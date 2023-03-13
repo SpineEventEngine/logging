@@ -24,12 +24,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import io.spine.internal.gradle.report.license.LicenseReporter
+
 plugins {
+    kotlin
     jacoco
     `project-report`
     `detekt-code-analysis`
 }
 
-kotlin {
+LicenseReporter.generateReportIn(project)
 
+kotlin {
+    // TODO: Implement
 }
