@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2022, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,46 +24,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-@file:Suppress("UNUSED_VARIABLE") // ... used for getting named objects.
+/**
+ * This package provides utilities for logging based on SLF4J.
+ */
+@CheckReturnValue
+@ParametersAreNonnullByDefault
+package io.spine.logging;
 
-import io.spine.internal.dependency.Flogger
-import io.spine.internal.dependency.Guava
-import io.spine.internal.gradle.report.license.LicenseReporter
+import com.google.errorprone.annotations.CheckReturnValue;
 
-plugins {
-    kotlin("multiplatform")
-    idea
-    jacoco
-    `project-report`
-    `detekt-code-analysis`
-}
-
-LicenseReporter.generateReportIn(project)
-
-kotlin {
-    jvm {
-        withJava()
-    }
-
-    sourceSets {
-        val jvmMain by getting {
-            dependencies {
-                api(Flogger.lib)
-                implementation(Guava.lib)
-            }
-        }
-        val jvmTest by getting {
-            dependencies {
-//                (Truth.libs
-//                        + JUnit.api
-//                        + Guava.testLib
-//                        + kotlin("test-junit5")
-//                        + Kotest.assertions)
-//                    .forEach {
-//                        implementation(it)
-//                    }
-                implementation(project(":testlib"))
-            }
-        }
-    }
-}
+import javax.annotation.ParametersAreNonnullByDefault;
