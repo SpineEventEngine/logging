@@ -62,7 +62,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies{
-                implementation(Kotlin.reflect)
+                api(project(":reflect"))
             }
         }
         val commonTest by getting {
