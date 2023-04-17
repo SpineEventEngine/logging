@@ -49,6 +49,7 @@ plugins {
     idea
     `project-report`
     `detekt-code-analysis`
+    `gradle-doctor`
 }
 
 apply(from = "$rootDir/version.gradle.kts")
@@ -64,7 +65,7 @@ spinePublishing {
         )
     }
     dokkaJar {
-        java = true
+        java = false
     }
 }
 
@@ -79,12 +80,11 @@ kotlin {
             kotlinOptions.jvmTarget = BuildSettings.javaVersion.toString()
         }
     }
-    val spine = Spine(project)
 
     sourceSets {
         val commonMain by getting {
             dependencies{
-                api(spine.reflect)
+                api(Spine.reflect)
             }
         }
         val commonTest by getting {
@@ -102,7 +102,7 @@ kotlin {
         }
         val jvmTest by getting {
             dependencies {
-                implementation(spine.testlib)
+                implementation(Spine.testlib)
             }
         }
     }
