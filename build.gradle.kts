@@ -29,11 +29,16 @@
 import io.spine.internal.dependency.Flogger
 import io.spine.internal.dependency.Guava
 import io.spine.internal.dependency.Kotest
+import io.spine.internal.dependency.Spine
 import io.spine.internal.gradle.checkstyle.CheckStyleConfig
 import io.spine.internal.gradle.javadoc.JavadocConfig
 import io.spine.internal.gradle.kotlin.setFreeCompilerArgs
+import io.spine.internal.gradle.publish.PublishingRepos
 import io.spine.internal.gradle.publish.javadocJar
+import io.spine.internal.gradle.publish.spinePublishing
 import io.spine.internal.gradle.report.license.LicenseReporter
+import io.spine.internal.gradle.report.pom.PomGenerator
+import io.spine.internal.gradle.standardToSpineSdk
 import io.spine.internal.gradle.testing.registerTestTasks
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -45,8 +50,25 @@ plugins {
     `project-report`
     `detekt-code-analysis`
 }
-LicenseReporter.generateReportIn(project)
-CheckStyleConfig.applyTo(project)
+
+apply(from = "$rootDir/version.gradle.kts")
+group = "io.spine"
+version = rootProject.extra["versionToPublish"]!!
+
+spinePublishing {
+    destinations = with(PublishingRepos) {
+        setOf(
+            cloudRepo,
+            cloudArtifactRegistry,
+            gitHub("logging")
+        )
+    }
+    dokkaJar {
+        java = true
+    }
+}
+
+repositories.standardToSpineSdk()
 
 kotlin {
     explicitApi()
@@ -57,11 +79,12 @@ kotlin {
             kotlinOptions.jvmTarget = BuildSettings.javaVersion.toString()
         }
     }
+    val spine = Spine(project)
 
     sourceSets {
         val commonMain by getting {
             dependencies{
-                api(project(":reflect"))
+                api(spine.reflect)
             }
         }
         val commonTest by getting {
@@ -79,7 +102,7 @@ kotlin {
         }
         val jvmTest by getting {
             dependencies {
-                implementation(project(":testlib"))
+                implementation(spine.testlib)
             }
         }
     }
@@ -96,10 +119,6 @@ val jvmTest: Task by tasks.getting {
     (this as Test).useJUnitPlatform()
 }
 
-// Apply Javadoc configuration here (and not right after the `plugins` block)
-// because the `javadoc` task is added when the `kotlin` block `withJava` is applied.
-JavadocConfig.applyTo(project)
-
 publishing {
     publications.withType<MavenPublication> {
         if (name.contains("jvm", true)) {
@@ -111,3 +130,11 @@ publishing {
 }
 
 apply(plugin="jacoco-kmm-jvm")
+CheckStyleConfig.applyTo(project)
+// Apply Javadoc configuration here (and not right after the `plugins` block)
+// because the `javadoc` task is added when the `kotlin` block `withJava` is applied.
+JavadocConfig.applyTo(project)
+PomGenerator.applyTo(project)
+LicenseReporter.generateReportIn(project)
+LicenseReporter.mergeAllReports(project)
+
