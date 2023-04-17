@@ -57,6 +57,8 @@ group = "io.spine"
 version = rootProject.extra["versionToPublish"]!!
 
 spinePublishing {
+    // This is a single-module KMM project. The Kotlin plugin handles the publication.
+    modulesWithCustomPublishing = setOf("logging")
     destinations = with(PublishingRepos) {
         setOf(
             cloudRepo,

@@ -87,5 +87,3 @@ internal fun Jar.dependOnGenerateProto() {
         this.dependsOn(it)
     }
 }
-
-
