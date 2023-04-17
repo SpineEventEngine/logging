@@ -33,6 +33,7 @@ import io.spine.internal.dependency.Spine
 import io.spine.internal.gradle.checkstyle.CheckStyleConfig
 import io.spine.internal.gradle.javadoc.JavadocConfig
 import io.spine.internal.gradle.kotlin.setFreeCompilerArgs
+import io.spine.internal.gradle.publish.IncrementGuard
 import io.spine.internal.gradle.publish.PublishingRepos
 import io.spine.internal.gradle.publish.javadocJar
 import io.spine.internal.gradle.publish.spinePublishing
@@ -51,8 +52,8 @@ plugins {
     `detekt-code-analysis`
     `gradle-doctor`
 }
-
 apply(from = "$rootDir/version.gradle.kts")
+apply<IncrementGuard>()
 group = "io.spine"
 version = rootProject.extra["versionToPublish"]!!
 
