@@ -43,6 +43,7 @@ import io.spine.internal.gradle.standardToSpineSdk
 import io.spine.internal.gradle.testing.configureLogging
 import io.spine.internal.gradle.testing.registerTestTasks
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.tasks.KotlinTest
 
 plugins {
    `maven-publish`
@@ -115,6 +116,9 @@ kotlin {
 tasks {
     withType<KotlinCompile>().configureEach {
         setFreeCompilerArgs()
+    }
+    withType<KotlinTest>().configureEach {
+        reports.junitXml.required.set(true)
     }
     registerTestTasks()
 }
