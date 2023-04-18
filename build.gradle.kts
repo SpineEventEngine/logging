@@ -33,12 +33,14 @@ import io.spine.internal.dependency.Spine
 import io.spine.internal.gradle.checkstyle.CheckStyleConfig
 import io.spine.internal.gradle.javadoc.JavadocConfig
 import io.spine.internal.gradle.kotlin.setFreeCompilerArgs
+import io.spine.internal.gradle.publish.IncrementGuard
 import io.spine.internal.gradle.publish.PublishingRepos
 import io.spine.internal.gradle.publish.javadocJar
 import io.spine.internal.gradle.publish.spinePublishing
 import io.spine.internal.gradle.report.license.LicenseReporter
 import io.spine.internal.gradle.report.pom.PomGenerator
 import io.spine.internal.gradle.standardToSpineSdk
+import io.spine.internal.gradle.testing.configureLogging
 import io.spine.internal.gradle.testing.registerTestTasks
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -50,9 +52,10 @@ plugins {
     `project-report`
     `detekt-code-analysis`
     `gradle-doctor`
+    id("org.jetbrains.kotlinx.kover") version "0.7.0-Alpha"
 }
-
 apply(from = "$rootDir/version.gradle.kts")
+apply<IncrementGuard>()
 group = "io.spine"
 version = rootProject.extra["versionToPublish"]!!
 
@@ -110,6 +113,20 @@ kotlin {
     }
 }
 
+detekt {
+    source = files(
+        "src/commonMain",
+        "src/jvmMain"
+    )
+}
+
+val jvmTest: Task by tasks.getting {
+    (this as Test).run {
+        useJUnitPlatform()
+        configureLogging()
+    }
+}
+
 tasks {
     withType<KotlinCompile>().configureEach {
         setFreeCompilerArgs()
@@ -117,8 +134,14 @@ tasks {
     registerTestTasks()
 }
 
-val jvmTest: Task by tasks.getting {
-    (this as Test).useJUnitPlatform()
+kover {
+    useJacocoTool()
+}
+
+koverReport {
+    xml {
+        onCheck = true
+    }
 }
 
 publishing {
@@ -131,7 +154,6 @@ publishing {
     }
 }
 
-apply(plugin="jacoco-kmm-jvm")
 CheckStyleConfig.applyTo(project)
 // Apply Javadoc configuration here (and not right after the `plugins` block)
 // because the `javadoc` task is added when the `kotlin` block `withJava` is applied.
@@ -139,4 +161,3 @@ JavadocConfig.applyTo(project)
 PomGenerator.applyTo(project)
 LicenseReporter.generateReportIn(project)
 LicenseReporter.mergeAllReports(project)
-

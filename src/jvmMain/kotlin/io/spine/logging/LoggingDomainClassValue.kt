@@ -56,6 +56,7 @@ internal object LoggingDomainClassValue: ClassValue<LoggingDomain>() {
 
     internal fun get(cls: KClass<*>) = get(cls.java)
 
+    @Suppress("ReturnCount") // to ease the flow on null results
     override fun computeValue(javaClass: Class<*>): LoggingDomain {
         with(javaClass.kotlin) {
             findWithNesting<LoggingDomain>()?.let {
@@ -75,6 +76,7 @@ internal object LoggingDomainClassValue: ClassValue<LoggingDomain>() {
 /**
  * Attempts to find the annotation of type [T] in this [KClass] or enclosing classes.
  */
+@Suppress("ReturnCount") // to ease the flow on null results
 private inline fun <reified T: Annotation> KClass<*>.findWithNesting(): T? {
     findAnnotation<T>()?.let {
         return it

@@ -39,14 +39,18 @@ public interface LoggingApi<API: LoggingApi<API>> {
     public open class NoOp<API: LoggingApi<API>>: LoggingApi<API> {
 
         @Suppress("UNCHECKED_CAST")
-        protected fun noOp(): API = this as API
+        protected fun self(): API = this as API
 
-        override fun withCause(cause: Throwable): API = noOp()
+        override fun withCause(cause: Throwable): API = self()
 
         override fun isEnabled(): Boolean = false
 
-        override fun log() {}
+        override fun log() {
+            // no-op
+        }
 
-        override fun log(message: () -> String) {}
+        override fun log(message: () -> String) {
+            // no-op
+        }
     }
 }
