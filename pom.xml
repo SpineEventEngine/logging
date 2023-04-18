@@ -94,16 +94,6 @@ all modules and does not describe the project structure per-subproject.
     <version>1.8.10</version>
   </dependency>
   <dependency>
-    <groupId>org.jetbrains.intellij.deps</groupId>
-    <artifactId>intellij-coverage-agent</artifactId>
-    <version>1.0.709</version>
-  </dependency>
-  <dependency>
-    <groupId>org.jetbrains.intellij.deps</groupId>
-    <artifactId>intellij-coverage-reporter</artifactId>
-    <version>1.0.709</version>
-  </dependency>
-  <dependency>
     <groupId>org.jetbrains.kotlin</groupId>
     <artifactId>kotlin-compiler-embeddable</artifactId>
     <version>1.8.10</version>

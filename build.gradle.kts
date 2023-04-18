@@ -138,6 +138,16 @@ tasks {
     registerTestTasks()
 }
 
+kover {
+    useJacocoTool()
+}
+
+koverReport {
+    xml {
+        onCheck = true
+    }
+}
+
 publishing {
     publications.withType<MavenPublication> {
         if (name.contains("jvm", true)) {
@@ -148,7 +158,6 @@ publishing {
     }
 }
 
-apply(plugin="jacoco-kmm-jvm")
 CheckStyleConfig.applyTo(project)
 // Apply Javadoc configuration here (and not right after the `plugins` block)
 // because the `javadoc` task is added when the `kotlin` block `withJava` is applied.
