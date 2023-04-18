@@ -445,6 +445,10 @@
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The BSD License](http://www.opensource.org/licenses/bsd-license.php)
 
+1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.30.
+     * **Project URL:** [https://freemarker.apache.org/](https://freemarker.apache.org/)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.31.
      * **Project URL:** [https://freemarker.apache.org/](https://freemarker.apache.org/)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -473,6 +477,10 @@
 1.  **Group** : org.jetbrains. **Name** : annotations. **Version** : 13.0.
      * **Project URL:** [http://www.jetbrains.org](http://www.jetbrains.org)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains. **Name** : annotations. **Version** : 16.0.2.
+     * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/license/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.3.1.**No license information found**
 1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.3.1.
@@ -514,6 +522,18 @@
 1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-analysis-intellij. **Version** : 1.8.10.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.intellij.deps. **Name** : coverage-report. **Version** : 1.0.18.
+     * **Project URL:** [https://github.com/JetBrains/coverage-report](https://github.com/JetBrains/coverage-report)
+     * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+
+1.  **Group** : org.jetbrains.intellij.deps. **Name** : intellij-coverage-agent. **Version** : 1.0.709.
+     * **Project URL:** [https://github.com/JetBrains/intellij-coverage](https://github.com/JetBrains/intellij-coverage)
+     * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+
+1.  **Group** : org.jetbrains.intellij.deps. **Name** : intellij-coverage-reporter. **Version** : 1.0.709.
+     * **Project URL:** [https://github.com/JetBrains/intellij-coverage](https://github.com/JetBrains/intellij-coverage)
+     * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 
 1.  **Group** : org.jetbrains.intellij.deps. **Name** : trove4j. **Version** : 1.0.20200330.
      * **Project URL:** [https://github.com/JetBrains/intellij-deps-trove4j](https://github.com/JetBrains/intellij-deps-trove4j)
@@ -672,6 +692,10 @@
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.json. **Name** : json. **Version** : 20210307.
+     * **Project URL:** [https://github.com/douglascrockford/JSON-java](https://github.com/douglascrockford/JSON-java)
+     * **License:** [The JSON License](http://json.org/license.html)
+
 1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.14.3.
      * **Project URL:** [https://jsoup.org/](https://jsoup.org/)
      * **License:** [The MIT License](https://jsoup.org/license)
@@ -738,4 +762,4 @@
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Tue Apr 18 00:45:39 WEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Tue Apr 18 14:11:04 WEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
