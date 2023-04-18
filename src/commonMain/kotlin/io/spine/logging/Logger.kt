@@ -41,11 +41,12 @@ public abstract class Logger<API: LoggingApi<API>>(
             return api
         }
         val loggingDomain = loggingDomainOf(cls)
-        if (loggingDomain === LoggingDomain.noOp) {
-            return api
+        return if (loggingDomain === LoggingDomain.noOp) {
+            api
+        } else {
+            @Suppress("UNCHECKED_CAST") // Safe to cast since delegates to the same interface.
+            WithLoggingDomain(loggingDomain, api) as API
         }
-        @Suppress("UNCHECKED_CAST") // Safe to cast since delegates to the same interface.
-        return WithLoggingDomain(loggingDomain, api) as API
     }
 
     protected abstract fun createApi(level: Level): API

@@ -113,6 +113,13 @@ kotlin {
     }
 }
 
+detekt {
+    source = files(
+        "src/commonMain",
+        "src/jvmMain"
+    )
+}
+
 val jvmTest: Task by tasks.getting {
     (this as Test).run {
         useJUnitPlatform()
