@@ -42,6 +42,7 @@ import io.spine.internal.gradle.report.pom.PomGenerator
 import io.spine.internal.gradle.standardToSpineSdk
 import io.spine.internal.gradle.testing.configureLogging
 import io.spine.internal.gradle.testing.registerTestTasks
+import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.gradle.tasks.KotlinTest
 
@@ -53,6 +54,7 @@ plugins {
     `project-report`
     `detekt-code-analysis`
     `gradle-doctor`
+    id("org.jetbrains.kotlinx.kover") version "0.7.0-Alpha"
 }
 apply(from = "$rootDir/version.gradle.kts")
 apply<IncrementGuard>()
@@ -113,6 +115,13 @@ kotlin {
     }
 }
 
+val jvmTest: Task by tasks.getting {
+    (this as Test).run {
+        useJUnitPlatform()
+        configureLogging()
+    }
+}
+
 tasks {
     withType<KotlinCompile>().configureEach {
         setFreeCompilerArgs()
@@ -120,14 +129,13 @@ tasks {
     withType<KotlinTest>().configureEach {
         reports.junitXml.required.set(true)
     }
-    registerTestTasks()
-}
-
-val jvmTest: Task by tasks.getting {
-    (this as Test).run {
-        useJUnitPlatform()
-        configureLogging()
+    withType<KotlinJvmTest>().configureEach {
+        reports.junitXml.required.set(true)
     }
+    withType<Test>().configureEach {
+        reports.junitXml.required.set(true)
+    }
+    registerTestTasks()
 }
 
 publishing {
@@ -148,4 +156,3 @@ JavadocConfig.applyTo(project)
 PomGenerator.applyTo(project)
 LicenseReporter.generateReportIn(project)
 LicenseReporter.mergeAllReports(project)
-
