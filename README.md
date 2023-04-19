@@ -18,7 +18,7 @@ To use Spine Logging in your Gradle project:
 
 ```kotlin
 dependencies {
-    implementation("io.spine.tools:spine-logging:${version}")
+    implementation("io.spine:spine-logging:${version}")
 }
 ```
 
