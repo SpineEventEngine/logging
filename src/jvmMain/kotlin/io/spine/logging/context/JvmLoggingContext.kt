@@ -30,11 +30,19 @@ import io.spine.logging.Level
 import io.spine.logging.toJavaLogging
 import io.spine.logging.toLevel
 import kotlin.reflect.KClass
-import com.google.common.flogger.context.LogLevelMap.Builder as FBuilder
 import com.google.common.flogger.context.LogLevelMap as FLogLevelMap
-import java.util.logging.Level as JLevel
+import com.google.common.flogger.context.LogLevelMap.Builder as FBuilder
 
-internal actual class LogLevelMapBuilderImpl : LogLevelMap.Builder {
+internal actual object LoggingContextFactory {
+
+    actual fun levelMapBuilder(): LogLevelMap.Builder =
+        BuilderImpl()
+
+    actual fun levelMap(map: Map<String, Level>, defaultLevel: Level): LogLevelMap =
+        MapImpl(map, defaultLevel)
+}
+
+private class BuilderImpl : LogLevelMap.Builder {
 
     private val delegate: FBuilder = FLogLevelMap.builder()
 
@@ -75,12 +83,13 @@ private fun packageNamed(name: String): Package {
     error("Unable to obtain a package named `$name`.")
 }
 
-internal class MapImpl(private val delegate: FLogLevelMap): LogLevelMap {
+private class MapImpl(private val delegate: FLogLevelMap): LogLevelMap {
 
-    override fun levelOf(loggerName: String): Level {
-        val jLevel = delegate.getLevel(loggerName)
-        return jLevel.toLevel()
-    }
+    constructor(map: Map<String, Level>, defaultLevel: Level) :
+            this(createDelegate(map, defaultLevel))
+
+    override fun levelOf(loggerName: String): Level =
+        delegate.getLevel(loggerName).toLevel()
 
     override fun merge(other: LogLevelMap): LogLevelMap {
         // It is safe to downcast because there's only one implementation per platform.
@@ -89,30 +98,10 @@ internal class MapImpl(private val delegate: FLogLevelMap): LogLevelMap {
         val merged = delegate.merge(otherDelegate)
         return MapImpl(merged)
     }
-}
-
-internal actual class LogLevelMapImpl(private val delegate: FLogLevelMap): LogLevelMap {
-
-    actual constructor(map: Map<String, Level>, defaultLevel: Level) : this(
-        createDelegate(map, defaultLevel)
-    )
-
-    override fun levelOf(loggerName: String): Level =
-        delegate.getLevel(loggerName).toLevel()
-
-    override fun merge(other: LogLevelMap): LogLevelMap {
-        // It is safe to downcast because there's only one implementation per platform.
-        // That is, all the instances implementing `LogLevelMap` would be `MapImpl`.
-        val otherDelegate = (other as LogLevelMapImpl).delegate
-        val merged = delegate.merge(otherDelegate)
-        return MapImpl(merged)
-    }
 
     private companion object {
         fun createDelegate(map: Map<String, Level>, defaultLevel: Level): FLogLevelMap {
-            val convertedMap: Map<String, JLevel> = map.mapValues {
-                it.value.toJavaLogging()
-            }
+            val convertedMap = map.mapValues { it.value.toJavaLogging() }
             return FLogLevelMap.create(convertedMap, defaultLevel.toJavaLogging())
         }
     }

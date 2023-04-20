@@ -27,42 +27,10 @@
 package io.spine.logging.context
 
 import io.spine.logging.Level
-import kotlin.reflect.KClass
 
-public interface LogLevelMap {
+internal expect object LoggingContextFactory {
 
-    public fun levelOf(loggerName: String): Level
-    public fun merge(other: LogLevelMap): LogLevelMap
+    fun levelMapBuilder(): LogLevelMap.Builder
 
-    public interface Builder {
-        public fun add(level: Level, vararg classes: KClass<*>): Builder
-        public fun add(level: Level, vararg packageNames: String): Builder
-        public fun setDefault(level: Level): Builder
-        public fun build(): LogLevelMap
-    }
-
-    public companion object {
-        public fun builder(): Builder =
-            LoggingContextFactory.levelMapBuilder()
-
-        /**
-         * Creates a new instance with the given [level values][map] and [defaultLevel].
-         */
-        @JvmOverloads
-        public fun create(
-            map: Map<String, Level> = mapOf(),
-            defaultLevel: Level = Level.OFF
-        ): LogLevelMap =
-            LoggingContextFactory.levelMap(map, defaultLevel)
-    }
-}
-
-/**
- * Builds a new [LogLevelMap] by populating a newly created [LogLevelMap.Builder]
- * using providing [builderAction].
- */
-public fun logLevelMap(builderAction: LogLevelMap.Builder.() -> Unit): LogLevelMap {
-    val builder = LogLevelMap.builder()
-    builderAction(builder)
-    return builder.build()
+    fun levelMap(map: Map<String, Level>, defaultLevel: Level): LogLevelMap
 }
