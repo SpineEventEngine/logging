@@ -26,5 +26,4 @@
 
 package io.spine.logging.context
 
-public abstract class ScopedLoggingContext: AutoCloseable {
-}
+public interface ScopedLoggingContext: AutoCloseable
