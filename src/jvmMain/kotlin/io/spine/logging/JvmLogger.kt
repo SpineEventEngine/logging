@@ -74,16 +74,26 @@ private class Impl(private val floggerApi: FluentLogger.Api): JvmLogger.Api {
 
 /**
  * Maps [Level] values to its Java logging counterparts.
+ *
+ * @see [JLevel.toLevel]
  */
-private fun Level.toJavaLogging(): JLevel {
-    val result = when (this) {
-        Level.DEBUG -> JLevel.FINE
-        Level.INFO -> JLevel.INFO
-        Level.WARNING -> JLevel.WARNING
-        Level.ERROR -> JLevel.SEVERE
-        else -> {
-            error("The level `${this}` cannot be matched to Java counterpart.")
-        }
-    }
-    return result
+internal fun Level.toJavaLogging(): JLevel = when (this) {
+    Level.DEBUG -> JLevel.FINE
+    Level.INFO -> JLevel.INFO
+    Level.WARNING -> JLevel.WARNING
+    Level.ERROR -> JLevel.SEVERE
+    else -> error("The level `${this}` cannot be matched to Java counterpart.")
+}
+
+/**
+ * Converts Java logging level to [Level].
+ *
+ * @see [Level.toJavaLogging]
+ */
+internal fun JLevel.toLevel(): Level = when (this) {
+    JLevel.FINE -> Level.DEBUG
+    JLevel.INFO -> Level.INFO
+    JLevel.WARNING -> Level.WARNING
+    JLevel.SEVERE -> Level.ERROR
+    else -> Level(name, intValue())
 }
