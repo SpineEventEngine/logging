@@ -27,7 +27,7 @@
 package io.spine.logging
 
 import com.google.common.flogger.FluentLogger
-import com.google.common.flogger.LogSites
+import com.google.common.flogger.LogSites.callerOf
 import kotlin.reflect.KClass
 import java.util.logging.Level as JLevel
 
@@ -45,9 +45,13 @@ public class JvmLogger(
     public interface Api: LoggingApi<Api>
 
     override fun createApi(level: Level): Api {
-        val implApi = impl.at(level.toJavaLogging()).withInjectedLogSite(
-            LogSites.callerOf(Logger::class.java)
-        )
+        val implApi = impl.at(level.toJavaLogging()).let {
+            if (it.isEnabled) {
+                it.withInjectedLogSite(callerOf(Logger::class.java))
+            } else {
+                it
+            }
+        }
         return Impl(implApi)
     }
 }
@@ -56,6 +60,7 @@ public class JvmLogger(
  * Implements [LoggingApi] wrapping [FluentLogger.Api].
  */
 private class Impl(private val floggerApi: FluentLogger.Api): JvmLogger.Api {
+
     override fun withCause(cause: Throwable): JvmLogger.Api {
         floggerApi.withCause(cause)
         return this
