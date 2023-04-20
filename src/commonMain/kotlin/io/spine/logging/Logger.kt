@@ -41,7 +41,7 @@ public abstract class Logger<API: LoggingApi<API>>(
             return api
         }
         val loggingDomain = loggingDomainOf(cls)
-        return if (loggingDomain === LoggingDomain.noOp) {
+        return if (loggingDomain.name.isEmpty()) {
             api
         } else {
             @Suppress("UNCHECKED_CAST") // Safe to cast since delegates to the same interface.

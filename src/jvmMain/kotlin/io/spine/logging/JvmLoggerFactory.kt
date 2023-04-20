@@ -66,7 +66,7 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
     @JvmStatic
     @JvmName("getFluentLogger") // Set the name explicitly to avoid synthetic `$logging` suffix.
     internal fun getFluentLogger(cls: Class<*>): FluentLogger {
-        return get(cls).impl
+        return get(cls).delegate
     }
 
     private fun createForClass(cls: Class<*>): JvmLogger {

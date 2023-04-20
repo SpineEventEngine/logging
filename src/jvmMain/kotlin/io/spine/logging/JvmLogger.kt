@@ -36,7 +36,7 @@ import java.util.logging.Level as JLevel
  */
 public class JvmLogger(
     cls: KClass<*>,
-    internal val impl: FluentLogger
+    internal val delegate: FluentLogger
 ) : Logger<JvmLogger.Api>(cls) {
 
     /**
@@ -45,34 +45,34 @@ public class JvmLogger(
     public interface Api: LoggingApi<Api>
 
     override fun createApi(level: Level): Api {
-        val implApi = impl.at(level.toJavaLogging()).let {
+        val apiDelegate = delegate.at(level.toJavaLogging()).let {
             if (it.isEnabled) {
                 it.withInjectedLogSite(callerOf(Logger::class.java))
             } else {
                 it
             }
         }
-        return Impl(implApi)
+        return ApiImpl(apiDelegate)
     }
 }
 
 /**
  * Implements [LoggingApi] wrapping [FluentLogger.Api].
  */
-private class Impl(private val floggerApi: FluentLogger.Api): JvmLogger.Api {
+private class ApiImpl(private val delegate: FluentLogger.Api): JvmLogger.Api {
 
     override fun withCause(cause: Throwable): JvmLogger.Api {
-        floggerApi.withCause(cause)
+        delegate.withCause(cause)
         return this
     }
 
-    override fun isEnabled(): Boolean = floggerApi.isEnabled
+    override fun isEnabled(): Boolean = delegate.isEnabled
 
-    override fun log() = floggerApi.log()
+    override fun log() = delegate.log()
 
     override fun log(message: () -> String) {
         if (isEnabled()) {
-            floggerApi.log(message.invoke())
+            delegate.log(message.invoke())
         }
     }
 }
