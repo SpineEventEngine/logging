@@ -69,7 +69,7 @@ internal class StdLoggerBackend(loggingClass: String): AbstractBackend(loggingCl
             logger.log(record)
             return
         }
-        // Give a filter a chance to do its work.
+        // If a filter is set, let it do its work.
         if (logger.filter?.isLoggable(record) == true) {
             return
         }
