@@ -101,13 +101,25 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 api(Flogger.lib)
-                runtimeOnly(Flogger.Runtime.systemBackend)
                 implementation(Guava.lib)
             }
         }
         val jvmTest by getting {
             dependencies {
                 implementation(Spine.testlib)
+
+//                runtimeOnly(Flogger.Runtime.systemBackend)
+
+                runtimeOnly(Flogger.Runtime.log4j2Backend)
+
+//                runtimeOnly(Flogger.Runtime.slf4JBackend)
+//                runtimeOnly(Slf4J.jdk14)
+
+//                runtimeOnly(Flogger.Runtime.slf4JBackend)
+//                runtimeOnly(Slf4J.reload4j)
+
+//                runtimeOnly(Flogger.Runtime.grpcContext)
+//                runtimeOnly(Grpc.context)
             }
         }
     }

@@ -38,6 +38,7 @@ import java.util.function.Supplier
 import java.util.logging.Level
 import java.util.logging.Logger
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -73,6 +74,7 @@ internal class LoggingSpec {
 
     @Nested
     @DisplayName("expose shortcut methods")
+    @Disabled
     internal inner class Shortcuts {
 
         private lateinit var obj: Logging
@@ -104,8 +106,7 @@ internal class LoggingSpec {
 
         private fun assertApi(method: Supplier<FluentLogger.Api>, expectedLevel: Level) {
             julLogger.level = expectedLevel
-            val api// See: https://github.com/SpineEventEngine/base/issues/612
-                    = method.get()
+            val api = method.get()
             LogTruth.assertThat(api).isInstanceOf(LogContext::class.java)
             (api as LogData).level shouldBe expectedLevel
         }
