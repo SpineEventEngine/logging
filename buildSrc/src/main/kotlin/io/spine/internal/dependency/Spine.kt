@@ -48,7 +48,7 @@ object Spine {
         const val base = "2.0.0-SNAPSHOT.180"
 
         /** The version of [Spine.reflect]. */
-        const val reflect = "2.0.0-SNAPSHOT.181"
+        const val reflect = "2.0.0-SNAPSHOT.182"
 
         /** The version of [Spine.logging]. */
         const val logging = "2.0.0-SNAPSHOT.182"
