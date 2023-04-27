@@ -102,6 +102,8 @@ kotlin {
             dependencies {
                 api(Flogger.lib)
                 implementation(Guava.lib)
+
+                implementation(Flogger.Runtime.systemBackend)
             }
         }
         val jvmTest by getting {
@@ -110,7 +112,7 @@ kotlin {
 
 //                runtimeOnly(Flogger.Runtime.systemBackend)
 
-                runtimeOnly(Flogger.Runtime.log4j2Backend)
+//                runtimeOnly(Flogger.Runtime.log4j2Backend)
 
 //                runtimeOnly(Flogger.Runtime.slf4JBackend)
 //                runtimeOnly(Slf4J.jdk14)

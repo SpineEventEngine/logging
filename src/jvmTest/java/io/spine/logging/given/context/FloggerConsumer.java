@@ -34,7 +34,7 @@ public class FloggerConsumer {
 
     @SuppressWarnings("UseOfSystemOutOrSystemErr")
     public void methodWithFine() {
-        logger.atFine().log("FINE logging.");
+        logger.atFine().log("Logging using `FINE` level.");
         System.out.println("`methodWithFine()` called.");
     }
 }
