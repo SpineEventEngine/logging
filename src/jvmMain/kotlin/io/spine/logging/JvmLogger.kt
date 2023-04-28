@@ -102,3 +102,9 @@ internal fun JLevel.toLevel(): Level = when (this) {
     JLevel.SEVERE -> Level.ERROR
     else -> Level(name, intValue())
 }
+
+/**
+ * Compares Java logging levels using their [values][JLevel.intValue].
+ */
+internal operator fun JLevel.compareTo(other: JLevel): Int =
+    intValue().compareTo(other.intValue())

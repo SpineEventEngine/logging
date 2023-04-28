@@ -50,3 +50,9 @@ public data class Level(
         public val DEBUG: Level = Level("DEBUG", 500)
     }
 }
+
+/**
+ * Compares the levels using their [values][Level.value].
+ */
+public operator fun Level.compareTo(other: Level): Int =
+    value.compareTo(other.value)
