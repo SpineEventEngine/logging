@@ -29,6 +29,9 @@ package io.spine.logging.context
 import java.util.concurrent.atomic.AtomicReference
 import java.util.function.BinaryOperator
 
+/**
+ * A reference to a value kept as [AtomicReference].
+ */
 internal abstract class ScopedReference<T>(initialValue: T?) {
 
     private val value: AtomicReference<T?>
@@ -37,8 +40,17 @@ internal abstract class ScopedReference<T>(initialValue: T?) {
         value = AtomicReference(initialValue)
     }
 
+    /**
+     * Obtains the current value.
+     */
     fun get(): T? = value.get()
 
+    /**
+     * Merges the given [delta] into the referenced value.
+     *
+     * If the current value is `null` the [delta] becomes the new value.
+     * Otherwise, it is [merged][merge] with the current one.
+     */
     fun mergeFrom(delta: T?) {
         if (delta != null) {
             val operator = BinaryOperator<T?> { t, u ->
@@ -48,5 +60,10 @@ internal abstract class ScopedReference<T>(initialValue: T?) {
         }
     }
 
+    /**
+     * Merges the [current] value with the [delta].
+     *
+     * The implementing functions must have no side effects.
+     */
     abstract fun merge(current: T, delta: T): T
 }
