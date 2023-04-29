@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.system
+package io.spine.backend.system
 
 import com.google.common.flogger.backend.LogData
 import com.google.common.flogger.backend.LoggerBackend
@@ -32,8 +32,8 @@ import com.google.common.flogger.backend.Platform
 import com.google.common.flogger.backend.system.AbstractBackend
 import com.google.common.flogger.backend.system.BackendFactory
 import com.google.common.flogger.backend.system.SimpleLogRecord
-import io.spine.logging.compareTo
 import java.util.logging.Handler
+import java.util.logging.Level
 import java.util.logging.LogRecord
 import java.util.logging.Logger
 
@@ -156,3 +156,9 @@ private fun publishForced(handler: Handler, record: LogRecord) {
         handler.level = prevLevel
     }
 }
+
+/**
+ * Compares Java logging levels using their [values][Level.intValue].
+ */
+internal operator fun Level.compareTo(other: Level): Int =
+    intValue().compareTo(other.intValue())

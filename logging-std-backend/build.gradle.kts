@@ -1,3 +1,5 @@
+import io.spine.internal.dependency.Flogger
+
 /*
  * Copyright 2023, TeamDev. All rights reserved.
  *
@@ -25,6 +27,11 @@
  */
 
 plugins {
-    `java-module`
+    `kotlin-jvm-module`
     `project-report`
+}
+
+dependencies {
+    implementation(Flogger.Runtime.systemBackend)
+    implementation(project(":logging"))
 }
