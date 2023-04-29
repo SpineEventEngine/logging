@@ -24,6 +24,12 @@ all modules and does not describe the project structure per-subproject.
 
 <dependencies>
   <dependency>
+    <groupId>com.google.flogger</groupId>
+    <artifactId>flogger-system-backend</artifactId>
+    <version>0.7.4</version>
+    <scope>compile</scope>
+  </dependency>
+  <dependency>
     <groupId>com.google.protobuf</groupId>
     <artifactId>protobuf-java</artifactId>
     <version>3.22.2</version>
@@ -102,11 +108,6 @@ all modules and does not describe the project structure per-subproject.
   <dependency>
     <groupId>com.google.flogger</groupId>
     <artifactId>flogger</artifactId>
-    <version>0.7.4</version>
-  </dependency>
-  <dependency>
-    <groupId>com.google.flogger</groupId>
-    <artifactId>flogger-system-backend</artifactId>
     <version>0.7.4</version>
   </dependency>
   <dependency>
