@@ -26,36 +26,21 @@
 
 package io.spine.logging.context
 
-import com.google.common.flogger.context.ScopeType
-import com.google.common.flogger.context.ScopedLoggingContext.LoggingContextCloseable
-import com.google.common.flogger.context.ScopedLoggingContext as FScopedLoggingContext
+import com.google.common.flogger.context.ContextDataProvider
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.shouldBe
+import io.spine.logging.context.system.StdContextDataProvider
+import java.util.ServiceLoader
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 
-internal class StdScopedLoggingContext(
-    private val provider: StdContextDataProvider
-) : FScopedLoggingContext() {
+@DisplayName("`StdContextDataProvider` should")
+internal class StdContextDataProviderSpec {
 
-    override fun newContext(): Builder =
-        newBuilder(null)
-
-    override fun newContext(scopeType: ScopeType): Builder =
-        newBuilder(scopeType)
-
-    private fun newBuilder(scopeType: ScopeType?): Builder {
-        val builder = object : Builder() {
-            override fun install(): LoggingContextCloseable {
-                val newContextData =
-                    StdContextData(StdContextDataProvider.currentContext(), scopeType, provider)
-                newContextData.addTags(tags)
-                newContextData.addMetadata(metadata)
-                newContextData.applyLogLevelMap(logLevelMap.toMap())
-                return installContextMetadata(newContextData)
-            }
-        }
-        return builder
+    @Test
+    fun `load as a service`() {
+        val services = ServiceLoader.load(ContextDataProvider::class.java)
+        services shouldHaveSize 1
+        (services.toList()[0] is StdContextDataProvider) shouldBe true
     }
-}
-
-private fun installContextMetadata(newContextData: StdContextData): LoggingContextCloseable {
-    val prev = newContextData.attach()
-    return LoggingContextCloseable { newContextData.detach(prev) }
 }

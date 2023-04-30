@@ -24,22 +24,46 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.context
+package io.spine.logging.context.system
 
-import com.google.common.flogger.context.ContextDataProvider
-import io.kotest.matchers.collections.shouldHaveSize
-import io.kotest.matchers.shouldBe
-import java.util.ServiceLoader
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
+import java.util.concurrent.atomic.AtomicReference
+import java.util.function.BinaryOperator
 
-@DisplayName("`StdContextDataProvider` should")
-internal class StdContextDataProviderSpec {
+/**
+ * A reference to a value kept as [AtomicReference].
+ */
+internal abstract class ScopedReference<T>(initialValue: T?) {
 
-    @Test
-    fun `load as a service`() {
-        val services = ServiceLoader.load(ContextDataProvider::class.java)
-        services shouldHaveSize 1
-        (services.toList()[0] is StdContextDataProvider) shouldBe true
+    private val value: AtomicReference<T?>
+
+    init {
+        value = AtomicReference(initialValue)
     }
+
+    /**
+     * Obtains the current value.
+     */
+    fun get(): T? = value.get()
+
+    /**
+     * Merges the given [delta] into the referenced value.
+     *
+     * If the current value is `null` the [delta] becomes the new value.
+     * Otherwise, it is [merged][merge] with the current one.
+     */
+    fun mergeFrom(delta: T?) {
+        if (delta != null) {
+            val operator = BinaryOperator<T?> { t, u ->
+                t?.let { merge(it, u) } ?: u
+            }
+            value.accumulateAndGet(delta, operator)
+        }
+    }
+
+    /**
+     * Merges the [current] value with the [delta].
+     *
+     * The implementing functions must have no side effects.
+     */
+    abstract fun merge(current: T, delta: T): T
 }

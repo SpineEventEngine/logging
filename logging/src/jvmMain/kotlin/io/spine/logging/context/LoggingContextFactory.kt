@@ -110,6 +110,6 @@ private class MapImpl(private val delegate: FLogLevelMap): LogLevelMap {
 /**
  * Converts a nullable instance of logging level map from Flogger to our wrapped implementation.
  */
-internal fun FLogLevelMap?.toMap(): LogLevelMap? {
+public fun FLogLevelMap?.toMap(): LogLevelMap? {
     return this?.let { MapImpl(this) }
 }

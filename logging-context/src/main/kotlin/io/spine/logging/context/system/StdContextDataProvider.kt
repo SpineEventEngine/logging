@@ -24,24 +24,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.context
+package io.spine.logging.context.system
 
 import com.google.common.flogger.LoggingScope
 import com.google.common.flogger.backend.Metadata
 import com.google.common.flogger.context.ContextDataProvider
 import com.google.common.flogger.context.ScopeType
+import com.google.common.flogger.context.ScopedLoggingContext
 import com.google.common.flogger.context.Tags
 import io.spine.logging.toLevel
 import java.util.logging.Level
-import com.google.common.flogger.context.ScopedLoggingContext as FScopedLoggingContext
 
 public class StdContextDataProvider: ContextDataProvider() {
 
     @Volatile
     private var hasLogLevelMap: Boolean = false
 
-    override fun getContextApiSingleton(): FScopedLoggingContext {
-        var result: FScopedLoggingContext? = scopedLoggingContext
+    override fun getContextApiSingleton(): ScopedLoggingContext {
+        var result: ScopedLoggingContext? = scopedLoggingContext
         if (result == null) {
             scopedLoggingContext = StdScopedLoggingContext(this)
             result = scopedLoggingContext

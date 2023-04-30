@@ -82,7 +82,7 @@ private class ApiImpl(private val delegate: FluentLogger.Api): JvmLogger.Api {
  *
  * @see [JLevel.toLevel]
  */
-internal fun Level.toJavaLogging(): JLevel = when (this) {
+public fun Level.toJavaLogging(): JLevel = when (this) {
     Level.DEBUG -> JLevel.FINE
     Level.INFO -> JLevel.INFO
     Level.WARNING -> JLevel.WARNING
@@ -95,7 +95,7 @@ internal fun Level.toJavaLogging(): JLevel = when (this) {
  *
  * @see [Level.toJavaLogging]
  */
-internal fun JLevel.toLevel(): Level = when (this) {
+public fun JLevel.toLevel(): Level = when (this) {
     JLevel.FINE -> Level.DEBUG
     JLevel.INFO -> Level.INFO
     JLevel.WARNING -> Level.WARNING
@@ -106,5 +106,5 @@ internal fun JLevel.toLevel(): Level = when (this) {
 /**
  * Compares Java logging levels using their [values][JLevel.intValue].
  */
-internal operator fun JLevel.compareTo(other: JLevel): Int =
+public operator fun JLevel.compareTo(other: JLevel): Int =
     intValue().compareTo(other.intValue())

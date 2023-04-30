@@ -24,26 +24,27 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.context
+package io.spine.logging.context.system
 
 import com.google.common.flogger.context.ContextMetadata
 import com.google.common.flogger.context.ScopeType
-import com.google.common.flogger.context.ScopedLoggingContext.ScopeList
+import com.google.common.flogger.context.ScopedLoggingContext
 import com.google.common.flogger.context.Tags
 import io.spine.logging.Level
+import io.spine.logging.context.LogLevelMap
 
 internal class StdContextData(
     parent: StdContextData?,
     scopeType: ScopeType?,
     private val provider: StdContextDataProvider
 ) {
-    private val scopes: ScopeList?
+    private val scopes: ScopedLoggingContext.ScopeList?
     private val tagRef: ScopedReference<Tags>
     private val metadataRef: ScopedReference<ContextMetadata>
     private val logLevelMapRef: ScopedReference<LogLevelMap>
 
     init {
-        scopes = ScopeList.addScope(parent?.scopes, scopeType)
+        scopes = ScopedLoggingContext.ScopeList.addScope(parent?.scopes, scopeType)
         tagRef = object : ScopedReference<Tags>(parent?.tagRef?.get()) {
             override fun merge(current: Tags, delta: Tags): Tags =
                 current.merge(delta)

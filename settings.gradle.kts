@@ -35,5 +35,6 @@ rootProject.name = "spine-logging"
 
 include(
     "logging",
-    "logging-backend"
+    "logging-backend",
+    "logging-context"
 )

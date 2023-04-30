@@ -24,6 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import io.spine.internal.dependency.Spine
 import io.spine.internal.gradle.kotlin.applyJvmToolchain
 import io.spine.internal.gradle.kotlin.setFreeCompilerArgs
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -38,6 +39,10 @@ plugins {
 kotlin {
     applyJvmToolchain(BuildSettings.javaVersion.asInt())
     explicitApi()
+}
+
+dependencies {
+    testImplementation(Spine.testlib)
 }
 
 tasks {
