@@ -35,5 +35,5 @@ rootProject.name = "spine-logging"
 
 include(
     "logging",
-    "logging-std-backend"
+    "logging-backend"
 )

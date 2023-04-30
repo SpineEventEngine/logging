@@ -47,7 +47,7 @@ apply(from = "$rootDir/version.gradle.kts")
 
 spinePublishing {
     modules = setOf(
-        "logging-std-backend"
+        "logging-backend"
     )
     modulesWithCustomPublishing = setOf("logging")
     destinations = with(PublishingRepos) {
