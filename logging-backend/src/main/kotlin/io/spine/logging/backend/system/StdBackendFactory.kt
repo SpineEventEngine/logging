@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.backend.system
+package io.spine.logging.backend.system
 
 import com.google.common.flogger.backend.LogData
 import com.google.common.flogger.backend.LoggerBackend
