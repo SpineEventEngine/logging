@@ -42,6 +42,7 @@ import io.spine.internal.dependency.Guava
 import io.spine.internal.dependency.J2ObjC
 import io.spine.internal.dependency.JUnit
 import io.spine.internal.dependency.Jackson
+import io.spine.internal.dependency.Kotest
 import io.spine.internal.dependency.Kotlin
 import io.spine.internal.dependency.Okio
 import io.spine.internal.dependency.Plexus
@@ -106,7 +107,8 @@ private fun ResolutionStrategy.forceTestDependencies() {
         JUnit.platformCommons,
         JUnit.platformLauncher,
         JUnit.legacy,
-        Truth.libs
+        Truth.libs,
+        Kotest.assertions,
     )
 }
 
