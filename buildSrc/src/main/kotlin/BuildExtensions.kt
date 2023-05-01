@@ -28,6 +28,7 @@
 
 import io.spine.internal.dependency.ErrorProne
 import io.spine.internal.dependency.GradleDoctor
+import io.spine.internal.dependency.Kotest
 import io.spine.internal.dependency.ProtoData
 import io.spine.internal.dependency.Protobuf
 import io.spine.internal.dependency.Spine
@@ -117,6 +118,9 @@ val PluginDependenciesSpec.protobuf: PluginDependencySpec
 
 val PluginDependenciesSpec.`gradle-doctor`: PluginDependencySpec
     get() = id(GradleDoctor.pluginId).version(GradleDoctor.version)
+
+val PluginDependenciesSpec.kotest: PluginDependencySpec
+    get() = id(Kotest.GradlePlugin.id).version(Kotest.GradlePlugin.version)
 
 /**
  * Configures the dependencies between third-party Gradle tasks
