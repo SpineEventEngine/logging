@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,8 +23,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-package io.spine.internal.gradle
 
 import io.spine.internal.dependency.AnimalSniffer
 import io.spine.internal.dependency.AutoCommon
@@ -104,8 +102,8 @@ private fun ResolutionStrategy.forceTestDependencies() {
     force(
         Guava.testLib,
         JUnit.api,
-        JUnit.platformCommons,
-        JUnit.platformLauncher,
+        JUnit.Platform.commons,
+        JUnit.Platform.launcher,
         JUnit.legacy,
         Truth.libs,
         Kotest.assertions,
@@ -124,6 +122,8 @@ private fun ResolutionStrategy.forceTransitiveDependencies() {
         Okio.lib,
         CommonsCli.lib,
         CommonsLogging.lib,
+        JUnit.Platform.engine,
+        JUnit.Platform.suiteApi,
         Jackson.databind,
         Jackson.core,
         Jackson.dataformatXml,
