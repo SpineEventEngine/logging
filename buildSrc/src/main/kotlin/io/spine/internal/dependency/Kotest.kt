@@ -44,9 +44,16 @@ object Kotest {
     const val frameworkEngine = "$group:kotest-framework-engine:$version"
 
     // https://plugins.gradle.org/plugin/io.kotest.multiplatform
-    object GradlePlugin {
+    object MultiplatformGradlePlugin {
         const val version = "5.6.1"
         const val id = "io.kotest.multiplatform"
-        const val classpath = "io.kotest:kotest-framework-multiplatform-plugin-gradle:$version"
+        const val classpath = "$group:kotest-framework-multiplatform-plugin-gradle:$version"
+    }
+
+    // https://github.com/kotest/kotest-gradle-plugin
+    object JvmGradlePlugin {
+        const val version = "0.4.10"
+        const val id = "io.kotest"
+        const val classpath = "$group:kotest-gradle-plugin:$version"
     }
 }
