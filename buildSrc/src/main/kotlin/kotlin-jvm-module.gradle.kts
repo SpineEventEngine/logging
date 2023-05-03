@@ -26,6 +26,7 @@
 
 import io.spine.internal.dependency.Kotest
 import io.spine.internal.dependency.Spine
+import io.spine.internal.dependency.JUnit
 import io.spine.internal.gradle.kotlin.applyJvmToolchain
 import io.spine.internal.gradle.kotlin.setFreeCompilerArgs
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -49,6 +50,7 @@ dependencies {
     testImplementation(Kotest.frameworkEngine)
     testImplementation(Kotest.datatest)
     testImplementation(Kotest.runnerJUnit5Jvm)
+    testImplementation(JUnit.runner)
 }
 
 tasks {
