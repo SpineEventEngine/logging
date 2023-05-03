@@ -24,17 +24,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.given.context;
+plugins {
+    `kotlin-jvm-module`
+}
 
-import com.google.common.flogger.FluentLogger;
-
-public class FloggerConsumer {
-
-    private static final FluentLogger logger = FluentLogger.forEnclosingClass();
-
-    @SuppressWarnings("UseOfSystemOutOrSystemErr")
-    public void methodWithFine() {
-        logger.atFine().log("Logging using `FINE` level.");
-        System.out.println("`methodWithFine()` called.");
-    }
+dependencies {
+    testImplementation(project(":logging"))
+    testImplementation(project(":fixtures"))
+    testRuntimeOnly(project(":logging-backend"))
+    testRuntimeOnly(project(":logging-context"))
 }

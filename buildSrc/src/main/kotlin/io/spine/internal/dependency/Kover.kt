@@ -24,10 +24,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-@CheckReturnValue
-@ParametersAreNonnullByDefault
-package io.spine.logging.given.context;
+package io.spine.internal.dependency
 
-import com.google.errorprone.annotations.CheckReturnValue;
-
-import javax.annotation.ParametersAreNonnullByDefault;
+// https://github.com/Kotlin/kotlinx-kover
+object Kover {
+    const val version = "0.7.0-Beta"
+    const val id = "org.jetbrains.kotlinx.kover"
+    const val classpath = "org.jetbrains.kotlinx:kover-gradle-plugin:$version"
+}

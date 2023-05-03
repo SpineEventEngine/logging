@@ -37,7 +37,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("multiplatform")
     `detekt-code-analysis`
-    id("org.jetbrains.kotlinx.kover") version "0.7.0-Alpha"
+    id("org.jetbrains.kotlinx.kover")
     kotest
     `project-report`
 }
@@ -59,6 +59,7 @@ kotlin {
                 api(Kotest.assertions)
                 api(Kotest.frameworkApi)
                 api(Kotest.frameworkEngine)
+                api(Spine.testlib)
             }
         }
     }
@@ -103,7 +104,9 @@ kover {
 }
 
 koverReport {
-    xml {
-        onCheck = true
+    defaults {
+        xml {
+            onCheck = true
+        }
     }
 }

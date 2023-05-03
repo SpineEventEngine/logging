@@ -25,6 +25,7 @@
  */
 
 import io.spine.internal.dependency.Flogger
+import io.spine.internal.dependency.JUnit
 
 plugins {
     `kotlin-jvm-module`
@@ -34,4 +35,5 @@ plugins {
 dependencies {
     implementation(Flogger.Runtime.systemBackend)
     implementation(project(":logging"))
+    testImplementation(JUnit.runner)
 }

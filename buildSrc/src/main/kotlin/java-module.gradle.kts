@@ -24,6 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import Java_module_gradle.Module
 import io.spine.internal.dependency.CheckerFramework
 import io.spine.internal.dependency.Dokka
 import io.spine.internal.dependency.ErrorProne
@@ -37,7 +38,6 @@ import io.spine.internal.gradle.github.pages.updateGitHubPages
 import io.spine.internal.gradle.javac.configureErrorProne
 import io.spine.internal.gradle.javac.configureJavac
 import io.spine.internal.gradle.javadoc.JavadocConfig
-import io.spine.internal.gradle.publish.publish
 import io.spine.internal.gradle.report.license.LicenseReporter
 import io.spine.internal.gradle.testing.configureLogging
 import io.spine.internal.gradle.testing.registerTestTasks
@@ -45,7 +45,6 @@ import io.spine.internal.gradle.testing.registerTestTasks
 plugins {
     `java-library`
     idea
-    jacoco
     id("net.ltgt.errorprone")
     id("pmd-settings")
     id("project-report")
@@ -101,7 +100,7 @@ fun Module.addDependencies() = dependencies {
     ErrorProne.annotations.forEach { compileOnlyApi(it) }
 
     testImplementation(Guava.testLib)
-    testImplementation(JUnit.runner)
+    //testImplementation(JUnit.runner)
     testImplementation(JUnit.pioneer)
     JUnit.api.forEach { testImplementation(it) }
 
@@ -146,9 +145,8 @@ fun Module.setTaskDependencies(generatedDir: String) {
         }
 
         project.afterEvaluate {
-            publish {
-                dependsOn("${project.path}:updateGitHubPages")
-            }
+            val publish = tasks.findByName("publish")
+            publish?.dependsOn("${project.path}:updateGitHubPages")
         }
     }
     configureTaskDependencies()

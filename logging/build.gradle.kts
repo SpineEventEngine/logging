@@ -46,7 +46,7 @@ plugins {
     kotest
     `dokka-for-kotlin`
     `detekt-code-analysis`
-    id("org.jetbrains.kotlinx.kover") version "0.7.0-Alpha"
+    id("org.jetbrains.kotlinx.kover")
     `project-report`
 }
 apply<IncrementGuard>()
@@ -88,21 +88,6 @@ kotlin {
                 implementation(Spine.testlib)
                 implementation(JUnit.runner)
                 implementation(Kotest.runnerJUnit5Jvm)
-
-                implementation(project(":fixtures"))
-
-//                runtimeOnly(Flogger.Runtime.systemBackend)
-
-//                runtimeOnly(Flogger.Runtime.log4j2Backend)
-
-//                runtimeOnly(Flogger.Runtime.slf4JBackend)
-//                runtimeOnly(Slf4J.jdk14)
-
-//                runtimeOnly(Flogger.Runtime.slf4JBackend)
-//                runtimeOnly(Slf4J.reload4j)
-
-//                runtimeOnly(Flogger.Runtime.grpcContext)
-//                runtimeOnly(Grpc.context)
             }
         }
     }
@@ -132,8 +117,10 @@ kover {
 }
 
 koverReport {
-    xml {
-        onCheck = true
+    defaults {
+        xml {
+            onCheck = true
+        }
     }
 }
 
