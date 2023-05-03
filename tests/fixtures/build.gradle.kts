@@ -63,19 +63,6 @@ kotlin {
             }
         }
     }
-
-//                runtimeOnly(Flogger.Runtime.systemBackend)
-
-//                runtimeOnly(Flogger.Runtime.log4j2Backend)
-
-//                runtimeOnly(Flogger.Runtime.slf4JBackend)
-//                runtimeOnly(Slf4J.jdk14)
-
-//                runtimeOnly(Flogger.Runtime.slf4JBackend)
-//                runtimeOnly(Slf4J.reload4j)
-
-//                runtimeOnly(Flogger.Runtime.grpcContext)
-//                runtimeOnly(Grpc.context)
 }
 
 detekt {
