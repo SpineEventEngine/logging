@@ -38,6 +38,7 @@ object Kotest {
     const val group = "io.kotest"
     const val assertions = "$group:kotest-assertions-core:$version"
     const val runnerJUnit5 = "$group:kotest-runner-junit5:$version"
+    const val runnerJUnit5Jvm = "$group:kotest-runner-junit5-jvm:$version"
     const val frameworkApi = "$group:kotest-framework-api:$version"
     const val datatest = "$group:kotest-framework-datatest:$version"
     const val frameworkEngine = "$group:kotest-framework-engine:$version"
