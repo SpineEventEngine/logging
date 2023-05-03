@@ -24,30 +24,30 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.context
+package io.spine.testing.logging
 
-import given.L1Direct
-import given.nested.L2Direct
 import io.spine.logging.Level
+import io.spine.logging.toJavaLogging
 
-internal class LogLevelMapSpec: AbstractLogLevelMapSpec() {
-
-    private val defaultLevel = Level.ERROR
-    private val level1 = Level.DEBUG
-    private val level2Direct = Level.WARNING
-    private val level2Package = Level.INFO
-
-    override fun setupLogLevelMapBuilder(builder: LogLevelMap.Builder) {
-        builder.setDefault(defaultLevel)
-        with(builder) {
-//            setDefault(defaultLevel)
-            add(level1, L1Direct::class)
-            add(level2Direct, L2Direct::class)
-            //add(level2Package, "given.nested")
-        }
+fun checkLogging(
+    loggingClass: Class<*>,
+    maxLevel: Level,
+    block: LoggingSpec.() -> Unit
+) {
+    val test = LoggingSpec(loggingClass, maxLevel)
+    try {
+        test.attach()
+        test.block()
+    } finally {
+        test.detach()
     }
+}
 
-    override fun checkSettingDefaultLevel() {
-        //TODO("Not yet implemented")
-    }
+class LoggingSpec(
+    loggingClass: Class<*>, maxLevel: Level
+) : LoggingTest(loggingClass, maxLevel.toJavaLogging()) {
+
+    fun attach() = interceptLogging()
+    fun detach() = restoreLogging()
+    fun assertLogging(): LoggingAssertions = assertLog()
 }

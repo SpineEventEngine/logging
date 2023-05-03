@@ -24,9 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging
-
-import io.spine.logging.given.context.FloggerConsumer
+import com.google.common.flogger.FluentLogger
 import java.util.logging.Level
 import com.google.common.flogger.context.LogLevelMap as FLogLevelMap
 import com.google.common.flogger.context.ScopedLoggingContexts as FScopedLoggingContexts
@@ -44,3 +42,15 @@ fun main() {
         FloggerConsumer().methodWithFine()
     }
 }
+
+class FloggerConsumer {
+    fun methodWithFine() {
+        logger.atFine().log("Logging using `FINE` level.")
+        println("`methodWithFine()` called.")
+    }
+
+    companion object {
+        private val logger = FluentLogger.forEnclosingClass()
+    }
+}
+

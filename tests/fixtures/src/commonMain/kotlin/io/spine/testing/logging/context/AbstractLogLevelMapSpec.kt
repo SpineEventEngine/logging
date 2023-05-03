@@ -24,10 +24,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.context
+package io.spine.testing.logging.context
 
 import io.kotest.core.spec.Spec
 import io.kotest.core.spec.style.ShouldSpec
+import io.spine.logging.context.LogLevelMap
+import io.spine.logging.context.ScopedLoggingContext
 
 @Suppress("LeakingThis")
 abstract class AbstractLogLevelMapSpec: ShouldSpec() {

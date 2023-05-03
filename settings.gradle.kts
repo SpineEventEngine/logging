@@ -45,4 +45,5 @@ include(
 )
 
 testModule("fixtures")
+testModule("jvm-our-backend-our-context")
 
