@@ -56,24 +56,12 @@ kotlin {
             dependencies{
                 implementation(project(":logging"))
                 implementation(kotlin("test"))
-                implementation(Kotest.assertions)
-                implementation(Kotest.frameworkApi)
-                implementation(Kotest.frameworkEngine)
+                api(Kotest.assertions)
+                api(Kotest.frameworkApi)
+                api(Kotest.frameworkEngine)
             }
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-                implementation(Kotest.assertions)
-            }
-        }
-        val jvmMain by getting {
-            dependencies {
-            }
-        }
-        val jvmTest by getting {
-            dependencies {
-                implementation(Spine.testlib)
+    }
 
 //                runtimeOnly(Flogger.Runtime.systemBackend)
 
@@ -87,9 +75,6 @@ kotlin {
 
 //                runtimeOnly(Flogger.Runtime.grpcContext)
 //                runtimeOnly(Grpc.context)
-            }
-        }
-    }
 }
 
 detekt {

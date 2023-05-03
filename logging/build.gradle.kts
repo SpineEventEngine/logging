@@ -28,6 +28,7 @@
 
 import io.spine.internal.dependency.Flogger
 import io.spine.internal.dependency.Guava
+import io.spine.internal.dependency.JUnit
 import io.spine.internal.dependency.Kotest
 import io.spine.internal.dependency.Spine
 import io.spine.internal.gradle.javadoc.JavadocConfig
@@ -42,6 +43,7 @@ import io.spine.internal.gradle.report.license.LicenseReporter
 plugins {
     `maven-publish`
     kotlin("multiplatform")
+    kotest
     `dokka-for-kotlin`
     `detekt-code-analysis`
     id("org.jetbrains.kotlinx.kover") version "0.7.0-Alpha"
@@ -68,8 +70,11 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test"))
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
                 implementation(Kotest.assertions)
+                implementation(Kotest.frameworkEngine)
+                implementation(Kotest.datatest)
             }
         }
         val jvmMain by getting {
@@ -81,6 +86,10 @@ kotlin {
         val jvmTest by getting {
             dependencies {
                 implementation(Spine.testlib)
+                implementation(JUnit.runner)
+                implementation(Kotest.runnerJUnit5Jvm)
+
+                implementation(project(":fixtures"))
 
 //                runtimeOnly(Flogger.Runtime.systemBackend)
 
@@ -106,11 +115,9 @@ detekt {
     )
 }
 
-val jvmTest: Task by tasks.getting {
-    (this as Test).run {
-        useJUnitPlatform()
-        configureLogging()
-    }
+tasks.named<Test>("jvmTest") {
+    useJUnitPlatform()
+    configureLogging()
 }
 
 tasks {
