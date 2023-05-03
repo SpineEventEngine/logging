@@ -75,4 +75,3 @@ private class DefLoggingFixture: WithLogging {
         logger.at(level).log { "Message at level `$level`." }
     }
 }
-
