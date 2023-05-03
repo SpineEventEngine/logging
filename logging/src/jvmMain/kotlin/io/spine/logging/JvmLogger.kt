@@ -87,8 +87,15 @@ public fun Level.toJavaLogging(): JLevel = when (this) {
     Level.INFO -> JLevel.INFO
     Level.WARNING -> JLevel.WARNING
     Level.ERROR -> JLevel.SEVERE
-    else -> error("The level `${this}` cannot be matched to Java counterpart.")
+    Level.ALL -> JLevel.ALL
+    else -> ConvertedLevel(this)
 }
+
+/**
+ * Opens the constructor of [JLevel] for creating converting instance.
+ */
+@Suppress("serial")
+private class ConvertedLevel(level: Level): JLevel(level.name, level.value)
 
 /**
  * Converts Java logging level to [Level].
