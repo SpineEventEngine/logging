@@ -28,4 +28,4 @@ package given.nested
 
 import given.AbstractWithLogging
 
-class Level2: AbstractWithLogging()
+class L2Direct: AbstractWithLogging()

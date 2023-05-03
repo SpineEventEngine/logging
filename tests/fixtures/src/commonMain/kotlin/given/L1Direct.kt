@@ -26,4 +26,4 @@
 
 package given
 
-class Level1: AbstractWithLogging()
+class L1Direct: AbstractWithLogging()
