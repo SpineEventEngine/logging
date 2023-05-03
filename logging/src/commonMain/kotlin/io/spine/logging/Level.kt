@@ -48,6 +48,7 @@ public data class Level(
         public val WARNING: Level = Level("WARNING", 900)
         public val INFO: Level = Level("INFO", 800)
         public val DEBUG: Level = Level("DEBUG", 500)
+        public val ALL: Level = Level("ALL", Int.MIN_VALUE)
     }
 }
 
