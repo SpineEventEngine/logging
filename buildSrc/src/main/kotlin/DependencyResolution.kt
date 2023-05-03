@@ -102,6 +102,7 @@ private fun ResolutionStrategy.forceTestDependencies() {
     force(
         Guava.testLib,
         JUnit.api,
+        JUnit.bom,
         JUnit.Platform.commons,
         JUnit.Platform.launcher,
         JUnit.legacy,
