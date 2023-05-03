@@ -51,8 +51,13 @@ import org.gradle.kotlin.dsl.KotlinClosure2
  *     }
  * }
  *```
+ * Also, this function configures [Test.filter] to accept the cases of no matching tests to
+ * handle the rare cases when a module provides purely interface-based API.
  */
 fun Test.configureLogging() {
+    filter {
+        isFailOnNoMatchingTests = false
+    }
     testLogging {
         showStandardStreams = true
         showExceptions = true
