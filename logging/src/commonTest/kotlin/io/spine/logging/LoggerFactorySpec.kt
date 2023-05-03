@@ -32,7 +32,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 @DisplayName("`LoggerFactory` should")
-class LoggerFactorySpec {
+internal class LoggerFactorySpec {
 
     @Test
     fun `provide the same instance of 'Logger' for the same class`() {
