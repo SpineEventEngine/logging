@@ -26,4 +26,16 @@
 
 package io.spine.logging.context
 
-public interface ScopedLoggingContext: AutoCloseable
+public interface ScopedLoggingContext {
+
+    public interface Builder {
+        public fun withLogLevelMap(map: LogLevelMap): Builder
+        public fun install(): AutoCloseable
+    }
+
+    public companion object {
+
+        @JvmStatic
+        public fun newContext(): Builder = LoggingContextFactory.newContext()
+    }
+}

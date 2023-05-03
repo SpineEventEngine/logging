@@ -30,8 +30,10 @@ import io.spine.logging.Level
 import io.spine.logging.toJavaLogging
 import io.spine.logging.toLevel
 import kotlin.reflect.KClass
+import com.google.common.flogger.context.ContextDataProvider as FContextDataProvider
 import com.google.common.flogger.context.LogLevelMap as FLogLevelMap
 import com.google.common.flogger.context.LogLevelMap.Builder as FBuilder
+import com.google.common.flogger.context.ScopedLoggingContext as FScopedLoggingContext
 
 internal actual object LoggingContextFactory {
 
@@ -40,6 +42,11 @@ internal actual object LoggingContextFactory {
 
     actual fun levelMap(map: Map<String, Level>, defaultLevel: Level): LogLevelMap =
         MapImpl(map, defaultLevel)
+
+    actual fun newContext(): ScopedLoggingContext.Builder {
+        val context = FContextDataProvider.getInstance().contextApiSingleton.newContext()
+        return DelegatingContextBuilder(context)
+    }
 }
 
 private class BuilderImpl : LogLevelMap.Builder {
@@ -83,7 +90,7 @@ private fun packageNamed(name: String): Package {
     error("Unable to obtain a package named `$name`.")
 }
 
-private class MapImpl(private val delegate: FLogLevelMap): LogLevelMap {
+private class MapImpl(val delegate: FLogLevelMap): LogLevelMap {
 
     constructor(map: Map<String, Level>, defaultLevel: Level) :
             this(createDelegate(map, defaultLevel))
@@ -112,4 +119,26 @@ private class MapImpl(private val delegate: FLogLevelMap): LogLevelMap {
  */
 public fun FLogLevelMap?.toMap(): LogLevelMap? {
     return this?.let { MapImpl(this) }
+}
+
+private fun LogLevelMap.toFlogger(): FLogLevelMap {
+    if (this is MapImpl) {
+        return this.delegate
+    }
+    error("Unknown implementation of `LogLevelMap` encountered: `${this.javaClass.name}`.")
+}
+
+private class DelegatingContextBuilder(
+    private val delegate: FScopedLoggingContext.Builder
+): ScopedLoggingContext.Builder {
+
+    override fun withLogLevelMap(map: LogLevelMap): ScopedLoggingContext.Builder {
+        delegate.withLogLevelMap(map.toFlogger())
+        return this
+    }
+
+    override fun install(): AutoCloseable {
+        val closeable = delegate.install()
+        return AutoCloseable { closeable.close() }
+    }
 }

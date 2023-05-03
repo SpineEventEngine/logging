@@ -33,4 +33,6 @@ internal expect object LoggingContextFactory {
     fun levelMapBuilder(): LogLevelMap.Builder
 
     fun levelMap(map: Map<String, Level>, defaultLevel: Level): LogLevelMap
+
+    fun newContext(): ScopedLoggingContext.Builder
 }
