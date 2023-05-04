@@ -26,10 +26,13 @@
 
 package io.spine.logging
 
+import io.spine.logging.LoggingFactory.loggerFor
+
 /**
- * Base interface for utility interfaces providing `Logger` as a property.
+ * Base interface for utility interfaces providing [Logger] instance as a property.
  *
- * Usages of this interface are likely to provide non-generic extension of this interface
+ * This interface is not meant to be used directly for performing logging instructions.
+ * Instead, platform-specific implementations should extend this interface,
  * providing actual type parameter for the [LoggingApi]:
  *
  * ```kotlin
@@ -39,8 +42,8 @@ package io.spine.logging
  */
 public interface WithLoggingBase<API : LoggingApi<API>> {
 
-    public val logger: Logger<API>
-        get() {
-            return LoggingFactory.loggerFor(this::class)
-        }
+    /**
+     * Obtains the logger created for this class.
+     */
+    public val logger: Logger<API> get() = loggerFor(this::class)
 }
