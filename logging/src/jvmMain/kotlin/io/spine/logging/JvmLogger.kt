@@ -45,14 +45,36 @@ public class JvmLogger(
     public interface Api: LoggingApi<Api>
 
     override fun createApi(level: Level): Api {
-        val apiDelegate = delegate.at(level.toJavaLogging()).let {
+        val floggerApi = delegate.at(level.toJavaLogging()).let {
             if (it.isEnabled) {
                 it.withInjectedLogSite(callerOf(Logger::class.java))
             } else {
                 it
             }
         }
-        return ApiImpl(apiDelegate)
+        val ourApi = if (floggerApi.isEnabled) {
+            ApiImpl(floggerApi)
+        } else {
+            NoOp
+        }
+        return if (LoggingTestApi.enabled) {
+            TestApi(ourApi)
+        } else {
+            ourApi
+        }
+    }
+
+    /**
+     * A no-op singleton implementation of [Api].
+     */
+    private object NoOp: LoggingApi.NoOp<Api>(), Api
+
+    /**
+     * A special test-only implementation of [Api] [created][JvmLogger.createApi] when
+     * [LoggingTestApi.enabled] is set to `true`.
+     */
+    public class TestApi(delegate: Api): LoggingTestApi<Api>(delegate), Api {
+        override fun self(): Api = this
     }
 }
 
