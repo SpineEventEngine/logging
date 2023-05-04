@@ -36,7 +36,7 @@ abstract class AbstractLogLevelMapSpec: ShouldSpec() {
 
     private val map = lazy {
         val builder = LogLevelMap.builder()
-        setupLogLevelMapBuilder(builder)
+        configureBuilder(builder)
         builder.build()
     }
 
@@ -63,7 +63,8 @@ abstract class AbstractLogLevelMapSpec: ShouldSpec() {
         }
     }
 
-    abstract fun setupLogLevelMapBuilder(builder: LogLevelMap.Builder)
+    abstract fun configureBuilder(builder: LogLevelMap.Builder)
+
     abstract fun checkSettingDefaultLevel()
 }
 

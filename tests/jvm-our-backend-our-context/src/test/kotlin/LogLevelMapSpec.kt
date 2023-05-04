@@ -35,7 +35,7 @@ import io.spine.testing.logging.context.AbstractLogLevelMapSpec
 
 internal class LogLevelMapSpec: AbstractLogLevelMapSpec() {
 
-    override fun setupLogLevelMapBuilder(builder: LogLevelMap.Builder) {
+    override fun configureBuilder(builder: LogLevelMap.Builder) {
         with(builder) {
             setDefault(defaultLevel)
             add(level1, L1Direct::class)
