@@ -84,7 +84,7 @@ open class Recorder(
      */
     fun attach() {
         handler = RecordingHandler(level)
-        publishingLogger = findPublishingLogger(logger)
+        publishingLogger = publishingLoggerOf(logger)
         publishingLogger?.addHandler(handler)
     }
 
@@ -106,15 +106,12 @@ open class Recorder(
  * Obtains the logger responsible for publishing the logging records
  * produced by the given [logger].
  */
-private fun findPublishingLogger(logger: Logger): Logger {
-    if (!logger.useParentHandlers) {
-        return logger
+private fun publishingLoggerOf(logger: Logger): Logger {
+    return if (!logger.useParentHandlers || logger.parent == null) {
+        logger
+    } else {
+        publishingLoggerOf(logger.parent)
     }
-    val parent = logger.parent ?: return logger
-    if (parent.useParentHandlers) {
-        return findPublishingLogger(parent)
-    }
-    return parent
 }
 
 private class RecordingHandler(level: Level): Handler() {
