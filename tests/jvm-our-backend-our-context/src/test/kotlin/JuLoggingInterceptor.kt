@@ -58,7 +58,7 @@ import java.util.logging.Logger
  * Intercepts logging records of the associated class.
  */
 open class JulInterceptor(
-    public val loggerName: String,
+    loggerName: String,
     public val level: Level
 ) {
 

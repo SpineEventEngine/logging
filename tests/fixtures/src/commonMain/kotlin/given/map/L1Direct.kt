@@ -26,6 +26,4 @@
 
 package given.map
 
-import given.map.AbstractWithLogging
-
 class L1Direct: AbstractWithLogging()

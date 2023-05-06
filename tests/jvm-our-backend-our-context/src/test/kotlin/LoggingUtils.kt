@@ -26,8 +26,6 @@
 
 import io.spine.logging.Level
 import io.spine.logging.toJavaLogging
-import io.spine.testing.logging.LoggingAssertions
-import io.spine.testing.logging.LoggingTest
 
 fun checkLogging(
     loggingClass: Class<*>,
