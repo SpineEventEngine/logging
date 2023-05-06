@@ -24,12 +24,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package given
-
-import io.spine.logging.WithLogging
-
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2022, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,21 +50,80 @@ import io.spine.logging.WithLogging
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-abstract class AbstractWithLogging: WithLogging {
+import java.util.logging.Level
+import java.util.logging.LogRecord
+import java.util.logging.Logger
 
-    fun atDebug() {
-        logger.atDebug().log { "AT DEBUG." }
+/**
+ * Intercepts logging records of the associated class.
+ */
+open class JulInterceptor(
+    public val loggerName: String,
+    public val level: Level
+) {
+
+    /** The `java.util.logging` logger.  */
+    private val logger: Logger = Logger.getLogger(loggerName)
+
+    /** The handler which remembers log records and performs assertions.  */
+    private var handler: JulRecordingHandler? = null
+
+    private var publishingLogger: Logger? = null
+
+    public val records: List<LogRecord>
+        get() = handler?.records ?: emptyList()
+
+    /**
+     * Installs the handler for intercepting the records.
+     *
+     * Current handlers are removed and remembered.
+     * The logger will also not use parent handlers.
+     *
+     * @see .release
+     */
+    fun intercept() {
+        handler = JulRecordingHandler(level)
+
+        publishingLogger = findPublishingLogger(logger)
+        publishingLogger?.addHandler(handler)
     }
 
-    fun atInfo() {
-        logger.atInfo().log { "AT INFO." }
+    private fun findPublishingLogger(logger: Logger): Logger {
+        if (!logger.useParentHandlers) {
+            return logger
+        }
+        val parent = logger.parent ?: return logger
+        if (parent.useParentHandlers) {
+            return findPublishingLogger(parent)
+        }
+        return parent
     }
 
-    fun atWarning() {
-        logger.atWarning().log { "AT WARNING." }
+    /**
+     * Returns the logger configuration to the previous state.
+     */
+    fun release() {
+        if (handler == null) {
+            return
+        }
+        publishingLogger?.removeHandler(handler)
+        handler = null
+        publishingLogger = null
     }
 
-    fun atError() {
-        logger.atError().log { "AT ERROR." }
+    /**
+     * Obtains assertions for the accumulated log.
+     *
+     * @throws IllegalStateException
+     *          if the interceptor is not yet [installed][intercept] or already
+     *          [released][release].
+     * @see [intercept]
+     * @see [release]
+     */
+    fun recordingHandler(): JulRecordingHandler {
+        check(handler != null) {
+            "The handler is not available. Please call `intercept(Level)`."
+        }
+        return handler!!
     }
 }

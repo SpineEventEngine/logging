@@ -24,8 +24,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package given.nested.sibling
+package given.map.nested.sibling
 
-import given.AbstractWithLogging
+import given.map.AbstractWithLogging
 
 class Level3Sibling: AbstractWithLogging()

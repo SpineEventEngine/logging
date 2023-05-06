@@ -24,13 +24,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import given.L1Direct
-import given.nested.L2Direct
+import given.map.L1Direct
+import given.map.nested.L2Direct
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.shouldBe
 import io.spine.logging.Level
 import io.spine.logging.WithLogging
 import io.spine.logging.context.LogLevelMap
 import io.spine.logging.toJavaLogging
-import io.spine.testing.logging.checkLogging
 import io.spine.testing.logging.context.AbstractLogLevelMapSpec
 
 internal class LogLevelMapSpec: AbstractLogLevelMapSpec() {
@@ -48,10 +49,10 @@ internal class LogLevelMapSpec: AbstractLogLevelMapSpec() {
         val fixture = DefLoggingFixture()
         checkLogging(fixture.javaClass, Level.ALL) {
             fixture.logError()
-            assertLogging()
-                .record()
-                .hasLevelThat()
-                .isEqualTo(Level.ERROR.toJavaLogging())
+            records shouldHaveSize 1
+
+            val record = records[0]
+            record.level shouldBe Level.ERROR.toJavaLogging()
         }
     }
 

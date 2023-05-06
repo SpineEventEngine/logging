@@ -24,8 +24,32 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package given.nested
+import java.util.logging.Handler
+import java.util.logging.Level
+import java.util.logging.LogRecord
 
-import given.AbstractWithLogging
+class JulRecordingHandler(level: Level): Handler() {
 
-class L2Direct: AbstractWithLogging()
+    init {
+        setLevel(level)
+    }
+
+    private val mutableRecords: MutableList<LogRecord> = mutableListOf()
+
+    public val records: List<LogRecord>
+        get() = mutableRecords.toList()
+
+    override fun publish(record: LogRecord?) {
+        if (record != null) {
+            mutableRecords.add(record)
+        }
+    }
+
+    override fun flush() {
+        // no-op.
+    }
+
+    override fun close() {
+        mutableRecords.clear()
+    }
+}

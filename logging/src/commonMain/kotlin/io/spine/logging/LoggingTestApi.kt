@@ -26,6 +26,25 @@
 
 package io.spine.logging
 
+/**
+ * An implementation of [LoggingApi] for testing purposes.
+ *
+ * Sometimes testing of logging instructions makes sense.
+ * Logging output may need to contain specific data (e.g. for the purpose
+ * of technical support). Or, in some cases logging instructions must be checked
+ * not expose sensitive information because of security reasons. Such conditions
+ * need to be tested.
+ *
+ * Logging frameworks or logging façades do not provide unified API for
+ * asserting logging instructions in tests. Even if an application
+ * (or worse, a library) uses a logging façade like Slf4J or Flogger,
+ * assertions of logging events depend on the implementation of a logging
+ * backend behind the façade.
+ *
+ * Spine Logging library addresses this issue by introducing a lightweight
+ * diagnostics API for logging instructions. Instances of [LoggingTestApi] are
+ * created by [Logger] when [LoggingTestApi.enabled] flag is set to `true`.
+ */
 public abstract class LoggingTestApi<API : LoggingApi<API>>(
     private val delegate: LoggingApi<API>
 ) : LoggingApi<API> {
@@ -56,7 +75,26 @@ public abstract class LoggingTestApi<API : LoggingApi<API>>(
     }
 
     public companion object {
+
+        /**
+         * Makes a [Logger] create a [LoggingTestApi] instance
+         * instead of a [LoggingApi] instance.
+         */
         @JvmStatic
         public var enabled: Boolean = false
+
+        /**
+         * Executes the given [block] setting the [enabled] flag to `true`, and then
+         * restoring it to the value prior to the call.
+         */
+        public fun beingOn(block: () -> Unit) {
+            val valueBefore = enabled
+            try {
+                enabled = true
+                block()
+            } finally {
+                enabled = valueBefore
+            }
+        }
     }
 }

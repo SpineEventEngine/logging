@@ -24,30 +24,36 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.testing.logging
+package io.spine.logging
 
-import io.spine.logging.Level
-import io.spine.logging.toJavaLogging
+import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 
-fun checkLogging(
-    loggingClass: Class<*>,
-    maxLevel: Level,
-    block: LoggingSpec.() -> Unit
-) {
-    val test = LoggingSpec(loggingClass, maxLevel)
-    try {
-        test.attach()
-        test.block()
-    } finally {
-        test.detach()
+@DisplayName("`JvmLogger` should")
+internal class JvmLoggerSpec {
+
+    private val logger = LoggingFactory.loggerFor(this::class)
+
+    @Test
+    fun `create no-op instance when logging level is too low`() {
+        // The default level (with Java logging as the backend) is `INFO`.
+        (logger.atDebug() is LoggingApi.NoOp) shouldBe true
+
+        (logger.atInfo() is LoggingApi.NoOp) shouldBe false
     }
-}
 
-class LoggingSpec(
-    loggingClass: Class<*>, maxLevel: Level
-) : LoggingTest(loggingClass, maxLevel.toJavaLogging()) {
+    @Test
+    fun `create test API instance`() {
+        LoggingTestApi.beingOn {
+            (logger.atInfo() is LoggingTestApi) shouldBe true
 
-    fun attach() = interceptLogging()
-    fun detach() = restoreLogging()
-    fun assertLogging(): LoggingAssertions = assertLog()
+            // Despite the too low level, we still need to get a test instance.
+            (logger.atDebug() is LoggingTestApi) shouldBe true
+        }
+
+        // If `LoggingTestApi.enabled` is `false` we log normally.
+        (logger.atInfo() is LoggingTestApi) shouldBe false
+        (logger.atDebug() is LoggingTestApi) shouldBe false
+    }
 }

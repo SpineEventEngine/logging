@@ -24,6 +24,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package given
+package given.map.nested.type
 
-class L1Direct: AbstractWithLogging()
+import given.map.AbstractWithLogging
+
+class Level3: AbstractWithLogging()
