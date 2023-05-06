@@ -24,38 +24,39 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import io.spine.logging.Level
 import io.spine.logging.toJavaLogging
 import java.util.logging.Handler
-import java.util.logging.Level
+import java.util.logging.Level as JLevel
 import java.util.logging.LogRecord
 import java.util.logging.Logger
 
-fun checkLogging(
-    loggingClass: Class<*>,
-    maxLevel: io.spine.logging.Level,
-    block: Recorder.() -> Unit
-) = checkLogging(loggingClass.name, maxLevel, block)
-
 public fun checkLogging(
     loggerName: String,
-    maxLevel: io.spine.logging.Level,
+    maxLevel: Level,
     block: Recorder.() -> Unit
 ) {
     val recorder = Recorder(loggerName, maxLevel.toJavaLogging())
     try {
-        recorder.attach()
+        recorder.start()
         recorder.block()
     } finally {
-        recorder.detach()
+        recorder.stop()
     }
 }
+
+public fun checkLogging(
+    loggingClass: Class<*>,
+    maxLevel: Level,
+    block: Recorder.() -> Unit
+) = checkLogging(loggingClass.name, maxLevel, block)
 
 /**
  * Intercepts logging records of the associated class.
  */
 open class Recorder(
     public val loggerName: String,
-    public val level: Level
+    public val level: JLevel
 ) {
 
     /**
@@ -68,31 +69,38 @@ open class Recorder(
      */
     private var handler: RecordingHandler? = null
 
+    /**
+     * The logger which performs actual publishing for the [logger].
+     *
+     * Is `null` before the [start] or after [stop].
+     */
     private var publishingLogger: Logger? = null
 
     /**
-     * The logging records collected by the interceptor, or an empty list
-     * if no records were intercepted.
+     * Contains log records collected so far.
+     *
+     * Is always empty before [start] and after [stop].
      */
     public val records: List<LogRecord>
         get() = handler?.records ?: emptyList()
 
     /**
-     * Installs the handler for intercepting the records.
+     * Starts the recording.
      *
-     * @see [detach]
+     * @see [stop]
      */
-    fun attach() {
+    fun start() {
         handler = RecordingHandler(level)
         publishingLogger = publishingLoggerOf(logger)
         publishingLogger?.addHandler(handler)
     }
 
     /**
-     * Detaches the interceptor from the handlers of the logger
-     * specified by its [name][loggerName].
+     * Stops the recording.
+     *
+     * @see [start]
      */
-    fun detach() {
+    fun stop() {
         if (handler == null) {
             return
         }
@@ -114,7 +122,10 @@ private fun publishingLoggerOf(logger: Logger): Logger {
     }
 }
 
-private class RecordingHandler(level: Level): Handler() {
+/**
+ * Accumulates [records] that have the specified [level][getLevel] or higher.
+ */
+private class RecordingHandler(level: JLevel): Handler() {
 
     init {
         setLevel(level)
