@@ -24,6 +24,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+package io.spine.testing.logging.jul
+
 import io.spine.logging.Level
 import io.spine.logging.toJavaLogging
 import java.util.logging.Handler
@@ -31,12 +33,22 @@ import java.util.logging.Level as JLevel
 import java.util.logging.LogRecord
 import java.util.logging.Logger
 
+/**
+ * Runs the [block] for a logging [Recorder] created for the logging with the given name.
+ *
+ * @param loggerName
+ *         the name of the logger.
+ * @param minLevel
+ *         the minimum level of logging records accepted by the [Recorder].
+ * @param block
+ *         the code with assertions statements with the [Recorder] as the receiver.
+ */
 public fun checkLogging(
     loggerName: String,
-    maxLevel: Level,
+    minLevel: Level,
     block: Recorder.() -> Unit
 ) {
-    val recorder = Recorder(loggerName, maxLevel.toJavaLogging())
+    val recorder = Recorder(loggerName, minLevel.toJavaLogging())
     try {
         recorder.start()
         recorder.block()
@@ -45,18 +57,29 @@ public fun checkLogging(
     }
 }
 
+/**
+ * Runs the [block] for a logging [Recorder] created for the logger with the name
+ * of the given [loggingClass].
+ *
+ * @param loggingClass
+ *         the class which performs the logging operations under the test.
+ * @param minLevel
+ *         the minimum level of logging records accepted by the [Recorder].
+ * @param block
+ *         the code with assertions statements with the [Recorder] as the receiver.
+ */
 public fun checkLogging(
     loggingClass: Class<*>,
-    maxLevel: Level,
+    minLevel: Level,
     block: Recorder.() -> Unit
-) = checkLogging(loggingClass.name, maxLevel, block)
+) = checkLogging(loggingClass.name, minLevel, block)
 
 /**
- * Intercepts logging records of the associated class.
+ * Intercepts logging records of the logger with the given name.
  */
-open class Recorder(
+public open class Recorder(
     public val loggerName: String,
-    public val level: JLevel
+    public val minLevel: JLevel
 ) {
 
     /**
@@ -89,8 +112,8 @@ open class Recorder(
      *
      * @see [stop]
      */
-    fun start() {
-        handler = RecordingHandler(level)
+    public fun start() {
+        handler = RecordingHandler(minLevel)
         publishingLogger = publishingLoggerOf(logger)
         publishingLogger?.addHandler(handler)
     }
@@ -100,7 +123,7 @@ open class Recorder(
      *
      * @see [start]
      */
-    fun stop() {
+    public fun stop() {
         if (handler == null) {
             return
         }

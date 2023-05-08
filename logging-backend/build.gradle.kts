@@ -29,11 +29,15 @@ import io.spine.internal.dependency.JUnit
 
 plugins {
     `kotlin-jvm-module`
+    `java-test-fixtures`
+    `maven-publish`
     `project-report`
 }
 
 dependencies {
     implementation(Flogger.Runtime.systemBackend)
-    implementation(project(":logging"))
+    val loggingModule = project(":logging")
+    implementation(loggingModule)
+    testFixturesApi(loggingModule)
     testImplementation(JUnit.runner)
 }

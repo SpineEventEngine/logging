@@ -26,11 +26,14 @@
 
 plugins {
     `kotlin-jvm-module`
+    `java-test-fixtures`
 }
 
 dependencies {
     testImplementation(project(":logging"))
     testImplementation(project(":fixtures"))
-    testRuntimeOnly(project(":logging-backend"))
+    val loggingBackendModule = project(":logging-backend")
+    testImplementation(testFixtures(loggingBackendModule))
+    testRuntimeOnly(loggingBackendModule)
     testRuntimeOnly(project(":logging-context"))
 }

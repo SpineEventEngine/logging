@@ -33,6 +33,7 @@ import io.spine.logging.WithLogging
 import io.spine.logging.context.LogLevelMap
 import io.spine.logging.toJavaLogging
 import io.spine.testing.logging.context.AbstractLogLevelMapSpec
+import io.spine.testing.logging.jul.checkLogging
 
 internal class LogLevelMapSpec: AbstractLogLevelMapSpec() {
 
