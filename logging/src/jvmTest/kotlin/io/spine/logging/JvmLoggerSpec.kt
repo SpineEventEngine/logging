@@ -42,18 +42,4 @@ internal class JvmLoggerSpec {
 
         (logger.atInfo() is LoggingApi.NoOp) shouldBe false
     }
-
-    @Test
-    fun `create test API instance`() {
-        LoggingTestApi.beingOn {
-            (logger.atInfo() is LoggingTestApi) shouldBe true
-
-            // Despite the too low level, we still need to get a test instance.
-            (logger.atDebug() is LoggingTestApi) shouldBe true
-        }
-
-        // If `LoggingTestApi.enabled` is `false` we log normally.
-        (logger.atInfo() is LoggingTestApi) shouldBe false
-        (logger.atDebug() is LoggingTestApi) shouldBe false
-    }
 }

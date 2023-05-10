@@ -52,15 +52,10 @@ public class JvmLogger(
                 it
             }
         }
-        val ourApi = if (floggerApi.isEnabled) {
+        return if (floggerApi.isEnabled) {
             ApiImpl(floggerApi)
         } else {
             NoOp
-        }
-        return if (LoggingTestApi.enabled) {
-            TestApi(ourApi)
-        } else {
-            ourApi
         }
     }
 
@@ -68,14 +63,6 @@ public class JvmLogger(
      * A no-op singleton implementation of [Api].
      */
     private object NoOp: LoggingApi.NoOp<Api>(), Api
-
-    /**
-     * A special test-only implementation of [Api] [created][JvmLogger.createApi] when
-     * [LoggingTestApi.enabled] is set to `true`.
-     */
-    public class TestApi(delegate: Api): LoggingTestApi<Api>(delegate), Api {
-        override fun self(): Api = this
-    }
 }
 
 /**
