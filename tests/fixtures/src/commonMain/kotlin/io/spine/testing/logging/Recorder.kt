@@ -59,9 +59,7 @@ public abstract class Recorder(protected val minLevel: Level) {
         mutableRecords.add(data)
     }
 
-    protected fun clear() {
-        mutableRecords.clear()
-    }
+    protected fun clear() = mutableRecords.clear()
 
     /**
      * Starts the recording.

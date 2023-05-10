@@ -107,7 +107,7 @@ internal class JulRecorder(loggerName: String, minLevel: Level): Recorder(minLev
     }
 
     /**
-     * Accumulates [records] that have the specified [level][getLevel] or higher.
+     * Accumulates [records] with the [minLevel] or higher.
      */
     inner class RecordingHandler: Handler() {
 
@@ -122,7 +122,6 @@ internal class JulRecorder(loggerName: String, minLevel: Level): Recorder(minLev
         }
 
         override fun flush() = Unit
-
         override fun close() = clear()
     }
 }
@@ -139,15 +138,11 @@ private fun publishingLoggerOf(logger: Logger): Logger {
     }
 }
 
-private class JulLogData(private val record: LogRecord): LogData {
-
-    override val level: Level
-        get() = record.level.toLevel()
-
-    override val message: String
-        get() = record.message
-
-    override val throwable: Throwable?
-        get() = record.thrown
-
+/**
+ * Implements [LogData] by wrapping over [LogRecord].
+ */
+private data class JulLogData(private val record: LogRecord): LogData {
+    override val level: Level = record.level.toLevel()
+    override val message: String = record.message
+    override val throwable: Throwable? = record.thrown
 }
