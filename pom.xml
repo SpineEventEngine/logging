@@ -54,6 +54,12 @@ all modules and does not describe the project structure per-subproject.
     <scope>runtime</scope>
   </dependency>
   <dependency>
+    <groupId>com.google.flogger</groupId>
+    <artifactId>flogger-grpc-context</artifactId>
+    <version>0.7.4</version>
+    <scope>test</scope>
+  </dependency>
+  <dependency>
     <groupId>com.google.guava</groupId>
     <artifactId>guava-testlib</artifactId>
     <version>31.1-jre</version>
