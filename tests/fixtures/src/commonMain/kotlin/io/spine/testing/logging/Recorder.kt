@@ -45,12 +45,23 @@ public fun checkLogging(recorder: Recorder, block: Recorder.() -> Unit) {
  */
 public abstract class Recorder(protected val minLevel: Level) {
 
+    private val mutableRecords: MutableList<LogData> = mutableListOf()
+
     /**
      * Contains log data collected so far.
      *
      * Is always empty before [start] and after [stop].
      */
-    public abstract val records: List<LogData>
+    public val records: List<LogData>
+        get() = mutableRecords
+
+    protected fun append(data: LogData) {
+        mutableRecords.add(data)
+    }
+
+    protected fun clear() {
+        mutableRecords.clear()
+    }
 
     /**
      * Starts the recording.

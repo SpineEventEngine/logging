@@ -76,7 +76,7 @@ public fun checkLogging(
 internal class JulRecorder(loggerName: String, minLevel: Level): Recorder(minLevel) {
 
     /**
-     * The logger obtained by the given name.
+     * The logger obtained for the given name.
      */
     private val logger: Logger = Logger.getLogger(loggerName)
 
@@ -92,11 +92,8 @@ internal class JulRecorder(loggerName: String, minLevel: Level): Recorder(minLev
      */
     private var publishingLogger: Logger? = null
 
-    override val records: List<LogData>
-        get() = handler?.records ?: emptyList()
-
     override fun start() {
-        handler = RecordingHandler(minLevel.toJavaLogging())
+        handler = RecordingHandler()
         publishingLogger = publishingLoggerOf(logger)
         publishingLogger?.addHandler(handler)
     }
@@ -108,6 +105,26 @@ internal class JulRecorder(loggerName: String, minLevel: Level): Recorder(minLev
         publishingLogger?.removeHandler(handler)
         handler = null
         publishingLogger = null
+    }
+
+    /**
+     * Accumulates [records] that have the specified [level][getLevel] or higher.
+     */
+    inner class RecordingHandler: Handler() {
+
+        init {
+            level = minLevel.toJavaLogging()
+        }
+
+        override fun publish(record: LogRecord?) {
+            record?.let {
+                append(JulLogData(it))
+            }
+        }
+
+        override fun flush() = Unit
+
+        override fun close() = clear()
     }
 }
 
@@ -134,26 +151,4 @@ private class JulLogData(private val record: LogRecord): LogData {
     override val throwable: Throwable?
         get() = record.thrown
 
-}
-/**
- * Accumulates [records] that have the specified [level][getLevel] or higher.
- */
-private class RecordingHandler(level: JLevel): Handler() {
-
-    init {
-        setLevel(level)
-    }
-
-    private val mutableRecords = mutableListOf<LogData>()
-    val records: List<LogData> get() = mutableRecords
-
-    override fun publish(record: LogRecord?) {
-        record?.let {
-            mutableRecords.add(JulLogData(it))
-        }
-    }
-
-    override fun flush() = Unit
-
-    override fun close() = mutableRecords.clear()
 }
