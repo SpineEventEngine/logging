@@ -70,7 +70,7 @@ fun Project.applyPlugin(cls: Class<out Plugin<*>>) {
 fun <T : Task> Project.findTask(name: String): T {
     val task = this.tasks.findByName(name)
         ?: error("Unable to find a task named `$name` in the project `${this.name}`.")
-return task as T
+    return task as T
 }
 
 /**
