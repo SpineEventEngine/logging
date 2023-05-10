@@ -32,7 +32,6 @@ import io.spine.logging.toLevel
 import java.util.logging.Handler
 import java.util.logging.LogRecord
 import java.util.logging.Logger
-import java.util.logging.Level as JLevel
 
 /**
  * Runs the [block] for a logging [Recorder] created for the logger with the given name.
