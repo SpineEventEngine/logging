@@ -24,8 +24,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package given.map.nested.type
+import io.spine.logging.context.JulLogLevelMapSpec
 
-import given.map.LoggingTestFixture
-
-class Level3: LoggingTestFixture()
+internal class LogLevelMapSpecOnGrpcContext: JulLogLevelMapSpec()

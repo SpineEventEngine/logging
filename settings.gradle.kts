@@ -46,4 +46,5 @@ include(
 
 testModule("fixtures")
 testModule("jvm-our-backend-our-context")
+testModule("jvm-our-backend-grpc-context")
 

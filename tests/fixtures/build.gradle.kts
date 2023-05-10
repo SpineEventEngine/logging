@@ -62,6 +62,10 @@ kotlin {
                 api(Spine.testlib)
             }
         }
+
+        val jvmMain by getting {
+            
+        }
     }
 }
 

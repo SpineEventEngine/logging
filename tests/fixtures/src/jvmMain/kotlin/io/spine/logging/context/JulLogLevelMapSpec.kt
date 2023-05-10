@@ -24,8 +24,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package given.map.nested.type
+package io.spine.logging.context
 
-import given.map.LoggingTestFixture
+import io.spine.logging.Level
+import io.spine.testing.logging.JulRecorder
+import io.spine.testing.logging.Recorder
 
-class Level3: LoggingTestFixture()
+abstract class JulLogLevelMapSpec: AbstractLogLevelMapSpec() {
+
+    override fun createRecorder(loggerName: String, minLevel: Level): Recorder {
+        return JulRecorder(loggerName, minLevel)
+    }
+}

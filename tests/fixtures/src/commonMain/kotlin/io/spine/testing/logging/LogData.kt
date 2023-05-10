@@ -24,8 +24,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package given.map.nested.type
+package io.spine.testing.logging
 
-import given.map.LoggingTestFixture
+import io.spine.logging.Level
 
-class Level3: LoggingTestFixture()
+public interface LogData {
+    public val level: Level
+    public val message: String
+    public val throwable: Throwable?
+}

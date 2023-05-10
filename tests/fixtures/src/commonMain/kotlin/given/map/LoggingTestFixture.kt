@@ -26,8 +26,6 @@
 
 package given.map
 
-import io.spine.logging.WithLogging
-
 /*
  * Copyright 2023, TeamDev. All rights reserved.
  *
@@ -54,21 +52,24 @@ import io.spine.logging.WithLogging
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-abstract class AbstractWithLogging: WithLogging {
+import io.spine.logging.Level
+import io.spine.logging.Level.Companion.DEBUG
+import io.spine.logging.Level.Companion.ERROR
+import io.spine.logging.Level.Companion.INFO
+import io.spine.logging.Level.Companion.WARNING
+import io.spine.logging.WithLogging
 
-    fun atDebug() {
-        logger.atDebug().log { "AT DEBUG." }
-    }
 
-    fun atInfo() {
-        logger.atInfo().log { "AT INFO." }
-    }
+abstract class LoggingTestFixture: WithLogging {
 
-    fun atWarning() {
-        logger.atWarning().log { "AT WARNING." }
-    }
+    fun atDebug() = logAt(DEBUG)
+    fun atInfo() = logAt(INFO)
+    fun atWarning() = logAt(WARNING)
+    fun atError() = logAt(ERROR)
 
-    fun atError() {
-        logger.atError().log { "AT ERROR." }
+    private fun logAt(level: Level) {
+        logger.at(level).log {
+            "Stub logging message at `${level.name}`."
+        }
     }
 }

@@ -1,3 +1,5 @@
+import io.spine.internal.dependency.Flogger
+
 /*
  * Copyright 2023, TeamDev. All rights reserved.
  *
@@ -24,47 +26,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.testing.logging.context
-
-import io.kotest.core.spec.Spec
-import io.kotest.core.spec.style.ShouldSpec
-import io.spine.logging.context.LogLevelMap
-import io.spine.logging.context.ScopedLoggingContext
-
-@Suppress("LeakingThis")
-abstract class AbstractLogLevelMapSpec: ShouldSpec() {
-
-    private val map = lazy {
-        val builder = LogLevelMap.builder()
-        configureBuilder(builder)
-        builder.build()
-    }
-
-    private val context by lazy {
-        ScopedLoggingContext.newContext()
-            .withLogLevelMap(map.value)
-    }
-
-    private var closable: AutoCloseable? = null
-
-    override suspend fun beforeSpec(spec: Spec) {
-        super.beforeSpec(spec)
-        closable = context.install()
-    }
-
-    override fun afterSpec(f: suspend (Spec) -> Unit) {
-        closable?.close()
-        super.afterSpec(f)
-    }
-
-    init {
-        should("allow setting default level") {
-            checkSettingDefaultLevel()
-        }
-    }
-
-    abstract fun configureBuilder(builder: LogLevelMap.Builder)
-
-    abstract fun checkSettingDefaultLevel()
+plugins {
+    `kotlin-jvm-module`
 }
 
+dependencies {
+    testImplementation(project(":logging"))
+    testImplementation(project(":fixtures"))
+    testRuntimeOnly(project(":logging-backend"))
+    testRuntimeOnly(Flogger.Runtime.grpcContext)
+}

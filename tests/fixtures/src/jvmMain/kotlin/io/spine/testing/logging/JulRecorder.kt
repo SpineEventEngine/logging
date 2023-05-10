@@ -24,37 +24,33 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.testing.logging.jul
+package io.spine.testing.logging
 
 import io.spine.logging.Level
 import io.spine.logging.toJavaLogging
+import io.spine.logging.toLevel
 import java.util.logging.Handler
-import java.util.logging.Level as JLevel
 import java.util.logging.LogRecord
 import java.util.logging.Logger
+import java.util.logging.Level as JLevel
 
 /**
- * Runs the [block] for a logging [Recorder] created for the logging with the given name.
+ * Runs the [block] for a logging [Recorder] created for the logger with the given name.
  *
  * @param loggerName
  *         the name of the logger.
  * @param minLevel
- *         the minimum level of logging records accepted by the [Recorder].
+ *         the minimum level of logging records accepted by the recorder.
  * @param block
- *         the code with assertions statements with the [Recorder] as the receiver.
+ *         the code with assertions statements with the recorder as the receiver.
  */
 public fun checkLogging(
     loggerName: String,
     minLevel: Level,
     block: Recorder.() -> Unit
 ) {
-    val recorder = Recorder(loggerName, minLevel.toJavaLogging())
-    try {
-        recorder.start()
-        recorder.block()
-    } finally {
-        recorder.stop()
-    }
+    val recorder = JulRecorder(loggerName, minLevel)
+    checkLogging(recorder, block)
 }
 
 /**
@@ -64,9 +60,9 @@ public fun checkLogging(
  * @param loggingClass
  *         the class which performs the logging operations under the test.
  * @param minLevel
- *         the minimum level of logging records accepted by the [Recorder].
+ *         the minimum level of logging records accepted by the recorder.
  * @param block
- *         the code with assertions statements with the [Recorder] as the receiver.
+ *         the code with assertions statements with the recorder as the receiver.
  */
 public fun checkLogging(
     loggingClass: Class<*>,
@@ -77,10 +73,7 @@ public fun checkLogging(
 /**
  * Intercepts logging records of the logger with the given name.
  */
-public open class Recorder(
-    public val loggerName: String,
-    public val minLevel: JLevel
-) {
+internal class JulRecorder(loggerName: String, minLevel: Level): Recorder(minLevel) {
 
     /**
      * The logger obtained by the given name.
@@ -99,31 +92,16 @@ public open class Recorder(
      */
     private var publishingLogger: Logger? = null
 
-    /**
-     * Contains log records collected so far.
-     *
-     * Is always empty before [start] and after [stop].
-     */
-    public val records: List<LogRecord>
+    override val records: List<LogData>
         get() = handler?.records ?: emptyList()
 
-    /**
-     * Starts the recording.
-     *
-     * @see [stop]
-     */
-    public fun start() {
-        handler = RecordingHandler(minLevel)
+    override fun start() {
+        handler = RecordingHandler(minLevel.toJavaLogging())
         publishingLogger = publishingLoggerOf(logger)
         publishingLogger?.addHandler(handler)
     }
 
-    /**
-     * Stops the recording.
-     *
-     * @see [start]
-     */
-    public fun stop() {
+    override fun stop() {
         if (handler == null) {
             return
         }
@@ -145,6 +123,18 @@ private fun publishingLoggerOf(logger: Logger): Logger {
     }
 }
 
+private class JulLogData(private val record: LogRecord): LogData {
+
+    override val level: Level
+        get() = record.level.toLevel()
+
+    override val message: String
+        get() = record.message
+
+    override val throwable: Throwable?
+        get() = record.thrown
+
+}
 /**
  * Accumulates [records] that have the specified [level][getLevel] or higher.
  */
@@ -154,12 +144,12 @@ private class RecordingHandler(level: JLevel): Handler() {
         setLevel(level)
     }
 
-    private val mutableRecords = mutableListOf<LogRecord>()
-    val records: List<LogRecord> get() = mutableRecords
+    private val mutableRecords = mutableListOf<LogData>()
+    val records: List<LogData> get() = mutableRecords
 
     override fun publish(record: LogRecord?) {
         record?.let {
-            mutableRecords.add(it)
+            mutableRecords.add(JulLogData(it))
         }
     }
 

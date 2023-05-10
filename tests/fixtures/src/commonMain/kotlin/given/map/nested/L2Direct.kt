@@ -26,6 +26,6 @@
 
 package given.map.nested
 
-import given.map.AbstractWithLogging
+import given.map.LoggingTestFixture
 
-class L2Direct: AbstractWithLogging()
+class L2Direct: LoggingTestFixture()

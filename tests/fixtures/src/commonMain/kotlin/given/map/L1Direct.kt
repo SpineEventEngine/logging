@@ -26,4 +26,4 @@
 
 package given.map
 
-class L1Direct: AbstractWithLogging()
+class L1Direct: LoggingTestFixture()

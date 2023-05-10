@@ -26,6 +26,6 @@
 
 package given.map.nested.sibling
 
-import given.map.AbstractWithLogging
+import given.map.LoggingTestFixture
 
-class Level3Sibling: AbstractWithLogging()
+class Level3Sibling: LoggingTestFixture()

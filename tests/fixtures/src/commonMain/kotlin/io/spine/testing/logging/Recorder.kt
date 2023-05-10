@@ -24,33 +24,45 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import com.google.common.flogger.FluentLogger
-import java.util.logging.Level
-import com.google.common.flogger.context.LogLevelMap as FLogLevelMap
-import com.google.common.flogger.context.ScopedLoggingContexts as FScopedLoggingContexts
+package io.spine.testing.logging
 
-fun main() {
-    val map = FLogLevelMap.builder()
-        .setDefault(Level.INFO)
-//        .add(Level.FINE, FloggerConsumer::class.java.`package`)
-        .add(Level.FINE, FloggerConsumer::class.java)
-        .build()
+import io.spine.logging.Level
 
-    val context = FScopedLoggingContexts.newContext().withLogLevelMap(map)
-
-    context.install().use {
-        FloggerConsumer().methodWithFine()
+public fun checkLogging(recorder: Recorder, block: Recorder.() -> Unit) {
+    try {
+        recorder.start()
+        recorder.block()
+    } finally {
+        recorder.stop()
     }
 }
 
-class FloggerConsumer {
-    fun methodWithFine() {
-        logger.atFine().log("Logging using `FINE` level.")
-        println("`methodWithFine()` called.")
-    }
+/**
+ * Records [LogData] after the method [start] called.
+ *
+ * Implementing classes should tap into an underlying logging framework to
+ * intercept logging instructions with the [minLevel] or above.
+ */
+public abstract class Recorder(protected val minLevel: Level) {
 
-    companion object {
-        private val logger = FluentLogger.forEnclosingClass()
-    }
+    /**
+     * Contains log data collected so far.
+     *
+     * Is always empty before [start] and after [stop].
+     */
+    public abstract val records: List<LogData>
+
+    /**
+     * Starts the recording.
+     *
+     * @see [stop]
+     */
+    public abstract fun start()
+
+    /**
+     * Stops the recording.
+     *
+     * @see [start]
+     */
+    public abstract fun stop()
 }
-
