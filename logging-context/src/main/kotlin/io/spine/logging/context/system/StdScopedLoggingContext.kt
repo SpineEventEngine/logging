@@ -29,7 +29,6 @@ package io.spine.logging.context.system
 import com.google.common.flogger.context.ScopeType
 import com.google.common.flogger.context.ScopedLoggingContext
 import com.google.common.flogger.context.ScopedLoggingContext.LoggingContextCloseable
-import io.spine.logging.context.system.StdContextData.Companion.current
 
 import io.spine.logging.context.toMap
 
@@ -44,7 +43,7 @@ internal class StdScopedLoggingContext(
     private fun newBuilder(scopeType: ScopeType?): Builder {
         return object : Builder() {
             override fun install(): LoggingContextCloseable {
-                val newContextData = StdContextData(current(), scopeType, provider).also {
+                val newContextData = StdContextData(scopeType, provider).also {
                     it.addTags(tags)
                     it.addMetadata(metadata)
                     it.applyLogLevelMap(logLevelMap.toMap())

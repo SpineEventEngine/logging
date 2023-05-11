@@ -26,6 +26,7 @@
 
 package io.spine.logging.context.system
 
+import com.google.common.flogger.LoggingScope
 import com.google.common.flogger.context.ContextMetadata
 import com.google.common.flogger.context.ScopeType
 import com.google.common.flogger.context.ScopedLoggingContext.ScopeList
@@ -34,7 +35,6 @@ import io.spine.logging.Level
 import io.spine.logging.context.LogLevelMap
 
 internal class StdContextData(
-    parent: StdContextData?,
     scopeType: ScopeType?,
     private val provider: StdContextDataProvider
 ) {
@@ -44,6 +44,7 @@ internal class StdContextData(
     private val logLevelMapRef: ScopedReference<LogLevelMap>
 
     init {
+        val parent = current
         scopes = ScopeList.addScope(parent?.scopes, scopeType)
         tagRef = object : ScopedReference<Tags>(parent?.tagRef?.get()) {
             override fun merge(current: Tags, delta: Tags): Tags =
@@ -73,25 +74,26 @@ internal class StdContextData(
     }
 
     fun attach(): StdContextData? {
-        val prev = current()
-        current.set(this)
+        val prev = current
+        holder.set(this)
         return prev
     }
 
     fun detach(prev: StdContextData?) {
-        current.set(prev)
+        holder.set(prev)
     }
 
     companion object {
 
-        private val current: ThreadLocal<StdContextData> = ThreadLocal()
-
-        fun current(): StdContextData? {
-            return current.get()
+        private val holder: ThreadLocal<StdContextData> by lazy {
+            ThreadLocal()
         }
 
-        fun tagsFor(context: StdContextData?): Tags {
-            context?.let {
+        private val current: StdContextData?
+            get() = holder.get()
+
+        fun tags(): Tags {
+            current?.let {
                 it.tagRef.get()?.let { tags ->
                     return tags
                 }
@@ -99,8 +101,8 @@ internal class StdContextData(
             return Tags.empty()
         }
 
-        fun metadataFor(context: StdContextData?): ContextMetadata {
-            context?.let {
+        fun metadata(): ContextMetadata {
+            current?.let {
                 it.metadataRef.get()?.let { metadata ->
                     return metadata
                 }
@@ -109,8 +111,7 @@ internal class StdContextData(
         }
 
         fun shouldForceLoggingFor(loggerName: String, level: Level): Boolean {
-            val context = current()
-            context?.let {
+            current?.let {
                 it.logLevelMapRef.get()?.let { map ->
                     val levelFromMap = map.levelOf(loggerName)
                     return levelFromMap.value <= level.value
@@ -118,5 +119,8 @@ internal class StdContextData(
             }
             return false
         }
+
+        fun lookupScopeFor(type: ScopeType): LoggingScope? =
+            current?.let { ScopeList.lookup(it.scopes, type) }
     }
 }

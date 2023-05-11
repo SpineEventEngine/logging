@@ -32,7 +32,6 @@ import com.google.common.flogger.context.ContextDataProvider
 import com.google.common.flogger.context.ScopeType
 import com.google.common.flogger.context.ScopedLoggingContext
 import com.google.common.flogger.context.Tags
-import io.spine.logging.context.system.StdContextData.Companion.current
 import io.spine.logging.context.system.StdContextData.Companion.shouldForceLoggingFor
 import io.spine.logging.toLevel
 import java.util.logging.Level
@@ -65,20 +64,21 @@ public class StdContextDataProvider: ContextDataProvider() {
         return hasLogLevelMap && shouldForceLoggingFor(loggerName, level.toLevel())
     }
 
-    override fun getTags(): Tags = StdContextData.tagsFor(current())
+    override fun getTags(): Tags = StdContextData.tags()
 
-    override fun getMetadata(): Metadata = StdContextData.metadataFor(current())
+    override fun getMetadata(): Metadata = StdContextData.metadata()
 
-    override fun getScope(type: ScopeType?): LoggingScope? {
-        // TODO: Implement scope lookup.
-        return super.getScope(type)
-    }
+    override fun getScope(type: ScopeType): LoggingScope? = StdContextData.lookupScopeFor(type)
 
+    /**
+     * Sets the flag to enable checking for a log level map after one
+     * is set for the first time.
+     */
     internal fun setLogLevelMapFlag() {
         hasLogLevelMap = true
     }
 
-    internal companion object {
+    private companion object {
         private var scopedLoggingContext: StdScopedLoggingContext? = null
     }
 }
