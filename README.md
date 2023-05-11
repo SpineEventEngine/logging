@@ -12,6 +12,12 @@ of priority.
 The library is largely inspired by [Google Flogger][flogger] logging API, and introduction of
 fluent logging API in [SLF4J in v2.0.0][fluent-slf4j].
 
+## Experimental status
+
+This library is in early stages of the development. While it is being used for development of
+Spine SDK, its API is likely to change in the near future without a notice.
+Therefore, adoption of the library in your project should be approached with great caution, 
+until the removal of the experimental status.
 
 ## Gradle dependency
 To use Spine Logging in your Gradle project:
