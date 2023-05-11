@@ -29,8 +29,9 @@ package io.spine.logging.context
 import given.map.L1Direct
 import given.map.LoggingTestFixture
 import given.map.nested.L2Direct
-import io.kotest.core.spec.Spec
 import io.kotest.core.spec.style.ExpectSpec
+import io.kotest.core.test.TestCase
+import io.kotest.core.test.TestResult
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.spine.logging.Level
@@ -66,33 +67,37 @@ abstract class AbstractLogLevelMapSpec: ExpectSpec() {
         }
     }
 
-    override suspend fun beforeSpec(spec: Spec) {
-        super.beforeSpec(spec)
-        closable = context.install()
-    }
-
-    override fun afterSpec(f: suspend (Spec) -> Unit) {
-        closable?.close()
-        super.afterSpec(f)
-    }
-
-    abstract fun createRecorder(loggerName: String, minLevel: Level): Recorder
-
-    init {
-        test("default level is set", DefLoggingFixture::class) {
-            it.atError()
-            records shouldHaveSize 1
-            val record = records[0]
-            record.level shouldBe ERROR
-        }
-    }
-
-    public companion object {
+    companion object {
         val defaultLevel = ERROR
         val level1 = DEBUG
         val level2Direct = WARNING
         val level2Package = INFO
     }
+
+    /**
+     * Installs logging context with the configured log level map.
+     *
+     * We do it via [beforeEach] rather than [beforeSpec] to make sure that
+     * a test is executed in the same thread.
+     *
+     * @see [afterEach]
+     */
+    override suspend fun beforeEach(testCase: TestCase) {
+        super.beforeEach(testCase)
+        closable = context.install()
+    }
+
+    /**
+     * Removes the currently installed logging context.
+     *
+     * @see [beforeEach]
+     */
+    override suspend fun afterEach(testCase: TestCase, result: TestResult) {
+        closable?.close()
+        super.afterEach(testCase, result)
+    }
+
+    abstract fun createRecorder(loggerName: String, minLevel: Level): Recorder
 
     private fun test(
         displayName: String,
@@ -107,10 +112,26 @@ abstract class AbstractLogLevelMapSpec: ExpectSpec() {
             }
         }
     }
+
+    init {
+        test("default level is set", DefLoggingFixture::class) {
+            it.atError()
+            records shouldHaveSize 1
+            val record = records[0]
+            record.level shouldBe ERROR
+        }
+
+        test("direct level for a class prevails", L1Direct::class) {
+            it.atDebug()
+            records shouldHaveSize 1
+            val record = records[0]
+            record.level shouldBe DEBUG
+        }
+    }
 }
 
 /**
  * The fixture which is not mentioned in log level map, and package of which
  * is outside the package hierarchy configured in the map.
  */
-public class DefLoggingFixture: LoggingTestFixture()
+class DefLoggingFixture: LoggingTestFixture()
