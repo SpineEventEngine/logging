@@ -32,29 +32,36 @@ import com.google.common.flogger.context.ScopedLoggingContext.LoggingContextClos
 
 import io.spine.logging.context.toMap
 
+/**
+ * A [ScopedLoggingContext] which creates contexts based on [StdContextData].
+ */
 internal class StdScopedLoggingContext(
     private val provider: StdContextDataProvider
 ) : ScopedLoggingContext() {
 
-    override fun newContext(): Builder = newBuilder(null)
+    override fun newContext(): Builder = BuilderImpl(null)
 
-    override fun newContext(scopeType: ScopeType): Builder = newBuilder(scopeType)
+    override fun newContext(scopeType: ScopeType): Builder = BuilderImpl(scopeType)
 
-    private fun newBuilder(scopeType: ScopeType?): Builder {
-        return object : Builder() {
-            override fun install(): LoggingContextCloseable {
-                val newContextData = StdContextData(scopeType, provider).also {
-                    it.addTags(tags)
-                    it.addMetadata(metadata)
-                    it.applyLogLevelMap(logLevelMap.toMap())
-                }
-                return installContextData(newContextData)
+    /**
+     * A [ScopedLoggingContext.Builder] which creates a new [StdContextData] and
+     * installs it.
+     */
+    inner class BuilderImpl(private val scopeType: ScopeType?) : Builder() {
+
+        override fun install(): LoggingContextCloseable {
+            val newContextData = StdContextData(scopeType, provider).also {
+                it.addTags(tags)
+                it.addMetadata(metadata)
+                it.applyLogLevelMap(logLevelMap.toMap())
             }
+            return install(newContextData)
+        }
+
+        private fun install(newData: StdContextData): LoggingContextCloseable {
+            val prev = newData.attach()
+            return LoggingContextCloseable { newData.detach(prev) }
         }
     }
 }
 
-private fun installContextData(newContextData: StdContextData): LoggingContextCloseable {
-    val prev = newContextData.attach()
-    return LoggingContextCloseable { newContextData.detach(prev) }
-}
