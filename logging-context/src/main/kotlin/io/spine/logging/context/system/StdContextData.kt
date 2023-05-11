@@ -28,7 +28,7 @@ package io.spine.logging.context.system
 
 import com.google.common.flogger.context.ContextMetadata
 import com.google.common.flogger.context.ScopeType
-import com.google.common.flogger.context.ScopedLoggingContext
+import com.google.common.flogger.context.ScopedLoggingContext.ScopeList
 import com.google.common.flogger.context.Tags
 import io.spine.logging.Level
 import io.spine.logging.context.LogLevelMap
@@ -38,13 +38,13 @@ internal class StdContextData(
     scopeType: ScopeType?,
     private val provider: StdContextDataProvider
 ) {
-    private val scopes: ScopedLoggingContext.ScopeList?
+    private val scopes: ScopeList?
     private val tagRef: ScopedReference<Tags>
     private val metadataRef: ScopedReference<ContextMetadata>
     private val logLevelMapRef: ScopedReference<LogLevelMap>
 
     init {
-        scopes = ScopedLoggingContext.ScopeList.addScope(parent?.scopes, scopeType)
+        scopes = ScopeList.addScope(parent?.scopes, scopeType)
         tagRef = object : ScopedReference<Tags>(parent?.tagRef?.get()) {
             override fun merge(current: Tags, delta: Tags): Tags =
                 current.merge(delta)
@@ -74,22 +74,20 @@ internal class StdContextData(
 
     fun attach(): StdContextData? {
         val prev = current()
-        currentContext.set(this)
+        current.set(this)
         return prev
     }
 
     fun detach(prev: StdContextData?) {
-        currentContext.set(prev)
+        current.set(prev)
     }
 
     companion object {
 
-        private val currentContext: ThreadLocal<StdContextData> by lazy {
-            ThreadLocal()
-        }
+        private val current: ThreadLocal<StdContextData> = ThreadLocal()
 
         fun current(): StdContextData? {
-            return currentContext.get()
+            return current.get()
         }
 
         fun tagsFor(context: StdContextData?): Tags {
@@ -110,11 +108,8 @@ internal class StdContextData(
             return ContextMetadata.none()
         }
 
-        fun shouldForceLoggingFor(
-            context: StdContextData?,
-            loggerName: String,
-            level: Level
-        ): Boolean {
+        fun shouldForceLoggingFor(loggerName: String, level: Level): Boolean {
+            val context = current()
             context?.let {
                 it.logLevelMapRef.get()?.let { map ->
                     val levelFromMap = map.levelOf(loggerName)

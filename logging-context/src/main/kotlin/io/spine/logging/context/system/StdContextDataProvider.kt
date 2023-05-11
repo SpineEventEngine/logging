@@ -32,9 +32,17 @@ import com.google.common.flogger.context.ContextDataProvider
 import com.google.common.flogger.context.ScopeType
 import com.google.common.flogger.context.ScopedLoggingContext
 import com.google.common.flogger.context.Tags
+import io.spine.logging.context.system.StdContextData.Companion.current
+import io.spine.logging.context.system.StdContextData.Companion.shouldForceLoggingFor
 import io.spine.logging.toLevel
 import java.util.logging.Level
 
+/**
+ * A [ContextDataProvider] providing basic support of [ScopedLoggingContext]
+ * similar to that provided by gRPC logging context from Flogger.
+ *
+ * Loaded via [ServiceLoader][java.util.ServiceLoader] by Flogger runtime.
+ */
 public class StdContextDataProvider: ContextDataProvider() {
 
     @Volatile
@@ -49,25 +57,20 @@ public class StdContextDataProvider: ContextDataProvider() {
         return result!!
     }
 
-
     override fun shouldForceLogging(
         loggerName: String,
         level: Level,
         isEnabledByLevel: Boolean
     ): Boolean {
-        return hasLogLevelMap &&
-                StdContextData.shouldForceLoggingFor(currentContext(), loggerName, level.toLevel())
+        return hasLogLevelMap && shouldForceLoggingFor(loggerName, level.toLevel())
     }
 
-    override fun getTags(): Tags {
-        return StdContextData.tagsFor(currentContext())
-    }
+    override fun getTags(): Tags = StdContextData.tagsFor(current())
 
-    override fun getMetadata(): Metadata {
-        return StdContextData.metadataFor(currentContext())
-    }
+    override fun getMetadata(): Metadata = StdContextData.metadataFor(current())
 
     override fun getScope(type: ScopeType?): LoggingScope? {
+        // TODO: Implement scope lookup.
         return super.getScope(type)
     }
 
@@ -76,11 +79,6 @@ public class StdContextDataProvider: ContextDataProvider() {
     }
 
     internal companion object {
-
         private var scopedLoggingContext: StdScopedLoggingContext? = null
-
-        internal fun currentContext(): StdContextData? {
-            return StdContextData.current()
-        }
     }
 }

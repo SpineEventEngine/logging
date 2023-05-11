@@ -30,7 +30,8 @@ import java.util.concurrent.atomic.AtomicReference
 import java.util.function.BinaryOperator
 
 /**
- * A reference to a value kept as [AtomicReference].
+ * A reference to a value kept as [AtomicReference] which provides
+ * a [merging][mergeFrom] operation.
  */
 internal abstract class ScopedReference<T>(initialValue: T?) {
 

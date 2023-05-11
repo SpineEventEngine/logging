@@ -29,7 +29,7 @@ package io.spine.logging.context.system
 import com.google.common.flogger.context.ScopeType
 import com.google.common.flogger.context.ScopedLoggingContext
 import com.google.common.flogger.context.ScopedLoggingContext.LoggingContextCloseable
-import io.spine.logging.context.system.StdContextDataProvider.Companion.currentContext
+import io.spine.logging.context.system.StdContextData.Companion.current
 
 import io.spine.logging.context.toMap
 
@@ -37,28 +37,25 @@ internal class StdScopedLoggingContext(
     private val provider: StdContextDataProvider
 ) : ScopedLoggingContext() {
 
-    override fun newContext(): Builder =
-        newBuilder(null)
+    override fun newContext(): Builder = newBuilder(null)
 
-    override fun newContext(scopeType: ScopeType): Builder =
-        newBuilder(scopeType)
+    override fun newContext(scopeType: ScopeType): Builder = newBuilder(scopeType)
 
     private fun newBuilder(scopeType: ScopeType?): Builder {
-        val builder = object : Builder() {
+        return object : Builder() {
             override fun install(): LoggingContextCloseable {
-                val newContextData = StdContextData(currentContext(), scopeType, provider).also {
+                val newContextData = StdContextData(current(), scopeType, provider).also {
                     it.addTags(tags)
                     it.addMetadata(metadata)
                     it.applyLogLevelMap(logLevelMap.toMap())
                 }
-                return installContextMetadata(newContextData)
+                return installContextData(newContextData)
             }
         }
-        return builder
     }
 }
 
-private fun installContextMetadata(newContextData: StdContextData): LoggingContextCloseable {
+private fun installContextData(newContextData: StdContextData): LoggingContextCloseable {
     val prev = newContextData.attach()
     return LoggingContextCloseable { newContextData.detach(prev) }
 }
