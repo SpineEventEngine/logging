@@ -30,7 +30,7 @@ import io.spine.logging.Level
 import io.spine.testing.logging.JulRecorder
 import io.spine.testing.logging.Recorder
 
-abstract class JulLogLevelMapSpec: AbstractLogLevelMapSpec() {
+abstract class JulLogLevelMapSpec: BaseLogLevelMapSpec() {
 
     override fun createRecorder(loggerName: String, minLevel: Level): Recorder {
         return JulRecorder(loggerName, minLevel)
