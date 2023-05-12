@@ -34,6 +34,20 @@ import com.google.common.flogger.context.Tags
 import io.spine.logging.Level
 import io.spine.logging.context.LogLevelMap
 
+/**
+ * The `StdContextData` class holds scoped logging context data providing merging
+ * capabilities when contexts are nested.
+ *
+ * @param scopeType
+ *        the type of the scope to be created, or `null` if no type is required.
+ * @param provider
+ *        the reference to the context data provider for setting the flag when
+ *        a log level map is used.
+ * @constructor
+ *        creates an instance taking initial values from the currently installed
+ *        context data. If there is no current logging context, initializes
+ *        the instance with `null`s.
+ */
 internal class StdContextData(
     scopeType: ScopeType?,
     private val provider: StdContextDataProvider
@@ -60,12 +74,24 @@ internal class StdContextData(
         }
     }
 
+    /**
+     * Adds tags to the current context data.
+     * If `null` is passed, no action is taken.
+     */
     fun addTags(tags: Tags?) =
         tagRef.mergeFrom(tags)
 
+    /**
+     * Concatenates given metadata with the one held in this context data instance.
+     * If null is passed, no action is taken.
+     */
     fun addMetadata(metadata: ContextMetadata?) =
         metadataRef.mergeFrom(metadata)
 
+    /**
+     * Merges the give map with the one held in this context data instance.
+     * If null is passed, no action is taken.
+     */
     fun applyLogLevelMap(map: LogLevelMap?) {
         if (map != null) {
             provider.setLogLevelMapFlag()
@@ -73,25 +99,49 @@ internal class StdContextData(
         }
     }
 
+    /**
+     * Installs this instance as current context data, returning the previously
+     * set instance or `null`, if there was no logging context prior to this call.
+     *
+     * @see [detach]
+     */
     fun attach(): StdContextData? {
         val prev = current
         holder.set(this)
         return prev
     }
 
+    /**
+     * Restores the previous state of the logging context data.
+     *
+     * @see [attach]
+     */
     fun detach(prev: StdContextData?) {
         holder.set(prev)
     }
 
     companion object {
 
+        /**
+         * Contains currently installed instance of logging context data or `null`,
+         * if there is no logging context.
+         */
         private val holder: ThreadLocal<StdContextData> by lazy {
             ThreadLocal()
         }
 
+        /**
+         * Obtains the currently stored value of the context data.
+         *
+         * Therefore, obtaining the value must be done via `get()`.
+         */
         private val current: StdContextData?
             get() = holder.get()
 
+        /**
+         * Obtains the tags of the current context or [Tags.empty] if no
+         * context is installed.
+         */
         fun tags(): Tags {
             current?.let {
                 it.tagRef.get()?.let { tags ->
@@ -101,6 +151,10 @@ internal class StdContextData(
             return Tags.empty()
         }
 
+        /**
+         * Obtains metadata of the current context or [ContextMetadata.none] if
+         * no context is installed.
+         */
         fun metadata(): ContextMetadata {
             current?.let {
                 it.metadataRef.get()?.let { metadata ->
@@ -110,6 +164,12 @@ internal class StdContextData(
             return ContextMetadata.none()
         }
 
+        /**
+         * Tells if the logging should be forced for the logger with
+         * the given name and the level.
+         *
+         * If there is no context is installed always returns `false`.
+         */
         fun shouldForceLoggingFor(loggerName: String, level: Level): Boolean {
             current?.let {
                 it.logLevelMapRef.get()?.let { map ->
@@ -120,6 +180,13 @@ internal class StdContextData(
             return false
         }
 
+        /**
+         * Obtains a [LoggingScope] for the given type.
+         *
+         * @return the scope instance or `null` if there is no current context, or
+         *         the current context data does not have scopes, or there is no
+         *         logging scope with the requested type.
+         */
         fun lookupScopeFor(type: ScopeType): LoggingScope? =
             current?.let { ScopeList.lookup(it.scopes, type) }
     }
