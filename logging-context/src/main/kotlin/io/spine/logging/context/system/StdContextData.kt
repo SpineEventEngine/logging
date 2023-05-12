@@ -35,17 +35,16 @@ import io.spine.logging.Level
 import io.spine.logging.context.LogLevelMap
 
 /**
- * The `StdContextData` class holds scoped logging context data providing merging
- * capabilities when contexts are nested.
+ * The data of a scoped logging context with merging capabilities when contexts are nested.
  *
  * @param scopeType
  *        the type of the scope to be created, or `null` if no type is required.
  * @param provider
- *        the reference to the context data provider for setting the flag when
+ *        a reference to the context data provider for setting the flag when
  *        a log level map is used.
  * @constructor
  *        creates an instance taking initial values from the currently installed
- *        context data. If there is no current logging context, initializes
+ *        context data. If there is no current logging context, it initializes
  *        the instance with `null`s.
  */
 internal class StdContextData(
