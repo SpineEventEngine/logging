@@ -50,11 +50,6 @@ public abstract class Logger<API: LoggingApi<API>>(
     }
 
     protected abstract fun createApi(level: Level): API
-
-    public fun atDebug(): API = at(Level.DEBUG)
-    public fun atInfo(): API = at(Level.INFO)
-    public fun atWarning(): API = at(Level.WARNING)
-    public fun atError(): API = at(Level.ERROR)
 }
 
 /**
@@ -70,3 +65,8 @@ private class WithLoggingDomain<API: LoggingApi<API>>(
         "${loggingDomain.messagePrefix}${message()}"
     }
 }
+
+public fun <API: LoggingApi<API>> Logger<API>.atDebug(): API = at(Level.DEBUG)
+public fun <API: LoggingApi<API>> Logger<API>.atInfo(): API = at(Level.INFO)
+public fun <API: LoggingApi<API>> Logger<API>.atWarning(): API = at(Level.WARNING)
+public fun <API: LoggingApi<API>> Logger<API>.atError(): API = at(Level.ERROR)
