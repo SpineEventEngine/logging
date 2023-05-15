@@ -48,7 +48,6 @@ public expect object LoggingFactory {
     public fun loggingDomainOf(cls: KClass<*>): LoggingDomain
 }
 
-
 /**
  * Obtains a name of a logger to be used for this class.
  *

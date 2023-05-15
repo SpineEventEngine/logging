@@ -27,11 +27,32 @@
 package io.spine.logging.context
 
 import io.spine.logging.Level
+import io.spine.logging.toLoggerName
 import kotlin.reflect.KClass
 
+/**
+ * A hierarchical mapping from logger name to [Level] used to override the configured log level.
+ *
+ * This can be used for debugging or to provide more detailed log output for specific
+ * conditions, such as when a command-line argument is passed.
+ */
 public interface LogLevelMap {
 
+    /**
+     * Returns the log level for the specified logger.
+     *
+     * The logger name is matched to an entry in the map, or the nearest parent in
+     * the naming hierarchy. If the given logger name is not matched to any entry,
+     * the default value is returned.
+     */
     public fun levelOf(loggerName: String): Level
+
+    /**
+     * Returns the union of this map with the given map.
+     *
+     * Logging is enabled in the merged map IFF it was enabled in one of
+     * the maps it was created from.
+     */
     public fun merge(other: LogLevelMap): LogLevelMap
 
     public interface Builder {
@@ -43,6 +64,9 @@ public interface LogLevelMap {
 
     public companion object {
 
+        /**
+         * Creates a builder for a new log level map.
+         */
         public fun builder(): Builder = LoggingContextFactory.levelMapBuilder()
 
         /**
@@ -56,6 +80,11 @@ public interface LogLevelMap {
             LoggingContextFactory.levelMap(map, defaultLevel)
     }
 }
+
+/**
+ * Obtains a level of logging for the given class.
+ */
+public fun LogLevelMap.levelOf(cls: KClass<*>): Level = levelOf(cls.toLoggerName())
 
 /**
  * Builds a new [LogLevelMap] by populating a newly created [LogLevelMap.Builder]

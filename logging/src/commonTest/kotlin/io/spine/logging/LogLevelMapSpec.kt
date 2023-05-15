@@ -27,12 +27,16 @@
 package io.spine.logging
 
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 import io.spine.logging.Level.Companion.DEBUG
 import io.spine.logging.Level.Companion.ERROR
 import io.spine.logging.Level.Companion.INFO
+import io.spine.logging.Level.Companion.OFF
 import io.spine.logging.Level.Companion.WARNING
 import io.spine.logging.context.LogLevelMap
+import io.spine.logging.context.levelOf
 import io.spine.logging.context.logLevelMap
+import kotlin.reflect.KClass
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -102,6 +106,29 @@ internal class LogLevelMapSpec {
             levelOf(String::class.qualifiedName!!) shouldBe DEBUG
             levelOf("java.lang") shouldBe WARNING
             levelOf("io.spine") shouldBe INFO
+        }
+    }
+
+    @Test
+    fun `merge with another map`() {
+        val map1 = logLevelMap {
+            add(DEBUG, String::class)
+            add(WARNING, Int::class)
+        }
+        val map2 = logLevelMap {
+            add(DEBUG, "kotlin.collections")
+        }
+        val merged = map1.merge(map2)
+
+        merged shouldNotBeSameInstanceAs map1
+        merged shouldNotBeSameInstanceAs map2
+
+        merged.run {
+            levelOf(String::class) shouldBe DEBUG
+            levelOf(Int::class) shouldBe WARNING
+            levelOf(List::class) shouldBe DEBUG // belongs to the package from `map2`.
+            levelOf(KClass::class) shouldBe OFF // not in any map.
+            levelOf("") shouldBe OFF // no custom default in both maps.
         }
     }
 }
