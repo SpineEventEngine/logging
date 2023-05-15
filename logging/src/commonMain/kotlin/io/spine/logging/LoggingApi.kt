@@ -26,31 +26,58 @@
 
 package io.spine.logging
 
+/**
+ * The basic logging API returned by a [Logger].
+ */
 public interface LoggingApi<API: LoggingApi<API>> {
 
+    /**
+     * Associates a [Throwable] with the current log statement.
+     *
+     * Presumably, this method is called from withing a catch block to
+     * log a caught exception. If the `cause` is null, the method has no effect.
+     *
+     * If the method is called more than once, the parameter of the last
+     * invocation will be used.
+     */
     public fun withCause(cause: Throwable): API
 
+    /**
+     * Returns `true` if logging is enabled at the level implied for this API.
+     */
     public fun isEnabled(): Boolean
 
+    /**
+     * Terminal log statement when a message is not required.
+     *
+     * For example:
+     * ```kotlin
+     * logger.at(ERROR).withCause(error).log()
+     * ```
+     */
     public fun log()
 
+    /**
+     * Logs a message produced by the given function block.
+     */
     public fun log(message: () -> String)
 
+    /**
+     * An implementation of [LoggingApi] which does nothing, discarding all parameters.
+     *
+     * The extending classes are likely to be non-wildcard, fully specified, no-op
+     * implementations of the [API].
+     */
     public open class NoOp<API: LoggingApi<API>>: LoggingApi<API> {
 
+        /**
+         * Obtains the reference to this no-op implementation of fluent logging [API].
+         */
         @Suppress("UNCHECKED_CAST")
-        protected fun self(): API = this as API
-
-        override fun withCause(cause: Throwable): API = self()
-
+        protected fun noOp(): API = this as API
+        override fun withCause(cause: Throwable): API = noOp()
         override fun isEnabled(): Boolean = false
-
-        override fun log() {
-            // no-op
-        }
-
-        override fun log(message: () -> String) {
-            // no-op
-        }
+        override fun log(): Unit = Unit
+        override fun log(message: () -> String): Unit = Unit
     }
 }

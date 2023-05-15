@@ -67,8 +67,8 @@ public abstract class Logger<API: LoggingApi<API>>(
      *
      * If a logger implementation determines that logging is definitely disabled
      * at this point, the implementation should return an instance of a class
-     * extending [LoggingApi.NoOp] which would be a leaf, non-generic, implementation
-     * of the [API] type.
+     * extending [LoggingApi.NoOp] which would be a non-wildcard, fully specified, no-op
+     * implementation of the [API] type.
      */
     protected abstract fun createApi(level: Level): API
 }
