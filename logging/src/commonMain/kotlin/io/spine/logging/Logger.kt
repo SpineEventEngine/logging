@@ -29,11 +29,24 @@ package io.spine.logging
 import io.spine.logging.LoggingFactory.loggingDomainOf
 import kotlin.reflect.KClass
 
+/**
+ * Base class for fluent API loggers. A logger is a factory of fluent logging [API] instances,
+ * which allow to build log statements via method chaining.
+ *
+ * @param [API]
+ *          the logging API provided by this logger.
+ * @param [cls]
+ *          the class which is going to perform the logging operations using this logger.
+ * @see [LoggingApi]
+ */
 public abstract class Logger<API: LoggingApi<API>>(
     protected val cls: KClass<*>
 ) {
     /**
-     * Creates an [API] for the given level of logging.
+     * Returns a fluent logging [API] for the specified level of logging.
+     *
+     * If the specified level of logging is disabled at this point, the method
+     * returns a "no-op" instance which silently ignores further calls to the logging [API].
      */
     public fun at(level: Level): API {
         val api = createApi(level)
@@ -49,6 +62,14 @@ public abstract class Logger<API: LoggingApi<API>>(
         }
     }
 
+    /**
+     * Creates a new [API] instance with the given level.
+     *
+     * If a logger implementation determines that logging is definitely disabled
+     * at this point, the implementation should return an instance of a class
+     * extending [LoggingApi.NoOp] which would be a leaf, non-generic, implementation
+     * of the [API] type.
+     */
     protected abstract fun createApi(level: Level): API
 }
 
@@ -56,17 +77,32 @@ public abstract class Logger<API: LoggingApi<API>>(
  * Wraps given [API] to prepend [LoggingDomain.messagePrefix] to
  * the [messages][log] of the [delegate].
  */
-private class WithLoggingDomain<API: LoggingApi<API>>(
+private class WithLoggingDomain<API : LoggingApi<API>>(
     private val loggingDomain: LoggingDomain,
     private val delegate: API
-): LoggingApi<API> by delegate {
+) : LoggingApi<API> by delegate {
 
     override fun log(message: () -> String) = delegate.log {
         "${loggingDomain.messagePrefix}${message()}"
     }
 }
 
+/**
+ * A convenience function for `at(Level.DEBUG)`.
+ */
 public fun <API: LoggingApi<API>> Logger<API>.atDebug(): API = at(Level.DEBUG)
+
+/**
+ * A convenience function for `at(Level.INFO)`.
+ */
 public fun <API: LoggingApi<API>> Logger<API>.atInfo(): API = at(Level.INFO)
+
+/**
+ * A convenience function for `at(Level.WARNING)`.
+ */
 public fun <API: LoggingApi<API>> Logger<API>.atWarning(): API = at(Level.WARNING)
+
+/**
+ * A convenience function for `at(Level.ERROR)`.
+ */
 public fun <API: LoggingApi<API>> Logger<API>.atError(): API = at(Level.ERROR)

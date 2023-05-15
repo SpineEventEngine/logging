@@ -30,6 +30,7 @@ package io.spine.logging
  * Level of logging in an application.
  *
  * Implemented as data class rather than enum to allow for custom logging level values.
+ * Please see the companion object for the standard levels.
  */
 public data class Level(
     val name: String,
@@ -41,6 +42,17 @@ public data class Level(
      *
      * Name properties use the words more popular among logging frameworks and implementations.
      * Level values repeat those from `java.util.logging.Level` for easier compatibility.
+     *
+     * Adding a custom logging level could be done like this:
+     *
+     * ```kotlin
+     * public object MyLoggingLevels {
+     *    public val TRACE: Level = Level("TRACE", 400)
+     *    ...
+     * }
+     *
+     * public fun <API: LoggingApi<API>> Logger<API>.atTrace(): API = at(MyLoggingLevels.TRACE)
+     * ```
      */
     public companion object {
         public val OFF: Level = Level("OFF", Int.MAX_VALUE)
