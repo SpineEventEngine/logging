@@ -42,8 +42,8 @@ public interface LogLevelMap {
     }
 
     public companion object {
-        public fun builder(): Builder =
-            LoggingContextFactory.levelMapBuilder()
+
+        public fun builder(): Builder = LoggingContextFactory.levelMapBuilder()
 
         /**
          * Creates a new instance with the given [level values][map] and [defaultLevel].
