@@ -32,4 +32,4 @@ import io.spine.logging.context.JulLogLevelMapTest
  *
  * Please see `build.gradle.kts` of this module for the details.
  */
-internal class LogLevelMapOnGrpcContextITest: JulLogLevelMapTest()
+internal class LogLevelMapOnGrpcContextTest: JulLogLevelMapTest()
