@@ -130,7 +130,7 @@ private fun LogLevelMap.toFlogger(): FLogLevelMap {
 
 private class DelegatingContextBuilder(
     private val delegate: FScopedLoggingContext.Builder
-): ScopedLoggingContext.Builder {
+) : ScopedLoggingContext.Builder() {
 
     override fun withLogLevelMap(map: LogLevelMap): ScopedLoggingContext.Builder {
         delegate.withLogLevelMap(map.toFlogger())

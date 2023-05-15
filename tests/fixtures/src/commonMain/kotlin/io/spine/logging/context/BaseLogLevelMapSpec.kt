@@ -35,7 +35,6 @@ import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.spine.logging.Level.Companion.ALL
 import io.spine.logging.Level.Companion.DEBUG
-import io.spine.logging.Level.Companion.ERROR
 import io.spine.logging.Level.Companion.INFO
 
 /**
@@ -51,6 +50,13 @@ import io.spine.logging.Level.Companion.INFO
  */
 abstract class BaseLogLevelMapSpec: AbstractLogLevelMapSpec() {
 
+    /**
+     * Configures a log level map builder with the data used by the test of this spec class.
+     *
+     * We set a default level higher than `INFO` to test the case of not restricting
+     * the level of logging by an installed context. Please see the documentation
+     * of [ScopedLoggingContext] for the details.
+     */
     override fun configureBuilder(builder: LogLevelMap.Builder) {
         with(builder) {
             setDefault(ANNOUNCEMENT)
@@ -61,24 +67,25 @@ abstract class BaseLogLevelMapSpec: AbstractLogLevelMapSpec() {
 
     init {
         should("set default level", DefLoggingFixture::class) {
-            it.logAt(ALL)
+            it.logAt(DEBUG)
             records shouldHaveSize 0
 
             it.logAt(INFO)
-            records shouldHaveSize 1
+            records shouldHaveSize 1 // because logging context should not reduce logging.
             records[0].level shouldBe INFO
         }
 
         should("use a level set for a class", L1Direct::class) {
             it.logAt(TRACE)
-            records shouldHaveSize 0 // because `TRACE` < `DEBUG`, which is set directly.
+            records shouldHaveSize 0 /* because `TRACE` < `DEBUG`, which is set directly for
+                this class */
 
             it.logAt(DEBUG)
-            records shouldHaveSize 1
+            records shouldHaveSize 1 /* as we specifically set in the map. */
             records.last().level shouldBe DEBUG
 
             it.logAt(INFO)
-            records.last().level shouldBe INFO // because `INFO` > `DEBUG`.
+            records.last().level shouldBe INFO /* because `INFO` > `DEBUG`. */
         }
     }
 }
