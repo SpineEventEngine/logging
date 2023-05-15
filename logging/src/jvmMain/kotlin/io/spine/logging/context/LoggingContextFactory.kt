@@ -49,6 +49,10 @@ internal actual object LoggingContextFactory {
     }
 }
 
+/**
+ * Implements [LogLevelMap.Builder] by producing [Flogger-based implementation][MapImpl]
+ * of [LogLevelMap].
+ */
 private class BuilderImpl : LogLevelMap.Builder {
 
     private val map: MutableMap<String, Level> = mutableMapOf()
@@ -87,6 +91,9 @@ private class BuilderImpl : LogLevelMap.Builder {
     }
 }
 
+/**
+ * Implements [LogLevelMap] by delegating to a log level map from Flogger.
+ */
 private class MapImpl(val delegate: FLogLevelMap): LogLevelMap {
 
     constructor(map: Map<String, Level>, defaultLevel: Level) :
@@ -96,9 +103,7 @@ private class MapImpl(val delegate: FLogLevelMap): LogLevelMap {
         delegate.getLevel(loggerName).toLevel()
 
     override fun merge(other: LogLevelMap): LogLevelMap {
-        // It is safe to downcast because there's only one implementation per platform.
-        // That is, all the instances implementing `LogLevelMap` would be `MapImpl`.
-        val otherDelegate = (other as MapImpl).delegate
+        val otherDelegate = other.toFlogger()
         val merged = delegate.merge(otherDelegate)
         return MapImpl(merged)
     }
@@ -118,13 +123,26 @@ public fun FLogLevelMap?.toMap(): LogLevelMap? {
     return this?.let { MapImpl(this) }
 }
 
+/**
+ * Gets a Flogger log map instance, assuming that this map instance is a [MapImpl].
+ * If not, an error is thrown with a diagnostic message.
+ *
+ * This function is a safety net to prevent accidental introduction of other map implementations.
+ * It is safe to assume that under a JVM, only [MapImpl] will be used because we
+ * control the instantiation. This method ensures that the downcast is checked and documented.
+ */
 private fun LogLevelMap.toFlogger(): FLogLevelMap {
     if (this is MapImpl) {
         return this.delegate
     }
-    error("Unknown implementation of `LogLevelMap` encountered: `${this.javaClass.name}`.")
+    error("Unsupported implementation of `${LogLevelMap::class.simpleName}`" +
+            " encountered: `${this.javaClass.name}`.")
 }
 
+/**
+ * Implements [ScopedLoggingContext.Builder] by using
+ * a [Flogger counterpart][FScopedLoggingContext.Builder] as underlying implementation.
+ */
 private class DelegatingContextBuilder(
     private val delegate: FScopedLoggingContext.Builder
 ) : ScopedLoggingContext.Builder() {
