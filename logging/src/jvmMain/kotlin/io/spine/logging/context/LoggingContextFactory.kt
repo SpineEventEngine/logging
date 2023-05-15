@@ -26,19 +26,22 @@
 
 package io.spine.logging.context
 
+import com.google.errorprone.annotations.CheckReturnValue
 import io.spine.logging.Level
 import io.spine.logging.toJavaLogging
 import io.spine.logging.toLevel
 import io.spine.logging.toLoggerName
+import com.google.errorprone.annotations.Immutable
 import kotlin.reflect.KClass
 import com.google.common.flogger.context.ContextDataProvider as FContextDataProvider
 import com.google.common.flogger.context.LogLevelMap as FLogLevelMap
 import com.google.common.flogger.context.ScopedLoggingContext as FScopedLoggingContext
 
+@Immutable
+@CheckReturnValue
 internal actual object LoggingContextFactory {
 
-    actual fun levelMapBuilder(): LogLevelMap.Builder =
-        BuilderImpl()
+    actual fun levelMapBuilder(): LogLevelMap.Builder = BuilderImpl()
 
     actual fun levelMap(map: Map<String, Level>, defaultLevel: Level): LogLevelMap =
         MapImpl(map, defaultLevel)
@@ -47,6 +50,16 @@ internal actual object LoggingContextFactory {
         val context = FContextDataProvider.getInstance().contextApiSingleton.newContext()
         return DelegatingContextBuilder(context)
     }
+}
+
+/**
+ * Adds the given packages at the specified log level.
+ */
+public fun LogLevelMap.Builder.add(level: Level, vararg packages: Package): LogLevelMap.Builder {
+    packages.forEach {
+        add(level, it.name)
+    }
+    return this
 }
 
 /**
@@ -94,6 +107,7 @@ private class BuilderImpl : LogLevelMap.Builder {
 /**
  * Implements [LogLevelMap] by delegating to a log level map from Flogger.
  */
+@Immutable
 private class MapImpl(val delegate: FLogLevelMap): LogLevelMap {
 
     constructor(map: Map<String, Level>, defaultLevel: Level) :

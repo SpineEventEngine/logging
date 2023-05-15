@@ -28,12 +28,14 @@ package io.spine.logging
 
 import com.google.common.flogger.FluentLogger
 import com.google.common.flogger.LogSites.callerOf
+import com.google.errorprone.annotations.CheckReturnValue
 import kotlin.reflect.KClass
 import java.util.logging.Level as JLevel
 
 /**
  * Implements [Logger] using [FluentLogger] as the underlying implementation.
  */
+@CheckReturnValue
 public class JvmLogger(
     cls: KClass<*>,
     internal val delegate: FluentLogger

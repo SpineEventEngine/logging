@@ -28,11 +28,24 @@ package io.spine.logging.context
 
 import io.spine.logging.Level
 
+/**
+ * A factory for platform-specific objects of the `io.spine.logging.context` package.
+ */
 internal expect object LoggingContextFactory {
 
+    /**
+     * Creates a builder for [LogLevelMap].
+     */
     fun levelMapBuilder(): LogLevelMap.Builder
 
+    /**
+     * Creates a log level map taking the mapping from names to logging levels and
+     * a default logging level.
+     */
     fun levelMap(map: Map<String, Level>, defaultLevel: Level): LogLevelMap
 
+    /**
+     * Obtains a builder for a new [ScopedLoggingContext].
+     */
     fun newContext(): ScopedLoggingContext.Builder
 }

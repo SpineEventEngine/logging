@@ -35,6 +35,8 @@ import kotlin.reflect.KClass
  *
  * This can be used for debugging or to provide more detailed log output for specific
  * conditions, such as when a command-line argument is passed.
+ *
+ * Implementing classes are expected to be immutable and thread safe.
  */
 public interface LogLevelMap {
 
@@ -55,10 +57,37 @@ public interface LogLevelMap {
      */
     public fun merge(other: LogLevelMap): LogLevelMap
 
+    /**
+     * The builder for a log level map which takes classes and package names
+     * for setting custom logging levels.
+     *
+     * To set up a [LogLevelMap] using only strings for names, please
+     * use the factory method [create].
+     *
+     * @see create
+     */
     public interface Builder {
+
+        /**
+         * Adds the given classes at the specified log level.
+         */
         public fun add(level: Level, vararg classes: KClass<*>): Builder
+
+        /**
+         * Adds the given package names at the specified level.
+         */
         public fun add(level: Level, vararg packageNames: String): Builder
+
+        /**
+         * Sets the default log level.
+         *
+         * If not called the [Level.OFF] will be used.
+         */
         public fun setDefault(level: Level): Builder
+
+        /**
+         * Creates a new log level map.
+         */
         public fun build(): LogLevelMap
     }
 
