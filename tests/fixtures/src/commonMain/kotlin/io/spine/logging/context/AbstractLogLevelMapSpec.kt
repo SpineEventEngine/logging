@@ -41,18 +41,20 @@ import kotlin.reflect.full.createInstance
  */
 abstract class AbstractLogLevelMapSpec(body: ShouldSpec.() -> Unit = {}) : ShouldSpec(body) {
 
-    private val map = lazy {
-        val builder = LogLevelMap.builder()
-        configureBuilder(builder)
-        builder.build()
-    }
-
-    private val context by lazy {
-        ScopedLoggingContext.newContext()
-            .withLogLevelMap(map.value)
-    }
-
     private var closable: AutoCloseable? = null
+
+    /**
+     * Creates and populates the builder of a scoped logging context
+     * delegating the configuration of the builer to [configureBuilder] method.
+     */
+    private fun createContext(): ScopedLoggingContext.Builder {
+        val map = LogLevelMap.builder().let {
+            configureBuilder(it)
+            it.build()
+        }
+        val context = ScopedLoggingContext.newContext().withLogLevelMap(map)
+        return context
+    }
 
     abstract fun configureBuilder(builder: LogLevelMap.Builder)
 
@@ -66,6 +68,7 @@ abstract class AbstractLogLevelMapSpec(body: ShouldSpec.() -> Unit = {}) : Shoul
      */
     override suspend fun beforeEach(testCase: TestCase) {
         super.beforeEach(testCase)
+        val context = createContext()
         closable = context.install()
     }
 
