@@ -33,7 +33,6 @@ import given.map.LoggingTestFixture
 import given.map.nested.L2Direct
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import io.spine.logging.Level.Companion.ALL
 import io.spine.logging.Level.Companion.DEBUG
 import io.spine.logging.Level.Companion.INFO
 

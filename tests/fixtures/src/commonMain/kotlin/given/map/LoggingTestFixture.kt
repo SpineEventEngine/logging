@@ -28,7 +28,6 @@ package given.map
 
 import io.spine.logging.Level
 import io.spine.logging.Level.Companion.DEBUG
-import io.spine.logging.Level.Companion.ERROR
 import io.spine.logging.Level.Companion.WARNING
 import io.spine.logging.WithLogging
 
@@ -51,7 +50,6 @@ abstract class LoggingTestFixture : WithLogging {
 
 @Suppress("MagicNumber")
 object CustomLoggingLevel {
-    val CRASH: Level = Level("CRASH", ERROR.value + 100)
     val ANNOUNCEMENT: Level = Level("ANNOUNCEMENT", WARNING.value + 100)
     val TRACE: Level = Level("TRACE", DEBUG.value - 100)
 }

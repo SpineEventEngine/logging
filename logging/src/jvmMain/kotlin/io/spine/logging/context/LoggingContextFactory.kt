@@ -29,10 +29,10 @@ package io.spine.logging.context
 import io.spine.logging.Level
 import io.spine.logging.toJavaLogging
 import io.spine.logging.toLevel
+import io.spine.logging.toLoggerName
 import kotlin.reflect.KClass
 import com.google.common.flogger.context.ContextDataProvider as FContextDataProvider
 import com.google.common.flogger.context.LogLevelMap as FLogLevelMap
-import com.google.common.flogger.context.LogLevelMap.Builder as FBuilder
 import com.google.common.flogger.context.ScopedLoggingContext as FScopedLoggingContext
 
 internal actual object LoggingContextFactory {
@@ -51,43 +51,40 @@ internal actual object LoggingContextFactory {
 
 private class BuilderImpl : LogLevelMap.Builder {
 
-    private val delegate: FBuilder = FLogLevelMap.builder()
+    private val map: MutableMap<String, Level> = mutableMapOf()
+    private var defaultLevel = Level.OFF
+
+    private fun put(name: String, level: Level) {
+        val prevEntry = map.put(name, level)
+        check(prevEntry == null) {
+            "The logging level for `$name` is already set to `$prevEntry`" +
+                    " and could not be changed to `$level`." +
+                    " Please check your log level map builder code."
+        }
+    }
 
     override fun add(level: Level, vararg classes: KClass<*>): LogLevelMap.Builder {
         classes.forEach { cls ->
-            delegate.add(level.toJavaLogging(), cls.java)
+            put(cls.toLoggerName(), level)
         }
         return this
     }
 
     override fun add(level: Level, vararg packageNames: String): LogLevelMap.Builder {
         packageNames.forEach {
-            val javaPackage = packageNamed(it)
-            delegate.add(level.toJavaLogging(), javaPackage)
+            put(it, level)
         }
         return this
     }
 
     override fun setDefault(level: Level): LogLevelMap.Builder {
-        delegate.setDefault(level.toJavaLogging())
+        defaultLevel = level
         return this
     }
 
     override fun build(): LogLevelMap {
-        return MapImpl(delegate.build())
+        return MapImpl(map, defaultLevel)
     }
-}
-
-private fun packageNamed(name: String): Package {
-    val classloader = ClassLoader.getPlatformClassLoader()
-    classloader.getDefinedPackage(name)?.let {
-        return it
-    }
-    val javaLang = String::class.java.`package`
-    if (name == javaLang.name) {
-        return javaLang
-    }
-    error("Unable to obtain a package named `$name`.")
 }
 
 private class MapImpl(val delegate: FLogLevelMap): LogLevelMap {
@@ -106,8 +103,8 @@ private class MapImpl(val delegate: FLogLevelMap): LogLevelMap {
         return MapImpl(merged)
     }
 
-    private companion object {
-        fun createDelegate(map: Map<String, Level>, defaultLevel: Level): FLogLevelMap {
+    companion object {
+        private fun createDelegate(map: Map<String, Level>, defaultLevel: Level): FLogLevelMap {
             val convertedMap = map.mapValues { it.value.toJavaLogging() }
             return FLogLevelMap.create(convertedMap, defaultLevel.toJavaLogging())
         }

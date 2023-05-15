@@ -47,3 +47,14 @@ public expect object LoggingFactory {
      */
     public fun loggingDomainOf(cls: KClass<*>): LoggingDomain
 }
+
+
+/**
+ * Obtains a name of a logger to be used for this class.
+ *
+ * For a fully-qualified class, its name will be used.
+ * Otherwise, if a class has a simple name, it will be used.
+ * If a class does not have a simple name, the string representation
+ * of the class will be returned.
+ */
+internal fun KClass<*>.toLoggerName(): String = qualifiedName?:simpleName?:toString()

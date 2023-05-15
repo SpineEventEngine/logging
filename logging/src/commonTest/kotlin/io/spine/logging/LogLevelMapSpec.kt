@@ -99,9 +99,9 @@ internal class LogLevelMapSpec {
             setDefault(INFO)
         }
         map.run {
-            levelOf("io.spine") shouldBe INFO
+            levelOf(String::class.qualifiedName!!) shouldBe DEBUG
             levelOf("java.lang") shouldBe WARNING
-            levelOf("java.lang.String") shouldBe DEBUG
+            levelOf("io.spine") shouldBe INFO
         }
     }
 }
