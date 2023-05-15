@@ -26,6 +26,8 @@
 
 package given.map
 
+import given.map.CustomLoggingLevel.CRASH
+import given.map.CustomLoggingLevel.TRACE
 import io.spine.logging.Level
 import io.spine.logging.Level.Companion.DEBUG
 import io.spine.logging.Level.Companion.ERROR
@@ -43,14 +45,23 @@ import io.spine.logging.WithLogging
  */
 abstract class LoggingTestFixture : WithLogging {
 
+    fun atTrace() = logAt(TRACE)
     fun atDebug() = logAt(DEBUG)
     fun atInfo() = logAt(INFO)
     fun atWarning() = logAt(WARNING)
     fun atError() = logAt(ERROR)
-
+    fun atCrash() = logAt(CRASH)
+    
     private fun logAt(level: Level) {
         logger.at(level).log {
             "Stub logging message at `${level.name}`."
         }
     }
+}
+
+public object CustomLoggingLevel {
+
+    public val TRACE: Level = Level("TRACE", 500)
+
+    public val CRASH: Level = Level("CRASH", 1100)
 }
