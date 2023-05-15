@@ -31,8 +31,11 @@ import given.map.CustomLoggingLevel.TRACE
 import given.map.L1Direct
 import given.map.LoggingTestFixture
 import given.map.nested.L2Direct
+import given.map.nested.sibling.Level3Sibling
+import given.map.nested.type.Level3
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import io.spine.logging.Level.Companion.ALL
 import io.spine.logging.Level.Companion.DEBUG
 import io.spine.logging.Level.Companion.INFO
 
@@ -61,6 +64,7 @@ abstract class BaseLogLevelMapSpec: AbstractLogLevelMapSpec() {
             setDefault(ANNOUNCEMENT)
             add(DEBUG, L1Direct::class)
             add(DEBUG, L2Direct::class)
+            add(TRACE, "given.map.nested")
         }
     }
 
@@ -85,6 +89,29 @@ abstract class BaseLogLevelMapSpec: AbstractLogLevelMapSpec() {
 
             it.logAt(INFO)
             records.last().level shouldBe INFO /* because `INFO` > `DEBUG`. */
+        }
+
+        should("use a level set on a package", Level3::class) {
+            it.logAt(ALL)
+            records shouldHaveSize 0
+
+            // `Level3` class belongs to a package under the one specified in the map.
+            it.logAt(TRACE)
+            records shouldHaveSize 1
+            records.last().level shouldBe TRACE
+
+            // `Level3Sibling` class is in another package under the one specified in the map.
+            val sibling = Level3Sibling()
+            sibling.logAt(TRACE)
+            records shouldHaveSize 2
+            records.last().level shouldBe TRACE
+
+            // `L2Direct` is the class which is directly in the package mentioned in the map.
+            // The class has its own logging level, but should log at the package level too.
+            val samePackageClass = L2Direct()
+            samePackageClass.logAt(TRACE)
+            records shouldHaveSize 2
+            records.last().level shouldBe TRACE
         }
     }
 }
