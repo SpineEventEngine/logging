@@ -59,9 +59,9 @@ abstract class LoggingTestFixture : WithLogging {
     }
 }
 
-public object CustomLoggingLevel {
+object CustomLoggingLevel {
 
-    public val TRACE: Level = Level("TRACE", 500)
+    val TRACE: Level = Level("TRACE", 500)
 
-    public val CRASH: Level = Level("CRASH", 1100)
+    val CRASH: Level = Level("CRASH", 1100)
 }
