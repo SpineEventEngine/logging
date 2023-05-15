@@ -64,7 +64,6 @@ public class StdBackendFactory: BackendFactory() {
  *          we extend. Please also see the constructor of `AbstractBackend` which accepts
  *          `String` for the operation with the given class name.
  * @see AbstractBackend
- *
  */
 internal class StdLoggerBackend(loggingClass: String): AbstractBackend(loggingClass) {
 
