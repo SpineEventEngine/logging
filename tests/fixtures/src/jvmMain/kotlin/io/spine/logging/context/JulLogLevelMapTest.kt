@@ -24,6 +24,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.logging.context.JulLogLevelMapSpec
+package io.spine.logging.context
 
-internal class LogLevelMapSpec: JulLogLevelMapSpec()
+import io.spine.logging.Level
+import io.spine.testing.logging.JulRecorder
+import io.spine.testing.logging.Recorder
+
+abstract class JulLogLevelMapTest: BaseLogLevelMapTest() {
+
+    override fun createRecorder(loggerName: String, minLevel: Level): Recorder {
+        return JulRecorder(loggerName, minLevel)
+    }
+}

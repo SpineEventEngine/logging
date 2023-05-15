@@ -24,15 +24,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.context
+import io.spine.logging.context.JulLogLevelMapTest
 
-import io.spine.logging.Level
-import io.spine.testing.logging.JulRecorder
-import io.spine.testing.logging.Recorder
-
-abstract class JulLogLevelMapSpec: BaseLogLevelMapSpec() {
-
-    override fun createRecorder(loggerName: String, minLevel: Level): Recorder {
-        return JulRecorder(loggerName, minLevel)
-    }
-}
+/**
+ * This is a non-abstract integration test of [LogLevelMap][io.spine.logging.context.LogLevelMap]
+ * executed in the project in which logging contexts implemented using gRPC.
+ *
+ * Please see `build.gradle.kts` of this module for the details.
+ */
+internal class LogLevelMapOnGrpcContextITest: JulLogLevelMapTest()

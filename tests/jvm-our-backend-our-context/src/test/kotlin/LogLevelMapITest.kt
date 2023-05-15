@@ -24,6 +24,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.logging.context.JulLogLevelMapSpec
+import io.spine.logging.context.JulLogLevelMapTest
 
-internal class LogLevelMapSpecOnGrpcContext: JulLogLevelMapSpec()
+/**
+ * This is a non-abstract integration test of [LogLevelMap][io.spine.logging.context.LogLevelMap]
+ * executed in the project in which logging contexts implemented using `spine-logging-context`.
+ *
+ * Please see `build.gradle.kts` of this module for the details.
+ */
+internal class LogLevelMapITest: JulLogLevelMapTest()

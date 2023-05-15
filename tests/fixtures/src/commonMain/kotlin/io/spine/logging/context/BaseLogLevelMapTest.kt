@@ -42,15 +42,21 @@ import io.spine.logging.Level.Companion.INFO
 /**
  * This class defines tests for [LogLevelMap].
  *
- * This class extends [AbstractLogLevelMapSpec] for defining the log level map against
+ * This class extends [AbstractLogLevelMapTest] for defining the log level map against
  * which tests are executed.
  *
  * The class is still abstract so that its descendants can implement [createRecorder] for
  * various logging backends. Another reason for having this interim abstract base is
- * to isolate abstract spec. code defined in [AbstractLogLevelMapSpec] from actual tests
+ * to isolate abstract spec. code defined in [AbstractLogLevelMapTest] from actual tests
  * defined by this class.
+ *
+ * The execution of tests is arranged by having non-abstract classes extending this one.
+ * These classes are created in projects that define implementation-specific details for
+ * the testing environments.
+ *
+ * @see AbstractLogLevelMapTest
  */
-abstract class BaseLogLevelMapSpec: AbstractLogLevelMapSpec() {
+abstract class BaseLogLevelMapTest: AbstractLogLevelMapTest() {
 
     /**
      * Configures a log level map builder with the data used by the test of this spec class.

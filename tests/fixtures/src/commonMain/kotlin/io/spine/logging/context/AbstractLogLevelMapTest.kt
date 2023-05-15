@@ -37,15 +37,20 @@ import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 
 /**
- * Base class for test suites for asserting [LogLevelMap] features.
+ * Base class for integration test suites of [LogLevelMap].
+ *
+ * This class is responsible for the general purpose configuration of a test suite.
+ * For the actual definition of tests, please see [BaseLogLevelMapTest].
+ *
+ * @see BaseLogLevelMapTest
  */
-abstract class AbstractLogLevelMapSpec(body: ShouldSpec.() -> Unit = {}) : ShouldSpec(body) {
+abstract class AbstractLogLevelMapTest(body: ShouldSpec.() -> Unit = {}) : ShouldSpec(body) {
 
     private var closable: AutoCloseable? = null
 
     /**
      * Creates and populates the builder of a scoped logging context
-     * delegating the configuration of the builer to [configureBuilder] method.
+     * delegating the configuration of the builder to [configureBuilder] method.
      */
     private fun createContext(): ScopedLoggingContext.Builder {
         val map = LogLevelMap.builder().let {
