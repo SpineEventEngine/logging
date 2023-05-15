@@ -26,12 +26,9 @@
 
 package given.map
 
-import given.map.CustomLoggingLevel.CRASH
-import given.map.CustomLoggingLevel.TRACE
 import io.spine.logging.Level
 import io.spine.logging.Level.Companion.DEBUG
 import io.spine.logging.Level.Companion.ERROR
-import io.spine.logging.Level.Companion.INFO
 import io.spine.logging.Level.Companion.WARNING
 import io.spine.logging.WithLogging
 
@@ -45,23 +42,16 @@ import io.spine.logging.WithLogging
  */
 abstract class LoggingTestFixture : WithLogging {
 
-    fun atTrace() = logAt(TRACE)
-    fun atDebug() = logAt(DEBUG)
-    fun atInfo() = logAt(INFO)
-    fun atWarning() = logAt(WARNING)
-    fun atError() = logAt(ERROR)
-    fun atCrash() = logAt(CRASH)
-    
-    private fun logAt(level: Level) {
+    fun logAt(level: Level) {
         logger.at(level).log {
             "Stub logging message at `${level.name}`."
         }
     }
 }
 
+@Suppress("MagicNumber")
 object CustomLoggingLevel {
-
-    val TRACE: Level = Level("TRACE", 500)
-
-    val CRASH: Level = Level("CRASH", 1100)
+    val CRASH: Level = Level("CRASH", ERROR.value + 100)
+    val ANNOUNCEMENT: Level = Level("ANNOUNCEMENT", WARNING.value + 100)
+    val TRACE: Level = Level("TRACE", DEBUG.value - 100)
 }

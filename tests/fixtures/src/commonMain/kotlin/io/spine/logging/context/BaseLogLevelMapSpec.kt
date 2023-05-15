@@ -26,11 +26,14 @@
 
 package io.spine.logging.context
 
+import given.map.CustomLoggingLevel.ANNOUNCEMENT
+import given.map.CustomLoggingLevel.TRACE
 import given.map.L1Direct
 import given.map.LoggingTestFixture
 import given.map.nested.L2Direct
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import io.spine.logging.Level.Companion.ALL
 import io.spine.logging.Level.Companion.DEBUG
 import io.spine.logging.Level.Companion.ERROR
 import io.spine.logging.Level.Companion.INFO
@@ -50,29 +53,32 @@ abstract class BaseLogLevelMapSpec: AbstractLogLevelMapSpec() {
 
     override fun configureBuilder(builder: LogLevelMap.Builder) {
         with(builder) {
-            setDefault(ERROR)
-            add(INFO, L1Direct::class)
+            setDefault(ANNOUNCEMENT)
+            add(DEBUG, L1Direct::class)
             add(DEBUG, L2Direct::class)
         }
     }
 
     init {
         should("set default level", DefLoggingFixture::class) {
-            it.atDebug()
+            it.logAt(ALL)
             records shouldHaveSize 0
 
-            it.atError()
+            it.logAt(INFO)
             records shouldHaveSize 1
-            records[0].level shouldBe ERROR
+            records[0].level shouldBe INFO
         }
 
         should("use a level set for a class", L1Direct::class) {
-            it.atDebug()
-            records shouldHaveSize 0
+            it.logAt(TRACE)
+            records shouldHaveSize 0 // because `TRACE` < `DEBUG`, which is set directly.
 
-            it.atInfo()
+            it.logAt(DEBUG)
             records shouldHaveSize 1
-            records[0].level shouldBe INFO
+            records.last().level shouldBe DEBUG
+
+            it.logAt(INFO)
+            records.last().level shouldBe INFO // because `INFO` > `DEBUG`.
         }
     }
 }
