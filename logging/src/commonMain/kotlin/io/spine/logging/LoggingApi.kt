@@ -65,7 +65,7 @@ public interface LoggingApi<API: LoggingApi<API>> {
     /**
      * An implementation of [LoggingApi] which does nothing, discarding all parameters.
      *
-     * The extending classes are likely to be non-wildcard, fully specified, no-op
+     * Extending classes are likely to be non-wildcard, fully specified, no-op
      * implementations of the [API].
      */
     public open class NoOp<API: LoggingApi<API>>: LoggingApi<API> {
@@ -73,11 +73,31 @@ public interface LoggingApi<API: LoggingApi<API>> {
         /**
          * Obtains the reference to this no-op implementation of fluent logging [API].
          */
-        @Suppress("UNCHECKED_CAST")
+        @Suppress(
+            "UNCHECKED_CAST" /* The cast is safe since the class implements `API`. */,
+            "MemberNameEqualsClassName" /* The name highlights the emptiness of the impl. */
+        )
         protected fun noOp(): API = this as API
+
+        /**
+         * Does nothing.
+         */
         override fun withCause(cause: Throwable): API = noOp()
+
+        /**
+         * Always returns `false`.
+         */
         override fun isEnabled(): Boolean = false
+
+
+        /**
+         * Does nothing.
+         */
         override fun log(): Unit = Unit
+
+        /**
+         * Does nothing.
+         */
         override fun log(message: () -> String): Unit = Unit
     }
 }
