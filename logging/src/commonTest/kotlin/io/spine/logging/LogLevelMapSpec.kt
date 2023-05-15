@@ -84,13 +84,15 @@ internal class LogLevelMapSpec {
     @Test
     fun `copy values from the given map`() {
         val p = "com.example"
-        val mutableMap = mutableMapOf(p to INFO)
-        LogLevelMap.create(mutableMap, WARNING).run {
+        val srcMap = mutableMapOf(p to INFO)
+        LogLevelMap.create(srcMap, WARNING).run {
             val nestedPackage = "$p.foo"
             levelOf(nestedPackage) shouldBe INFO
 
-            mutableMap[nestedPackage] = DEBUG
+            // Now set another level for the `nestedPackage`.
+            srcMap[nestedPackage] = DEBUG
 
+            // The level should still be the same.
             levelOf(nestedPackage) shouldBe INFO
         }
     }
@@ -104,6 +106,7 @@ internal class LogLevelMapSpec {
         }
         map.run {
             levelOf(String::class.qualifiedName!!) shouldBe DEBUG
+            levelOf(String::class) shouldBe DEBUG
             levelOf("java.lang") shouldBe WARNING
             levelOf("io.spine") shouldBe INFO
         }
