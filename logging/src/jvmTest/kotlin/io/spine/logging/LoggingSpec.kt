@@ -74,7 +74,6 @@ internal class LoggingSpec {
 
     @Nested
     @DisplayName("expose shortcut methods")
-    @Disabled
     internal inner class Shortcuts {
 
         private lateinit var obj: Logging
