@@ -56,7 +56,7 @@ import io.spine.logging.Level.Companion.INFO
  *
  * @see AbstractLogLevelMapTest
  */
-abstract class BaseLogLevelMapTest: AbstractLogLevelMapTest() {
+public abstract class BaseLogLevelMapTest: AbstractLogLevelMapTest() {
 
     /**
      * Configures a log level map builder with the data used by the test of this spec class.
@@ -125,5 +125,7 @@ abstract class BaseLogLevelMapTest: AbstractLogLevelMapTest() {
 /**
  * The fixture which is not mentioned in log level map, and package of which
  * is outside the package hierarchy configured in the map.
+ *
+ * The class must be public so that Kotlin Reflection can call its constructor.
  */
-class DefLoggingFixture: LoggingTestFixture()
+public class DefLoggingFixture: LoggingTestFixture()

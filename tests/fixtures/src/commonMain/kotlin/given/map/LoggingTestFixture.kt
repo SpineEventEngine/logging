@@ -39,9 +39,9 @@ import io.spine.logging.WithLogging
  * instances of these fixtures are created via Kotlin reflection using
  * a class reference.
  */
-abstract class LoggingTestFixture : WithLogging {
+public abstract class LoggingTestFixture : WithLogging {
 
-    fun logAt(level: Level) {
+    public fun logAt(level: Level) {
         logger.at(level).log {
             "Stub logging message at `${level.name}`."
         }
@@ -49,7 +49,7 @@ abstract class LoggingTestFixture : WithLogging {
 }
 
 @Suppress("MagicNumber")
-object CustomLoggingLevel {
-    val ANNOUNCEMENT: Level = Level("ANNOUNCEMENT", WARNING.value + 100)
-    val TRACE: Level = Level("TRACE", DEBUG.value - 100)
+public object CustomLoggingLevel {
+    public val ANNOUNCEMENT: Level = Level("ANNOUNCEMENT", WARNING.value + 100)
+    public val TRACE: Level = Level("TRACE", DEBUG.value - 100)
 }

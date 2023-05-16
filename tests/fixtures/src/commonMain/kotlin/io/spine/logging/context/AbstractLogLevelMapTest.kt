@@ -44,7 +44,7 @@ import kotlin.reflect.full.createInstance
  *
  * @see BaseLogLevelMapTest
  */
-abstract class AbstractLogLevelMapTest(body: ShouldSpec.() -> Unit = {}) : ShouldSpec(body) {
+public abstract class AbstractLogLevelMapTest(body: ShouldSpec.() -> Unit = {}) : ShouldSpec(body) {
 
     private var closable: AutoCloseable? = null
 
@@ -61,7 +61,7 @@ abstract class AbstractLogLevelMapTest(body: ShouldSpec.() -> Unit = {}) : Shoul
         return context
     }
 
-    abstract fun configureBuilder(builder: LogLevelMap.Builder)
+    protected abstract fun configureBuilder(builder: LogLevelMap.Builder)
 
     /**
      * Installs logging context with the configured log level map.
@@ -91,7 +91,7 @@ abstract class AbstractLogLevelMapTest(body: ShouldSpec.() -> Unit = {}) : Shoul
      * Extending classes should create a [Recorder] specific to the currently
      * used logging backend.
      */
-    abstract fun createRecorder(loggerName: String, minLevel: Level): Recorder
+    protected abstract fun createRecorder(loggerName: String, minLevel: Level): Recorder
 
     /**
      * Executes the [test] with the started logging [Recorder].

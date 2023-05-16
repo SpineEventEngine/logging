@@ -30,9 +30,11 @@ import io.spine.logging.Level
 import io.spine.testing.logging.JulRecorder
 import io.spine.testing.logging.Recorder
 
-abstract class JulLogLevelMapTest: BaseLogLevelMapTest() {
+/**
+ * Abstract base for log level map tests that use Java Logging as a logging backend.
+ */
+public abstract class JulLogLevelMapTest: BaseLogLevelMapTest() {
 
-    override fun createRecorder(loggerName: String, minLevel: Level): Recorder {
-        return JulRecorder(loggerName, minLevel)
-    }
+    override fun createRecorder(loggerName: String, minLevel: Level): Recorder =
+        JulRecorder(loggerName, minLevel)
 }

@@ -28,4 +28,4 @@ package given.map.nested.type
 
 import given.map.LoggingTestFixture
 
-class Level3: LoggingTestFixture()
+public class Level3: LoggingTestFixture()

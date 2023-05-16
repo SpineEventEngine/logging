@@ -67,7 +67,7 @@ public fun checkLogging(
     loggingClass: Class<*>,
     minLevel: Level,
     block: Recorder.() -> Unit
-) = checkLogging(loggingClass.name, minLevel, block)
+): Unit = checkLogging(loggingClass.name, minLevel, block)
 
 /**
  * Intercepts logging records of the logger with the given name.

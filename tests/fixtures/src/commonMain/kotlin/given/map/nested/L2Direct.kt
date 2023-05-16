@@ -28,4 +28,4 @@ package given.map.nested
 
 import given.map.LoggingTestFixture
 
-class L2Direct: LoggingTestFixture()
+public class L2Direct: LoggingTestFixture()
