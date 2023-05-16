@@ -102,10 +102,10 @@ private class StdScopedLoggingContext(
     inner class BuilderImpl(private val scopeType: ScopeType?) : Builder() {
 
         override fun install(): LoggingContextCloseable {
-            val newContextData = StdContextData(scopeType, provider).also {
-                it.addTags(tags)
-                it.addMetadata(metadata)
-                it.applyLogLevelMap(logLevelMap.toMap())
+            val newContextData = StdContextData(scopeType, provider).apply {
+                addTags(tags)
+                addMetadata(metadata)
+                applyLogLevelMap(logLevelMap.toMap())
             }
             return install(newContextData)
         }
