@@ -99,7 +99,7 @@ fun Module.addDependencies() = dependencies {
     ErrorProne.annotations.forEach { compileOnlyApi(it) }
 
     testImplementation(Guava.testLib)
-    //testImplementation(JUnit.runner)
+    testImplementation(JUnit.runner)
     testImplementation(JUnit.pioneer)
     JUnit.api.forEach { testImplementation(it) }
 

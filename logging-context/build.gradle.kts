@@ -33,5 +33,4 @@ plugins {
 
 dependencies {
     implementation(project(":logging"))
-    testImplementation(JUnit.runner)
 }
