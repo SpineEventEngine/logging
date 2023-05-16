@@ -24,8 +24,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-@file:Suppress("UNUSED_VARIABLE")
-
 import io.spine.internal.dependency.Kotest
 import io.spine.internal.dependency.Spine
 import io.spine.internal.gradle.kotlin.setFreeCompilerArgs
@@ -61,10 +59,6 @@ kotlin {
                 api(Kotest.frameworkEngine)
                 api(Spine.testlib)
             }
-        }
-
-        val jvmMain by getting {
-            
         }
     }
 }
