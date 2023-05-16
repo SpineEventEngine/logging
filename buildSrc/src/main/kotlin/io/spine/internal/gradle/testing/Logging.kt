@@ -53,7 +53,6 @@ import org.gradle.kotlin.dsl.KotlinClosure2
  *```
  */
 fun Test.configureLogging() {
-
     testLogging {
         showStandardStreams = true
         showExceptions = true
