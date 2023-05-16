@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,30 +24,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-    }
-}
+import io.spine.logging.context.JulLogLevelMapTest
 
-rootProject.name = "spine-logging"
-
-fun testModule(name: String) {
-    include(name)
-    project(":$name").projectDir = file("tests/$name")
-}
-
-include(
-    "logging",
-    "logging-backend",
-    "logging-context",
-)
-
-testModule("fixtures")
-testModule("jvm-our-backend-our-context")
-testModule("jvm-our-backend-grpc-context")
-testModule("jvm-log4j-backend-our-context")
-testModule("jvm-slf4j-jdk14-backend-our-context")
-testModule("jvm-slf4j-reload4j-backend-our-context")
-
+/**
+ * This is a non-abstract integration test of [LogLevelMap][io.spine.logging.context.LogLevelMap]
+ * executed in the project with Slf4J  Flogger backend and `spine-logging-context`. Slf4J uses
+ * JDK 1.4 logging.
+ *
+ * Please see `build.gradle.kts` of this module for the details.
+ */
+internal class LogLevelMapSlf4JOnJdk14Test: JulLogLevelMapTest()

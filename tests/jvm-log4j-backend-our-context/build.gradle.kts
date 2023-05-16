@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,30 +24,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-    }
+import io.spine.internal.dependency.Flogger
+
+plugins {
+    `kotlin-jvm-module`
 }
 
-rootProject.name = "spine-logging"
-
-fun testModule(name: String) {
-    include(name)
-    project(":$name").projectDir = file("tests/$name")
+dependencies {
+    testImplementation(project(":logging"))
+    testImplementation(project(":fixtures"))
+    testImplementation(Flogger.Runtime.log4j2Backend)
+    testRuntimeOnly(project(":logging-context"))
 }
-
-include(
-    "logging",
-    "logging-backend",
-    "logging-context",
-)
-
-testModule("fixtures")
-testModule("jvm-our-backend-our-context")
-testModule("jvm-our-backend-grpc-context")
-testModule("jvm-log4j-backend-our-context")
-testModule("jvm-slf4j-jdk14-backend-our-context")
-testModule("jvm-slf4j-reload4j-backend-our-context")
-

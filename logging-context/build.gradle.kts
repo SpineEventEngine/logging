@@ -1,3 +1,5 @@
+import io.spine.internal.dependency.Flogger
+
 /*
  * Copyright 2023, TeamDev. All rights reserved.
  *
@@ -31,4 +33,12 @@ plugins {
 
 dependencies {
     implementation(project(":logging"))
+    // We need this as an implementation dependency in order to detect
+    // currently used logging backend. This is done by loading implementation
+    // of the service `com.google.common.flogger.backend.system.BackendFactory` which
+    // is an abstract class belonging to Flogger system backend artifact.
+    //
+    // Other backends like Log4J depend on Flogger system backend anyway, because they
+    // extend the abstract `BackendFactory` class.
+    implementation(Flogger.Runtime.systemBackend)
 }

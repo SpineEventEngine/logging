@@ -1,5 +1,3 @@
-import io.spine.internal.dependency.Flogger
-
 /*
  * Copyright 2023, TeamDev. All rights reserved.
  *
@@ -25,6 +23,8 @@ import io.spine.internal.dependency.Flogger
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+import io.spine.internal.dependency.Flogger
 
 plugins {
     `kotlin-jvm-module`

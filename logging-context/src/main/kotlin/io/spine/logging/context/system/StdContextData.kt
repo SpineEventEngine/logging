@@ -27,12 +27,14 @@
 package io.spine.logging.context.system
 
 import com.google.common.flogger.LoggingScope
+import com.google.common.flogger.backend.system.BackendFactory
 import com.google.common.flogger.context.ContextMetadata
 import com.google.common.flogger.context.ScopeType
 import com.google.common.flogger.context.ScopedLoggingContext.ScopeList
 import com.google.common.flogger.context.Tags
 import io.spine.logging.Level
 import io.spine.logging.context.LogLevelMap
+import java.util.ServiceLoader
 
 /**
  * The data of a scoped logging context with merging capabilities when contexts are nested.
@@ -77,24 +79,22 @@ internal class StdContextData(
      * Adds tags to the current context data.
      * If `null` is passed, no action is taken.
      */
-    fun addTags(tags: Tags?) =
-        tagRef.mergeFrom(tags)
+    fun addTags(tags: Tags?) = tagRef.mergeFrom(tags)
 
     /**
      * Concatenates given metadata with the one held in this context data instance.
      * If null is passed, no action is taken.
      */
-    fun addMetadata(metadata: ContextMetadata?) =
-        metadataRef.mergeFrom(metadata)
+    fun addMetadata(metadata: ContextMetadata?) = metadataRef.mergeFrom(metadata)
 
     /**
      * Merges the give map with the one held in this context data instance.
      * If null is passed, no action is taken.
      */
     fun applyLogLevelMap(map: LogLevelMap?) {
-        if (map != null) {
+        map?.let {
             provider.setLogLevelMapFlag()
-            logLevelMapRef.mergeFrom(map)
+            logLevelMapRef.mergeFrom(it)
         }
     }
 
@@ -138,6 +138,28 @@ internal class StdContextData(
             get() = holder.get()
 
         /**
+         * Stores the way we need to compare logging levels depending on
+         * the currently used logging backend.
+         */
+        private val compareLevels: CompareLevels by lazy {
+            val lessOrEqual: CompareLevels = { l1, l2 -> l1 <= l2 }
+            val greaterOrEqual: CompareLevels = { l1, l2 -> l1 >= l2 }
+
+            val services = ServiceLoader.load(BackendFactory::class.java)
+            val log4J = services.find {
+                // See if it's one of these:
+                //  — com.google.common.flogger.backend.log4j.Log4jBackendFactory
+                //  — com.google.common.flogger.backend.log4j2.Log4j2BackendFactory
+                it::class.java.name.contains("backend.log4j")
+            }
+            if (log4J != null) {
+                greaterOrEqual
+            } else {
+                lessOrEqual
+            }
+        }
+
+        /**
          * Obtains the tags of the current context or [Tags.empty] if no
          * context is installed.
          */
@@ -173,7 +195,8 @@ internal class StdContextData(
             current?.let {
                 it.logLevelMapRef.get()?.let { map ->
                     val levelFromMap = map.levelOf(loggerName)
-                    return levelFromMap.value <= level.value
+                    val result = compareLevels(levelFromMap.value, level.value)
+                    return result
                 }
             }
             return false
@@ -190,3 +213,6 @@ internal class StdContextData(
             current?.let { ScopeList.lookup(it.scopes, type) }
     }
 }
+
+private typealias CompareLevels = (Int, Int) -> Boolean
+
