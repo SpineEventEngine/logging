@@ -14,10 +14,9 @@ fluent logging API in [SLF4J in v2.0.0][fluent-slf4j].
 
 ## Experimental status
 
-This library is in early stages of the development. While it is being used for development of
-Spine SDK, its API is likely to change in the near future without a notice.
-Therefore, adoption of the library in your project should be approached with great caution, 
-until the removal of the experimental status.
+This library is in its early stages of development and is not yet stable. 
+Its API may change without notice in the near future. Therefore, you should use it with
+caution in your projects until it is no longer considered experimental.
 
 ## Gradle dependency
 To use Spine Logging in your Gradle project:
