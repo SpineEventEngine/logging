@@ -43,16 +43,13 @@ import java.util.logging.Logger
  */
 public class StdBackendFactory: BackendFactory() {
 
-    public override fun create(loggingClass: String): LoggerBackend {
-        return StdLoggerBackend(loggingClass)
-    }
+    public override fun create(loggingClass: String): LoggerBackend =
+        StdLoggerBackend(loggingClass)
 
     /**
      * Returns a fully-qualified name of this class.
      */
-    override fun toString(): String {
-        return javaClass.name
-    }
+    override fun toString(): String = javaClass.name
 }
 
 /**
@@ -71,16 +68,15 @@ internal class StdLoggerBackend(loggingClass: String): AbstractBackend(loggingCl
         Logger.getLogger(loggerName)
     }
 
-    override fun log(data: LogData) {
-        doLog(SimpleLogRecord.create(data, Platform.getInjectedMetadata()), data.wasForced())
-    }
+    override fun log(data: LogData) = doLog(
+        SimpleLogRecord.create(data, Platform.getInjectedMetadata()),
+        data.wasForced()
+    )
 
-    override fun handleError(error: RuntimeException, badData: LogData) {
-        doLog(
-            SimpleLogRecord.error(error, badData, Platform.getInjectedMetadata()),
-            badData.wasForced()
-        )
-    }
+    override fun handleError(error: RuntimeException, badData: LogData) = doLog(
+        SimpleLogRecord.error(error, badData, Platform.getInjectedMetadata()),
+        badData.wasForced()
+    )
 
     /**
      * Logs the given record using the [logger] associated with this backend.
