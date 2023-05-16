@@ -28,6 +28,10 @@ package io.spine.testing.logging
 
 import io.spine.logging.Level
 
+/**
+ * A common interface for data processed by logging frameworks, and used by
+ * [Recorder]s for storing intercepted logging records.
+ */
 public interface LogData {
     public val level: Level
     public val message: String
