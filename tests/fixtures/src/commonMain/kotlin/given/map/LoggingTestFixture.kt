@@ -50,6 +50,6 @@ public abstract class LoggingTestFixture : WithLogging {
 
 @Suppress("MagicNumber")
 public object CustomLoggingLevel {
-    public val ANNOUNCEMENT: Level = Level("ANNOUNCEMENT", WARNING.value + 10)
+    public val ANNOUNCEMENT: Level = Level("ANNOUNCEMENT", WARNING.value + 50)
     public val TRACE: Level = Level("TRACE", DEBUG.value - 100)
 }
