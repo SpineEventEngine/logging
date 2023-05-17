@@ -1,5 +1,3 @@
-import io.spine.internal.dependency.Flogger
-
 /*
  * Copyright 2023, TeamDev. All rights reserved.
  *
