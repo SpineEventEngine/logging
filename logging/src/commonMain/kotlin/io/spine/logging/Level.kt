@@ -26,8 +26,6 @@
 
 package io.spine.logging
 
-import kotlin.reflect.KClass
-
 /**
  * Level of logging in an application.
  *
