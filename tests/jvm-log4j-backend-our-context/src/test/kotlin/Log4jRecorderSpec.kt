@@ -24,18 +24,32 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.logging.Level
-import io.spine.logging.context.BaseLogLevelMapTest
-import io.spine.testing.logging.Recorder
+import given.map.CustomLoggingLevel.ANNOUNCEMENT
+import io.kotest.core.spec.style.ShouldSpec
+import io.kotest.matchers.shouldBe
+import io.spine.logging.Level.Companion.INFO
+import io.spine.logging.Level.Companion.WARNING
+import io.spine.logging.compareTo
 
-/**
- * This is a non-abstract integration test of [LogLevelMap][io.spine.logging.context.LogLevelMap]
- * executed in the project in which logging backend is based on Log4J by Flogger.
- *
- * Please see `build.gradle.kts` of this module for the details.
- */
-internal class LogLevelMapLog4JBackendTest: BaseLogLevelMapTest() {
+internal class Log4jRecorderSpec: ShouldSpec({
 
-    override fun createRecorder(loggerName: String, minLevel: Level): Recorder =
-        Log4jRecorder(loggerName, minLevel)
-}
+    val anno = ANNOUNCEMENT.toLog4j()
+    val warn = WARNING.toLog4j()
+    val info = INFO.toLog4j()
+
+    should("use levels converted to Log4j") {
+        // In terms of Log4J lesser level means higher barrier for log records.
+        // Therefore, the custom level of `ANNOUNCEMENT` defined in JUL terms as being
+        // higher than `WARNING` should be less than `INFO` and `WARNING` when
+        // converted to Log4J.
+        (anno <= info) shouldBe true
+        (anno <= warn) shouldBe true
+    }
+
+    should("convert Log4j level to level") {
+        val annoBack = anno.toLevel()
+        val warnBack = warn.toLevel()
+        (annoBack > warnBack) shouldBe true
+        (annoBack > warnBack) shouldBe true
+    }
+})

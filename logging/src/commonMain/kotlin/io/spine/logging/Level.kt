@@ -26,11 +26,34 @@
 
 package io.spine.logging
 
+import kotlin.reflect.KClass
+
 /**
  * Level of logging in an application.
  *
  * Implemented as data class rather than enum to allow for custom logging level values.
  * Please see the companion object for the standard levels.
+ *
+ * ## Adding custom levels
+ *
+ * Adding a custom logging level could be done like this:
+ *
+ * ```kotlin
+ * public object MyLoggingLevels {
+ *    public val CONFIG: Level = Level("CONFIG", 700)
+ *    ...
+ * }
+ * ```
+ * You may also want to add an extension function for the [Logger] class to
+ * use thew new level:
+ * ```
+ * public fun <API: LoggingApi<API>> Logger<API>.atConfig(): API = at(MyLoggingLevels.CONFIG)
+ * ```
+ * If the new logging level needs to be converted to a level of underlying logging backend
+ * a [LevelConverter] must be [registered][LevelConverter.register] prior to
+ * performing the [conversion][LevelConverter.convert].
+ *
+ * @see LevelConverter
  */
 public data class Level(
     val name: String,
@@ -42,24 +65,15 @@ public data class Level(
      *
      * Name properties use the words more popular among logging frameworks and implementations.
      * Level values repeat those from `java.util.logging.Level` for easier compatibility.
-     *
-     * Adding a custom logging level could be done like this:
-     *
-     * ```kotlin
-     * public object MyLoggingLevels {
-     *    public val TRACE: Level = Level("TRACE", 400)
-     *    ...
-     * }
-     *
-     * public fun <API: LoggingApi<API>> Logger<API>.atTrace(): API = at(MyLoggingLevels.TRACE)
-     * ```
      */
     public companion object {
         public val OFF: Level = Level("OFF", Int.MAX_VALUE)
+        public val FATAL: Level = Level("FATAL", 2000)
         public val ERROR: Level = Level("ERROR", 1000)
         public val WARNING: Level = Level("WARNING", 900)
         public val INFO: Level = Level("INFO", 800)
         public val DEBUG: Level = Level("DEBUG", 500)
+        public val TRACE: Level = Level("TRACE", 400)
         public val ALL: Level = Level("ALL", Int.MIN_VALUE)
     }
 }
@@ -67,5 +81,5 @@ public data class Level(
 /**
  * Compares the levels using their [values][Level.value].
  */
-public operator fun Level.compareTo(other: Level): Int =
-    value.compareTo(other.value)
+public operator fun Level.compareTo(other: Level): Int = value.compareTo(other.value)
+

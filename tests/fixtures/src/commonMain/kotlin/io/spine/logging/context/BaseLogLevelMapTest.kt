@@ -37,6 +37,7 @@ import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.spine.logging.Level.Companion.ALL
 import io.spine.logging.Level.Companion.DEBUG
+import io.spine.logging.Level.Companion.ERROR
 import io.spine.logging.Level.Companion.INFO
 
 /**
@@ -80,9 +81,9 @@ public abstract class BaseLogLevelMapTest: AbstractLogLevelMapTest() {
             it.logAt(DEBUG)
             records shouldHaveSize 0
 
-            it.logAt(INFO)
+            it.logAt(ERROR)
             records shouldHaveSize 1 // because logging context should not reduce logging.
-            records[0].level shouldBe INFO
+            records[0].level shouldBe ERROR
         }
 
         should("use a level set for a class", L1Direct::class) {
