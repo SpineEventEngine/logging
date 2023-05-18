@@ -34,7 +34,8 @@ import given.map.nested.sibling.Level3Sibling
 import given.map.nested.type.Level3
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import io.spine.logging.Level.Companion.ALL
+import io.kotest.matchers.string.shouldContain
+import io.kotest.matchers.string.shouldNotContain
 import io.spine.logging.Level.Companion.DEBUG
 import io.spine.logging.Level.Companion.ERROR
 import io.spine.logging.Level.Companion.INFO
@@ -105,23 +106,33 @@ public abstract class BaseLogLevelMapTest: AbstractLogLevelMapTest() {
             val records1 = recorders[1].records
 
             // `Level3` class belongs to a package under the one specified in the map.
-            fixtures[0].logAt(TRACE)
+            fixtures[0].logAt(TRACE, "From fixture 0.")
             records0 shouldHaveSize 1
-            records0.last().level shouldBe TRACE
+            records0.last().run {
+                level shouldBe TRACE
+                message shouldContain "From fixture 0."
+            }
 
             // `Level3Sibling` class is in another package under the one specified in the map.
             val sibling = fixtures[1]
-            sibling.logAt(TRACE, "`TRACE` from fixture 1.")
-            // shouldHaveSize 1
-            records1.last().level shouldBe TRACE
+            sibling.logAt(TRACE, "From fixture 1.")
+            records1.last().run {
+                level shouldBe TRACE
+                message shouldContain "From fixture 1."
+            }
 
             // `L2Direct` is the class which is directly in the package mentioned in the map.
-            // The class has its own logging level, but should log at the package level too.
-//            val records2 = recorders[2].records
-//            val samePackageClass = fixtures[2]
-//            samePackageClass.logAt(TRACE)
-//            records2 shouldHaveSize 1
-//            records2.last().level shouldBe TRACE
+            // The class has its own logging level. Logging at lower level should not occur.
+            val records2 = recorders[2].records
+            val samePackageClass = fixtures[2]
+            samePackageClass.logAt(TRACE, "Fixture 2 at TRACE.")
+            // When under JUL we may get records at the parent handler, so our recorder
+            // may already be not empty.
+            if (records2.isNotEmpty()) {
+                records2.last().run {
+                    message shouldNotContain "Fixture 2 at TRACE."
+                }
+            }
         }
     }
 }
