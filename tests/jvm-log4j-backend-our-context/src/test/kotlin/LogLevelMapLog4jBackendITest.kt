@@ -34,7 +34,7 @@ import io.spine.testing.logging.Recorder
  *
  * Please see `build.gradle.kts` of this module for the details.
  */
-internal class LogLevelMapLog4jBackendTest: BaseLogLevelMapTest() {
+internal class LogLevelMapLog4jBackendITest: BaseLogLevelMapTest() {
 
     override fun createRecorder(loggerName: String, minLevel: Level): Recorder =
         Log4jRecorder(loggerName, minLevel)

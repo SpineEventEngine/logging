@@ -28,12 +28,29 @@ package io.spine.testing.logging
 
 import io.spine.logging.Level
 
-public fun checkLogging(recorder: Recorder, block: Recorder.() -> Unit) {
+/**
+ * Executes logging test [action] with the started [recorder].
+ * Stops the recorder after the action completes or fails.
+ */
+public fun checkLogging(recorder: Recorder, action: Recorder.() -> Unit) {
     try {
         recorder.start()
-        recorder.block()
+        recorder.action()
     } finally {
         recorder.stop()
+    }
+}
+
+/**
+ * Executes logging test [action] with the started [recorders].
+ * Stops all the recorders after the action completes or fails.
+ */
+public fun checkLogging(recorders: List<Recorder>, action: (List<Recorder>) -> Unit) {
+    try {
+        recorders.forEach { it.start() }
+        action(recorders)
+    } finally {
+        recorders.forEach { it.stop() }
     }
 }
 

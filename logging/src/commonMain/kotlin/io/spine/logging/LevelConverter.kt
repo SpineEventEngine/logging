@@ -59,8 +59,13 @@ public open class Converter<A: Any, B: Any>(
  * Converts logging levels to an external logging level type of type [T], and backward.
  *
  * A level converter must be [registered][register] before invoking the [conversion][convert].
+ *
+ * The class made `open` for convenience of derived classes that may provide actual
+ * value of the generic parameter [T].
+ *
+ * @param T the type of the external logging level.
  */
-public abstract class LevelConverter<T : Any>(
+public open class LevelConverter<T : Any>(
     forward: (Level) -> T,
     backward: (T) -> Level
 ) : Converter<Level, T>(forward, backward) {
@@ -72,11 +77,12 @@ public abstract class LevelConverter<T : Any>(
         /**
          * Obtains a converter for levels of the type [T].
          */
+        @JvmStatic
         public fun <T: Any> get(cls: KClass<T>): LevelConverter<T> {
             val converter = registry[cls]
             check(converter != null) {
                 "Unable to convert log level of class `${cls.qualifiedName}`." +
-                        " No converter was found." +
+                        " No suitable converter was found." +
                         " Please call `LevelConverter.register()` for adding the conversion."
             }
             @Suppress("UNCHECKED_CAST") // Safe as we put a bounded type `T`.
@@ -86,6 +92,7 @@ public abstract class LevelConverter<T : Any>(
         /**
          * Obtains a converter that translates levels of type [T] to [Level].
          */
+        @JvmStatic
         public fun <T: Any> reverse(cls: KClass<T>): Converter<T, Level> = get(cls).reverse
 
         /**

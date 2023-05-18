@@ -27,7 +27,6 @@
 package io.spine.logging.context
 
 import given.map.CustomLoggingLevel.ANNOUNCEMENT
-import given.map.CustomLoggingLevel.TRACE
 import given.map.L1Direct
 import given.map.LoggingTestFixture
 import given.map.nested.L2Direct
@@ -39,6 +38,7 @@ import io.spine.logging.Level.Companion.ALL
 import io.spine.logging.Level.Companion.DEBUG
 import io.spine.logging.Level.Companion.ERROR
 import io.spine.logging.Level.Companion.INFO
+import io.spine.logging.Level.Companion.TRACE
 
 /**
  * This class defines tests for [LogLevelMap].
@@ -99,27 +99,31 @@ public abstract class BaseLogLevelMapTest: AbstractLogLevelMapTest() {
             records.last().level shouldBe INFO /* because `INFO` > `DEBUG`. */
         }
 
-        should("use a level set on a package", Level3::class) {
-            it.logAt(ALL)
-            records shouldHaveSize 0
+        val loggingClasses = listOf(Level3::class, Level3Sibling::class, L2Direct::class)
+        shouldMany("use a level set on a package", loggingClasses) { fixtures, recorders ->
+            fixtures[0].logAt(ALL)
+            val records0 = recorders[0].records
+            records0 shouldHaveSize 0
 
             // `Level3` class belongs to a package under the one specified in the map.
-            it.logAt(TRACE)
-            records shouldHaveSize 1
-            records.last().level shouldBe TRACE
+            fixtures[0].logAt(TRACE)
+            records0 shouldHaveSize 1
+            records0.last().level shouldBe TRACE
 
             // `Level3Sibling` class is in another package under the one specified in the map.
-            val sibling = Level3Sibling()
+            val records1 = recorders[1].records
+            val sibling = fixtures[1]
             sibling.logAt(TRACE)
-            records shouldHaveSize 2
-            records.last().level shouldBe TRACE
+            records1 shouldHaveSize 1
+            records1.last().level shouldBe TRACE
 
             // `L2Direct` is the class which is directly in the package mentioned in the map.
             // The class has its own logging level, but should log at the package level too.
-            val samePackageClass = L2Direct()
+            val records2 = recorders[2].records
+            val samePackageClass = fixtures[2]
             samePackageClass.logAt(TRACE)
-            records shouldHaveSize 2
-            records.last().level shouldBe TRACE
+            records2 shouldHaveSize 1
+            records2.last().level shouldBe TRACE
         }
     }
 }

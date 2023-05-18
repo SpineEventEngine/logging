@@ -44,7 +44,9 @@ import kotlin.reflect.full.createInstance
  *
  * @see BaseLogLevelMapTest
  */
-public abstract class AbstractLogLevelMapTest(body: ShouldSpec.() -> Unit = {}) : ShouldSpec(body) {
+public abstract class AbstractLogLevelMapTest(
+    body: ShouldSpec.() -> Unit = {}
+) : ShouldSpec(body) {
 
     private var closable: AutoCloseable? = null
 
@@ -114,6 +116,33 @@ public abstract class AbstractLogLevelMapTest(body: ShouldSpec.() -> Unit = {}) 
             checkLogging(recorder) {
                 val fixture = loggingClass.createInstance()
                 test(fixture)
+            }
+        }
+    }
+
+    /**
+     * Executes the [test] with fixtures created for the given [loggingClasses].
+     *
+     * @param T the type of the logging test fixtures to be used in the test.
+     * @param displayName
+     *         the name of the test.
+     * @param loggingClasses
+     *         the classes of the logging test fixture used in the test.
+     * @param test
+     *         the block with the testing code.
+     */
+    protected fun <T : LoggingTestFixture> shouldMany(
+        displayName: String,
+        loggingClasses: List<KClass<out T>>,
+        test: (fixtures: List<T>, recorders: List<Recorder>) -> Unit
+    ) {
+        val recorders = loggingClasses.map { cls ->
+            createRecorder(cls.qualifiedName!!, Level.ALL)
+        }
+        should(displayName) {
+            checkLogging(recorders) {
+                val fixtures = loggingClasses.map { it.createInstance() }
+                test(fixtures, recorders)
             }
         }
     }

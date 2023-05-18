@@ -26,8 +26,14 @@
 
 import Log4jLevelConverter.backward
 import Log4jLevelConverter.forward
-import given.map.CustomLoggingLevel.TRACE
 import io.spine.logging.Level
+import io.spine.logging.Level.Companion.ALL
+import io.spine.logging.Level.Companion.DEBUG
+import io.spine.logging.Level.Companion.ERROR
+import io.spine.logging.Level.Companion.INFO
+import io.spine.logging.Level.Companion.OFF
+import io.spine.logging.Level.Companion.TRACE
+import io.spine.logging.Level.Companion.WARNING
 import io.spine.logging.LevelConverter
 import io.spine.logging.LevelConverter.Companion.convert
 import io.spine.logging.LevelConverter.Companion.reverse
@@ -68,7 +74,7 @@ internal class Log4jRecorder(loggerName: String, minLevel: Level): Recorder(minL
         // This is the assumption of the common tests.
         val rootLogger = LogManager.getRootLogger() as Logger
         prevRootLevel = rootLogger.level
-        rootLogger.level = Level.INFO.toLog4j()
+        rootLogger.level = INFO.toLog4j()
     }
 
     override fun stop() {
@@ -123,7 +129,7 @@ private val log4jRange: IntRange = 0.rangeTo(BOUND)
 
 private fun IntRange.size(): Int = (last - first + 1)
 
-@Suppress("unused")
+@Suppress("unused") // Is meant to force the construction of the converter object.
 private val forceRegistration = Log4jLevelConverter
 
 /**
@@ -157,13 +163,13 @@ private object Log4jLevelConverter: LevelConverter<L4jLevel>(
         }
 
         return when (level) {
-            Level.OFF -> L4jLevel.OFF
-            Level.ERROR -> L4jLevel.ERROR
-            Level.WARNING -> L4jLevel.WARN
-            Level.INFO -> L4jLevel.INFO
-            Level.DEBUG -> L4jLevel.DEBUG
+            OFF -> L4jLevel.OFF
+            ERROR -> L4jLevel.ERROR
+            WARNING -> L4jLevel.WARN
+            INFO -> L4jLevel.INFO
+            DEBUG -> L4jLevel.DEBUG
             TRACE -> L4jLevel.TRACE
-            Level.ALL -> L4jLevel.ALL
+            ALL -> L4jLevel.ALL
             else -> L4jLevel.forName(level.name, level.value.scaleToLog4j())
         }
     }
@@ -179,13 +185,13 @@ private object Log4jLevelConverter: LevelConverter<L4jLevel>(
         }
 
         return when (level) {
-            L4jLevel.OFF -> Level.OFF
-            L4jLevel.ERROR -> Level.ERROR
-            L4jLevel.WARN -> Level.WARNING
-            L4jLevel.INFO -> Level.INFO
-            L4jLevel.DEBUG -> Level.DEBUG
+            L4jLevel.OFF -> OFF
+            L4jLevel.ERROR -> ERROR
+            L4jLevel.WARN -> WARNING
+            L4jLevel.INFO -> INFO
+            L4jLevel.DEBUG -> DEBUG
             L4jLevel.TRACE -> TRACE
-            L4jLevel.ALL -> Level.ALL
+            L4jLevel.ALL -> ALL
             else -> Level(level.name(), level.intLevel().scaleToJul())
         }
     }
