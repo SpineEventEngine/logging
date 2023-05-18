@@ -27,7 +27,6 @@
 package given.map
 
 import io.spine.logging.Level
-import io.spine.logging.Level.Companion.DEBUG
 import io.spine.logging.Level.Companion.WARNING
 import io.spine.logging.WithLogging
 
