@@ -58,7 +58,7 @@ internal class Log4jRecorder(loggerName: String, minLevel: Level): Recorder(minL
         }
         appender = object: AbstractAppender(logger.name, null, null, true, null) {
             override fun append(event: LogEvent) {
-                val data = Log4JLogData(event)
+                val data = Log4jLogData(event)
                 append(data)
             }
         }
@@ -90,12 +90,20 @@ internal class Log4jRecorder(loggerName: String, minLevel: Level): Recorder(minL
 /**
  * Adapts [LogEvent] to [LogData] used by [Recorder].
  */
-private class Log4JLogData(val event: LogEvent): LogData {
+private class Log4jLogData(val event: LogEvent): LogData {
     override val level: Level by lazy {
         event.level.toLevel()
     }
     override val message: String = event.message.formattedMessage
     override val throwable: Throwable? = event.thrown
+    override fun equals(other: Any?): Boolean {
+        return if (other is Log4jLogData) {
+            event == other.event
+        } else {
+            false
+        }
+    }
+    override fun hashCode(): Int = event.hashCode()
 }
 
 /**

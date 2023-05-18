@@ -145,4 +145,12 @@ private data class JulLogData(private val record: LogRecord): LogData {
     override val level: Level = record.level.toLevel()
     override val message: String = record.message
     override val throwable: Throwable? = record.thrown
+    override fun equals(other: Any?): Boolean {
+        return if (other is JulLogData) {
+            record == other.record
+        } else {
+            false
+        }
+    }
+    override fun hashCode(): Int = record.hashCode()
 }
