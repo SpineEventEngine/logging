@@ -40,7 +40,10 @@ import io.spine.logging.WithLogging
  */
 public abstract class LoggingTestFixture : WithLogging {
 
-    public fun logAt(level: Level, message: String = "Stub logging message at `${level.name}`.") {
+    public fun logAt(
+        level: Level,
+        message: String = "Stub logging message at `${level.name}`."
+    ) {
         logger.at(level).log {
             message
         }
