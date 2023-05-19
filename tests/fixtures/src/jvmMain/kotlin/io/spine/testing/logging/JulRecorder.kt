@@ -34,42 +34,6 @@ import java.util.logging.LogRecord
 import java.util.logging.Logger
 
 /**
- * Runs the [block] for a logging [Recorder] created for the logger with the given name.
- *
- * @param loggerName
- *         the name of the logger.
- * @param minLevel
- *         the minimum level of logging records accepted by the recorder.
- * @param block
- *         the code with assertions statements with the recorder as the receiver.
- */
-public fun checkLogging(
-    loggerName: String,
-    minLevel: Level,
-    block: Recorder.() -> Unit
-) {
-    val recorder = JulRecorder(loggerName, minLevel)
-    checkLogging(recorder, block)
-}
-
-/**
- * Runs the [block] for a logging [Recorder] created for the logger with the name
- * of the given [loggingClass].
- *
- * @param loggingClass
- *         the class which performs the logging operations under the test.
- * @param minLevel
- *         the minimum level of logging records accepted by the recorder.
- * @param block
- *         the code with assertions statements with the recorder as the receiver.
- */
-public fun checkLogging(
-    loggingClass: Class<*>,
-    minLevel: Level,
-    block: Recorder.() -> Unit
-): Unit = checkLogging(loggingClass.name, minLevel, block)
-
-/**
  * Intercepts logging records of the logger with the given name.
  */
 internal class JulRecorder(loggerName: String, minLevel: Level): Recorder(minLevel) {
