@@ -33,16 +33,16 @@ pluginManagement {
 
 rootProject.name = "spine-logging"
 
-fun testModule(name: String) {
-    include(name)
-    project(":$name").projectDir = file("tests/$name")
-}
-
 include(
     "logging",
     "logging-backend",
     "logging-context",
 )
+
+fun testModule(name: String) {
+    include(name)
+    project(":$name").projectDir = file("tests/$name")
+}
 
 testModule("fixtures")
 testModule("jvm-our-backend-our-context")
