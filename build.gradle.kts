@@ -24,43 +24,31 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-@file:Suppress("UNUSED_VARIABLE") // ... used for getting named objects.
-
-import io.spine.internal.dependency.Flogger
-import io.spine.internal.dependency.Guava
-import io.spine.internal.dependency.Kotest
+import io.spine.internal.dependency.Dokka
+import io.spine.internal.dependency.JUnit
+import io.spine.internal.dependency.Jackson
 import io.spine.internal.dependency.Spine
-import io.spine.internal.gradle.checkstyle.CheckStyleConfig
-import io.spine.internal.gradle.javadoc.JavadocConfig
-import io.spine.internal.gradle.kotlin.setFreeCompilerArgs
-import io.spine.internal.gradle.publish.IncrementGuard
+import io.spine.internal.dependency.Validation
 import io.spine.internal.gradle.publish.PublishingRepos
-import io.spine.internal.gradle.publish.javadocJar
 import io.spine.internal.gradle.publish.spinePublishing
+import io.spine.internal.gradle.report.coverage.JacocoConfig
 import io.spine.internal.gradle.report.license.LicenseReporter
 import io.spine.internal.gradle.report.pom.PomGenerator
 import io.spine.internal.gradle.standardToSpineSdk
-import io.spine.internal.gradle.testing.configureLogging
-import io.spine.internal.gradle.testing.registerTestTasks
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-   `maven-publish`
-    kotlin("multiplatform")
-    `dokka-for-kotlin`
     idea
-    `project-report`
-    `detekt-code-analysis`
+    jacoco
     `gradle-doctor`
-    id("org.jetbrains.kotlinx.kover") version "0.7.0-Alpha"
+    `project-report`
 }
 apply(from = "$rootDir/version.gradle.kts")
-apply<IncrementGuard>()
-group = "io.spine"
-version = rootProject.extra["versionToPublish"]!!
 
 spinePublishing {
-    // This is a single-module KMM project. The Kotlin plugin handles the publication.
+    modules = setOf(
+        "logging-backend",
+        "logging-context"
+    )
     modulesWithCustomPublishing = setOf("logging")
     destinations = with(PublishingRepos) {
         setOf(
@@ -74,90 +62,30 @@ spinePublishing {
     }
 }
 
-repositories.standardToSpineSdk()
-
-kotlin {
-    explicitApi()
-
-    jvm {
-        withJava()
-        compilations.all {
-            kotlinOptions.jvmTarget = BuildSettings.javaVersion.toString()
-        }
-    }
-
-    sourceSets {
-        val commonMain by getting {
-            dependencies{
-                api(Spine.reflect)
-            }
-        }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-                implementation(Kotest.assertions)
-            }
-        }
-        val jvmMain by getting {
-            dependencies {
-                api(Flogger.lib)
-                runtimeOnly(Flogger.Runtime.systemBackend)
-                implementation(Guava.lib)
-            }
-        }
-        val jvmTest by getting {
-            dependencies {
-                implementation(Spine.testlib)
+allprojects {
+    group = "io.spine"
+    version = rootProject.extra["versionToPublish"]!!
+    repositories.standardToSpineSdk()
+    configurations {
+        forceVersions()
+        all {
+            exclude("io.spine:spine-validate")
+            resolutionStrategy {
+                force(
+                    Spine.base,
+                    Spine.toolBase,
+                    Validation.runtime,
+                    Dokka.BasePlugin.lib,
+                    Jackson.databind,
+                    JUnit.runner,
+                )
             }
         }
     }
 }
 
-detekt {
-    source = files(
-        "src/commonMain",
-        "src/jvmMain"
-    )
+gradle.projectsEvaluated {
+    JacocoConfig.applyTo(project)
+    LicenseReporter.mergeAllReports(project)
+    PomGenerator.applyTo(project)
 }
-
-val jvmTest: Task by tasks.getting {
-    (this as Test).run {
-        useJUnitPlatform()
-        configureLogging()
-    }
-}
-
-tasks {
-    withType<KotlinCompile>().configureEach {
-        setFreeCompilerArgs()
-    }
-    registerTestTasks()
-}
-
-kover {
-    useJacocoTool()
-}
-
-koverReport {
-    xml {
-        onCheck = true
-    }
-}
-
-publishing {
-    publications.withType<MavenPublication> {
-        if (name.contains("jvm", true)) {
-            artifact(project.javadocJar())
-        } else {
-            artifact(project.dokkaKotlinJar())
-        }
-    }
-}
-
-CheckStyleConfig.applyTo(project)
-// Apply Javadoc configuration here (and not right after the `plugins` block)
-// because the `javadoc` task is added when the `kotlin` block `withJava` is applied.
-JavadocConfig.applyTo(project)
-PomGenerator.applyTo(project)
-LicenseReporter.generateReportIn(project)
-LicenseReporter.mergeAllReports(project)

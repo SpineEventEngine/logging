@@ -31,6 +31,23 @@ pluginManagement {
     }
 }
 
-// Do not apply the `spine-` prefix for this single-module project.
-// It will be added automatically.
-rootProject.name = "logging"
+rootProject.name = "spine-logging"
+
+include(
+    "logging",
+    "logging-backend",
+    "logging-context",
+)
+
+fun testModule(name: String) {
+    include(name)
+    project(":$name").projectDir = file("tests/$name")
+}
+
+testModule("fixtures")
+testModule("jvm-our-backend-our-context")
+testModule("jvm-our-backend-grpc-context")
+testModule("jvm-log4j-backend-our-context")
+testModule("jvm-slf4j-jdk14-backend-our-context")
+testModule("jvm-slf4j-reload4j-backend-our-context")
+

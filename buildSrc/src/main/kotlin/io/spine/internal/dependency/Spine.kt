@@ -41,17 +41,21 @@ object Spine {
     object ArtifactVersion {
 
         /** The version of [ProtoData]. */
-        const val protoData = "0.8.0"
+        @Deprecated("Please use `ProtoData.version` instead.")
+        const val protoData = ProtoData.version
 
         /** The version of [Spine.base]. */
-        const val base = "2.0.0-SNAPSHOT.170"
+        const val base = "2.0.0-SNAPSHOT.180"
 
         /** The version of [Spine.reflect]. */
-        const val reflect = "2.0.0-SNAPSHOT.170"
+        const val reflect = "2.0.0-SNAPSHOT.182"
 
         /** The version of [Spine.logging]. */
-        const val logging = "2.0.0-SNAPSHOT.170"
-        
+        const val logging = "2.0.0-SNAPSHOT.183"
+
+        /** The version of [Spine.testlib]. */
+        const val testlib = "2.0.0-SNAPSHOT.183"
+
         /**
          * The version of `core-java`.
          * @see [Spine.CoreJava.client]
@@ -81,31 +85,28 @@ object Spine {
         const val toolBase = "2.0.0-SNAPSHOT.156"
 
         /** The version of [Spine.validation]. */
-        const val validation = "2.0.0-SNAPSHOT.81"
+        @Deprecated("Please use `Validation.version` instead.")
+        const val validation = Validation.version
 
         /** The version of [Spine.javadocTools]. */
         const val javadocTools = "2.0.0-SNAPSHOT.75"
     }
 
-    /**
-     * The version of ProtoData to be used in the project.
-     *
-     * We do it here instead of `versions.gradle.kts` because we later use
-     * it in a `plugins` section in a build script.
-     *
-     * @see [ProtoData]
-     */
-    const val protoDataVersion = ArtifactVersion.protoData
+    /** The version of ProtoData to be used in the project. */
+    @Deprecated("Please use `ProtoData.version` instead.")
+    const val protoDataVersion = ProtoData.version
 
     const val base = "$group:spine-base:${ArtifactVersion.base}"
-    const val logging = "$group:spine-logging:${ArtifactVersion.base}"
-    const val reflect = "$group:spine-reflect:${ArtifactVersion.base}"
+    const val logging = "$group:spine-logging:${ArtifactVersion.logging}"
+    const val loggingContext = "$group:spine-logging-context:${ArtifactVersion.logging}"
+    const val loggingBackend = "$group:spine-logging-backend:${ArtifactVersion.logging}"
+    const val reflect = "$group:spine-reflect:${ArtifactVersion.reflect}"
     const val baseTypes = "$group:spine-base-types:${ArtifactVersion.baseTypes}"
     const val time = "$group:spine-time:${ArtifactVersion.time}"
     const val change = "$group:spine-change:${ArtifactVersion.change}"
     const val text = "$group:spine-text:${ArtifactVersion.text}"
 
-    const val testlib = "$toolsGroup:spine-testlib:${ArtifactVersion.base}"
+    const val testlib = "$toolsGroup:spine-testlib:${ArtifactVersion.testlib}"
     const val testUtilTime = "$toolsGroup:spine-testutil-time:${ArtifactVersion.time}"
     const val toolBase = "$toolsGroup:spine-tool-base:${ArtifactVersion.toolBase}"
     const val pluginBase = "$toolsGroup:spine-plugin-base:${ArtifactVersion.toolBase}"
@@ -118,50 +119,20 @@ object Spine {
         const val pluginLib = "$toolsGroup:spine-mc-java-plugins:${version}:all"
     }
 
-    /**
-     *  Does not allow re-definition via a project property.
-     *  Please change [ArtifactVersion.javadocTools].
-     */
     const val javadocTools = "$toolsGroup::${ArtifactVersion.javadocTools}"
 
     @Deprecated("Please use `validation.runtime`", replaceWith = ReplaceWith("validation.runtime"))
-    val validate = "$group:spine-validate:${ArtifactVersion.base}"
+    const val validate = "$group:spine-validate:${ArtifactVersion.base}"
 
+    @Deprecated("Please use `Validation` instead.")
     val validation = Validation
 
     @Suppress("MemberVisibilityCanBePrivate")
+    @Deprecated("Please use `CoreJava` instead.")
     val coreJava = CoreJava
-    const val client = coreJava.client // Added for brevity.
-    const val server = coreJava.server // Added for brevity.
 
-    /**
-     * Dependencies on Spine validation modules.
-     *
-     * See [`SpineEventEngine/validation`](https://github.com/SpineEventEngine/validation/).
-     */
-    object Validation {
-        const val group = "io.spine.validation"
-        const val runtime = "$group:spine-validation-java-runtime:${ArtifactVersion.validation}"
-        const val java = "$group:spine-validation-java:${ArtifactVersion.validation}"
-        const val model = "$group:spine-validation-model:${ArtifactVersion.validation}"
-        const val config = "$group:spine-validation-configuration:${ArtifactVersion.validation}"
-    }
-
-    /**
-     * Dependencies on ProtoData modules.
-     *
-     * See [`SpineEventEngine/ProtoData`](https://github.com/SpineEventEngine/ProtoData/).
-     */
-    object ProtoData {
-        const val group = "io.spine.protodata"
-        const val version = protoDataVersion
-        const val compiler = "$group:protodata-compiler:$version"
-
-        const val codegenJava = "io.spine.protodata:protodata-codegen-java:$version"
-
-        const val pluginId = "io.spine.protodata"
-        const val pluginLib = "${Spine.group}:protodata:$version"
-    }
+    const val client = CoreJava.client // Added for brevity.
+    const val server = CoreJava.server // Added for brevity.
 
     /**
      * Dependencies on `core-java` modules.
