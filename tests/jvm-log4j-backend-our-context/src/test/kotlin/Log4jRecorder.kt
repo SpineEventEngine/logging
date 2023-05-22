@@ -134,7 +134,9 @@ private val forceRegistration = Log4jLevelConverter
 
 /**
  * Converts this logging level instance to a Log4j counterpart.
- */ //VisibleForTesting
+ *
+ * This function is used in tests and thus is `internal`.
+ */
 internal fun Level.toLog4j(): L4jLevel = convert(this)
 
 /**
