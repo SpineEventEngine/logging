@@ -93,7 +93,7 @@ private open class SlowTest : Test() {
     init {
         description = "Executes JUnit tests tagged as `slow`."
         group = "Verification"
-        // No slow tests -- no problem.
+        // No slow tests — no problem.
         filter.isFailOnNoMatchingTests = false
         this.useJUnitPlatform {
             includeTags(SLOW_TAG)
