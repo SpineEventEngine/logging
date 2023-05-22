@@ -30,7 +30,9 @@ import io.spine.logging.LoggingFactory.loggingDomainOf
 import kotlin.reflect.KClass
 
 /**
- * Base class for fluent API loggers. A logger is a factory of fluent logging [API] instances,
+ * Base class for fluent API loggers.
+ *
+ * A logger is a factory of fluent logging [API] instances,
  * which allow to build log statements via method chaining.
  *
  * @param [API]

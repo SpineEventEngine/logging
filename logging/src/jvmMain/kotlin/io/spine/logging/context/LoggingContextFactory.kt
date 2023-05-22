@@ -37,6 +37,11 @@ import com.google.common.flogger.context.ContextDataProvider as FContextDataProv
 import com.google.common.flogger.context.LogLevelMap as FLogLevelMap
 import com.google.common.flogger.context.ScopedLoggingContext as FScopedLoggingContext
 
+/**
+ * A JVM implementation of `LoggingContextFactory`.
+ *
+ * The class is immutable and thread-safe.
+ */
 @Immutable
 @CheckReturnValue
 internal actual object LoggingContextFactory {

@@ -36,7 +36,7 @@ import kotlin.reflect.KClass
  * This can be used for debugging or to provide more detailed log output for specific
  * conditions, such as when a command-line argument is passed.
  *
- * Implementing classes are expected to be immutable and thread safe.
+ * Implementing classes are expected to be immutable and thread-safe.
  */
 public interface LogLevelMap {
 

@@ -141,6 +141,6 @@ public abstract class BaseLogLevelMapTest: AbstractLogLevelMapTest() {
  * The fixture which is not mentioned in log level map, and package of which
  * is outside the package hierarchy configured in the map.
  *
- * The class must be public so that Kotlin Reflection can call its constructor.
+ * The class must be public so that Kotlin Reflection is able to call its constructor.
  */
 public class DefLoggingFixture: LoggingTestFixture()

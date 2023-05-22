@@ -83,7 +83,7 @@ public interface ScopedLoggingContext {
         /**
          * Installs a new context based on the state of the builder.
          *
-         * The caller is <em>required</em> to invoke [close][AutoCloseable.close] on
+         * The caller is _required_ to invoke [close][AutoCloseable.close] on
          * the returned instances in the reverse order to which they were obtained.
          *
          * This method is intended primarily to be overridden by context implementations

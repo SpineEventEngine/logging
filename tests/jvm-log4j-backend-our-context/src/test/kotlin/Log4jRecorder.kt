@@ -139,7 +139,9 @@ internal fun Level.toLog4j(): L4jLevel = convert(this)
 
 /**
  * Converts this Log4j level to Spine Logging level.
- */ //VisibleForTesting
+ *
+ * This function is used in tests and thus is `internal`.
+ */
 internal fun L4jLevel.toLevel(): Level = reverse(this)
 
 private object Log4jLevelConverter: LevelConverter<L4jLevel>(
@@ -196,4 +198,3 @@ private object Log4jLevelConverter: LevelConverter<L4jLevel>(
         }
     }
 }
-
