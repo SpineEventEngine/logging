@@ -29,7 +29,7 @@ package io.spine.logging
 import kotlin.reflect.KClass
 
 /**
- * Converts values of type [A] to ones of type [B] and [backward][reverse].
+ * Converts values of type [A] to ones of type [B] and [backwards][reverse].
  */
 public open class Converter<A: Any, B: Any>(
     private val forward: (A) -> B,
@@ -56,7 +56,7 @@ public open class Converter<A: Any, B: Any>(
 }
 
 /**
- * Converts logging levels to an external logging level type of type [T], and backward.
+ * Converts logging levels to an external logging level type of type [T], and backwards.
  *
  * A level converter must be [registered][register] before invoking the [conversion][convert].
  *

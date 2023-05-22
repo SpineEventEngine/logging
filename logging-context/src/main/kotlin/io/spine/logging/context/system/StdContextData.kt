@@ -82,13 +82,13 @@ internal class StdContextData(
 
     /**
      * Concatenates given metadata with the one held in this context data instance.
-     * If null is passed, no action is taken.
+     * If `null` is passed, no action is taken.
      */
     fun addMetadata(metadata: ContextMetadata?) = metadataRef.mergeFrom(metadata)
 
     /**
      * Merges the give map with the one held in this context data instance.
-     * If null is passed, no action is taken.
+     * If `null` is passed, no action is taken.
      */
     fun applyLogLevelMap(map: LogLevelMap?) {
         map?.let {

@@ -80,4 +80,3 @@ public data class Level(
  * Compares the levels using their [values][Level.value].
  */
 public operator fun Level.compareTo(other: Level): Int = value.compareTo(other.value)
-

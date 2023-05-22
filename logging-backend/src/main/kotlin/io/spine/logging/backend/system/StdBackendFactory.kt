@@ -38,7 +38,7 @@ import java.util.logging.LogRecord
 import java.util.logging.Logger
 
 /**
- * A [BackendFactory] producing [LoggerBackend] which support publishing
+ * A [BackendFactory] producing [LoggerBackend] which supports publishing
  * of logging records according to configured [LogLevelMap][io.spine.logging.context.LogLevelMap].
  */
 public class StdBackendFactory: BackendFactory() {
