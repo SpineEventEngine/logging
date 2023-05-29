@@ -59,8 +59,7 @@ public abstract class Logger<API: LoggingApi<API>>(
         return if (loggingDomain.name.isEmpty()) {
             api
         } else {
-            @Suppress("UNCHECKED_CAST") // Safe to cast since delegates to the same interface.
-            WithLoggingDomain(loggingDomain, api) as API
+            api.withLoggingDomain(loggingDomain)
         }
     }
 
@@ -73,20 +72,6 @@ public abstract class Logger<API: LoggingApi<API>>(
      * implementation of the [API] type.
      */
     protected abstract fun createApi(level: Level): API
-}
-
-/**
- * Wraps given [API] to prepend [LoggingDomain.messagePrefix] to
- * the [messages][log] of the [delegate].
- */
-private class WithLoggingDomain<API : LoggingApi<API>>(
-    private val loggingDomain: LoggingDomain,
-    private val delegate: API
-) : LoggingApi<API> by delegate {
-
-    override fun log(message: () -> String) = delegate.log {
-        "${loggingDomain.messagePrefix}${message()}"
-    }
 }
 
 /**

@@ -72,6 +72,13 @@ public class JvmLogger(
  */
 private class ApiImpl(private val delegate: FluentLogger.Api): JvmLogger.Api {
 
+    private var loggingDomain: LoggingDomain? = null
+
+    override fun withLoggingDomain(domain: LoggingDomain): JvmLogger.Api {
+        this.loggingDomain = domain
+        return this
+    }
+
     override fun withCause(cause: Throwable): JvmLogger.Api {
         delegate.withCause(cause)
         return this
@@ -83,7 +90,8 @@ private class ApiImpl(private val delegate: FluentLogger.Api): JvmLogger.Api {
 
     override fun log(message: () -> String) {
         if (isEnabled()) {
-            delegate.log(message.invoke())
+            val prefix = loggingDomain.messagePrefix
+            delegate.log(prefix + message.invoke())
         }
     }
 }

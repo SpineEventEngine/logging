@@ -28,6 +28,14 @@ package io.spine.logging
 
 import kotlin.annotation.AnnotationTarget.CLASS
 
+/**
+ * An annotation for classes which define a logging domain for loggers
+ * created for the class.
+ *
+ * Logging statements for classes with the same logging domain are
+ * [prefixed][LoggingDomain.messagePrefix] with the name of the logging
+ * domain in square brackets.
+ */
 @Target(CLASS)
 @Retention
 public annotation class LoggingDomain(public val name: String) {
@@ -49,6 +57,8 @@ public annotation class LoggingDomain(public val name: String) {
  * If the logging domain is not defined for a class, logging statements for it
  * will not be prefixed. Otherwise, the prefix would be the name of the logging domain
  * in square brackets followed by a space.
+ *
+ * If the receiver is `null`, the prefix is empty.
  */
-public val LoggingDomain.messagePrefix: String
-    get() = if (name.isEmpty()) "" else "[$name] "
+public val LoggingDomain?.messagePrefix: String
+    get() = if (this?.name?.isEmpty() != false) "" else "[$name] "

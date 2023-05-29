@@ -32,6 +32,11 @@ package io.spine.logging
 public interface LoggingApi<API: LoggingApi<API>> {
 
     /**
+     * Associates the given domain with the current log statement.
+     */
+    public fun withLoggingDomain(domain: LoggingDomain): API
+
+    /**
      * Associates a [Throwable] with the current log statement.
      *
      * Presumably, this method is called from withing a catch block to
@@ -78,6 +83,11 @@ public interface LoggingApi<API: LoggingApi<API>> {
             "MemberNameEqualsClassName" /* The name highlights the emptiness of the impl. */
         )
         protected fun noOp(): API = this as API
+
+        /**
+         * Does nothing.
+         */
+        override fun withLoggingDomain(domain: LoggingDomain): API = noOp()
 
         /**
          * Does nothing.
