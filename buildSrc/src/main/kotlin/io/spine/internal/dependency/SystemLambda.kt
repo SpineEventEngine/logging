@@ -24,41 +24,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging
+package io.spine.internal.dependency
 
-import kotlin.annotation.AnnotationTarget.CLASS
-
-/**
- * An annotation for classes which define a logging domain for loggers
- * created for the class.
- *
- * Logging statements for classes with the same logging domain are
- * [prefixed][LoggingDomain.messagePrefix] with the name of the logging
- * domain in square brackets.
- */
-@Target(CLASS)
-@Retention
-public annotation class LoggingDomain(public val name: String) {
-
-    public companion object {
-
-        /**
-         * A no-op instance of `LoggingDomain` returned for classes
-         * without an associated logging domain.
-         */
-        public val noOp: LoggingDomain = LoggingDomain("")
-    }
+// https://github.com/stefanbirkner/system-lambda
+object SystemLambda {
+    const val version = "1.2.1"
+    const val group = "com.github.stefanbirkner"
+    const val lib = "$group:system-lambda:$version"
 }
-
-/**
- * Obtains the string to be prepended before logging statements for the classes
- * [belonging][LoggingFactory.loggingDomainOf] to this `LoggingDomain`.
- *
- * If the logging domain is not defined for a class, logging statements for it
- * will not be prefixed. Otherwise, the prefix would be the name of the logging domain
- * in square brackets followed by a space.
- *
- * If the receiver is `null`, the prefix is empty.
- */
-public val LoggingDomain?.messagePrefix: String
-    get() = if (this?.name?.isEmpty() != false) "" else "[$name] "

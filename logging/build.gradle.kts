@@ -24,11 +24,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+@file:Suppress("UNUSED_VARIABLE") // for source sets.
+
 import io.spine.internal.dependency.Flogger
 import io.spine.internal.dependency.Guava
 import io.spine.internal.dependency.JUnit
 import io.spine.internal.dependency.Kotest
 import io.spine.internal.dependency.Spine
+import io.spine.internal.dependency.SystemLambda
 import io.spine.internal.gradle.javadoc.JavadocConfig
 import io.spine.internal.gradle.publish.IncrementGuard
 import io.spine.internal.gradle.testing.configureLogging
@@ -86,6 +89,7 @@ kotlin {
                 implementation(Spine.testlib)
                 implementation(JUnit.runner)
                 implementation(Kotest.runnerJUnit5Jvm)
+                implementation(SystemLambda.lib)
             }
         }
     }

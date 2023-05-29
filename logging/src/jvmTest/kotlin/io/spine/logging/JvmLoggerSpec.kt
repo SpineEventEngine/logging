@@ -26,7 +26,10 @@
 
 package io.spine.logging
 
+import com.github.stefanbirkner.systemlambda.SystemLambda.tapSystemErrAndOut
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldContain
+import io.spine.logging.given.domain.IndirectlyAnnotatedClass
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -41,5 +44,15 @@ internal class JvmLoggerSpec {
         (logger.atDebug() is LoggingApi.NoOp) shouldBe true
 
         (logger.atInfo() is LoggingApi.NoOp) shouldBe false
+    }
+
+    @Test
+    fun `create a logger with logging domain`() {
+        val msg = "Hello, world!"
+        val consoleOutput = tapSystemErrAndOut {
+            val loggerWithDomain = LoggingFactory.loggerFor(IndirectlyAnnotatedClass::class)
+            loggerWithDomain.atInfo().log { msg }
+        }
+        consoleOutput shouldContain "[OnPackage] $msg"
     }
 }
