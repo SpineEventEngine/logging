@@ -55,4 +55,16 @@ internal class JvmLoggerSpec {
         }
         consoleOutput shouldContain "[OnPackage] $msg"
     }
+
+    @Test
+    fun `contain the name of the logging class`() {
+        val expectedMsg = "METHOD REFERENCE TEST"
+        val consoleOutput = tapSystemErrAndOut {
+            logger.atInfo().log { expectedMsg }
+        }
+        val expectedMethodReference = "contain the name of the logging class".replace(' ', '_')
+        consoleOutput shouldContain this::class.java.name
+        consoleOutput shouldContain expectedMsg
+        consoleOutput shouldContain expectedMethodReference
+    }
 }

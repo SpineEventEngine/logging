@@ -72,24 +72,35 @@ public abstract class Logger<API: LoggingApi<API>>(
      * implementation of the [API] type.
      */
     protected abstract fun createApi(level: Level): API
+
+    /*
+     * IMPLEMENTATION NOTE
+     *
+     * The following methods are not implemented as extension functions in order to
+     * preserve the calling site which is supposed to be set by `createApi()` method
+     * of the concrete logger implementation.
+     *
+     * Had we implemented these methods as extension functions, the calling site would
+     * be `LoggerKt` class, which is not what we want.
+     */
+
+    /**
+     * A convenience function for `at(Level.DEBUG)`.
+     */
+    public fun atDebug(): API = at(Level.DEBUG)
+
+    /**
+     * A convenience function for `at(Level.INFO)`.
+     */
+    public fun atInfo(): API = at(Level.INFO)
+
+    /**
+     * A convenience function for `at(Level.WARNING)`.
+     */
+    public fun atWarning(): API = at(Level.WARNING)
+
+    /**
+     * A convenience function for `at(Level.ERROR)`.
+     */
+    public fun atError(): API = at(Level.ERROR)
 }
-
-/**
- * A convenience function for `at(Level.DEBUG)`.
- */
-public fun <API: LoggingApi<API>> Logger<API>.atDebug(): API = at(Level.DEBUG)
-
-/**
- * A convenience function for `at(Level.INFO)`.
- */
-public fun <API: LoggingApi<API>> Logger<API>.atInfo(): API = at(Level.INFO)
-
-/**
- * A convenience function for `at(Level.WARNING)`.
- */
-public fun <API: LoggingApi<API>> Logger<API>.atWarning(): API = at(Level.WARNING)
-
-/**
- * A convenience function for `at(Level.ERROR)`.
- */
-public fun <API: LoggingApi<API>> Logger<API>.atError(): API = at(Level.ERROR)
