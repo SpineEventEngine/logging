@@ -85,22 +85,27 @@ public abstract class Logger<API: LoggingApi<API>>(
      */
 
     /**
-     * A convenience function for `at(Level.DEBUG)`.
+     * A convenience method for `at(Level.TRACE)`.
+     */
+    public fun atTrace(): API = at(Level.TRACE)
+
+    /**
+     * A convenience method for `at(Level.DEBUG)`.
      */
     public fun atDebug(): API = at(Level.DEBUG)
 
     /**
-     * A convenience function for `at(Level.INFO)`.
+     * A convenience method for `at(Level.INFO)`.
      */
     public fun atInfo(): API = at(Level.INFO)
 
     /**
-     * A convenience function for `at(Level.WARNING)`.
+     * A convenience method for `at(Level.WARNING)`.
      */
     public fun atWarning(): API = at(Level.WARNING)
 
     /**
-     * A convenience function for `at(Level.ERROR)`.
+     * A convenience method for `at(Level.ERROR)`.
      */
     public fun atError(): API = at(Level.ERROR)
 }
