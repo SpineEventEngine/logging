@@ -36,10 +36,9 @@ import java.io.PrintStream
  * @see TapConsole
  */
 internal fun tapConsole(action: () -> Unit): String {
-    val bytes = TapBytesStream(4096)
-    val printer = PrintStream(bytes, true)
-    TapConsole.executeWithStream(printer, action)
-    return bytes.output()
+    val tap = TapBytesStream(4096)
+    TapConsole.executeWithStream(tap, action)
+    return tap.output()
 }
 
 /**
@@ -116,10 +115,10 @@ private class DelegatingOutputStream(var delegate: OutputStream): OutputStream()
 /**
  * A typed replacement for [ByteArrayOutputStream] for easier debugging.
  */
-private class TapBytesStream(size: Int): ByteArrayOutputStream(size) {
+private class TapBytesStream(size: Int): PrintStream(ByteArrayOutputStream(size), true) {
 
     fun output(): String {
-        flush()
-        return toString()
+        out.flush()
+        return out.toString()
     }
 }
