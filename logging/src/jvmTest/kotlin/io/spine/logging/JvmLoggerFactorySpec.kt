@@ -24,4 +24,39 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-val versionToPublish: String by extra("2.0.0-SNAPSHOT.185")
+package io.spine.logging
+
+import io.kotest.matchers.shouldBe
+import io.spine.logging.LoggingFactory.loggingDomainOf
+import io.spine.logging.given.domain.AnnotatedClass
+import io.spine.logging.given.domain.IndirectlyAnnotatedClass
+import io.spine.logging.given.domain.nested.NonAnnotatedNestedPackageClass
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+
+@DisplayName("`JvmLoggerFactory` should")
+internal class JvmLoggerFactorySpec {
+
+    @Nested
+    inner class `obtain a logging domain for` {
+
+        @Test
+        fun `directly annotated class`() {
+            val loggingDomain = loggingDomainOf(AnnotatedClass::class)
+            loggingDomain.name shouldBe "OnClass"
+        }
+
+        @Test
+        fun `a class with annotated package`() {
+            val loggingDomain = loggingDomainOf(IndirectlyAnnotatedClass::class)
+            loggingDomain.name shouldBe "OnPackage"
+        }
+
+        @Test
+        fun `a class in a nested non-annotated package`() {
+            val loggingDomain = loggingDomainOf(NonAnnotatedNestedPackageClass::class)
+            loggingDomain.name shouldBe "OnPackage"
+        }
+    }
+}

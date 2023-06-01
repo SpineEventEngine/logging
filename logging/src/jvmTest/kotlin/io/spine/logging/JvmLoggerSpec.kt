@@ -26,10 +26,9 @@
 
 package io.spine.logging
 
-import com.github.stefanbirkner.systemlambda.SystemLambda.tapSystemErrAndOut
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
-import io.spine.logging.given.domain.IndirectlyAnnotatedClass
+import io.spine.logging.given.domain.AnnotatedClass
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -41,18 +40,61 @@ internal class JvmLoggerSpec {
     @Test
     fun `create no-op instance when logging level is too low`() {
         // The default level (with Java logging as the backend) is `INFO`.
+        (logger.atTrace() is LoggingApi.NoOp) shouldBe true
         (logger.atDebug() is LoggingApi.NoOp) shouldBe true
 
         (logger.atInfo() is LoggingApi.NoOp) shouldBe false
+        (logger.atWarning() is LoggingApi.NoOp) shouldBe false
+        (logger.atError() is LoggingApi.NoOp) shouldBe false
     }
 
     @Test
-    fun `create a logger with logging domain`() {
-        val msg = "Hello, world!"
-        val consoleOutput = tapSystemErrAndOut {
-            val loggerWithDomain = LoggingFactory.loggerFor(IndirectlyAnnotatedClass::class)
-            loggerWithDomain.atInfo().log { msg }
+    fun `produce the output with the name of the logging class and calling method`() {
+        val expectedMsg = "CLASS AND METHOD REFERENCE TEST"
+        val consoleCheck = "*** Confirm console output ***"
+        val consoleOutput = tapConsole {
+            logger.atInfo().log { expectedMsg }
+            System.err.println(consoleCheck)
         }
-        consoleOutput shouldContain "[OnPackage] $msg"
+        consoleOutput shouldContain consoleCheck
+        val expectedMethodReference = "produce the output with the name of" +
+                " the logging class and calling method"
+        consoleOutput shouldContain this::class.java.name
+        consoleOutput shouldContain expectedMsg
+        consoleOutput shouldContain expectedMethodReference
     }
+
+    @Test
+    fun `create an API with logging domain`() {
+        val loggingDomain = LoggingFactory.loggingDomainOf(AnnotatedClass::class)
+        loggingDomain.name shouldBe "OnClass"
+
+        val msg = "Logging domain test"
+        val consoleCheck = "*** Console output double-check ***"
+        val loggerWithDomain = LoggingFactory.loggerFor(AnnotatedClass::class)
+        val consoleOutput = tapConsole {
+            loggerWithDomain.atInfo().log { msg }
+            System.err.println(consoleCheck)
+        }
+        consoleOutput shouldContain consoleCheck
+        consoleOutput shouldContain "[OnClass] $msg"
+    }
+
+    @Test
+    fun `log from different classes`() {
+        val consoleOutput = tapConsole {
+            LoggingClass1().log()
+            LoggingClass2().log()
+        }
+        consoleOutput shouldContain "Logging class 1"
+        consoleOutput shouldContain "Logging class 2"
+    }
+}
+
+private class LoggingClass1: WithLogging {
+    fun log() = logger.atInfo().log { "Logging class 1" }
+}
+
+private class LoggingClass2: WithLogging {
+    fun log() = logger.atInfo().log { "Logging class 2" }
 }
