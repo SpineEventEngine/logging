@@ -41,30 +41,30 @@ internal fun tapConsole(action: () -> Unit): String {
 }
 
 /**
- * This object is a test fixture that allows to tap the output
- * sent to [System.out] and [System.err] when [executing][executeWithStream]
- * a code block which potentially can produce console output.
+ * This test fixture is designed to intercept and control output sent
+ * to [System.out] and [System.err] during the execution of a given code block
+ * when [executeWithStream] method is called.
  *
- * This arrangement is needed as a workaround for the fact that Java Logging framework
- * initializes the [ConsoleHandler][java.util.logging.ConsoleHandler] with the stream
- * assigned to [System.err] at the time of the calling parameterless constructor of
- * [ConsoleHandler][java.util.logging.ConsoleHandler]. That's why replacing the value of
- * [System.err] with a custom stream after the initialization of the logging framework has
- * no effect for intercepting the output. `ConsoleHandler` will still use the originally
- * remembered value of [System.err].
+ * The purpose of this test fixture is to address a limitation of the Java Logging
+ * framework, where the [ConsoleHandler][java.util.logging.ConsoleHandler] is initialized
+ * with the stream tied to [System.err] during the parameterless constructor call.
+ * This makes it impossible to replace [System.err] with a custom stream after
+ * the logging framework is initialized, as `ConsoleHandler` continues using
+ * the original [System.err] value.
  *
- * During the initialization the object replaces both [System.out] and [System.err] with
- * the custom streams which can be redirected. When [executeWithStream] is called,
- * a stream passed as a parameter is used to replace the current streams. After the execution
- * is complete, the original streams are restored.
+ * At initialization, this object replaces [System.out] and [System.err] with custom,
+ * redirectable streams. When [executeWithStream] is invoked, the current streams are
+ * replaced with a stream passed as an argument. Once the execution concludes,
+ * the original streams are reinstated.
  *
- * Since this fixture is `object`, which replaces [System.out] and [System.err] on
- * construction, we never restore the original streams. We do it deliberately to have
- * a reliable workaround for the Java Logging framework "fixation" on [System.err].
+ * This fixture is deliberately constructed as an `object` that doesn't restore
+ * the original streams after construction. This approach provides a reliable solution
+ * for the Java Logging framework's static binding to [System.err].
  *
- * Not restoring the streams is not a problem for our current tests. It might be an issue
- * for the tests executed in a broader context, which also deal the console output interception
- * especially in combination with wording around of Java Logging framework "peculiarities".
+ * Not restoring the streams does not affect our current testing requirements.
+ * However, for more extensive testing scenarios that also involve console output
+ * interception and complex interactions with Java Logging framework's quirks,
+ * this could potentially create issues.
  */
 private object TapConsole {
 
