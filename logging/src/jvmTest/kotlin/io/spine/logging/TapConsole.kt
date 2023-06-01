@@ -27,7 +27,6 @@
 package io.spine.logging
 
 import java.io.ByteArrayOutputStream
-import java.io.OutputStream
 import java.io.PrintStream
 
 /**
@@ -36,7 +35,7 @@ import java.io.PrintStream
  * @see TapConsole
  */
 internal fun tapConsole(action: () -> Unit): String {
-    val tap = TapBytesStream(4096)
+    val tap = StringOutputStream(4096)
     TapConsole.executeWithStream(tap, action)
     return tap.output()
 }
@@ -48,15 +47,24 @@ internal fun tapConsole(action: () -> Unit): String {
  *
  * This arrangement is needed as a workaround for the fact that Java Logging framework
  * initializes the [ConsoleHandler][java.util.logging.ConsoleHandler] with the stream
- * object assigned to [System.err] at the time of the calling parameterless constructor of
+ * assigned to [System.err] at the time of the calling parameterless constructor of
  * [ConsoleHandler][java.util.logging.ConsoleHandler]. That's why replacing the value of
  * [System.err] with a custom stream after the initialization of the logging framework has
- * no effect for intercepting the output.
+ * no effect for intercepting the output. `ConsoleHandler` will still use the originally
+ * remembered value of [System.err].
  *
  * During the initialization the object replaces both [System.out] and [System.err] with
  * the custom streams which can be redirected. When [executeWithStream] is called,
  * a stream passed as a parameter is used to replace the current streams. After the execution
  * is complete, the original streams are restored.
+ *
+ * Since this fixture is `object`, which replaces [System.out] and [System.err] on
+ * construction, we never restore the original streams. We do it deliberately to have
+ * a reliable workaround for the Java Logging framework "fixation" on [System.err].
+ *
+ * Not restoring the streams is not a problem for our current tests. It might be an issue
+ * for the tests executed in a broader context, which also deal the console output interception
+ * especially in combination with wording around of Java Logging framework "peculiarities".
  */
 private object TapConsole {
 
@@ -84,39 +92,30 @@ private object TapConsole {
  * Redirects the output to the given [PrintStream] and restores the original
  * stream when instructed.
  */
-private class RedirectingPrintStream(
-    initial: PrintStream
-): PrintStream(DelegatingOutputStream(initial)) {
+private class RedirectingPrintStream(initial: PrintStream): PrintStream(initial) {
 
-    private val output = out as DelegatingOutputStream
-    private var prevStream: OutputStream = initial
+    private var prevStream: PrintStream = initial
 
     fun redirect(newStream: PrintStream) {
-        prevStream = output.delegate
-        output.redirect(newStream)
+        prevStream = out as PrintStream
+        out = newStream
     }
 
-    fun restore() = output.redirect(prevStream)
-}
-
-/**
- * A stream which performs writing via the [delegate].
- */
-private class DelegatingOutputStream(var delegate: OutputStream): OutputStream()  {
-
-    override fun write(b: Int) =
-        delegate.write(b)
-
-    fun redirect(newOutputStream: OutputStream) {
-        delegate = newOutputStream
+    fun restore() {
+        out = prevStream
     }
 }
 
 /**
- * A typed replacement for [ByteArrayOutputStream] for easier debugging.
+ * A [PrintStream] which stores the output in a byte array and allows to retrieve it.
+ *
+ * @param size the initial size of the underlying byte array, which grows as needed.
  */
-private class TapBytesStream(size: Int): PrintStream(ByteArrayOutputStream(size), true) {
+private class StringOutputStream(size: Int): PrintStream(ByteArrayOutputStream(size), true) {
 
+    /**
+     * Flushes the underlying stream and returns the text written to it.
+     */
     fun output(): String {
         out.flush()
         return out.toString()

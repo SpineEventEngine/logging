@@ -57,9 +57,8 @@ internal class JvmLoggerSpec {
             System.err.println(consoleCheck)
         }
         consoleOutput shouldContain consoleCheck
-        val expectedMethodReference =
-            ("produce the output with the name of" +
-                    " the logging class and calling method") //.replace(' ', '_')
+        val expectedMethodReference = "produce the output with the name of" +
+                " the logging class and calling method"
         consoleOutput shouldContain this::class.java.name
         consoleOutput shouldContain expectedMsg
         consoleOutput shouldContain expectedMethodReference
