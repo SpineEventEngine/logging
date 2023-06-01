@@ -5,45 +5,47 @@
 
 # Spine Logging
 
-Spine Logging is a library for (potentially multi-platform) Kotlin and Java projects.
-Only JMV implementation for Kotlin is currently provided, with JS implementation being
-of priority.
+Spine Logging is a versatile library designed for Kotlin and Java projects, with a potential
+for multi-platform use. At present, we only provide a JVM implementation for Kotlin,
+with a JavaScript implementation being our priority for future development.
 
-The library is largely inspired by [Google Flogger][flogger] logging API, and introduction of
-fluent logging API in [SLF4J in v2.0.0][fluent-slf4j].
+This library draws inspiration from the logging API of [Google Flogger][flogger], and
+the introduction of a fluent logging API in [SLF4J v2.0.0][fluent-slf4j].
 
-## Experimental status
+## Current status: Experimental
 
-This library is in its early stages of development and is not yet stable. 
-Its API may change without notice in the near future. Therefore, you should use it with
-caution in your projects until it is no longer considered experimental.
+Please note that this library is still in the experimental phase of development and hence,
+its API may undergo significant changes. As such, we advise using this library cautiously in
+your projects until it has reached a stable release stage.
 
 ## Logging backends
 
-The JVM implementation of the library uses Google Flogger as a backend, at least, for 
-the time being. Flogger, in turn, is also a logging facade, which means that it needs to
-be configured with a backend which does actual logging operations. 
+Our JVM implementation currently employs Google Flogger.
+Since Flogger is a logging facade, it requires a backend to perform the actual logging operations.
+At the time of writing, the following Flogger backends are available:
 
-There are following logging Flogger backends available at the time of writing:
-  * `com.google.flogger:flogger-system-backend:$floggerVersion` — uses `java.util.logging`.
-  * `com.google.flogger:flogger-log4j-backend:$floggerVersion` — uses Log4.
-  * `com.google.flogger:flogger-log4j2-backend:$floggerVersion` — uses Log4j2.
-  * `com.google.flogger:flogger-slf4j-backend:$floggerVersion` — uses SLF4J (which is facade itself!).
+* `com.google.flogger:flogger-system-backend:$floggerVersion` — utilizing `java.util.logging`.
+* `com.google.flogger:flogger-log4j-backend:$floggerVersion` — utilizing Log4j.
+* `com.google.flogger:flogger-log4j2-backend:$floggerVersion` — utilizing Log4j2.
+* `com.google.flogger:flogger-slf4j-backend:$floggerVersion` — utilizing SLF4J (which is a facade itself!).
 
-### Using `java.util.logging` as a backend
-If you want to use `java.util.logging` in your project, you need to add the following dependency:
+### How to Use `java.util.logging` as a backend
+
+To use `java.util.logging` in your project, add the following dependency:
+
 ```kotlin
 dependencies {
     implementation("io.spine:spine-logging:$version")
     runtimeOnly("io.spine:spine-logging-backend:$version")
 }
 ```
-The second dependency replaces the default Flogger backend with the one which fixes the issues
-with using `LogLevelMap` in the project.
+The second dependency replaces the default Flogger backend with a backend that resolves issues
+with using LogLevelMap in the project.
 
-### Other backends
-If you want a backend other than `java.util.logging`, you need to add dependencies that include
-`rutimeOnly` dependency for a logging backend of choice. For example:
+### Utilizing other backends
+
+If you prefer a backend other than java.util.logging, add dependencies that include a `runtimeOnly`
+dependency for your chosen logging backend. For instance:
 
 ```kotlin
 dependencies {
@@ -52,8 +54,7 @@ dependencies {
 }
 ```
 
-If you need to use SLF4J as a backend, your dependencies should also include a backend for SLF4J.
-For example:
+For SLF4J as a backend, your dependencies should also include a backend for SLF4J. For example:
 
 ```kotlin
 dependencies {
@@ -65,15 +66,14 @@ dependencies {
 
 ## Logging context
 
-A logging context is a set of attributes that are attached to all log records while 
-a context is installed. For example, you can attach a user ID to all log records for 
+A logging context refers to a set of attributes that are attached to all log records while
+a context is installed. For instance, you can attach a user ID to all log records for
 the current request.
 
-Default implementation provides a no-op context, which does nothing. To use logging
-context a `rutimeOnly` dependency for a context implementation should be added in addition
-to the dependencies described above.
+The default implementation provides a no-op context. To use a logging context, a `runtimeOnly`
+dependency for a context implementation should be added along with the above dependencies.
 
-If your project does not use gRPC, you need to use the following dependency:
+If your project does not use gRPC, use the following dependency:
 
 ```kotlin
 dependencies {
@@ -82,7 +82,7 @@ dependencies {
 }
 ```
 
-If your project does use gRPC, you need to add the following dependency instead:
+If your project does use gRPC, add the following dependency:
 
 ```kotlin
 dependencies {
