@@ -84,6 +84,11 @@ private class ApiImpl(private val delegate: FluentLogger.Api): JvmLogger.Api {
         return this
     }
 
+    override fun every(n: Int): JvmLogger.Api {
+        delegate.every(n)
+        return this
+    }
+
     override fun isEnabled(): Boolean = delegate.isEnabled
 
     override fun log() = delegate.log()
