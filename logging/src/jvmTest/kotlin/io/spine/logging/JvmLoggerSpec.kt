@@ -28,6 +28,7 @@ package io.spine.logging
 
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
+import io.kotest.matchers.string.shouldContainOnlyOnce
 import io.spine.logging.given.domain.AnnotatedClass
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -88,6 +89,20 @@ internal class JvmLoggerSpec {
         }
         consoleOutput shouldContain "Logging class 1"
         consoleOutput shouldContain "Logging class 2"
+    }
+
+    @Test
+    fun `log once per N invocations`() {
+        val invocations = 10
+        val expectedMessage = "log once per N invocations test"
+        val consoleOutput = tapConsole {
+            repeat(invocations) {
+                logger.atInfo()
+                    .every(invocations)
+                    .log { expectedMessage }
+            }
+        }
+        consoleOutput shouldContainOnlyOnce expectedMessage
     }
 }
 
