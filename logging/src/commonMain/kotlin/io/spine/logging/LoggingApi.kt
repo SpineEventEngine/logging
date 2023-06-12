@@ -48,12 +48,11 @@ public interface LoggingApi<API: LoggingApi<API>> {
     public fun withCause(cause: Throwable): API
 
     /**
-     * Modifies the current log statement to be emitted only once per N calls.
+     * Modifies the current log statement to be emitted only once per N invocations.
      *
      * The specified `n` must be greater than zero.
      *
-     * The first invocation of this rate-limited log statement
-     * is always emitted.
+     * The first invocation of this rate-limited log statement is always emitted.
      *
      * If this method is called multiple times for a single log statement,
      * the last invocation will take precedence.
