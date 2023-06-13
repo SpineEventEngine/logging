@@ -140,6 +140,16 @@ internal class JvmLoggerSpec {
         }
 
         @Test
+        fun `throw on negative rates`() {
+            for (loggingRate in -1 downTo -5) {
+                assertThrows<IllegalArgumentException> {
+                    logger.atInfo()
+                        .every(loggingRate)
+                }
+            }
+        }
+
+        @Test
         fun `log no more often than the rate allows`() {
             val loggingRate = 5
             val invocations = 28
