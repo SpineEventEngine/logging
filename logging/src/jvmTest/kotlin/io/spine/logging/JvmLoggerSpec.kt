@@ -139,74 +139,21 @@ internal class JvmLoggerSpec {
             }
         }
 
-        /**
-         * Ensures that the configured rate is applied correctly with different number
-         * of invocations.
-         *
-         * This test can't be implemented as parametrized, and the logging call itself
-         * can't be extracted into a separate function. Doing so breaks the test isolation.
-         * We need a separate logging call site for each number of invocations to have
-         * this test valid.
-         */
-        @Nested
-        internal inner class `log no more often than the rate allows` {
-
-            private val loggingRate = 3
-
-            @Test
-            fun `using 6 invocations`() {
-                val invocations = 6
-                val consoleOutput = tapConsole {
-                    repeat(invocations) {
-                        logger.atInfo()
-                            .every(loggingRate)
-                            .log { loggingMessage }
-                    }
+        @Test
+        fun `log no more often than the rate allows`() {
+            val loggingRate = 5
+            val invocations = 28
+            val expectedLoggedInvocations = listOf(1, 6, 11, 16, 21, 26)
+            val numberedLogMessage = { i: Int -> "log message #$i." }
+            val consoleOutput = tapConsole {
+                (1..invocations).forEach { i ->
+                    logger.atInfo()
+                        .every(loggingRate)
+                        .log { numberedLogMessage(i) }
                 }
-                val timesLogged = consoleOutput.occurrencesOf(loggingMessage)
-                timesLogged shouldBe 2 // Logs on 1st and 4th invocations.
             }
-
-            @Test
-            fun `using 7 invocations`() {
-                val invocations = 7
-                val consoleOutput = tapConsole {
-                    repeat(invocations) {
-                        logger.atInfo()
-                            .every(loggingRate)
-                            .log { loggingMessage }
-                    }
-                }
-                val timesLogged = consoleOutput.occurrencesOf(loggingMessage)
-                timesLogged shouldBe 3 // Logs on 1st, 4th, 7th invocations.
-            }
-
-            @Test
-            fun `using 9 invocations`() {
-                val invocations = 9
-                val consoleOutput = tapConsole {
-                    repeat(invocations) {
-                        logger.atInfo()
-                            .every(loggingRate)
-                            .log { loggingMessage }
-                    }
-                }
-                val timesLogged = consoleOutput.occurrencesOf(loggingMessage)
-                timesLogged shouldBe 3 // Logs on 1st, 4th, 7th invocations.
-            }
-
-            @Test
-            fun `using 10 invocations`() {
-                val invocations = 10
-                val consoleOutput = tapConsole {
-                    repeat(invocations) {
-                        logger.atInfo()
-                            .every(loggingRate)
-                            .log { loggingMessage }
-                    }
-                }
-                val timesLogged = consoleOutput.occurrencesOf(loggingMessage)
-                timesLogged shouldBe 4 // Logs on 1st, 4th, 7th, 10th invocations.
+            expectedLoggedInvocations.forEach { i ->
+                consoleOutput shouldContainOnlyOnce numberedLogMessage(i)
             }
         }
     }
