@@ -48,6 +48,18 @@ public interface LoggingApi<API: LoggingApi<API>> {
     public fun withCause(cause: Throwable): API
 
     /**
+     * Modifies the current log statement to be emitted only once per N invocations.
+     *
+     * The specified `n` must be greater than zero.
+     *
+     * The first invocation of this rate-limited log statement is always emitted.
+     *
+     * If this method is called multiple times for a single log statement,
+     * the last invocation will take precedence.
+     */
+    public fun every(n: Int): API
+
+    /**
      * Returns `true` if logging is enabled at the level implied for this API.
      */
     public fun isEnabled(): Boolean
@@ -95,10 +107,14 @@ public interface LoggingApi<API: LoggingApi<API>> {
         override fun withCause(cause: Throwable): API = noOp()
 
         /**
+         * Does nothing.
+         */
+        override fun every(n: Int): API = noOp()
+
+        /**
          * Always returns `false`.
          */
         override fun isEnabled(): Boolean = false
-
 
         /**
          * Does nothing.

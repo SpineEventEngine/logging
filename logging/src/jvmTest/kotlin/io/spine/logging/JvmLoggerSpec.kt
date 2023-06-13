@@ -28,9 +28,12 @@ package io.spine.logging
 
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
+import io.kotest.matchers.string.shouldContainOnlyOnce
 import io.spine.logging.given.domain.AnnotatedClass
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 @DisplayName("`JvmLogger` should")
 internal class JvmLoggerSpec {
@@ -89,6 +92,81 @@ internal class JvmLoggerSpec {
         consoleOutput shouldContain "Logging class 1"
         consoleOutput shouldContain "Logging class 2"
     }
+
+    @Nested
+    internal inner class `, when given a logging rate,` {
+
+        private val loggingMessage = "logging rate test"
+
+        @Test
+        fun `log on the first invocation`() {
+            val invocations = 3
+            val loggingRate = invocations
+            val consoleOutput = tapConsole {
+                repeat(invocations) {
+                    logger.atInfo()
+                        .every(loggingRate)
+                        .log { loggingMessage }
+                }
+            }
+            consoleOutput shouldContainOnlyOnce loggingMessage
+        }
+
+        @Test
+        fun `use the latest specified rate`() {
+            val invocations = 10
+            val initialLoggingRate = 3
+            val finalLoggingRate = 5
+            val consoleOutput = tapConsole {
+                repeat(invocations) {
+                    logger.atInfo()
+                        .every(initialLoggingRate)
+                        .every(finalLoggingRate)
+                        .log { loggingMessage }
+                }
+            }
+            val expectedTimesLogged = expectedExecutions(invocations, finalLoggingRate)
+            val timesLogged = consoleOutput.occurrencesOf(loggingMessage)
+            timesLogged shouldBe expectedTimesLogged
+        }
+
+        @Test
+        fun `throw on zero rate`() {
+            val loggingRate = 0
+            assertThrows<IllegalArgumentException> {
+                logger.atInfo()
+                    .every(loggingRate)
+            }
+        }
+
+        @Test
+        fun `throw on negative rates`() {
+            for (loggingRate in -1 downTo -5) {
+                assertThrows<IllegalArgumentException> {
+                    logger.atInfo()
+                        .every(loggingRate)
+                }
+            }
+        }
+
+        @Test
+        fun `log no more often than the rate allows`() {
+            val loggingRate = 5
+            val invocations = 28
+            val numberedLogMessage = { i: Int -> "log message #$i." }
+            val consoleOutput = tapConsole {
+                (1..invocations).forEach { i ->
+                    logger.atInfo()
+                        .every(loggingRate)
+                        .log { numberedLogMessage(i) }
+                }
+            }
+            val expectedLoggedInvocations = 1..invocations step loggingRate
+            expectedLoggedInvocations.forEach { i ->
+                consoleOutput shouldContainOnlyOnce numberedLogMessage(i)
+            }
+        }
+    }
 }
 
 private class LoggingClass1: WithLogging {
@@ -97,4 +175,17 @@ private class LoggingClass1: WithLogging {
 
 private class LoggingClass2: WithLogging {
     fun log() = logger.atInfo().log { "Logging class 2" }
+}
+
+private fun String.occurrencesOf(substring: String) = split(substring).size - 1
+
+/**
+ * Calculates how many times a logging statement will actually be executed
+ * when it is execution rate is [restricted][LoggingApi.every].
+ */
+@Suppress("SameParameterValue") // Extracted to a method for better readability.
+private fun expectedExecutions(invocations: Int, rate: Int): Int {
+    val sureExecutions = invocations / rate
+    val hasRemainder = invocations % rate != 0
+    return sureExecutions + if (hasRemainder) 1 else 0
 }
