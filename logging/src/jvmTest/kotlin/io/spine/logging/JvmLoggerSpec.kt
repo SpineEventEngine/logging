@@ -145,7 +145,8 @@ internal class JvmLoggerSpec {
          *
          * This test can't be implemented as parametrized, and the logging call itself
          * can't be extracted into a separate function. Doing so breaks the test isolation.
-         * We need a separate call site for each number of invocations to have this test valid.
+         * We need a separate logging call site for each number of invocations to have
+         * this test valid.
          */
         @Nested
         internal inner class `log no more often than the rate allows` {
