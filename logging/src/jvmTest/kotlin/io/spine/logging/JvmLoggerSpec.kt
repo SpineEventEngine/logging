@@ -117,7 +117,6 @@ internal class JvmLoggerSpec {
             val invocations = 10
             val initialLoggingRate = 3
             val finalLoggingRate = 5
-            val expectedTimesLogged = 2
             val consoleOutput = tapConsole {
                 repeat(invocations) {
                     logger.atInfo()
@@ -126,6 +125,7 @@ internal class JvmLoggerSpec {
                         .log { loggingMessage }
                 }
             }
+            val expectedTimesLogged = expectedExecutions(invocations, finalLoggingRate)
             val timesLogged = consoleOutput.occurrencesOf(loggingMessage)
             timesLogged shouldBe expectedTimesLogged
         }
@@ -153,7 +153,6 @@ internal class JvmLoggerSpec {
         fun `log no more often than the rate allows`() {
             val loggingRate = 5
             val invocations = 28
-            val expectedLoggedInvocations = listOf(1, 6, 11, 16, 21, 26)
             val numberedLogMessage = { i: Int -> "log message #$i." }
             val consoleOutput = tapConsole {
                 (1..invocations).forEach { i ->
@@ -162,6 +161,7 @@ internal class JvmLoggerSpec {
                         .log { numberedLogMessage(i) }
                 }
             }
+            val expectedLoggedInvocations = 1..invocations step loggingRate
             expectedLoggedInvocations.forEach { i ->
                 consoleOutput shouldContainOnlyOnce numberedLogMessage(i)
             }
@@ -178,3 +178,14 @@ private class LoggingClass2: WithLogging {
 }
 
 private fun String.occurrencesOf(substring: String) = split(substring).size - 1
+
+/**
+ * Calculates how many times a logging statement will actually be executed
+ * when it is execution rate is [restricted][LoggingApi.every].
+ */
+@Suppress("SameParameterValue") // Extracted to a method for better readability.
+private fun expectedExecutions(invocations: Int, rate: Int): Int {
+    val sureExecutions = invocations / rate
+    val hasRemainder = invocations % rate != 0
+    return sureExecutions + if (hasRemainder) 1 else 0
+}
