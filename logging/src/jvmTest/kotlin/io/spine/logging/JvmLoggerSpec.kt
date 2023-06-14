@@ -30,6 +30,9 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldContainOnlyOnce
 import io.spine.logging.given.domain.AnnotatedClass
+import java.lang.Thread.sleep
+import kotlin.time.DurationUnit.MILLISECONDS
+import kotlin.time.DurationUnit.SECONDS
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -39,6 +42,7 @@ import org.junit.jupiter.api.assertThrows
 internal class JvmLoggerSpec {
 
     private val logger = LoggingFactory.loggerFor(this::class)
+    private val message = "logging test message"
 
     @Test
     fun `create no-op instance when logging level is too low`() {
@@ -94,9 +98,7 @@ internal class JvmLoggerSpec {
     }
 
     @Nested
-    internal inner class `, when given a logging rate,` {
-
-        private val loggingMessage = "logging rate test"
+    internal inner class `, when given an invocations-limiting logging rate,` {
 
         @Test
         fun `log on the first invocation`() {
@@ -106,10 +108,10 @@ internal class JvmLoggerSpec {
                 repeat(invocations) {
                     logger.atInfo()
                         .every(loggingRate)
-                        .log { loggingMessage }
+                        .log { message }
                 }
             }
-            consoleOutput shouldContainOnlyOnce loggingMessage
+            consoleOutput shouldContainOnlyOnce message
         }
 
         @Test
@@ -122,11 +124,11 @@ internal class JvmLoggerSpec {
                     logger.atInfo()
                         .every(initialLoggingRate)
                         .every(finalLoggingRate)
-                        .log { loggingMessage }
+                        .log { message }
                 }
             }
             val expectedTimesLogged = expectedExecutions(invocations, finalLoggingRate)
-            val timesLogged = consoleOutput.occurrencesOf(loggingMessage)
+            val timesLogged = consoleOutput.occurrencesOf(message)
             timesLogged shouldBe expectedTimesLogged
         }
 
@@ -153,18 +155,133 @@ internal class JvmLoggerSpec {
         fun `log no more often than the rate allows`() {
             val loggingRate = 5
             val invocations = 28
-            val numberedLogMessage = { i: Int -> "log message #$i." }
+
+            val numberedMessage = { i: Int -> "log message #$i." }
             val consoleOutput = tapConsole {
                 (1..invocations).forEach { i ->
                     logger.atInfo()
                         .every(loggingRate)
-                        .log { numberedLogMessage(i) }
+                        .log { numberedMessage(i) }
                 }
             }
-            val expectedLoggedInvocations = 1..invocations step loggingRate
+
+            val expectedLoggedInvocations = (1..invocations step loggingRate).toList()
             expectedLoggedInvocations.forEach { i ->
-                consoleOutput shouldContainOnlyOnce numberedLogMessage(i)
+                consoleOutput shouldContainOnlyOnce numberedMessage(i)
             }
+
+            val expectedLoggedTimes = expectedLoggedInvocations.size
+            val timesLogged = consoleOutput.lines().size / 2 // Logger prints two lines per a message.
+            timesLogged shouldBe expectedLoggedTimes
+        }
+    }
+
+    @Nested
+    internal inner class `, when given a time-limiting logging rate, ` {
+
+        @Test
+        fun `log on the first invocation`() {
+            val seconds = 5
+            val consoleOutput = tapConsole {
+                logger.atInfo()
+                    .atMostEvery(seconds, SECONDS)
+                    .log { message }
+            }
+            consoleOutput shouldContainOnlyOnce message
+        }
+
+        @Test
+        fun `use the latest specified interval`() {
+            val initialInterval = 100
+            val finalInterval = 500
+            val invocations = 10
+
+            val consoleOutput = tapConsole {
+                repeat(invocations, initialInterval) {
+                    logger.atInfo()
+                        .atMostEvery(initialInterval, MILLISECONDS)
+                        .atMostEvery(finalInterval, MILLISECONDS)
+                        .log { message }
+                }
+            }
+
+            val expectedTimesLogged = invocations * initialInterval / finalInterval
+            val timesLogged = consoleOutput.occurrencesOf(message)
+            timesLogged shouldBe expectedTimesLogged
+        }
+
+        @Test
+        fun `throw on negative durations`() {
+            for (interval in -1 downTo -1000 step 100) {
+                assertThrows<IllegalArgumentException> {
+                    logger.atInfo()
+                        .atMostEvery(interval, MILLISECONDS)
+                }
+            }
+        }
+
+        @Test
+        fun `have no effect on a zero duration`() {
+            val invocations = 10
+            val consoleOutput = tapConsole {
+                repeat(invocations) {
+                    logger.atInfo()
+                        .atMostEvery(0, MILLISECONDS)
+                        .log { message }
+                }
+            }
+            val timesLogged = consoleOutput.occurrencesOf(message)
+            timesLogged shouldBe invocations
+        }
+
+        @Test
+        fun `log no more often than the rate allows`() {
+            val invocationInterval = 120
+            val rateInterval = 300
+            val invocations = 10
+
+            val timestampedMessage = { millis: Int -> "log message $millis ms." }
+            val totalDuration = invocations * invocationInterval
+            val consoleOutput = tapConsole {
+                for (millis in 0..totalDuration step invocationInterval) {
+                    logger.atInfo()
+                        .atMostEvery(rateInterval, MILLISECONDS)
+                        .log { timestampedMessage(millis) }
+                    sleep(invocationInterval.toLong())
+                }
+            }
+
+            val expectedLoggedTimestamps = expectedLoggedTimestamps(
+                invocations,
+                invocationInterval,
+                rateInterval
+            )
+            expectedLoggedTimestamps.forEach { i ->
+                consoleOutput shouldContainOnlyOnce timestampedMessage(i)
+            }
+
+            val expectedLoggedTimes = expectedLoggedTimestamps.size
+            val timesLogged = consoleOutput.lines().size / 2 // Logger prints two lines per a message.
+            timesLogged shouldBe expectedLoggedTimes
+        }
+    }
+
+    @Nested
+    internal inner class `, when given multiple rate limiters` {
+
+        @Test
+        fun `limit rather by invocations`() {
+
+        }
+
+        @Test
+        fun `limit rather by duration`() {
+
+        }
+
+        @Test
+        fun `limit equally by invocations and duration`() {
+
         }
     }
 }
@@ -188,4 +305,35 @@ private fun expectedExecutions(invocations: Int, rate: Int): Int {
     val sureExecutions = invocations / rate
     val hasRemainder = invocations % rate != 0
     return sureExecutions + if (hasRemainder) 1 else 0
+}
+
+@Suppress("SameParameterValue") // Extracted to a method for better readability.
+private fun repeat(times: Int, intervalMillis: Int, action: () -> Unit) {
+    repeat(times - 1) {
+        action()
+        sleep(intervalMillis.toLong())
+    }
+    action()
+}
+
+@Suppress("SameParameterValue") // Extracted to a method for better readability.
+private fun expectedLoggedTimestamps(
+    invocations: Int,
+    invocationInterval: Int,
+    rateInterval: Int,
+): List<Int> {
+
+    val result = mutableListOf<Int>()
+    var currentMillis = -invocationInterval
+    var lastLogged = -rateInterval
+
+    repeat(invocations) {
+        currentMillis += invocationInterval
+        if (currentMillis >= lastLogged + rateInterval) {
+            result.add(currentMillis)
+            lastLogged = currentMillis
+        }
+    }
+
+    return result
 }
