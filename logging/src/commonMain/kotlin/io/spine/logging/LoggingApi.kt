@@ -56,6 +56,9 @@ public interface LoggingApi<API: LoggingApi<API>> {
      *
      * If this method is called multiple times for a single log statement,
      * the last invocation will take precedence.
+     *
+     * @throws IllegalArgumentException
+     *          if `n` is negative or zero
      */
     public fun every(n: Int): API
 
