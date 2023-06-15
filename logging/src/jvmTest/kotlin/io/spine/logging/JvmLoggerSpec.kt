@@ -163,14 +163,14 @@ internal class JvmLoggerSpec {
                 }
             }
 
-            val expectedMessages = (1..invocations step invocationRate).toList()
-            expectedMessages.forEach { i ->
+            val expectedInvocations = (1..invocations step invocationRate).toList()
+            expectedInvocations.forEach { i ->
                 consoleOutput shouldContainOnlyOnce numberedMessage(i)
             }
 
             // The logger prints two lines per a message.
             val timesLogged = consoleOutput.lines().size / 2
-            timesLogged shouldBe expectedMessages.size
+            timesLogged shouldBe expectedInvocations.size
         }
     }
 
@@ -205,8 +205,7 @@ internal class JvmLoggerSpec {
                 }
             }
 
-            val expectedTimesLogged =
-                expectedExecutions(invocations, intervalMillis, finalRateMillis)
+            val expectedTimesLogged = expectedExecutions(invocations, intervalMillis, finalRateMillis)
             val timesLogged = consoleOutput.occurrencesOf(message)
             timesLogged shouldBe expectedTimesLogged
         }
@@ -245,7 +244,7 @@ internal class JvmLoggerSpec {
             val timeRateMillis = 300
 
             val timestampedMessage = { millis: Long -> "log message $millis ms." }
-            val totalDuration = invocations * intervalMillis
+            val totalDuration = (invocations - 1) * intervalMillis
             val consoleOutput = tapConsole {
                 for (millis in 0..totalDuration step intervalMillis) {
                     logger.atInfo()
@@ -255,7 +254,8 @@ internal class JvmLoggerSpec {
                 }
             }
 
-            val expectedTimestamps = expectedTimestamps(invocations, intervalMillis, timeRateMillis)
+            val expectedTimestamps =
+                expectedTimestamps(invocations, intervalMillis, timeRateMillis)
             expectedTimestamps.forEach { i ->
                 consoleOutput shouldContainOnlyOnce timestampedMessage(i)
             }
@@ -270,87 +270,71 @@ internal class JvmLoggerSpec {
     internal inner class `, when given multiple rate limiters` {
 
         @Test
-        fun `limit rather by invocations`() {
-            val invocationInterval = 50
-            val timeRate = 50
-            val invocations = 20
+        fun `log with a higher invocation rate`() {
+            val invocations = 15
+            val intervalMillis = 50L
             val invocationRate = 5
 
-            val timestampedMessage = { millis: Int -> "log message $millis ms." }
-            val totalDuration = (invocations - 1) * invocationInterval
+            val timeRateMillis = intervalMillis.toInt()
+            val numberedMessage = { i: Int -> "log message #$i." }
+            val totalDuration = (invocations - 1) * intervalMillis
             val consoleOutput = tapConsole {
-                for (millis in 0..totalDuration step invocationInterval) {
+                var i = 1
+                for (millis in 0..totalDuration step intervalMillis) {
                     logger.atInfo()
                         .every(invocationRate)
-                        .atMostEvery(timeRate, MILLISECONDS)
-                        .log { timestampedMessage(millis) }
-                    sleep(invocationInterval.toLong())
+                        .atMostEvery(timeRateMillis, MILLISECONDS)
+                        .log { numberedMessage(i++) }
+                    sleep(intervalMillis)
                 }
             }
 
-            println("*********************************************************")
-            println(consoleOutput)
-            println("*********************************************************")
+            // Every invocation is guaranteed to pass through the interval rate,
+            // so logging should occur every 5 logs due to invocation rate.
 
-            // Logger prints two lines per a message.
+            val expectedMessages = (1..invocations step invocationRate).toList()
+            expectedMessages.forEach { i ->
+                consoleOutput shouldContainOnlyOnce numberedMessage(i)
+            }
+
+            // The logger prints two lines per a message.
             val timesLogged = consoleOutput.lines().size / 2
-            println("Times logged: $timesLogged")
+            timesLogged shouldBe expectedMessages.size
         }
 
         @Test
-        fun `limit rather by duration`() {
-            val invocationInterval = 50
-            val timeRate = 100
-            val invocations = 20
-            val invocationRate = 20
+        fun `log with a longer interval rate`() {
+            val invocations = 15
+            val intervalMillis = 50L
+            val timeRateMillis = 200
 
-            val timestampedMessage = { millis: Int -> "log message $millis ms." }
-            val totalDuration = (invocations - 1) * invocationInterval
+            val invocationRate = timeRateMillis / intervalMillis.toInt()
+            val timestampedMessage = { millis: Long -> "log message $millis ms." }
+            val totalDuration = (invocations - 1) * intervalMillis
             val consoleOutput = tapConsole {
-                for (millis in 0..totalDuration step invocationInterval) {
+                for (millis in 0..totalDuration step intervalMillis) {
                     logger.atInfo()
                         .every(invocationRate)
-                        .atMostEvery(timeRate, MILLISECONDS)
+                        .atMostEvery(timeRateMillis, MILLISECONDS)
                         .log { timestampedMessage(millis) }
-                    sleep(invocationInterval.toLong())
+                    sleep(intervalMillis)
                 }
             }
 
-            println("*********************************************************")
             println(consoleOutput)
-            println("*********************************************************")
 
-            // Logger prints two lines per a message.
-            val timesLogged = consoleOutput.lines().size / 2
-            println("Times logged: $timesLogged")
-        }
+            // Every invocation is guaranteed to pass through the invocation rate,
+            // so logging should occur every 200ms due to interval rate.
 
-        @Test
-        fun `limit equally by invocations and duration`() {
-            val invocationInterval = 50
-            val timeRate = 50
-            val invocations = 20
-            val invocationRate = 5
-
-            val timestampedMessage = { millis: Int -> "log message $millis ms." }
-            val totalDuration = (invocations - 1) * invocationInterval
-            val consoleOutput = tapConsole {
-                for (millis in 0..totalDuration step invocationInterval) {
-                    logger.atInfo()
-                        .every(invocationRate)
-                        .atMostEvery(timeRate, MILLISECONDS)
-                        .log { timestampedMessage(millis) }
-                    sleep(invocationInterval.toLong())
-                }
+            val expectedTimestamps =
+                expectedTimestamps(invocations, intervalMillis, timeRateMillis)
+            expectedTimestamps.forEach { i ->
+                consoleOutput shouldContainOnlyOnce timestampedMessage(i)
             }
 
-            println("*********************************************************")
-            println(consoleOutput)
-            println("*********************************************************")
-
-            // Logger prints two lines per a message.
+            // The logger prints two lines per a message.
             val timesLogged = consoleOutput.lines().size / 2
-            println("Times logged: $timesLogged")
+            timesLogged shouldBe expectedTimestamps.size
         }
     }
 }
