@@ -26,6 +26,8 @@
 
 package io.spine.logging
 
+import kotlin.time.DurationUnit
+
 /**
  * The basic logging API returned by a [Logger].
  */
@@ -54,10 +56,88 @@ public interface LoggingApi<API: LoggingApi<API>> {
      *
      * The first invocation of this rate-limited log statement is always emitted.
      *
-     * If this method is called multiple times for a single log statement,
+     * ## Notes
+     *
+     * 1. If `atMostEvery(...)` and `every(...)` are invoked for the same statement,
+     * then it will be emitted only when both criteria are satisfied.
+     * Firstly, `atMostEvery(...)` criterion should be satisfied, then the counter
+     * for `every(...)` starts. As `every(...)` becomes satisfied, the statement
+     * is emitted.
+     *
+     * 2. If this method is called multiple times for a single log statement,
      * the last invocation will take precedence.
+     *
+     * @throws IllegalArgumentException
+     *          if `n` is negative or zero
      */
     public fun every(n: Int): API
+
+    /**
+     * Modifies the current log statement to be emitted **at most** once per
+     * the specified period.
+     *
+     * The passed `n` must be non-negative.
+     *
+     * The first invocation of this rate-limited log statement is always emitted.
+     *
+     * ## Behavior
+     *
+     * A call to this method adds the following pre-condition for emitting
+     * the log statement:
+     *
+     * ```
+     * val currentTimestampNanos = now()
+     * val lastTimestampNanos = ... // The last time this statement was emitted.
+     * val rateNanos = n.toDuration(unit).inWholeNanoseconds // The specified rate.
+     * val shouldEmit = currentTimestampNanos >= lastTimestampNanos + rateNanos
+     * if (shouldEmit) {
+     *     // The statement can be emitted. It is within the rate.
+     * }
+     * ```
+     *
+     * The effect of this is that when logging invocation is relatively infrequent,
+     * the period between emitted log statements can be higher than the specified duration.
+     * For example, if the following log statement was called every 600ms:
+     *
+     * ```
+     * logger.atFine()
+     *       .atMostEvery(2, SECONDS)
+     *       .log(...)
+     * ```
+     *
+     * logging would occur after 0s, 2.4s and 4.8s (not 4.2s), giving an effective
+     * duration of 2.4s between log statements over time.
+     *
+     * Providing a zero length duration (`n` == 0) does not affect a log statement.
+     * Previously configured rate limitation is used, if any. Such a call should be
+     * considered as a no-op.
+     *
+     * ## Granularity
+     *
+     * Because the implementation of this feature relies on a nanosecond timestamp
+     * provided by the backend, the actual granularity of the underlying clock
+     * used may vary. Thus, it is possible to specify a period smaller than
+     * the smallest visible time increment. If this occurs, then the effective
+     * rate limit will be the smallest available time increment. For example,
+     * if the system clock granularity is 1 millisecond, and a log statement
+     * is called with `atMostEvery(700, MICROSECONDS)`, the effective rate of
+     * logging could never be more than once every millisecond.
+     *
+     * ## Notes
+     *
+     * 1. If `atMostEvery(...)` and `every(...)` are invoked for the same statement,
+     * then it will be emitted only when both criteria are satisfied.
+     * Firstly, `atMostEvery(...)` criterion should be satisfied, then the counter
+     * for `every(...)` starts. As `every(...)` becomes satisfied, the statement
+     * is emitted.
+     *
+     * 2. If this method is called multiple times for a single log statement,
+     * the last invocation will take precedence.
+     *
+     * @throws IllegalArgumentException
+     *          if `n` is negative
+     */
+    public fun atMostEvery(n: Int, unit: DurationUnit): API
 
     /**
      * Returns `true` if logging is enabled at the level implied for this API.
@@ -110,6 +190,11 @@ public interface LoggingApi<API: LoggingApi<API>> {
          * Does nothing.
          */
         override fun every(n: Int): API = noOp()
+
+        /**
+         * Does nothing.
+         */
+        override fun atMostEvery(n: Int, unit: DurationUnit): API = noOp()
 
         /**
          * Always returns `false`.

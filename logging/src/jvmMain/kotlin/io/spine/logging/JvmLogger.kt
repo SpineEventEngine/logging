@@ -30,6 +30,8 @@ import com.google.common.flogger.FluentLogger
 import com.google.common.flogger.LogSites.callerOf
 import com.google.errorprone.annotations.CheckReturnValue
 import kotlin.reflect.KClass
+import kotlin.time.DurationUnit
+import kotlin.time.toTimeUnit
 import java.util.logging.Level as JLevel
 
 /**
@@ -86,6 +88,12 @@ private class ApiImpl(private val delegate: FluentLogger.Api): JvmLogger.Api {
 
     override fun every(n: Int): JvmLogger.Api {
         delegate.every(n)
+        return this
+    }
+
+    override fun atMostEvery(n: Int, unit: DurationUnit): JvmLogger.Api {
+        val javaTimeUnit = unit.toTimeUnit()
+        delegate.atMostEvery(n, javaTimeUnit)
         return this
     }
 
