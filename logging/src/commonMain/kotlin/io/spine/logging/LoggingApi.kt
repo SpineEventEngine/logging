@@ -108,8 +108,9 @@ public interface LoggingApi<API: LoggingApi<API>> {
      * logging would occur after 0s, 2.4s and 4.8s (not 4.2s), giving an effective
      * duration of 2.4s between log statements over time.
      *
-     * Providing a zero length duration (`n` == 0) disables rate limiting
-     * and makes this method an effective no-op.
+     * Providing a zero length duration (`n` == 0) does not affect a log statement.
+     * Previously configured rate limitation is used, if any. Such a call should be
+     * considered as a no-op.
      *
      * ## Granularity
      *
