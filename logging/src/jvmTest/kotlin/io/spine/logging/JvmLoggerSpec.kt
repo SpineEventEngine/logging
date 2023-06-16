@@ -29,6 +29,7 @@ package io.spine.logging
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldContainOnlyOnce
+import io.spine.logging.given.Task
 import io.spine.logging.given.domain.AnnotatedClass
 import io.spine.logging.given.expectedRuns
 import io.spine.logging.given.expectedTimestamps
@@ -368,6 +369,43 @@ internal class JvmLoggerSpec {
             // The logger prints two lines per message.
             val timesLogged = consoleOutput.lines().size / 2
             timesLogged shouldBe expectedTimestamps.size
+        }
+    }
+
+    @Nested
+    internal inner class `count an invocation rate limit` {
+
+        @Test
+        fun `per enum value`() {
+            val rateLimit = 3
+            val invocationsPerTask = mutableMapOf(
+                Task.BUILD to 15,
+                Task.DESTROY to 7
+            )
+
+            val taskedMessage = { task: Task -> "$task log message" }
+            val consoleOutput = tapConsole {
+                invocationsPerTask.forEach { (task, invocations) ->
+                    repeat(invocations) {
+                        logger.atInfo()
+                            .per(task)
+                            .every(rateLimit)
+                            .log { taskedMessage(task) }
+                    }
+                }
+            }
+
+            val expectedLogsPerTask = expectedRuns(invocationsPerTask, rateLimit)
+            val logsPerTask = invocationsPerTask.mapValues { (task, _) ->
+                val wantedMessage = taskedMessage(task)
+                consoleOutput.occurrencesOf(wantedMessage)
+            }
+            logsPerTask shouldBe expectedLogsPerTask
+        }
+
+        @Test
+        fun `per combination of enum values`() {
+
         }
     }
 }

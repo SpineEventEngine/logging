@@ -50,6 +50,23 @@ internal fun expectedRuns(invocations: Int, invocationRateLimit: Int): Int {
 }
 
 /**
+ * Calculates how many times a logging statement should be executed for each
+ * enum value when the execution rate is limited by [LoggingApi.every] method.
+ *
+ * @param invocations
+ *          number of times a logging statement is invoked for each enum value
+ * @param invocationRateLimit
+ *          the configured rate limitation
+ */
+@Suppress("SameParameterValue") // Extracted to a method for better readability.
+internal fun expectedRuns(
+    invocations: Map<Task, Int>,
+    invocationRateLimit: Int,
+): Map<Task, Int> = invocations.mapValues { entry ->
+    expectedRuns(entry.value, invocationRateLimit)
+}
+
+/**
  * Calculates how many times a logging statement should be executed when
  * its execution rate is limited by [LoggingApi.atMostEvery] method.
  *
