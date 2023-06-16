@@ -193,7 +193,7 @@ internal class JvmLoggerSpec {
             val invocations = 10
             val intervalMillis = 50L
             val initialRateMillis = 50
-            val finalRateMillis = 75
+            val finalRateMillis = 100
 
             val consoleOutput = tapConsole {
                 repeat(invocations) {
