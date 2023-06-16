@@ -170,7 +170,7 @@ internal class JvmLoggerSpec {
                 consoleOutput shouldContainOnlyOnce numberedMessage(i)
             }
 
-            // The logger prints two lines per a message.
+            // The logger prints two lines per message.
             val timesLogged = consoleOutput.lines().size / 2
             timesLogged shouldBe expectedInvocations.size
         }
@@ -262,7 +262,7 @@ internal class JvmLoggerSpec {
                 consoleOutput shouldContainOnlyOnce timestampedMessage(i)
             }
 
-            // The logger prints two lines per a message.
+            // The logger prints two lines per message.
             val timesLogged = consoleOutput.lines().size / 2
             timesLogged shouldBe expectedTimestamps.size
         }
@@ -299,7 +299,7 @@ internal class JvmLoggerSpec {
                 consoleOutput shouldContainOnlyOnce numberedMessage(i)
             }
 
-            // The logger prints two lines per a message.
+            // The logger prints two lines per message.
             val timesLogged = consoleOutput.lines().size / 2
             timesLogged shouldBe expectedMessages.size
         }
@@ -332,7 +332,7 @@ internal class JvmLoggerSpec {
                 consoleOutput shouldContainOnlyOnce timestampedMessage(i)
             }
 
-            // The logger prints two lines per a message.
+            // The logger prints two lines per message.
             val timesLogged = consoleOutput.lines().size / 2
             timesLogged shouldBe expectedTimestamps.size
         }
@@ -365,7 +365,7 @@ internal class JvmLoggerSpec {
                 consoleOutput shouldContainOnlyOnce timestampedMessage(i)
             }
 
-            // The logger prints two lines per a message.
+            // The logger prints two lines per message.
             val timesLogged = consoleOutput.lines().size / 2
             timesLogged shouldBe expectedTimestamps.size
         }
