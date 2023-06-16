@@ -99,7 +99,7 @@ internal class JvmLoggerSpec {
     }
 
     @Nested
-    internal inner class `, when given an invocation rate limit,` {
+    internal inner class `when given an invocation rate limit,` {
 
         @Test
         fun `always log on the first invocation`() {
@@ -177,7 +177,7 @@ internal class JvmLoggerSpec {
     }
 
     @Nested
-    internal inner class `, when given a time rate limit,` {
+    internal inner class `when given a time rate limit,` {
 
         @Test
         fun `always log on the first invocation`() {
@@ -269,7 +269,7 @@ internal class JvmLoggerSpec {
     }
 
     @Nested
-    internal inner class `, when given multiple rate limiters` {
+    internal inner class `when given multiple rate limiters` {
 
         @Test
         fun `log with a higher invocation rate`() {
