@@ -254,8 +254,7 @@ internal class JvmLoggerSpec {
                 }
             }
 
-            val expectedTimestamps =
-                expectedTimestamps(invocations, intervalMillis, timeRateMillis)
+            val expectedTimestamps = expectedTimestamps(invocations, intervalMillis, timeRateMillis)
             expectedTimestamps.forEach { i ->
                 consoleOutput shouldContainOnlyOnce timestampedMessage(i)
             }
@@ -321,13 +320,43 @@ internal class JvmLoggerSpec {
                 }
             }
 
-            println(consoleOutput)
-
             // Every invocation is guaranteed to pass through the invocation rate,
             // so logging should occur every 200ms due to interval rate.
 
+            val expectedTimestamps = expectedTimestamps(invocations, intervalMillis, timeRateMillis)
+            expectedTimestamps.forEach { i ->
+                consoleOutput shouldContainOnlyOnce timestampedMessage(i)
+            }
+
+            // The logger prints two lines per a message.
+            val timesLogged = consoleOutput.lines().size / 2
+            timesLogged shouldBe expectedTimestamps.size
+        }
+
+        @Test
+        fun `log on intersection of interval and invocation rates`() {
+            val invocations = 15
+            val intervalMillis = 50L
+            val timeRateMillis = 200
+            val invocationRate = 3
+
+            val timestampedMessage = { millis: Long -> "log message $millis ms." }
+            val totalDuration = (invocations - 1) * intervalMillis
+            val consoleOutput = tapConsole {
+                for (millis in 0..totalDuration step intervalMillis) {
+                    logger.atInfo()
+                        .every(invocationRate)
+                        .atMostEvery(timeRateMillis, MILLISECONDS)
+                        .log { timestampedMessage(millis) }
+                    sleep(intervalMillis)
+                }
+            }
+
+            // Every invocation should firstly pass the interval rate, then it
+            // starts counting for the invocation rate. And only then emitted.
+
             val expectedTimestamps =
-                expectedTimestamps(invocations, intervalMillis, timeRateMillis)
+                expectedTimestamps(invocations, intervalMillis, timeRateMillis, invocationRate)
             expectedTimestamps.forEach { i ->
                 consoleOutput shouldContainOnlyOnce timestampedMessage(i)
             }
@@ -419,6 +448,49 @@ private fun expectedTimestamps(
         if (currentMillis >= lastLoggedMillis + timeRateMillis) {
             result.add(currentMillis)
             lastLoggedMillis = currentMillis
+        }
+        currentMillis += intervalMillis
+
+    }
+
+    return result
+}
+
+/**
+ * Calculates the expected timestamps at which the logging statement should be
+ * executed when [interval][LoggingApi.atMostEvery] and [invocation][LoggingApi.every]
+ * rate limits are configured simultaneously.
+ *
+ * @param invocations
+ *          number of times a logging statement is invoked
+ * @param intervalMillis
+ *          time interval between each two invocations
+ * @param timeRateMillis
+ *          the configured time rate limitation
+ * @param invocationRate
+ *          the configured invocation rate limitation
+ */
+@Suppress("SameParameterValue") // Extracted to a method for better readability.
+private fun expectedTimestamps(
+    invocations: Int,
+    intervalMillis: Long,
+    timeRateMillis: Int,
+    invocationRate: Int
+): List<Long> {
+
+    val result = mutableListOf(0L)
+    var currentMillis = 0L
+    var lastLoggedMillis = 0L
+    var invoked = 0
+
+    for (i in 1..invocations) {
+        if (currentMillis >= lastLoggedMillis + timeRateMillis) {
+            invoked++
+            if (invoked == invocationRate) {
+                result.add(currentMillis)
+                lastLoggedMillis = currentMillis
+                invoked = 0
+            }
         }
         currentMillis += intervalMillis
 
