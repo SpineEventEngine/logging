@@ -157,7 +157,7 @@ public interface LoggingApi<API: LoggingApi<API>> {
      * `taskType`s to be rate-limited independently of each other:
      *
      * ```
-     * // We want to rate limit logging separately for all task types.
+     * // We want to rate limit logging separately for each task type.
      * logger.at(INFO)
      *       .per(task.type)
      *       .atMostEvery(30, SECONDS)
