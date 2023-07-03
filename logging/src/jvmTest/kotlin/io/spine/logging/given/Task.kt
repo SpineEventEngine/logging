@@ -29,4 +29,7 @@ package io.spine.logging.given
 internal enum class Task {
     BUILD,
     DESTROY,
+    REVISE,
+    UPDATE,
+    ARCHIVE
 }

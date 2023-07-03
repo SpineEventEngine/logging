@@ -30,6 +30,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldContainOnlyOnce
 import io.spine.logging.given.Task
+import io.spine.logging.given.Task.*
 import io.spine.logging.given.domain.AnnotatedClass
 import io.spine.logging.given.expectedRuns
 import io.spine.logging.given.expectedTimestamps
@@ -379,8 +380,9 @@ internal class JvmLoggerSpec {
         fun `per enum value`() {
             val rateLimit = 3
             val invocationsPerTask = mutableMapOf(
-                Task.BUILD to 15,
-                Task.DESTROY to 7
+                BUILD to 15,
+                DESTROY to 7,
+                ARCHIVE to 11,
             )
 
             val taskedMessage = { task: Task -> "$task log message" }
@@ -405,7 +407,34 @@ internal class JvmLoggerSpec {
 
         @Test
         fun `per combination of enum values`() {
+            val rateLimit = 3
+            val invocationsPerTasks = mutableMapOf(
+                setOf(BUILD, DESTROY, REVISE) to 15,
+                setOf(BUILD, UPDATE, DESTROY) to 7,
+                setOf(ARCHIVE, BUILD, DESTROY) to 11,
+            )
 
+            val taskedMessage = { tasks: Set<Task> -> "$tasks log message" }
+            val consoleOutput = tapConsole {
+                invocationsPerTasks.forEach { (tasks, invocations) ->
+                    val tasksList = tasks.toList()
+                    repeat(invocations) {
+                        logger.atInfo()
+                            .per(tasksList[0])
+                            .per(tasksList[1])
+                            .per(tasksList[2])
+                            .every(rateLimit)
+                            .log { taskedMessage(tasks) }
+                    }
+                }
+            }
+
+            val expectedLogsPerTasks = expectedRuns(invocationsPerTasks, rateLimit)
+            val logsPerTasks = invocationsPerTasks.mapValues { (tasks, _) ->
+                val wantedMessage = taskedMessage(tasks)
+                consoleOutput.occurrencesOf(wantedMessage)
+            }
+            logsPerTasks shouldBe expectedLogsPerTasks
         }
     }
 }

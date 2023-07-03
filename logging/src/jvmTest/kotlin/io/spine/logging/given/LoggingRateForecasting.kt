@@ -59,10 +59,31 @@ internal fun expectedRuns(invocations: Int, invocationRateLimit: Int): Int {
  *          the configured rate limitation
  */
 @Suppress("SameParameterValue") // Extracted to a method for better readability.
+@JvmName("expectedRunsPerTask") // JVM has a problem with the conflicting erasures.
 internal fun expectedRuns(
     invocations: Map<Task, Int>,
     invocationRateLimit: Int,
 ): Map<Task, Int> = invocations.mapValues { entry ->
+    expectedRuns(entry.value, invocationRateLimit)
+}
+
+/**
+ * Calculates how many times a logging statement should be executed for each
+ * combination of enum values when the execution rate is limited by
+ * [LoggingApi.every] method.
+ *
+ * @param invocations
+ *          number of times a logging statement is invoked for each combination
+ *          of enum values
+ * @param invocationRateLimit
+ *          the configured rate limitation
+ */
+@Suppress("SameParameterValue") // Extracted to a method for better readability.
+@JvmName("expectedRunsPerTasks") // JVM has a problem with the conflicting erasures.
+internal fun expectedRuns(
+    invocations: Map<Set<Task>, Int>,
+    invocationRateLimit: Int,
+): Map<Set<Task>, Int> = invocations.mapValues { entry ->
     expectedRuns(entry.value, invocationRateLimit)
 }
 
