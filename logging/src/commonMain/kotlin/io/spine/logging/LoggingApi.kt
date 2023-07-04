@@ -102,7 +102,7 @@ public interface LoggingApi<API: LoggingApi<API>> {
      * ```
      * logger.atFine()
      *       .atMostEvery(2, SECONDS)
-     *       .log(...)
+     *       .log { ... }
      * ```
      *
      * logging would occur after 0s, 2.4s and 4.8s (not 4.2s), giving an effective
@@ -161,7 +161,7 @@ public interface LoggingApi<API: LoggingApi<API>> {
      * logger.at(INFO)
      *       .per(task.type)
      *       .atMostEvery(30, SECONDS)
-     *       .log("Start task: %s", task.name);
+     *       .log { "Task started: ${task.name}." }
      * ```
      *
      * The `key` passed to this method should always be a variable.
