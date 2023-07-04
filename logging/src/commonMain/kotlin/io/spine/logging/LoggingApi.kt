@@ -102,7 +102,7 @@ public interface LoggingApi<API: LoggingApi<API>> {
      * ```
      * logger.atFine()
      *       .atMostEvery(2, SECONDS)
-     *       .log(...)
+     *       .log { ... }
      * ```
      *
      * logging would occur after 0s, 2.4s and 4.8s (not 4.2s), giving an effective
@@ -138,6 +138,40 @@ public interface LoggingApi<API: LoggingApi<API>> {
      *          if `n` is negative
      */
     public fun atMostEvery(n: Int, unit: DurationUnit): API
+
+    /**
+     * Aggregates stateful logging with respect to the given enum value.
+     *
+     * Normally log statements with conditional behavior (e.g., rate limiting)
+     * use the same state for each invocation (e.g., counters or timestamps).
+     * This method allows an additional qualifier to be given, which allows
+     * a different conditional state for each unique enum value.
+     *
+     * This only makes a difference for log statements, which use persistent
+     * state to control conditional behaviour (e.g., `atMostEvery()` or `every()`).
+     *
+     * It is most useful in helping to avoid cases where a rare event might
+     * never be logged due to rate limiting.
+     *
+     * For example, the following code will cause log statements with different
+     * `taskType`s to be rate-limited independently of each other:
+     *
+     * ```
+     * // We want to rate limit logging separately for each task type.
+     * logger.at(INFO)
+     *       .per(task.type)
+     *       .atMostEvery(30, SECONDS)
+     *       .log { "Task started: ${task.name}." }
+     * ```
+     *
+     * The `key` passed to this method should always be a variable.
+     * Passing of a constant has no effect.
+     *
+     * If multiple aggregation keys are added to a single log statement,
+     * then they all take effect and logging is aggregated by the unique
+     * combination of keys passed to all [per] methods.
+     */
+    public fun per(key: Enum<*>): API
 
     /**
      * Returns `true` if logging is enabled at the level implied for this API.
@@ -190,6 +224,11 @@ public interface LoggingApi<API: LoggingApi<API>> {
          * Does nothing.
          */
         override fun every(n: Int): API = noOp()
+
+        /**
+         * Does nothing.
+         */
+        override fun per(key: Enum<*>): API = noOp()
 
         /**
          * Does nothing.

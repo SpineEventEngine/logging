@@ -24,4 +24,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-val versionToPublish: String by extra("2.0.0-SNAPSHOT.189")
+package io.spine.logging.given
+
+internal enum class Task {
+    BUILD,
+    DESTROY,
+    REVISE,
+    UPDATE,
+    ARCHIVE
+}
