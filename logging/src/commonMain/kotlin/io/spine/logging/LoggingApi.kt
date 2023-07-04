@@ -49,6 +49,8 @@ public interface LoggingApi<API: LoggingApi<API>> {
      */
     public fun withCause(cause: Throwable): API
 
+    public fun withInjectedLogSite(logSite: LogSite): API
+
     /**
      * Modifies the current log statement to be emitted only once per N invocations.
      *
@@ -219,6 +221,11 @@ public interface LoggingApi<API: LoggingApi<API>> {
          * Does nothing.
          */
         override fun withCause(cause: Throwable): API = noOp()
+
+        /**
+         * Does nothing.
+         */
+        override fun withInjectedLogSite(logSite: LogSite): API = noOp()
 
         /**
          * Does nothing.

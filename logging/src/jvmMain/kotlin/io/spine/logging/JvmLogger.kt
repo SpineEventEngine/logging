@@ -33,6 +33,7 @@ import kotlin.reflect.KClass
 import kotlin.time.DurationUnit
 import kotlin.time.toTimeUnit
 import java.util.logging.Level as JLevel
+import com.google.common.flogger.LogSite as FloggerLogSite
 
 /**
  * Implements [Logger] using [FluentLogger] as the underlying implementation.
@@ -83,6 +84,12 @@ private class ApiImpl(private val delegate: FluentLogger.Api): JvmLogger.Api {
 
     override fun withCause(cause: Throwable): JvmLogger.Api {
         delegate.withCause(cause)
+        return this
+    }
+
+    override fun withInjectedLogSite(logSite: LogSite): JvmLogger.Api {
+        val floggerLogSite = logSite.toFloggerSite()
+        delegate.withInjectedLogSite(floggerLogSite)
         return this
     }
 
@@ -152,3 +159,14 @@ public fun JLevel.toLevel(): Level = when (this) {
  */
 public operator fun JLevel.compareTo(other: JLevel): Int =
     intValue().compareTo(other.intValue())
+
+/**
+ * Converts this [LogSite] to Flogger's counterpart.
+ */
+private fun LogSite.toFloggerSite(): FloggerLogSite =
+    object : FloggerLogSite() {
+        override fun getClassName(): String = this@toFloggerSite.className
+        override fun getMethodName(): String = this@toFloggerSite.methodName
+        override fun getLineNumber(): Int = this@toFloggerSite.lineNumber
+        override fun getFileName(): String? = null
+    }
