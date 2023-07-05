@@ -88,6 +88,17 @@ internal fun expectedRuns(
 }
 
 /**
+ * Calculates how many times a logging statement should be executed for each
+ * log site in [invocations] collection, when the execution rate is limited
+ * by [LoggingApi.every] method.
+ */
+@Suppress("SameParameterValue") // Extracted to a method for better readability.
+internal fun expectedRuns(invocations: InvocationsPerSite): Map<TestLogSite, Int>
+= invocations.associate { (logSite, rate, invocations) ->
+    logSite to expectedRuns(invocations, rate)
+}
+
+/**
  * Calculates how many times a logging statement should be executed when
  * its execution rate is limited by [LoggingApi.atMostEvery] method.
  *
