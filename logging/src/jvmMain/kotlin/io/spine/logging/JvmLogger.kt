@@ -169,4 +169,13 @@ private fun LogSite.toFloggerSite(): FloggerLogSite =
         override fun getMethodName(): String = this@toFloggerSite.methodName
         override fun getLineNumber(): Int = this@toFloggerSite.lineNumber
         override fun getFileName(): String? = null
+        override fun hashCode(): Int  = this@toFloggerSite.hashCode()
+        override fun equals(other: Any?): Boolean {
+            if (other !is FloggerLogSite) {
+                return false
+            }
+            return lineNumber == other.lineNumber &&
+                    methodName == other.methodName &&
+                    className == other.className
+        }
     }
