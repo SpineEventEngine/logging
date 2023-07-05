@@ -39,10 +39,6 @@ package io.spine.logging
  * the facade needs to track previous invocations. This information is a part
  * of metadata that is stored for each statement.
  *
- * Please note, implementations can use more criteria to identify a statement.
- * For example, an additional unique ID to distinguish different statements,
- * placed on the same line.
- *
  * Usually, this type if filled from [StackTraceElement] until it is injected
  * [manually][LoggingApi.withInjectedLogSite], or the used backend provides
  * its own mechanism to determine a log site.
