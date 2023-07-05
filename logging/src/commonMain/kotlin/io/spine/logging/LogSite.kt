@@ -29,17 +29,18 @@ package io.spine.logging
 /**
  * Represents the location of a single log statement.
  *
- * This type identifies a specific log statement. It is used to provide
+ * This type is used to identify a particular log statement and provide
  * a linkage between the statement itself and its metadata.
  *
  * For example, the logging [facade][LoggingApi] allows configuring of
  * a logging statement to be emitted only if a specific condition is satisfied.
- * Consider [LoggingApi.atMostEvery] method. It configures a log statement
- * to perform actual logging no often than once in a minute. To make it possible,
- * the facade needs to track previous invocations. This information is a part
- * of metadata that is stored for each statement.
+ * Consider the [LoggingApi.atMostEvery] method, which configures a log statement
+ * to perform actual logging no often than once per the specified period when
+ * called multiple times. To achieve this, the facade needs to track
+ * previous invocations, and this information is part of metadata that is stored
+ * for each statement.
  *
- * Usually, this type if filled from [StackTraceElement] until it is injected
+ * Usually, this type if filled from a stack trace until it is injected
  * [manually][LoggingApi.withInjectedLogSite], or the used backend provides
  * its own mechanism to determine a log site.
  */
