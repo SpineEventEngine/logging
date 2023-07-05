@@ -50,13 +50,7 @@ public class JvmLogger(
     public interface Api: LoggingApi<Api>
 
     override fun createApi(level: Level): Api {
-        val floggerApi = delegate.at(level.toJavaLogging()).let {
-            if (it.isEnabled) {
-                it.withInjectedLogSite(callerOf(Logger::class.java))
-            } else {
-                it
-            }
-        }
+        val floggerApi = delegate.at(level.toJavaLogging())
         return if (floggerApi.isEnabled) {
             ApiImpl(floggerApi)
         } else {
@@ -111,12 +105,16 @@ private class ApiImpl(private val delegate: FluentLogger.Api): JvmLogger.Api {
 
     override fun isEnabled(): Boolean = delegate.isEnabled
 
-    override fun log() = delegate.log()
+    override fun log() {
+        delegate.withInjectedLogSite(callerOf(ApiImpl::class.java))
+            .log()
+    }
 
     override fun log(message: () -> String) {
         if (isEnabled()) {
             val prefix = loggingDomain.messagePrefix
-            delegate.log(prefix + message.invoke())
+            delegate.withInjectedLogSite(callerOf(ApiImpl::class.java))
+                .log(prefix + message.invoke())
         }
     }
 }
