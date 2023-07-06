@@ -28,6 +28,10 @@ package io.spine.logging.given
 
 import io.spine.logging.LogSite
 
+/**
+ * Number of invocations to be performed in tests for a single log site,
+ * along with the configured rate limitation.
+ */
 internal class LogSiteInvocations(
     private val logSite: LogSite,
     private val rate: Int,
@@ -38,11 +42,18 @@ internal class LogSiteInvocations(
     operator fun component3() = invocations
 }
 
-
+/**
+ * Collections of [LogSiteInvocations].
+ *
+ * The class provides a convenient method to fulfill the collection.
+ */
 internal class InvocationsPerSite(
     private val list: MutableList<LogSiteInvocations> = mutableListOf()
 ) : Collection<LogSiteInvocations> by list {
 
+    /**
+     * Adds a new [LogSiteInvocations] with the given parameters.
+     */
     fun add(logSite: LogSite, rate: Int, invocations: Int): InvocationsPerSite {
         val logSiteInvocation = LogSiteInvocations(logSite, rate, invocations)
         list.add(logSiteInvocation)

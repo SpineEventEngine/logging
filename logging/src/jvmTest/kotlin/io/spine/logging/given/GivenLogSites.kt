@@ -29,6 +29,12 @@ package io.spine.logging.given
 import io.spine.logging.InjectedLogSite
 import io.spine.logging.LogSite
 
+/**
+ * Generates a random [LogSite].
+ *
+ * All returned sites will have the same class, but different method names
+ * and line numbers.
+ */
 internal fun randomLogSite(): LogSite {
     val randomLine = (1..700).random()
     return InjectedLogSite(

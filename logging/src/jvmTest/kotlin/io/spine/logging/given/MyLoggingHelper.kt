@@ -26,14 +26,17 @@
 
 package io.spine.logging.given
 
-import io.spine.logging.LogSites
+import io.spine.logging.LogSites.callerOf
 import io.spine.logging.LoggingFactory
 
+/**
+ * A logging helper that uses a log site of the outer caller.
+ */
 internal object MyLoggingHelper {
 
     private val logger = LoggingFactory.loggerFor(this::class)
     
     fun logWithForwardedLogSite(msg: () -> String) = logger.atInfo()
-        .withInjectedLogSite(LogSites.callerOf(MyLoggingHelper::class))
+        .withInjectedLogSite(callerOf(MyLoggingHelper::class))
         .log { msg.invoke() }
 }
