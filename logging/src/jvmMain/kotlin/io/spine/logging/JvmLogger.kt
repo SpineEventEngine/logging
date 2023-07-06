@@ -161,13 +161,16 @@ public operator fun JLevel.compareTo(other: JLevel): Int =
 /**
  * Converts this [LogSite] to Flogger's counterpart.
  */
-private fun LogSite.toFloggerSite(): FloggerLogSite =
-    object : FloggerLogSite() {
+private fun LogSite.toFloggerSite(): FloggerLogSite {
+    if (this == LogSite.INVALID) {
+        return FloggerLogSite.INVALID
+    }
+    return object : FloggerLogSite() {
         override fun getClassName(): String = this@toFloggerSite.className
         override fun getMethodName(): String = this@toFloggerSite.methodName
         override fun getLineNumber(): Int = this@toFloggerSite.lineNumber
         override fun getFileName(): String? = null
-        override fun hashCode(): Int  = this@toFloggerSite.hashCode()
+        override fun hashCode(): Int = this@toFloggerSite.hashCode()
         override fun equals(other: Any?): Boolean {
             if (other !is FloggerLogSite) {
                 return false
@@ -177,3 +180,4 @@ private fun LogSite.toFloggerSite(): FloggerLogSite =
                     className == other.className
         }
     }
+}

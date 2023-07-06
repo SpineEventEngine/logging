@@ -44,9 +44,6 @@ public actual object LogSites {
      */
     public actual fun callerOf(loggingApi: KClass<*>): LogSite {
         val floggerSite = FloggerLogSites.callerOf(loggingApi.java)
-        if (floggerSite == FloggerLogSite.INVALID) {
-            return LogSite.INVALID
-        }
         val logSite = floggerSite.toLogSite()
         return logSite
     }
@@ -62,16 +59,18 @@ public actual object LogSites {
             LogSites::class.java,
             0
         )
-        if (floggerSite == FloggerLogSite.INVALID) {
-            return LogSite.INVALID
-        }
         val logSite = floggerSite.toLogSite()
         return logSite
     }
 }
 
-private fun FloggerLogSite.toLogSite() = InjectedLogSite(
-    className = this@toLogSite.className,
-    methodName = this@toLogSite.methodName,
-    lineNumber = this@toLogSite.lineNumber
-)
+private fun FloggerLogSite.toLogSite(): LogSite {
+    if (this == FloggerLogSite.INVALID) {
+        return LogSite.INVALID
+    }
+    return InjectedLogSite(
+        className = this@toLogSite.className,
+        methodName = this@toLogSite.methodName,
+        lineNumber = this@toLogSite.lineNumber
+    )
+}
