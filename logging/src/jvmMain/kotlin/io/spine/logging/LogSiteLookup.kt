@@ -34,7 +34,7 @@ import com.google.common.flogger.LogSites as FloggerLogSites
 /**
  * Determines log sites for the current line of code using Flogger utils.
  */
-public actual object LogSites {
+public actual object LogSiteLookup {
 
     /**
      * Returns a [LogSite] for the caller of the specified class.
@@ -56,7 +56,7 @@ public actual object LogSites {
      */
     public actual fun logSite(): LogSite {
         val floggerSite = Platform.getCallerFinder().findLogSite(
-            LogSites::class.java,
+            LogSiteLookup::class.java,
             0
         )
         val logSite = floggerSite.toLogSite()

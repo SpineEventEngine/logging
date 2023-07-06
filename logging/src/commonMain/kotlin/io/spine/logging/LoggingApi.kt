@@ -79,7 +79,7 @@ public interface LoggingApi<API: LoggingApi<API>> {
      * And then call it elsewhere:
      *
      * ```
-     * import io.spine.logging.LogSites.logSite
+     * import io.spine.logging.LogSiteLookup.logSite
      * import MyLoggingHelper.logAtInfo
      *
      * ...
@@ -96,10 +96,10 @@ public interface LoggingApi<API: LoggingApi<API>> {
      * Another option is to determine an outer caller of `MyLoggingHelper.logAtInfo()`
      * from inside instead of manual passing of a log site for every statement.
      *
-     * Implementation option of `MyLoggingHelper` with [LogSites.callerOf]:
+     * Implementation option of `MyLoggingHelper` with [LogSiteLookup.callerOf]:
      *
      * ```
-     * import io.spine.logging.LogSites.callerOf
+     * import io.spine.logging.LogSiteLookup.callerOf
      * import io.spine.logging.LoggingFactory
      *
      * object MyLoggingHelper {

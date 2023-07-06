@@ -37,7 +37,7 @@ import kotlin.reflect.KClass
  * Methods of this class can be used with the [LoggingApi.withInjectedLogSite]
  * method to implement logging helper methods.
  */
-public expect object LogSites {
+public expect object LogSiteLookup {
 
     /**
      * Returns a [LogSite] for the caller of the specified class.

@@ -26,7 +26,7 @@
 
 package io.spine.logging.given
 
-import io.spine.logging.LogSites.callerOf
+import io.spine.logging.LogSiteLookup.callerOf
 import io.spine.logging.LoggingFactory
 
 /**
