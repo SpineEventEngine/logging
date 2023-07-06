@@ -26,8 +26,10 @@
 
 package io.spine.logging.given
 
+import io.spine.logging.LogSite
+
 internal class LogSiteInvocations(
-    private val logSite: TestLogSite,
+    private val logSite: LogSite,
     private val rate: Int,
     private val invocations: Int
 ) {
@@ -41,7 +43,7 @@ internal class InvocationsPerSite(
     private val list: MutableList<LogSiteInvocations> = mutableListOf()
 ) : Collection<LogSiteInvocations> by list {
 
-    fun add(logSite: TestLogSite, rate: Int, invocations: Int): InvocationsPerSite {
+    fun add(logSite: LogSite, rate: Int, invocations: Int): InvocationsPerSite {
         val logSiteInvocation = LogSiteInvocations(logSite, rate, invocations)
         list.add(logSiteInvocation)
         return this

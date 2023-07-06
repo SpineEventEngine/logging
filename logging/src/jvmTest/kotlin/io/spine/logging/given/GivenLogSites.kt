@@ -26,18 +26,13 @@
 
 package io.spine.logging.given
 
+import io.spine.logging.InjectedLogSite
 import io.spine.logging.LogSite
 
-internal data class TestLogSite(
-    override val className: String,
-    override val methodName: String,
-    override val lineNumber: Int
-) : LogSite
-
-internal fun randomLogSite(): TestLogSite {
+internal fun randomLogSite(): LogSite {
     val randomLine = (1..700).random()
-    return TestLogSite(
-        className = TestLogSite::class.qualifiedName!!,
+    return InjectedLogSite(
+        className = InjectedLogSite::class.qualifiedName!!,
         methodName = "callMe_$randomLine",
         lineNumber = randomLine
     )

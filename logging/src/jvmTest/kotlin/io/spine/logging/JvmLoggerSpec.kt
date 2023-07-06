@@ -32,7 +32,6 @@ import io.kotest.matchers.string.shouldContainOnlyOnce
 import io.spine.logging.given.InvocationsPerSite
 import io.spine.logging.given.Task
 import io.spine.logging.given.Task.*
-import io.spine.logging.given.TestLogSite
 import io.spine.logging.given.domain.AnnotatedClass
 import io.spine.logging.given.expectedRuns
 import io.spine.logging.given.expectedTimestamps
@@ -451,7 +450,7 @@ internal class JvmLoggerSpec {
                 .add(randomLogSite(), rate = 3, invocations = 7)
                 .add(randomLogSite(), rate = 4, invocations = 17)
 
-            val sitedMessage = { site: TestLogSite -> "$site log message" }
+            val sitedMessage = { site: LogSite -> "$site log message" }
             val consoleOutput = tapConsole {
                 invocationsPerSite.forEach { (site, rate, invocations) ->
                     repeat(invocations) {

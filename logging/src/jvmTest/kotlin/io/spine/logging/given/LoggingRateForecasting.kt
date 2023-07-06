@@ -26,6 +26,7 @@
 
 package io.spine.logging.given
 
+import io.spine.logging.LogSite
 import io.spine.logging.LoggingApi
 
 /**
@@ -93,7 +94,7 @@ internal fun expectedRuns(
  * by [LoggingApi.every] method.
  */
 @Suppress("SameParameterValue") // Extracted to a method for better readability.
-internal fun expectedRuns(invocations: InvocationsPerSite): Map<TestLogSite, Int>
+internal fun expectedRuns(invocations: InvocationsPerSite): Map<LogSite, Int>
 = invocations.associate { (logSite, rate, invocations) ->
     logSite to expectedRuns(invocations, rate)
 }
