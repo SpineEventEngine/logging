@@ -33,6 +33,7 @@ import kotlin.reflect.KClass
 import kotlin.time.DurationUnit
 import kotlin.time.toTimeUnit
 import java.util.logging.Level as JLevel
+import com.google.common.flogger.LogSite as FloggerLogSite
 
 /**
  * Implements [Logger] using [FluentLogger] as the underlying implementation.
@@ -49,13 +50,7 @@ public class JvmLogger(
     public interface Api: LoggingApi<Api>
 
     override fun createApi(level: Level): Api {
-        val floggerApi = delegate.at(level.toJavaLogging()).let {
-            if (it.isEnabled) {
-                it.withInjectedLogSite(callerOf(Logger::class.java))
-            } else {
-                it
-            }
-        }
+        val floggerApi = delegate.at(level.toJavaLogging())
         return if (floggerApi.isEnabled) {
             ApiImpl(floggerApi)
         } else {
@@ -86,6 +81,12 @@ private class ApiImpl(private val delegate: FluentLogger.Api): JvmLogger.Api {
         return this
     }
 
+    override fun withInjectedLogSite(logSite: LogSite): JvmLogger.Api {
+        val floggerLogSite = logSite.toFloggerSite()
+        delegate.withInjectedLogSite(floggerLogSite)
+        return this
+    }
+
     override fun every(n: Int): JvmLogger.Api {
         delegate.every(n)
         return this
@@ -104,12 +105,16 @@ private class ApiImpl(private val delegate: FluentLogger.Api): JvmLogger.Api {
 
     override fun isEnabled(): Boolean = delegate.isEnabled
 
-    override fun log() = delegate.log()
+    override fun log() {
+        delegate.withInjectedLogSite(callerOf(ApiImpl::class.java))
+            .log()
+    }
 
     override fun log(message: () -> String) {
         if (isEnabled()) {
             val prefix = loggingDomain.messagePrefix
-            delegate.log(prefix + message.invoke())
+            delegate.withInjectedLogSite(callerOf(ApiImpl::class.java))
+                .log(prefix + message.invoke())
         }
     }
 }
@@ -152,3 +157,27 @@ public fun JLevel.toLevel(): Level = when (this) {
  */
 public operator fun JLevel.compareTo(other: JLevel): Int =
     intValue().compareTo(other.intValue())
+
+/**
+ * Converts this [LogSite] to Flogger's counterpart.
+ */
+private fun LogSite.toFloggerSite(): FloggerLogSite {
+    if (this == LogSite.INVALID) {
+        return FloggerLogSite.INVALID
+    }
+    return object : FloggerLogSite() {
+        override fun getClassName(): String = this@toFloggerSite.className
+        override fun getMethodName(): String = this@toFloggerSite.methodName
+        override fun getLineNumber(): Int = this@toFloggerSite.lineNumber
+        override fun getFileName(): String? = null
+        override fun hashCode(): Int = this@toFloggerSite.hashCode()
+        override fun equals(other: Any?): Boolean {
+            if (other !is FloggerLogSite) {
+                return false
+            }
+            return lineNumber == other.lineNumber &&
+                    methodName == other.methodName &&
+                    className == other.className
+        }
+    }
+}

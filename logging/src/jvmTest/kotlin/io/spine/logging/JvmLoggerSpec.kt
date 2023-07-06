@@ -29,11 +29,13 @@ package io.spine.logging
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldContainOnlyOnce
+import io.spine.logging.given.InvocationsPerSite
 import io.spine.logging.given.Task
 import io.spine.logging.given.Task.*
 import io.spine.logging.given.domain.AnnotatedClass
 import io.spine.logging.given.expectedRuns
 import io.spine.logging.given.expectedTimestamps
+import io.spine.logging.given.randomLogSite
 import java.lang.Thread.sleep
 import kotlin.time.DurationUnit.MILLISECONDS
 import org.junit.jupiter.api.DisplayName
@@ -435,6 +437,55 @@ internal class JvmLoggerSpec {
                 consoleOutput.occurrencesOf(wantedMessage)
             }
             logsPerTasks shouldBe expectedLogsPerTasks
+        }
+    }
+
+    @Nested
+    internal inner class `when given a custom log site` {
+
+        @Test
+        fun `track metadata per log site`() {
+            val invocationsPerSite = InvocationsPerSite()
+                .add(randomLogSite(), rate = 5, invocations = 15)
+                .add(randomLogSite(), rate = 3, invocations = 7)
+                .add(randomLogSite(), rate = 4, invocations = 17)
+
+            val sitedMessage = { site: LogSite -> "$site log message" }
+            val consoleOutput = tapConsole {
+                invocationsPerSite.forEach { (site, rate, invocations) ->
+                    repeat(invocations) {
+                        logger.atInfo()
+                            .withInjectedLogSite(site)
+                            .every(rate)
+                            .log { sitedMessage(site) }
+                    }
+                }
+            }
+
+            val expectedLogsPerSite = expectedRuns(invocationsPerSite)
+            val logsPerSite = invocationsPerSite.associate { (logSite) ->
+                val wantedMessage = sitedMessage(logSite)
+                val occurrences = consoleOutput.occurrencesOf(wantedMessage)
+                logSite to occurrences
+            }
+
+            logsPerSite shouldBe expectedLogsPerSite
+        }
+
+        @Test
+        fun `use the first specified site`() {
+            val firstLogSite = randomLogSite()
+            val lastLogSite = randomLogSite()
+
+            val consoleOutput = tapConsole {
+                logger.atInfo()
+                    .withInjectedLogSite(firstLogSite)
+                    .withInjectedLogSite(lastLogSite)
+                    .log { message }
+            }
+
+            consoleOutput shouldContain firstLogSite.className
+            consoleOutput shouldContain firstLogSite.methodName
         }
     }
 }

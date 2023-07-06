@@ -24,4 +24,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-val versionToPublish: String by extra("2.0.0-SNAPSHOT.190")
+package io.spine.logging.given
+
+import io.spine.logging.LogSiteLookup.callerOf
+import io.spine.logging.LoggingFactory
+
+/**
+ * A logging helper that uses a log site of the outer caller.
+ */
+internal object MyLoggingHelper {
+
+    private val logger = LoggingFactory.loggerFor(this::class)
+    
+    fun logWithForwardedLogSite(msg: () -> String) = logger.atInfo()
+        .withInjectedLogSite(callerOf(MyLoggingHelper::class))
+        .log { msg.invoke() }
+}

@@ -24,4 +24,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-val versionToPublish: String by extra("2.0.0-SNAPSHOT.190")
+package io.spine.logging
+
+/**
+ * A [LogSite] that can be manually created and injected with
+ * the [LoggingApi.withInjectedLogSite] method.
+ */
+public data class InjectedLogSite(
+    override val className: String,
+    override val methodName: String,
+    override val lineNumber: Int,
+) : LogSite

@@ -26,6 +26,7 @@
 
 package io.spine.logging.given
 
+import io.spine.logging.LogSite
 import io.spine.logging.LoggingApi
 
 /**
@@ -85,6 +86,17 @@ internal fun expectedRuns(
     invocationRateLimit: Int,
 ): Map<Set<Task>, Int> = invocations.mapValues { entry ->
     expectedRuns(entry.value, invocationRateLimit)
+}
+
+/**
+ * Calculates how many times a logging statement should be executed for each
+ * log site in [invocations] collection, when the execution rate is limited
+ * by [LoggingApi.every] method.
+ */
+@Suppress("SameParameterValue") // Extracted to a method for better readability.
+internal fun expectedRuns(invocations: InvocationsPerSite): Map<LogSite, Int>
+= invocations.associate { (logSite, rate, invocations) ->
+    logSite to expectedRuns(invocations, rate)
 }
 
 /**
