@@ -26,6 +26,10 @@
 
 package io.spine.logging
 
+/**
+ * A [LogSite] that can be manually created and injected with
+ * the [LoggingApi.withInjectedLogSite] method.
+ */
 public data class InjectedLogSite(
     override val className: String,
     override val methodName: String,
