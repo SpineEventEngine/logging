@@ -60,4 +60,18 @@ public interface LogSite {
      * Line number of the log statement.
      */
     public val lineNumber: Int
+
+    /**
+     * A singleton instance used to indicate that valid log site information
+     * cannot be determined.
+     *
+     * If a log statement ends up with invalid log site information, then any
+     * fluent logging methods, which rely on being able to look up site specific
+     * metadata will be disabled and essentially become “no ops”.
+     */
+    public object INVALID : LogSite {
+        override val className: String = "<unknown class>"
+        override val methodName: String = "<unknown method>"
+        override val lineNumber: Int = 0
+    }
 }

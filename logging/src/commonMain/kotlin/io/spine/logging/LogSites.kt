@@ -28,9 +28,30 @@ package io.spine.logging
 
 import kotlin.reflect.KClass
 
+/**
+ * Determines log sites for the current line of code.
+ *
+ * Please note that determining of a log site at runtime can be a very slow
+ * operation because it usually involves some form of stack trace analysis.
+ *
+ * Methods of this class can be used with the [LoggingApi.withInjectedLogSite]
+ * method to implement logging helper methods.
+ */
 public expect object LogSites {
 
+    /**
+     * Returns a [LogSite] for the caller of the specified class.
+     *
+     * In some platforms, log site determination may be unsupported, and in
+     * those cases this method should return the [LogSite.INVALID] instance.
+     */
     public fun callerOf(loggingApi: KClass<*>): LogSite
 
+    /**
+     * Returns a [LogSite] for the current line of code.
+     *
+     * In some platforms, log site determination may be unsupported, and in
+     * those cases this method should return the [LogSite.INVALID] instance.
+     */
     public fun logSite(): LogSite
 }

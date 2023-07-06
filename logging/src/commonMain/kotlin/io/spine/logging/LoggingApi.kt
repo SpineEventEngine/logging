@@ -124,11 +124,6 @@ public interface LoggingApi<API: LoggingApi<API>> {
      * logAtInfo { "useful info 2" }
      * ```
      *
-     * It is important to note that determining a log site at runtime can be
-     * a quite slow operation because it usually involves stack trace analysis.
-     * It is only recommended in cases where logging is expected to occur.
-     * For example, `WARNING` level or higher.
-     *
      * This method must only be explicitly called once for any log statement,
      * and if this method is called multiple times, the first invocation will
      * take precedence. This is because log site injection (if present) is

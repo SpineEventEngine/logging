@@ -31,19 +31,40 @@ import kotlin.reflect.KClass
 import com.google.common.flogger.LogSite as FloggerLogSite
 import com.google.common.flogger.LogSites as FloggerLogSites
 
+/**
+ * Determines log sites for the current line of code using Flogger utils.
+ */
 public actual object LogSites {
 
+    /**
+     * Returns a [LogSite] for the caller of the specified class.
+     *
+     * If log site determination is unsupported, this method returns
+     * the [LogSite.INVALID] instance.
+     */
     public actual fun callerOf(loggingApi: KClass<*>): LogSite {
         val floggerSite = FloggerLogSites.callerOf(loggingApi.java)
+        if (floggerSite == FloggerLogSite.INVALID) {
+            return LogSite.INVALID
+        }
         val logSite = floggerSite.toLogSite()
         return logSite
     }
 
+    /**
+     * Returns a [LogSite] for the current line of code.
+     *
+     * If log site determination is unsupported, this method returns
+     * the [LogSite.INVALID] instance.
+     */
     public actual fun logSite(): LogSite {
         val floggerSite = Platform.getCallerFinder().findLogSite(
             LogSites::class.java,
             0
         )
+        if (floggerSite == FloggerLogSite.INVALID) {
+            return LogSite.INVALID
+        }
         val logSite = floggerSite.toLogSite()
         return logSite
     }
