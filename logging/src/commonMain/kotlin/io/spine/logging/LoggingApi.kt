@@ -49,6 +49,92 @@ public interface LoggingApi<API: LoggingApi<API>> {
      */
     public fun withCause(cause: Throwable): API
 
+    /**
+     * Sets the log site for the current log statement.
+     *
+     * Explicit log site injection is rarely necessary, since either the log site
+     * is injected automatically at compile time, or it is determined at runtime
+     * via stack analysis.
+     *
+     * The one use case where calling this method explicitly may be useful is
+     * when making logging helper methods, where some common project specific
+     * logging behavior is enshrined.
+     *
+     * For example, one can implement the following helper:
+     *
+     * ```
+     * import io.spine.logging.LogSite
+     * import io.spine.logging.LoggingFactory
+     *
+     * object MyLoggingHelper {
+     *
+     *     private val logger = LoggingFactory.loggerFor(this::class)
+     *
+     *     fun logAtInfo(logSite: LogSite, msg: () -> String) = logger.atInfo()
+     *         .withInjectedLogSite(logSite)
+     *         .log(msg)
+     * }
+     * ```
+     *
+     * And then call it elsewhere:
+     *
+     * ```
+     * import io.spine.logging.LogSites.logSite
+     * import MyLoggingHelper.logAtInfo
+     *
+     * ...
+     *
+     * logAtInfo(logSite()) { "useful info 1" }
+     * logAtInfo(logSite()) { "useful info 2" }
+     * ```
+     *
+     * Now each of the call sites for the helper method is treated as if
+     * it were in the logging API. Things like rate limiting work separately
+     * for each, and the location in the log statement will be the point at
+     * which the helper method was called.
+     *
+     * Another option is to determine an outer caller of `MyLoggingHelper.logAtInfo()`
+     * from inside instead of manual passing of a log site for every statement.
+     *
+     * Implementation option of `MyLoggingHelper` with [LogSites.callerOf]:
+     *
+     * ```
+     * import io.spine.logging.LogSites.callerOf
+     * import io.spine.logging.LoggingFactory
+     *
+     * object MyLoggingHelper {
+     *
+     *     private val logger = LoggingFactory.loggerFor(this::class)
+     *
+     *     fun logAtInfo(msg: () -> String) = logger.atInfo()
+     *         .withInjectedLogSite(callerOf(MyLoggingHelper::class))
+     *         .log(msg)
+     * }
+     * ```
+     *
+     * Now, the log site for each call is determined automatically to be a caller
+     * of `MyLoggingHelper` class, and logging statements look much prettier:
+     *
+     * ```
+     * import MyLoggingHelper.logAtInfo
+     *
+     * ...
+     *
+     * logAtInfo { "useful info 1" }
+     * logAtInfo { "useful info 2" }
+     * ```
+     *
+     * It is important to note that determining a log site at runtime can be
+     * a quite slow operation because it usually involves stack trace analysis.
+     * It is only recommended in cases where logging is expected to occur.
+     * For example, `WARNING` level or higher.
+     *
+     * This method must only be explicitly called once for any log statement,
+     * and if this method is called multiple times, the first invocation will
+     * take precedence. This is because log site injection (if present) is
+     * expected to occur just before the final log() call and must be overrideable
+     * by earlier (explicit) calls.
+     */
     public fun withInjectedLogSite(logSite: LogSite): API
 
     /**
