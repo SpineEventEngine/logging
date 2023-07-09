@@ -28,7 +28,7 @@ package io.spine.internal.dependency
 
 /**
  * Okio is a transitive dependency which we don't use directly.
- * We `force` it in [DependencyResolution.forceConfiguration].
+ * We `force` it in [forceVersions] (see `DependencyResolution.kt`).
  */
 object Okio {
     // This is the last version before next major.
