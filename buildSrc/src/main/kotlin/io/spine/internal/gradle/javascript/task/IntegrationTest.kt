@@ -74,6 +74,7 @@ val TaskContainer.integrationTest: TaskProvider<Task>
  * }
  * ```
  */
+@Suppress("unused")
 fun JsTasks.integrationTest() {
 
     linkSpineWebModule()
