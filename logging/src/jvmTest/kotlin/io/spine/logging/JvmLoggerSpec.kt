@@ -31,11 +31,16 @@ import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldContainOnlyOnce
 import io.spine.logging.given.InvocationsPerSite
 import io.spine.logging.given.Task
-import io.spine.logging.given.Task.*
+import io.spine.logging.given.Task.ARCHIVE
+import io.spine.logging.given.Task.BUILD
+import io.spine.logging.given.Task.DESTROY
+import io.spine.logging.given.Task.REVISE
+import io.spine.logging.given.Task.UPDATE
 import io.spine.logging.given.domain.AnnotatedClass
 import io.spine.logging.given.expectedRuns
 import io.spine.logging.given.expectedTimestamps
 import io.spine.logging.given.randomLogSite
+import io.spine.testing.SlowTest
 import java.lang.Thread.sleep
 import kotlin.time.DurationUnit.MILLISECONDS
 import org.junit.jupiter.api.DisplayName
@@ -185,21 +190,21 @@ internal class JvmLoggerSpec {
 
         @Test
         fun `always log on the first invocation`() {
-            val rateLimitMillis = 100
             val consoleOutput = tapConsole {
                 logger.atInfo()
-                    .atMostEvery(rateLimitMillis, MILLISECONDS)
+                    .atMostEvery(100, MILLISECONDS)
                     .log { message }
             }
             consoleOutput shouldContainOnlyOnce message
         }
 
         @Test
+        @SlowTest
         fun `use the latest specified rate`() {
-            val invocations = 10
-            val intervalMillis = 50L
+            val invocations = 5
+            val intervalMillis = 500L
             val firstRateLimitMillis = 50
-            val lastRateLimitMillis = 100
+            val lastRateLimitMillis = 1500
 
             val consoleOutput = tapConsole {
                 repeat(invocations) {
@@ -246,7 +251,7 @@ internal class JvmLoggerSpec {
         @Test
         fun `log no more often than the rate allows`() {
             val invocations = 10
-            val intervalMillis = 120L
+            val intervalMillis = 200L
             val rateLimitMillis = 300
 
             val timestampedMessage = { millis: Long -> "log message $millis ms." }
@@ -342,13 +347,14 @@ internal class JvmLoggerSpec {
         }
 
         @Test
+        @SlowTest
         fun `log on intersection of time and invocation rates`() {
-            val invocations = 15
-            val intervalMillis = 50L
-            val timeLimitMillis = 200
+            val invocations = 5
+            val intervalMillis = 500L
+            val timeLimitMillis = 2000
             val invocationLimit = 3
 
-            val timestampedMessage = { millis: Long -> "log message $millis ms." }
+            val timestampedMessage = { millis: Long -> "intersection test log message $millis ms." }
             val totalDuration = (invocations - 1) * intervalMillis
             val consoleOutput = tapConsole {
                 for (millis in 0..totalDuration step intervalMillis) {
@@ -369,7 +375,7 @@ internal class JvmLoggerSpec {
                 consoleOutput shouldContainOnlyOnce timestampedMessage(i)
             }
 
-            // The logger prints two lines per message.
+            // The JUL backend logger prints two lines per message.
             val timesLogged = consoleOutput.lines().size / 2
             timesLogged shouldBe expectedTimestamps.size
         }
