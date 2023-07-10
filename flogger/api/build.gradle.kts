@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,33 +24,34 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
+plugins {
+    `java-library`
+}
+
+dependencies {
+
+    implementation(project(":flogger:platform-generator", "generated-platform-provider"))
+    implementation(project(":flogger:util"))
+
+    implementation("org.checkerframework:checker-compat-qual:2.5.3")
+    implementation("com.google.errorprone:error_prone_annotation:2.3.2")
+
+    testImplementation("com.google.truth:truth:1.1")
+    testImplementation("org.mockito:mockito-core:2.28.2")
+    testImplementation("com.google.auto.service:auto-service:1.0")
+
+}
+
+java {
+    toolchain.languageVersion.set(
+        JavaLanguageVersion.of(8)
+    )
+}
+
+tasks {
+    test.configure {
+        useJUnitPlatform {
+            includeEngines("junit-jupiter")
+        }
     }
 }
-
-rootProject.name = "spine-logging"
-
-include(
-    "logging",
-    "logging-backend",
-    "logging-context",
-    "flogger:api",
-    "flogger:platform-generator",
-    "flogger:util",
-)
-
-fun testModule(name: String) {
-    include(name)
-    project(":$name").projectDir = file("tests/$name")
-}
-
-testModule("fixtures")
-testModule("jvm-our-backend-our-context")
-testModule("jvm-our-backend-grpc-context")
-testModule("jvm-log4j-backend-our-context")
-testModule("jvm-slf4j-jdk14-backend-our-context")
-testModule("jvm-slf4j-reload4j-backend-our-context")
-

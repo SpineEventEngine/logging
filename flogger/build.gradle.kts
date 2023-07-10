@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,33 +24,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-    }
-}
+import io.spine.internal.gradle.report.license.LicenseReporter
 
-rootProject.name = "spine-logging"
-
-include(
-    "logging",
-    "logging-backend",
-    "logging-context",
-    "flogger:api",
-    "flogger:platform-generator",
-    "flogger:util",
-)
-
-fun testModule(name: String) {
-    include(name)
-    project(":$name").projectDir = file("tests/$name")
-}
-
-testModule("fixtures")
-testModule("jvm-our-backend-our-context")
-testModule("jvm-our-backend-grpc-context")
-testModule("jvm-log4j-backend-our-context")
-testModule("jvm-slf4j-jdk14-backend-our-context")
-testModule("jvm-slf4j-reload4j-backend-our-context")
-
+LicenseReporter.generateReportIn(project)
