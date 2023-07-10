@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,6 +63,7 @@ import org.gradle.api.tasks.TaskProvider
  * }
  * ```
  */
+@Suppress("unused")
 fun JsTasks.webpack() {
 
     assembleJs.configure {
@@ -92,6 +93,7 @@ private val copyBundledJsName = TaskName.of("copyBundledJs", Copy::class)
  *
  * The task copies bundled JavaScript sources to the publication directory.
  */
+@Suppress("unused")
 val TaskContainer.copyBundledJs: TaskProvider<Copy>
     get() = named(copyBundledJsName)
 

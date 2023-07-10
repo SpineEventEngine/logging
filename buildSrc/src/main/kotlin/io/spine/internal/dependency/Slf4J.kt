@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,8 +33,9 @@ package io.spine.internal.dependency
  * The primary purpose of having this dependency object is working in combination with
  * [Flogger.Runtime.slf4JBackend].
  *
- * Some third-party libraries may clash with different versions of the library. Thus, we specify
- * this version and force it via [io.spine.internal.gradle.forceVersions].
+ * Some third-party libraries may clash with different versions of the library.
+ * Thus, we specify this version and force it via [forceVersions].
+ * Please see `DependencyResolution.kt` for details.
  */
 @Suppress("unused")
 object Slf4J {

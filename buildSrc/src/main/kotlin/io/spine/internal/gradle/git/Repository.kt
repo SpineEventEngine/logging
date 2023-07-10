@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,9 +58,9 @@ class Repository : AutoCloseable {
     /**
      * Current user configuration.
      *
-     * This configuration determines what ends up in author and commiter fields of a commit.
+     * This configuration determines what ends up in author and committer fields of a commit.
      */
-    var user: UserInfo
+    var user: UserInfo? = null
         get() = field
         private set(value) {
             field = value
@@ -69,7 +69,7 @@ class Repository : AutoCloseable {
     /**
      * Currently checked out branch.
      */
-    var currentBranch: String
+    var currentBranch: String? = null
         get() = field
         private set(value) {
             field = value
@@ -109,7 +109,7 @@ class Repository : AutoCloseable {
      *
      * Overwrites `user.name` and `user.email` settings locally in [location] with
      * values from [user]. These settings determine what ends up in author and
-     * commiter fields of a commit.
+     * committer fields of a commit.
      */
     fun configureUser(user: UserInfo) {
         repoExecute("git", "config", "user.name", user.name)
