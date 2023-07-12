@@ -80,7 +80,7 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                api(Flogger.lib)
+                api("flogger:api")
                 implementation(Guava.lib)
             }
         }
