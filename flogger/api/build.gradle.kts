@@ -30,8 +30,8 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":flogger:platform-generator", "generated-platform-provider"))
-    implementation(project(":flogger:util"))
+    implementation(project(":platform-generator", "generated-platform-provider"))
+    implementation(project(":util"))
 
     implementation("org.checkerframework:checker-compat-qual:2.5.3")
     implementation("com.google.errorprone:error_prone_annotation:2.3.2")
@@ -57,7 +57,7 @@ testing {
         useJUnit()
 
         dependencies {
-            implementation(project(":flogger:api"))
+            implementation(project(":api"))
             implementation("com.google.truth:truth:1.1")
             implementation("com.google.auto.service:auto-service:1.0")
             annotationProcessor("com.google.auto.service:auto-service:1.0")

@@ -24,6 +24,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.gradle.report.license.LicenseReporter
-
-LicenseReporter.generateReportIn(project)
+subprojects {
+    repositories {
+        mavenCentral()
+    }
+}

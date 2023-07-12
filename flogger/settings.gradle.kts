@@ -24,31 +24,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-    }
-}
-
-rootProject.name = "spine-logging"
+rootProject.name = "flogger"
 
 include(
-    "logging",
-    "logging-backend",
-    "logging-context",
+    "api",
+    "platform-generator",
+    "util",
 )
-
-fun testModule(name: String) {
-    include(name)
-    project(":$name").projectDir = file("tests/$name")
-}
-
-testModule("fixtures")
-testModule("jvm-our-backend-our-context")
-testModule("jvm-our-backend-grpc-context")
-testModule("jvm-log4j-backend-our-context")
-testModule("jvm-slf4j-jdk14-backend-our-context")
-testModule("jvm-slf4j-reload4j-backend-our-context")
-
-includeBuild("flogger")
