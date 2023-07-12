@@ -30,7 +30,7 @@ plugins {
 
 dependencies {
     implementation("org.checkerframework:checker-compat-qual:2.5.3")
-    implementation("com.google.errorprone:error_prone_annotation:2.3.2")
+    implementation("com.google.errorprone:error_prone_annotation:2.20.0")
 }
 
 java {

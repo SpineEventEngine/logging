@@ -34,7 +34,7 @@ dependencies {
     implementation(project(":util"))
 
     implementation("org.checkerframework:checker-compat-qual:2.5.3")
-    implementation("com.google.errorprone:error_prone_annotation:2.3.2")
+    implementation("com.google.errorprone:error_prone_annotation:2.20.0")
 
     testImplementation("junit:junit:4.13.1")
     testImplementation("com.google.truth:truth:1.1")
