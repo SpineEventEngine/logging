@@ -29,9 +29,15 @@ plugins {
     `jvm-test-suite`
 }
 
+sourceSets {
+    // Although Flogger is a Java 8 library, some of its sources
+    // can be compiled only with Java 11 or above.
+    register("java11")
+}
+
 dependencies {
+    implementation(sourceSets["java11"].output)
     implementation(project(":platform-generator", "generated-platform-provider"))
-    implementation(project(":util"))
 
     implementation("org.checkerframework:checker-compat-qual:2.5.3")
     implementation("com.google.errorprone:error_prone_annotation:2.20.0")
@@ -39,20 +45,35 @@ dependencies {
     testImplementation("junit:junit:4.13.1")
     testImplementation("com.google.truth:truth:1.1")
     testImplementation("org.mockito:mockito-core:2.28.2")
+
+    val java11Implementation by configurations.getting
+    java11Implementation("org.checkerframework:checker-compat-qual:2.5.3")
+    java11Implementation("com.google.errorprone:error_prone_annotation:2.20.0")
 }
 
 java {
-    toolchain.languageVersion.set(
-        JavaLanguageVersion.of(8)
-    )
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    }
+    tasks.named<JavaCompile>("compileJava11Java") {
+        val java11Compiler = project.javaToolchains.compilerFor {
+            languageVersion.set(JavaLanguageVersion.of(11))
+        }
+        javaCompiler.set(java11Compiler)
+        sourceCompatibility = JavaVersion.VERSION_1_8.toString()
+        targetCompatibility = JavaVersion.VERSION_1_8.toString()
+    }
 }
 
 testing {
+    // This tests should be executed alone because it uses @AutoService annotation.
     val isolatedTest = "**/DefaultPlatformServiceLoadingTest.java"
+
     val test by suites.getting(JvmTestSuite::class) {
         useJUnit()
         sources.java.exclude(isolatedTest)
     }
+
     val serviceLoadingTest by suites.registering(JvmTestSuite::class) {
         useJUnit()
 
@@ -66,10 +87,8 @@ testing {
         sources.java.setSrcDirs(test.sources.java.srcDirs)
         sources.java.include(isolatedTest)
     }
-}
 
-tasks {
-    test.configure {
-        dependsOn(named("serviceLoadingTest"))
+    tasks.test.configure {
+        dependsOn(serviceLoadingTest)
     }
 }
