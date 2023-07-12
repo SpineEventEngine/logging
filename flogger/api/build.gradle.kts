@@ -26,20 +26,19 @@
 
 plugins {
     `java-library`
+    `jvm-test-suite`
 }
 
 dependencies {
-
     implementation(project(":flogger:platform-generator", "generated-platform-provider"))
     implementation(project(":flogger:util"))
 
     implementation("org.checkerframework:checker-compat-qual:2.5.3")
     implementation("com.google.errorprone:error_prone_annotation:2.3.2")
 
+    testImplementation("junit:junit:4.13.1")
     testImplementation("com.google.truth:truth:1.1")
     testImplementation("org.mockito:mockito-core:2.28.2")
-    testImplementation("com.google.auto.service:auto-service:1.0")
-
 }
 
 java {
@@ -48,10 +47,29 @@ java {
     )
 }
 
+testing {
+    val isolatedTest = "**/DefaultPlatformServiceLoadingTest.java"
+    val test by suites.getting(JvmTestSuite::class) {
+        useJUnit()
+        sources.java.exclude(isolatedTest)
+    }
+    val serviceLoadingTest by suites.registering(JvmTestSuite::class) {
+        useJUnit()
+
+        dependencies {
+            implementation(project(":flogger:api"))
+            implementation("com.google.truth:truth:1.1")
+            implementation("com.google.auto.service:auto-service:1.0")
+            annotationProcessor("com.google.auto.service:auto-service:1.0")
+        }
+
+        sources.java.setSrcDirs(test.sources.java.srcDirs)
+        sources.java.include(isolatedTest)
+    }
+}
+
 tasks {
     test.configure {
-        useJUnitPlatform {
-            includeEngines("junit-jupiter")
-        }
+        dependsOn(named("serviceLoadingTest"))
     }
 }
