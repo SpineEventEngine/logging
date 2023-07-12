@@ -139,7 +139,7 @@ internal fun expectedRuns(invocations: Int, intervalMillis: Long, intervalLimitM
  *          the configured rate limitation
  */
 @Suppress("SameParameterValue") // Extracted to a method for better readability.
-internal fun expectedTimestamps(
+internal fun expectedStamps(
     invocations: Int,
     intervalMillis: Long,
     intervalLimitMillis: Int,
@@ -176,29 +176,31 @@ internal fun expectedTimestamps(
  *          the configured invocation rate limitation
  */
 @Suppress("SameParameterValue") // Extracted to a method for better readability.
-internal fun expectedTimestamps(
+internal fun expectedStamps(
     invocations: Int,
     intervalMillis: Long,
     intervalLimitMillis: Int,
     invocationRateLimit: Int,
-): List<Long> {
+): List<Pair<Int, Long>> {
 
-    val result = mutableListOf(0L)
+    val result = mutableListOf(1 to 0L) // The first invocation is always logged.
     var currentMillis = 0L
     var lastLoggedMillis = 0L
-    var invoked = 0
+    var lastInvoked = 0
 
-    for (i in 1..invocations) {
-        if (currentMillis >= lastLoggedMillis + intervalLimitMillis) {
-            invoked++
-            if (invoked == invocationRateLimit) {
-                result.add(currentMillis)
-                lastLoggedMillis = currentMillis
-                invoked = 0
-            }
-        }
+    for (invocationN in 2..invocations) {
         currentMillis += intervalMillis
 
+        if (currentMillis < lastLoggedMillis + intervalLimitMillis) {
+            continue
+        }
+        if (invocationN - lastInvoked < invocationRateLimit) {
+            continue
+        }
+
+        result.add(invocationN to currentMillis)
+        lastLoggedMillis = currentMillis
+        lastInvoked = invocationN
     }
 
     return result

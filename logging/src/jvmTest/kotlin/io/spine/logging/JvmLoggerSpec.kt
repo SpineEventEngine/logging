@@ -38,7 +38,7 @@ import io.spine.logging.given.Task.REVISE
 import io.spine.logging.given.Task.UPDATE
 import io.spine.logging.given.domain.AnnotatedClass
 import io.spine.logging.given.expectedRuns
-import io.spine.logging.given.expectedTimestamps
+import io.spine.logging.given.expectedStamps
 import io.spine.logging.given.randomLogSite
 import io.spine.testing.SlowTest
 import java.lang.Thread.sleep
@@ -266,7 +266,7 @@ internal class JvmLoggerSpec {
             }
 
             val expectedTimestamps =
-                expectedTimestamps(invocations, intervalMillis, rateLimitMillis)
+                expectedStamps(invocations, intervalMillis, rateLimitMillis)
             expectedTimestamps.forEach { i ->
                 consoleOutput shouldContainOnlyOnce timestampedMessage(i)
             }
@@ -336,7 +336,7 @@ internal class JvmLoggerSpec {
             // so logging should occur every 200ms due to time rate.
 
             val expectedTimestamps =
-                expectedTimestamps(invocations, intervalMillis, invocationLimit)
+                expectedStamps(invocations, intervalMillis, invocationLimit)
             expectedTimestamps.forEach { i ->
                 consoleOutput shouldContainOnlyOnce timestampedMessage(i)
             }
@@ -354,30 +354,30 @@ internal class JvmLoggerSpec {
             val timeLimitMillis = 2000
             val invocationLimit = 3
 
-            val timestampedMessage = { millis: Long -> "intersection test log message $millis ms." }
+            val timeAndSerialStamp = { invocation: Int, millis: Long ->
+                "Invocation #$invocation at $millis ms."
+            }
             val totalDuration = (invocations - 1) * intervalMillis
+            var invoked = 0
             val consoleOutput = tapConsole {
                 for (millis in 0..totalDuration step intervalMillis) {
                     logger.atInfo()
                         .every(invocationLimit)
                         .atMostEvery(timeLimitMillis, MILLISECONDS)
-                        .log { timestampedMessage(millis) }
+                        .log { timeAndSerialStamp(++invoked, millis) }
                     sleep(intervalMillis)
                 }
             }
 
-            // Every invocation should firstly pass the time rate, then it
-            // starts counting for the invocation rate. And only then emitted.
-
-            val expectedTimestamps =
-                expectedTimestamps(invocations, intervalMillis, timeLimitMillis, invocationLimit)
-            expectedTimestamps.forEach { i ->
-                consoleOutput shouldContainOnlyOnce timestampedMessage(i)
+            val expectedStamps =
+                expectedStamps(invocations, intervalMillis, timeLimitMillis, invocationLimit)
+            expectedStamps.forEach { (invocation, millis) ->
+                consoleOutput shouldContainOnlyOnce timeAndSerialStamp(invocation, millis)
             }
 
             // The JUL backend logger prints two lines per message.
             val timesLogged = consoleOutput.lines().size / 2
-            timesLogged shouldBe expectedTimestamps.size
+            timesLogged shouldBe expectedStamps.size
         }
     }
 
