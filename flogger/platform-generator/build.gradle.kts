@@ -34,11 +34,16 @@ dependencies {
 
 tasks {
     register<JavaExec>("generatePlatformProvider") {
-        val outputJar = "build/provider/platform-provider.jar"
-        args = listOf(outputJar)
-        outputs.file(outputJar)
-        classpath = sourceSets.main.get().runtimeClasspath
         mainClass.set("com.google.common.flogger.backend.PlatformProviderGenerator")
+
+        val outputJar = "build/provider/platform-provider.jar"
+        args(listOf(outputJar))
+        outputs.file(outputJar)
+        doFirst { file(outputJar).deleteRecursively() }
+
+        val inputClasspath = sourceSets.main.get().runtimeClasspath
+        classpath(inputClasspath)
+        inputs.files(inputClasspath)
     }
 }
 
