@@ -66,7 +66,8 @@ java {
 }
 
 testing {
-    // This tests should be executed alone because it uses @AutoService annotation.
+    // This test should be executed separately because it uses `@AutoService` annotation,
+    // substituting the default implementations with stubs.
     val isolatedTest = "**/DefaultPlatformServiceLoadingTest.java"
 
     val test by suites.getting(JvmTestSuite::class) {
