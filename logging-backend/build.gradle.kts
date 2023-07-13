@@ -31,7 +31,6 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":logging"))
     implementation("flogger:system-backend")
-    val loggingModule = project(":logging")
-    implementation(loggingModule)
 }

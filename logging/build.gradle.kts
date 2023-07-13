@@ -65,7 +65,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies{
-                api(Spine.reflect)
+                api(Spine.reflect) {
+                    exclude(group = "com.google.flogger")
+                }
             }
         }
         val commonTest by getting {
@@ -85,7 +87,10 @@ kotlin {
         }
         val jvmTest by getting {
             dependencies {
-                implementation(Spine.testlib)
+                implementation("flogger:system-backend")
+                implementation(Spine.testlib) {
+                    exclude(group = "com.google.flogger")
+                }
                 implementation(JUnit.runner)
                 implementation(Kotest.runnerJUnit5Jvm)
                 implementation(SystemLambda.lib)
