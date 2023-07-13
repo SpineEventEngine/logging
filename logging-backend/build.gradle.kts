@@ -24,8 +24,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.dependency.Flogger
-
 plugins {
     `kotlin-jvm-module`
     `maven-publish`
@@ -33,7 +31,7 @@ plugins {
 }
 
 dependencies {
-    implementation(Flogger.Runtime.systemBackend)
+    implementation("flogger:system-backend")
     val loggingModule = project(":logging")
     implementation(loggingModule)
 }

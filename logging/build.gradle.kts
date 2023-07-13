@@ -26,7 +26,6 @@
 
 @file:Suppress("UNUSED_VARIABLE") // for source sets.
 
-import io.spine.internal.dependency.Flogger
 import io.spine.internal.dependency.Guava
 import io.spine.internal.dependency.JUnit
 import io.spine.internal.dependency.Kotest
