@@ -162,9 +162,9 @@ internal fun expectedTimestamps(
 }
 
 /**
- * Calculates the expected timestamps at which a logging statement should be
- * executed when [interval][LoggingApi.atMostEvery] and [invocation][LoggingApi.every]
- * rate limits are configured simultaneously.
+ * Calculates the expected time and serial stamps at which a logging statement
+ * should be executed when [interval][LoggingApi.atMostEvery] and
+ * [invocation][LoggingApi.every] rate limits are configured simultaneously.
  *
  * @param invocations
  *          number of times a logging statement is invoked
@@ -176,29 +176,31 @@ internal fun expectedTimestamps(
  *          the configured invocation rate limitation
  */
 @Suppress("SameParameterValue") // Extracted to a method for better readability.
-internal fun expectedTimestamps(
+internal fun expectedStamps(
     invocations: Int,
     intervalMillis: Long,
     intervalLimitMillis: Int,
     invocationRateLimit: Int,
-): List<Long> {
+): List<Pair<Int, Long>> {
 
-    val result = mutableListOf(0L)
+    val result = mutableListOf(1 to 0L) // The first invocation is always logged.
     var currentMillis = 0L
     var lastLoggedMillis = 0L
-    var invoked = 0
+    var lastInvoked = 0
 
-    for (i in 1..invocations) {
-        if (currentMillis >= lastLoggedMillis + intervalLimitMillis) {
-            invoked++
-            if (invoked == invocationRateLimit) {
-                result.add(currentMillis)
-                lastLoggedMillis = currentMillis
-                invoked = 0
-            }
-        }
+    for (invocationN in 2..invocations) {
         currentMillis += intervalMillis
 
+        if (currentMillis < lastLoggedMillis + intervalLimitMillis) {
+            continue
+        }
+        if (invocationN - lastInvoked < invocationRateLimit) {
+            continue
+        }
+
+        result.add(invocationN to currentMillis)
+        lastLoggedMillis = currentMillis
+        lastInvoked = invocationN
     }
 
     return result

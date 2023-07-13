@@ -46,7 +46,9 @@ kotlin {
 }
 
 dependencies {
-    testImplementation(Spine.testlib)
+    testImplementation(Spine.testlib) {
+        exclude(group = "com.google.flogger")
+    }
     testImplementation(Kotest.frameworkEngine)
     testImplementation(Kotest.datatest)
     testImplementation(Kotest.runnerJUnit5Jvm)

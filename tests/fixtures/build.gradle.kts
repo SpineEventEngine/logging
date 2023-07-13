@@ -58,7 +58,9 @@ kotlin {
                 api(Kotest.assertions)
                 api(Kotest.frameworkApi)
                 api(Kotest.frameworkEngine)
-                api(Spine.testlib)
+                api(Spine.testlib) {
+                    exclude(group = "com.google.flogger")
+                }
             }
         }
     }

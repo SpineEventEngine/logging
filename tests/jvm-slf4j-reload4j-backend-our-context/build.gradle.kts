@@ -34,7 +34,9 @@ plugins {
 dependencies {
     testImplementation(project(":logging"))
     testImplementation(project(":fixtures"))
-    testRuntimeOnly(Flogger.Runtime.slf4JBackend)
+    testRuntimeOnly(Flogger.Runtime.slf4JBackend) {
+        exclude(group = "com.google.flogger")
+    }
     testRuntimeOnly(Slf4J.reload4j)
     testRuntimeOnly(project(":logging-context"))
 }
