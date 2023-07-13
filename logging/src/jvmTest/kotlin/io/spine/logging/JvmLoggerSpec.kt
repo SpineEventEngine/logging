@@ -39,6 +39,7 @@ import io.spine.logging.given.Task.UPDATE
 import io.spine.logging.given.domain.AnnotatedClass
 import io.spine.logging.given.expectedRuns
 import io.spine.logging.given.expectedStamps
+import io.spine.logging.given.expectedTimestamps
 import io.spine.logging.given.randomLogSite
 import io.spine.testing.SlowTest
 import java.lang.Thread.sleep
@@ -266,7 +267,7 @@ internal class JvmLoggerSpec {
             }
 
             val expectedTimestamps =
-                expectedStamps(invocations, intervalMillis, rateLimitMillis)
+                expectedTimestamps(invocations, intervalMillis, rateLimitMillis)
             expectedTimestamps.forEach { i ->
                 consoleOutput shouldContainOnlyOnce timestampedMessage(i)
             }
@@ -336,7 +337,7 @@ internal class JvmLoggerSpec {
             // so logging should occur every 200ms due to time rate.
 
             val expectedTimestamps =
-                expectedStamps(invocations, intervalMillis, invocationLimit)
+                expectedTimestamps(invocations, intervalMillis, invocationLimit)
             expectedTimestamps.forEach { i ->
                 consoleOutput shouldContainOnlyOnce timestampedMessage(i)
             }

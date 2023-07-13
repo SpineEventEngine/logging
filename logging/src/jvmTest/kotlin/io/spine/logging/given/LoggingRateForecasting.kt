@@ -139,7 +139,7 @@ internal fun expectedRuns(invocations: Int, intervalMillis: Long, intervalLimitM
  *          the configured rate limitation
  */
 @Suppress("SameParameterValue") // Extracted to a method for better readability.
-internal fun expectedStamps(
+internal fun expectedTimestamps(
     invocations: Int,
     intervalMillis: Long,
     intervalLimitMillis: Int,
@@ -162,9 +162,9 @@ internal fun expectedStamps(
 }
 
 /**
- * Calculates the expected timestamps at which a logging statement should be
- * executed when [interval][LoggingApi.atMostEvery] and [invocation][LoggingApi.every]
- * rate limits are configured simultaneously.
+ * Calculates the expected time and serial stamps at which a logging statement
+ * should be executed when [interval][LoggingApi.atMostEvery] and
+ * [invocation][LoggingApi.every] rate limits are configured simultaneously.
  *
  * @param invocations
  *          number of times a logging statement is invoked
