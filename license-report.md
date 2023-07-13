@@ -30,14 +30,6 @@
 1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.18.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
-     * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
-     * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : com.google.flogger. **Name** : flogger-system-backend. **Version** : 0.7.4.
-     * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
-     * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
-
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.1.
      * **Project URL:** [https://github.com/google/guava/](https://github.com/google/guava/)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -81,7 +73,6 @@
 
 1.  **Group** : flogger. **Name** : api. **Version** : unspecified.**No license information found**
 1.  **Group** : flogger. **Name** : platform-generator. **Version** : unspecified.**No license information found**
-1.  **Group** : flogger. **Name** : util. **Version** : unspecified.**No license information found**
 1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.157.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
@@ -299,14 +290,6 @@
 1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.18.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
-     * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
-     * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : com.google.flogger. **Name** : flogger-system-backend. **Version** : 0.7.4.
-     * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
-     * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
-
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.1.
      * **Project URL:** [https://github.com/google/guava/](https://github.com/google/guava/)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -359,7 +342,6 @@
 
 1.  **Group** : flogger. **Name** : api. **Version** : unspecified.**No license information found**
 1.  **Group** : flogger. **Name** : platform-generator. **Version** : unspecified.**No license information found**
-1.  **Group** : flogger. **Name** : util. **Version** : unspecified.**No license information found**
 1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.157.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
@@ -787,7 +769,7 @@
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Wed Jul 12 15:50:05 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Jul 13 17:25:19 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -805,14 +787,6 @@ This report was generated on **Wed Jul 12 15:50:05 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.18.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
-     * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
-     * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : com.google.flogger. **Name** : flogger-system-backend. **Version** : 0.7.4.
-     * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
-     * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.1.
      * **Project URL:** [https://github.com/google/guava/](https://github.com/google/guava/)
@@ -839,11 +813,6 @@ This report was generated on **Wed Jul 12 15:50:05 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : com.google.protobuf. **Name** : protobuf-kotlin. **Version** : 3.23.4.
      * **License:** [BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause)
-
-1.  **Group** : org.checkerframework. **Name** : checker-compat-qual. **Version** : 2.5.3.
-     * **Project URL:** [https://checkerframework.org](https://checkerframework.org)
-     * **License:** [GNU General Public License, version 2 (GPL2), with the classpath exception](http://www.gnu.org/software/classpath/license.html)
-     * **License:** [The MIT License](http://opensource.org/licenses/MIT)
 
 1.  **Group** : org.checkerframework. **Name** : checker-qual. **Version** : 3.27.0.
      * **Project URL:** [https://checkerframework.org](https://checkerframework.org)
@@ -1042,7 +1011,7 @@ This report was generated on **Wed Jul 12 15:50:05 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : flogger. **Name** : api. **Version** : unspecified.**No license information found**
 1.  **Group** : flogger. **Name** : platform-generator. **Version** : unspecified.**No license information found**
-1.  **Group** : flogger. **Name** : util. **Version** : unspecified.**No license information found**
+1.  **Group** : flogger. **Name** : system-backend. **Version** : unspecified.**No license information found**
 1.  **Group** : info.picocli. **Name** : picocli. **Version** : 4.6.3.
      * **Project URL:** [http://picocli.info](http://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -1593,7 +1562,7 @@ This report was generated on **Wed Jul 12 15:50:05 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Wed Jul 12 15:50:06 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Jul 13 17:25:20 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -1611,14 +1580,6 @@ This report was generated on **Wed Jul 12 15:50:06 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.18.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
-     * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
-     * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : com.google.flogger. **Name** : flogger-system-backend. **Version** : 0.7.4.
-     * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
-     * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.1.
      * **Project URL:** [https://github.com/google/guava/](https://github.com/google/guava/)
@@ -1645,11 +1606,6 @@ This report was generated on **Wed Jul 12 15:50:06 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : com.google.protobuf. **Name** : protobuf-kotlin. **Version** : 3.23.4.
      * **License:** [BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause)
-
-1.  **Group** : org.checkerframework. **Name** : checker-compat-qual. **Version** : 2.5.3.
-     * **Project URL:** [https://checkerframework.org](https://checkerframework.org)
-     * **License:** [GNU General Public License, version 2 (GPL2), with the classpath exception](http://www.gnu.org/software/classpath/license.html)
-     * **License:** [The MIT License](http://opensource.org/licenses/MIT)
 
 1.  **Group** : org.checkerframework. **Name** : checker-qual. **Version** : 3.27.0.
      * **Project URL:** [https://checkerframework.org](https://checkerframework.org)
@@ -1848,7 +1804,7 @@ This report was generated on **Wed Jul 12 15:50:06 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : flogger. **Name** : api. **Version** : unspecified.**No license information found**
 1.  **Group** : flogger. **Name** : platform-generator. **Version** : unspecified.**No license information found**
-1.  **Group** : flogger. **Name** : util. **Version** : unspecified.**No license information found**
+1.  **Group** : flogger. **Name** : system-backend. **Version** : unspecified.**No license information found**
 1.  **Group** : info.picocli. **Name** : picocli. **Version** : 4.6.3.
      * **Project URL:** [http://picocli.info](http://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -2395,7 +2351,7 @@ This report was generated on **Wed Jul 12 15:50:06 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Wed Jul 12 15:50:07 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Jul 13 17:25:21 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -2413,14 +2369,6 @@ This report was generated on **Wed Jul 12 15:50:07 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.18.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
-     * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
-     * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : com.google.flogger. **Name** : flogger-system-backend. **Version** : 0.7.4.
-     * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
-     * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.1.
      * **Project URL:** [https://github.com/google/guava/](https://github.com/google/guava/)
@@ -2447,11 +2395,6 @@ This report was generated on **Wed Jul 12 15:50:07 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : com.google.protobuf. **Name** : protobuf-kotlin. **Version** : 3.23.4.
      * **License:** [BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause)
-
-1.  **Group** : org.checkerframework. **Name** : checker-compat-qual. **Version** : 2.5.3.
-     * **Project URL:** [https://checkerframework.org](https://checkerframework.org)
-     * **License:** [GNU General Public License, version 2 (GPL2), with the classpath exception](http://www.gnu.org/software/classpath/license.html)
-     * **License:** [The MIT License](http://opensource.org/licenses/MIT)
 
 1.  **Group** : org.checkerframework. **Name** : checker-qual. **Version** : 3.27.0.
      * **Project URL:** [https://checkerframework.org](https://checkerframework.org)
@@ -2646,7 +2589,7 @@ This report was generated on **Wed Jul 12 15:50:07 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : flogger. **Name** : api. **Version** : unspecified.**No license information found**
 1.  **Group** : flogger. **Name** : platform-generator. **Version** : unspecified.**No license information found**
-1.  **Group** : flogger. **Name** : util. **Version** : unspecified.**No license information found**
+1.  **Group** : flogger. **Name** : system-backend. **Version** : unspecified.**No license information found**
 1.  **Group** : info.picocli. **Name** : picocli. **Version** : 4.6.3.
      * **Project URL:** [http://picocli.info](http://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -3189,7 +3132,7 @@ This report was generated on **Wed Jul 12 15:50:07 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Wed Jul 12 15:50:10 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Jul 13 17:25:22 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -3207,14 +3150,6 @@ This report was generated on **Wed Jul 12 15:50:10 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.18.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
-     * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
-     * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : com.google.flogger. **Name** : flogger-system-backend. **Version** : 0.7.4.
-     * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
-     * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.1.
      * **Project URL:** [https://github.com/google/guava/](https://github.com/google/guava/)
@@ -3241,11 +3176,6 @@ This report was generated on **Wed Jul 12 15:50:10 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : com.google.protobuf. **Name** : protobuf-kotlin. **Version** : 3.23.4.
      * **License:** [BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause)
-
-1.  **Group** : org.checkerframework. **Name** : checker-compat-qual. **Version** : 2.5.3.
-     * **Project URL:** [https://checkerframework.org](https://checkerframework.org)
-     * **License:** [GNU General Public License, version 2 (GPL2), with the classpath exception](http://www.gnu.org/software/classpath/license.html)
-     * **License:** [The MIT License](http://opensource.org/licenses/MIT)
 
 1.  **Group** : org.checkerframework. **Name** : checker-qual. **Version** : 3.27.0.
      * **Project URL:** [https://checkerframework.org](https://checkerframework.org)
@@ -3444,7 +3374,6 @@ This report was generated on **Wed Jul 12 15:50:10 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : flogger. **Name** : api. **Version** : unspecified.**No license information found**
 1.  **Group** : flogger. **Name** : platform-generator. **Version** : unspecified.**No license information found**
-1.  **Group** : flogger. **Name** : util. **Version** : unspecified.**No license information found**
 1.  **Group** : info.picocli. **Name** : picocli. **Version** : 4.6.3.
      * **Project URL:** [http://picocli.info](http://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -3995,7 +3924,7 @@ This report was generated on **Wed Jul 12 15:50:10 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Wed Jul 12 15:50:11 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Jul 13 17:25:23 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -4013,14 +3942,6 @@ This report was generated on **Wed Jul 12 15:50:11 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.18.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
-     * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
-     * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : com.google.flogger. **Name** : flogger-system-backend. **Version** : 0.7.4.
-     * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
-     * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.1.
      * **Project URL:** [https://github.com/google/guava/](https://github.com/google/guava/)
@@ -4047,11 +3968,6 @@ This report was generated on **Wed Jul 12 15:50:11 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : com.google.protobuf. **Name** : protobuf-kotlin. **Version** : 3.23.4.
      * **License:** [BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause)
-
-1.  **Group** : org.checkerframework. **Name** : checker-compat-qual. **Version** : 2.5.3.
-     * **Project URL:** [https://checkerframework.org](https://checkerframework.org)
-     * **License:** [GNU General Public License, version 2 (GPL2), with the classpath exception](http://www.gnu.org/software/classpath/license.html)
-     * **License:** [The MIT License](http://opensource.org/licenses/MIT)
 
 1.  **Group** : org.checkerframework. **Name** : checker-qual. **Version** : 3.27.0.
      * **Project URL:** [https://checkerframework.org](https://checkerframework.org)
@@ -4254,7 +4170,6 @@ This report was generated on **Wed Jul 12 15:50:11 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : flogger. **Name** : api. **Version** : unspecified.**No license information found**
 1.  **Group** : flogger. **Name** : platform-generator. **Version** : unspecified.**No license information found**
-1.  **Group** : flogger. **Name** : util. **Version** : unspecified.**No license information found**
 1.  **Group** : info.picocli. **Name** : picocli. **Version** : 4.6.3.
      * **Project URL:** [http://picocli.info](http://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -4805,7 +4720,7 @@ This report was generated on **Wed Jul 12 15:50:11 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Wed Jul 12 15:50:12 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Jul 13 17:25:24 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -4827,14 +4742,6 @@ This report was generated on **Wed Jul 12 15:50:12 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.18.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
-     * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
-     * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : com.google.flogger. **Name** : flogger-system-backend. **Version** : 0.7.4.
-     * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
-     * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.1.
      * **Project URL:** [https://github.com/google/guava/](https://github.com/google/guava/)
@@ -4864,7 +4771,6 @@ This report was generated on **Wed Jul 12 15:50:12 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : flogger. **Name** : api. **Version** : unspecified.**No license information found**
 1.  **Group** : flogger. **Name** : platform-generator. **Version** : unspecified.**No license information found**
-1.  **Group** : flogger. **Name** : util. **Version** : unspecified.**No license information found**
 1.  **Group** : org.checkerframework. **Name** : checker-compat-qual. **Version** : 2.5.3.
      * **Project URL:** [https://checkerframework.org](https://checkerframework.org)
      * **License:** [GNU General Public License, version 2 (GPL2), with the classpath exception](http://www.gnu.org/software/classpath/license.html)
@@ -5041,7 +4947,7 @@ This report was generated on **Wed Jul 12 15:50:12 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : flogger. **Name** : api. **Version** : unspecified.**No license information found**
 1.  **Group** : flogger. **Name** : platform-generator. **Version** : unspecified.**No license information found**
-1.  **Group** : flogger. **Name** : util. **Version** : unspecified.**No license information found**
+1.  **Group** : flogger. **Name** : system-backend. **Version** : unspecified.**No license information found**
 1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.157.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
@@ -5537,7 +5443,7 @@ This report was generated on **Wed Jul 12 15:50:12 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Wed Jul 12 15:50:12 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Jul 13 17:25:24 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -5560,14 +5466,6 @@ This report was generated on **Wed Jul 12 15:50:12 EEST 2023** using [Gradle-Lic
 1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.18.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
-     * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
-     * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : com.google.flogger. **Name** : flogger-system-backend. **Version** : 0.7.4.
-     * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
-     * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
-
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.1.
      * **Project URL:** [https://github.com/google/guava/](https://github.com/google/guava/)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -5596,7 +5494,7 @@ This report was generated on **Wed Jul 12 15:50:12 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : flogger. **Name** : api. **Version** : unspecified.**No license information found**
 1.  **Group** : flogger. **Name** : platform-generator. **Version** : unspecified.**No license information found**
-1.  **Group** : flogger. **Name** : util. **Version** : unspecified.**No license information found**
+1.  **Group** : flogger. **Name** : system-backend. **Version** : unspecified.**No license information found**
 1.  **Group** : org.checkerframework. **Name** : checker-compat-qual. **Version** : 2.5.3.
      * **Project URL:** [https://checkerframework.org](https://checkerframework.org)
      * **License:** [GNU General Public License, version 2 (GPL2), with the classpath exception](http://www.gnu.org/software/classpath/license.html)
@@ -5799,7 +5697,7 @@ This report was generated on **Wed Jul 12 15:50:12 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : flogger. **Name** : api. **Version** : unspecified.**No license information found**
 1.  **Group** : flogger. **Name** : platform-generator. **Version** : unspecified.**No license information found**
-1.  **Group** : flogger. **Name** : util. **Version** : unspecified.**No license information found**
+1.  **Group** : flogger. **Name** : system-backend. **Version** : unspecified.**No license information found**
 1.  **Group** : info.picocli. **Name** : picocli. **Version** : 4.6.3.
      * **Project URL:** [http://picocli.info](http://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -6338,7 +6236,7 @@ This report was generated on **Wed Jul 12 15:50:12 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Wed Jul 12 15:50:13 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Jul 13 17:25:25 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -6361,14 +6259,6 @@ This report was generated on **Wed Jul 12 15:50:13 EEST 2023** using [Gradle-Lic
 1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.18.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
-     * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
-     * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : com.google.flogger. **Name** : flogger-system-backend. **Version** : 0.7.4.
-     * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
-     * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
-
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.1.
      * **Project URL:** [https://github.com/google/guava/](https://github.com/google/guava/)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -6397,7 +6287,6 @@ This report was generated on **Wed Jul 12 15:50:13 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : flogger. **Name** : api. **Version** : unspecified.**No license information found**
 1.  **Group** : flogger. **Name** : platform-generator. **Version** : unspecified.**No license information found**
-1.  **Group** : flogger. **Name** : util. **Version** : unspecified.**No license information found**
 1.  **Group** : org.checkerframework. **Name** : checker-compat-qual. **Version** : 2.5.3.
      * **Project URL:** [https://checkerframework.org](https://checkerframework.org)
      * **License:** [GNU General Public License, version 2 (GPL2), with the classpath exception](http://www.gnu.org/software/classpath/license.html)
@@ -6600,7 +6489,6 @@ This report was generated on **Wed Jul 12 15:50:13 EEST 2023** using [Gradle-Lic
 
 1.  **Group** : flogger. **Name** : api. **Version** : unspecified.**No license information found**
 1.  **Group** : flogger. **Name** : platform-generator. **Version** : unspecified.**No license information found**
-1.  **Group** : flogger. **Name** : util. **Version** : unspecified.**No license information found**
 1.  **Group** : info.picocli. **Name** : picocli. **Version** : 4.6.3.
      * **Project URL:** [http://picocli.info](http://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -7139,4 +7027,4 @@ This report was generated on **Wed Jul 12 15:50:13 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Wed Jul 12 15:50:14 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Jul 13 17:25:26 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
