@@ -32,15 +32,19 @@ dependencies {
     implementation("org.ow2.asm:asm:9.2")
 }
 
-configurations {
-    val generatePlatformProvider by tasks.registering(JavaExec::class) {
+tasks {
+    register<JavaExec>("generatePlatformProvider") {
         val outputJar = "build/provider/platform-provider.jar"
         args = listOf(outputJar)
         outputs.file(outputJar)
         classpath = sourceSets.main.get().runtimeClasspath
         mainClass.set("com.google.common.flogger.backend.PlatformProviderGenerator")
     }
-    create("generated-platform-provider") {
-        outgoing.artifact(generatePlatformProvider)
+}
+
+configurations {
+    register("generatedPlatformProvider") {
+        val genTask = tasks.named("generatePlatformProvider")
+        outgoing.artifact(genTask)
     }
 }
