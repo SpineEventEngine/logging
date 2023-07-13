@@ -37,8 +37,6 @@ import org.gradle.api.tasks.TaskProvider
 import org.gradle.api.tasks.bundling.Jar
 import org.gradle.configurationcache.extensions.capitalized
 import org.gradle.kotlin.dsl.DependencyHandlerScope
-import org.gradle.kotlin.dsl.add
-import org.gradle.kotlin.dsl.exclude
 import org.jetbrains.dokka.DokkaConfiguration
 import org.jetbrains.dokka.base.DokkaBase
 import org.jetbrains.dokka.base.DokkaBaseConfiguration
@@ -67,10 +65,8 @@ fun DependencyHandlerScope.useDokkaWithSpineExtensions() {
     dokkaPlugin(Dokka.SpineExtensions.lib)
 }
 
-private fun DependencyHandler.dokkaPlugin(dependencyNotation: String): Dependency =
-    add("dokkaPlugin", dependencyNotation) {
-        exclude(group = "com.google.flogger")
-    }
+private fun DependencyHandler.dokkaPlugin(dependencyNotation: Any): Dependency? =
+    add("dokkaPlugin", dependencyNotation)
 
 private fun Project.dokkaOutput(language: String): File =
     buildDir.resolve("docs/dokka${language.capitalized()}")
