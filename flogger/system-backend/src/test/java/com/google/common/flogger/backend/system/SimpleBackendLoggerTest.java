@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 The Flogger Authors.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -7,11 +7,21 @@
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Redistribution and use in source and/or binary forms, with or without
+ * modification, must retain the above copyright notice and the following
+ * disclaimer.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 package com.google.common.flogger.backend.system;
@@ -60,8 +70,8 @@ public class SimpleBackendLoggerTest {
     AssertingLogger logger = new AssertingLogger();
     LoggerBackend backend = newBackend(logger);
 
-    backend.log(withPrintfStyle("Hello %s World", "Printf"));
-    backend.log(withBraceStyle("Hello {0} World", "Brace Format"));
+    backend.log(FakeLogData.withPrintfStyle("Hello %s World", "Printf"));
+    backend.log(FakeLogData.withBraceStyle("Hello {0} World", "Brace Format"));
 
     logger.assertLogCount(2);
     logger.assertLogEntry(0, INFO, "Hello Printf World");
@@ -73,8 +83,8 @@ public class SimpleBackendLoggerTest {
     AssertingLogger logger = new AssertingLogger();
     LoggerBackend backend = newBackend(logger);
 
-    backend.log(withPrintfStyle("Printf: %s %s %s", "Foo", "Bar", "Baz"));
-    backend.log(withBraceStyle("Brace: {0} {1} {2}", "Foo", "Bar", "Baz"));
+    backend.log(FakeLogData.withPrintfStyle("Printf: %s %s %s", "Foo", "Bar", "Baz"));
+    backend.log(FakeLogData.withBraceStyle("Brace: {0} {1} {2}", "Foo", "Bar", "Baz"));
 
     logger.assertLogCount(2);
     logger.assertLogEntry(0, INFO, "Printf: Foo Bar Baz");
@@ -90,16 +100,16 @@ public class SimpleBackendLoggerTest {
     cal.setTimeZone(TimeZone.getTimeZone("GMT"));
 
     backend.log(
-        withPrintfStyle("int=%d, float=%f, date=%3$tD %3$tr", 12345678, 1234.5678D, cal));
+            FakeLogData.withPrintfStyle("int=%d, float=%f, date=%3$tD %3$tr", 12345678, 1234.5678D, cal));
     backend.log(
-        withBraceStyle("int={0}, float={1}, date={2}", 12345678, 1234.5678D, cal));
+            FakeLogData.withBraceStyle("int={0}, float={1}, date={2}", 12345678, 1234.5678D, cal));
 
     // Note that the "%f" and "{n}" formatting for floats differ, but that matches String.format()
     // and MessageFormat respectively.
     logger.assertLogCount(2);
     logger.assertLogEntry(0, INFO, "int=12345678, float=1234.567800, date=07/13/85 05:20:03 AM");
     logger.assertLogEntry(
-        1, INFO, "int=12,345,678, float=1,234.567800, date=Sat Jul 13 05:20:03 GMT 1985");
+            1, INFO, "int=12,345,678, float=1,234.567800, date=Sat Jul 13 05:20:03 GMT 1985");
   }
 
   @Test
@@ -107,7 +117,7 @@ public class SimpleBackendLoggerTest {
     AssertingLogger logger = new AssertingLogger();
     LoggerBackend backend = newBackend(logger);
 
-    backend.log(withPrintfStyle("Hello %#08X %+,8d %8.2f World", 0xcafe, 1234, -12.0));
+    backend.log(FakeLogData.withPrintfStyle("Hello %#08X %+,8d %8.2f World", 0xcafe, 1234, -12.0));
 
     logger.assertLogCount(1);
     logger.assertLogEntry(0, INFO, "Hello 0X00CAFE   +1,234   -12.00 World");
@@ -118,7 +128,7 @@ public class SimpleBackendLoggerTest {
     AssertingLogger logger = new AssertingLogger();
     LoggerBackend backend = newBackend(logger);
 
-    backend.log(withPrintfStyle("Hello %s World", "anything"));
+    backend.log(FakeLogData.withPrintfStyle("Hello %s World", "anything"));
 
     logger.assertLogCount(1);
     logger.assertLogEntry(0, INFO, "Hello anything World");
@@ -142,9 +152,9 @@ public class SimpleBackendLoggerTest {
           }
         };
 
-    backend.log(withPrintfStyle("Hello %s World", arg));
-    backend.log(withPrintfStyle("Hello %#S World", arg));
-    backend.log(withPrintfStyle("Hello %-10.4s World", arg));
+    backend.log(FakeLogData.withPrintfStyle("Hello %s World", arg));
+    backend.log(FakeLogData.withPrintfStyle("Hello %#S World", arg));
+    backend.log(FakeLogData.withPrintfStyle("Hello %-10.4s World", arg));
 
     logger.assertLogCount(3);
     logger.assertLogEntry(0, INFO, "Hello [f=0, w=-1, p=-1] World");
@@ -164,13 +174,13 @@ public class SimpleBackendLoggerTest {
     Calendar cal = new GregorianCalendar(1985, 4, 13, 5, 20, 3);
     cal.setTimeZone(TimeZone.getTimeZone("GMT"));
 
-    backend.log(withPrintfStyle("Day=%1$Ta %1$te, Month=%1$tB, Year=%1$tY", cal));
-    backend.log(withPrintfStyle("Time=%1$tl:%1$tM:%1$tS %1$Tp", cal));
+    backend.log(FakeLogData.withPrintfStyle("Day=%1$Ta %1$te, Month=%1$tB, Year=%1$tY", cal));
+    backend.log(FakeLogData.withPrintfStyle("Time=%1$tl:%1$tM:%1$tS %1$Tp", cal));
     // String should format to 28 characters, so set width 30 to test padding.
-    backend.log(withPrintfStyle("%-30tc", cal));
+    backend.log(FakeLogData.withPrintfStyle("%-30tc", cal));
     // Use one of the formats which doesn't require time-zone interaction for testing millis
     // (otherwise this test would not be system portable).
-    backend.log(withPrintfStyle("Seconds=%tS", cal.getTimeInMillis()));
+    backend.log(FakeLogData.withPrintfStyle("Seconds=%tS", cal.getTimeInMillis()));
 
     logger.assertLogCount(4);
     logger.assertLogEntry(0, INFO, "Day=MON 13, Month=May, Year=1985");
@@ -192,8 +202,8 @@ public class SimpleBackendLoggerTest {
           }
         };
 
-    backend.log(withPrintfStyle("hash=%h", arg));
-    backend.log(withPrintfStyle("%-10H", arg));
+    backend.log(FakeLogData.withPrintfStyle("hash=%h", arg));
+    backend.log(FakeLogData.withPrintfStyle("%-10H", arg));
 
     logger.assertLogCount(2);
     logger.assertLogEntry(0, INFO, "hash=deadbeef");
@@ -208,10 +218,10 @@ public class SimpleBackendLoggerTest {
     // Typed variable is needed to disambiguate log(String, Object) and log(String, Object[]).
     Object nullArg = null;
     // %h and %t trigger different types of parameters, so it's worth checking them as well.
-    backend.log(withPrintfStyle("[%6.2f] #1", nullArg));
-    backend.log(withPrintfStyle("[%-10H] #2", nullArg));
-    backend.log(withPrintfStyle("[%8tc] #3", nullArg));
-    backend.log(withBraceStyle("[{0}] #4", nullArg));
+    backend.log(FakeLogData.withPrintfStyle("[%6.2f] #1", nullArg));
+    backend.log(FakeLogData.withPrintfStyle("[%-10H] #2", nullArg));
+    backend.log(FakeLogData.withPrintfStyle("[%8tc] #3", nullArg));
+    backend.log(FakeLogData.withBraceStyle("[{0}] #4", nullArg));
 
     logger.assertLogCount(4);
     logger.assertLogEntry(0, INFO, "[null] #1");
@@ -228,7 +238,7 @@ public class SimpleBackendLoggerTest {
     String nl = System.getProperty("line.separator");
     assertThat(nl).containsMatch("\\n|\\r(?:\\n)?");
 
-    backend.log(withPrintfStyle("Hello %d%n World%n", 42));
+    backend.log(FakeLogData.withPrintfStyle("Hello %d%n World%n", 42));
 
     logger.assertLogCount(1);
     logger.assertLogEntry(0, INFO, "Hello 42" + nl + " World" + nl);
@@ -239,7 +249,7 @@ public class SimpleBackendLoggerTest {
     AssertingLogger logger = new AssertingLogger();
     LoggerBackend backend = newBackend(logger);
 
-    LogData data = withPrintfStyle("Hello %?X World", "ignored");
+    LogData data = FakeLogData.withPrintfStyle("Hello %?X World", "ignored");
     try {
       backend.log(data);
       fail("expected ParseException");
@@ -256,8 +266,8 @@ public class SimpleBackendLoggerTest {
     AssertingLogger logger = new AssertingLogger();
     LoggerBackend backend = newBackend(logger);
 
-    backend.log(withPrintfStyle("Printf: %3$d %2$d %1$d", 1, 2, 3));
-    backend.log(withBraceStyle("Brace: {2} {1} {0}", 1, 2, 3));
+    backend.log(FakeLogData.withPrintfStyle("Printf: %3$d %2$d %1$d", 1, 2, 3));
+    backend.log(FakeLogData.withBraceStyle("Brace: {2} {1} {0}", 1, 2, 3));
 
     logger.assertLogCount(2);
     logger.assertLogEntry(0, INFO, "Printf: 3 2 1");
@@ -269,9 +279,9 @@ public class SimpleBackendLoggerTest {
     AssertingLogger logger = new AssertingLogger();
     LoggerBackend backend = newBackend(logger);
 
-    backend.log(withPrintfStyle("Printf: %1$d %1$d %1$d", 23));
-    backend.log(withPrintfStyle("Printf: %d %<d %<d", 42));
-    backend.log(withBraceStyle("Brace: {0} {0} {0}", 42));
+    backend.log(FakeLogData.withPrintfStyle("Printf: %1$d %1$d %1$d", 23));
+    backend.log(FakeLogData.withPrintfStyle("Printf: %d %<d %<d", 42));
+    backend.log(FakeLogData.withBraceStyle("Brace: {0} {0} {0}", 42));
 
     logger.assertLogCount(3);
     logger.assertLogEntry(0, INFO, "Printf: 23 23 23");
