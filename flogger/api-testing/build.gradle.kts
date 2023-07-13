@@ -32,8 +32,6 @@ dependencies {
     implementation(project(":api"))
     implementation(project(":system-backend"))
     implementation("com.google.truth:truth:1.1")
-//    implementation("org.checkerframework:checker-compat-qual:2.5.3")
-//    implementation("com.google.errorprone:error_prone_annotation:2.20.0")
 }
 
 java {
