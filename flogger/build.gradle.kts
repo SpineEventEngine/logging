@@ -24,8 +24,21 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+plugins {
+    java
+}
+
 subprojects {
+    apply {
+        plugin("java")
+    }
     repositories {
         mavenCentral()
+    }
+    java {
+        toolchain {
+            val version = JavaLanguageVersion.of(11)
+            languageVersion.set(version)
+        }
     }
 }

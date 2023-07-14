@@ -40,9 +40,3 @@ dependencies {
 
     testAnnotationProcessor("com.google.auto.service:auto-service:1.0")
 }
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(8))
-    }
-}

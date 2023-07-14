@@ -37,9 +37,3 @@ dependencies {
     testImplementation(project(":testing"))
     testImplementation("com.google.truth:truth:1.1")
 }
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(8))
-    }
-}
