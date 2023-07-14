@@ -53,7 +53,7 @@ dependencies {
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(8))
+        languageVersion.set(JavaLanguageVersion.of(11))
     }
     tasks.named<JavaCompile>("compileJava11Java") {
         val java11Compiler = project.javaToolchains.compilerFor {
