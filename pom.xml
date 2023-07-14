@@ -10,7 +10,7 @@ all modules and does not describe the project structure per-subproject.
  -->
 <groupId>io.spine</groupId>
 <artifactId>spine-logging</artifactId>
-<version>2.0.0-SNAPSHOT.191</version>
+<version>2.0.0-SNAPSHOT.192</version>
 
 <inceptionYear>2015</inceptionYear>
 
@@ -49,12 +49,6 @@ all modules and does not describe the project structure per-subproject.
   </dependency>
   <dependency>
     <groupId>com.google.flogger</groupId>
-    <artifactId>flogger-system-backend</artifactId>
-    <version>0.7.4</version>
-    <scope>runtime</scope>
-  </dependency>
-  <dependency>
-    <groupId>com.google.flogger</groupId>
     <artifactId>flogger-grpc-context</artifactId>
     <version>0.7.4</version>
     <scope>test</scope>
@@ -75,6 +69,12 @@ all modules and does not describe the project structure per-subproject.
     <groupId>com.google.guava</groupId>
     <artifactId>guava-testlib</artifactId>
     <version>31.1-jre</version>
+    <scope>test</scope>
+  </dependency>
+  <dependency>
+    <groupId>flogger</groupId>
+    <artifactId>system-backend</artifactId>
+    <version>null</version>
     <scope>test</scope>
   </dependency>
   <dependency>
@@ -159,14 +159,14 @@ all modules and does not describe the project structure per-subproject.
     <version>9+181-r4173-1</version>
   </dependency>
   <dependency>
-    <groupId>com.google.flogger</groupId>
-    <artifactId>flogger</artifactId>
-    <version>0.7.4</version>
-  </dependency>
-  <dependency>
     <groupId>com.puppycrawl.tools</groupId>
     <artifactId>checkstyle</artifactId>
     <version>10.3.4</version>
+  </dependency>
+  <dependency>
+    <groupId>flogger</groupId>
+    <artifactId>api</artifactId>
+    <version>null</version>
   </dependency>
   <dependency>
     <groupId>io.gitlab.arturbosch.detekt</groupId>

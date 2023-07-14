@@ -143,9 +143,6 @@ public interface LoggingApi<API: LoggingApi<API>> {
      *
      * 1. If `atMostEvery(...)` and `every(...)` are invoked for the same statement,
      * then it will be emitted only when both criteria are satisfied.
-     * Firstly, `atMostEvery(...)` criterion should be satisfied, then the counter
-     * for `every(...)` starts. As `every(...)` becomes satisfied, the statement
-     * is emitted.
      *
      * 2. If this method is called multiple times for a single log statement,
      * the last invocation will take precedence.
@@ -210,9 +207,6 @@ public interface LoggingApi<API: LoggingApi<API>> {
      *
      * 1. If `atMostEvery(...)` and `every(...)` are invoked for the same statement,
      * then it will be emitted only when both criteria are satisfied.
-     * Firstly, `atMostEvery(...)` criterion should be satisfied, then the counter
-     * for `every(...)` starts. As `every(...)` becomes satisfied, the statement
-     * is emitted.
      *
      * 2. If this method is called multiple times for a single log statement,
      * the last invocation will take precedence.
