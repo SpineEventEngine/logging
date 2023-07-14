@@ -24,8 +24,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.dependency.Flogger
-
 plugins {
     `kotlin-jvm-module`
 }
@@ -33,10 +31,6 @@ plugins {
 dependencies {
     testImplementation(project(":logging"))
     testImplementation(project(":fixtures"))
-    testImplementation("flogger:system-backend")
-    testImplementation(Flogger.Runtime.log4j2Backend) {
-        exclude(group = "com.google.flogger")
-    }
-
+    testImplementation("flogger:log4j2-backend")
     testRuntimeOnly(project(":logging-context"))
 }

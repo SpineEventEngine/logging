@@ -41,7 +41,7 @@ dependencies {
     implementation("org.checkerframework:checker-compat-qual:2.5.3")
     implementation("com.google.errorprone:error_prone_annotation:2.20.0")
 
-    testImplementation(project(":api-testing"))
+    testImplementation(project(":testing"))
     testImplementation("junit:junit:4.13.1")
     testImplementation("com.google.truth:truth:1.1")
     testImplementation("org.mockito:mockito-core:2.28.2")

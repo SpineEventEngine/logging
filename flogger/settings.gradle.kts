@@ -28,7 +28,9 @@ rootProject.name = "flogger"
 
 include(
     "api",
-    "api-testing",
-    "system-backend",
+    "testing",
     "platform-generator",
+    "system-backend",
+    "log4j2-backend",
+    "grpc-context",
 )
