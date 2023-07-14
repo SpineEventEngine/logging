@@ -26,7 +26,6 @@
 
 plugins {
     `java-library`
-    `jvm-test-suite`
 }
 
 sourceSets {
@@ -63,34 +62,5 @@ java {
         javaCompiler.set(java11Compiler)
         sourceCompatibility = JavaVersion.VERSION_1_8.toString()
         targetCompatibility = JavaVersion.VERSION_1_8.toString()
-    }
-}
-
-testing {
-    // This test should be executed separately because it uses `@AutoService` annotation,
-    // substituting the default implementations with stubs.
-    val isolatedTest = "**/DefaultPlatformServiceLoadingTest.java"
-
-    val test by suites.getting(JvmTestSuite::class) {
-        useJUnit()
-        sources.java.exclude(isolatedTest)
-    }
-
-    val serviceLoadingTest by suites.registering(JvmTestSuite::class) {
-        useJUnit()
-
-        dependencies {
-            implementation(project(":api"))
-            implementation("com.google.truth:truth:1.1")
-            implementation("com.google.auto.service:auto-service:1.0")
-            annotationProcessor("com.google.auto.service:auto-service:1.0")
-        }
-
-        sources.java.setSrcDirs(test.sources.java.srcDirs)
-        sources.java.include(isolatedTest)
-    }
-
-    tasks.test.configure {
-        dependsOn(serviceLoadingTest)
     }
 }
