@@ -33,10 +33,6 @@ plugins {
 dependencies {
     testImplementation(project(":logging"))
     testImplementation(project(":fixtures"))
-    testImplementation("flogger:system-backend")
-    testImplementation(Flogger.Runtime.log4j2Backend) {
-        exclude(group = "com.google.flogger")
-    }
-
+    testImplementation("flogger:log4j2-backend")
     testRuntimeOnly(project(":logging-context"))
 }

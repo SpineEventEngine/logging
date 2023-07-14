@@ -34,7 +34,5 @@ dependencies {
     testImplementation(project(":logging"))
     testImplementation(project(":fixtures"))
     testRuntimeOnly(project(":logging-backend"))
-    testRuntimeOnly(Flogger.Runtime.grpcContext) {
-        exclude(group = "com.google.flogger")
-    }
+    testRuntimeOnly("flogger:grpc-context")
 }
