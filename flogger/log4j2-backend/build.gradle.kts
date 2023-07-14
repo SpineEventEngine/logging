@@ -24,13 +24,25 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-rootProject.name = "flogger"
+plugins {
+    `java-library`
+}
 
-include(
-    "api",
-    "testing",
-    "platform-generator",
-    "system-backend",
-    "log4j2-backend",
-    "grpc-context",
-)
+dependencies {
+    api("org.apache.logging.log4j:log4j-core:2.17.0")
+
+    implementation(project(":api"))
+    implementation(project(":system-backend"))
+    implementation("org.checkerframework:checker-compat-qual:2.5.3")
+
+    testImplementation(project(":testing"))
+    testImplementation("com.google.truth:truth:1.1")
+
+    testRuntimeOnly(project(":grpc-context"))
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    }
+}
