@@ -28,7 +28,8 @@ rootProject.name = "flogger"
 
 include(
     "api",
-    "api-testing",
+    "testing",
+    "platform-generator",
     "system-backend",
     "platform-generator",
 )
