@@ -38,9 +38,3 @@ dependencies {
     testImplementation("com.google.truth:truth:1.1")
     testImplementation("org.mockito:mockito-core:2.28.2")
 }
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
-    }
-}

@@ -32,12 +32,6 @@ dependencies {
     implementation("org.ow2.asm:asm:9.2")
 }
 
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
-    }
-}
-
 tasks {
     register<JavaExec>("generatePlatformProvider") {
         mainClass.set("com.google.common.flogger.backend.PlatformProviderGenerator")

@@ -40,9 +40,3 @@ dependencies {
 
     testRuntimeOnly(project(":grpc-context"))
 }
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
-    }
-}
