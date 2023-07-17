@@ -33,6 +33,10 @@ import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
+/**
+ * Original Java code copied and translated from [google/flogger](https://github.com/google/flogger).
+ * Originally licensed under the Apache V2 License.
+ */
 @DisplayName("`Parameter` should")
 internal class ParameterSpec {
 
