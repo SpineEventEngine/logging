@@ -29,9 +29,9 @@ package com.google.common.flogger.parameter
 import com.google.common.flogger.backend.FormatOptions
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 /**
  * Original Java code copied and translated from [google/flogger](https://github.com/google/flogger).
@@ -42,14 +42,14 @@ internal class ParameterSpec {
 
     @Test
     fun `not accept nullable options`() {
-        assertThrows(IllegalArgumentException::class.java) {
+        assertThrows<IllegalArgumentException> {
             TestParameter(null, 0)
         }
     }
 
     @Test
     fun `not accept a negative index`() {
-        assertThrows(IllegalArgumentException::class.java) {
+        assertThrows<IllegalArgumentException> {
             val options = FormatOptions.getDefault()
             TestParameter(options, -1)
         }
