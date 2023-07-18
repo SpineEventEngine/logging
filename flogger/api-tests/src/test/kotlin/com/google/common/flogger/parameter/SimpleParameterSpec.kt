@@ -42,8 +42,10 @@ import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 import org.junit.jupiter.api.Nested
 
 /**
- * Original Java code copied and translated from [google/flogger](https://github.com/google/flogger).
- * Originally licensed under the Apache V2 License.
+ * Tests for [SimpleParameter].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/parameter/SimpleParameterTest.java">
+ *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`SimpleParameter` should")
 internal class SimpleParameterSpec {

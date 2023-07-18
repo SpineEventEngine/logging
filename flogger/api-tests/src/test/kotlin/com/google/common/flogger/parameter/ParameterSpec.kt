@@ -34,8 +34,10 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 /**
- * Original Java code copied and translated from [google/flogger](https://github.com/google/flogger).
- * Originally licensed under the Apache V2 License.
+ * Tests for [Parameter].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/parameter/ParameterTest.java">
+ *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`Parameter` should")
 internal class ParameterSpec {
