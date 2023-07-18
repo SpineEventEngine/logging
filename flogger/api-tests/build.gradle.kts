@@ -35,8 +35,8 @@ dependencies {
 
     /*
     Truth assertions are used during migration of tests to Kotlin.
-    But by the end of the migration, all tests should use Kotest instead, and this
-    dependency will be removed.
+    But by the end of the migration, all tests should use Kotest instead,
+    and this dependency will be removed.
      */
     testImplementation("com.google.truth:truth:1.1.3")
 }
