@@ -32,6 +32,7 @@ import com.google.common.flogger.parameter.Parameter
 import com.google.common.flogger.parameter.ParameterVisitor
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.string.shouldContain
+import java.lang.StringBuilder
 import org.junit.jupiter.api.assertThrows
 
 /**
@@ -53,7 +54,7 @@ internal class FakeParameter(index: Int, private val details: String) :
 /**
  * A message builder that returns captured detail strings from the fake parser.
  */
-private class FakeMessageBuilder(fakeParser: MessageParser, message: String) :
+internal class FakeMessageBuilder(fakeParser: MessageParser, message: String) :
     MessageBuilder<List<String>>(TemplateContext(fakeParser, message)) {
 
     private val details = mutableListOf<String>()
@@ -63,6 +64,17 @@ private class FakeMessageBuilder(fakeParser: MessageParser, message: String) :
     }
 
     override fun buildImpl(): List<String> = details
+}
+
+internal class FakeMessageParser : MessageParser() {
+
+    override fun <T : Any?> parseImpl(builder: MessageBuilder<T>?) {
+        // No op.
+    }
+
+    override fun unescape(out: StringBuilder?, message: String?, start: Int, end: Int) {
+        // No op.
+    }
 }
 
 /**
