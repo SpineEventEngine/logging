@@ -24,14 +24,46 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-rootProject.name = "flogger"
+plugins {
+    kotlin("jvm") version "1.9.0"
+}
 
-include(
-    "api",
-    "api-tests",
-    "testing",
-    "platform-generator",
-    "system-backend",
-    "log4j2-backend",
-    "grpc-context",
-)
+dependencies {
+    testImplementation(project(":api"))
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.3")
+    testImplementation("io.kotest:kotest-assertions-core:5.6.2")
+
+    /*
+    Truth assertions are used during migration of tests to Kotlin.
+    But by the end of the migration, all tests should use Kotest instead,
+    and this dependency will be removed.
+     */
+    testImplementation("com.google.truth:truth:1.1.3")
+}
+
+kotlin {
+    jvmToolchain(11)
+}
+
+tasks {
+    withType<Test>().configureEach {
+        useJUnitPlatform()
+
+        fun TestResult.summary(): String =
+            """
+        Test summary:
+        >> $testCount tests
+        >> $successfulTestCount succeeded
+        >> $failedTestCount failed
+        >> $skippedTestCount skipped
+        """
+
+        afterSuite(
+            KotlinClosure2<TestDescriptor, TestResult, Unit>({ descriptor, result ->
+                if (descriptor.parent == null) {
+                    logger.lifecycle(result.summary())
+                }
+            })
+        )
+    }
+}
