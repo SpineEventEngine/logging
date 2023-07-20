@@ -63,7 +63,7 @@ tasks {
 }
 
 kover {
-    useJacocoTool()
+    useJacoco()
 }
 
 koverReport {

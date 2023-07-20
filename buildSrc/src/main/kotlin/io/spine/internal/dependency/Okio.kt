@@ -31,6 +31,7 @@ package io.spine.internal.dependency
  * We `force` it in [forceVersions] (see `DependencyResolution.kt`).
  */
 object Okio {
+
     // This is the last version before next major.
     private const val version = "1.17.5"
     const val lib = "com.squareup.okio:okio:${version}"

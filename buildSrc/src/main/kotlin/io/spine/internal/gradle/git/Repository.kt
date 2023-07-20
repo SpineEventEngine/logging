@@ -44,43 +44,31 @@ import io.spine.internal.gradle.fs.LazyTempPath
  * release of resources please use the provided functionality inside a `use` block or
  * call the `close` method manually.
  */
-class Repository : AutoCloseable {
+class Repository private constructor(
+
     /**
      * The GitHub SSH URL to the underlying repository.
      */
-    val sshUrl: String
-
-    /**
-     * Path to the temporal folder for a clone of the underlying repository.
-     */
-    val location = LazyTempPath("repoTemp")
+    private val sshUrl: String,
 
     /**
      * Current user configuration.
      *
      * This configuration determines what ends up in author and committer fields of a commit.
      */
-    var user: UserInfo? = null
-        get() = field
-        private set(value) {
-            field = value
-        }
+    private var user: UserInfo,
 
     /**
      * Currently checked out branch.
      */
-    var currentBranch: String? = null
-        get() = field
-        private set(value) {
-            field = value
-        }
+    private var currentBranch: String
 
+) : AutoCloseable {
 
-    private constructor(sshUrl: String, user: UserInfo, branch: String) {
-        this.sshUrl = sshUrl
-        this.user = user
-        this.currentBranch = branch
-    }
+    /**
+     * Path to the temporal folder for a clone of the underlying repository.
+     */
+    val location = LazyTempPath("repoTemp")
 
     /**
      * Clones the repository with [the SSH url][sshUrl] into the [temporal folder][location].
@@ -101,7 +89,7 @@ class Repository : AutoCloseable {
     fun checkout(branch: String) {
         repoExecute("git", "checkout", branch)
 
-        this.currentBranch = branch
+        currentBranch = branch
     }
 
     /**
