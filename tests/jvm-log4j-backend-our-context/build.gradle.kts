@@ -31,6 +31,6 @@ plugins {
 dependencies {
     testImplementation(project(":logging"))
     testImplementation(project(":fixtures"))
-    testImplementation("flogger:log4j2-backend")
+    testImplementation(project(":flogger:log4j2-backend"))
     testRuntimeOnly(project(":logging-context"))
 }
