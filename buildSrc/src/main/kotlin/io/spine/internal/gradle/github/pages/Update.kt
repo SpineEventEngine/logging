@@ -26,6 +26,7 @@
 
 package io.spine.internal.gradle.github.pages
 
+import io.spine.internal.gradle.git.Repository
 import java.io.File
 import java.nio.file.Path
 import org.gradle.api.Project
@@ -33,7 +34,6 @@ import org.gradle.api.Task
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.FileCollection
 import org.gradle.api.logging.Logger
-import io.spine.internal.gradle.git.Repository
 
 /**
  * Performs the update of GitHub pages.

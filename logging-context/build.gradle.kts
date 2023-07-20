@@ -25,7 +25,7 @@
  */
 
 plugins {
-    `kotlin-jvm-module`
+    `jvm-module`
     `project-report`
 }
 
