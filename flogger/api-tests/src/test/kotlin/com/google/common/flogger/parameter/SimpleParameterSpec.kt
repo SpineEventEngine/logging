@@ -39,6 +39,7 @@ import com.google.common.flogger.parser.ParseException
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
+import java.lang.IllegalStateException
 import org.junit.jupiter.api.Nested
 
 /**
@@ -102,6 +103,6 @@ private fun parseOptions(s: String, isUpperCase: Boolean): FormatOptions {
     try {
         return FormatOptions.parse(s, 0, s.length, isUpperCase)
     } catch (parseException: ParseException) {
-        throw RuntimeException(parseException)
+        throw IllegalStateException(parseException)
     }
 }

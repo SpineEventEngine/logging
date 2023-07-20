@@ -25,38 +25,9 @@
  */
 
 plugins {
-    kotlin("jvm")
+    `jvm-module`
 }
 
 dependencies {
     testImplementation(project(":flogger:api"))
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.3")
-    testImplementation("io.kotest:kotest-assertions-core:5.6.2")
-}
-
-kotlin {
-    jvmToolchain(11)
-}
-
-tasks {
-    withType<Test>().configureEach {
-        useJUnitPlatform()
-
-        fun TestResult.summary(): String =
-            """
-        Test summary:
-        >> $testCount tests
-        >> $successfulTestCount succeeded
-        >> $failedTestCount failed
-        >> $skippedTestCount skipped
-        """
-
-        afterSuite(
-            KotlinClosure2<TestDescriptor, TestResult, Unit>({ descriptor, result ->
-                if (descriptor.parent == null) {
-                    logger.lifecycle(result.summary())
-                }
-            })
-        )
-    }
 }
