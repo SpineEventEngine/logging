@@ -32,5 +32,5 @@ plugins {
 
 dependencies {
     implementation(project(":logging"))
-    implementation("flogger:system-backend")
+    implementation(project(":flogger:system-backend"))
 }

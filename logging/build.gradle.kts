@@ -81,13 +81,13 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                api("flogger:api")
+                api(project(":flogger:api"))
                 implementation(Guava.lib)
             }
         }
         val jvmTest by getting {
             dependencies {
-                implementation("flogger:system-backend")
+                implementation(project(":flogger:system-backend"))
                 implementation(Spine.testlib) {
                     exclude(group = "com.google.flogger")
                 }
