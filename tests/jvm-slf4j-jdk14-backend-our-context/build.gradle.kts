@@ -28,7 +28,7 @@ import io.spine.internal.dependency.Flogger
 import io.spine.internal.dependency.Slf4J
 
 plugins {
-    `kotlin-jvm-module`
+    `jvm-module`
 }
 
 dependencies {
