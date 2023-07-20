@@ -24,6 +24,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import io.spine.internal.dependency.Truth
+
 plugins {
     `java-library`
 }
@@ -31,7 +33,8 @@ plugins {
 dependencies {
     implementation(project(":flogger:api"))
     implementation(project(":flogger:system-backend"))
-    implementation("com.google.truth:truth:1.1")
+    implementation("org.checkerframework:checker-compat-qual:2.5.3")
+    Truth.libs.forEach { implementation(it) }
 }
 
 java {

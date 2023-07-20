@@ -32,13 +32,6 @@ dependencies {
     testImplementation(project(":flogger:api"))
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.3")
     testImplementation("io.kotest:kotest-assertions-core:5.6.2")
-
-    /*
-    Truth assertions are used during migration of tests to Kotlin.
-    But by the end of the migration, all tests should use Kotest instead,
-    and this dependency will be removed.
-     */
-    testImplementation("com.google.truth:truth:1.1.3")
 }
 
 kotlin {
