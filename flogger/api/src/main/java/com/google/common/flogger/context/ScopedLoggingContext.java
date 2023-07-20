@@ -25,7 +25,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.MustBeClosed;
 import java.io.Closeable;
 import java.util.concurrent.Callable;
-import org.checkerframework.checker.nullness.compatqual.NullableDecl;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * A user facing API for creating and modifying scoped logging contexts in applications.
@@ -96,15 +96,15 @@ public abstract class ScopedLoggingContext {
      * the type already exists in the list, the original (potentially {@code null}) list reference
      * is returned.
      */
-    @NullableDecl public static ScopeList addScope(
-        @NullableDecl ScopeList list, @NullableDecl ScopeType type) {
+    @Nullable public static ScopeList addScope(
+        @Nullable ScopeList list, @Nullable ScopeType type) {
       return (type != null && lookup(list, type) == null)
           ? new ScopeList(type, type.newScope(), list)
           : list;
     }
 
     /** Finds a scope instance for the given type in a possibly null scope list. */
-    @NullableDecl public static LoggingScope lookup(@NullableDecl ScopeList list, ScopeType type) {
+    @Nullable public static LoggingScope lookup(@Nullable ScopeList list, ScopeType type) {
       while (list != null) {
         if (type.equals(list.key)) {
           return list.scope;
@@ -116,9 +116,9 @@ public abstract class ScopedLoggingContext {
 
     private final ScopeType key;
     private final LoggingScope scope;
-    @NullableDecl private final ScopeList next;
+    @Nullable private final ScopeList next;
 
-    public ScopeList(ScopeType key, LoggingScope scope, @NullableDecl ScopeList next) {
+    public ScopeList(ScopeType key, LoggingScope scope, @Nullable ScopeList next) {
       this.key = checkNotNull(key, "scope type");
       this.scope = checkNotNull(scope, "scope");
       this.next = next;
@@ -288,7 +288,7 @@ public abstract class ScopedLoggingContext {
      * Returns the configured tags, or null. This method may do work and results should be cached by
      * context implementations.
      */
-    @NullableDecl
+    @Nullable
     protected final Tags getTags() {
       return tags;
     }
@@ -297,7 +297,7 @@ public abstract class ScopedLoggingContext {
      * Returns the configured context metadata, or null. This method may do work and results should
      * be cached by context implementations.
      */
-    @NullableDecl
+    @Nullable
     protected final ContextMetadata getMetadata() {
       return metadata != null ? metadata.build() : null;
     }
@@ -306,7 +306,7 @@ public abstract class ScopedLoggingContext {
      * Returns the configured log level map, or null. This method may do work and results should be
      * cached by context implementations.
      */
-    @NullableDecl
+    @Nullable
     protected final LogLevelMap getLogLevelMap() {
       return logLevelMap;
     }

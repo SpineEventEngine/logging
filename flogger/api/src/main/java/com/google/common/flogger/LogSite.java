@@ -18,7 +18,7 @@ package com.google.common.flogger;
 
 import static com.google.common.flogger.util.Checks.checkNotNull;
 
-import org.checkerframework.checker.nullness.compatqual.NullableDecl;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * A value type which representing the location of a single log statement. This class is similar to
@@ -101,7 +101,7 @@ public abstract class LogSite implements LogSiteKey {
    * href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.7.10">JVM class
    * file format specification</a> for more details).
    */
-  @NullableDecl
+  @Nullable
   public abstract String getFileName();
 
   // Provide a common toString() implementation for only the public attributes.
@@ -144,7 +144,7 @@ public abstract class LogSite implements LogSiteKey {
       String internalClassName,
       String methodName,
       int encodedLineNumber,
-      @NullableDecl String sourceFileName) {
+      @Nullable String sourceFileName) {
     return new InjectedLogSite(internalClassName, methodName, encodedLineNumber, sourceFileName);
   }
 
@@ -156,14 +156,14 @@ public abstract class LogSite implements LogSiteKey {
     /** Bare method name (no signature information). */
     private final String methodName;
     private final int encodedLineNumber;
-    @NullableDecl private final String sourceFileName;
+    @Nullable private final String sourceFileName;
     private int hashcode = 0;
 
     private InjectedLogSite(
         String internalClassName,
         String methodName,
         int encodedLineNumber,
-        @NullableDecl String sourceFileName) {
+        @Nullable String sourceFileName) {
       this.internalClassName = checkNotNull(internalClassName, "class name");
       this.methodName = checkNotNull(methodName, "method name");
       this.encodedLineNumber = encodedLineNumber;
@@ -191,7 +191,7 @@ public abstract class LogSite implements LogSiteKey {
     }
 
     @Override
-    @NullableDecl
+    @Nullable
     public String getFileName() {
       return sourceFileName;
     }

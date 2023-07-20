@@ -25,7 +25,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.checkerframework.checker.nullness.compatqual.NullableDecl;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * Immutable {@link Metadata} implementation intended for use in nested contexts. Scope metadata can
@@ -137,7 +137,7 @@ public abstract class ContextMetadata extends Metadata {
     }
 
     @Override
-    @NullableDecl
+    @Nullable
     @SuppressWarnings("unchecked")
     public <T> T findValue(MetadataKey<T> key) {
       checkArgument(!key.canRepeat(), "metadata key must be single valued");
@@ -188,7 +188,7 @@ public abstract class ContextMetadata extends Metadata {
     }
 
     @Override
-    @NullableDecl
+    @Nullable
     @SuppressWarnings("unchecked")
     public <R> R findValue(MetadataKey<R> key) {
       checkArgument(!key.canRepeat(), "metadata key must be single valued");
@@ -229,7 +229,7 @@ public abstract class ContextMetadata extends Metadata {
     }
 
     @Override
-    @NullableDecl
+    @Nullable
     public <T> T findValue(MetadataKey<T> key) {
       // For consistency, do the same checks as for non-empty instances.
       checkArgument(!key.canRepeat(), "metadata key must be single valued");

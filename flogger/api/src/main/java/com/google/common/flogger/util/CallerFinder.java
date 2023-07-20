@@ -18,7 +18,7 @@ package com.google.common.flogger.util;
 
 import static com.google.common.flogger.util.Checks.checkNotNull;
 
-import org.checkerframework.checker.nullness.compatqual.NullableDecl;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /** A helper class for determining callers of a specified class currently on the stack. */
 public final class CallerFinder {
@@ -75,7 +75,7 @@ public final class CallerFinder {
    * @return the stack trace element representing the immediate caller of the specified class, or
    *     null if no caller was found (due to incorrect target, wrong skip count or use of JNI).
    */
-  @NullableDecl
+  @Nullable
   public static StackTraceElement findCallerOf(Class<?> target, int skip) {
     checkNotNull(target, "target");
     if (skip < 0) {

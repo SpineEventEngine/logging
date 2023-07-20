@@ -17,7 +17,7 @@
 package com.google.common.flogger.backend;
 
 import com.google.common.flogger.MetadataKey;
-import org.checkerframework.checker.nullness.compatqual.NullableDecl;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * A sequence of metadata key/value pairs which can be associated to a log statement, either
@@ -66,7 +66,7 @@ public abstract class Metadata {
     }
 
     @Override
-    @NullableDecl
+    @Nullable
     public <T> T findValue(MetadataKey<T> key) {
       return null;
     }
@@ -95,6 +95,6 @@ public abstract class Metadata {
    * @throws NullPointerException if {@code key} is {@code null}.
    */
   // TODO(dbeaumont): Make this throw an exception for repeated keys.
-  @NullableDecl
+  @Nullable
   public abstract <T> T findValue(MetadataKey<T> key);
 }

@@ -24,7 +24,7 @@ import com.google.common.flogger.context.ScopedLoggingContext;
 import com.google.common.flogger.context.Tags;
 import io.grpc.Context;
 import java.util.logging.Level;
-import org.checkerframework.checker.nullness.compatqual.NullableDecl;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * A gRPC context based implementation of Flogger's {@link ContextDataProvider}.
@@ -51,7 +51,7 @@ public final class GrpcContextDataProvider extends ContextDataProvider {
   }
 
   /** Returns the current context data, or {@code null} if we are not in a context. */
-  @NullableDecl
+  @Nullable
   static GrpcContextData currentContext() {
     return getContextKey().get();
   }
@@ -96,7 +96,7 @@ public final class GrpcContextDataProvider extends ContextDataProvider {
     return GrpcContextData.getMetadataFor(currentContext());
   }
 
-  @NullableDecl
+  @Nullable
   @Override
   public LoggingScope getScope(ScopeType type) {
     return GrpcContextData.lookupScopeFor(currentContext(), type);

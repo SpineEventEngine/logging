@@ -24,6 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import io.spine.internal.dependency.CheckerFramework
 import io.spine.internal.dependency.Truth
 
 plugins {
@@ -33,7 +34,7 @@ plugins {
 dependencies {
     implementation(project(":flogger:api"))
     implementation(project(":flogger:system-backend"))
-    implementation("org.checkerframework:checker-compat-qual:2.5.3")
+    implementation(CheckerFramework.annotations)
     Truth.libs.forEach { implementation(it) }
 }
 

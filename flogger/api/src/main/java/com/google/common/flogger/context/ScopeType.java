@@ -20,7 +20,7 @@ import static com.google.common.flogger.util.Checks.checkNotNull;
 
 import com.google.common.flogger.LoggingScope;
 import com.google.common.flogger.LoggingScopeProvider;
-import org.checkerframework.checker.nullness.compatqual.NullableDecl;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * Singleton keys which identify different types of scopes which scoped contexts can be bound to.
@@ -80,7 +80,7 @@ public final class ScopeType implements LoggingScopeProvider {
     return LoggingScope.create(name);
   }
 
-  @NullableDecl
+  @Nullable
   @Override
   public LoggingScope getCurrentScope() {
     return ContextDataProvider.getInstance().getScope(this);
