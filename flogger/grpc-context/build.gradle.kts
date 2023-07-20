@@ -25,6 +25,9 @@
  */
 
 import io.spine.internal.dependency.CheckerFramework
+import io.spine.internal.dependency.ErrorProne
+import io.spine.internal.dependency.Grpc
+import io.spine.internal.dependency.Truth
 
 plugins {
     `java-library`
@@ -32,10 +35,10 @@ plugins {
 
 dependencies {
     implementation(project(":flogger:api"))
-    implementation("io.grpc:grpc-context:1.2.0")
+    implementation(Grpc.context)
     implementation(CheckerFramework.annotations)
-    implementation("com.google.errorprone:error_prone_annotation:2.20.0")
+    ErrorProne.annotations.forEach { implementation(it) }
 
     testImplementation(project(":flogger:testing"))
-    testImplementation("com.google.truth:truth:1.1")
+    Truth.libs.forEach { testImplementation(it) }
 }

@@ -37,9 +37,3 @@ dependencies {
     implementation(CheckerFramework.annotations)
     Truth.libs.forEach { implementation(it) }
 }
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
-    }
-}

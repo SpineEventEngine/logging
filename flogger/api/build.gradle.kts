@@ -25,6 +25,8 @@
  */
 
 import io.spine.internal.dependency.CheckerFramework
+import io.spine.internal.dependency.ErrorProne
+import io.spine.internal.dependency.Truth
 
 plugins {
     `java-library`
@@ -33,11 +35,10 @@ plugins {
 dependencies {
     implementation(project(":flogger:platform-generator", configuration = "generatedPlatformProvider"))
     implementation(CheckerFramework.annotations)
-
-    implementation("com.google.errorprone:error_prone_annotation:2.20.0")
+    ErrorProne.annotations.forEach { implementation(it) }
 
     testImplementation(project(":flogger:testing"))
     testImplementation("junit:junit:4.13.1")
-    testImplementation("com.google.truth:truth:1.1")
     testImplementation("org.mockito:mockito-core:4.11.0")
+    Truth.libs.forEach { testImplementation(it) }
 }
