@@ -31,12 +31,12 @@ plugins {
 dependencies {
     api("org.apache.logging.log4j:log4j-core:2.17.0")
 
-    implementation(project(":api"))
-    implementation(project(":system-backend"))
+    implementation(project(":flogger:api"))
+    implementation(project(":flogger:system-backend"))
     implementation("org.checkerframework:checker-compat-qual:2.5.3")
 
-    testImplementation(project(":testing"))
+    testImplementation(project(":flogger:testing"))
     testImplementation("com.google.truth:truth:1.1")
 
-    testRuntimeOnly(project(":grpc-context"))
+    testRuntimeOnly(project(":flogger:grpc-context"))
 }

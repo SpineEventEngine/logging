@@ -25,11 +25,11 @@
  */
 
 plugins {
-    kotlin("jvm") version "1.9.0"
+    kotlin("jvm")
 }
 
 dependencies {
-    testImplementation(project(":api"))
+    testImplementation(project(":flogger:api"))
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.3")
     testImplementation("io.kotest:kotest-assertions-core:5.6.2")
 

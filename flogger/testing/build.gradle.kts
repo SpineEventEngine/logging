@@ -29,8 +29,8 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":api"))
-    implementation(project(":system-backend"))
+    implementation(project(":flogger:api"))
+    implementation(project(":flogger:system-backend"))
     implementation("com.google.truth:truth:1.1")
 }
 

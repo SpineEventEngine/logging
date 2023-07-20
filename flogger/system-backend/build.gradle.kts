@@ -29,11 +29,11 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":api"))
+    implementation(project(":flogger:api"))
     implementation("org.checkerframework:checker-compat-qual:2.5.3")
     implementation("com.google.errorprone:error_prone_annotation:2.20.0")
 
-    testImplementation(project(":testing"))
+    testImplementation(project(":flogger:testing"))
     testImplementation("com.google.truth:truth:1.1")
     testImplementation("org.mockito:mockito-core:2.28.2")
     testImplementation("com.google.auto.service:auto-service:1.0")
