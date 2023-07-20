@@ -35,7 +35,7 @@ dependencies {
 
     testImplementation(project(":flogger:testing"))
     testImplementation("com.google.truth:truth:1.1")
-    testImplementation("org.mockito:mockito-core:2.28.2")
+    testImplementation("org.mockito:mockito-core:4.11.0")
     testImplementation("com.google.auto.service:auto-service:1.0")
 
     testAnnotationProcessor("com.google.auto.service:auto-service:1.0")
