@@ -28,10 +28,13 @@ import io.spine.internal.dependency.AutoService
 import io.spine.internal.dependency.CheckerFramework
 import io.spine.internal.dependency.ErrorProne
 import io.spine.internal.dependency.Truth
+import io.spine.internal.gradle.report.license.LicenseReporter
 
 plugins {
     `java-library`
 }
+
+LicenseReporter.generateReportIn(project)
 
 dependencies {
     implementation(project(":flogger-api"))

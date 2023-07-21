@@ -26,10 +26,13 @@
 
 import io.spine.internal.dependency.CheckerFramework
 import io.spine.internal.dependency.Truth
+import io.spine.internal.gradle.report.license.LicenseReporter
 
 plugins {
     `java-library`
 }
+
+LicenseReporter.generateReportIn(project)
 
 dependencies {
     api("org.apache.logging.log4j:log4j-core:2.17.0")

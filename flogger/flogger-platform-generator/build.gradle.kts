@@ -1,3 +1,5 @@
+import io.spine.internal.gradle.report.license.LicenseReporter
+
 /*
  * Copyright 2023, TeamDev. All rights reserved.
  *
@@ -27,6 +29,8 @@
 plugins {
     application
 }
+
+LicenseReporter.generateReportIn(project)
 
 dependencies {
     implementation("org.ow2.asm:asm:9.2")
