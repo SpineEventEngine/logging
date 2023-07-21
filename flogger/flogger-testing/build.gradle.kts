@@ -32,8 +32,8 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":flogger:api"))
-    implementation(project(":flogger:system-backend"))
+    implementation(project(":flogger-api"))
+    implementation(project(":flogger-system-backend"))
     implementation(CheckerFramework.annotations)
     Truth.libs.forEach { implementation(it) }
 }

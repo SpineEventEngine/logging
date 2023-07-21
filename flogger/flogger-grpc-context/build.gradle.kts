@@ -25,6 +25,8 @@
  */
 
 import io.spine.internal.dependency.CheckerFramework
+import io.spine.internal.dependency.ErrorProne
+import io.spine.internal.dependency.Grpc
 import io.spine.internal.dependency.Truth
 
 plugins {
@@ -32,14 +34,11 @@ plugins {
 }
 
 dependencies {
-    api("org.apache.logging.log4j:log4j-core:2.17.0")
-
-    implementation(project(":flogger:api"))
-    implementation(project(":flogger:system-backend"))
+    implementation(project(":flogger-api"))
+    implementation(Grpc.context)
     implementation(CheckerFramework.annotations)
+    ErrorProne.annotations.forEach { implementation(it) }
 
-    testImplementation(project(":flogger:testing"))
-    Truth.libs.forEach { implementation(it) }
-
-    testRuntimeOnly(project(":flogger:grpc-context"))
+    testImplementation(project(":flogger-testing"))
+    Truth.libs.forEach { testImplementation(it) }
 }

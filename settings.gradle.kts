@@ -37,23 +37,33 @@ include(
     "logging",
     "logging-backend",
     "logging-context",
-    "flogger:api",
-    "flogger:api-tests",
-    "flogger:testing",
-    "flogger:platform-generator",
-    "flogger:system-backend",
-    "flogger:log4j2-backend",
-    "flogger:grpc-context",
 )
 
-fun testModule(name: String) {
+includeTest(
+    "fixtures",
+    "jvm-our-backend-our-context",
+    "jvm-our-backend-grpc-context",
+    "jvm-log4j-backend-our-context",
+    "jvm-slf4j-jdk14-backend-our-context",
+    "jvm-slf4j-reload4j-backend-our-context",
+)
+
+includeFlogger(
+    "flogger-api",
+    "flogger-api-tests",
+    "flogger-testing",
+    "flogger-platform-generator",
+    "flogger-system-backend",
+    "flogger-log4j2-backend",
+    "flogger-grpc-context",
+)
+
+fun includeTest(vararg names: String) = names.forEach { name ->
     include(name)
     project(":$name").projectDir = file("tests/$name")
 }
 
-testModule("fixtures")
-testModule("jvm-our-backend-our-context")
-testModule("jvm-our-backend-grpc-context")
-testModule("jvm-log4j-backend-our-context")
-testModule("jvm-slf4j-jdk14-backend-our-context")
-testModule("jvm-slf4j-reload4j-backend-our-context")
+fun includeFlogger(vararg names: String) = names.forEach { name ->
+    include(name)
+    project(":$name").projectDir = file("flogger/$name")
+}

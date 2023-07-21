@@ -24,10 +24,22 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import io.spine.internal.dependency.CheckerFramework
+import io.spine.internal.dependency.Truth
+
 plugins {
-    `jvm-module`
+    `java-library`
 }
 
 dependencies {
-    testImplementation(project(":flogger:api"))
+    api("org.apache.logging.log4j:log4j-core:2.17.0")
+
+    implementation(project(":flogger-api"))
+    implementation(project(":flogger-system-backend"))
+    implementation(CheckerFramework.annotations)
+
+    testImplementation(project(":flogger-testing"))
+    Truth.libs.forEach { implementation(it) }
+
+    testRuntimeOnly(project(":flogger-grpc-context"))
 }

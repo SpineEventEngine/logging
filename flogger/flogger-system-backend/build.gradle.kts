@@ -24,9 +24,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import io.spine.internal.dependency.AutoService
 import io.spine.internal.dependency.CheckerFramework
 import io.spine.internal.dependency.ErrorProne
-import io.spine.internal.dependency.Grpc
 import io.spine.internal.dependency.Truth
 
 plugins {
@@ -34,11 +34,21 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":flogger:api"))
-    implementation(Grpc.context)
+    implementation(project(":flogger-api"))
     implementation(CheckerFramework.annotations)
     ErrorProne.annotations.forEach { implementation(it) }
 
-    testImplementation(project(":flogger:testing"))
+    testImplementation(project(":flogger-testing"))
+    testImplementation("org.mockito:mockito-core:4.11.0")
     Truth.libs.forEach { testImplementation(it) }
+
+    testImplementation(AutoService.processor)
+    testAnnotationProcessor(AutoService.processor)
+}
+
+tasks {
+    named<Javadoc>("javadoc") {
+        // Produces a lot of formatting/linkage errors.
+        enabled = false
+    }
 }

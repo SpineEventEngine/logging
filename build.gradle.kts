@@ -47,7 +47,10 @@ apply(from = "$rootDir/version.gradle.kts")
 spinePublishing {
     modules = setOf(
         "logging-backend",
-        "logging-context"
+        "logging-context",
+        "flogger-api",
+        "flogger-system-backend",
+        "flogger-log4j2-backend"
     )
     modulesWithCustomPublishing = setOf("logging")
     destinations = with(PublishingRepos) {
