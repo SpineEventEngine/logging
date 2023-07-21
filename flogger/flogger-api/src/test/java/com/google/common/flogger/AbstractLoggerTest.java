@@ -17,6 +17,7 @@
 package com.google.common.flogger;
 
 import static com.google.common.truth.Truth.assertThat;
+import static java.lang.System.lineSeparator;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.google.common.base.Splitter;
@@ -45,7 +46,7 @@ public final class AbstractLoggerTest {
   // Matches ISO 8601 date/time format.
   // See: https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html
   private static final Pattern ISO_TIMESTAMP_PREFIX =
-      Pattern.compile("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}\\:\\d{2}\\.\\d{3}[-+]\\d{4}: .*");
+      Pattern.compile("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}[-+]\\d{4}: .*", Pattern.MULTILINE);
 
   private static class TestBackend extends LoggerBackend {
     final List<String> logged = new ArrayList<>();
@@ -115,7 +116,7 @@ public final class AbstractLoggerTest {
 
     logger.atInfo().log("evil value: %s", bad);
     assertThat(backend.logged).isEmpty();
-    List<String> stdErrLines = Splitter.on('\n').splitToList(stdErrString());
+    List<String> stdErrLines = Splitter.on(lineSeparator()).splitToList(stdErrString());
     assertThat(stdErrLines).isNotEmpty();
     String errLine = stdErrLines.get(0);
     assertThat(errLine).matches(ISO_TIMESTAMP_PREFIX);
@@ -145,7 +146,7 @@ public final class AbstractLoggerTest {
 
     logger.atInfo().log("evil value: %s", evil);
     assertThat(backend.logged).isEmpty();
-    List<String> stdErrLines = Splitter.on('\n').splitToList(stdErrString());
+    List<String> stdErrLines = Splitter.on(lineSeparator()).splitToList(stdErrString());
     assertThat(stdErrLines).isNotEmpty();
     String errLine = stdErrLines.get(0);
     assertThat(errLine).matches(ISO_TIMESTAMP_PREFIX);
@@ -174,7 +175,7 @@ public final class AbstractLoggerTest {
     logger.atInfo().log("evil value: %s", bad);
     // Matches AbstractLogger#MAX_ALLOWED_RECURSION_DEPTH.
     assertThat(backend.logged).hasSize(100);
-    List<String> stdErrLines = Splitter.on('\n').splitToList(stdErrString());
+    List<String> stdErrLines = Splitter.on(lineSeparator()).splitToList(stdErrString());
     assertThat(stdErrLines).isNotEmpty();
     String errLine = stdErrLines.get(0);
     assertThat(errLine).matches(ISO_TIMESTAMP_PREFIX);
