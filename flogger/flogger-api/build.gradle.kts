@@ -24,6 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import BuildSettings.javaVersion
 import io.spine.internal.dependency.CheckerFramework
 import io.spine.internal.dependency.ErrorProne
 import io.spine.internal.dependency.Truth
@@ -44,6 +45,10 @@ dependencies {
     testImplementation("junit:junit:4.13.1")
     testImplementation("org.mockito:mockito-core:4.11.0")
     Truth.libs.forEach { testImplementation(it) }
+}
+
+java {
+    toolchain.languageVersion.set(javaVersion)
 }
 
 tasks {

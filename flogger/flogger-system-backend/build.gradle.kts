@@ -24,6 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import BuildSettings.javaVersion
 import io.spine.internal.dependency.AutoService
 import io.spine.internal.dependency.CheckerFramework
 import io.spine.internal.dependency.ErrorProne
@@ -47,6 +48,10 @@ dependencies {
 
     testImplementation(AutoService.processor)
     testAnnotationProcessor(AutoService.processor)
+}
+
+java {
+    toolchain.languageVersion.set(javaVersion)
 }
 
 tasks {

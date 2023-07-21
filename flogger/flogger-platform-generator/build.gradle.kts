@@ -1,5 +1,3 @@
-import io.spine.internal.gradle.report.license.LicenseReporter
-
 /*
  * Copyright 2023, TeamDev. All rights reserved.
  *
@@ -26,6 +24,9 @@ import io.spine.internal.gradle.report.license.LicenseReporter
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import BuildSettings.javaVersion
+import io.spine.internal.gradle.report.license.LicenseReporter
+
 plugins {
     application
 }
@@ -34,6 +35,10 @@ LicenseReporter.generateReportIn(project)
 
 dependencies {
     implementation("org.ow2.asm:asm:9.2")
+}
+
+java {
+    toolchain.languageVersion.set(javaVersion)
 }
 
 tasks {

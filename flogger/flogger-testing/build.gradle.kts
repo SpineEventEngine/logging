@@ -24,6 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import BuildSettings.javaVersion
 import io.spine.internal.dependency.CheckerFramework
 import io.spine.internal.dependency.Truth
 import io.spine.internal.gradle.report.license.LicenseReporter
@@ -33,6 +34,10 @@ plugins {
 }
 
 LicenseReporter.generateReportIn(project)
+
+java {
+    toolchain.languageVersion.set(javaVersion)
+}
 
 dependencies {
     implementation(project(":flogger-api"))

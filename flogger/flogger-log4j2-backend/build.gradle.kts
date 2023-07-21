@@ -24,6 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import BuildSettings.javaVersion
 import io.spine.internal.dependency.CheckerFramework
 import io.spine.internal.dependency.Truth
 import io.spine.internal.gradle.report.license.LicenseReporter
@@ -45,4 +46,8 @@ dependencies {
     Truth.libs.forEach { implementation(it) }
 
     testRuntimeOnly(project(":flogger-grpc-context"))
+}
+
+java {
+    toolchain.languageVersion.set(javaVersion)
 }
