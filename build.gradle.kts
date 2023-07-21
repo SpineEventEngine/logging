@@ -50,7 +50,8 @@ spinePublishing {
         "logging-context",
         "flogger-api",
         "flogger-system-backend",
-        "flogger-log4j2-backend"
+        "flogger-log4j2-backend",
+        "flogger-platform-generator"
     )
     modulesWithCustomPublishing = setOf("logging")
     destinations = with(PublishingRepos) {
