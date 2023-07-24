@@ -29,8 +29,5 @@ plugins {
 }
 
 dependencies {
-    testImplementation(project(":logging"))
-    testImplementation(project(":fixtures"))
-    testRuntimeOnly(project(":logging-backend"))
-    testRuntimeOnly(project(":flogger-grpc-context"))
+    testImplementation(project(":flogger-api"))
 }

@@ -24,13 +24,39 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import BuildSettings.javaVersion
+import io.spine.internal.dependency.AutoService
+import io.spine.internal.dependency.CheckerFramework
+import io.spine.internal.dependency.ErrorProne
+import io.spine.internal.dependency.Truth
+import io.spine.internal.gradle.report.license.LicenseReporter
+
 plugins {
-    `jvm-module`
+    `java-library`
 }
 
+LicenseReporter.generateReportIn(project)
+
 dependencies {
-    testImplementation(project(":logging"))
-    testImplementation(project(":fixtures"))
-    testRuntimeOnly(project(":logging-backend"))
-    testRuntimeOnly(project(":flogger-grpc-context"))
+    implementation(project(":flogger-api"))
+    implementation(CheckerFramework.annotations)
+    ErrorProne.annotations.forEach { implementation(it) }
+
+    testImplementation(project(":flogger-testing"))
+    testImplementation("org.mockito:mockito-core:4.11.0")
+    Truth.libs.forEach { testImplementation(it) }
+
+    testImplementation(AutoService.processor)
+    testAnnotationProcessor(AutoService.processor)
+}
+
+java {
+    toolchain.languageVersion.set(javaVersion)
+}
+
+tasks {
+    named<Javadoc>("javadoc") {
+        // Produces a lot of formatting/linkage errors.
+        enabled = false
+    }
 }

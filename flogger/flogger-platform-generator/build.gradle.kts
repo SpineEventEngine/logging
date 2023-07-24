@@ -24,13 +24,41 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import BuildSettings.javaVersion
+import io.spine.internal.gradle.report.license.LicenseReporter
+
 plugins {
-    `jvm-module`
+    application
 }
 
+LicenseReporter.generateReportIn(project)
+
 dependencies {
-    testImplementation(project(":logging"))
-    testImplementation(project(":fixtures"))
-    testRuntimeOnly(project(":logging-backend"))
-    testRuntimeOnly(project(":flogger-grpc-context"))
+    implementation("org.ow2.asm:asm:9.2")
+}
+
+java {
+    toolchain.languageVersion.set(javaVersion)
+}
+
+tasks {
+    register<JavaExec>("generatePlatformProvider") {
+        mainClass.set("com.google.common.flogger.backend.PlatformProviderGenerator")
+
+        val outputJar = "build/provider/platform-provider.jar"
+        args(listOf(outputJar))
+        outputs.file(outputJar)
+        doFirst { file(outputJar).deleteRecursively() }
+
+        val inputClasspath = sourceSets.main.get().runtimeClasspath
+        classpath(inputClasspath)
+        inputs.files(inputClasspath)
+    }
+}
+
+configurations {
+    register("generatedPlatformProvider") {
+        val genTask = tasks.named("generatePlatformProvider")
+        outgoing.artifact(genTask)
+    }
 }

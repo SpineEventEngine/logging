@@ -24,13 +24,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import BuildSettings.javaVersion
+import io.spine.internal.dependency.CheckerFramework
+import io.spine.internal.dependency.Truth
+import io.spine.internal.gradle.report.license.LicenseReporter
+
 plugins {
-    `jvm-module`
+    `java-library`
+}
+
+LicenseReporter.generateReportIn(project)
+
+java {
+    toolchain.languageVersion.set(javaVersion)
 }
 
 dependencies {
-    testImplementation(project(":logging"))
-    testImplementation(project(":fixtures"))
-    testRuntimeOnly(project(":logging-backend"))
-    testRuntimeOnly(project(":flogger-grpc-context"))
+    implementation(project(":flogger-api"))
+    implementation(project(":flogger-system-backend"))
+    implementation(CheckerFramework.annotations)
+    Truth.libs.forEach { implementation(it) }
 }
