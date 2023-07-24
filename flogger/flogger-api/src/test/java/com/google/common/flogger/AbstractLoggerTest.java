@@ -46,7 +46,7 @@ public final class AbstractLoggerTest {
   // Matches ISO 8601 date/time format.
   // See: https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html
   private static final Pattern ISO_TIMESTAMP_PREFIX =
-      Pattern.compile("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}[-+]\\d{4}: .*", Pattern.MULTILINE);
+      Pattern.compile("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}[-+]\\d{4}: .*");
 
   private static class TestBackend extends LoggerBackend {
     final List<String> logged = new ArrayList<>();
