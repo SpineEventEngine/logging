@@ -24,12 +24,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.common.flogger.parser
+package com.google.common.flogger.parser.given
 
 import com.google.common.flogger.backend.FormatOptions
 import com.google.common.flogger.backend.TemplateContext
 import com.google.common.flogger.parameter.Parameter
 import com.google.common.flogger.parameter.ParameterVisitor
+import com.google.common.flogger.parser.MessageBuilder
+import com.google.common.flogger.parser.MessageParser
+import com.google.common.flogger.parser.ParseException
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.string.shouldContain
 import java.lang.StringBuilder

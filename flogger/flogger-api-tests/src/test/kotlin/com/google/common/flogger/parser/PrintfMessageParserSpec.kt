@@ -17,6 +17,9 @@
 package com.google.common.flogger.parser
 
 import com.google.common.flogger.parser.PrintfMessageParser.nextPrintfTerm
+import com.google.common.flogger.parser.given.FakeParameter
+import com.google.common.flogger.parser.given.assertParse
+import com.google.common.flogger.parser.given.assertParseError
 
 import com.google.common.truth.Truth.assertThat
 import io.kotest.matchers.collections.shouldBeIn
