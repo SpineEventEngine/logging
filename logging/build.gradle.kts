@@ -64,7 +64,7 @@ kotlin {
 
     sourceSets {
         val commonMain by getting {
-            dependencies{
+            dependencies {
                 api(Spine.reflect) {
                     exclude(group = "com.google.flogger")
                 }
