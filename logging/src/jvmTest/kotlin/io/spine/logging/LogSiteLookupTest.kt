@@ -22,7 +22,6 @@ internal class LogSiteLookupTest {
         }
         consoleOutput shouldContain LogSiteLookupTest::class.simpleName!!
         consoleOutput shouldNotContain MyLoggingHelper::class.simpleName!!
-        println(consoleOutput)
     }
 
     @Test
