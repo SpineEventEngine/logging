@@ -24,10 +24,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import io.spine.internal.dependency.JUnit
+import io.spine.internal.dependency.Kotest
+
 plugins {
     `jvm-module`
 }
 
 dependencies {
     implementation(project(":logging"))
+    implementation(Kotest.assertions)
+    JUnit.api.forEach { implementation(it) }
 }
