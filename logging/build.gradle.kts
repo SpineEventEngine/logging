@@ -106,16 +106,15 @@ detekt {
     )
 }
 
-tasks.named<Test>("jvmTest") {
-    useJUnitPlatform()
-    configureLogging()
-}
-
 tasks {
+    registerTestTasks()
+    named<Test>("jvmTest") {
+        useJUnitPlatform()
+        configureLogging()
+    }
     withType<KotlinCompile>().configureEach {
         setFreeCompilerArgs()
     }
-    registerTestTasks()
 }
 
 kover {
