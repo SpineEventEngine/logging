@@ -46,6 +46,7 @@ includeTest(
     "jvm-log4j-backend-our-context",
     "jvm-slf4j-jdk14-backend-our-context",
     "jvm-slf4j-reload4j-backend-our-context",
+    "logging-smoke-test",
 )
 
 includeFlogger(
