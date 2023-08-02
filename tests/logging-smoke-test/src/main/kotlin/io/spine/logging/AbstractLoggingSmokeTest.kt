@@ -31,14 +31,14 @@ import io.kotest.matchers.string.shouldContain
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-@DisplayName("Spine Logging should")
 @Suppress("FunctionNaming", "FunctionName")
+@DisplayName("Spine Logging should")
 public open class AbstractLoggingSmokeTest {
 
     private val message = "some logging text"
 
     @Test
-    public fun `log from 'Logging' interface`() {
+    public fun `log by implementing 'Logging' interface`() {
         val loggingInstance = LoggingClass()
         val output = tapHandler {
             loggingInstance.logSomething(message)
@@ -50,13 +50,14 @@ public open class AbstractLoggingSmokeTest {
     }
 
     @Test
-    public fun `log from the 'JvmLogger'`() {
+    public fun `log using instance of 'JvmLogger'`() {
         val loggingClass = AbstractLoggingSmokeTest::class
         val logger = LoggingFactory.loggerFor(loggingClass).also {
             it::class shouldBe JvmLogger::class
         }
         val output = tapHandler {
-            logger.atInfo().log { message }
+            logger.atInfo()
+                .log { message }
         }
 
         output shouldContain loggingClass.qualifiedName!!
