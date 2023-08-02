@@ -129,13 +129,12 @@ koverReport {
     }
 }
 
-publishing {
-    publications.withType<MavenPublication> {
-        if (name.contains("jvm", true)) {
-            artifact(project.javadocJar())
-        } else {
-            artifact(project.dokkaKotlinJar())
-        }
+publishing.publications {
+    named<MavenPublication>("jvm") {
+        artifact(project.javadocJar())
+    }
+    named<MavenPublication>("kotlinMultiplatform") {
+        artifact(project.dokkaKotlinJar())
     }
 }
 
