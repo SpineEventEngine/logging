@@ -35,15 +35,6 @@ internal class MemoizingStreamHandler(
     private val out: ByteArrayOutputStream = ByteArrayOutputStream()
 ) : StreamHandler(out, SimpleFormatter()) {
 
-    companion object {
-        lateinit var INSTANCE: MemoizingStreamHandler
-            private set
-    }
-
-    init {
-        INSTANCE = this
-    }
-
     fun reset() {
         flush()
         out.reset()

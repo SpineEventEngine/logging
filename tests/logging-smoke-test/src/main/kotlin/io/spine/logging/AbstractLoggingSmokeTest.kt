@@ -31,9 +31,12 @@ import io.kotest.matchers.string.shouldContain
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
+/**
+ * Test the most fundamental functionality of `spine-logging` library.
+ */
 @Suppress("FunctionNaming", "FunctionName")
 @DisplayName("Spine Logging should")
-public open class AbstractLoggingSmokeTest {
+public abstract class AbstractLoggingSmokeTest {
 
     private val message = "some logging text"
 

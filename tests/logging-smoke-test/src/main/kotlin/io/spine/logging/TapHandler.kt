@@ -26,14 +26,21 @@
 
 package io.spine.logging
 
+import java.util.logging.Logger
+
 /**
  * Executes the given [action] and returns the text printed to the console.
  *
  * @see TapConsole
  */
 internal fun tapHandler(action: () -> Unit): String {
-    val memozingHandler = MemoizingStreamHandler.INSTANCE
-    memozingHandler.reset()
+    if (::handler.isInitialized.not()) {
+        handler = MemoizingStreamHandler()
+        Logger.getLogger("").addHandler(handler)
+    }
+    handler.reset()
     action.invoke()
-    return memozingHandler.result()
+    return handler.result()
 }
+
+private lateinit var handler: MemoizingStreamHandler
