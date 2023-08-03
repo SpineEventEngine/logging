@@ -42,14 +42,6 @@ internal class MemoizingHandler(
 ) : StreamHandler(out, SimpleFormatter()) {
 
     /**
-     * Clears the previously remembered messages.
-     */
-    fun reset() {
-        flush()
-        out.reset()
-    }
-
-    /**
      * Return the remembered messages concatenated to a single string.
      */
     fun result(): String {
