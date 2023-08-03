@@ -35,12 +35,13 @@ import java.util.logging.Logger
  */
 internal fun tapHandler(action: () -> Unit): String {
     if (::handler.isInitialized.not()) {
-        handler = MemoizingStreamHandler()
+        handler = MemoizingHandler()
         Logger.getLogger("").addHandler(handler)
+        Logger.getLogger("").removeHandler()
     }
     handler.reset()
     action.invoke()
     return handler.result()
 }
 
-private lateinit var handler: MemoizingStreamHandler
+private lateinit var handler: MemoizingHandler

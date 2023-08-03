@@ -31,15 +31,27 @@ import java.util.logging.SimpleFormatter
 import java.util.logging.StreamHandler
 import kotlin.text.Charsets.UTF_8
 
-internal class MemoizingStreamHandler(
+/**
+ * A Java Logging handler that remembers the logged messages.
+ *
+ * When installed, this handler remembers the stream of logged messages
+ * as a whole, not distinguishing particular statements from each other.
+ */
+internal class MemoizingHandler(
     private val out: ByteArrayOutputStream = ByteArrayOutputStream()
 ) : StreamHandler(out, SimpleFormatter()) {
 
+    /**
+     * Clears the previously remembered messages.
+     */
     fun reset() {
         flush()
         out.reset()
     }
 
+    /**
+     * Return the remembered messages concatenated to a single string.
+     */
     fun result(): String {
         flush()
         return out.toString(UTF_8)
