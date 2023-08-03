@@ -32,7 +32,37 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
- * Test the most fundamental functionality of `spine-logging` library.
+ * Tests the most fundamental functionality of `spine-logging` library.
+ *
+ * This test suite is meant to be implemented in particular Spine modules
+ * to verify the actual logging is happening in real conditions.
+ *
+ * To add this suite to an arbitrary module, create a new test that extends
+ * from this class. No additional code is needed.
+ *
+ * For example:
+ *
+ * ```
+ * class LoggingSmokeTest : AbstractLoggingSmokeTest()
+ * ```
+ *
+ * Make sure, `spine-logging-smoke-test` library is on test classpath:
+ *
+ * ```
+ * testImplementation(Spine.Logging.smokeTest)
+ * ```
+ *
+ * ## Implementation details
+ *
+ * Tests assert the logged messages using [tapJavaLogging] util. This util writes
+ * a stream of the logged messages into a plain [String], which then makes possible
+ * to assert the result.
+ *
+ * The messages are captured by a custom Java Logging Handler. This approach is less
+ * fair compared to interception of `out` and `err` streams, but a way simpler
+ * and more reliable. Inserting of a “listening handler” into Java Logging makes
+ * tests dependable on a specific backend, but eliminates difficulties with interception of
+ * the default streams.
  */
 @Suppress("FunctionNaming", "FunctionName")
 @DisplayName("Spine Logging should")
