@@ -10,7 +10,7 @@ all modules and does not describe the project structure per-subproject.
  -->
 <groupId>io.spine</groupId>
 <artifactId>spine-logging</artifactId>
-<version>2.0.0-SNAPSHOT.197</version>
+<version>2.0.0-SNAPSHOT.198</version>
 
 <inceptionYear>2015</inceptionYear>
 
@@ -82,12 +82,6 @@ all modules and does not describe the project structure per-subproject.
     <artifactId>asm</artifactId>
     <version>9.2</version>
     <scope>compile</scope>
-  </dependency>
-  <dependency>
-    <groupId>com.google.flogger</groupId>
-    <artifactId>flogger-system-backend</artifactId>
-    <version>0.7.4</version>
-    <scope>runtime</scope>
   </dependency>
   <dependency>
     <groupId>com.google.auto.service</groupId>

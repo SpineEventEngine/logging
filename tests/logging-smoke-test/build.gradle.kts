@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,47 +24,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-    }
+import io.spine.internal.dependency.JUnit
+import io.spine.internal.dependency.Kotest
+
+plugins {
+    `jvm-module`
 }
 
-rootProject.name = "spine-logging"
-
-include(
-    "logging",
-    "logging-backend",
-    "logging-context",
-)
-
-includeTest(
-    "fixtures",
-    "jvm-our-backend-our-context",
-    "jvm-our-backend-grpc-context",
-    "jvm-log4j-backend-our-context",
-    "jvm-slf4j-jdk14-backend-our-context",
-    "jvm-slf4j-reload4j-backend-our-context",
-    "logging-smoke-test",
-)
-
-includeFlogger(
-    "flogger-api",
-    "flogger-api-tests",
-    "flogger-testing",
-    "flogger-platform-generator",
-    "flogger-system-backend",
-    "flogger-log4j2-backend",
-    "flogger-grpc-context",
-)
-
-fun includeTest(vararg names: String) = names.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("tests/$name")
-}
-
-fun includeFlogger(vararg names: String) = names.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("flogger/$name")
+dependencies {
+    implementation(project(":logging"))
+    implementation(Kotest.assertions)
+    JUnit.api.forEach { implementation(it) }
 }

@@ -48,6 +48,7 @@ spinePublishing {
     modules = setOf(
         "logging-backend",
         "logging-context",
+        "logging-smoke-test",
         "flogger-api",
         "flogger-system-backend",
         "flogger-log4j2-backend",

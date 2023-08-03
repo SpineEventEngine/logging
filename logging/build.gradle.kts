@@ -64,7 +64,7 @@ kotlin {
 
     sourceSets {
         val commonMain by getting {
-            dependencies{
+            dependencies {
                 api(Spine.reflect) {
                     exclude(group = "com.google.flogger")
                 }
@@ -106,16 +106,15 @@ detekt {
     )
 }
 
-tasks.named<Test>("jvmTest") {
-    useJUnitPlatform()
-    configureLogging()
-}
-
 tasks {
+    registerTestTasks()
+    named<Test>("jvmTest") {
+        useJUnitPlatform()
+        configureLogging()
+    }
     withType<KotlinCompile>().configureEach {
         setFreeCompilerArgs()
     }
-    registerTestTasks()
 }
 
 kover {
@@ -130,13 +129,12 @@ koverReport {
     }
 }
 
-publishing {
-    publications.withType<MavenPublication> {
-        if (name.contains("jvm", true)) {
-            artifact(project.javadocJar())
-        } else {
-            artifact(project.dokkaKotlinJar())
-        }
+publishing.publications {
+    named<MavenPublication>("jvm") {
+        artifact(project.javadocJar())
+    }
+    named<MavenPublication>("kotlinMultiplatform") {
+        artifact(project.dokkaKotlinJar())
     }
 }
 

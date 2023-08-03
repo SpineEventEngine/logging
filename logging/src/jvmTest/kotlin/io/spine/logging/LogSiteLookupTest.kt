@@ -5,7 +5,6 @@ import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldNotContain
 import io.spine.logging.LogSiteLookup.logSite
 import io.spine.logging.given.MyLoggingHelper
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -23,7 +22,6 @@ internal class LogSiteLookupTest {
         }
         consoleOutput shouldContain LogSiteLookupTest::class.simpleName!!
         consoleOutput shouldNotContain MyLoggingHelper::class.simpleName!!
-        println(consoleOutput)
     }
 
     @Test
