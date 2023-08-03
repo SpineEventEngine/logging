@@ -43,7 +43,7 @@ public abstract class AbstractLoggingSmokeTest {
     @Test
     public fun `log by implementing 'Logging' interface`() {
         val loggingInstance = LoggingClass()
-        val output = tapHandler {
+        val output = tapJavaLogging {
             loggingInstance.logSomething(message)
         }
 
@@ -58,7 +58,7 @@ public abstract class AbstractLoggingSmokeTest {
         val logger = LoggingFactory.loggerFor(loggingClass).also {
             it::class shouldBe JvmLogger::class
         }
-        val output = tapHandler {
+        val output = tapJavaLogging {
             logger.atInfo()
                 .log { message }
         }

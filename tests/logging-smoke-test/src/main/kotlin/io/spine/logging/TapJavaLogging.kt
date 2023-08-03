@@ -29,19 +29,14 @@ package io.spine.logging
 import java.util.logging.Logger
 
 /**
- * Executes the given [action] and returns the text printed to the console.
- *
- * @see TapConsole
+ * Executes the given [action] and returns the text logged with
+ * [Java Logging][Logger] backend.
  */
-internal fun tapHandler(action: () -> Unit): String {
-    if (::handler.isInitialized.not()) {
-        handler = MemoizingHandler()
-        Logger.getLogger("").addHandler(handler)
-        Logger.getLogger("").removeHandler()
-    }
-    handler.reset()
+internal fun tapJavaLogging(action: () -> Unit): String {
+    val memoizingHandler = MemoizingHandler()
+    val rootLogger = Logger.getLogger("")
+    rootLogger.addHandler(memoizingHandler) // Handlers are propagated down to child loggers.
     action.invoke()
-    return handler.result()
+    rootLogger.removeHandler(memoizingHandler)
+    return memoizingHandler.result()
 }
-
-private lateinit var handler: MemoizingHandler
