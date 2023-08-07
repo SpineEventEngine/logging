@@ -31,11 +31,24 @@ import io.spine.logging.LoggingFactory.loggerFor
 /**
  * Provides [Logger] instance as a property.
  *
- * Which logger will be used is determined by [LoggingFactory].
+ * Implement this interface when logging is needed.
+ *
+ * Usage example:
+ *
+ * ```
+ * class MyClass : WithLogging {
+ *     fun doAction() {
+ *         logger.atInfo().log { "Action is in progress." }
+ *     }
+ * }
+ * ```
  */
 public actual interface WithLogging {
 
-    @Suppress("INAPPLICABLE_JVM_NAME")
+    /**
+     * Returns the logger created for this class.
+     */
+    @Suppress("INAPPLICABLE_JVM_NAME") // See issue: https://youtrack.jetbrains.com/issue/KT-31420/Support-JvmName-on-interface-or-provide-other-interface-evolution-mechanism.
     @get:JvmName("logger")
     public actual val logger: Logger<*>
         get() = loggerFor(this::class)
