@@ -34,6 +34,8 @@ package io.spine.logging
  * Usage example:
  *
  * ```
+ * import io.spine.logging.WithLogging
+ *
  * class MyClass : WithLogging {
  *     fun doAction() {
  *         logger.atInfo().log { "Action is in progress." }
