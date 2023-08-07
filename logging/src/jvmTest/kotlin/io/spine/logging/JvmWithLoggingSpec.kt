@@ -35,9 +35,10 @@ internal class JvmWithLoggingSpec {
 
     @Test
     fun `provide 'JvmLogger'`() {
-        val lc = JvmLoggingClass()
-        lc.logger::class shouldBe JvmLogger::class
+        class LoggingClass : WithLogging
+        val instance = LoggingClass()
+        val usedLogger = instance.logger
+        usedLogger::class shouldBe JvmLogger::class
     }
 }
 
-private class JvmLoggingClass : WithLogging
