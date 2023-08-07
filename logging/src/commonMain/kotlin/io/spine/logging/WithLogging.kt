@@ -41,10 +41,13 @@ public interface WithLogging {
 //    public val <API : LoggingApi<API>> logger: Logger<API>
 //        get() = loggerFor(this::class)
 
-    // Functions can be generified. But they are called with round brackets.
+    // Functions can be generified. But it does not work as well. It produces the same
+    // result as a star-projected property. Actual logging factory can't override
+    // the function signature. `actual` modifier is operational only on implementation level.
     public fun <API : LoggingApi<API>> logger(): Logger<API> = loggerFor(this::class)
 
-    // So-called "star-projection" can be a compromise.
+    // So-called "star-projection" can be a compromise. As a consequence, we never know
+    // whose API the returned logger uses.
     public val logger: Logger<*>
         get() = loggerFor(this::class)
 }
