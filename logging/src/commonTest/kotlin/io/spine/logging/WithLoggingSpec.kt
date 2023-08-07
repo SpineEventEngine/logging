@@ -36,10 +36,10 @@ internal class WithLoggingSpec {
 
     @Test
     fun `provide the same logger associated with a class`() {
-        val lc = LoggingConsumer()
+        val lc = LoggingClass()
         lc.logger shouldNotBe null
         lc.logger shouldBeSameInstanceAs lc.logger
     }
 }
 
-private class LoggingConsumer: WithLogging
+private class LoggingClass: WithLogging
