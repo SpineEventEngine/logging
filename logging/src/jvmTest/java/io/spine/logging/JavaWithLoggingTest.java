@@ -38,7 +38,7 @@ class JavaWithLoggingTest {
     private static final String msg = "JavaWithLoggingTest test message";
 
     @Test
-    @DisplayName("have `logger` getter without `get` prefix")
+    @DisplayName("have `logger()` method without `get` prefix")
     void haveLoggerGetterWithoutPrefix() {
         var loggingClass = new LoggingClass();
         var output = TapConsoleKt.tapConsole(() -> {
