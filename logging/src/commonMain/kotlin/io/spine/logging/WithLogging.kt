@@ -26,21 +26,32 @@
 
 package io.spine.logging
 
-import io.kotest.matchers.shouldNotBe
-import io.kotest.matchers.types.shouldBeSameInstanceAs
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
+import io.spine.logging.LoggingFactory.loggerFor
 
-@DisplayName("`WithLogging` interface should")
-internal class WithLoggingBaseSpec {
+/**
+ * Base interface for utility interfaces providing [Logger] instance as a property.
+ *
+ * This interface is not meant to be used directly for performing logging instructions.
+ * Instead, platform-specific implementations should extend this interface,
+ * providing actual type parameter for the [LoggingApi]:
+ *
+ * ```kotlin
+ * public interface MyLoggingApi: LoggingApi<MyLoggingApi>
+ * public interface WithLogging: WithLoggingBase<MyLoggingApi>
+ * ```
+ */
+public interface WithLogging {
 
-    @Test
-    fun `provide the same logger associated with a class`() {
-        val lc = LoggingConsumer()
+    // Unfortunately, even if a property is final and explicitly declared
+    // with a getter, it still can't be generified.
 
-        lc.logger shouldNotBe null
-        lc.logger shouldBeSameInstanceAs lc.logger
-    }
+//    public val <API : LoggingApi<API>> logger: Logger<API>
+//        get() = loggerFor(this::class)
+
+    // Functions can be generified. But they are called with round brackets.
+    public fun <API : LoggingApi<API>> logger(): Logger<API> = loggerFor(this::class)
+
+    // So-called "star-projection" can be a compromise.
+    public val logger: Logger<*>
+        get() = loggerFor(this::class)
 }
-
-private class LoggingConsumer: WithLoggingBase<JvmLogger.Api>

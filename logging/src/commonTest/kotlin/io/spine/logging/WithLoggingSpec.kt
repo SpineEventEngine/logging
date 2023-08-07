@@ -26,7 +26,22 @@
 
 package io.spine.logging
 
-/**
- * Actual interface which provides [logger] with [JvmLogger.Api].
- */
-public interface WithLogging: WithLoggingBase<JvmLogger.Api>
+import io.kotest.matchers.shouldNotBe
+import io.kotest.matchers.types.shouldBeSameInstanceAs
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+
+@DisplayName("`WithLogging` interface should")
+internal class WithLoggingSpec {
+
+    @Test
+    fun `provide the same logger associated with a class`() {
+        val lc = LoggingConsumer()
+
+        lc.logger shouldNotBe null
+        lc.logger shouldBeSameInstanceAs lc.logger
+        println(lc.logger::class)
+    }
+}
+
+private class LoggingConsumer: WithLogging
