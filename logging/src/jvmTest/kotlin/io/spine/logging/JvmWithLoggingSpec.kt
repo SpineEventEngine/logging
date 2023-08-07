@@ -30,7 +30,7 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-@DisplayName("`WithLogging` interface should")
+@DisplayName("`JvmWithLogging` interface should")
 internal class JvmWithLoggingSpec {
 
     @Test
