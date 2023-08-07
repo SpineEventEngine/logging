@@ -29,20 +29,43 @@ package io.spine.logging
 /**
  * Provides [Logger] instance as a property.
  *
- * Which logger will be used is determined by [LoggingFactory].
- */
-public interface WithLogging {
-
-    // Unfortunately, even if a property is final and explicitly declared
-    // with a getter, it still can't be generified.
-
-//    public val <API : LoggingApi<API>> logger: Logger<API>
-//        get() = loggerFor(this::class)
-
-    // Functions can be generified. But it does not work as well. It produces the same
-    // result as a star-projected property. Actual logging factory can't override
-    // the function signature. `actual` modifier is operational only on implementation level.
-    public fun <API : LoggingApi<API>> logger(): Logger<API> = loggerFor(this::class)
+ * Implement this interface when logging is needed.
+ *
+ * Usage example:
+ *
+ * ```
+ * class MyClass : WithLogging {
+ *     fun doAction() {
+ *         logger.atInfo().log { "Action is in progress." }
+ *     }
+ * }
+ * ```
+ *
+ * ### Note for actual implementations
+ *
+ * Actual implementations are meant to take a logger from [LoggingFactory]:
+ *
+ * ```
+ * import io.spine.logging.LoggingFactory.loggerFor
+ *
+ * public actual interface WithLogging {
+ *     public actual val logger: Logger<*>
+ *         get() = loggerFor(this::class)
+ * }
+ * ```
+ *
+ * Indeed, this interface could have a default implementation of [WithLogging.logger]
+ * if default implementations for expected interfaces have been supported.
+ * Take a look on [KT-20427](https://youtrack.jetbrains.com/issue/KT-20427/Allow-expect-declarations-with-a-default-implementation)
+ * for details.
+ *
+ * As for now, providing a default implementation for a property makes it
+ * impossible to customize accessing of a logger in target implementations.
+ * But this feature is needed. For example, JVM target overrides a property
+ * name with `@JvmName("...")` annotation to prevent generating old-fashioned
+ * getters with `get` prefix.
+*/
+public expect interface WithLogging {
 
     /**
      * Returns the logger created for this class.
