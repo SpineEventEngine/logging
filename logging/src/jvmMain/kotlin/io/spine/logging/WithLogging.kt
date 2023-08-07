@@ -26,26 +26,17 @@
 
 package io.spine.logging
 
+import io.spine.logging.LoggingFactory.loggerFor
+
 /**
  * Provides [Logger] instance as a property.
  *
  * Which logger will be used is determined by [LoggingFactory].
  */
-public interface WithLogging {
+public actual interface WithLogging {
 
-    // Unfortunately, even if a property is final and explicitly declared
-    // with a getter, it still can't be generified.
-
-//    public val <API : LoggingApi<API>> logger: Logger<API>
-//        get() = loggerFor(this::class)
-
-    // Functions can be generified. But it does not work as well. It produces the same
-    // result as a star-projected property. Actual logging factory can't override
-    // the function signature. `actual` modifier is operational only on implementation level.
-    public fun <API : LoggingApi<API>> logger(): Logger<API> = loggerFor(this::class)
-
-    /**
-     * Returns the logger created for this class.
-     */
-    public open val logger: Logger<*>
+    @Suppress("INAPPLICABLE_JVM_NAME")
+    @get:JvmName("logger")
+    public actual val logger: Logger<*>
+        get() = loggerFor(this::class)
 }
