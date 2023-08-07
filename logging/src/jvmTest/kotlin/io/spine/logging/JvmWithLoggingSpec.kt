@@ -26,20 +26,18 @@
 
 package io.spine.logging
 
-import io.kotest.matchers.shouldNotBe
-import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 @DisplayName("`WithLogging` interface should")
-internal class WithLoggingSpec {
+internal class JvmWithLoggingSpec {
 
     @Test
-    fun `provide the same logger associated with a class`() {
-        val lc = LoggingConsumer()
-        lc.logger shouldNotBe null
-        lc.logger shouldBeSameInstanceAs lc.logger
+    fun `provide 'JvmLogger'`() {
+        val lc = LoggingClass()
+        lc.logger::class shouldBe JvmLogger::class
     }
 }
 
-private class LoggingConsumer: WithLogging
+private class LoggingClass : WithLogging
