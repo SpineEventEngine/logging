@@ -26,8 +26,6 @@
 
 package io.spine.logging
 
-import io.spine.logging.LoggingFactory.loggerFor
-
 /**
  * Provides [Logger] instance as a property.
  *
@@ -36,20 +34,43 @@ import io.spine.logging.LoggingFactory.loggerFor
  * Usage example:
  *
  * ```
+ * import io.spine.logging.WithLogging
+ *
  * class MyClass : WithLogging {
  *     fun doAction() {
  *         logger.atInfo().log { "Action is in progress." }
  *     }
  * }
  * ```
- */
-public actual interface WithLogging {
+ *
+ * ### Note for actual implementations
+ *
+ * Actual implementations are meant to take a logger from [LoggingFactory]:
+ *
+ * ```
+ * import io.spine.logging.LoggingFactory.loggerFor
+ *
+ * public actual interface WithLogging {
+ *     public actual val logger: Logger<*>
+ *         get() = loggerFor(this::class)
+ * }
+ * ```
+ *
+ * Indeed, this interface could have a default implementation of [WithLogging.logger]
+ * if default implementations for expected interfaces have been supported.
+ * Take a look on [KT-20427](https://youtrack.jetbrains.com/issue/KT-20427/Allow-expect-declarations-with-a-default-implementation)
+ * for details.
+ *
+ * As for now, providing a default implementation for a property makes it
+ * impossible to customize accessing of a logger in target implementations.
+ * But this feature is needed. For example, JVM target overrides a property
+ * name with `@JvmName("...")` annotation to prevent generating old-fashioned
+ * getters with `get` prefix.
+*/
+public expect interface WithLogging {
 
     /**
      * Returns the logger created for this class.
      */
-    @Suppress("INAPPLICABLE_JVM_NAME") // See issue: https://youtrack.jetbrains.com/issue/KT-31420/Support-JvmName-on-interface-or-provide-other-interface-evolution-mechanism.
-    @get:JvmName("logger")
-    public actual val logger: Logger<*>
-        get() = loggerFor(this::class)
+    public open val logger: Logger<*>
 }

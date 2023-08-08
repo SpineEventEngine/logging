@@ -24,23 +24,37 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging
+package io.spine.logging;
 
-import io.kotest.matchers.shouldNotBe
-import io.kotest.matchers.types.shouldBeSameInstanceAs
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
+import kotlin.Unit;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
-@DisplayName("`WithLogging` interface should")
-internal class WithLoggingBaseSpec {
+import static com.google.common.truth.Truth.assertThat;
+
+@DisplayName("In Java, `WithLogging` should")
+class JavaWithLoggingTest {
+
+    private static final String msg = "JavaWithLoggingTest test message";
 
     @Test
-    fun `provide the same logger associated with a class`() {
-        val lc = LoggingConsumer()
+    @DisplayName("have `logger()` method without `get` prefix")
+    void haveLoggerGetterWithoutPrefix() {
+        var loggingClass = new LoggingClass();
+        var output = TapConsoleKt.tapConsole(() -> {
+            loggingClass.myMethod(msg);
+            return Unit.INSTANCE;
+        });
 
-        lc.logger shouldNotBe null
-        lc.logger shouldBeSameInstanceAs lc.logger
+        assertThat(output).contains(msg);
+        assertThat(output).contains(LoggingClass.class.getSimpleName());
+    }
+
+    private static class LoggingClass implements WithLogging {
+        private void myMethod(String message) {
+            logger().atWarning().log(() -> message);
+        }
     }
 }
 
-private class LoggingConsumer: WithLoggingBase<JvmLogger.Api>
+

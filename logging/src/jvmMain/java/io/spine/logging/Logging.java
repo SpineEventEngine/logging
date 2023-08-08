@@ -46,7 +46,9 @@ import static com.google.common.flogger.LogSites.callerOf;
  *
  * @apiNote The underscore-based convention is selected for making logging calls more visible and
  *          distinguishable from the real code.
+ * @deprecated This interface is scheduled for removal. Please use {@link WithLogging} instead.
  */
+@Deprecated(forRemoval = true)
 @SuppressWarnings({
         "NewMethodNamingConvention", "PMD.MethodNamingConventions"
         /* These methods are prefixed with underscore to highlight the fact that these methods

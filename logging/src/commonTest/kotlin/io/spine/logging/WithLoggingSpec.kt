@@ -26,24 +26,21 @@
 
 package io.spine.logging
 
-import io.spine.logging.LoggingFactory.loggerFor
+import io.kotest.matchers.shouldNotBe
+import io.kotest.matchers.types.shouldBeSameInstanceAs
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 
-/**
- * Base interface for utility interfaces providing [Logger] instance as a property.
- *
- * This interface is not meant to be used directly for performing logging instructions.
- * Instead, platform-specific implementations should extend this interface,
- * providing actual type parameter for the [LoggingApi]:
- *
- * ```kotlin
- * public interface MyLoggingApi: LoggingApi<MyLoggingApi>
- * public interface WithLogging: WithLoggingBase<MyLoggingApi>
- * ```
- */
-public interface WithLoggingBase<API : LoggingApi<API>> {
+@DisplayName("`WithLogging` interface should")
+internal class WithLoggingSpec {
 
-    /**
-     * Obtains the logger created for this class.
-     */
-    public val logger: Logger<API> get() = loggerFor(this::class)
+    @Test
+    fun `provide the same logger associated with a class`() {
+        class LoggingClass: WithLogging
+        val instance = LoggingClass()
+        val usedLogger = instance.logger
+        usedLogger shouldNotBe null
+        usedLogger shouldBeSameInstanceAs instance.logger
+    }
 }
+

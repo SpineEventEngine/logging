@@ -26,30 +26,19 @@
 
 package io.spine.logging
 
-import io.spine.logging.LoggingFactory.loggerFor
+import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 
-/**
- * Provides [Logger] instance as a property.
- *
- * Implement this interface when logging is needed.
- *
- * Usage example:
- *
- * ```
- * class MyClass : WithLogging {
- *     fun doAction() {
- *         logger.atInfo().log { "Action is in progress." }
- *     }
- * }
- * ```
- */
-public actual interface WithLogging {
+@DisplayName("`JvmWithLogging` interface should")
+internal class JvmWithLoggingSpec {
 
-    /**
-     * Returns the logger created for this class.
-     */
-    @Suppress("INAPPLICABLE_JVM_NAME") // See issue: https://youtrack.jetbrains.com/issue/KT-31420/Support-JvmName-on-interface-or-provide-other-interface-evolution-mechanism.
-    @get:JvmName("logger")
-    public actual val logger: Logger<*>
-        get() = loggerFor(this::class)
+    @Test
+    fun `provide 'JvmLogger'`() {
+        class LoggingClass : WithLogging
+        val instance = LoggingClass()
+        val usedLogger = instance.logger
+        usedLogger::class shouldBe JvmLogger::class
+    }
 }
+

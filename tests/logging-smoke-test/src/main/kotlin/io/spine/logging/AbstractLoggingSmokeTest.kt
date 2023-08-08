@@ -83,6 +83,18 @@ public abstract class AbstractLoggingSmokeTest {
     }
 
     @Test
+    public fun `log by implementing 'WithLogging' interface`() {
+        val loggingInstance = WithLoggingClass()
+        val output = tapJavaLogging {
+            loggingInstance.logSomething(message)
+        }
+
+        output shouldContain WithLoggingClass::class.qualifiedName!!
+        output shouldContain Level.INFO.name
+        output shouldContain message
+    }
+
+    @Test
     public fun `log using instance of 'JvmLogger'`() {
         val loggingClass = AbstractLoggingSmokeTest::class
         val logger = LoggingFactory.loggerFor(loggingClass).also {
@@ -102,5 +114,11 @@ public abstract class AbstractLoggingSmokeTest {
 private class LoggingClass : Logging {
     fun logSomething(msg: String) {
         _info().log(msg)
+    }
+}
+
+private class WithLoggingClass : WithLogging {
+    fun logSomething(msg: String) {
+        logger.atInfo().log { msg }
     }
 }
