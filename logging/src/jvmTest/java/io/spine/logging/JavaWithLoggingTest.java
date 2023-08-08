@@ -50,9 +50,29 @@ class JavaWithLoggingTest {
         assertThat(output).contains(LoggingClass.class.getSimpleName());
     }
 
+    @Test
+    @DisplayName("provide a shortcut for `String.format()`")
+    void provideShortcutToStringFormat() {
+        var loggingInstance = new LoggingClass();
+        var output = TapConsoleKt.tapConsole(() -> {
+            loggingInstance.myMethod();
+            return Unit.INSTANCE;
+        });
+
+        assertThat(output).contains("integer: 153");
+        assertThat(output).contains(JavaWithLoggingTest.LoggingClass.class.getSimpleName());
+    }
+
     private static class LoggingClass implements WithLogging {
+
         private void myMethod(String message) {
+            // IDEA highlights this call in red, but it works.
             logger().atWarning().log(() -> message);
+        }
+
+        private void myMethod() {
+            // IDEA highlights this call in red, but it works.
+            logger().atWarning().log("integer: %d", 153);
         }
     }
 }

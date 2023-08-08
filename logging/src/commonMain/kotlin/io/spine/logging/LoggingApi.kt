@@ -274,6 +274,8 @@ public expect interface LoggingApi<API: LoggingApi<API>> {
 // Class 'NoOpLoggingApi' is not abstract and does not implement abstract member
 // public abstract fun log(format: String, vararg args: Any): Unit defined in io.spine.logging.LoggingApi
 
+// → Changes made to `LoggingApi` in JVM sources affect common code.
+
 
 ///**
 // * An implementation of [LoggingApi] which does nothing, discarding all parameters.
