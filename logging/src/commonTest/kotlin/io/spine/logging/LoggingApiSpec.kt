@@ -36,7 +36,7 @@ internal class LoggingApiSpec {
 
     @Test
     fun `provide no-op implementation class`() {
-        val noOp = LoggingApi.NoOp<LeafApi>()
+        val noOp = NoOpLoggingApi<LeafApi>()
         noOp.isEnabled() shouldBe false
         noOp.withCause(Throwable("stub instance")) shouldBeSameInstanceAs noOp
     }

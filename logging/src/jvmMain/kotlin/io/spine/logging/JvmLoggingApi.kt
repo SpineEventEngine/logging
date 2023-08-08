@@ -24,6 +24,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+@file:Suppress("MatchingDeclarationName")
+
 package io.spine.logging
 
 import kotlin.time.DurationUnit
@@ -31,12 +33,12 @@ import kotlin.time.DurationUnit
 /**
  * The basic logging API returned by a [Logger].
  */
-public expect interface LoggingApi<API: LoggingApi<API>> {
+public actual interface LoggingApi<API: LoggingApi<API>> {
 
     /**
      * Associates the given domain with the current log statement.
      */
-    public fun withLoggingDomain(domain: LoggingDomain): API
+    public actual fun withLoggingDomain(domain: LoggingDomain): API
 
     /**
      * Associates a [Throwable] with the current log statement.
@@ -47,7 +49,7 @@ public expect interface LoggingApi<API: LoggingApi<API>> {
      * If the method is called more than once, the parameter of the last
      * invocation will be used.
      */
-    public fun withCause(cause: Throwable): API
+    public actual fun withCause(cause: Throwable): API
 
     /**
      * Sets the log site for the current log statement.
@@ -130,7 +132,7 @@ public expect interface LoggingApi<API: LoggingApi<API>> {
      * expected to occur just before the final log() call and must be overrideable
      * by earlier (explicit) calls.
      */
-    public fun withInjectedLogSite(logSite: LogSite): API
+    public actual fun withInjectedLogSite(logSite: LogSite): API
 
     /**
      * Modifies the current log statement to be emitted only once per N invocations.
@@ -150,7 +152,7 @@ public expect interface LoggingApi<API: LoggingApi<API>> {
      * @throws IllegalArgumentException
      *          if `n` is negative or zero
      */
-    public fun every(n: Int): API
+    public actual fun every(n: Int): API
 
     /**
      * Modifies the current log statement to be emitted **at most** once per
@@ -214,7 +216,7 @@ public expect interface LoggingApi<API: LoggingApi<API>> {
      * @throws IllegalArgumentException
      *          if `n` is negative
      */
-    public fun atMostEvery(n: Int, unit: DurationUnit): API
+    public actual fun atMostEvery(n: Int, unit: DurationUnit): API
 
     /**
      * Aggregates stateful logging with respect to the given enum value.
@@ -248,12 +250,12 @@ public expect interface LoggingApi<API: LoggingApi<API>> {
      * then they all take effect and logging is aggregated by the unique
      * combination of keys passed to all [per] methods.
      */
-    public fun per(key: Enum<*>): API
+    public actual fun per(key: Enum<*>): API
 
     /**
      * Returns `true` if logging is enabled at the level implied for this API.
      */
-    public fun isEnabled(): Boolean
+    public actual fun isEnabled(): Boolean
 
     /**
      * Terminal log statement when a message is not required.
@@ -263,73 +265,10 @@ public expect interface LoggingApi<API: LoggingApi<API>> {
      * logger.at(ERROR).withCause(error).log()
      * ```
      */
-    public fun log()
+    public actual fun log()
 
     /**
      * Logs a message produced by the given function block.
      */
-    public fun log(message: () -> String)
-}
-
-/**
- * An implementation of [LoggingApi] which does nothing, discarding all parameters.
- *
- * Extending classes are likely to be non-wildcard, fully specified, no-op
- * implementations of the [API].
- */
-public open class NoOpLoggingApi<API: LoggingApi<API>>: LoggingApi<API> {
-
-    /**
-     * Obtains the reference to this no-op implementation of fluent logging [API].
-     */
-    @Suppress(
-        "UNCHECKED_CAST" /* The cast is safe since the class implements `API`. */,
-        "MemberNameEqualsClassName" /* The name highlights the emptiness of the impl. */
-    )
-    protected fun noOp(): API = this as API
-
-    /**
-     * Does nothing.
-     */
-    override fun withLoggingDomain(domain: LoggingDomain): API = noOp()
-
-    /**
-     * Does nothing.
-     */
-    override fun withCause(cause: Throwable): API = noOp()
-
-    /**
-     * Does nothing.
-     */
-    override fun withInjectedLogSite(logSite: LogSite): API = noOp()
-
-    /**
-     * Does nothing.
-     */
-    override fun every(n: Int): API = noOp()
-
-    /**
-     * Does nothing.
-     */
-    override fun per(key: Enum<*>): API = noOp()
-
-    /**
-     * Does nothing.
-     */
-    override fun atMostEvery(n: Int, unit: DurationUnit): API = noOp()
-
-    /**
-     * Always returns `false`.
-     */
-    override fun isEnabled(): Boolean = false
-
-    /**
-     * Does nothing.
-     */
-    override fun log(): Unit = Unit
-
-    /**
-     * Does nothing.
-     */
-    override fun log(message: () -> String): Unit = Unit
+    public actual fun log(message: () -> String)
 }

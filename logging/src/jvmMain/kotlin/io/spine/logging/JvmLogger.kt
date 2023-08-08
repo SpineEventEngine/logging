@@ -61,7 +61,7 @@ public class JvmLogger(
     /**
      * A no-op singleton implementation of [Api].
      */
-    private object NoOp: LoggingApi.NoOp<Api>(), Api
+    private object NoOp: NoOpLoggingApi<Api>(), Api
 }
 
 /**
