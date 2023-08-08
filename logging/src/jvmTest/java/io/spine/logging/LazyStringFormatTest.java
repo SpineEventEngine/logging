@@ -24,28 +24,38 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging
+package io.spine.logging;
 
-import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
+import kotlin.Unit;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
-@DisplayName("`JvmWithLogging` interface should")
-internal class JvmWithLoggingSpec {
+import static com.google.common.truth.Truth.assertThat;
+import static io.spine.logging.LazyStringFormat.lazyFormat;
+
+@DisplayName("`LazyStringFormatTest` should")
+class LazyStringFormatTest {
 
     @Test
-    fun `provide 'JvmLogger' for hard class`() {
-        class LoggingClass : WithLogging
-        val instance = LoggingClass()
-        val usedLogger = instance.logger
-        usedLogger::class shouldBe JvmLogger::class
+    @DisplayName("provide a shortcut for `String.format()`")
+    void provideShortcutToStringFormat() {
+        var number = 123321;
+        var expectedMsg = "Integer: " + number;
+        var loggingInstance = new LoggingClass();
+        var output = TapConsoleKt.tapConsole(() -> {
+            loggingInstance.myMethod("Integer: %d", number);
+            return Unit.INSTANCE;
+        });
+
+        assertThat(output).contains(expectedMsg);
+        assertThat(output).contains(LazyStringFormatTest.LoggingClass.class.getSimpleName());
     }
 
-    @Test
-    fun `provide 'JvmLogger' for local objects`() {
-        val loggingObject = object : WithLogging { }
-        val usedLogger = loggingObject.logger
-        usedLogger::class shouldBe JvmLogger::class
+    private static class LoggingClass implements WithLogging {
+
+        @SuppressWarnings("SameParameterValue") // It is better to pass parameters explicitly.
+        private void myMethod(String format, Object... args) {
+            logger().atWarning().log(lazyFormat(format, args));
+        }
     }
 }
-
