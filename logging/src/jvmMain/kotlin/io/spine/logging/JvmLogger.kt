@@ -62,45 +62,26 @@ public class JvmLogger(
      * A no-op singleton implementation of [Api].
      */
     private object NoOp: Api {
-        override fun withLoggingDomain(domain: LoggingDomain): Api {
-            TODO("Not yet implemented")
-        }
 
-        override fun withCause(cause: Throwable): Api {
-            TODO("Not yet implemented")
-        }
+        override fun withLoggingDomain(domain: LoggingDomain): Api = this
 
-        override fun withInjectedLogSite(logSite: LogSite): Api {
-            TODO("Not yet implemented")
-        }
+        override fun withCause(cause: Throwable): Api = this
 
-        override fun every(n: Int): Api {
-            TODO("Not yet implemented")
-        }
+        override fun withInjectedLogSite(logSite: LogSite): Api = this
 
-        override fun atMostEvery(n: Int, unit: DurationUnit): Api {
-            TODO("Not yet implemented")
-        }
+        override fun every(n: Int): Api = this
 
-        override fun per(key: Enum<*>): Api {
-            TODO("Not yet implemented")
-        }
+        override fun atMostEvery(n: Int, unit: DurationUnit): Api = this
 
-        override fun isEnabled(): Boolean {
-            TODO("Not yet implemented")
-        }
+        override fun per(key: Enum<*>): Api = this
 
-        override fun log() {
-            TODO("Not yet implemented")
-        }
+        override fun isEnabled(): Boolean = false
 
-        override fun log(message: () -> String) {
-            TODO("Not yet implemented")
-        }
+        override fun log() = Unit
 
-        override fun log(format: String, vararg args: Any) {
-            TODO("Not yet implemented")
-        }
+        override fun log(message: () -> String) = Unit
+
+        override fun log(format: String, vararg args: Any) = Unit
     }
 }
 
