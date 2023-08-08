@@ -31,5 +31,6 @@ import io.spine.logging.Logging;
 /**
  * The root of the class hierarchy.
  */
+@SuppressWarnings("removal")
 public class Base implements Logging {
 }

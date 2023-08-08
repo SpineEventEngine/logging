@@ -111,6 +111,7 @@ public abstract class AbstractLoggingSmokeTest {
     }
 }
 
+@Suppress("DEPRECATION", "removal")
 private class LoggingClass : Logging {
     fun logSomething(msg: String) {
         _info().log(msg)
