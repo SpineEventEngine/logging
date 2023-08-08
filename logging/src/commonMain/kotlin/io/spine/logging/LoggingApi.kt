@@ -271,65 +271,69 @@ public expect interface LoggingApi<API: LoggingApi<API>> {
     public fun log(message: () -> String)
 }
 
-/**
- * An implementation of [LoggingApi] which does nothing, discarding all parameters.
- *
- * Extending classes are likely to be non-wildcard, fully specified, no-op
- * implementations of the [API].
- */
-public open class NoOpLoggingApi<API: LoggingApi<API>>: LoggingApi<API> {
+// Class 'NoOpLoggingApi' is not abstract and does not implement abstract member
+// public abstract fun log(format: String, vararg args: Any): Unit defined in io.spine.logging.LoggingApi
 
-    /**
-     * Obtains the reference to this no-op implementation of fluent logging [API].
-     */
-    @Suppress(
-        "UNCHECKED_CAST" /* The cast is safe since the class implements `API`. */,
-        "MemberNameEqualsClassName" /* The name highlights the emptiness of the impl. */
-    )
-    protected fun noOp(): API = this as API
 
-    /**
-     * Does nothing.
-     */
-    override fun withLoggingDomain(domain: LoggingDomain): API = noOp()
-
-    /**
-     * Does nothing.
-     */
-    override fun withCause(cause: Throwable): API = noOp()
-
-    /**
-     * Does nothing.
-     */
-    override fun withInjectedLogSite(logSite: LogSite): API = noOp()
-
-    /**
-     * Does nothing.
-     */
-    override fun every(n: Int): API = noOp()
-
-    /**
-     * Does nothing.
-     */
-    override fun per(key: Enum<*>): API = noOp()
-
-    /**
-     * Does nothing.
-     */
-    override fun atMostEvery(n: Int, unit: DurationUnit): API = noOp()
-
-    /**
-     * Always returns `false`.
-     */
-    override fun isEnabled(): Boolean = false
-
-    /**
-     * Does nothing.
-     */
-    override fun log(): Unit = Unit
-
-    /**
-     * Does nothing.
-     */
-    override fun log(message: () -> String): Unit = Unit
-}
+///**
+// * An implementation of [LoggingApi] which does nothing, discarding all parameters.
+// *
+// * Extending classes are likely to be non-wildcard, fully specified, no-op
+// * implementations of the [API].
+// */
+//public open class NoOpLoggingApi<API: LoggingApi<API>>: LoggingApi<API> {
+//
+//    /**
+//     * Obtains the reference to this no-op implementation of fluent logging [API].
+//     */
+//    @Suppress(
+//        "UNCHECKED_CAST" /* The cast is safe since the class implements `API`. */,
+//        "MemberNameEqualsClassName" /* The name highlights the emptiness of the impl. */
+//    )
+//    protected fun noOp(): API = this as API
+//
+//    /**
+//     * Does nothing.
+//     */
+//    override fun withLoggingDomain(domain: LoggingDomain): API = noOp()
+//
+//    /**
+//     * Does nothing.
+//     */
+//    override fun withCause(cause: Throwable): API = noOp()
+//
+//    /**
+//     * Does nothing.
+//     */
+//    override fun withInjectedLogSite(logSite: LogSite): API = noOp()
+//
+//    /**
+//     * Does nothing.
+//     */
+//    override fun every(n: Int): API = noOp()
+//
+//    /**
+//     * Does nothing.
+//     */
+//    override fun per(key: Enum<*>): API = noOp()
+//
+//    /**
+//     * Does nothing.
+//     */
+//    override fun atMostEvery(n: Int, unit: DurationUnit): API = noOp()
+//
+//    /**
+//     * Always returns `false`.
+//     */
+//    override fun isEnabled(): Boolean = false
+//
+//    /**
+//     * Does nothing.
+//     */
+//    override fun log(): Unit = Unit
+//
+//    /**
+//     * Does nothing.
+//     */
+//    override fun log(message: () -> String): Unit = Unit
+//}

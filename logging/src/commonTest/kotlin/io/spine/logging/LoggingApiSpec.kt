@@ -34,12 +34,12 @@ import org.junit.jupiter.api.Test
 @DisplayName("`LoggingApi` should")
 internal class LoggingApiSpec {
 
-    @Test
-    fun `provide no-op implementation class`() {
-        val noOp = NoOpLoggingApi<LeafApi>()
-        noOp.isEnabled() shouldBe false
-        noOp.withCause(Throwable("stub instance")) shouldBeSameInstanceAs noOp
-    }
+//    @Test
+//    fun `provide no-op implementation class`() {
+//        val noOp = NoOpLoggingApi<LeafApi>()
+//        noOp.isEnabled() shouldBe false
+//        noOp.withCause(Throwable("stub instance")) shouldBeSameInstanceAs noOp
+//    }
 }
 
 private interface LeafApi: LoggingApi<LeafApi>

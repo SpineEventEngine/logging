@@ -271,4 +271,6 @@ public actual interface LoggingApi<API: LoggingApi<API>> {
      * Logs a message produced by the given function block.
      */
     public actual fun log(message: () -> String)
+
+    public fun log(format: String, vararg args: Any)
 }

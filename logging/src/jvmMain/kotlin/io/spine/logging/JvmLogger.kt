@@ -61,7 +61,47 @@ public class JvmLogger(
     /**
      * A no-op singleton implementation of [Api].
      */
-    private object NoOp: NoOpLoggingApi<Api>(), Api
+    private object NoOp: Api {
+        override fun withLoggingDomain(domain: LoggingDomain): Api {
+            TODO("Not yet implemented")
+        }
+
+        override fun withCause(cause: Throwable): Api {
+            TODO("Not yet implemented")
+        }
+
+        override fun withInjectedLogSite(logSite: LogSite): Api {
+            TODO("Not yet implemented")
+        }
+
+        override fun every(n: Int): Api {
+            TODO("Not yet implemented")
+        }
+
+        override fun atMostEvery(n: Int, unit: DurationUnit): Api {
+            TODO("Not yet implemented")
+        }
+
+        override fun per(key: Enum<*>): Api {
+            TODO("Not yet implemented")
+        }
+
+        override fun isEnabled(): Boolean {
+            TODO("Not yet implemented")
+        }
+
+        override fun log() {
+            TODO("Not yet implemented")
+        }
+
+        override fun log(message: () -> String) {
+            TODO("Not yet implemented")
+        }
+
+        override fun log(format: String, vararg args: Any) {
+            TODO("Not yet implemented")
+        }
+    }
 }
 
 /**
@@ -115,6 +155,12 @@ private class ApiImpl(private val delegate: FluentLogger.Api): JvmLogger.Api {
             val prefix = loggingDomain.messagePrefix
             delegate.withInjectedLogSite(callerOf(ApiImpl::class.java))
                 .log(prefix + message.invoke())
+        }
+    }
+
+    override fun log(format: String, vararg args: Any) {
+        if (isEnabled()) {
+            log { format.format(*args) }
         }
     }
 }
