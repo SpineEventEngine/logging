@@ -51,6 +51,8 @@ class JavaWithLoggingTest {
     }
 
     private static class LoggingClass implements WithLogging {
+
+        @SuppressWarnings("SameParameterValue") // Avoid usage of outer class' private members.
         private void myMethod(String message) {
             logger().atWarning().log(() -> message);
         }
