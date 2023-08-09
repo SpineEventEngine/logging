@@ -26,8 +26,10 @@
 
 package com.google.common.flogger.parser.given
 
+import com.google.common.flogger.backend.FormatChar
 import com.google.common.flogger.backend.FormatOptions
 import com.google.common.flogger.backend.TemplateContext
+import com.google.common.flogger.parameter.DateTimeFormat
 import com.google.common.flogger.parameter.Parameter
 import com.google.common.flogger.parameter.ParameterVisitor
 import com.google.common.flogger.parser.MessageBuilder
@@ -35,7 +37,7 @@ import com.google.common.flogger.parser.MessageParser
 import com.google.common.flogger.parser.ParseException
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.string.shouldContain
-import java.lang.StringBuilder
+import kotlin.properties.Delegates.notNull
 import org.junit.jupiter.api.assertThrows
 
 /**
@@ -69,17 +71,6 @@ internal class FakeMessageBuilder(fakeParser: MessageParser, message: String) :
     override fun buildImpl(): List<String> = details
 }
 
-internal class FakeMessageParser : MessageParser() {
-
-    override fun <T : Any?> parseImpl(builder: MessageBuilder<T>?) {
-        // No op.
-    }
-
-    override fun unescape(out: StringBuilder?, message: String?, start: Int, end: Int) {
-        // No op.
-    }
-}
-
 /**
  * Asserts that for a format message, the given parser will emit fake parameters with the
  * specified detail strings (in the given order).
@@ -100,4 +91,47 @@ internal fun assertParseError(fakeParser: MessageParser, message: String, errorP
         fakeBuilder.build()
     }
     exception.message shouldContain errorPart
+}
+
+/**
+ * Remembers arguments of [addParameterImpl] method's last invocation.
+ */
+internal class MemoizingMessageBuilder(parser: MessageParser) :
+    MessageBuilder<List<String>>(TemplateContext(parser, "")) {
+
+    lateinit var param: Parameter
+    var termStart by notNull<Int>()
+    var termEnd by notNull<Int>()
+
+    override fun addParameterImpl(termStart: Int, termEnd: Int, param: Parameter) {
+        this.termStart = termStart
+        this.termEnd = termEnd
+        this.param = param
+    }
+
+    override fun buildImpl(): List<String> = emptyList()
+}
+
+/**
+ * Remembers arguments of [visit] method's last invocation.
+ */
+internal class MemoizingParameterVisitor : ParameterVisitor {
+
+    lateinit var value: Any
+    lateinit var format: FormatChar
+    lateinit var options: FormatOptions
+
+    override fun visit(value: Any, format: FormatChar, options: FormatOptions) {
+        this.value = value
+        this.format = format
+        this.options = options
+    }
+
+    override fun visitDateTime(value: Any?, format: DateTimeFormat?, options: FormatOptions?) = Unit
+
+    override fun visitPreformatted(value: Any?, formatted: String?) = Unit
+
+    override fun visitMissing() = Unit
+
+    override fun visitNull() = Unit
 }
