@@ -34,6 +34,7 @@ import com.google.common.flogger.parser.given.MemoizingMessageBuilder
 import com.google.common.flogger.parser.given.MemoizingParameterVisitor
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -43,6 +44,7 @@ import org.junit.jupiter.api.assertThrows
  * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/parser/DefaultBraceStyleMessageParserTest.java">
  *     Original Java code of Google Flogger</a>
  */
+@DisplayName("`DefaultBraceStyleMessageParser` should")
 internal class DefaultBraceStyleMessageParserSpec {
 
     companion object {
@@ -51,7 +53,7 @@ internal class DefaultBraceStyleMessageParserSpec {
     }
 
     @Test
-    fun testParseBraceFormat() {
+    fun `parse brace-based format string`() {
         // Parse just 3 characters representing the brace format specifier between position 6 and 9.
         // "-1" indicates that there's no additional formatting information after the index.
         val memoizingBuilder = MemoizingMessageBuilder(PARSER)
@@ -77,7 +79,7 @@ internal class DefaultBraceStyleMessageParserSpec {
     }
 
     @Test
-    fun testTrailingFormatNotSupportedInBraceFormat() {
+    fun `fail on trailing format specifiers`() {
         val exception = assertThrows<ParseException> {
             PARSER.parseBraceFormatTerm(null, 0, "{0:x}", 0, 3, 5)
         }

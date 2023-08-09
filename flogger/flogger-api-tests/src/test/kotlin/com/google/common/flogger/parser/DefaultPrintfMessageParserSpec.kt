@@ -31,6 +31,7 @@ import com.google.common.flogger.parser.given.MemoizingMessageBuilder
 import com.google.common.flogger.parser.given.MemoizingParameterVisitor
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -40,12 +41,13 @@ import org.junit.jupiter.api.assertThrows
  * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/parser/DefaultPrintfMessageParserTest.java">
  *     Original Java code of Google Flogger</a>
  */
+@DisplayName("`DefaultPrintfMessageParser` should")
 internal class DefaultPrintfMessageParserSpec {
 
     private val parser = DefaultPrintfMessageParser.getInstance()
 
     @Test
-    fun testParsePrintf() {
+    fun `parse printf-based format string`() {
         val memoizingBuilder = MemoizingMessageBuilder(parser)
         parser.parsePrintfTerm(memoizingBuilder, 1, "Hello %2$+06.2f World", 6, 9, 14)
 
@@ -73,7 +75,7 @@ internal class DefaultPrintfMessageParserSpec {
     }
 
     @Test
-    fun testUnknownPrintfFormat() {
+    fun `fail on unknown printf format`() {
         val exception = assertThrows<ParseException> {
             parser.parsePrintfTerm(null, 0, "%Q", 0, 1, 1)
         }
@@ -81,7 +83,7 @@ internal class DefaultPrintfMessageParserSpec {
     }
 
     @Test
-    fun testInvalidPrintfFlags() {
+    fun `fail on invalid printf flag`() {
         val exception = assertThrows<ParseException> {
             parser.parsePrintfTerm(null, 0, "%0s", 0, 1, 2)
         }

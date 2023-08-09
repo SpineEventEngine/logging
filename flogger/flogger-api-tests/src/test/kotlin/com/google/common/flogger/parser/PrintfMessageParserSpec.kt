@@ -34,6 +34,7 @@ import com.google.common.flogger.parser.given.assertParseError
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -43,10 +44,12 @@ import org.junit.jupiter.api.assertThrows
  * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/parser/PrintfMessageParserTest.java">
  *     Original Java code of Google Flogger</a>
  */
+@DisplayName("`PrintfMessageParserSpec` should")
+@Suppress("DANGEROUS_CHARACTERS") // '%' character is needed in the test name.
 internal class PrintfMessageParserSpec {
 
     @Test
-    fun testPrintfNextTerm() {
+    fun `return the index of the next unquoted '%' character`() {
         nextPrintfTerm("", 0) shouldBe -1
         nextPrintfTerm("%X", 0) shouldBe 0
         nextPrintfTerm("Hello %X World %X", 0) shouldBe 6
@@ -57,7 +60,7 @@ internal class PrintfMessageParserSpec {
     }
 
     @Test
-    fun testPrintfNextTermFails() {
+    fun `fail when facing a trailing percent sign`() {
         val exception = assertThrows<ParseException> {
             nextPrintfTerm("Hello %", 0)
         }
@@ -65,7 +68,7 @@ internal class PrintfMessageParserSpec {
     }
 
     @Test
-    fun testParse() {
+    fun `extract place-holder terms`() {
         assertParse(fakeParser, "Hello World")
         assertParse(fakeParser, "Hello %A %B %C World", "0:A", "1:B", "2:C")
         assertParse(fakeParser, "Hello %1\$A %2\$B %3\$C World", "0:A", "1:B", "2:C")
@@ -76,7 +79,7 @@ internal class PrintfMessageParserSpec {
     }
 
     @Test
-    fun testParsePrintfError() {
+    fun `fail when facing an unexpected format`() {
         assertParseError(fakeParser, "%", "[%]")
         assertParseError(fakeParser, "Hello %", "[%]")
         // Unterminated parameter
@@ -100,14 +103,14 @@ internal class PrintfMessageParserSpec {
     }
 
     @Test
-    fun testGetSafeSystemNewline() {
+    fun `return the system newline separator`() {
         // This should pass even if "line.separator" is set to something else.
         val nl = PrintfMessageParser.getSafeSystemNewline()
         nl shouldBeIn listOf("\n", "\r", "\r\n")
     }
 
     @Test
-    fun testUnescapePrintfSupportsNewline() {
+    fun `unescape printf-supported new line`() {
         val nl = PrintfMessageParser.getSafeSystemNewline()
         unescapePrintf("%n") shouldBe nl
         unescapePrintf("Hello %n World") shouldBe "Hello $nl World"
@@ -116,7 +119,7 @@ internal class PrintfMessageParserSpec {
     }
 
     @Test
-    fun testUnescapePrintf() {
+    fun `unescape '%' symbol`() {
         unescapePrintf("") shouldBe ""
         unescapePrintf("Hello World") shouldBe "Hello World"
         unescapePrintf("Hello %% World") shouldBe "Hello % World"
@@ -125,7 +128,7 @@ internal class PrintfMessageParserSpec {
     }
 
     @Test
-    fun testUnescapePrintfIgnoresErrors() {
+    fun `unescape unexpected '%' symbols`() {
         unescapePrintf("Hello % World") shouldBe "Hello % World"
         unescapePrintf("Hello %") shouldBe "Hello %"
     }

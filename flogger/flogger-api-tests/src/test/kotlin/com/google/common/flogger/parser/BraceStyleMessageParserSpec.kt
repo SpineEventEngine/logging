@@ -32,6 +32,7 @@ import com.google.common.flogger.parser.given.assertParse
 import com.google.common.flogger.parser.given.assertParseError
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -41,10 +42,11 @@ import org.junit.jupiter.api.assertThrows
  * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/parser/BraceStyleMessageParserTest.java">
  *     Original Java code of Google Flogger</a>
  */
+@DisplayName("`BraceStyleMessageParser` should")
 internal class BraceStyleMessageParserSpec {
 
     @Test
-    fun testBraceFormatNextTerm() {
+    fun `return the index of the next unquoted '{' character`() {
         nextBraceFormatTerm("", 0) shouldBe -1
         nextBraceFormatTerm("{", 0) shouldBe 0
         nextBraceFormatTerm("Hello {0} World {1}", 0) shouldBe 6
@@ -75,7 +77,7 @@ internal class BraceStyleMessageParserSpec {
     }
 
     @Test
-    fun testParseBraceFormatNoTerms() {
+    fun `extract place-holder terms`() {
         assertParse(fakeParser, "Hello World")
         assertParse(fakeParser, "Hello {0} {1} {2} World", "0", "1", "2")
         assertParse(fakeParser, "Hello {1,XX} {0,YYY} World", "1:XX", "0:YYY")
@@ -83,7 +85,7 @@ internal class BraceStyleMessageParserSpec {
     }
 
     @Test
-    fun testParseBraceFormatError() {
+    fun `fail when facing an unexpected format`() {
         assertParseError(fakeParser, "'", "[']")
         assertParseError(fakeParser, "Hello '", "[']")
         assertParseError(fakeParser, "Hello ' World", "[' World]")
@@ -104,7 +106,7 @@ internal class BraceStyleMessageParserSpec {
     }
 
     @Test
-    fun testUnescapeBraceFormat() {
+    fun `unescape braces and single quotes`() {
         unescapeBraceFormat("") shouldBe ""
         unescapeBraceFormat("Hello World") shouldBe "Hello World"
         unescapeBraceFormat("Hello '{}' World") shouldBe "Hello {} World"
@@ -118,7 +120,7 @@ internal class BraceStyleMessageParserSpec {
     }
 
     @Test
-    fun testUnescapeBraceFormatIgnoresErrors() {
+    fun `unescape unexpected trailing quotes`() {
         unescapeBraceFormat("Hello '") shouldBe "Hello "
         unescapeBraceFormat("Hello \\'") shouldBe "Hello "
     }
