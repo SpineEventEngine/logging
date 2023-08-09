@@ -94,26 +94,25 @@ internal class PrintfMessageParserSpec {
     @Test
     fun testUnescapePrintfSupportsNewline() {
         val nl = PrintfMessageParser.getSafeSystemNewline()
-        assertThat(unescapePrintf("%n")).isEqualTo(nl)
-        assertThat(unescapePrintf("Hello %n World")).isEqualTo("Hello " + nl + " World")
-        assertThat(unescapePrintf("Hello World %n")).isEqualTo("Hello World " + nl)
-        assertThat(unescapePrintf("%n%n%%n%n")).isEqualTo(nl + nl + "%n" + nl)
+        unescapePrintf("%n") shouldBe nl
+        unescapePrintf("Hello %n World") shouldBe "Hello $nl World"
+        unescapePrintf("Hello World %n") shouldBe "Hello World $nl"
+        unescapePrintf("%n%n%%n%n") shouldBe "$nl$nl%n$nl"
     }
 
     @Test
     fun testUnescapePrintf() {
-        assertThat(unescapePrintf("")).isEqualTo("")
-        assertThat(unescapePrintf("Hello World")).isEqualTo("Hello World")
-        assertThat(unescapePrintf("Hello %% World")).isEqualTo("Hello % World")
-        assertThat(unescapePrintf("Hello %%%% World")).isEqualTo("Hello %% World")
-        assertThat(unescapePrintf("%% 'Hello {%%}{%%} World' %%"))
-            .isEqualTo("% 'Hello {%}{%} World' %")
+        unescapePrintf("") shouldBe ""
+        unescapePrintf("Hello World") shouldBe "Hello World"
+        unescapePrintf("Hello %% World") shouldBe "Hello % World"
+        unescapePrintf("Hello %%%% World") shouldBe "Hello %% World"
+        unescapePrintf("%% 'Hello {%%}{%%} World' %%") shouldBe "% 'Hello {%}{%} World' %"
     }
 
     @Test
     fun testUnescapePrintfIgnoresErrors() {
-        assertThat(unescapePrintf("Hello % World")).isEqualTo("Hello % World")
-        assertThat(unescapePrintf("Hello %")).isEqualTo("Hello %")
+        unescapePrintf("Hello % World") shouldBe "Hello % World"
+        unescapePrintf("Hello %") shouldBe "Hello %"
     }
 }
 
