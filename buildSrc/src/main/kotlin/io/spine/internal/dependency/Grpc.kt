@@ -27,13 +27,14 @@
 package io.spine.internal.dependency
 
 // https://github.com/grpc/grpc-java
-@Suppress("unused")
+@Suppress("unused", "ConstPropertyName")
 object Grpc {
     @Suppress("MemberVisibilityCanBePrivate")
-    const val version        = "1.53.0"
+    const val version        = "1.57.1"
     const val api            = "io.grpc:grpc-api:${version}"
     const val auth           = "io.grpc:grpc-auth:${version}"
     const val core           = "io.grpc:grpc-core:${version}"
+    @Deprecated("Use `api` instead.")
     const val context        = "io.grpc:grpc-context:${version}"
     const val stub           = "io.grpc:grpc-stub:${version}"
     const val okHttp         = "io.grpc:grpc-okhttp:${version}"
