@@ -21,7 +21,6 @@ import com.google.common.flogger.parser.given.FakeParameter
 import com.google.common.flogger.parser.given.assertParse
 import com.google.common.flogger.parser.given.assertParseError
 
-import com.google.common.truth.Truth.assertThat
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
@@ -51,37 +50,37 @@ internal class PrintfMessageParserSpec {
 
     @Test
     fun testParse() {
-        assertParse(FakeParser, "Hello World")
-        assertParse(FakeParser, "Hello %A %B %C World", "0:A", "1:B", "2:C")
-        assertParse(FakeParser, "Hello %1\$A %2\$B %3\$C World", "0:A", "1:B", "2:C")
-        assertParse(FakeParser, "Hello %2\$A %B %C %1\$D World", "1:A", "0:B", "1:C", "0:D")
-        assertParse(FakeParser, "Hello %A %<B %<C World", "0:A", "0:B", "0:C")
-        assertParse(FakeParser, "Hello %???X World", "0:???:X")
-        assertParse(FakeParser, "%%%A%%X%%%B%%", "0:A", "1:B")
+        assertParse(fakeParser, "Hello World")
+        assertParse(fakeParser, "Hello %A %B %C World", "0:A", "1:B", "2:C")
+        assertParse(fakeParser, "Hello %1\$A %2\$B %3\$C World", "0:A", "1:B", "2:C")
+        assertParse(fakeParser, "Hello %2\$A %B %C %1\$D World", "1:A", "0:B", "1:C", "0:D")
+        assertParse(fakeParser, "Hello %A %<B %<C World", "0:A", "0:B", "0:C")
+        assertParse(fakeParser, "Hello %???X World", "0:???:X")
+        assertParse(fakeParser, "%%%A%%X%%%B%%", "0:A", "1:B")
     }
 
     @Test
     fun testParsePrintfError() {
-        assertParseError(FakeParser, "%", "[%]")
-        assertParseError(FakeParser, "Hello %", "[%]")
+        assertParseError(fakeParser, "%", "[%]")
+        assertParseError(fakeParser, "Hello %", "[%]")
         // Unterminated parameter
-        assertParseError(FakeParser, "Hello %1", "[%1]")
-        assertParseError(FakeParser, "Hello %1$", "[%1$]")
+        assertParseError(fakeParser, "Hello %1", "[%1]")
+        assertParseError(fakeParser, "Hello %1$", "[%1$]")
         // Missing index
-        assertParseError(FakeParser, "Hello %$ World", "[%$]")
+        assertParseError(fakeParser, "Hello %$ World", "[%$]")
         // Leading zeros
-        assertParseError(FakeParser, "Hello %01\$X World", "[%01$]")
+        assertParseError(fakeParser, "Hello %01\$X World", "[%01$]")
         // Index too large
-        assertParseError(FakeParser, "Hello %1000000X World", "[%1000000]")
+        assertParseError(fakeParser, "Hello %1000000X World", "[%1000000]")
         // Printf indices are 1-based
-        assertParseError(FakeParser, "Hello %0\$X World", "[%0$]")
+        assertParseError(fakeParser, "Hello %0\$X World", "[%0$]")
         // Relative indexing cannot come first.
-        assertParseError(FakeParser, "Hello %<X World", "[%<]")
-        // Unexpected flag or missing term character
-        assertParseError(FakeParser, "Hello %????", "[%????]")
-        assertParseError(FakeParser, "Hello %X %<", "[%<]")
+        assertParseError(fakeParser, "Hello %<X World", "[%<]")
+        // An unexpected flag or missing term character
+        assertParseError(fakeParser, "Hello %????", "[%????]")
+        assertParseError(fakeParser, "Hello %X %<", "[%<]")
         // Gaps in term indices is a parse error, report the first argument index not referenced.
-        assertParseError(FakeParser, "Hello %X %100\$X World", "first missing index=1")
+        assertParseError(fakeParser, "Hello %X %100\$X World", "first missing index=1")
     }
 
     @Test
@@ -119,7 +118,7 @@ internal class PrintfMessageParserSpec {
 /**
  * Simply generates detail strings of the terms it was asked to parse.
  */
-private object FakeParser : PrintfMessageParser() {
+private val fakeParser = object : PrintfMessageParser() {
     override fun parsePrintfTerm(
         builder: MessageBuilder<*>,
         index: Int,
@@ -140,6 +139,10 @@ private object FakeParser : PrintfMessageParser() {
     }
 }
 
+/**
+ * Unescapes the characters in the given [message] according
+ * to printf style formatting rules.
+ */
 private fun unescapePrintf(message: String): String {
     val out = StringBuilder()
     PrintfMessageParser.unescapePrintf(out, message, 0, message.length)
