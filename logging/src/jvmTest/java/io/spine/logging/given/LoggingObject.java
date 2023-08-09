@@ -31,5 +31,6 @@ import io.spine.logging.Logging;
 /**
  * A test dummy class which implements the {@link Logging} interface.
  */
+@SuppressWarnings("removal")
 public final class LoggingObject implements Logging {
 }
