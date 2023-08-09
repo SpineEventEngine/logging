@@ -35,6 +35,12 @@ import io.kotest.matchers.string.shouldContain
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
+/**
+ * Tests for [BraceStyleMessageParser].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/parser/BraceStyleMessageParserTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
 internal class BraceStyleMessageParserSpec {
 
     @Test

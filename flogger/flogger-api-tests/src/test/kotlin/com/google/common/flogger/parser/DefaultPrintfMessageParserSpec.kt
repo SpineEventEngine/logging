@@ -34,6 +34,12 @@ import io.kotest.matchers.string.shouldContain
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
+/**
+ * Tests for [DefaultPrintfMessageParser].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/parser/DefaultPrintfMessageParserTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
 internal class DefaultPrintfMessageParserSpec {
 
     private val parser = DefaultPrintfMessageParser.getInstance()

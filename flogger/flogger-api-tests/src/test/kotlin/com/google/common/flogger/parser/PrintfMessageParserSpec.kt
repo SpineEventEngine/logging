@@ -37,6 +37,12 @@ import io.kotest.matchers.string.shouldContain
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
+/**
+ * Tests for [PrintfMessageParser].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/parser/PrintfMessageParserTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
 internal class PrintfMessageParserSpec {
 
     @Test
