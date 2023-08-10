@@ -28,7 +28,7 @@ import java.util.logging.Level;
 import static com.google.common.truth.Truth.assertThat;
 
 @RunWith(JUnit4.class)
-public class LogLevelMapTest {
+public class LogLevelMapSpec {
 
   // We have a different implementation for empty maps (ie, just changing the global log level).
   @Test

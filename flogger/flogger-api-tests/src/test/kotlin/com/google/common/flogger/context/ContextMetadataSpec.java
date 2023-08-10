@@ -25,7 +25,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.fail;
 
 @RunWith(JUnit4.class)
-public final class ContextMetadataTest {
+public final class ContextMetadataSpec {
   private static final MetadataKey<String> FOO_KEY = MetadataKey.single("FOO", String.class);
   private static final MetadataKey<String> BAR_KEY = MetadataKey.repeated("BAR", String.class);
   private static final MetadataKey<String> UNUSED_KEY = MetadataKey.single("UNUSED", String.class);

@@ -26,7 +26,7 @@ import static org.junit.Assert.fail;
 
 // Implementation is tested via subclasses of AbstractScopedLoggingContextTest.
 @RunWith(JUnit4.class)
-public class ScopedLoggingContextTest {
+public class ScopedLoggingContextSpec {
   // A context which fails when the scope is closed. Used to verify that user errors are
   // prioritized in cases where errors cause scopes to be exited.
   private static final ScopedLoggingContext ERROR_CONTEXT =

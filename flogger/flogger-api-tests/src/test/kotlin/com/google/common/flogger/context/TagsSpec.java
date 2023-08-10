@@ -29,7 +29,7 @@ import java.util.Set;
 import static com.google.common.truth.Truth.assertThat;
 
 @RunWith(JUnit4.class)
-public class TagsTest {
+public class TagsSpec {
 
   @Rule public ExpectedException thrown = ExpectedException.none();
 

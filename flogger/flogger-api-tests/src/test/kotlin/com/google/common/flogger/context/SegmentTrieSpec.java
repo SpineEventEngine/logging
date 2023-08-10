@@ -28,7 +28,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.fail;
 
 @RunWith(JUnit4.class)
-public class SegmentTrieTest {
+public class SegmentTrieSpec {
   private static final String DEFAULT = "DEFAULT";
 
   @Test
