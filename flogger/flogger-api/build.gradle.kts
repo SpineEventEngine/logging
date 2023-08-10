@@ -27,6 +27,7 @@
 import BuildSettings.javaVersion
 import io.spine.internal.dependency.CheckerFramework
 import io.spine.internal.dependency.ErrorProne
+import io.spine.internal.dependency.JUnit
 import io.spine.internal.dependency.Truth
 import io.spine.internal.gradle.report.license.LicenseReporter
 
@@ -37,12 +38,17 @@ plugins {
 LicenseReporter.generateReportIn(project)
 
 dependencies {
-    implementation(project(":flogger-platform-generator", configuration = "generatedPlatformProvider"))
+    implementation(
+        project(
+            ":flogger-platform-generator",
+            configuration = "generatedPlatformProvider"
+        )
+    )
     implementation(CheckerFramework.annotations)
     ErrorProne.annotations.forEach { implementation(it) }
 
     testImplementation(project(":flogger-testing"))
-    testImplementation("junit:junit:4.13.1")
+    testImplementation(JUnit.legacy)
     testImplementation("org.mockito:mockito-core:4.11.0")
     Truth.libs.forEach { testImplementation(it) }
 }
