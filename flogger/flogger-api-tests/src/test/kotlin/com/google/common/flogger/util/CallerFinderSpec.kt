@@ -31,6 +31,12 @@ import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
+/**
+ * Tests for [CallerFinder].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/util/CallerFinderTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
 @DisplayName("`CallerFinder` should")
 internal class CallerFinderSpec {
 

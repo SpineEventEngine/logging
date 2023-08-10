@@ -28,5 +28,11 @@ package com.google.common.flogger.util
 
 import org.junit.jupiter.api.DisplayName
 
+/**
+ * Tests for [ThrowableStackGetter].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/util/ThrowableStackGetterTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
 @DisplayName("`ThrowableStackGetter` should")
 internal class ThrowableStackGetterSpec : AbstractStackGetterSpec(ThrowableStackGetter())

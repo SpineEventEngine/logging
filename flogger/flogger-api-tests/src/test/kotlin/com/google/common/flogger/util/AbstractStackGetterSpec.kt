@@ -31,10 +31,10 @@ import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
 
 /**
- * Test environment for log site detection-related tests.
+ * An abstract base for testing concrete implementations of [StackGetter].
  *
- * Please note, this class can't be put to `given` package because
- * it uses package-private declarations.
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/util/StackGetterTestUtil.java">
+ *     Original Java code of Google Flogger</a>
  */
 internal abstract class AbstractStackGetterSpec(
     private val stackGetter: StackGetter
