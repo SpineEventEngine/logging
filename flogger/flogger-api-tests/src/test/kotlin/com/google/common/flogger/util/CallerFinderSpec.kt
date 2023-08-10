@@ -65,38 +65,3 @@ internal class CallerFinderSpec {
         library.caller shouldBe null
     }
 }
-
-/**
- * Fake class that emulates some code calling a log method.
- */
-private class UserCode(private val logger: LoggerCode) {
-
-    fun invokeUserCode() {
-        loggingMethod()
-    }
-
-    private fun loggingMethod() {
-        logger.logMethod()
-    }
-}
-
-/**
- * A fake class that emulates the logging library,
- * which eventually calls [CallerFinder.findCallerOf].
- */
-private class LoggerCode(private val skipCount: Int) {
-
-    var caller: StackTraceElement? = null
-
-    fun logMethod() {
-        internalMethodOne()
-    }
-
-    private fun internalMethodOne() {
-        internalMethodTwo()
-    }
-
-    private fun internalMethodTwo() {
-        caller = CallerFinder.findCallerOf(LoggerCode::class.java, skipCount)
-    }
-}
