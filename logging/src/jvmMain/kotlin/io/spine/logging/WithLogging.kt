@@ -48,8 +48,12 @@ public actual interface WithLogging {
     /**
      * Returns the logger created for this class.
      */
-    @Suppress("INAPPLICABLE_JVM_NAME") // See issue: https://youtrack.jetbrains.com/issue/KT-31420/Support-JvmName-on-interface-or-provide-other-interface-evolution-mechanism.
-    @get:JvmName("logger")
     public actual val logger: Logger<*>
         get() = loggerFor(this::class)
+
+    /**
+     * Convenience method for obtaining the logger created for this class
+     * when calling from Java code, avoiding the `get` prefix.
+     */
+    public fun logger(): Logger<*> = logger
 }

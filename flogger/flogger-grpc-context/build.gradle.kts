@@ -39,7 +39,7 @@ LicenseReporter.generateReportIn(project)
 
 dependencies {
     implementation(project(":flogger-api"))
-    implementation(Grpc.context)
+    implementation(Grpc.api)
     implementation(CheckerFramework.annotations)
     ErrorProne.annotations.forEach { implementation(it) }
 
