@@ -80,7 +80,7 @@ all modules and does not describe the project structure per-subproject.
   <dependency>
     <groupId>org.checkerframework</groupId>
     <artifactId>checker-qual</artifactId>
-    <version>3.36.0</version>
+    <version>3.37.0</version>
     <scope>compile</scope>
   </dependency>
   <dependency>
