@@ -28,6 +28,7 @@ package com.google.common.flogger.util
 
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import org.junit.jupiter.api.Test
 
 /**
  * Test environment for log site detection-related tests.
@@ -35,9 +36,12 @@ import io.kotest.matchers.shouldNotBe
  * Please note, this class can't be put to `given` package because
  * it uses package-private declarations.
  */
-internal object StackGetterTestEnv {
+internal abstract class AbstractStackGetterSpec(
+    private val stackGetter: StackGetter
+) {
 
-    fun runTestCallerOf(stackGetter: StackGetter) {
+    @Test
+    fun `find the stack trace element of the immediate caller of the specified class`() {
         // There are 2 internal methods (not including the log method itself)
         // in our fake library.
         val library = LoggerCode(skipCount = 2, stackGetter)
@@ -48,7 +52,8 @@ internal object StackGetterTestEnv {
         library.caller!!.methodName shouldBe "loggingMethod"
     }
 
-    fun runTestCallerOfBadOffset(stackGetter: StackGetter) {
+    @Test
+    fun `return 'null' due to wrong skip count`() {
         // If the minimum offset exceeds the number of internal methods, the find fails.
         val library = LoggerCode(skipCount = 3, stackGetter)
         val code = UserCode(library)

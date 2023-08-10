@@ -16,21 +16,7 @@
 
 package com.google.common.flogger.util
 
-import com.google.common.flogger.util.StackGetterTestEnv.runTestCallerOf
-import com.google.common.flogger.util.StackGetterTestEnv.runTestCallerOfBadOffset
 import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
 
 @DisplayName("`ThrowableStackGetter` should")
-internal class ThrowableStackGetterSpec {
-
-    @Test
-    fun `find the stack trace element of the immediate caller of the specified class`() {
-        runTestCallerOf(ThrowableStackGetter())
-    }
-
-    @Test
-    fun `return 'null' due to wrong skip count`() {
-        runTestCallerOfBadOffset(ThrowableStackGetter())
-    }
-}
+internal class ThrowableStackGetterSpec : AbstractStackGetterSpec(ThrowableStackGetter())
