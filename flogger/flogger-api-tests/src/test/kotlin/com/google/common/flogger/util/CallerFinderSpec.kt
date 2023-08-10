@@ -18,8 +18,10 @@ package com.google.common.flogger.util
 
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
+@DisplayName("`CallerFinder` should")
 internal class CallerFinderSpec {
 
     /**
@@ -28,7 +30,7 @@ internal class CallerFinderSpec {
      * guaranteed by the JavaDoc in the JDK but is relied upon during log site analysis.
      */
     @Test
-    fun testStackTraceUsesClassGetName() {
+    fun `use the class name that matches one in the stack trace`() {
         // Simple case for a top-level named class.
         Throwable().stackTrace[0].className shouldBe CallerFinderSpec::class.java.name
 
@@ -42,46 +44,11 @@ internal class CallerFinderSpec {
         "$obj" shouldBe obj::class.java.name
     }
 
-    /**
-     * Fake class that emulates some code calling a log method.
-     */
-    private inner class UserCode(private val logger: LoggerCode) {
-
-        fun invokeUserCode() {
-            loggingMethod()
-        }
-
-        private fun loggingMethod() {
-            logger.logMethod()
-        }
-    }
-
-    /**
-     * A fake class that emulates the logging library,
-     * which eventually calls [CallerFinder.findCallerOf].
-     */
-    inner class LoggerCode(private val skipCount: Int) {
-
-        var caller: StackTraceElement? = null
-
-        fun logMethod() {
-            internalMethodOne()
-        }
-
-        private fun internalMethodOne() {
-            internalMethodTwo()
-        }
-
-        private fun internalMethodTwo() {
-            caller = CallerFinder.findCallerOf(LoggerCode::class.java, skipCount)
-        }
-    }
-
     @Test
-    fun testFindCallerOf() {
+    fun `find the stack trace element of the immediate caller of the specified class`() {
         // There are 2 internal methods (not including the log method itself)
         // in our fake library.
-        val library = LoggerCode(2)
+        val library = LoggerCode(skipCount = 2)
         val code = UserCode(library)
         code.invokeUserCode()
         library.caller shouldNotBe null
@@ -90,11 +57,46 @@ internal class CallerFinderSpec {
     }
 
     @Test
-    fun testFindCallerOfBadOffset() {
+    fun `return 'null' due to wrong skip count`() {
         // If the minimum offset exceeds the number of internal methods, the find fails.
-        val library = LoggerCode(3)
+        val library = LoggerCode(skipCount = 3)
         val code = UserCode(library)
         code.invokeUserCode()
         library.caller shouldBe null
+    }
+}
+
+/**
+ * Fake class that emulates some code calling a log method.
+ */
+private class UserCode(private val logger: LoggerCode) {
+
+    fun invokeUserCode() {
+        loggingMethod()
+    }
+
+    private fun loggingMethod() {
+        logger.logMethod()
+    }
+}
+
+/**
+ * A fake class that emulates the logging library,
+ * which eventually calls [CallerFinder.findCallerOf].
+ */
+private class LoggerCode(private val skipCount: Int) {
+
+    var caller: StackTraceElement? = null
+
+    fun logMethod() {
+        internalMethodOne()
+    }
+
+    private fun internalMethodOne() {
+        internalMethodTwo()
+    }
+
+    private fun internalMethodTwo() {
+        caller = CallerFinder.findCallerOf(LoggerCode::class.java, skipCount)
     }
 }
