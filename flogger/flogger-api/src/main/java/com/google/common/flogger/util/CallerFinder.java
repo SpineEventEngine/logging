@@ -22,10 +22,6 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 /** A helper class for determining callers of a specified class currently on the stack. */
 public final class CallerFinder {
-  private static final String[] STACK_GETTER_IMPLEMENTATIONS = {
-    "com.google.common.flogger.util.StackWalkerStackGetter",
-    "com.google.common.flogger.util.JavaLangAccessStackGetter"
-  };
 
   private static final StackGetter STACK_GETTER = getBestStackGetter();
 
@@ -34,32 +30,14 @@ public final class CallerFinder {
    * implementation returned is dependent on the current java version.
    */
   private static StackGetter getBestStackGetter() {
-    for (String stackGetterName : STACK_GETTER_IMPLEMENTATIONS) {
-      StackGetter stackGetter = maybeCreateStackGetter(stackGetterName);
-      if (stackGetter != null) {
-        return stackGetter;
-      }
-    }
-    return new ThrowableStackGetter();
-  }
-
-  private static StackGetter maybeCreateStackGetter(String className) {
     try {
-      return Class.forName(className)
-          .asSubclass(StackGetter.class)
-          .getDeclaredConstructor()
-          .newInstance();
-    } catch (Throwable t) {
-      // We may not be able to create one or both of the implementations in some cases, like for
-      // exmaple on Android. This is not a problem because we have ThrowableStackGetter as a
-      // fallback.
-      // Note, this Throwable is replacing ClassNotFoundException, NoSuchMethodException,
-      // InstantiationException, IllegalAccessException, InvocationTargetException, LinkageError,
-      // because multi-catch is not available with -source 6 and we would need a separate empty
-      // catch clause for all of those. Also, we generally don't want this method to throw any kind
-      // of Exception.
+      return new StackWalkerStackGetter();
+    } catch (Throwable ignored) {
+      // We may not be able to create `StackWalkerStackGetter` sometimes,
+      // for example, on Android. This is not a problem because we have
+      // `ThrowableStackGetter` as a fallback option.
+      return new ThrowableStackGetter();
     }
-    return null;
   }
 
   /**
