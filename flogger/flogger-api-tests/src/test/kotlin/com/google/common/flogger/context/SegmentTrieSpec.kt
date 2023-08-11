@@ -20,6 +20,7 @@ import com.google.common.collect.ImmutableMap
 import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.Assertions.fail
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 internal class SegmentTrieSpec {
 
@@ -90,11 +91,8 @@ internal class SegmentTrieSpec {
     fun testSingletonMap_nullkey() {
         val map = hashMapOf<String?, String>()
         map[null] = "BAD"
-        try {
-            @SuppressWarnings("unused") val unused = SegmentTrie.create(map, '.', DEFAULT)
-            fail("expected NullPointerException")
-        } catch (e: NullPointerException) {
-            // pass
+        assertThrows<NullPointerException> {
+            SegmentTrie.create(map, '.', DEFAULT)
         }
     }
 
@@ -157,12 +155,8 @@ internal class SegmentTrieSpec {
         val map = hashMapOf<String?, String>()
         map["foo"] = "FOO"
         map[null] = "BAD"
-        try {
-            @SuppressWarnings("unused")
-            val unused = SegmentTrie.create(map, '.', DEFAULT)
-            fail("expected NullPointerException")
-        } catch (e: NullPointerException) {
-            // pass
+        assertThrows<NullPointerException> {
+            SegmentTrie.create(map, '.', DEFAULT)
         }
     }
 

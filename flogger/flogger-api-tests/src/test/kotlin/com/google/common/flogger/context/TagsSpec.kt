@@ -134,7 +134,7 @@ internal class TagsSpec {
         val rhs = Tags.builder()
 
         repeat(256) { i ->
-            val key = String.format("k%02X", i)
+            val key = "k%02X".format(i)
             if ((i and 1) == 0) {
                 lhs.addTag(key)
             }
@@ -158,7 +158,7 @@ internal class TagsSpec {
         val rhs = Tags.builder()
 
         repeat(256) { i ->
-            val value = String.format("v%02X", i)
+            val value = "v%02X".format(i)
             if ((i and 1) == 0) {
                 lhs.addTag("tag", value)
             }
@@ -182,7 +182,7 @@ internal class TagsSpec {
     @Test
     fun testBuilder_largeNumberOfDuplicates() {
         val tags = Tags.builder()
-        repeat(256) { i ->
+        repeat(256) {
             tags.addTag("foo")
             tags.addTag("bar")
             repeat(20) { j ->

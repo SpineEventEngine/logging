@@ -21,6 +21,7 @@ import com.google.common.flogger.testing.MetadataSubject.assertThat
 import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.Assertions.fail
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 internal class ContextMetadataSpec {
 
@@ -59,11 +60,8 @@ internal class ContextMetadataSpec {
         // The most recent single keyed value.
         assertThat(metadata.findValue(FOO_KEY)).isEqualTo("four")
         assertThat(metadata.findValue(UNUSED_KEY)).isNull()
-        try {
+        assertThrows<IllegalArgumentException> {
             metadata.findValue(BAR_KEY)
-            fail("expected IllegalArgumentException")
-        } catch (e: IllegalArgumentException) {
-            // pass
         }
     }
 
