@@ -17,85 +17,100 @@
 package com.google.common.flogger.context
 
 import com.google.common.flogger.MetadataKey
-import com.google.common.flogger.testing.MetadataSubject.assertThat
-import com.google.common.truth.Truth.assertThat
-import org.junit.jupiter.api.Assertions.fail
+import com.google.common.flogger.MetadataKey.repeated
+import com.google.common.flogger.MetadataKey.single
+import com.google.common.flogger.context.given.shouldBeEmpty
+import com.google.common.flogger.context.given.shouldContainInOrder
+import com.google.common.flogger.context.given.shouldHaveFirstValue
+import com.google.common.flogger.context.given.shouldHaveSize
+import com.google.common.flogger.context.given.shouldNotContain
+import io.kotest.matchers.types.shouldBeSameInstanceAs
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
+@DisplayName("`ContextMetadata` should")
 internal class ContextMetadataSpec {
 
     companion object {
-        private val FOO_KEY: MetadataKey<String> =
-            MetadataKey.single("FOO", String::class.java)
-        private val BAR_KEY: MetadataKey<String> = MetadataKey.repeated("BAR", String::class.java)
-        private val UNUSED_KEY: MetadataKey<String> =
-            MetadataKey.single("UNUSED", String::class.java)
+        private val FOO_KEY: MetadataKey<String> = single("FOO", String::class.java)
+        private val BAR_KEY: MetadataKey<String> = repeated("BAR", String::class.java)
+        private val UNUSED_KEY: MetadataKey<String> = single("UNUSED", String::class.java)
     }
 
     @Test
-    fun testNone() {
-        assertThat(ContextMetadata.none()).hasSize(0)
+    fun `provide an empty instance`() {
+        val metadata = ContextMetadata.none()
+        metadata.shouldBeEmpty()
     }
 
     @Test
-    fun testSingleton() {
+    fun `create a single piece of metadata`() {
         val metadata = ContextMetadata.singleton(FOO_KEY, "foo")
-        assertThat(metadata).hasSize(1)
-        assertThat(metadata).containsEntries(FOO_KEY, "foo")
-        assertThat(metadata.findValue(UNUSED_KEY)).isNull()
+        metadata shouldHaveSize 1
+        metadata.shouldContainInOrder(FOO_KEY, "foo")
+        metadata.shouldNotContain(UNUSED_KEY)
     }
 
     @Test
-    fun testBuilder() {
+    fun `create a compound metadata with repeated keys`() {
         val metadata = ContextMetadata.builder()
             .add(FOO_KEY, "one")
             .add(BAR_KEY, "two")
             .add(BAR_KEY, "three")
             .add(FOO_KEY, "four")
             .build()
-        assertThat(metadata).hasSize(4)
-        assertThat(metadata).containsEntries(FOO_KEY, "one", "four")
-        assertThat(metadata).containsEntries(BAR_KEY, "two", "three")
+
+        metadata shouldHaveSize 4
+        metadata.shouldContainInOrder(FOO_KEY, "one", "four")
+        metadata.shouldContainInOrder(BAR_KEY, "two", "three")
+        metadata.shouldNotContain(UNUSED_KEY)
+
         // The most recent single keyed value.
-        assertThat(metadata.findValue(FOO_KEY)).isEqualTo("four")
-        assertThat(metadata.findValue(UNUSED_KEY)).isNull()
+        metadata.shouldHaveFirstValue(FOO_KEY, "four")
+
         assertThrows<IllegalArgumentException> {
+            // Throws an exception when a repeated key is treated as single.
+            // Remember that `BAR_KEY` is repeated.
             metadata.findValue(BAR_KEY)
         }
     }
 
-    @Test
-    fun testConcatenate_none() {
-        val metadata = ContextMetadata.singleton(FOO_KEY, "foo")
-        assertThat(ContextMetadata.none().concatenate(metadata)).isSameInstanceAs(metadata)
-        assertThat(metadata.concatenate(ContextMetadata.none())).isSameInstanceAs(metadata)
-    }
+    @Nested inner class
+    `concatenate with` {
 
-    @Test
-    fun testConcatenate_duplicateSingleKey() {
-        val metadata = ContextMetadata.singleton(FOO_KEY, "foo")
-            .concatenate(ContextMetadata.singleton(FOO_KEY, "bar"))
-        assertThat(metadata).hasSize(2)
-        // No reordering, no de-duplication.
-        assertThat(metadata).containsEntries(FOO_KEY, "foo", "bar")
-    }
-
-    @Test
-    fun testConcatenate_general() {
-        val first =
-            ContextMetadata.builder()
+        @Test
+        fun `another instance`() {
+            val first = ContextMetadata.builder()
                 .add(FOO_KEY, "one")
                 .add(BAR_KEY, "two")
                 .build()
-        val second =
-            ContextMetadata.builder()
+            val second = ContextMetadata.builder()
                 .add(BAR_KEY, "three")
                 .add(FOO_KEY, "four")
                 .build()
-        val metadata = first.concatenate(second)
-        assertThat(metadata).hasSize(4)
-        assertThat(metadata).containsEntries(FOO_KEY, "one", "four")
-        assertThat(metadata).containsEntries(BAR_KEY, "two", "three")
+            val metadata = first.concatenate(second)
+            metadata shouldHaveSize 4
+            metadata.shouldContainInOrder(FOO_KEY, "one", "four")
+            metadata.shouldContainInOrder(BAR_KEY, "two", "three")
+        }
+
+        @Test
+        fun `an empty instance`() {
+            val fooMetadata = ContextMetadata.singleton(FOO_KEY, "foo")
+            val emptyMetadata = ContextMetadata.none()
+            emptyMetadata.concatenate(fooMetadata) shouldBeSameInstanceAs fooMetadata
+            fooMetadata.concatenate(emptyMetadata) shouldBeSameInstanceAs fooMetadata
+        }
+
+        @Test
+        fun `the same single key`() {
+            val metadata = ContextMetadata.singleton(FOO_KEY, "foo")
+                .concatenate(ContextMetadata.singleton(FOO_KEY, "bar"))
+            metadata shouldHaveSize 2
+            // No reordering, no de-duplication.
+            metadata.shouldContainInOrder(FOO_KEY, "foo", "bar")
+        }
     }
 }
