@@ -16,77 +16,80 @@
 
 package com.google.common.flogger.context
 
-import com.google.common.collect.ImmutableMap
 import com.google.common.flogger.context.LogLevelMap.create
-import com.google.common.truth.Truth.assertThat
-
+import io.kotest.matchers.shouldBe
 import java.util.logging.Level
+
+import java.util.logging.Level.FINE
+import java.util.logging.Level.FINER
+import java.util.logging.Level.INFO
+import java.util.logging.Level.WARNING
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
+@DisplayName("`LogLevelMap` should")
 internal class LogLevelMapSpec {
 
-    // We have a different implementation for empty maps (ie, just changing the global log level).
     @Test
-    fun testGetLevel_empty() {
-        val levelMap = create(ImmutableMap.of(), Level.WARNING)
-
-        assertThat(levelMap.getLevel("")).isEqualTo(Level.WARNING)
-        assertThat(levelMap.getLevel("com")).isEqualTo(Level.WARNING)
-        assertThat(levelMap.getLevel("com.example")).isEqualTo(Level.WARNING)
+    fun `always return the default level when given no mapping`() {
+        val levelMap = create(emptyMap(), WARNING)
+        levelMap[""] shouldBe WARNING
+        levelMap["com"] shouldBe WARNING
+        levelMap["com.example"] shouldBe WARNING
     }
 
-    // We have a different implementation for singleton maps.
     @Test
-    fun testGetLevel_single() {
-        val levelMap = create(ImmutableMap.of("com.example", Level.FINE), Level.WARNING)
-
-        assertThat(levelMap.getLevel("")).isEqualTo(Level.WARNING)
-        assertThat(levelMap.getLevel("com")).isEqualTo(Level.WARNING)
-        assertThat(levelMap.getLevel("com.example")).isEqualTo(Level.FINE)
-        assertThat(levelMap.getLevel("com.example.foo")).isEqualTo(Level.FINE)
+    fun `return level in accordance to a single mapping`() {
+        val levelMap = create(mapOf("com.example" to FINE), WARNING)
+        levelMap[""] shouldBe WARNING
+        levelMap["com"] shouldBe WARNING
+        levelMap["com.example"] shouldBe FINE
+        levelMap["com.example.foo"] shouldBe FINE
     }
 
-    // General implementation.
     @Test
-    fun testGetLevel_general() {
-        val map = ImmutableMap.of(
-            "com.example.foo", Level.INFO,
-            "com.example.foobar", Level.FINE,
-            "com.example.foo.bar", Level.FINER
+    fun `return level in accordance to a diverse mapping`() {
+        val mapping = mapOf(
+            "com.example.foo" to INFO,
+            "com.example.foobar" to FINE,
+            "com.example.foo.bar" to FINER
         )
-        val levelMap = create(map, Level.WARNING)
-
-        assertThat(levelMap.getLevel("")).isEqualTo(Level.WARNING)
-        assertThat(levelMap.getLevel("com")).isEqualTo(Level.WARNING)
-        assertThat(levelMap.getLevel("com.example")).isEqualTo(Level.WARNING)
-        assertThat(levelMap.getLevel("com.example.foo")).isEqualTo(Level.INFO)
-        assertThat(levelMap.getLevel("com.example.foo.foo")).isEqualTo(Level.INFO)
-        assertThat(levelMap.getLevel("com.example.foo.foo.foo.foo")).isEqualTo(Level.INFO)
-        assertThat(levelMap.getLevel("com.example.foobar")).isEqualTo(Level.FINE)
-        assertThat(levelMap.getLevel("com.example.foo.bar")).isEqualTo(Level.FINER)
+        val levelMap = create(mapping, WARNING)
+        levelMap[""] shouldBe WARNING
+        levelMap["com"] shouldBe WARNING
+        levelMap["com.example"] shouldBe WARNING
+        levelMap["com.example.foo"] shouldBe INFO
+        levelMap["com.example.foo.foo"] shouldBe INFO
+        levelMap["com.example.foo.foo.foo.foo"] shouldBe INFO
+        levelMap["com.example.foobar"] shouldBe FINE
+        levelMap["com.example.foo.bar"] shouldBe FINER
     }
 
     @Test
-    fun testLevelImmutable() {
-        val mutableMap = hashMapOf<String, Level>()
-        mutableMap["com.example"] = Level.INFO
-        val levelMap = create(mutableMap, Level.WARNING)
-        assertThat(levelMap.getLevel("com.example.foo")).isEqualTo(Level.INFO)
+    fun `not alter level mapping when the input map changes`() {
+        val mutableMapping = hashMapOf("com.example" to INFO)
+        val levelMap = create(mutableMapping, WARNING)
+        levelMap["com.example.foo"] shouldBe INFO
 
         // Changing the mutable map has no effect after creating the level map.
-        mutableMap["com.example.foo"] = Level.FINE
-        assertThat(levelMap.getLevel("com.example.foo")).isEqualTo(Level.INFO)
+        mutableMapping["com.example.foo"] = FINE
+        levelMap["com.example.foo"] shouldBe INFO
     }
 
     @Test
-    fun testBuilder() {
+    fun `provide a builder`() {
         val levelMap = LogLevelMap.builder()
-            .add(Level.FINE, String::class.java)
-            .add(Level.WARNING, String::class.java.getPackage())
-            .setDefault(Level.INFO)
+            .add(FINE, String::class.java)
+            .add(WARNING, String::class.java.getPackage())
+            .setDefault(INFO)
             .build()
-        assertThat(levelMap.getLevel("com.google")).isEqualTo(Level.INFO)
-        assertThat(levelMap.getLevel("java.lang")).isEqualTo(Level.WARNING)
-        assertThat(levelMap.getLevel("java.lang.String")).isEqualTo(Level.FINE)
+        levelMap["com.google"] shouldBe INFO
+        levelMap["java.lang"] shouldBe WARNING
+        levelMap["java.lang.String"] shouldBe FINE
     }
+}
+
+// For readability.
+private operator fun LogLevelMap.get(logger: String): Level {
+    return getLevel(logger)
 }
