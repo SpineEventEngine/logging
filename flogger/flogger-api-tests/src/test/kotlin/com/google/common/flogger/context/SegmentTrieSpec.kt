@@ -16,12 +16,15 @@
 
 package com.google.common.flogger.context
 
-import com.google.common.collect.ImmutableMap
-import com.google.common.truth.Truth.assertThat
-import org.junit.jupiter.api.Assertions.fail
+import com.google.common.flogger.context.SegmentTrie.create
+import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
+@DisplayName("`SegmentTrie` should return")
 internal class SegmentTrieSpec {
 
     companion object {
@@ -29,164 +32,175 @@ internal class SegmentTrieSpec {
     }
 
     @Test
-    fun testEmptyMap() {
-        val map = ImmutableMap.of<String, String>()
-        val trie = SegmentTrie.create(map, '.', DEFAULT)
-
-        assertThat(trie.find("")).isEqualTo(DEFAULT)
-        assertThat(trie.find(".")).isEqualTo(DEFAULT)
-        assertThat(trie.find("foo")).isEqualTo(DEFAULT)
+    fun `the default value when given an empty mapping`() {
+        val map = emptyMap<String, String>()
+        val trie = create(map, '.', DEFAULT)
+        trie[""] shouldBe DEFAULT
+        trie["."] shouldBe DEFAULT
+        trie["foo"] shouldBe DEFAULT
     }
 
-    @Test
-    fun testSingletonMap() {
-        val map = ImmutableMap.of("com.foo", "FOO")
-        val trie = SegmentTrie.create(map, '.', DEFAULT)
+    @Nested inner class
+    `the value that most closely matches the given key` {
 
-        assertThat(trie.find("com.foo")).isEqualTo("FOO")
-        assertThat(trie.find("com.foo.xxx")).isEqualTo("FOO")
+        @Test
+        fun `when given a singleton mapping`() {
+            val map = mapOf("com.foo" to "FOO")
+            val trie = create(map, '.', DEFAULT)
 
-        assertThat(trie.find("")).isEqualTo(DEFAULT)
-        assertThat(trie.find("com")).isEqualTo(DEFAULT)
-        assertThat(trie.find("com.foobar")).isEqualTo(DEFAULT)
-        assertThat(trie.find("xxx")).isEqualTo(DEFAULT)
-    }
+            trie["com.foo"] shouldBe "FOO"
+            trie["com.foo.xxx"] shouldBe "FOO"
 
-    @Test
-    fun testSingletonMap_emptysegments() {
-        val map = ImmutableMap.of("...", "DOT")
-        val trie = SegmentTrie.create(map, '.', DEFAULT)
+            trie[""] shouldBe DEFAULT
+            trie["com"] shouldBe DEFAULT
+            trie["com.foobar"] shouldBe DEFAULT
+            trie["xxx"] shouldBe DEFAULT
+        }
 
-        assertThat(trie.find("...")).isEqualTo("DOT")
-        assertThat(trie.find("....")).isEqualTo("DOT")
-        assertThat(trie.find(".....")).isEqualTo("DOT")
-        assertThat(trie.find("....x")).isEqualTo("DOT")
+        @Test
+        fun `when given a mapping with only a separating char`() {
+            val map = mapOf("..." to "DOT")
+            val trie = create(map, '.', DEFAULT)
 
-        assertThat(trie.find("")).isEqualTo(DEFAULT)
-        assertThat(trie.find(".")).isEqualTo(DEFAULT)
-        assertThat(trie.find("..")).isEqualTo(DEFAULT)
-        assertThat(trie.find("x...")).isEqualTo(DEFAULT)
-        assertThat(trie.find(".x..")).isEqualTo(DEFAULT)
-        assertThat(trie.find("..x.")).isEqualTo(DEFAULT)
-        assertThat(trie.find("...x")).isEqualTo(DEFAULT)
-    }
+            trie["..."] shouldBe "DOT"
+            trie["...."] shouldBe "DOT"
+            trie["....."] shouldBe "DOT"
+            trie["....x"] shouldBe "DOT"
 
-    @Test
-    fun testSingletonMap_emptykey() {
-        val map = ImmutableMap.of("", "FOO")
-        val trie = SegmentTrie.create(map, '.', DEFAULT)
+            trie[""] shouldBe DEFAULT
+            trie["."] shouldBe DEFAULT
+            trie[".."] shouldBe DEFAULT
+            trie["x..."] shouldBe DEFAULT
+            trie[".x.."] shouldBe DEFAULT
+            trie["..x."] shouldBe DEFAULT
+            trie["...x"] shouldBe DEFAULT
+        }
 
-        assertThat(trie.find("")).isEqualTo("FOO")
-        assertThat(trie.find(".")).isEqualTo("FOO")
-        assertThat(trie.find("..")).isEqualTo("FOO")
-        assertThat(trie.find(".x")).isEqualTo("FOO")
+        @Test
+        fun `when given a mapping with only an empty key`() {
+            val map = mapOf("" to "FOO")
+            val trie = create(map, '.', DEFAULT)
 
-        assertThat(trie.find("x")).isEqualTo(DEFAULT)
-        assertThat(trie.find("x.")).isEqualTo(DEFAULT)
-        assertThat(trie.find("x..")).isEqualTo(DEFAULT)
-        assertThat(trie.find("x.y")).isEqualTo(DEFAULT)
-    }
+            trie[""] shouldBe "FOO"
+            trie["."] shouldBe "FOO"
+            trie[".."] shouldBe "FOO"
+            trie[".x"] shouldBe "FOO"
 
-    @Test
-    fun testSingletonMap_nullkey() {
-        val map = hashMapOf<String?, String>()
-        map[null] = "BAD"
-        assertThrows<NullPointerException> {
-            SegmentTrie.create(map, '.', DEFAULT)
+            trie["x"] shouldBe DEFAULT
+            trie["x."] shouldBe DEFAULT
+            trie["x.."] shouldBe DEFAULT
+            trie["x.y"] shouldBe DEFAULT
+        }
+
+        @Test
+        fun `when given a mapping with only a 'null' key`() {
+            val map = mapOf<String?, String>(null to "BAD")
+            assertThrows<NullPointerException> {
+                create(map, '.', DEFAULT)
+            }
+        }
+
+        @Test
+        fun `when given a mapping with only a 'null' value`() {
+            val map = mapOf<String, String?>("com.foo" to null)
+            val trie = create(map, '.', DEFAULT)
+
+            trie["com.foo"].shouldBeNull()
+            trie["com.foo.xxx"].shouldBeNull()
+
+            trie["com"] shouldBe DEFAULT
+            trie["com.foobar"] shouldBe DEFAULT
+            trie["xxx"] shouldBe DEFAULT
+        }
+
+        @Test
+        fun `when given a general case mapping`() {
+            val map = mapOf(
+                "com.bar" to "BAR",
+                "com.foo" to "FOO",
+                "com.foo.bar" to "FOO_BAR",
+                "com.quux" to "QUUX"
+            )
+            val trie = create(map, '.', DEFAULT)
+
+            trie["com.bar"] shouldBe "BAR"
+            trie["com.bar.xxx"] shouldBe "BAR"
+            trie["com.foo"] shouldBe "FOO"
+            trie["com.foo.xxx"] shouldBe "FOO"
+            trie["com.foo.barf"] shouldBe "FOO"
+            trie["com.foo.bar"] shouldBe "FOO_BAR"
+            trie["com.foo.bar.quux"] shouldBe "FOO_BAR"
+
+            trie[""] shouldBe DEFAULT
+            trie["com"] shouldBe DEFAULT
+            trie["com.foobar"] shouldBe DEFAULT
+            trie["xxx"] shouldBe DEFAULT
+        }
+
+        @Test
+        fun `when given a general case mapping with empty keys`() {
+            val map = mapOf(
+                "" to "EMPTY",
+                "." to "DOT",
+                ".." to "DOT_DOT",
+                ".foo." to "FOO"
+            )
+            val trie = create(map, '.', DEFAULT)
+
+            trie[""] shouldBe "EMPTY"
+            trie[".foo"] shouldBe "EMPTY"
+            trie[".foo.bar"] shouldBe "EMPTY"
+            trie["."] shouldBe "DOT"
+            trie["..foo"] shouldBe "DOT"
+            trie["...foo"] shouldBe "DOT_DOT"
+            trie[".foo..bar"] shouldBe "FOO"
+
+            trie["foo"] shouldBe DEFAULT
+            trie["foo.bar"] shouldBe DEFAULT
+        }
+
+        @Test
+        fun `when given a general case mapping with a 'null' key`() {
+            val map = mapOf(
+                "foo" to "FOO",
+                null to "BAD"
+            )
+            assertThrows<NullPointerException> {
+                create(map, '.', DEFAULT)
+            }
+        }
+
+        @Test
+        fun `when given a general case mapping with a 'null' value`() {
+            val map = hashMapOf<String, String?>()
+            map["foo"] = null
+            map["foo.bar"] = "FOO_BAR"
+            val trie = create(map, '.', DEFAULT)
+
+            trie["foo.bar"] shouldBe "FOO_BAR"
+
+            trie["foo"].shouldBeNull()
+            trie["foo."].shouldBeNull()
+            trie["foo.barf"].shouldBeNull()
+
+            trie[""] shouldBe DEFAULT
+            trie["foo_bar"] shouldBe DEFAULT
         }
     }
 
     @Test
-    fun testSingletonMap_nullvalue() {
-        val map = hashMapOf<String, String?>()
-        map["com.foo"] = null
-        val trie = SegmentTrie.create(map, '.', DEFAULT)
+    fun `the same value in case the original mapping were modified`() {
+        val map = mutableMapOf("foo" to "FOO")
+        val trie = create(map, '.', DEFAULT)
 
-        assertThat(trie.find("com.foo")).isNull()
-        assertThat(trie.find("com.foo.xxx")).isNull()
+        trie["foo.bar"] shouldBe "FOO"
 
-        assertThat(trie.find("com")).isEqualTo(DEFAULT)
-        assertThat(trie.find("com.foobar")).isEqualTo(DEFAULT)
-        assertThat(trie.find("xxx")).isEqualTo(DEFAULT)
+        map["foo.bar"] = "BAR" // Should not affect the trie.
+        trie["foo.bar"] shouldBe "FOO"
     }
+}
 
-    @Test
-    fun testGeneralCaseMap() {
-        val map = ImmutableMap.of(
-            "com.bar", "BAR", "com.foo", "FOO", "com.foo.bar", "FOO_BAR", "com.quux", "QUUX"
-        )
-        val trie = SegmentTrie.create(map, '.', DEFAULT)
-
-        assertThat(trie.find("com.bar")).isEqualTo("BAR")
-        assertThat(trie.find("com.bar.xxx")).isEqualTo("BAR")
-        assertThat(trie.find("com.foo")).isEqualTo("FOO")
-        assertThat(trie.find("com.foo.xxx")).isEqualTo("FOO")
-        assertThat(trie.find("com.foo.barf")).isEqualTo("FOO")
-        assertThat(trie.find("com.foo.bar")).isEqualTo("FOO_BAR")
-        assertThat(trie.find("com.foo.bar.quux")).isEqualTo("FOO_BAR")
-
-        assertThat(trie.find("")).isEqualTo(DEFAULT)
-        assertThat(trie.find("com")).isEqualTo(DEFAULT)
-        assertThat(trie.find("com.foobar")).isEqualTo(DEFAULT)
-        assertThat(trie.find("xxx")).isEqualTo(DEFAULT)
-    }
-
-    @Test
-    fun testGeneralCaseMap_emptysegments() {
-        val map = ImmutableMap.of(
-            "", "EMPTY", ".", "DOT", "..", "DOT_DOT", ".foo.", "FOO"
-        )
-        val trie = SegmentTrie.create(map, '.', DEFAULT)
-
-        assertThat(trie.find("")).isEqualTo("EMPTY")
-        assertThat(trie.find(".foo")).isEqualTo("EMPTY")
-        assertThat(trie.find(".foo.bar")).isEqualTo("EMPTY")
-        assertThat(trie.find(".")).isEqualTo("DOT")
-        assertThat(trie.find("..foo")).isEqualTo("DOT")
-        assertThat(trie.find("...foo")).isEqualTo("DOT_DOT")
-        assertThat(trie.find(".foo..bar")).isEqualTo("FOO")
-
-        assertThat(trie.find("foo")).isEqualTo(DEFAULT)
-        assertThat(trie.find("foo.bar")).isEqualTo(DEFAULT)
-    }
-
-    @Test
-    fun testGeneralCaseMap_nullkeys() {
-        val map = hashMapOf<String?, String>()
-        map["foo"] = "FOO"
-        map[null] = "BAD"
-        assertThrows<NullPointerException> {
-            SegmentTrie.create(map, '.', DEFAULT)
-        }
-    }
-
-    @Test
-    fun testGeneralCaseMap_nullvalues() {
-        val map = hashMapOf<String, String?>()
-        map["foo"] = null
-        map["foo.bar"] = "FOO_BAR"
-        val trie = SegmentTrie.create(map, '.', DEFAULT)
-
-        assertThat(trie.find("foo.bar")).isEqualTo("FOO_BAR")
-
-        assertThat(trie.find("foo")).isNull()
-        assertThat(trie.find("foo.")).isNull()
-        assertThat(trie.find("foo.barf")).isNull()
-
-        assertThat(trie.find("")).isEqualTo(DEFAULT)
-        assertThat(trie.find("foo_bar")).isEqualTo(DEFAULT)
-    }
-
-    @Test
-    fun testImmutable() {
-        val map = hashMapOf<String, String>()
-        map["foo"] = "FOO"
-        val trie = SegmentTrie.create(map, '.', DEFAULT)
-
-        assertThat(trie.find("foo.bar")).isEqualTo("FOO")
-
-        // No change if source map modified.
-        map["foo.bar"] = "BAR"
-        assertThat(trie.find("foo.bar")).isEqualTo("FOO")
-    }
+// For readability.
+private operator fun <T> SegmentTrie<T>.get(key: String): T {
+    return find(key)
 }
