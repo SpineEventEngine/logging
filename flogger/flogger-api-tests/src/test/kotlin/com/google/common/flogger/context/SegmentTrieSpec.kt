@@ -34,6 +34,12 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
+/**
+ * Tests for [SegmentTrie].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/context/SegmentTrieTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
 @DisplayName("`SegmentTrie` should return")
 internal class SegmentTrieSpec {
 

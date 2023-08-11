@@ -40,6 +40,12 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
+/**
+ * Tests for [Tags].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/context/TagsTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
 @DisplayName("`Tags` should")
 internal class TagsSpec {
 

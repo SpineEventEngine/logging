@@ -37,6 +37,12 @@ import java.util.logging.Level.WARNING
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
+/**
+ * Tests for [LogLevelMap].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/context/LogLevelMapTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
 @DisplayName("`LogLevelMap` should")
 internal class LogLevelMapSpec {
 
