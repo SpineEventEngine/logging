@@ -30,5 +30,4 @@ plugins {
 
 dependencies {
     testImplementation(project(":flogger-api"))
-    testImplementation(project(":flogger-testing"))
 }
