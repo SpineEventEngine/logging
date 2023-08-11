@@ -18,49 +18,54 @@ package com.google.common.flogger.context
 
 import com.google.common.flogger.context.ScopedLoggingContext.InvalidLoggingContextStateException
 import com.google.common.flogger.context.ScopedLoggingContext.LoggingContextCloseable
-import com.google.common.truth.Truth.assertThat
+import io.kotest.matchers.throwable.shouldHaveMessage
+import io.kotest.matchers.types.shouldBeInstanceOf
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-// Implementation is tested via subclasses of AbstractScopedLoggingContextTest.
+// Concrete implementations are tested via subclasses of `AbstractScopedLoggingContextTest`.
+@DisplayName("`ScopedLoggingContext` should")
 internal class ScopedLoggingContextSpec {
 
-    companion object {
-
-        // A context, which fails when the scope is closed. Used to verify that user errors are
-        // prioritized in cases where errors cause scopes to be exited.
-        private val ERROR_CONTEXT: ScopedLoggingContext = object : ScopedLoggingContext() {
-
-            override fun newContext(): Builder = object : Builder() {
-                override fun install(): LoggingContextCloseable {
-                    return LoggingContextCloseable { throw IllegalArgumentException("BAD CONTEXT") }
-                }
-            }
-
-            override fun newContext(scopeType: ScopeType?): Builder = newContext()
-
-            override fun addTags(tags: Tags?): Boolean = false
-
-            override fun applyLogLevelMap(logLevelMap: LogLevelMap?): Boolean = false
+    @Test
+    fun `handle non-user errors`() {
+        val exception = assertThrows<InvalidLoggingContextStateException> {
+            ErrorContext.newContext().run { }
         }
+        exception.cause.shouldBeInstanceOf<IllegalArgumentException>()
+        exception.cause!!.shouldHaveMessage("BAD CONTEXT")
     }
 
     @Test
-    fun testErrorHandlingWithoutUserError() {
-        val e = assertThrows<InvalidLoggingContextStateException> {
-            ERROR_CONTEXT.newContext().run { }
-        }
-        assertThat(e).hasCauseThat().isInstanceOf(IllegalArgumentException::class.java)
-        assertThat(e).hasCauseThat().hasMessageThat().isEqualTo("BAD CONTEXT")
-    }
-
-    @Test
-    fun testErrorHandlingWithUserError() {
-        val e = assertThrows<IllegalArgumentException> {
-            ERROR_CONTEXT
+    fun `propagate user errors`() {
+        val exception = assertThrows<IllegalArgumentException> {
+            ErrorContext
                 .newContext()
                 .run { throw IllegalArgumentException("User error") }
         }
-        assertThat(e).hasMessageThat().isEqualTo("User error")
+        exception.shouldBeInstanceOf<IllegalArgumentException>()
+        exception.shouldHaveMessage("User error")
     }
+}
+
+/**
+ * A context that fails when the scope is closed.
+ *
+ * It is used to verify that user errors are prioritized in cases
+ * where errors cause scopes to be exited.
+ */
+private object ErrorContext : ScopedLoggingContext() {
+
+    override fun newContext(): Builder = object : Builder() {
+        override fun install(): LoggingContextCloseable {
+            return LoggingContextCloseable { throw IllegalArgumentException("BAD CONTEXT") }
+        }
+    }
+
+    override fun newContext(scopeType: ScopeType?): Builder = newContext()
+
+    override fun addTags(tags: Tags?): Boolean = false
+
+    override fun applyLogLevelMap(logLevelMap: LogLevelMap?): Boolean = false
 }
