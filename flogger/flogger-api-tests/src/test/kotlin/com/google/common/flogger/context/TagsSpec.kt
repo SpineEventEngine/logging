@@ -16,120 +16,160 @@
 
 package com.google.common.flogger.context
 
-import com.google.common.collect.ImmutableSet
-import com.google.common.truth.Truth.assertThat
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
+import io.kotest.matchers.collections.shouldContainInOrder
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.collections.shouldNotContainAnyOf
+import io.kotest.matchers.maps.shouldBeEmpty
+import io.kotest.matchers.maps.shouldContain
+import io.kotest.matchers.maps.shouldContainKey
+import io.kotest.matchers.maps.shouldHaveSize
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeSameInstanceAs
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
+@DisplayName("`Tags` should")
 internal class TagsSpec {
 
-    companion object {
-        fun setOf(vararg elements: Any): ImmutableSet<Any> {
-            return ImmutableSet.copyOf(elements)
-        }
+    @Test
+    fun `provide an empty instance`() {
+        Tags.builder().build().shouldBeSameInstanceAs(Tags.empty())
+        Tags.empty().asMap().shouldBeEmpty()
     }
 
     @Test
-    fun testEmpty() {
-        assertThat(Tags.builder().build()).isSameInstanceAs(Tags.empty())
-        assertThat(Tags.empty().asMap()).isEmpty()
+    fun `handle a single tag without value`() {
+        val tags = Tags.builder()
+            .addTag("foo")
+            .build()
+        tags.asMap().shouldContain("foo", setOf())
+        tags.asMap().shouldHaveSize(1)
     }
 
     @Test
-    fun testSimpleTag() {
-        val tags = Tags.builder().addTag("foo").build()
-        assertThat(tags.asMap()).containsEntry("foo", setOf())
-        assertThat(tags.asMap()).hasSize(1)
+    fun `handle a single tag with 'String' value`() {
+        val tags = Tags.builder()
+            .addTag("foo", "bar")
+            .build()
+        tags.asMap().shouldContain("foo", setOf("bar"))
+        tags.asMap().shouldHaveSize(1)
     }
 
     @Test
-    fun testTagWithString() {
-        val tags = Tags.builder().addTag("foo", "bar").build()
-        assertThat(tags.asMap()).containsEntry("foo", setOf("bar"))
-        assertThat(tags.asMap()).hasSize(1)
+    fun `handle a single tag with escapable 'String' value`() {
+        val tags = Tags.builder()
+            .addTag("foo", "\"foo\\bar\"")
+            .build()
+        tags.asMap().shouldContain("foo", setOf("\"foo\\bar\""))
+        tags.asMap().shouldHaveSize(1)
     }
 
     @Test
-    fun testTagWithEscapableString() {
-        val tags = Tags.builder().addTag("foo", "\"foo\\bar\"").build()
-        assertThat(tags.asMap()).containsEntry("foo", setOf("\"foo\\bar\""))
-        assertThat(tags.asMap()).hasSize(1)
+    fun `handle a single tag with 'Bool' value`() {
+        val tags = Tags.builder()
+            .addTag("foo", true)
+            .build()
+        tags.asMap().shouldContain("foo", setOf(true))
+        tags.asMap().shouldHaveSize(1)
     }
 
     @Test
-    fun testTagWithBoolean() {
-        val tags = Tags.builder().addTag("foo", true).build()
-        assertThat(tags.asMap()).containsEntry("foo", setOf(true))
-        assertThat(tags.asMap()).hasSize(1)
+    fun `handle a single tag with 'Long' value`() {
+        val tags = Tags.builder()
+            .addTag("foo", 42L)
+            .build()
+        tags.asMap().shouldContain("foo", setOf(42L))
+        tags.asMap().shouldHaveSize(1)
     }
 
     @Test
-    fun testTagWithLong() {
-        val tags = Tags.builder().addTag("foo", 42L).build()
-        assertThat(tags.asMap()).containsEntry("foo", setOf(42L))
-        assertThat(tags.asMap()).hasSize(1)
+    fun `handle a single tag with 'Double' value`() {
+        val tags = Tags.builder()
+            .addTag("foo", 12.34)
+            .build()
+        tags.asMap().shouldContain("foo", setOf(12.34))
+        tags.asMap().shouldHaveSize(1)
     }
 
     @Test
-    fun testTagWithDouble() {
-        val tags = Tags.builder().addTag("foo", 12.34).build()
-        assertThat(tags.asMap()).containsEntry("foo", setOf(12.34))
-        assertThat(tags.asMap()).hasSize(1)
-    }
-
-    @Test
-    fun testTagWithBadName() {
+    fun `fail when given an incorrect tag name`() {
+        // An identifier must contain only ASCII letters, digits or underscore.
         assertThrows<IllegalArgumentException> {
-            Tags.builder().addTag("foo!", "bar")
+            Tags.builder()
+                .addTag("foo!", "bar")
         }
     }
 
     @Test
-    fun testTagMerging_null() {
-        val tags = Tags.builder().addTag("foo").build()
+    fun `fail on attempt to merge with 'null'`() {
+        val tags = Tags.builder()
+            .addTag("foo")
+            .build()
         assertThrows<NullPointerException> {
             tags.merge(null)
         }
     }
 
     @Test
-    fun testTagMerging_empty() {
-        // It is important to not create new instances when merging.
-        val tags = Tags.builder().addTag("foo").build()
-        assertThat(tags.merge(Tags.empty())).isSameInstanceAs(tags)
-        assertThat(Tags.empty().merge(tags)).isSameInstanceAs(tags)
-        assertThat(Tags.empty().merge(Tags.empty())).isSameInstanceAs(Tags.empty())
+    fun `not create new instances when merging`() {
+        val tags = Tags.builder()
+            .addTag("foo")
+            .build()
+        tags.merge(Tags.empty()) shouldBeSameInstanceAs tags
+        Tags.empty().merge(tags) shouldBeSameInstanceAs tags
+        Tags.empty().merge(Tags.empty()) shouldBeSameInstanceAs Tags.empty()
     }
 
     @Test
-    fun testTagMerging_distinct() {
-        val lhs = Tags.builder().addTag("foo").addTag("tag", "true").addTag("tag", true).build()
-        val rhs = Tags.builder().addTag("bar").addTag("tag", 42L).addTag("tag", 42.0).build()
+    fun `merge with different values for a single key`() {
+        val lhs = Tags.builder()
+            .addTag("foo")
+            .addTag("tag", "true")
+            .addTag("tag", true)
+            .build()
+        val rhs = Tags.builder()
+            .addTag("bar")
+            .addTag("tag", 42L)
+            .addTag("tag", 42.0)
+            .build()
         val tags = lhs.merge(rhs)
-        assertThat(tags.asMap()).containsEntry("foo", setOf())
-        assertThat(tags.asMap()).containsEntry("bar", setOf())
-        assertThat(tags.asMap()).containsEntry("tag", setOf("true", true, 42L, 42.0))
-        assertThat(tags.asMap()).hasSize(3)
+        tags.asMap().shouldContain("foo", setOf())
+        tags.asMap().shouldContain("bar", setOf())
+        tags.asMap().shouldContain("tag", setOf("true", true, 42L, 42.0))
+        tags.asMap().shouldHaveSize(3)
     }
 
     @Test
-    fun testTagMerging_overlap() {
-        val lhs = Tags.builder().addTag("tag", "abc").addTag("tag", "def").build()
-        val rhs = Tags.builder().addTag("tag", "abc").addTag("tag", "xyz").build()
-        assertThat(lhs.merge(rhs).asMap()).containsEntry("tag", setOf("abc", "def", "xyz"))
-        assertThat(rhs.merge(lhs).asMap()).containsEntry("tag", setOf("abc", "def", "xyz"))
+    fun `merge with overlapping keys`() {
+        val lhs = Tags.builder()
+            .addTag("tag", "abc")
+            .addTag("tag", "def")
+            .build()
+        val rhs = Tags.builder()
+            .addTag("tag", "abc")
+            .addTag("tag", "xyz")
+            .build()
+        lhs.merge(rhs).asMap().shouldContain("tag", setOf("abc", "def", "xyz"))
+        rhs.merge(lhs).asMap().shouldContain("tag", setOf("abc", "def", "xyz"))
     }
 
     @Test
-    fun testTagMerging_superset() {
-        val lhs = Tags.builder().addTag("tag", "abc").addTag("tag", "def").build()
-        val rhs = Tags.builder().addTag("tag", "abc").build()
-        assertThat(lhs.merge(rhs).asMap()).containsEntry("tag", setOf("abc", "def"))
-        assertThat(rhs.merge(lhs).asMap()).containsEntry("tag", setOf("abc", "def"))
+    fun `merge with its superset`() {
+        val lhs = Tags.builder()
+            .addTag("tag", "abc")
+            .addTag("tag", "def")
+            .build()
+        val rhs = Tags.builder()
+            .addTag("tag", "abc")
+            .build()
+        lhs.merge(rhs).asMap().shouldContain("tag", setOf("abc", "def"))
+        rhs.merge(lhs).asMap().shouldContain("tag", setOf("abc", "def"))
     }
 
     @Test
-    fun testTagMerging_largeNumberOfKeys() {
+    fun `merge large numbers of keys`() {
         val lhs = Tags.builder()
         val rhs = Tags.builder()
 
@@ -144,16 +184,15 @@ internal class TagsSpec {
         }
 
         val tagMap = lhs.build().merge(rhs.build()).asMap()
-        assertThat(tagMap).hasSize(192)  // 3/4 of 256
-        assertThat(tagMap.keys)
-            .containsAtLeast("k00", "k01", "k02", "k80", "kCC", "kFC", "kFD", "kFE")
-            .inOrder()
-        // Nothing ending in 3, 7, B or F.
-        assertThat(tagMap.keys).containsNoneOf("k03", "k77", "kAB", "kFF")
+        tagMap.shouldHaveSize(192)  // 3/4 of 256
+
+        val keys = tagMap.keys
+        keys.shouldContainInOrder("k00", "k01", "k02", "k80", "kCC", "kFC", "kFD", "kFE")
+        keys.shouldNotContainAnyOf("k03", "k77", "kAB", "kFF") // Nothing ends in 3, 7, B or F.
     }
 
     @Test
-    fun testTagMerging_largeNumberOfValues() {
+    fun `merge large numbers of values`() {
         val lhs = Tags.builder()
         val rhs = Tags.builder()
 
@@ -168,20 +207,19 @@ internal class TagsSpec {
         }
 
         val tagMap = lhs.build().merge(rhs.build()).asMap()
-        assertThat(tagMap).hasSize(1)
-        assertThat(tagMap).containsKey("tag")
+        tagMap.shouldHaveSize(1)
+        tagMap.shouldContainKey("tag")
 
-        val values = tagMap.get("tag")
-        assertThat(values).hasSize(192)  // 3/4 of 256
-        assertThat(values)
-            .containsAtLeast("v00", "v01", "v02", "v80", "vCC", "vFC", "vFD", "vFE")
-            .inOrder()
-        assertThat(tagMap.keys).containsNoneOf("v03", "v77", "vAB", "vFF")
+        val values = tagMap["tag"]!!
+        values.shouldHaveSize(192)  // 3/4 of 256
+        values.shouldContainInOrder("v00", "v01", "v02", "v80", "vCC", "vFC", "vFD", "vFE")
+        tagMap.keys.shouldNotContainAnyOf("v03", "v77", "vAB", "vFF")
     }
 
     @Test
-    fun testBuilder_largeNumberOfDuplicates() {
+    fun `build a new instance with a large number of duplicates`() {
         val tags = Tags.builder()
+
         repeat(256) {
             tags.addTag("foo")
             tags.addTag("bar")
@@ -191,33 +229,31 @@ internal class TagsSpec {
                 tags.addTag("bar", value)
             }
         }
+
         val tagMap = tags.build().asMap()
-        assertThat(tagMap).hasSize(2)
-        assertThat(tagMap.keys).containsExactly("bar", "foo").inOrder()
-        assertThat(tagMap["foo"]).containsExactly("v1", "v2", "v3", "v4", "v5").inOrder()
-        assertThat(tagMap["bar"]).containsExactly("v1", "v2", "v3", "v4", "v5").inOrder()
+        tagMap.shouldHaveSize(2)
+
+        // Sets can only be compared to sets, unless both types provide a stable iteration order.
+        tagMap.keys.shouldContainExactlyInAnyOrder("bar", "foo")
+        tagMap["foo"].shouldContainExactlyInAnyOrder("v1", "v2", "v3", "v4", "v5")
+        tagMap["bar"].shouldContainExactlyInAnyOrder("v1", "v2", "v3", "v4", "v5")
     }
 
     @Test
-    fun testToString() {
-        assertToString(Tags.builder(), "{}")
-        assertToString(Tags.builder().addTag("foo").addTag("bar"), "{bar=[], foo=[]}")
-        assertToString(Tags.builder().addTag("foo", "value"), "{foo=[value]}")
-        assertToString(Tags.builder().addTag("foo", ""), "{foo=[]}")
-        // Mixed types will be rare but should be sorted stably in the same order as the tag type enum:
-        // boolean < string < integer < double
-        assertToString(
-            Tags.builder()
-                .addTag("foo", "bar")
-                .addTag("foo", true)
-                .addTag("foo", 12.3)
-                .addTag("foo", 42),
-            "{foo=[true, bar, 42, 12.3]}"
-        )
-    }
+    fun `provide 'String' representation`() {
+        "${Tags.builder()}" shouldBe  "{}"
+        "${Tags.builder().addTag("foo").addTag("bar")}" shouldBe "{bar=[], foo=[]}"
+        "${Tags.builder().addTag("foo", "value")}" shouldBe "{foo=[value]}"
+        "${Tags.builder().addTag("foo", "")}" shouldBe  "{foo=[]}"
 
-    private fun assertToString(builder: Tags.Builder, expected: String) {
-        assertThat(builder.toString()).isEqualTo(expected)
-        assertThat(builder.build().toString()).isEqualTo(expected)
+        // Mixed types will be rare but should be sorted stably in the same order
+        // as the tag type enum: boolean < string < integer < double.
+        val mixedTags = Tags.builder()
+            .addTag("foo", "bar")
+            .addTag("foo", true)
+            .addTag("foo", 12.3)
+            .addTag("foo", 42)
+
+        "$mixedTags" shouldBe "{foo=[true, bar, 42, 12.3]}"
     }
 }
