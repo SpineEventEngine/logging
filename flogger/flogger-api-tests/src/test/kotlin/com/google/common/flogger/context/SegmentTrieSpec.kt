@@ -189,7 +189,7 @@ internal class SegmentTrieSpec {
     }
 
     @Test
-    fun `the same value in case the original mapping were modified`() {
+    fun `the same value when the input mapping was modified`() {
         val map = mutableMapOf("foo" to "FOO")
         val trie = create(map, '.', DEFAULT)
 

@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test
 internal class LogLevelMapSpec {
 
     @Test
-    fun `always return the default level when given no mapping`() {
+    fun `return the default level when given no mapping`() {
         val levelMap = create(emptyMap(), WARNING)
         levelMap[""] shouldBe WARNING
         levelMap["com"] shouldBe WARNING

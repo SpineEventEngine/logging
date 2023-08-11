@@ -35,7 +35,7 @@ internal class TagsSpec {
 
     @Test
     fun `provide an empty instance`() {
-        Tags.builder().build().shouldBeSameInstanceAs(Tags.empty())
+        Tags.builder().build() shouldBeSameInstanceAs Tags.empty()
         Tags.empty().asMap().shouldBeEmpty()
     }
 
@@ -45,7 +45,7 @@ internal class TagsSpec {
             .addTag("foo")
             .build()
         tags.asMap().shouldContain("foo", setOf())
-        tags.asMap().shouldHaveSize(1)
+        tags.asMap() shouldHaveSize 1
     }
 
     @Test
@@ -54,7 +54,7 @@ internal class TagsSpec {
             .addTag("foo", "bar")
             .build()
         tags.asMap().shouldContain("foo", setOf("bar"))
-        tags.asMap().shouldHaveSize(1)
+        tags.asMap() shouldHaveSize 1
     }
 
     @Test
@@ -63,7 +63,7 @@ internal class TagsSpec {
             .addTag("foo", "\"foo\\bar\"")
             .build()
         tags.asMap().shouldContain("foo", setOf("\"foo\\bar\""))
-        tags.asMap().shouldHaveSize(1)
+        tags.asMap() shouldHaveSize 1
     }
 
     @Test
@@ -72,7 +72,7 @@ internal class TagsSpec {
             .addTag("foo", true)
             .build()
         tags.asMap().shouldContain("foo", setOf(true))
-        tags.asMap().shouldHaveSize(1)
+        tags.asMap() shouldHaveSize 1
     }
 
     @Test
@@ -81,7 +81,7 @@ internal class TagsSpec {
             .addTag("foo", 42L)
             .build()
         tags.asMap().shouldContain("foo", setOf(42L))
-        tags.asMap().shouldHaveSize(1)
+        tags.asMap() shouldHaveSize 1
     }
 
     @Test
@@ -90,7 +90,7 @@ internal class TagsSpec {
             .addTag("foo", 12.34)
             .build()
         tags.asMap().shouldContain("foo", setOf(12.34))
-        tags.asMap().shouldHaveSize(1)
+        tags.asMap() shouldHaveSize 1
     }
 
     @Test
@@ -138,7 +138,7 @@ internal class TagsSpec {
         tags.asMap().shouldContain("foo", setOf())
         tags.asMap().shouldContain("bar", setOf())
         tags.asMap().shouldContain("tag", setOf("true", true, 42L, 42.0))
-        tags.asMap().shouldHaveSize(3)
+        tags.asMap() shouldHaveSize 3
     }
 
     @Test
@@ -184,7 +184,7 @@ internal class TagsSpec {
         }
 
         val tagMap = lhs.build().merge(rhs.build()).asMap()
-        tagMap.shouldHaveSize(192)  // 3/4 of 256
+        tagMap shouldHaveSize 192  // 3/4 of 256
 
         val keys = tagMap.keys
         keys.shouldContainInOrder("k00", "k01", "k02", "k80", "kCC", "kFC", "kFD", "kFE")
@@ -207,13 +207,15 @@ internal class TagsSpec {
         }
 
         val tagMap = lhs.build().merge(rhs.build()).asMap()
-        tagMap.shouldHaveSize(1)
-        tagMap.shouldContainKey("tag")
+        tagMap shouldHaveSize 1
+        tagMap shouldContainKey "tag"
 
         val values = tagMap["tag"]!!
-        values.shouldHaveSize(192)  // 3/4 of 256
+        values shouldHaveSize 192  // 3/4 of 256
         values.shouldContainInOrder("v00", "v01", "v02", "v80", "vCC", "vFC", "vFD", "vFE")
-        tagMap.keys.shouldNotContainAnyOf("v03", "v77", "vAB", "vFF")
+
+        val keys = tagMap.keys
+        keys.shouldNotContainAnyOf("v03", "v77", "vAB", "vFF")
     }
 
     @Test
@@ -231,7 +233,7 @@ internal class TagsSpec {
         }
 
         val tagMap = tags.build().asMap()
-        tagMap.shouldHaveSize(2)
+        tagMap shouldHaveSize 2
 
         // Sets can only be compared to sets, unless both types provide a stable iteration order.
         tagMap.keys.shouldContainExactlyInAnyOrder("bar", "foo")

@@ -57,7 +57,7 @@ fun <T> ContextMetadata.shouldHaveFirstValue(key: MetadataKey<T>, value: T) {
     this.findValue(key) shouldBe value
 }
 
-fun <T> ContextMetadata.shouldNotContain(key: MetadataKey<T>) {
+infix fun <T> ContextMetadata.shouldNotContain(key: MetadataKey<T>) {
     this.findValue(key).shouldBeNull()
 }
 

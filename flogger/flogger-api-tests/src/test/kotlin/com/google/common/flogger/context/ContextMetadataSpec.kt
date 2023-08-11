@@ -50,11 +50,11 @@ internal class ContextMetadataSpec {
         val metadata = ContextMetadata.singleton(FOO_KEY, "foo")
         metadata shouldHaveSize 1
         metadata.shouldContainInOrder(FOO_KEY, "foo")
-        metadata.shouldNotContain(UNUSED_KEY)
+        metadata shouldNotContain UNUSED_KEY
     }
 
     @Test
-    fun `create a compound metadata with repeated keys`() {
+    fun `create a new instance with repeated keys`() {
         val metadata = ContextMetadata.builder()
             .add(FOO_KEY, "one")
             .add(BAR_KEY, "two")
@@ -65,7 +65,7 @@ internal class ContextMetadataSpec {
         metadata shouldHaveSize 4
         metadata.shouldContainInOrder(FOO_KEY, "one", "four")
         metadata.shouldContainInOrder(BAR_KEY, "two", "three")
-        metadata.shouldNotContain(UNUSED_KEY)
+        metadata shouldNotContain UNUSED_KEY
 
         // The most recent single keyed value.
         metadata.shouldHaveFirstValue(FOO_KEY, "four")
@@ -108,9 +108,10 @@ internal class ContextMetadataSpec {
         fun `the same single key`() {
             val metadata = ContextMetadata.singleton(FOO_KEY, "foo")
                 .concatenate(ContextMetadata.singleton(FOO_KEY, "bar"))
-            metadata shouldHaveSize 2
+
             // No reordering, no de-duplication.
             metadata.shouldContainInOrder(FOO_KEY, "foo", "bar")
+            metadata shouldHaveSize 2
         }
     }
 }
