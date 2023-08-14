@@ -33,7 +33,7 @@ import static com.google.common.flogger.backend.FormatOptions.UNSET;
 import static com.google.common.truth.Truth.assertThat;
 
 @RunWith(JUnit4.class)
-public class MessageUtilsTest {
+public class MessageUtilsSpec {
   // TODO: More tests here (lots of MessageUtils is tested by SimpleLogRecordTest).
   private static final FormatOptions NO_OPTIONS = FormatOptions.getDefault();
   private static final FormatOptions UPPER_CASE = FormatOptions.of(FLAG_UPPER_CASE, UNSET, UNSET);

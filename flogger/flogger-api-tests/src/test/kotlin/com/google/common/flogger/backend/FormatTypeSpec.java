@@ -31,7 +31,7 @@ import static com.google.common.flogger.backend.FormatType.INTEGRAL;
 import static com.google.common.flogger.testing.FormatTypeSubject.assertThat;
 
 @RunWith(JUnit4.class)
-public class FormatTypeTest {
+public class FormatTypeSpec {
   private static final Object ANY_OBJECT = new Object();
 
   @Test

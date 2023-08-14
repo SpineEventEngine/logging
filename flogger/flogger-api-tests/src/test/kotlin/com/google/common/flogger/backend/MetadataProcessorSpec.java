@@ -36,7 +36,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.fail;
 
 @RunWith(Parameterized.class)
-public class MetadataProcessorTest {
+public class MetadataProcessorSpec {
   private static final MetadataKey<String> KEY_1 = MetadataKey.single("K1", String.class);
   private static final MetadataKey<String> KEY_2 = MetadataKey.single("K2", String.class);
   private static final MetadataKey<String> KEY_3 = MetadataKey.single("K3", String.class);
@@ -58,7 +58,7 @@ public class MetadataProcessorTest {
 
   // We don't care about the test name here, and the extra parameter is just to keep JUnit happy.
   @SuppressWarnings("unused")
-  public MetadataProcessorTest(ProcessorFactory factory, String ignoredName) {
+  public MetadataProcessorSpec(ProcessorFactory factory, String ignoredName) {
     this.factory = factory;
   }
 

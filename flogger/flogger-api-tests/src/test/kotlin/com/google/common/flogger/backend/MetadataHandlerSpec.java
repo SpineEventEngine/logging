@@ -30,13 +30,13 @@ import static com.google.common.flogger.backend.Metadata.empty;
 import static com.google.common.truth.Truth.assertThat;
 
 @RunWith(JUnit4.class)
-public class MetadataHandlerTest {
+public class MetadataHandlerSpec {
   @Test
   public void testUnknownValue() {
     MetadataKey<String> unknownKey = MetadataKey.single("unknown", String.class);
 
     MetadataHandler<StringBuilder> handler =
-        MetadataHandler.builder(MetadataHandlerTest::appendUnknownValue).build();
+        MetadataHandler.builder(MetadataHandlerSpec::appendUnknownValue).build();
 
     FakeMetadata scope = new FakeMetadata();
     scope.add(unknownKey, "hello");
@@ -50,9 +50,9 @@ public class MetadataHandlerTest {
     MetadataKey<String> rep = MetadataKey.repeated("rep", String.class);
 
     MetadataHandler<StringBuilder> handler =
-        MetadataHandler.builder(MetadataHandlerTest::appendUnknownValue)
-            .addHandler(key, MetadataHandlerTest::appendValue)
-            .addHandler(rep, MetadataHandlerTest::appendValue)
+        MetadataHandler.builder(MetadataHandlerSpec::appendUnknownValue)
+            .addHandler(key, MetadataHandlerSpec::appendValue)
+            .addHandler(rep, MetadataHandlerSpec::appendValue)
             .build();
 
     FakeMetadata scope = new FakeMetadata();
@@ -68,8 +68,8 @@ public class MetadataHandlerTest {
     MetadataKey<String> key = MetadataKey.repeated("key", String.class);
 
     MetadataHandler<StringBuilder> handler =
-        MetadataHandler.builder(MetadataHandlerTest::appendUnknownValue)
-            .addRepeatedHandler(key, MetadataHandlerTest::appendValues)
+        MetadataHandler.builder(MetadataHandlerSpec::appendUnknownValue)
+            .addRepeatedHandler(key, MetadataHandlerSpec::appendValues)
             .build();
 
     FakeMetadata scope = new FakeMetadata();
@@ -85,10 +85,10 @@ public class MetadataHandlerTest {
     MetadataKey<Integer> barKey = MetadataKey.repeated("bar", Integer.class);
 
     MetadataHandler<StringBuilder> handler =
-        MetadataHandler.builder(MetadataHandlerTest::appendUnknownValue)
-            .setDefaultRepeatedHandler(MetadataHandlerTest::appendUnknownValues)
+        MetadataHandler.builder(MetadataHandlerSpec::appendUnknownValue)
+            .setDefaultRepeatedHandler(MetadataHandlerSpec::appendUnknownValues)
             // Adding an explicit individual handler takes precedence.
-            .addHandler(fooKey, MetadataHandlerTest::appendValue)
+            .addHandler(fooKey, MetadataHandlerSpec::appendValue)
             .build();
 
     FakeMetadata scope = new FakeMetadata();
@@ -110,9 +110,9 @@ public class MetadataHandlerTest {
     MetadataKey<String> unknownKey = MetadataKey.single("baz", String.class);
 
     MetadataHandler<StringBuilder> handler =
-        MetadataHandler.builder(MetadataHandlerTest::appendUnknownValue)
-            .addRepeatedHandler(barKey, MetadataHandlerTest::appendSum)
-            .addHandler(fooKey, MetadataHandlerTest::appendValue)
+        MetadataHandler.builder(MetadataHandlerSpec::appendUnknownValue)
+            .addRepeatedHandler(barKey, MetadataHandlerSpec::appendSum)
+            .addHandler(fooKey, MetadataHandlerSpec::appendValue)
             .build();
 
     FakeMetadata scope = new FakeMetadata();
@@ -133,9 +133,9 @@ public class MetadataHandlerTest {
     MetadataKey<String> key = MetadataKey.repeated("key", String.class);
 
     MetadataHandler<StringBuilder> handler =
-        MetadataHandler.builder(MetadataHandlerTest::appendUnknownValue)
-            .addRepeatedHandler(key, MetadataHandlerTest::appendValues)
-            .addHandler(key, MetadataHandlerTest::appendValue)
+        MetadataHandler.builder(MetadataHandlerSpec::appendUnknownValue)
+            .addRepeatedHandler(key, MetadataHandlerSpec::appendValues)
+            .addHandler(key, MetadataHandlerSpec::appendValue)
             .build();
 
     FakeMetadata scope = new FakeMetadata();
@@ -150,8 +150,8 @@ public class MetadataHandlerTest {
     MetadataKey<String> key = MetadataKey.repeated("key", String.class);
 
     MetadataHandler.Builder<StringBuilder> builder =
-        MetadataHandler.builder(MetadataHandlerTest::appendUnknownValue)
-            .addRepeatedHandler(key, MetadataHandlerTest::appendValues);
+        MetadataHandler.builder(MetadataHandlerSpec::appendUnknownValue)
+            .addRepeatedHandler(key, MetadataHandlerSpec::appendValues);
 
     FakeMetadata scope = new FakeMetadata();
     scope.add(key, "hello");

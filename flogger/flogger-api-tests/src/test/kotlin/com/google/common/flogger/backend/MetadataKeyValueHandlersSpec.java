@@ -30,7 +30,7 @@ import java.util.Iterator;
 import static com.google.common.truth.Truth.assertThat;
 
 @RunWith(JUnit4.class)
-public final class MetadataKeyValueHandlersTest {
+public final class MetadataKeyValueHandlersSpec {
   private static final MetadataKey<Object> single = MetadataKey.single("single", Object.class);
   private static final MetadataKey<Object> repeated =
       MetadataKey.repeated("repeated", Object.class);

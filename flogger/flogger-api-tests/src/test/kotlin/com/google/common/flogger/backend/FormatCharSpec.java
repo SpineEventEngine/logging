@@ -33,7 +33,7 @@ import static com.google.common.flogger.backend.FormatChar.STRING;
 import static com.google.common.truth.Truth.assertThat;
 
 @RunWith(JUnit4.class)
-public class FormatCharTest {
+public class FormatCharSpec {
 
   private static void assertFormatType(FormatType type, FormatChar... formatChars) {
     for (FormatChar fc : formatChars) {

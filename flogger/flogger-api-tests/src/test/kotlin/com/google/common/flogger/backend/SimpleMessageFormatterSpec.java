@@ -28,7 +28,7 @@ import org.junit.runners.JUnit4;
 import static com.google.common.truth.Truth.assertThat;
 
 @RunWith(JUnit4.class)
-public class SimpleMessageFormatterTest {
+public class SimpleMessageFormatterSpec {
   // TODO: More tests here (lots of SimpleMessageFormatter is tested by SimpleLogRecordTest).
   private static final MetadataKey<String> STRING_KEY = MetadataKey.single("string", String.class);
   private static final MetadataKey<Boolean> BOOL_KEY = MetadataKey.single("bool", Boolean.class);

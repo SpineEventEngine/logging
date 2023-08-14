@@ -33,7 +33,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.fail;
 
 @RunWith(JUnit4.class)
-public class BaseMessageFormatterTest {
+public class BaseMessageFormatterSpec {
   @Test
   public void testBasicFormatting() {
     assertThat(formatPrintf("Hello World")).isEqualTo("Hello World");
