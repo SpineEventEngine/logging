@@ -16,7 +16,6 @@
 
 package com.google.common.flogger.backend
 
-
 import com.google.common.flogger.backend.FormatType.GENERAL
 import com.google.common.flogger.backend.FormatType.BOOLEAN
 import com.google.common.flogger.backend.FormatType.CHARACTER
