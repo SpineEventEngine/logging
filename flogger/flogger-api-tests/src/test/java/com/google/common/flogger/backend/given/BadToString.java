@@ -29,15 +29,15 @@ package com.google.common.flogger.backend.given;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
- * An object that returns {@code null} on call to {@code toString()}.
+ * Returns {@code null} on call to {@code toString()}.
  *
- * <p>This object is needed in Kotlin tests, where it is impossible to create an inheritor
- * from {@code Object} or {@code Any} with nullable {@code toString()}.
+ * <p>This class is needed in Kotlin tests, where it is impossible to create
+ * an inheritor from {@code Object} or {@code Any} with nullable {@code toString()}.
  */
-public final class BadObject {
+public final class BadToString {
 
     @Override
-    @SuppressWarnings("ToStringReturnsNull") // It is needed for error resilience tests.
+    @SuppressWarnings("ToStringReturnsNull") // Needed for error resilience tests.
     public @Nullable String toString() {
         return null;
     }

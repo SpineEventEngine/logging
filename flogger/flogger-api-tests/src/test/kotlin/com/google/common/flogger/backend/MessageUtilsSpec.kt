@@ -35,7 +35,7 @@ import com.google.common.flogger.backend.MessageUtils.appendHex
 import com.google.common.flogger.backend.MessageUtils.appendLogSite
 import com.google.common.flogger.backend.MessageUtils.safeFormatTo
 import com.google.common.flogger.backend.MessageUtils.safeToString
-import com.google.common.flogger.backend.given.BadObject
+import com.google.common.flogger.backend.given.BadToString
 import com.google.common.flogger.testing.FakeLogSite.create
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
@@ -75,9 +75,9 @@ internal class MessageUtilsSpec {
 
         @Test
         fun `objects that return 'null' on 'toString()'`() {
-            val badObject = BadObject() // Its `toString()` method returns `null`.
-            safeToString(badObject) shouldContain badObject::class.simpleName!!
-            safeToString(badObject) shouldContain "toString() returned null"
+            val badToString = BadToString()
+            safeToString(badToString) shouldContain badToString::class.simpleName!!
+            safeToString(badToString) shouldContain "toString() returned null"
         }
 
         @Test
