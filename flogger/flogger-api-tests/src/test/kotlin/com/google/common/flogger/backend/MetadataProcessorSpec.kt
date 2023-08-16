@@ -19,7 +19,12 @@ import com.google.common.collect.Iterables
 import com.google.common.collect.Iterators
 import com.google.common.flogger.MetadataKey
 import com.google.common.flogger.testing.FakeMetadata
-import com.google.common.truth.Truth.assertThat
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.ints.shouldBeLessThanOrEqual
+import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.shouldBe
 import java.util.*
 import java.util.function.BiFunction
 import org.junit.jupiter.api.Assertions
@@ -30,18 +35,14 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
 
     @Test
     fun testSimpleCombinedMetadata() {
-        val scope = FakeMetadata()
-        scope.add(KEY_1, "one")
-        scope.add(KEY_2, "two")
-        val logged = FakeMetadata()
-        logged.add(KEY_3, "three")
+        val logged = FakeMetadata().add(KEY_3, "three")
+        val scope = FakeMetadata().add(KEY_1, "one").add(KEY_2, "two")
         val metadata = factory.apply(scope, logged)
-        assertThat(extractEntries(metadata)).containsExactly("K1=one", "K2=two", "K3=three")
-            .inOrder()
-        assertThat(metadata!!.keyCount()).isEqualTo(3)
-        assertThat(metadata.keySet()).containsExactly(KEY_1, KEY_2, KEY_3).inOrder()
-        assertThat(metadata.getSingleValue(KEY_1)).isEqualTo("one")
-        assertThat(metadata.getSingleValue(KEY_3)).isEqualTo("three")
+        extractEntries(metadata) shouldContainExactly listOf("K1=one", "K2=two", "K3=three")
+        metadata!!.keyCount() shouldBe 3
+        metadata.keySet() shouldContainExactly setOf(KEY_1, KEY_2, KEY_3)
+        metadata.getSingleValue(KEY_1) shouldBe "one"
+        metadata.getSingleValue(KEY_3) shouldBe "three"
     }
 
     @Test
@@ -53,17 +54,14 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
         val logged = FakeMetadata()
         logged.add(REP_1, "third")
         val metadata = factory.apply(scope, logged)
-        assertThat(extractEntries(metadata))
-            .containsExactly("R1=[first, second, third]", "K1=single")
-            .inOrder()
-        assertThat(metadata!!.keyCount()).isEqualTo(2)
-        assertThat(metadata.keySet()).containsExactly(REP_1, KEY_1).inOrder()
-        assertThat(metadata.getSingleValue(KEY_1)).isEqualTo("single")
-        try {
+        extractEntries(metadata) shouldContainExactly listOf(
+            "R1=[first, second, third]", "K1=single"
+        )
+        metadata!!.keyCount() shouldBe 2
+        metadata.keySet() shouldContainExactly setOf(REP_1, KEY_1)
+        metadata.getSingleValue(KEY_1) shouldBe "single"
+        shouldThrow<IllegalArgumentException> {
             metadata.getSingleValue(REP_1)
-            Assertions.fail("expected IllegalArgumentException")
-        } catch (expected: IllegalArgumentException) {
-            // pass
         }
     }
 
@@ -80,11 +78,11 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
         logged.add(REP_2, "r2-1") // Duplicated from scope.
         logged.add(KEY_1, "override")
         val metadata = factory.apply(scope, logged)
-        assertThat(extractEntries(metadata))
-            .containsExactly("K1=override", "R1=[r1-1, r1-2]", "R2=[r2-1, r2-2, r2-1]", "K2=value")
-            .inOrder()
-        assertThat(metadata!!.keyCount()).isEqualTo(4)
-        assertThat(metadata.keySet()).containsExactly(KEY_1, REP_1, REP_2, KEY_2).inOrder()
+        extractEntries(metadata) shouldContainExactly listOf(
+            "K1=override", "R1=[r1-1, r1-2]", "R2=[r2-1, r2-2, r2-1]", "K2=value"
+        )
+        metadata!!.keyCount() shouldBe 4
+        metadata.keySet() shouldContainExactly setOf(KEY_1, REP_1, REP_2, KEY_2)
     }
 
     @Test
@@ -96,12 +94,10 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
             scope.add(k, "v$n")
         }
         val metadata = factory.apply(scope, Metadata.empty())
-        assertThat(extractEntries(metadata))
-            .containsExactly(
-                "R1=[v0, v2, v4, v6, v8, v10, v12, v14, v16, v18, v20, v22, v24, v26]",
-                "R2=[v1, v3, v5, v7, v9, v11, v13, v15, v17, v19, v21, v23, v25, v27]"
-            )
-            .inOrder()
+        extractEntries(metadata) shouldContainExactly listOf(
+            "R1=[v0, v2, v4, v6, v8, v10, v12, v14, v16, v18, v20, v22, v24, v26]",
+            "R2=[v1, v3, v5, v7, v9, v11, v13, v15, v17, v19, v21, v23, v25, v27]"
+        )
     }
 
     @Test
@@ -112,44 +108,41 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
         for (n in 0..27) {
             scope.add(
                 MetadataKey.single(
-                    "K$n",
-                    String::class.java
+                    "K$n", String::class.java
                 ), "v$n"
             )
         }
         val metadata = factory.apply(scope, Metadata.empty())
-        assertThat(extractEntries(metadata))
-            .containsExactly(
-                "K0=v0",
-                "K1=v1",
-                "K2=v2",
-                "K3=v3",
-                "K4=v4",
-                "K5=v5",
-                "K6=v6",
-                "K7=v7",
-                "K8=v8",
-                "K9=v9",
-                "K10=v10",
-                "K11=v11",
-                "K12=v12",
-                "K13=v13",
-                "K14=v14",
-                "K15=v15",
-                "K16=v16",
-                "K17=v17",
-                "K18=v18",
-                "K19=v19",
-                "K20=v20",
-                "K21=v21",
-                "K22=v22",
-                "K23=v23",
-                "K24=v24",
-                "K25=v25",
-                "K26=v26",
-                "K27=v27"
-            )
-            .inOrder()
+        extractEntries(metadata) shouldContainExactly listOf(
+            "K0=v0",
+            "K1=v1",
+            "K2=v2",
+            "K3=v3",
+            "K4=v4",
+            "K5=v5",
+            "K6=v6",
+            "K7=v7",
+            "K8=v8",
+            "K9=v9",
+            "K10=v10",
+            "K11=v11",
+            "K12=v12",
+            "K13=v13",
+            "K14=v14",
+            "K15=v15",
+            "K16=v16",
+            "K17=v17",
+            "K18=v18",
+            "K19=v19",
+            "K20=v20",
+            "K21=v21",
+            "K22=v22",
+            "K23=v23",
+            "K24=v24",
+            "K25=v25",
+            "K26=v26",
+            "K27=v27"
+        )
     }
 
     @Test
@@ -161,8 +154,7 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
         for (n in 0..13) {
             scope.add(
                 MetadataKey.single(
-                    "K$n",
-                    String::class.java
+                    "K$n", String::class.java
                 ), "v$n"
             )
         }
@@ -170,25 +162,23 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
             scope.add(REP_1, "v$n")
         }
         val metadata = factory.apply(scope, Metadata.empty())
-        assertThat(extractEntries(metadata))
-            .containsExactly(
-                "K0=v0",
-                "K1=v1",
-                "K2=v2",
-                "K3=v3",
-                "K4=v4",
-                "K5=v5",
-                "K6=v6",
-                "K7=v7",
-                "K8=v8",
-                "K9=v9",
-                "K10=v10",
-                "K11=v11",
-                "K12=v12",
-                "K13=v13",
-                "R1=[v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27]"
-            )
-            .inOrder()
+        extractEntries(metadata) shouldContainExactly listOf(
+            "K0=v0",
+            "K1=v1",
+            "K2=v2",
+            "K3=v3",
+            "K4=v4",
+            "K5=v5",
+            "K6=v6",
+            "K7=v7",
+            "K8=v8",
+            "K9=v9",
+            "K10=v10",
+            "K11=v11",
+            "K12=v12",
+            "K13=v13",
+            "R1=[v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27]"
+        )
     }
 
     @Test
@@ -200,9 +190,9 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
         val logged = FakeMetadata()
         logged.add(REP_1, "third")
         val metadata = factory.apply(scope, logged)
-        assertThat(handleEntry(metadata, REP_1)).isEqualTo("R1=[first, second, third]")
-        assertThat(handleEntry(metadata, KEY_1)).isEqualTo("K1=single")
-        assertThat(handleEntry(metadata, KEY_3)).isNull()
+        handleEntry(metadata, REP_1) shouldBe "R1=[first, second, third]"
+        handleEntry(metadata, KEY_1) shouldBe "K1=single"
+        handleEntry(metadata, KEY_3).shouldBeNull()
     }
 
     @Test
@@ -214,12 +204,10 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
         val handler: MetadataHandler<Void> = object : MetadataHandler<Void>() {
             override fun <T> handle(key: MetadataKey<T>, value: T, context: Void) {}
             override fun <T> handleRepeated(
-                key: MetadataKey<T>,
-                values: MutableIterator<T>,
-                context: Void?
+                key: MetadataKey<T>, values: MutableIterator<T>, context: Void?
             ) {
-                assertThat(values.hasNext()).isTrue()
-                assertThat(values.next()).isEqualTo("one")
+                values.hasNext().shouldBeTrue()
+                values.next() shouldBe "one"
                 values.remove()
             }
         }
@@ -235,24 +223,19 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
 fun interface ProcessorFactory : BiFunction<Metadata?, Metadata?, MetadataProcessor?>
 
 private val KEY_1 = MetadataKey.single(
-    "K1",
-    String::class.java
+    "K1", String::class.java
 )
 private val KEY_2 = MetadataKey.single(
-    "K2",
-    String::class.java
+    "K2", String::class.java
 )
 private val KEY_3 = MetadataKey.single(
-    "K3",
-    String::class.java
+    "K3", String::class.java
 )
 private val REP_1 = MetadataKey.repeated(
-    "R1",
-    String::class.java
+    "R1", String::class.java
 )
 private val REP_2 = MetadataKey.repeated(
-    "R2",
-    String::class.java
+    "R2", String::class.java
 )
 
 @Parameterized.Parameters(name = "{1}")
@@ -260,14 +243,12 @@ fun factories(): Collection<Array<Any>> {
     return listOf(
         arrayOf(ProcessorFactory { scope: Metadata?, logged: Metadata? ->
             MetadataProcessor.getLightweightProcessor(
-                scope,
-                logged
+                scope, logged
             )
         }, "Lightweight Processor"), arrayOf(
             ProcessorFactory { scope: Metadata?, logged: Metadata? ->
                 MetadataProcessor.getSimpleProcessor(
-                    scope,
-                    logged
+                    scope, logged
                 )
             }, "Simple Processor"
         )
@@ -285,16 +266,14 @@ private fun extractEntries(metadata: MetadataProcessor?): List<String> {
 private fun handleEntry(metadata: MetadataProcessor?, key: MetadataKey<*>): String? {
     val entries: MutableList<String> = ArrayList()
     metadata!!.handle(key, COLLECTING_HANDLER, entries)
-    assertThat(entries.size).isAtMost(1)
+    entries.size shouldBeLessThanOrEqual 1
     return Iterables.getFirst(entries, null)
 }
 
 private val COLLECTING_HANDLER: MetadataHandler<MutableList<String>> =
     object : MetadataHandler<MutableList<String>>() {
         override fun <T> handle(
-            key: MetadataKey<T>,
-            value: T,
-            out: MutableList<String>
+            key: MetadataKey<T>, value: T, out: MutableList<String>
         ) {
             out.add(String.format("%s=%s", key.label, value))
         }
