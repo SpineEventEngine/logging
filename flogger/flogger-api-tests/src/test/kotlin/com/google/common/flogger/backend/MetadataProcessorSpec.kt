@@ -99,7 +99,10 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
                 .add(REP_2, "r2-1") // Duplicate.
                 .add(KEY_1, "override") // Override.
             val metadata = factory.processorFor(scope, logged)
-            val expected = listOf("K1=override", "R1=[r1-1, r1-2]", "R2=[r2-1, r2-2, r2-1]", "K2=value")
+            val expected = listOf(
+                "K1=override", "R1=[r1-1, r1-2]",
+                "R2=[r2-1, r2-2, r2-1]", "K2=value"
+            )
             entries(metadata) shouldContainExactly expected
             metadata.keySet() shouldContainExactly setOf(KEY_1, REP_1, REP_2, KEY_2)
         }
