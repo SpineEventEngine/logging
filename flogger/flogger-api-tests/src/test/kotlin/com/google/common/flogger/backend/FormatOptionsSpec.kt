@@ -79,7 +79,7 @@ internal class FormatOptionsSpec {
     }
 
     @Test
-    fun `parse many flags`() {
+    fun `parse multiple flags`() {
         val options = parse("%-0#+ (,x", 1, 8, true)
         options.width shouldBe UNSET
         options.precision shouldBe UNSET
@@ -135,7 +135,7 @@ internal class FormatOptionsSpec {
     }
 
     @Test
-    fun `validate according to the allowed criteria`() {
+    fun `validate accordingly to the allowed criteria`() {
         val options = parse("-#,123.456", false)
         val givenFlags = FLAG_LEFT_ALIGN or FLAG_SHOW_ALT_FORM or FLAG_SHOW_GROUPING
 

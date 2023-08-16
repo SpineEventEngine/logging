@@ -41,7 +41,7 @@ import org.junit.jupiter.api.Test
 internal class KeyValueFormatterSpec {
 
     @Test
-    fun `keep the message unchanged if no key-value pairs handled`() {
+    fun `keep the message unchanged if no key-value pairs passed`() {
         var out = StringBuilder()
         formatter(out).done()
         "$out".shouldBeEmpty()

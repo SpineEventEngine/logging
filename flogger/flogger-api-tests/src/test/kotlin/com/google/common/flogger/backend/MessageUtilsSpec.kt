@@ -97,7 +97,7 @@ internal class MessageUtilsSpec {
 
     @Nested
     inner class
-    `safely format the given 'Formattable', ` {
+    `safely format the given 'Formattable'` {
 
         @Test
         fun `which doesn't throw`() {
