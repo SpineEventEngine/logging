@@ -49,6 +49,12 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
+/**
+ * Tests for [MessageUtils].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/backend/MessageUtilsTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
 @DisplayName("`MessageUtils` should")
 internal class MessageUtilsSpec {
 

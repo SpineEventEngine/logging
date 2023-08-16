@@ -38,6 +38,12 @@ import java.math.BigInteger
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
+/**
+ * Tests for [FormatType].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/backend/FormatTypeTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
 @DisplayName("`FormatType` should")
 internal class FormatTypeSpec {
 

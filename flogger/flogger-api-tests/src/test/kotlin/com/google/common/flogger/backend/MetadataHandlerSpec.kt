@@ -36,6 +36,12 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
+/**
+ * Tests for [MetadataHandler].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/backend/MetadataHandlerTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
 @DisplayName("`MetadataHandler` should")
 internal class MetadataHandlerSpec {
 

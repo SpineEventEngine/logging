@@ -31,6 +31,12 @@ import io.kotest.matchers.string.shouldBeEmpty
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
+/**
+ * Tests for [KeyValueFormatter].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/backend/KeyValueFormatterTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
 @DisplayName("`KeyValueFormatter` should")
 internal class KeyValueFormatterSpec {
 

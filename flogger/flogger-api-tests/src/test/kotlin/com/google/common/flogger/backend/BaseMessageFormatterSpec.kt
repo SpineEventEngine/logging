@@ -39,6 +39,12 @@ import java.util.Locale
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
+/**
+ * Tests for [BaseMessageFormatter].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/backend/BaseMessageFormatterTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
 @DisplayName("`BaseMessageFormatter` should")
 internal class BaseMessageFormatterSpec {
 

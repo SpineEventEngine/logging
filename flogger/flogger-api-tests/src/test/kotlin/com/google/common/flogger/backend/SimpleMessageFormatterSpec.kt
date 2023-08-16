@@ -34,9 +34,17 @@ import com.google.common.flogger.testing.FakeLogData
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
+/**
+ * Tests for [SimpleMessageFormatter].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/backend/SimpleMessageFormatterTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
+@DisplayName("`SimpleMessageFormatter` should")
 internal class SimpleMessageFormatterSpec {
 
     companion object {
