@@ -26,5 +26,8 @@
 
 package com.google.common.flogger.backend
 
+import org.junit.jupiter.api.DisplayName
+
+@DisplayName("`LightweightProcessor` should")
 internal class LightweightProcessorSpec :
     MetadataProcessorSpec(MetadataProcessor::getLightweightProcessor)

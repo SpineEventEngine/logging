@@ -15,9 +15,10 @@
  */
 package com.google.common.flogger.backend
 
-import com.google.common.collect.Iterables
 import com.google.common.collect.Iterators
 import com.google.common.flogger.MetadataKey
+import com.google.common.flogger.MetadataKey.repeated
+import com.google.common.flogger.MetadataKey.single
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeTrue
@@ -25,39 +26,38 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.ints.shouldBeLessThanOrEqual
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
-import java.util.*
-import java.util.function.BiFunction
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.junit.runners.Parameterized
 
 internal abstract class MetadataProcessorSpec(private val factory: ProcessorFactory) {
 
+    companion object {
+        private val KEY_1 = single("K1", String::class.java)
+        private val KEY_2 = single("K2", String::class.java)
+        private val KEY_3 = single("K3", String::class.java)
+        private val REP_1 = repeated("R1", String::class.java)
+        private val REP_2 = repeated("R2", String::class.java)
+    }
+
     @Test
-    fun testSimpleCombinedMetadata() {
-        val logged = FakeMetadata().add(KEY_3, "three")
+    fun `combine scope and log site metadata with singleton keys`() {
         val scope = FakeMetadata().add(KEY_1, "one").add(KEY_2, "two")
-        val metadata = factory.apply(scope, logged)
-        extractEntries(metadata) shouldContainExactly listOf("K1=one", "K2=two", "K3=three")
-        metadata!!.keyCount() shouldBe 3
+        val logged = FakeMetadata().add(KEY_3, "three")
+        val metadata = factory.processorFor(scope, logged)
+        entries(metadata) shouldContainExactly listOf("K1=one", "K2=two", "K3=three")
         metadata.keySet() shouldContainExactly setOf(KEY_1, KEY_2, KEY_3)
         metadata.getSingleValue(KEY_1) shouldBe "one"
         metadata.getSingleValue(KEY_3) shouldBe "three"
     }
 
     @Test
-    fun testSimpleRepeated() {
+    fun `combine scope and log site metadata with mixed keys`() {
         val scope = FakeMetadata()
-        scope.add(REP_1, "first")
-        scope.add(KEY_1, "single")
-        scope.add(REP_1, "second")
-        val logged = FakeMetadata()
-        logged.add(REP_1, "third")
-        val metadata = factory.apply(scope, logged)
-        extractEntries(metadata) shouldContainExactly listOf(
-            "R1=[first, second, third]", "K1=single"
-        )
-        metadata!!.keyCount() shouldBe 2
+            .add(REP_1, "first")
+            .add(KEY_1, "single")
+            .add(REP_1, "second")
+        val logged = FakeMetadata().add(REP_1, "third")
+        val metadata = factory.processorFor(scope, logged)
+        entries(metadata) shouldContainExactly listOf("R1=[first, second, third]", "K1=single")
         metadata.keySet() shouldContainExactly setOf(REP_1, KEY_1)
         metadata.getSingleValue(KEY_1) shouldBe "single"
         shouldThrow<IllegalArgumentException> {
@@ -66,221 +66,151 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
     }
 
     @Test
-    fun testMessy() {
+    fun `combine scope and log site metadata with overriding and duplicating keys`() {
         val scope = FakeMetadata()
-        scope.add(KEY_1, "original")
-        scope.add(REP_1, "r1-1")
-        scope.add(REP_2, "r2-1")
-        scope.add(REP_1, "r1-2")
+            .add(KEY_1, "original")
+            .add(REP_1, "r1-1")
+            .add(REP_2, "r2-1")
+            .add(REP_1, "r1-2")
         val logged = FakeMetadata()
-        logged.add(REP_2, "r2-2")
-        logged.add(KEY_2, "value")
-        logged.add(REP_2, "r2-1") // Duplicated from scope.
-        logged.add(KEY_1, "override")
-        val metadata = factory.apply(scope, logged)
-        extractEntries(metadata) shouldContainExactly listOf(
-            "K1=override", "R1=[r1-1, r1-2]", "R2=[r2-1, r2-2, r2-1]", "K2=value"
-        )
-        metadata!!.keyCount() shouldBe 4
+            .add(REP_2, "r2-2")
+            .add(KEY_2, "value")
+            .add(REP_2, "r2-1") // Duplicate.
+            .add(KEY_1, "override") // Override.
+        val metadata = factory.processorFor(scope, logged)
+        val expected = listOf("K1=override", "R1=[r1-1, r1-2]", "R2=[r2-1, r2-2, r2-1]", "K2=value")
+        entries(metadata) shouldContainExactly expected
         metadata.keySet() shouldContainExactly setOf(KEY_1, REP_1, REP_2, KEY_2)
     }
 
     @Test
-    fun testMaxLightweight() {
-        // Max entries is 28 for lightweight processor.
+    fun `process the maximum number of entries with shareable keys`() {
         val scope = FakeMetadata()
-        for (n in 0..27) {
-            val k = if (n and 1 == 0) REP_1 else REP_2
-            scope.add(k, "v$n")
+        repeat(28) { i -> // 28 is a max number of entries for the lightweight processor.
+            val key = if (i and 1 == 0) REP_1 else REP_2
+            scope.add(key, "v$i")
         }
-        val metadata = factory.apply(scope, Metadata.empty())
-        extractEntries(metadata) shouldContainExactly listOf(
+        val metadata = factory.processorFor(scope, Metadata.empty())
+        entries(metadata) shouldContainExactly listOf(
             "R1=[v0, v2, v4, v6, v8, v10, v12, v14, v16, v18, v20, v22, v24, v26]",
             "R2=[v1, v3, v5, v7, v9, v11, v13, v15, v17, v19, v21, v23, v25, v27]"
         )
     }
 
     @Test
-    fun testAllDistinctKeys() {
-        // Max entries is 28 for lightweight processor. With all distinct keys you are bound to force
-        // at least one false positive in the bloom filter in the lightweight processor.
+    fun `process the maximum number of entries with distinct keys`() {
         val scope = FakeMetadata()
-        for (n in 0..27) {
-            scope.add(
-                MetadataKey.single(
-                    "K$n", String::class.java
-                ), "v$n"
-            )
+        repeat(28) { i -> // 28 is a max number of entries for the lightweight processor.
+            val key = single("K$i", String::class.java)
+            val value = "v$i"
+            scope.add(key, value)
         }
-        val metadata = factory.apply(scope, Metadata.empty())
-        extractEntries(metadata) shouldContainExactly listOf(
-            "K0=v0",
-            "K1=v1",
-            "K2=v2",
-            "K3=v3",
-            "K4=v4",
-            "K5=v5",
-            "K6=v6",
-            "K7=v7",
-            "K8=v8",
-            "K9=v9",
-            "K10=v10",
-            "K11=v11",
-            "K12=v12",
-            "K13=v13",
-            "K14=v14",
-            "K15=v15",
-            "K16=v16",
-            "K17=v17",
-            "K18=v18",
-            "K19=v19",
-            "K20=v20",
-            "K21=v21",
-            "K22=v22",
-            "K23=v23",
-            "K24=v24",
-            "K25=v25",
-            "K26=v26",
-            "K27=v27"
+        val metadata = factory.processorFor(scope, Metadata.empty())
+        entries(metadata) shouldContainExactly listOf(
+            "K0=v0", "K1=v1", "K2=v2", "K3=v3", "K4=v4", "K5=v5", "K6=v6",
+            "K7=v7", "K8=v8", "K9=v9", "K10=v10", "K11=v11", "K12=v12", "K13=v13",
+            "K14=v14", "K15=v15", "K16=v16", "K17=v17", "K18=v18", "K19=v19", "K20=v20",
+            "K21=v21", "K22=v22", "K23=v23", "K24=v24", "K25=v25", "K26=v26", "K27=v27"
         )
     }
 
     @Test
-    fun testWorstCaseLookup() {
-        // Since duplicated keys need to have their index looked up (linear scan) the worst case
-        // scenario for performance in 14 distinct keys followed by the same repeated key 14 times.
-        // This means that there are (N/2)^2 key accesses.
+    fun `withstand worst case performance scenario`() {
+        // Since duplicated keys need to have their index looked up (linear scan),
+        // the worst case scenario for performance is 14 distinct keys, followed by
+        // the same repeated key 14 times. This means (N/2)^2 key accesses.
         val scope = FakeMetadata()
         for (n in 0..13) {
-            scope.add(
-                MetadataKey.single(
-                    "K$n", String::class.java
-                ), "v$n"
-            )
+            val key = single("K$n", String::class.java)
+            val value = "v$n"
+            scope.add(key, value)
         }
         for (n in 14..27) {
             scope.add(REP_1, "v$n")
         }
-        val metadata = factory.apply(scope, Metadata.empty())
-        extractEntries(metadata) shouldContainExactly listOf(
-            "K0=v0",
-            "K1=v1",
-            "K2=v2",
-            "K3=v3",
-            "K4=v4",
-            "K5=v5",
-            "K6=v6",
-            "K7=v7",
-            "K8=v8",
-            "K9=v9",
-            "K10=v10",
-            "K11=v11",
-            "K12=v12",
-            "K13=v13",
+        val metadata = factory.processorFor(scope, Metadata.empty())
+        entries(metadata) shouldContainExactly listOf(
+            "K0=v0", "K1=v1", "K2=v2", "K3=v3", "K4=v4", "K5=v5", "K6=v6", "K7=v7",
+            "K8=v8", "K9=v9", "K10=v10", "K11=v11", "K12=v12", "K13=v13",
             "R1=[v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27]"
         )
     }
 
     @Test
-    fun testSingleKeyHandling() {
+    fun `handle a duplicate key`() {
         val scope = FakeMetadata()
-        scope.add(REP_1, "first")
-        scope.add(KEY_1, "single")
-        scope.add(REP_1, "second")
-        val logged = FakeMetadata()
-        logged.add(REP_1, "third")
-        val metadata = factory.apply(scope, logged)
+            .add(REP_1, "first")
+            .add(KEY_1, "single")
+            .add(REP_1, "second")
+        val logged = FakeMetadata().add(REP_1, "third")
+        val metadata = factory.processorFor(scope, logged)
         handleEntry(metadata, REP_1) shouldBe "R1=[first, second, third]"
         handleEntry(metadata, KEY_1) shouldBe "K1=single"
         handleEntry(metadata, KEY_3).shouldBeNull()
     }
 
     @Test
-    fun testReadOnlyIterable() {
+    fun `use an immutable iterator for repeated keys`() {
         val scope = FakeMetadata()
-        scope.add(REP_1, "one")
-        scope.add(REP_1, "two")
-        val metadata = factory.apply(scope, Metadata.empty())
+            .add(REP_1, "one")
+            .add(REP_1, "two")
+        val metadata = factory.processorFor(scope, Metadata.empty())
         val handler: MetadataHandler<Void> = object : MetadataHandler<Void>() {
             override fun <T> handle(key: MetadataKey<T>, value: T, context: Void) {}
-            override fun <T> handleRepeated(
-                key: MetadataKey<T>, values: MutableIterator<T>, context: Void?
-            ) {
+            override fun <T> handleRepeated(key: MetadataKey<T>,
+                                            values: MutableIterator<T>,
+                                            context: Void?) {
                 values.hasNext().shouldBeTrue()
                 values.next() shouldBe "one"
                 values.remove()
             }
         }
-        try {
-            metadata!!.process(handler, null)
-            Assertions.fail("expected UnsupportedOperationException")
-        } catch (expected: UnsupportedOperationException) {
-            // pass
+        shouldThrow<UnsupportedOperationException> {
+            metadata.process(handler, null)
         }
     }
 }
 
-fun interface ProcessorFactory : BiFunction<Metadata?, Metadata?, MetadataProcessor?>
-
-private val KEY_1 = MetadataKey.single(
-    "K1", String::class.java
-)
-private val KEY_2 = MetadataKey.single(
-    "K2", String::class.java
-)
-private val KEY_3 = MetadataKey.single(
-    "K3", String::class.java
-)
-private val REP_1 = MetadataKey.repeated(
-    "R1", String::class.java
-)
-private val REP_2 = MetadataKey.repeated(
-    "R2", String::class.java
-)
-
-@Parameterized.Parameters(name = "{1}")
-fun factories(): Collection<Array<Any>> {
-    return listOf(
-        arrayOf(ProcessorFactory { scope: Metadata?, logged: Metadata? ->
-            MetadataProcessor.getLightweightProcessor(
-                scope, logged
-            )
-        }, "Lightweight Processor"), arrayOf(
-            ProcessorFactory { scope: Metadata?, logged: Metadata? ->
-                MetadataProcessor.getSimpleProcessor(
-                    scope, logged
-                )
-            }, "Simple Processor"
-        )
-    )
+/**
+ * A convenience interface to describe [MetadataProcessor.getLightweightProcessor]
+ * and [MetadataProcessor.getSimpleProcessor] methods' signature.
+ */
+fun interface ProcessorFactory {
+    fun processorFor(logged: Metadata, scope: Metadata): MetadataProcessor
 }
 
-// Processes all metadata, collecting formatted results as strings.
-private fun extractEntries(metadata: MetadataProcessor?): List<String> {
-    val entries: MutableList<String> = ArrayList()
-    metadata!!.process(COLLECTING_HANDLER, entries)
+/**
+ * Processes the given [metadata], collecting the all formatted entries as strings.
+ */
+private fun entries(metadata: MetadataProcessor): List<String> {
+    val entries = arrayListOf<String>()
+    metadata.process(COLLECTING_HANDLER, entries)
     return entries
 }
 
-// Handles a single metadata entry, returning null if the key is not present.
-private fun handleEntry(metadata: MetadataProcessor?, key: MetadataKey<*>): String? {
-    val entries: MutableList<String> = ArrayList()
-    metadata!!.handle(key, COLLECTING_HANDLER, entries)
+/**
+ * Processes the given [metadata] for a single metadata [key],
+ * returning the formatted entry.
+ */
+private fun handleEntry(metadata: MetadataProcessor, key: MetadataKey<*>): String? {
+    val entries = arrayListOf<String>()
+    metadata.handle(key, COLLECTING_HANDLER, entries)
     entries.size shouldBeLessThanOrEqual 1
-    return Iterables.getFirst(entries, null)
+    return entries.firstOrNull()
 }
 
-private val COLLECTING_HANDLER: MetadataHandler<MutableList<String>> =
-    object : MetadataHandler<MutableList<String>>() {
-        override fun <T> handle(
-            key: MetadataKey<T>, value: T, out: MutableList<String>
-        ) {
-            out.add(String.format("%s=%s", key.label, value))
-        }
+private object COLLECTING_HANDLER : MetadataHandler<MutableList<String>>() {
 
-        override fun <T> handleRepeated(
-            key: MetadataKey<T>, values: Iterator<T>, out: MutableList<String>
-        ) {
-            out.add(String.format("%s=%s", key.label, Iterators.toString(values)))
-        }
+    override fun <T : Any?> handle(key: MetadataKey<T>, value: T, out: MutableList<String>) {
+        val stringified = "%s=%s".format(key.label, value)
+        out.add(stringified)
     }
+
+    override fun <T : Any?> handleRepeated(key: MetadataKey<T>,
+                                           values: MutableIterator<T>,
+                                           out: MutableList<String>) {
+        val stringified = "%s=%s".format(key.label, Iterators.toString(values))
+        out.add(stringified)
+    }
+
+}

@@ -26,5 +26,8 @@
 
 package com.google.common.flogger.backend
 
+import org.junit.jupiter.api.DisplayName
+
+@DisplayName("`SimpleProcessor` should")
 internal class SimpleProcessorSpec :
     MetadataProcessorSpec(MetadataProcessor::getSimpleProcessor)
