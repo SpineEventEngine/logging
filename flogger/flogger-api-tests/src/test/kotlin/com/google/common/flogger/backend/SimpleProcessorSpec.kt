@@ -26,4 +26,5 @@
 
 package com.google.common.flogger.backend
 
-internal class SimpleProcessorSpec : MetadataProcessorSpec(MetadataProcessor::getSimpleProcessor)
+internal class SimpleProcessorSpec :
+    MetadataProcessorSpec(MetadataProcessor::getSimpleProcessor)
