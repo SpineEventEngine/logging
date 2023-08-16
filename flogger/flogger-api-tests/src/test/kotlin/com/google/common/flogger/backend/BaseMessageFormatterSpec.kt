@@ -61,10 +61,8 @@ internal class BaseMessageFormatterSpec {
     @Test
     fun `report usage errors`() {
         formatPrintf("Hello %s %s", "World") shouldBe "Hello World [ERROR: MISSING LOG ARGUMENT]"
-        formatPrintf(
-            "Hello %d",
-            "World"
-        ) shouldBe "Hello [INVALID: format=%d, type=java.lang.String, value=World]"
+        val literalWithErrorMsg = "Hello [INVALID: format=%d, type=java.lang.String, value=World]"
+        formatPrintf("Hello %d", "World") shouldBe literalWithErrorMsg
     }
 
     @Test
