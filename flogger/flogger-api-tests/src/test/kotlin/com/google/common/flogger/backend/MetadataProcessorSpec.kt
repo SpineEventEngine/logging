@@ -156,7 +156,7 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
             .add(REP_1, "two")
         val metadata = factory.processorFor(scope, Metadata.empty())
         val handler: MetadataHandler<Void> = object : MetadataHandler<Void>() {
-            override fun <T> handle(key: MetadataKey<T>, value: T, context: Void) {}
+            override fun <T> handle(key: MetadataKey<T>, value: T, context: Void) = Unit
             override fun <T> handleRepeated(key: MetadataKey<T>,
                                             values: MutableIterator<T>,
                                             context: Void?) {

@@ -37,6 +37,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 public final class BadObject {
 
     @Override
+    @SuppressWarnings("ToStringReturnsNull") // It is needed for error resilience tests.
     public @Nullable String toString() {
         return null;
     }
