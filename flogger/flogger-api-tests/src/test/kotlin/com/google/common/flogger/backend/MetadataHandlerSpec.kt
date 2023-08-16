@@ -36,9 +36,7 @@ internal class MetadataHandlerSpec {
             .build()
 
         val logged = Metadata.empty()
-        val scope = FakeMetadata().apply {
-            add(unknownKey, "hello")
-        }
+        val scope = FakeMetadata().add(unknownKey, "hello")
 
         process(handler, scope, logged) shouldBe "unknown=<<hello>>"
     }
@@ -53,11 +51,10 @@ internal class MetadataHandlerSpec {
             .build()
 
         val logged = Metadata.empty()
-        val scope = FakeMetadata().apply {
-            add(key, "hello")
-            add(rep, "repeated")
-            add(rep, "world")
-        }
+        val scope = FakeMetadata()
+            .add(key, "hello")
+            .add(rep, "repeated")
+            .add(rep, "world")
 
         process(handler, scope, logged) shouldBe "key=hello rep=repeated rep=world"
     }
@@ -70,10 +67,9 @@ internal class MetadataHandlerSpec {
             .build()
 
         val logged = Metadata.empty()
-        val scope = FakeMetadata().apply {
-            add(key, "hello")
-            add(key, "world")
-        }
+        val scope = FakeMetadata()
+            .add(key, "hello")
+            .add(key, "world")
 
         process(handler, scope, logged) shouldBe "key=[hello, world]"
     }
@@ -93,15 +89,13 @@ internal class MetadataHandlerSpec {
             .addHandler(fooKey, ::appendValue) // Explicit individual handler takes precedence.
             .build()
 
-        val scope = FakeMetadata().apply {
-            add(fooKey, "hello")
-            add(barKey, 13)
-            add(barKey, 20)
-        }
-        val logged = FakeMetadata().apply {
-            add(fooKey, "world")
-            add(barKey, 9)
-        }
+        val scope = FakeMetadata()
+            .add(fooKey, "hello")
+            .add(barKey, 13)
+            .add(barKey, 20)
+        val logged = FakeMetadata()
+            .add(fooKey, "world")
+            .add(barKey, 9)
 
         process(handler, scope, logged) shouldBe "foo=hello foo=world bar=<<13, 20, 9>>"
     }
@@ -122,16 +116,14 @@ internal class MetadataHandlerSpec {
             .addHandler(fooKey, ::appendValue)
             .build()
 
-        val scope = FakeMetadata().apply {
-            add(fooKey, "hello")
-            add(barKey, 13)
-            add(barKey, 20)
-            add(unknownKey, "ball")
-        }
-        val logged = FakeMetadata().apply {
-            add(fooKey, "world")
-            add(barKey, 9)
-        }
+        val scope = FakeMetadata()
+            .add(fooKey, "hello")
+            .add(barKey, 13)
+            .add(barKey, 20)
+            .add(unknownKey, "ball")
+        val logged = FakeMetadata()
+            .add(fooKey, "world")
+            .add(barKey, 9)
 
         process(handler, scope, logged) shouldBe "foo=hello foo=world sum(bar)=42 unknown=<<ball>>"
     }
@@ -145,10 +137,9 @@ internal class MetadataHandlerSpec {
             .build()
 
         val logged = Metadata.empty()
-        val scope = FakeMetadata().apply {
-            add(foo, "hello")
-            add(foo, "world")
-        }
+        val scope = FakeMetadata()
+            .add(foo, "hello")
+            .add(foo, "world")
 
         process(handler, scope, logged) shouldBe "foo=hello foo=world"
     }
@@ -160,10 +151,9 @@ internal class MetadataHandlerSpec {
             .addRepeatedHandler(foo, ::appendValues)
 
         val logged = Metadata.empty()
-        val scope = FakeMetadata().apply {
-            add(foo, "hello")
-            add(foo, "world")
-        }
+        val scope = FakeMetadata()
+            .add(foo, "hello")
+            .add(foo, "world")
 
         val withFooHandler = builder.build()
         process(withFooHandler, scope, logged) shouldBe "foo=[hello, world]"
