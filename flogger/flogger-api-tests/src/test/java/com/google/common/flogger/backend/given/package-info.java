@@ -24,11 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-plugins {
-    `jvm-module`
-}
-
-dependencies {
-    testImplementation(project(":flogger-api"))
-    testImplementation(project(":flogger-testing"))
-}
+/**
+ * Contains environment classes for backend tests.
+ */
+package com.google.common.flogger.backend.given;

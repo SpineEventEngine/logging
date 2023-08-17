@@ -24,11 +24,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-plugins {
-    `jvm-module`
-}
+package com.google.common.flogger.backend
 
-dependencies {
-    testImplementation(project(":flogger-api"))
-    testImplementation(project(":flogger-testing"))
-}
+import org.junit.jupiter.api.DisplayName
+
+@DisplayName("`LightweightProcessor` should")
+internal class LightweightProcessorSpec :
+    MetadataProcessorSpec(MetadataProcessor::getLightweightProcessor)

@@ -24,11 +24,21 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-plugins {
-    `jvm-module`
-}
+package com.google.common.flogger.backend.given;
 
-dependencies {
-    testImplementation(project(":flogger-api"))
-    testImplementation(project(":flogger-testing"))
+import org.checkerframework.checker.nullness.qual.Nullable;
+
+/**
+ * Returns {@code null} on call to {@code toString()}.
+ *
+ * <p>This class is needed in Kotlin tests, where it is impossible to create
+ * an inheritor from {@code Object} or {@code Any} with nullable {@code toString()}.
+ */
+public final class BadToString {
+
+    @Override
+    @SuppressWarnings("ToStringReturnsNull") // Needed for error resilience tests.
+    public @Nullable String toString() {
+        return null;
+    }
 }
