@@ -35,7 +35,7 @@ import com.google.common.flogger.MetadataKey as FMetadataKey
  */
 internal class JvmMetadataKey<T: Any>(
     override val label: String,
-    private val clazz: KClass<out T>,
+    private val clazz: KClass<T>,
     override val canRepeat: Boolean
 ) :  MetadataKey<T> {
 
@@ -46,13 +46,13 @@ internal class JvmMetadataKey<T: Any>(
         /**
          * Creates a new single metadata key with the given label and type.
          */
-        fun <T: Any> single(label: String, clazz: KClass<out T>): MetadataKey<T> =
+        fun <T: Any> single(label: String, clazz: KClass<T>): MetadataKey<T> =
             JvmMetadataKey(label, clazz, canRepeat = false)
 
         /**
          * Creates a new repeated metadata key with the given label and type.
          */
-        fun <T: Any> repeated(label: String, clazz: KClass<out T>): MetadataKey<T> =
+        fun <T: Any> repeated(label: String, clazz: KClass<T>): MetadataKey<T> =
             JvmMetadataKey(label, clazz, canRepeat = true)
     }
 

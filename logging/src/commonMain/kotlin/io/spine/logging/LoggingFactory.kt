@@ -56,7 +56,7 @@ public expect object LoggingFactory {
      * be considered distinct. The recommended approach is to always assign [MetadataKey]
      * instances to static final constants.
      */
-    public fun <T: Any> singleMetadataKey(label: String, type: KClass<out T>): MetadataKey<T>
+    public fun <T: Any> singleMetadataKey(label: String, type: KClass<T>): MetadataKey<T>
 
     /**
      * Creates a key for a repeated piece of metadata. If metadata is added more than once
@@ -67,7 +67,7 @@ public expect object LoggingFactory {
      * be considered distinct. The recommended approach is to always assign [MetadataKey]
      * instances to static final constants.
      */
-    public fun <T: Any> repeatedMetadataKey(label: String, type: KClass<out T>): MetadataKey<T>
+    public fun <T: Any> repeatedMetadataKey(label: String, type: KClass<T>): MetadataKey<T>
 }
 
 /**

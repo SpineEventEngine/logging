@@ -53,14 +53,21 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
 
     public actual fun <T : Any> singleMetadataKey(
         label: String,
-        type: KClass<out T>
+        type: KClass<T>
     ): MetadataKey<T> {
         return JvmMetadataKey.single(label, type)
     }
 
+    public fun <T: Any> singleMetadataKey(
+        label: String,
+        type: Class<T>
+    ): MetadataKey<T> {
+        return JvmMetadataKey.single(label, type.kotlin)
+    }
+
     public actual fun <T : Any> repeatedMetadataKey(
         label: String,
-        type: KClass<out T>
+        type: KClass<T>
     ): MetadataKey<T> {
         return JvmMetadataKey.repeated(label, type)
     }
