@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package com.google.common.flogger;
+package com.google.common.flogger
 
-import static com.google.common.truth.Truth.assertThat;
+import com.google.common.flogger.LoggingScope.create
+import io.kotest.matchers.shouldNotBe
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+@DisplayName("`LoggingScope` should")
+internal class LoggingScopeSpec {
 
-@RunWith(JUnit4.class)
-public class LoggingScopeTest {
-  @Test
-  public void testDifferentLabelsAreDistinctScopes() {
-    // Using the same label doesn't make scopes equivalent.
-    assertThat(LoggingScope.create("foo")).isNotEqualTo(LoggingScope.create("foo"));
-  }
+    @Test
+    fun `create distinct scopes for the same label`() {
+        val label = "foo"
+        create(label) shouldNotBe create(label) // The same label doesn't make scopes equivalent.
+    }
 }
