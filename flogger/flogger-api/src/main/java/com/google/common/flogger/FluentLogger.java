@@ -65,7 +65,7 @@ public final class FluentLogger extends AbstractLogger<FluentLogger.Api> {
   public static FluentLogger forEnclosingClass() {
     // NOTE: It is _vital_ that the call to "caller finder" is made directly inside the static
     // factory method. See getCallerFinder() for more information.
-    String loggingClass = Platform.getCallerFinder().findLoggingClass(FluentLogger.class);
+    var loggingClass = Platform.getCallerFinder().findLoggingClass(FluentLogger.class);
     return new FluentLogger(Platform.getBackend(loggingClass));
   }
 
@@ -83,8 +83,8 @@ public final class FluentLogger extends AbstractLogger<FluentLogger.Api> {
 
   @Override
   public Api at(Level level) {
-    boolean isLoggable = isLoggable(level);
-    boolean isForced = Platform.shouldForceLogging(getName(), level, isLoggable);
+    var isLoggable = isLoggable(level);
+    var isForced = Platform.shouldForceLogging(getName(), level, isLoggable);
     return (isLoggable || isForced) ? new Context(level, isForced) : NO_OP;
   }
 
