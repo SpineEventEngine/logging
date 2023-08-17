@@ -58,12 +58,8 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
         return JvmMetadataKey.single(label, type)
     }
 
-    public fun <T: Any> singleMetadataKey(
-        label: String,
-        type: Class<T>
-    ): MetadataKey<T> {
-        return JvmMetadataKey.single(label, type.kotlin)
-    }
+    public fun <T: Any> singleMetadataKey(label: String, type: Class<T>): MetadataKey<T> =
+        singleMetadataKey(label, type.kotlin)
 
     public actual fun <T : Any> repeatedMetadataKey(
         label: String,
@@ -71,6 +67,9 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
     ): MetadataKey<T> {
         return JvmMetadataKey.repeated(label, type)
     }
+
+    public fun <T : Any> repeatedMetadataKey(label: String, type: Class<T>): MetadataKey<T> =
+        repeatedMetadataKey(label, type.kotlin)
 
     /**
      * Obtains an instance of [FluentLogger] for the given class.
