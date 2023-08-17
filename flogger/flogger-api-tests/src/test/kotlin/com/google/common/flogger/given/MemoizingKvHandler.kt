@@ -28,6 +28,9 @@ package com.google.common.flogger.given
 
 import com.google.common.flogger.MetadataKey
 
+/**
+ * Remembers all handled key/value pairs.
+ */
 internal class MemoizingKvHandler : MetadataKey.KeyValueHandler {
 
     val entries = ArrayList<String?>()

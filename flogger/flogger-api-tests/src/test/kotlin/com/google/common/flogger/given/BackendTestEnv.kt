@@ -26,4 +26,11 @@
 
 package com.google.common.flogger.given
 
+/**
+ * Contains test environment for flogger API tests.
+ */
+
+/**
+ * Creates a new [Iterator] over the given [values].
+ */
 internal fun <T> iterate(vararg values: T): Iterator<T> = listOf(*values).iterator()
