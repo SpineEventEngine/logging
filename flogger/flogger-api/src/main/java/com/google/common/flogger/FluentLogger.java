@@ -69,8 +69,15 @@ public final class FluentLogger extends AbstractLogger<FluentLogger.Api> {
     return new FluentLogger(Platform.getBackend(loggingClass));
   }
 
-  // Visible for testing.
-  FluentLogger(LoggerBackend backend) {
+  /**
+   * Creates a new fluent logger instance with the specified backend.
+   *
+   * @apiNote This constructor used to be package-private in the original Flogger implementation.
+   *         This, in turn, required reflection-based creation of new instances of this class in
+   *         {@code io.spine.logging.JvmLoggerFactoryKt}. Now, as we aggregate the Flogger code,
+   *         we open the constructor for simplicity.
+   */
+  public FluentLogger(LoggerBackend backend) {
     super(backend);
   }
 

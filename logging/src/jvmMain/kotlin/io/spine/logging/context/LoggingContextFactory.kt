@@ -27,11 +27,13 @@
 package io.spine.logging.context
 
 import com.google.errorprone.annotations.CheckReturnValue
+import com.google.errorprone.annotations.Immutable
+import io.spine.logging.JvmMetadataKey
 import io.spine.logging.Level
+import io.spine.logging.MetadataKey
 import io.spine.logging.toJavaLogging
 import io.spine.logging.toLevel
 import io.spine.logging.toLoggerName
-import com.google.errorprone.annotations.Immutable
 import kotlin.reflect.KClass
 import com.google.common.flogger.context.ContextDataProvider as FContextDataProvider
 import com.google.common.flogger.context.LogLevelMap as FLogLevelMap
@@ -168,6 +170,14 @@ private class DelegatingContextBuilder(
 
     override fun withLogLevelMap(map: LogLevelMap): ScopedLoggingContext.Builder {
         delegate.withLogLevelMap(map.toFlogger())
+        return this
+    }
+
+    override fun <T : Any> withMetadata(
+        key: MetadataKey<T>,
+        value: T
+    ): ScopedLoggingContext.Builder {
+        delegate.withMetadata((key as JvmMetadataKey<T>).delegate, value)
         return this
     }
 

@@ -26,6 +26,8 @@
 
 package io.spine.logging.context
 
+import io.spine.logging.MetadataKey
+
 /**
  * This class provides a user-centric API for constructing and modifying logging
  * contexts within an application.
@@ -69,6 +71,13 @@ public interface ScopedLoggingContext {
          * once will result in a runtime error.
          */
         public abstract fun withLogLevelMap(map: LogLevelMap): Builder
+
+        /**
+         * Adds a single metadata key/value pair to the context.
+         *
+         * This method can be called multiple times on a builder.
+         */
+        public abstract fun <T: Any> withMetadata(key: MetadataKey<T>, value: T): Builder
 
         /**
          * Executes the given function directly withing a new context

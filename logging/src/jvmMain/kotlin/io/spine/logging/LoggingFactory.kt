@@ -26,21 +26,14 @@
 
 package io.spine.logging
 
-import com.google.common.base.Throwables
 import com.google.common.flogger.FluentLogger
-import com.google.common.flogger.backend.LoggerBackend
 import com.google.common.flogger.backend.Platform
-import java.lang.reflect.Constructor
 import kotlin.reflect.KClass
-
-private val logger = FluentLogger.forEnclosingClass()
 
 /**
  * Obtains a [JvmLogger] for a given class.
  */
 public actual object LoggingFactory: ClassValue<JvmLogger>() {
-
-    private val constructor: Constructor<FluentLogger> = ctor()
 
     @JvmStatic
     @JvmName("getLogger") // Set the name explicitly to avoid synthetic `$logging` suffix.
@@ -56,6 +49,20 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
 
     public actual fun loggingDomainOf(cls: KClass<*>): LoggingDomain {
         return LoggingDomainClassValue.get(cls)
+    }
+
+    public actual fun <T : Any> singleMetadataKey(
+        label: String,
+        type: KClass<out T>
+    ): MetadataKey<T> {
+        return JvmMetadataKey.single(label, type)
+    }
+
+    public actual fun <T : Any> repeatedMetadataKey(
+        label: String,
+        type: KClass<out T>
+    ): MetadataKey<T> {
+        return JvmMetadataKey.repeated(label, type)
     }
 
     /**
@@ -74,35 +81,8 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
         return JvmLogger(cls.kotlin, impl)
     }
 
-    @Suppress("TooGenericExceptionCaught") // Several exception types could be thrown.
     private fun createFluentLogger(cls: Class<*>): FluentLogger {
         val backend = Platform.getBackend(cls.name)
-        return try {
-            constructor.newInstance(backend)
-        } catch (e: Exception) {
-            logger.atSevere().withCause(e)
-                .log("Unable to create a logger for the class `${cls.name}`.")
-            throw illegalStateWithCauseOf(e)
-        }
+        return FluentLogger(backend)
     }
-}
-
-private fun ctor(): Constructor<FluentLogger> {
-    val loggerClass = FluentLogger::class.java
-    val loggerBackendClass = LoggerBackend::class.java
-    return try {
-        val constructor = loggerClass.getDeclaredConstructor(loggerBackendClass)
-        constructor.isAccessible = true
-        constructor
-    } catch (e: NoSuchMethodException) {
-        logger.atSevere().withCause(e).log(
-            "Unable to find constructor `${loggerClass.name}(${loggerBackendClass.name})`."
-        )
-        throw illegalStateWithCauseOf(e)
-    }
-}
-
-private fun illegalStateWithCauseOf(throwable: Throwable): IllegalStateException {
-    val rootCause = Throwables.getRootCause(throwable)
-    throw IllegalStateException(rootCause)
 }

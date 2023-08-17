@@ -29,7 +29,7 @@ package io.spine.logging
 import kotlin.reflect.KClass
 
 /**
- * A factory for [Logger] instances.
+ * A factory for logging objects.
  */
 public expect object LoggingFactory {
 
@@ -46,6 +46,28 @@ public expect object LoggingFactory {
      * If the domain is not specified, returns [LoggingDomain.noOp].
      */
     public fun loggingDomainOf(cls: KClass<*>): LoggingDomain
+
+    /**
+     * Creates a key for a single piece of metadata. If metadata is set more than once
+     * using this key for the same log statement, the last set value will be the one used, and
+     * other values will be ignored (although callers should never rely on this behavior).
+     *
+     * Key instances behave like singletons, and two key instances with the same label will still
+     * be considered distinct. The recommended approach is to always assign [MetadataKey]
+     * instances to static final constants.
+     */
+    public fun <T: Any> singleMetadataKey(label: String, type: KClass<out T>): MetadataKey<T>
+
+    /**
+     * Creates a key for a repeated piece of metadata. If metadata is added more than once
+     * using this key for a log statement, all values will be retained as key/value pairs in
+     * the order they were added.
+     *
+     * Key instances behave like singletons, and two key instances with the same label will still
+     * be considered distinct. The recommended approach is to always assign [MetadataKey]
+     * instances to static final constants.
+     */
+    public fun <T: Any> repeatedMetadataKey(label: String, type: KClass<out T>): MetadataKey<T>
 }
 
 /**
