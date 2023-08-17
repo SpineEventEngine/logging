@@ -18,7 +18,7 @@ package com.google.common.flogger.context;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
 
-import com.google.common.flogger.FluentLogger;
+import com.google.common.flogger.FluentLogger2;
 import com.google.common.flogger.MetadataKey;
 import com.google.common.flogger.StackSize;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
@@ -29,7 +29,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
  * ScopedLoggingContext#getInstance}.
  */
 public final class ScopedLoggingContexts {
-  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
+  private static final FluentLogger2 logger = FluentLogger2.forEnclosingClass();
 
   private static boolean warnOnFailure(boolean wasSuccessful) {
     if (!wasSuccessful && !ScopedLoggingContext.getInstance().isNoOp()) {

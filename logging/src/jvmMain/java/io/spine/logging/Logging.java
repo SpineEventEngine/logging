@@ -26,7 +26,7 @@
 
 package io.spine.logging;
 
-import com.google.common.flogger.FluentLogger;
+import com.google.common.flogger.FluentLogger2;
 
 import java.util.logging.Level;
 
@@ -36,7 +36,7 @@ import static com.google.common.flogger.LogSites.callerOf;
 /**
  * Utility interface for objects that require logging output.
  *
- * <p>Such an object needs to implement this interface and obtain a {@link FluentLogger} instance
+ * <p>Such an object needs to implement this interface and obtain a {@link FluentLogger2} instance
  * associated with the class of the object via the {@link #logger()} method.
  *
  * <p>In addition to this, the interface provides shortcut methods for the popular
@@ -69,7 +69,7 @@ public interface Logging {
     /**
      * Obtains {@code FluentLogger} instance for the given class.
      */
-    static FluentLogger loggerFor(Class<?> cls) {
+    static FluentLogger2 loggerFor(Class<?> cls) {
         checkNotNull(cls);
         return LoggingFactory.getFluentLogger(cls);
     }
@@ -77,57 +77,57 @@ public interface Logging {
     /**
      * Obtains {@code FluentLogger} instance for this class.
      */
-    default FluentLogger logger() {
+    default FluentLogger2 logger() {
         return loggerFor(getClass());
     }
 
-    /** A convenience method for {@link FluentLogger#atSevere()}. */
-    default FluentLogger.Api _severe() {
+    /** A convenience method for {@link FluentLogger2#atSevere()}. */
+    default FluentLogger2.Api _severe() {
         return injectLogSite(logger().atSevere());
     }
 
     /** Same as {@link #_severe()}. */
-    default FluentLogger.Api _error() {
+    default FluentLogger2.Api _error() {
         return _severe();
     }
 
-    /** A convenience method for {@link FluentLogger#atWarning()}. */
-    default FluentLogger.Api _warn() {
+    /** A convenience method for {@link FluentLogger2#atWarning()}. */
+    default FluentLogger2.Api _warn() {
         return injectLogSite(logger().atWarning());
     }
 
-    /** A convenience method for {@link FluentLogger#atInfo()}. */
-    default FluentLogger.Api _info() {
+    /** A convenience method for {@link FluentLogger2#atInfo()}. */
+    default FluentLogger2.Api _info() {
         return injectLogSite(logger().atInfo());
     }
 
-    /** A convenience method for {@link FluentLogger#atConfig()}. */
-    default FluentLogger.Api _config() {
+    /** A convenience method for {@link FluentLogger2#atConfig()}. */
+    default FluentLogger2.Api _config() {
         return injectLogSite(logger().atConfig());
     }
 
-    /** A convenience method for {@link FluentLogger#atFine()}. */
-    default FluentLogger.Api _fine() {
+    /** A convenience method for {@link FluentLogger2#atFine()}. */
+    default FluentLogger2.Api _fine() {
         return injectLogSite(logger().atFine());
     }
 
     /** Sames as {@link #_fine()}. */
-    default FluentLogger.Api _debug() {
+    default FluentLogger2.Api _debug() {
         return _fine();
     }
 
-    /** A convenience method for {@link FluentLogger#atFiner()}. */
-    default FluentLogger.Api _finer() {
+    /** A convenience method for {@link FluentLogger2#atFiner()}. */
+    default FluentLogger2.Api _finer() {
         return injectLogSite(logger().atFiner());
     }
 
-    /** A convenience method for {@link FluentLogger#atFine()}. */
-    default FluentLogger.Api _finest() {
+    /** A convenience method for {@link FluentLogger2#atFine()}. */
+    default FluentLogger2.Api _finest() {
         return injectLogSite(logger().atFinest());
     }
 
     /** Same as {@link #_finest()}. */
-    default FluentLogger.Api _trace() {
+    default FluentLogger2.Api _trace() {
         return _finest();
     }
 
@@ -137,7 +137,7 @@ public interface Logging {
      *
      * <p>The call site is at the class implementing the {@code Logging} interface.
      */
-    private static FluentLogger.Api injectLogSite(FluentLogger.Api api) {
+    private static FluentLogger2.Api injectLogSite(FluentLogger2.Api api) {
         if (api.isEnabled()) {
             return api.withInjectedLogSite(callerOf(Logging.class));
         } else {

@@ -16,7 +16,7 @@
 
 package com.google.common.flogger.context;
 
-import com.google.common.flogger.FluentLogger;
+import com.google.common.flogger.FluentLogger2;
 import com.google.common.flogger.MetadataKey;
 import com.google.common.flogger.StackSize;
 import com.google.common.flogger.context.ScopedLoggingContext.LoggingContextCloseable;
@@ -43,7 +43,7 @@ final class NoOpContextDataProvider extends ContextDataProvider {
     // careful to avoid any attempt to obtain a logger instance until we can be sure logging config
     // is complete.
     private static final class LazyLogger {
-      private static final FluentLogger logger = FluentLogger.forEnclosingClass();
+      private static final FluentLogger2 logger = FluentLogger2.forEnclosingClass();
     }
     private final AtomicBoolean haveWarned = new AtomicBoolean();
 

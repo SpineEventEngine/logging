@@ -67,7 +67,7 @@ public class LogContextTest {
   @Test
   public void testIsEnabled() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
 
     backend.setLevel(INFO);
 
@@ -79,7 +79,7 @@ public class LogContextTest {
   @Test
   public void testLoggingWithCause() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
 
     Throwable cause = new Throwable();
     logger.atInfo().withCause(cause).log("Hello World");
@@ -91,7 +91,7 @@ public class LogContextTest {
   @Test
   public void testLazyArgs() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
 
     logger.atInfo().log("Hello %s", LazyArgs.lazy(() -> "World"));
 
@@ -111,7 +111,7 @@ public class LogContextTest {
   @Test
   public void testFormattedMessage() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
     logger.at(INFO).log("Formatted %s", "Message");
 
     assertThat(backend.getLoggedCount()).isEqualTo(1);
@@ -129,7 +129,7 @@ public class LogContextTest {
   @Test
   public void testLiteralMessage() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
     logger.at(INFO).log("Literal Message");
 
     assertThat(backend.getLoggedCount()).isEqualTo(1);
@@ -147,7 +147,7 @@ public class LogContextTest {
   @Test
   public void testMultipleMetadata() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
     Exception cause = new RuntimeException();
 
     logger.atInfo().withCause(cause).every(42).log("Hello World");
@@ -161,7 +161,7 @@ public class LogContextTest {
   @Test
   public void testMetadataKeys() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
 
     logger.atInfo().with(REPEATED_KEY, "foo").with(REPEATED_KEY, "bar").log("Several values");
     logger.atInfo().with(FLAG_KEY).log("Set Flag");
@@ -182,7 +182,7 @@ public class LogContextTest {
   @Test
   public void testLoggedTags() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
 
     Tags tags = Tags.of("foo", "bar");
     logger.atInfo().with(Key.TAGS, tags).log("With tags");
@@ -513,7 +513,7 @@ public class LogContextTest {
   @Test
   public void testExplicitVarargs() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
 
     Object[] args = new Object[] {"foo", null, "baz"};
     logger.atInfo().logVarargs("Any message ...", args);
@@ -527,7 +527,7 @@ public class LogContextTest {
   @Test
   public void testNoArguments() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
 
     // Verify arguments passed in to the non-boxed fundamental type methods are mapped correctly.
     logger.atInfo().log();
@@ -539,7 +539,7 @@ public class LogContextTest {
   @Test
   public void testLiteralArgument_doesNotEscapePercent() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
     logger.atInfo().log("Hello %s World");
     backend.assertLastLogged().hasMessage("Hello %s World");
     backend.assertLastLogged().hasArguments();
@@ -548,7 +548,7 @@ public class LogContextTest {
   @Test
   public void testSingleParameter() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
     logger.atInfo().log("Hello %d World", 42);
     backend.assertLastLogged().hasMessage("Hello %d World");
     backend.assertLastLogged().hasArguments(42);
@@ -558,7 +558,7 @@ public class LogContextTest {
   @Test
   public void testNullLiteral() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
     // We want to call log(String) (not log(Object)) with a null value.
     logger.atInfo().log((String) null);
     backend.assertLastLogged().hasMessage(null);
@@ -568,7 +568,7 @@ public class LogContextTest {
   @Test
   public void testNullArgument() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
     logger.atInfo().log("Hello %d World", null);
     backend.assertLastLogged().hasMessage("Hello %d World");
     backend.assertLastLogged().hasArguments(new Object[] {null});
@@ -583,7 +583,7 @@ public class LogContextTest {
   @Test
   public void testNullMessageAndArgument() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
     try {
       logger.atInfo().log(null, null);
       fail("null message and arguments should fail");
@@ -594,7 +594,7 @@ public class LogContextTest {
   @Test
   public void testManyObjectParameters() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
     String ms = "Any message will do...";
 
     // Verify that the arguments passed in to the Object based methods are mapped correctly.
@@ -631,7 +631,7 @@ public class LogContextTest {
   @Test
   public void testOneUnboxedArgument() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
     String ms = "Any message will do...";
 
     // Verify arguments passed in to the non-boxed fundamental type methods are mapped correctly.
@@ -650,7 +650,7 @@ public class LogContextTest {
   @Test
   public void testTwoUnboxedArguments() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
     String ms = "Any message will do...";
 
     // Verify arguments passed in to the non-boxed fundamental type methods are mapped correctly.
@@ -713,7 +713,7 @@ public class LogContextTest {
   @Test
   public void testTwoMixedArguments() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
     String ms = "Any message will do...";
 
     // Verify arguments passed in to the non-boxed fundamental type methods are mapped correctly.
@@ -743,7 +743,7 @@ public class LogContextTest {
   @Test
   public void testWithStackTrace() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
 
     // Keep these 2 lines immediately adjacent to each other.
     StackTraceElement expectedCaller = getCallerInfoFollowingLine();
@@ -774,7 +774,7 @@ public class LogContextTest {
   @Test
   public void testWithStackTraceAndCause() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
     RuntimeException badness = new RuntimeException("badness");
 
     // Use "SMALL" size here because we rely on the total stack depth in this test being bigger
@@ -798,7 +798,7 @@ public class LogContextTest {
   @Test
   public void testStackTraceFormatting() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
 
     // Keep these 2 lines immediately adjacent to each other.
     StackTraceElement expectedCaller = getCallerInfoFollowingLine();
@@ -859,7 +859,7 @@ public class LogContextTest {
   @Test
   public void testExplicitLogSiteInjection() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
     // Tests it's the log site instance that controls rate limiting, even over different calls.
     // We don't expect this to ever happen in real code though.
     for (int i = 0; i <= 6; i++) {
@@ -878,7 +878,7 @@ public class LogContextTest {
   }
 
   // In normal use, the logger would never need to be passed in and you'd use logVarargs().
-  private static void logHelper(FluentLogger logger, LogSite logSite, int n, String message) {
+  private static void logHelper(FluentLogger2 logger, LogSite logSite, int n, String message) {
     logger.atInfo().withInjectedLogSite(logSite).every(n).log("%s", message);
   }
 
@@ -887,7 +887,7 @@ public class LogContextTest {
   @Test
   public void testExplicitLogSiteSuppression() {
     FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    FluentLogger2 logger = new FluentLogger2(backend);
 
     logger.atInfo().withInjectedLogSite(LogSite.INVALID).log("No log site here");
     logger.atInfo().withInjectedLogSite(null).log("No-op injection");
