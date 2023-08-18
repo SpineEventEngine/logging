@@ -47,10 +47,12 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
         return createForClass(cls)
     }
 
+    @JvmStatic
     public actual fun loggingDomainOf(cls: KClass<*>): LoggingDomain {
         return LoggingDomainClassValue.get(cls)
     }
 
+    @JvmStatic
     public actual fun <T : Any> singleMetadataKey(
         label: String,
         type: KClass<T>
@@ -58,9 +60,11 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
         return JvmMetadataKey.single(label, type)
     }
 
+    @JvmStatic
     public fun <T: Any> singleMetadataKey(label: String, type: Class<T>): MetadataKey<T> =
         singleMetadataKey(label, type.kotlin)
 
+    @JvmStatic
     public actual fun <T : Any> repeatedMetadataKey(
         label: String,
         type: KClass<T>
@@ -68,6 +72,7 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
         return JvmMetadataKey.repeated(label, type)
     }
 
+    @JvmStatic
     public fun <T : Any> repeatedMetadataKey(label: String, type: Class<T>): MetadataKey<T> =
         repeatedMetadataKey(label, type.kotlin)
 
