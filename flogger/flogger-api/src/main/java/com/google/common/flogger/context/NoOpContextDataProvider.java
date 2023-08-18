@@ -20,7 +20,10 @@ import com.google.common.flogger.FluentLogger2;
 import com.google.common.flogger.MetadataKey;
 import com.google.common.flogger.StackSize;
 import com.google.common.flogger.context.ScopedLoggingContext.LoggingContextCloseable;
+
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import static java.lang.String.format;
 
 /**
  * Fallback context data provider used when no other implementations are available for a platform.
@@ -49,14 +52,17 @@ final class NoOpContextDataProvider extends ContextDataProvider {
 
     private void logWarningOnceOnly() {
       if (haveWarned.compareAndSet(false, true)) {
+        var defaultPlatform = "com.google.common.flogger.backend.system.DefaultPlatform";
         LazyLogger.logger
             .atWarning()
             .withStackTrace(StackSize.SMALL)
-            .log(
+            .log(format(
                 "Scoped logging contexts are disabled; no context data provider was installed.%n"
                     + "To enable scoped logging contexts in your application, see the "
                     + "site-specific Platform class used to configure logging behaviour.%n"
-                    + "Default Platform: com.google.common.flogger.backend.system.DefaultPlatform");
+                    + "Default Platform: `%s`.",
+                defaultPlatform)
+            );
       }
     }
 
