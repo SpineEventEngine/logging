@@ -38,11 +38,11 @@ public final class ScopedLoggingContexts {
           .atMostEvery(5, MINUTES)
           .withStackTrace(StackSize.SMALL)
           .log(
-              "***** An attempt to add metadata to the current logging context failed. *****\n"
+              "***** An attempt to add metadata to the current logging context failed. *****%n"
                   + "Calls to static methods in 'ScopedLoggingContexts' may fail when there is no"
-                  + " existing context available.\n"
+                  + " existing context available.%n"
                   + "To ensure metadata is available to log statements, create a new context via"
-                  + " 'ScopedLoggingContexts.newContext()' and add metadata to it explicitly.\n");
+                  + " 'ScopedLoggingContexts.newContext()' and add metadata to it explicitly.%n");
     }
     return wasSuccessful;
   }

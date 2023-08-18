@@ -35,7 +35,7 @@ import org.junit.runners.JUnit4;
 public class FluentLogger2Test {
   @Test
   public void testCreate() {
-    FluentLogger2 logger = FluentLogger2.forEnclosingClass();
+    var logger = FluentLogger2.forEnclosingClass();
     assertThat(logger.getName()).isEqualTo(FluentLogger2Test.class.getName());
 
     // Note that this one-to-one binding of loggers and backends is not strictly necessary and in
@@ -47,8 +47,8 @@ public class FluentLogger2Test {
 
   @Test
   public void testNoOp() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger2 logger = new FluentLogger2(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
     backend.setLevel(Level.INFO);
 
     // Down to and including the configured log level are not the no-op instance.

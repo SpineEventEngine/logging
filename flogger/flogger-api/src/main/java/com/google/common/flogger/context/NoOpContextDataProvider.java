@@ -33,7 +33,7 @@ final class NoOpContextDataProvider extends ContextDataProvider {
    * used in code which attempts to set context information or modify scopes. This is intended for
    * use by platform implementations in cases where no context is configured.
    */
-  static final ContextDataProvider getNoOpInstance() {
+  static ContextDataProvider getNoOpInstance() {
     return NO_OP_INSTANCE;
   }
 
@@ -53,9 +53,9 @@ final class NoOpContextDataProvider extends ContextDataProvider {
             .atWarning()
             .withStackTrace(StackSize.SMALL)
             .log(
-                "Scoped logging contexts are disabled; no context data provider was installed.\n"
+                "Scoped logging contexts are disabled; no context data provider was installed.%n"
                     + "To enable scoped logging contexts in your application, see the "
-                    + "site-specific Platform class used to configure logging behaviour.\n"
+                    + "site-specific Platform class used to configure logging behaviour.%n"
                     + "Default Platform: com.google.common.flogger.backend.system.DefaultPlatform");
       }
     }
