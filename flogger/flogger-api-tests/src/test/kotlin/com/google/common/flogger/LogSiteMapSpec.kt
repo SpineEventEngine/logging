@@ -1,0 +1,123 @@
+/*
+ * Copyright (C) 2020 The Flogger Authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.google.common.flogger
+
+import com.google.common.flogger.backend.Metadata
+import com.google.common.flogger.testing.FakeLogSite.create
+import com.google.common.flogger.testing.FakeMetadata
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.kotest.matchers.types.shouldNotBeSameInstanceAs
+import java.lang.Thread.sleep
+import java.util.concurrent.Callable
+import java.util.concurrent.atomic.AtomicInteger
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+
+@DisplayName("`LogSiteMap` should")
+internal class LogSiteMapSpec {
+
+    @Test
+    fun `get value for the given key`() {
+        val map = createMap()
+        val logSite1 = create("class1", "method1", 1, "path1")
+        val logSite2 = create("class2", "method2", 2, "path2")
+        val stats1 = map[logSite1, Metadata.empty()]
+        val stats2 = map[logSite2, Metadata.empty()]
+        stats1.shouldNotBeNull()
+        stats2.shouldNotBeNull()
+        stats1 shouldNotBeSameInstanceAs stats2
+        map[logSite1, Metadata.empty()] shouldBeSameInstanceAs stats1
+        map[logSite2, Metadata.empty()] shouldBeSameInstanceAs stats2
+    }
+
+    @Test
+    fun `remove entries when a scope is manually closed`() {
+        val map = createMap()
+        val foo = LoggingScope.WeakScope("foo")
+        val fooMetadata = FakeMetadata().add(LogContext.Key.LOG_SITE_GROUPING_KEY, foo)
+        val bar = LoggingScope.WeakScope("bar")
+        val barMetadata = FakeMetadata().add(LogContext.Key.LOG_SITE_GROUPING_KEY, bar)
+        val logSite = create("com.google.foo.Foo", "doFoo", 42, "<unused>")
+        val fooKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
+        val barKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, barMetadata)
+
+        // First increment.
+        map[fooKey, fooMetadata].incrementAndGet() shouldBe 1
+        // Same metadata, non-specialized key (scope is also not in the metadata).
+        map[logSite, FakeMetadata.empty()].incrementAndGet() shouldBe 1
+        // Same metadata, specialized key (2nd time).
+        map[fooKey, fooMetadata].incrementAndGet() shouldBe 2
+        // Different metadata, new specialized key.
+        map[barKey, barMetadata].incrementAndGet() shouldBe 1
+
+        map.contains(logSite).shouldBeTrue()
+        map.contains(fooKey).shouldBeTrue()
+        map.contains(barKey).shouldBeTrue()
+
+        foo.closeForTesting()
+        map.contains(logSite).shouldBeTrue()
+        map.contains(fooKey).shouldBeFalse()
+        map.contains(barKey).shouldBeTrue()
+    }
+
+    @Test
+    fun `remove entries when a scope is garbage collected`() {
+        val map = createMap()
+
+        // The scope of the returned key should be garbage collected
+        // once the recursion is over.
+        val fooKey = recurseAndCall(10) {
+            useAndReturnScopedKey(map, "foo")
+        }
+
+        // GC should collect the `Scope` reference used in the recursive call.
+        System.gc()
+        sleep(1000)
+        System.gc()
+
+        // Adding new keys in a different scope triggers tidying up of keys
+        // from unreachable scopes.
+        val barKey = useAndReturnScopedKey(map, "bar")
+        map.contains(barKey).shouldBeTrue()
+
+        // This is what's being tested! The scope becoming unreachable
+        // causes old keys to be removed.
+        map.contains(fooKey).shouldBeFalse()
+    }
+}
+
+private fun createMap(): LogSiteMap<AtomicInteger> = object : LogSiteMap<AtomicInteger>() {
+    override fun initialValue(): AtomicInteger = AtomicInteger(0)
+}
+
+private fun <T> recurseAndCall(n: Int, action: Callable<T>): T {
+    val i = n - 1
+    return if (i <= 0) action.call() else recurseAndCall(i, action)
+}
+
+private fun useAndReturnScopedKey(map: LogSiteMap<AtomicInteger>, label: String): LogSiteKey {
+    val scope = LoggingScope.create(label)
+    val metadata = FakeMetadata().add(LogContext.Key.LOG_SITE_GROUPING_KEY, scope)
+    val logSite = create("com.example", label, 42, "<unused>")
+    val key = LogContext.specializeLogSiteKeyFromMetadata(logSite, metadata)
+    map[key, metadata].incrementAndGet()
+    map.contains(key).shouldBeTrue()
+    return key
+}
