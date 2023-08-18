@@ -16,6 +16,26 @@
 
 package com.google.common.flogger;
 
+import com.google.common.base.Splitter;
+import com.google.common.collect.Iterators;
+import com.google.common.collect.Range;
+import com.google.common.flogger.DurationRateLimiter.RateLimitPeriod;
+import com.google.common.flogger.LogContext.Key;
+import com.google.common.flogger.context.Tags;
+import com.google.common.flogger.testing.FakeLogSite;
+import com.google.common.flogger.testing.FakeLoggerBackend;
+import com.google.common.flogger.testing.FakeMetadata;
+import com.google.common.flogger.testing.TestLogger;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Level;
+
 import static com.google.common.collect.ImmutableList.toImmutableList;
 import static com.google.common.flogger.LogContextTest.LogType.BAR;
 import static com.google.common.flogger.LogContextTest.LogType.FOO;
@@ -28,26 +48,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.logging.Level.INFO;
 import static org.junit.Assert.fail;
 
-import com.google.common.base.Splitter;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterators;
-import com.google.common.collect.Range;
-import com.google.common.flogger.DurationRateLimiter.RateLimitPeriod;
-import com.google.common.flogger.LogContext.Key;
-import com.google.common.flogger.context.Tags;
-import com.google.common.flogger.testing.FakeLogSite;
-import com.google.common.flogger.testing.FakeLoggerBackend;
-import com.google.common.flogger.testing.FakeMetadata;
-import com.google.common.flogger.testing.TestLogger;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.Arrays;
-import java.util.List;
-import java.util.logging.Level;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-
+@SuppressWarnings("NewExceptionWithoutArguments") // For testing exception logging.
 @RunWith(JUnit4.class)
 public class LogContextTest {
   // Arbitrary constants of overloaded types for testing argument mappings.
@@ -128,8 +129,8 @@ public class LogContextTest {
 
   @Test
   public void testLiteralMessage() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger2 logger = new FluentLogger2(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
     logger.at(INFO).log("Literal Message");
 
     assertThat(backend.getLoggedCount()).isEqualTo(1);
@@ -181,10 +182,10 @@ public class LogContextTest {
   // AbstractScopedLoggingContextTest.
   @Test
   public void testLoggedTags() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger2 logger = new FluentLogger2(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
 
-    Tags tags = Tags.of("foo", "bar");
+    var tags = Tags.of("foo", "bar");
     logger.atInfo().with(Key.TAGS, tags).log("With tags");
 
     assertThat(backend.getLoggedCount()).isEqualTo(1);
@@ -199,7 +200,7 @@ public class LogContextTest {
     var startNanos = MILLISECONDS.toNanos(System.currentTimeMillis());
     // Logging occurs for counts: 0, 5, 10 (timestamp is not important).
     for (int millis = 0, count = 0; millis <= 1000; millis += 100) {
-      long timestampNanos = startNanos + MILLISECONDS.toNanos(millis);
+      var timestampNanos = startNanos + MILLISECONDS.toNanos(millis);
       logger.at(INFO, timestampNanos).every(5).log("Count=%d", count++);
     }
 
@@ -309,7 +310,7 @@ public class LogContextTest {
     // 10 logs per second over 6 seconds.
     long startNanos = MILLISECONDS.toNanos(System.currentTimeMillis());
     for (int millis = 0, count = 0; millis <= 6000; millis += 100) {
-      long timestampNanos = startNanos + MILLISECONDS.toNanos(millis);
+      var timestampNanos = startNanos + MILLISECONDS.toNanos(millis);
       // Fever than N logs occur in the rate limit period, so logging should occur every 15 logs.
       logger.at(INFO, timestampNanos).every(15).atMostEvery(1, SECONDS).log("Count=%d", count++);
     }
@@ -366,7 +367,7 @@ public class LogContextTest {
   enum LogType {
     FOO,
     BAR
-  };
+  }
 
   @Test
   public void testPer_enum() {
@@ -375,8 +376,8 @@ public class LogContextTest {
 
     // Logs for both types should appear (even though the 2nd log is within the rate limit period).
     // NOTE: It is important this is tested on a single log statement.
-    long nowNanos = MILLISECONDS.toNanos(System.currentTimeMillis());
-    for (LogType type : Arrays.asList(FOO, FOO, FOO, BAR, FOO, BAR, FOO)) {
+    var nowNanos = MILLISECONDS.toNanos(System.currentTimeMillis());
+    for (var type : Arrays.asList(FOO, FOO, FOO, BAR, FOO, BAR, FOO)) {
       logger.at(INFO, nowNanos).atMostEvery(1, SECONDS).per(type).log("Type: %s", type);
       nowNanos += MILLISECONDS.toNanos(100);
     }
@@ -430,7 +431,7 @@ public class LogContextTest {
 
   @Test
   public void testWasForced_level() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
+    var backend = new FakeLoggerBackend();
     backend.setLevel(Level.WARNING);
     TestLogger logger = TestLogger.create(backend);
 
