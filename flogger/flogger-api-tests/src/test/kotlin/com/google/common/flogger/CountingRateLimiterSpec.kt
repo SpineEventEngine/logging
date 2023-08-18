@@ -28,7 +28,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 @DisplayName("`CountingRateLimiter` should")
-class CountingRateLimiterSpec {
+internal class CountingRateLimiterSpec {
 
     companion object {
         private const val RATE_LIMIT = 3
