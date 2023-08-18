@@ -177,7 +177,7 @@ private class DelegatingContextBuilder(
         key: MetadataKey<T>,
         value: T
     ): ScopedLoggingContext.Builder {
-        delegate.withMetadata((key as JvmMetadataKey<T>).delegate, value)
+        delegate.withMetadata((key as JvmMetadataKey<T>).adapter, value)
         return this
     }
 
