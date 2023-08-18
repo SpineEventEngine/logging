@@ -29,7 +29,7 @@ import org.junit.runners.JUnit4;
  * Fluent loggers are typically very simple classes whose only real responsibility is as a factory
  * for a specific API implementation. As such it needs very few tests itself.
  *
- * See LogContextTest.java for the vast majority of tests related to base logging behaviour.
+ * <p>See LogContextTest.java for the vast majority of tests related to base logging behaviour.
  */
 @RunWith(JUnit4.class)
 public class FluentLogger2Test {
