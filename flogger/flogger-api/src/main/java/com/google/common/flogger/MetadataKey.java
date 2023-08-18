@@ -93,7 +93,7 @@ public class MetadataKey<T> {
    * {@link MetadataKey#emit} method in this class.
    */
   public interface KeyValueHandler {
-    /** Handle a single key/value pair of contextual metadata for a log statement. */
+    /** Handle a single key/value a pair of contextual metadata for a log statement. */
     void handle(String key, Object value);
   }
 
