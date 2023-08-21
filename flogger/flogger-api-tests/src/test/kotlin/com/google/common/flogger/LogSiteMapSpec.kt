@@ -41,6 +41,12 @@ import java.util.concurrent.atomic.AtomicInteger
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
+/**
+ * Tests for [LogSiteMap].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/LogSiteMapTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
 @DisplayName("`LogSiteMap` should")
 internal class LogSiteMapSpec {
 

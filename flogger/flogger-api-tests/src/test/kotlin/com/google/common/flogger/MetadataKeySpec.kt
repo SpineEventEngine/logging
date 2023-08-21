@@ -40,6 +40,12 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
+/**
+ * Tests for [MetadataKey].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/MetadataKeyTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
 @DisplayName("`MetadataKey` should")
 internal class MetadataKeySpec {
 

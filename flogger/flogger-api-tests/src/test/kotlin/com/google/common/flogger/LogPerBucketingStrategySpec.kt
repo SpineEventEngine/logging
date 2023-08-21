@@ -33,10 +33,15 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
+ * Tests for [LogPerBucketingStrategy].
+ *
  * Please note this test suite doesn't use static imports for [LogPerBucketingStrategy]
  * methods because they clash with Kotlin's [built-in][apply] extension.
  *
  * [LogPerBucketingStrategy] declares a method named `apply`.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/LogPerBucketingStrategyTest.java">
+ *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`LogPerBucketingStrategy` should provide a strategy that")
 internal class LogPerBucketingStrategySpec {
