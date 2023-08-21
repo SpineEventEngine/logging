@@ -55,8 +55,10 @@ public expect object LoggingFactory {
      * Key instances behave like singletons, and two key instances with the same label will still
      * be considered distinct. The recommended approach is to always assign [MetadataKey]
      * instances to static final constants.
+     *
+     * @param T the type of the value associated with this key.
      */
-    public fun <T: Any> singleMetadataKey(label: String, type: KClass<T>): MetadataKey<T>
+    public fun <T: Any> singleMetadataKey(label: String, valueClass: KClass<T>): MetadataKey<T>
 
     /**
      * Creates a key for a repeated piece of metadata. If metadata is added more than once
@@ -66,8 +68,10 @@ public expect object LoggingFactory {
      * Key instances behave like singletons, and two key instances with the same label will still
      * be considered distinct. The recommended approach is to always assign [MetadataKey]
      * instances to static final constants.
+     *
+     * @param T the type of the value associated with this key.
      */
-    public fun <T: Any> repeatedMetadataKey(label: String, type: KClass<T>): MetadataKey<T>
+    public fun <T: Any> repeatedMetadataKey(label: String, valueClass: KClass<T>): MetadataKey<T>
 }
 
 /**

@@ -55,9 +55,9 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
     @JvmStatic
     public actual fun <T : Any> singleMetadataKey(
         label: String,
-        type: KClass<T>
+        valueClass: KClass<T>
     ): MetadataKey<T> {
-        return JvmMetadataKey.single(label, type)
+        return JvmMetadataKey.single(label, valueClass)
     }
 
     @JvmStatic
@@ -67,9 +67,9 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
     @JvmStatic
     public actual fun <T : Any> repeatedMetadataKey(
         label: String,
-        type: KClass<T>
+        valueClass: KClass<T>
     ): MetadataKey<T> {
-        return JvmMetadataKey.repeated(label, type)
+        return JvmMetadataKey.repeated(label, valueClass)
     }
 
     @JvmStatic
