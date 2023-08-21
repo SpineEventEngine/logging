@@ -24,4 +24,25 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-val versionToPublish: String by extra("2.0.0-SNAPSHOT.206")
+package com.google.common.flogger
+
+import com.google.common.flogger.LoggingScope.create
+import io.kotest.matchers.shouldNotBe
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+
+/**
+ * Tests for [LoggingScope].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/LoggingScopeTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
+@DisplayName("`LoggingScope` should")
+internal class LoggingScopeSpec {
+
+    @Test
+    fun `create distinct scopes for the same label`() {
+        val label = "foo"
+        create(label) shouldNotBe create(label) // The same label doesn't make scopes equivalent.
+    }
+}

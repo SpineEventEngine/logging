@@ -27,12 +27,13 @@
 package com.google.common.flogger.backend
 
 import com.google.common.flogger.MetadataKey
-import com.google.common.flogger.MetadataKey.KeyValueHandler
 import com.google.common.flogger.MetadataKey.repeated
 import com.google.common.flogger.MetadataKey.single
 import com.google.common.flogger.backend.MetadataKeyValueHandlers.getDefaultHandler
 import com.google.common.flogger.backend.MetadataKeyValueHandlers.getDefaultRepeatedValueHandler
 import com.google.common.flogger.backend.MetadataKeyValueHandlers.getDefaultValueHandler
+import com.google.common.flogger.given.MemoizingKvHandler
+import com.google.common.flogger.given.iterate
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import org.junit.jupiter.api.DisplayName
@@ -55,7 +56,7 @@ internal class MetadataKeyValueHandlersSpec {
 
     @Test
     fun `provide a handler for singleton values`() {
-        val keyValueHandler = MemoizingHandler()
+        val keyValueHandler = MemoizingKvHandler()
         val metadataHandler = getDefaultValueHandler()
         metadataHandler.handle(single, "value", keyValueHandler)
         keyValueHandler.entries shouldContainExactly listOf("single=value")
@@ -63,7 +64,7 @@ internal class MetadataKeyValueHandlersSpec {
 
     @Test
     fun `provide a handler for repeated values`() {
-        val keyValueHandler = MemoizingHandler()
+        val keyValueHandler = MemoizingKvHandler()
         val metadataHandler = getDefaultRepeatedValueHandler()
 
         metadataHandler.handle(repeated, iterate("foo", "bar"), keyValueHandler)
@@ -74,7 +75,7 @@ internal class MetadataKeyValueHandlersSpec {
 
     @Test
     fun `provide a handler that ignores the given keys`() {
-        val keyValueHandler = MemoizingHandler()
+        val keyValueHandler = MemoizingKvHandler()
         val metadataHandler = getDefaultHandler(setOf(ignored))
 
         metadataHandler.handle(single, "foo", keyValueHandler)
@@ -85,14 +86,3 @@ internal class MetadataKeyValueHandlersSpec {
         keyValueHandler.entries shouldContainExactlyInAnyOrder expected
     }
 }
-
-private class MemoizingHandler : KeyValueHandler {
-
-    val entries = arrayListOf<String>()
-
-    override fun handle(label: String?, value: Any?) {
-        entries.add("$label=$value")
-    }
-}
-
-private fun <T> iterate(vararg values: T): Iterator<T> = listOf(*values).iterator()

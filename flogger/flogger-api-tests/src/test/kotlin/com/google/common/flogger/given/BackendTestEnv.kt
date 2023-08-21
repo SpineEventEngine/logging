@@ -24,4 +24,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-val versionToPublish: String by extra("2.0.0-SNAPSHOT.206")
+package com.google.common.flogger.given
+
+/**
+ * Contains test environment for Flogger API tests.
+ */
+
+/**
+ * Creates a new [Iterator] over the given [values].
+ */
+internal fun <T> iterate(vararg values: T): Iterator<T> = listOf(*values).iterator()

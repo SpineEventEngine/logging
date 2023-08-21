@@ -24,4 +24,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-val versionToPublish: String by extra("2.0.0-SNAPSHOT.206")
+package com.google.common.flogger.given
+
+import com.google.common.flogger.MetadataKey
+
+/**
+ * Remembers all handled key/value pairs.
+ */
+internal class MemoizingKvHandler : MetadataKey.KeyValueHandler {
+
+    val entries = ArrayList<String?>()
+
+    override fun handle(label: String, value: Any) {
+        entries.add("$label=$value")
+    }
+}
