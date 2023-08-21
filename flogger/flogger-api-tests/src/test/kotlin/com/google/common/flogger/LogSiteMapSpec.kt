@@ -95,6 +95,7 @@ internal class LogSiteMapSpec {
     }
 
     @Test
+    @Suppress("ExplicitGarbageCollectionCall") // Needed in the test.
     fun `remove entries when a scope is garbage collected`() {
         val map = createMap()
 

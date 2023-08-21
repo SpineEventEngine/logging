@@ -88,9 +88,7 @@ internal class RateLimitStatusSpec {
     fun `use 'reset()' method of both statutes when combined`() {
         val fooStatus = TestStatus()
         val erroneousStatus: RateLimitStatus = object : RateLimitStatus() {
-            public override fun reset() {
-                throw IllegalStateException("badness")
-            }
+            public override fun reset() = error("badness")
         }
 
         fooStatus.wasReset = false // For sure.
@@ -147,9 +145,7 @@ internal class RateLimitStatusSpec {
 private class TestStatus(private val shouldThrow: Boolean = false) : RateLimitStatus() {
     var wasReset = false
     public override fun reset() {
-        if (shouldThrow) {
-            throw IllegalStateException()
-        }
+        check(!shouldThrow)
         wasReset = true
     }
 }
