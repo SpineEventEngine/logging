@@ -67,7 +67,7 @@ internal class AbstractLoggerSpec {
         backend.logged.shouldBeEmpty()
         output shouldMatch ISO_TIMESTAMP_PREFIX
         output shouldContain "logging error"
-        output shouldContain "com.google.common.flogger.AbstractLoggerSpec.report error"
+        output shouldContain "com.google.common.flogger.AbstractLoggerSpec.report an error"
         output shouldContain "java.lang.IllegalStateException: Ooopsie"
     }
 
@@ -129,6 +129,7 @@ internal class AbstractLoggerSpec {
     }
 
     @Test
+    @Suppress("TooGenericExceptionThrown") // Just `Error` is OK for tests.
     fun `allow logging errors thrown by a backend`() {
         // A backend that triggers an `Error`.
         val backend: MemoizingBackend = object : MemoizingBackend() {
