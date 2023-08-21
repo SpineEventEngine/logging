@@ -27,7 +27,7 @@
 package com.google.common.flogger.given
 
 /**
- * Contains test environment for flogger API tests.
+ * Contains test environment for Flogger API tests.
  */
 
 /**
