@@ -34,7 +34,7 @@ import java.util.logging.Level;
  * The choice to prevent direct extension of loggers was made deliberately to ensure that users of
  * a specific logger implementation always get the same behavior.
  */
-public final class FluentLogger extends AbstractLogger<FluentLogger.Api> {
+public final class FluentLogger2 extends AbstractLogger<FluentLogger2.Api> {
   /**
    * The non-wildcard, fully specified, logging API for this logger. Fluent logger implementations
    * should specify a non-wildcard API like this with which to generify the abstract logger.
@@ -62,35 +62,42 @@ public final class FluentLogger extends AbstractLogger<FluentLogger.Api> {
    * Returns a new logger instance which parses log messages using printf format for the enclosing
    * class using the system default logging backend.
    */
-  public static FluentLogger forEnclosingClass() {
+  public static FluentLogger2 forEnclosingClass() {
     // NOTE: It is _vital_ that the call to "caller finder" is made directly inside the static
     // factory method. See getCallerFinder() for more information.
-    String loggingClass = Platform.getCallerFinder().findLoggingClass(FluentLogger.class);
-    return new FluentLogger(Platform.getBackend(loggingClass));
+    var loggingClass = Platform.getCallerFinder().findLoggingClass(FluentLogger2.class);
+    return new FluentLogger2(Platform.getBackend(loggingClass));
   }
 
-  // Visible for testing.
-  FluentLogger(LoggerBackend backend) {
+  /**
+   * Creates a new fluent logger instance with the specified backend.
+   *
+   * @apiNote This constructor used to be package-private in the original Flogger implementation.
+   *         This, in turn, required reflection-based creation of new instances of this class in
+   *         {@code io.spine.logging.JvmLoggerFactoryKt}. Now, as we aggregate the Flogger code,
+   *         we open the constructor for simplicity.
+   */
+  public FluentLogger2(LoggerBackend backend) {
     super(backend);
   }
 
   @Override
   public Api at(Level level) {
-    boolean isLoggable = isLoggable(level);
-    boolean isForced = Platform.shouldForceLogging(getName(), level, isLoggable);
+    var isLoggable = isLoggable(level);
+    var isForced = Platform.shouldForceLogging(getName(), level, isLoggable);
     return (isLoggable || isForced) ? new Context(level, isForced) : NO_OP;
   }
 
   /** Logging context implementing the fully specified API for this logger. */
   // VisibleForTesting
-  final class Context extends LogContext<FluentLogger, Api> implements Api {
+  final class Context extends LogContext<FluentLogger2, Api> implements Api {
     private Context(Level level, boolean isForced) {
       super(level, isForced);
     }
 
     @Override
-    protected FluentLogger getLogger() {
-      return FluentLogger.this;
+    protected FluentLogger2 getLogger() {
+      return FluentLogger2.this;
     }
 
     @Override

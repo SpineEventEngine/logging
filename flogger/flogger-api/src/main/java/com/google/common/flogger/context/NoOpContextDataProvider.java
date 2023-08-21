@@ -16,11 +16,14 @@
 
 package com.google.common.flogger.context;
 
-import com.google.common.flogger.FluentLogger;
+import com.google.common.flogger.FluentLogger2;
 import com.google.common.flogger.MetadataKey;
 import com.google.common.flogger.StackSize;
 import com.google.common.flogger.context.ScopedLoggingContext.LoggingContextCloseable;
+
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import static java.lang.String.format;
 
 /**
  * Fallback context data provider used when no other implementations are available for a platform.
@@ -33,7 +36,7 @@ final class NoOpContextDataProvider extends ContextDataProvider {
    * used in code which attempts to set context information or modify scopes. This is intended for
    * use by platform implementations in cases where no context is configured.
    */
-  static final ContextDataProvider getNoOpInstance() {
+  static ContextDataProvider getNoOpInstance() {
     return NO_OP_INSTANCE;
   }
 
@@ -43,20 +46,23 @@ final class NoOpContextDataProvider extends ContextDataProvider {
     // careful to avoid any attempt to obtain a logger instance until we can be sure logging config
     // is complete.
     private static final class LazyLogger {
-      private static final FluentLogger logger = FluentLogger.forEnclosingClass();
+      private static final FluentLogger2 logger = FluentLogger2.forEnclosingClass();
     }
     private final AtomicBoolean haveWarned = new AtomicBoolean();
 
     private void logWarningOnceOnly() {
       if (haveWarned.compareAndSet(false, true)) {
+        var defaultPlatform = "com.google.common.flogger.backend.system.DefaultPlatform";
         LazyLogger.logger
             .atWarning()
             .withStackTrace(StackSize.SMALL)
-            .log(
-                "Scoped logging contexts are disabled; no context data provider was installed.\n"
+            .log(format(
+                "Scoped logging contexts are disabled; no context data provider was installed.%n"
                     + "To enable scoped logging contexts in your application, see the "
-                    + "site-specific Platform class used to configure logging behaviour.\n"
-                    + "Default Platform: com.google.common.flogger.backend.system.DefaultPlatform");
+                    + "site-specific Platform class used to configure logging behaviour.%n"
+                    + "Default Platform: `%s`.",
+                defaultPlatform)
+            );
       }
     }
 

@@ -93,7 +93,7 @@ public class MetadataKey<T> {
    * {@link MetadataKey#emit} method in this class.
    */
   public interface KeyValueHandler {
-    /** Handle a single key/value pair of contextual metadata for a log statement. */
+    /** Handle a single key/value a pair of contextual metadata for a log statement. */
     void handle(String key, Object value);
   }
 
@@ -107,7 +107,7 @@ public class MetadataKey<T> {
    * instances to static final constants.
    */
   public static <T> MetadataKey<T> single(String label, Class<? extends T> clazz) {
-    return new MetadataKey<T>(label, clazz, false, false);
+    return new MetadataKey<>(label, clazz, false, false);
   }
 
   /**
@@ -120,7 +120,7 @@ public class MetadataKey<T> {
    * instances to static final constants.
    */
   public static <T> MetadataKey<T> repeated(String label, Class<T> clazz) {
-    return new MetadataKey<T>(label, clazz, true, false);
+    return new MetadataKey<>(label, clazz, true, false);
   }
 
   private final String label;
@@ -283,7 +283,7 @@ public class MetadataKey<T> {
   // Prevent subclasses using toString() for anything unexpected.
   @Override
   public final String toString() {
-    return getClass().getName() + "/" + label + "[" + clazz.getName() + "]";
+    return getClass().getName() + '/' + label + '[' + clazz.getName() + ']';
   }
 
   // From https://en.wikipedia.org/wiki/Bloom_filter the number of hash bits to minimize false
@@ -299,11 +299,11 @@ public class MetadataKey<T> {
     // In tests (JDK11) the identity hashcode on its own was as good, if not better than, applying
     // a "mix" operation such as found in:
     // https://github.com/google/guava/blob/master/guava/src/com/google/common/hash/Murmur3_32HashFunction.java#L234
-    int hash = System.identityHashCode(this);
-    long bloom = 0L;
+    var hash = System.identityHashCode(this);
+    var bloom = 0L;
     // Bottom 6-bits form a value from 0-63 (the bit index in the Bloom Filter), and we can extract
     // 5 of these for a 32-bit value (see above for why 5 bits per mask is enough).
-    for (int n = 0; n < 5; n++) {
+    for (var n = 0; n < 5; n++) {
       bloom |= 1L << (hash & 0x3F);
       hash >>>= 6;
     }

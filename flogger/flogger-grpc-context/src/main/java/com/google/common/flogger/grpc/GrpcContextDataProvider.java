@@ -29,7 +29,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 /**
  * A gRPC context based implementation of Flogger's {@link ContextDataProvider}.
  *
- * <p>When using Flogger's {@link com.google.common.flogger.backend.system.DefaultPlatform}, this
+ * <p>When using Flogger's {@code com.google.common.flogger.backend.system.DefaultPlatform}, this
  * factory will automatically be used if it is included on the classpath and no other implementation
  * of {@code ContextDataProvider} (other than the default implementation) is. To specify it more
  * explicitly or to work around an issue where multiple {@code ContextDataProvider} implementations
@@ -79,9 +79,10 @@ public final class GrpcContextDataProvider extends ContextDataProvider {
   public ScopedLoggingContext getContextApiSingleton() {
     GrpcScopedLoggingContext result = configInstance;
     if (result == null) {
-      // GrpcScopedLoggingContext is stateless so we shouldn't need double-checked locking here to
+      // GrpcScopedLoggingContext is stateless, so we shouldn't need double-checked locking here to
       // ensure we don't make more than one.
-      configInstance = result = new GrpcScopedLoggingContext(this);
+      result = new GrpcScopedLoggingContext(this);
+      configInstance = result;
     }
     return result;
   }

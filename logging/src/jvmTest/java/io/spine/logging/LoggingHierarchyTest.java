@@ -26,7 +26,7 @@
 
 package io.spine.logging;
 
-import com.google.common.flogger.FluentLogger;
+import com.google.common.flogger.FluentLogger2;
 import com.google.common.flogger.LogContext;
 import io.spine.logging.given.Base;
 import io.spine.logging.given.ChildOne;
@@ -64,7 +64,7 @@ class LoggingHierarchyTest {
         assertLogger(childTwoLogger, ChildTwo.class);
     }
 
-    private static void assertLogger(FluentLogger logger, Class<?> cls) {
+    private static void assertLogger(FluentLogger2 logger, Class<?> cls) {
         var context = (LogContext<?, ?>) logger.atSevere();
         assertThat(context.getLoggerName())
              .isEqualTo(cls.getName());

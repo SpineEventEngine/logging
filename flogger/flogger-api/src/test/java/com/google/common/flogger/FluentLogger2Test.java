@@ -18,7 +18,7 @@ package com.google.common.flogger;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import com.google.common.flogger.FluentLogger.Context;
+import com.google.common.flogger.FluentLogger2.Context;
 import com.google.common.flogger.testing.FakeLoggerBackend;
 import java.util.logging.Level;
 import org.junit.Test;
@@ -29,40 +29,40 @@ import org.junit.runners.JUnit4;
  * Fluent loggers are typically very simple classes whose only real responsibility is as a factory
  * for a specific API implementation. As such it needs very few tests itself.
  *
- * See LogContextTest.java for the vast majority of tests related to base logging behaviour.
+ * <p>See LogContextTest.java for the vast majority of tests related to base logging behaviour.
  */
 @RunWith(JUnit4.class)
-public class FluentLoggerTest {
+public class FluentLogger2Test {
   @Test
   public void testCreate() {
-    FluentLogger logger = FluentLogger.forEnclosingClass();
-    assertThat(logger.getName()).isEqualTo(FluentLoggerTest.class.getName());
+    var logger = FluentLogger2.forEnclosingClass();
+    assertThat(logger.getName()).isEqualTo(FluentLogger2Test.class.getName());
 
     // Note that this one-to-one binding of loggers and backends is not strictly necessary and in
     // future it's plausible that a configured backend factory might return backends shared with
     // many loggers. In that situation, the logger name must still be the enclosing class name
     // (held separately by the logger itself) while the backend name could differ.
-    assertThat(logger.getBackend().getLoggerName()).isEqualTo(FluentLoggerTest.class.getName());
+    assertThat(logger.getBackend().getLoggerName()).isEqualTo(FluentLogger2Test.class.getName());
   }
 
   @Test
   public void testNoOp() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
     backend.setLevel(Level.INFO);
 
     // Down to and including the configured log level are not the no-op instance.
-    assertThat(logger.atSevere()).isNotSameInstanceAs(FluentLogger.NO_OP);
+    assertThat(logger.atSevere()).isNotSameInstanceAs(FluentLogger2.NO_OP);
     assertThat(logger.atSevere()).isInstanceOf(Context.class);
-    assertThat(logger.atWarning()).isNotSameInstanceAs(FluentLogger.NO_OP);
+    assertThat(logger.atWarning()).isNotSameInstanceAs(FluentLogger2.NO_OP);
     assertThat(logger.atWarning()).isInstanceOf(Context.class);
-    assertThat(logger.atInfo()).isNotSameInstanceAs(FluentLogger.NO_OP);
+    assertThat(logger.atInfo()).isNotSameInstanceAs(FluentLogger2.NO_OP);
     assertThat(logger.atInfo()).isInstanceOf(Context.class);
 
     // Below the configured log level you only get the singleton no-op instance.
-    assertThat(logger.atFine()).isSameInstanceAs(FluentLogger.NO_OP);
-    assertThat(logger.atFiner()).isSameInstanceAs(FluentLogger.NO_OP);
-    assertThat(logger.atFinest()).isSameInstanceAs(FluentLogger.NO_OP);
+    assertThat(logger.atFine()).isSameInstanceAs(FluentLogger2.NO_OP);
+    assertThat(logger.atFiner()).isSameInstanceAs(FluentLogger2.NO_OP);
+    assertThat(logger.atFinest()).isSameInstanceAs(FluentLogger2.NO_OP);
 
     // Just verify that logs below the current log level are discarded.
     logger.atFine().log("DISCARDED");
@@ -75,9 +75,9 @@ public class FluentLoggerTest {
     assertThat(backend.getLoggedCount()).isEqualTo(1);
 
     backend.setLevel(Level.OFF);
-    assertThat(logger.atSevere()).isSameInstanceAs(FluentLogger.NO_OP);
+    assertThat(logger.atSevere()).isSameInstanceAs(FluentLogger2.NO_OP);
 
     backend.setLevel(Level.ALL);
-    assertThat(logger.atFinest()).isNotSameInstanceAs(FluentLogger.NO_OP);
+    assertThat(logger.atFinest()).isNotSameInstanceAs(FluentLogger2.NO_OP);
   }
 }

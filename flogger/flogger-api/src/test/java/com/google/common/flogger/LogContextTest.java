@@ -16,6 +16,26 @@
 
 package com.google.common.flogger;
 
+import com.google.common.base.Splitter;
+import com.google.common.collect.Iterators;
+import com.google.common.collect.Range;
+import com.google.common.flogger.DurationRateLimiter.RateLimitPeriod;
+import com.google.common.flogger.LogContext.Key;
+import com.google.common.flogger.context.Tags;
+import com.google.common.flogger.testing.FakeLogSite;
+import com.google.common.flogger.testing.FakeLoggerBackend;
+import com.google.common.flogger.testing.FakeMetadata;
+import com.google.common.flogger.testing.TestLogger;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Level;
+
 import static com.google.common.collect.ImmutableList.toImmutableList;
 import static com.google.common.flogger.LogContextTest.LogType.BAR;
 import static com.google.common.flogger.LogContextTest.LogType.FOO;
@@ -28,26 +48,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.logging.Level.INFO;
 import static org.junit.Assert.fail;
 
-import com.google.common.base.Splitter;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterators;
-import com.google.common.collect.Range;
-import com.google.common.flogger.DurationRateLimiter.RateLimitPeriod;
-import com.google.common.flogger.LogContext.Key;
-import com.google.common.flogger.context.Tags;
-import com.google.common.flogger.testing.FakeLogSite;
-import com.google.common.flogger.testing.FakeLoggerBackend;
-import com.google.common.flogger.testing.FakeMetadata;
-import com.google.common.flogger.testing.TestLogger;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.Arrays;
-import java.util.List;
-import java.util.logging.Level;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-
+@SuppressWarnings("NewExceptionWithoutArguments") // For testing exception logging.
 @RunWith(JUnit4.class)
 public class LogContextTest {
   // Arbitrary constants of overloaded types for testing argument mappings.
@@ -66,8 +67,8 @@ public class LogContextTest {
 
   @Test
   public void testIsEnabled() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
 
     backend.setLevel(INFO);
 
@@ -78,10 +79,10 @@ public class LogContextTest {
 
   @Test
   public void testLoggingWithCause() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
 
-    Throwable cause = new Throwable();
+    var cause = new Throwable();
     logger.atInfo().withCause(cause).log("Hello World");
     backend.assertLastLogged().metadata().hasSize(1);
     backend.assertLastLogged().metadata().containsUniqueEntry(Key.LOG_CAUSE, cause);
@@ -90,8 +91,8 @@ public class LogContextTest {
 
   @Test
   public void testLazyArgs() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
 
     logger.atInfo().log("Hello %s", LazyArgs.lazy(() -> "World"));
 
@@ -110,8 +111,8 @@ public class LogContextTest {
 
   @Test
   public void testFormattedMessage() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
     logger.at(INFO).log("Formatted %s", "Message");
 
     assertThat(backend.getLoggedCount()).isEqualTo(1);
@@ -128,8 +129,8 @@ public class LogContextTest {
 
   @Test
   public void testLiteralMessage() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
     logger.at(INFO).log("Literal Message");
 
     assertThat(backend.getLoggedCount()).isEqualTo(1);
@@ -146,8 +147,8 @@ public class LogContextTest {
 
   @Test
   public void testMultipleMetadata() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
     Exception cause = new RuntimeException();
 
     logger.atInfo().withCause(cause).every(42).log("Hello World");
@@ -160,8 +161,8 @@ public class LogContextTest {
 
   @Test
   public void testMetadataKeys() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
 
     logger.atInfo().with(REPEATED_KEY, "foo").with(REPEATED_KEY, "bar").log("Several values");
     logger.atInfo().with(FLAG_KEY).log("Set Flag");
@@ -181,10 +182,10 @@ public class LogContextTest {
   // AbstractScopedLoggingContextTest.
   @Test
   public void testLoggedTags() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
 
-    Tags tags = Tags.of("foo", "bar");
+    var tags = Tags.of("foo", "bar");
     logger.atInfo().with(Key.TAGS, tags).log("With tags");
 
     assertThat(backend.getLoggedCount()).isEqualTo(1);
@@ -193,13 +194,13 @@ public class LogContextTest {
 
   @Test
   public void testEveryN() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    TestLogger logger = TestLogger.create(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = TestLogger.create(backend);
 
-    long startNanos = MILLISECONDS.toNanos(System.currentTimeMillis());
+    var startNanos = MILLISECONDS.toNanos(System.currentTimeMillis());
     // Logging occurs for counts: 0, 5, 10 (timestamp is not important).
     for (int millis = 0, count = 0; millis <= 1000; millis += 100) {
-      long timestampNanos = startNanos + MILLISECONDS.toNanos(millis);
+      var timestampNanos = startNanos + MILLISECONDS.toNanos(millis);
       logger.at(INFO, timestampNanos).every(5).log("Count=%d", count++);
     }
 
@@ -219,13 +220,13 @@ public class LogContextTest {
 
   @Test
   public void testOnAverageEveryN() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    TestLogger logger = TestLogger.create(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = TestLogger.create(backend);
 
-    long startNanos = MILLISECONDS.toNanos(System.currentTimeMillis());
+    var startNanos = MILLISECONDS.toNanos(System.currentTimeMillis());
     // Logging occurs randomly 1-in-5 times over 1000 log statements.
     for (int millis = 0, count = 0; millis <= 1000; millis += 1) {
-      long timestampNanos = startNanos + MILLISECONDS.toNanos(millis);
+      var timestampNanos = startNanos + MILLISECONDS.toNanos(millis);
       logger.at(INFO, timestampNanos).onAverageEvery(5).log("Count=%d", count++);
     }
 
@@ -234,8 +235,8 @@ public class LogContextTest {
     backend.assertLogged(0).metadata().containsUniqueEntry(Key.LOG_SAMPLE_EVERY_N, 5);
 
     // Check the expected count and skipped-count for each log based on the timestamp.
-    int lastLogIndex = -1;
-    for (int n = 0; n < backend.getLoggedCount(); n++) {
+    var lastLogIndex = -1;
+    for (var n = 0; n < backend.getLoggedCount(); n++) {
       // The timestamp increases by 1 millisecond each time so we can get the log index from it.
       long deltaNanos = backend.getLogged(n).getTimestampNanos() - startNanos;
       int logIndex = (int) (deltaNanos / MILLISECONDS.toNanos(1));
@@ -253,8 +254,8 @@ public class LogContextTest {
 
   @Test
   public void testAtMostEvery() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    TestLogger logger = TestLogger.create(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = TestLogger.create(backend);
 
     // Logging occurs at: +0ms, +2400ms, +4800ms
     // Note it will not occur at 4200ms (which is the first logging attempt after the
@@ -283,8 +284,8 @@ public class LogContextTest {
 
   @Test
   public void testMultipleRateLimiters_higherLoggingRate() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    TestLogger logger = TestLogger.create(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = TestLogger.create(backend);
 
     // 10 logs per second over 6 seconds.
     long startNanos = MILLISECONDS.toNanos(System.currentTimeMillis());
@@ -303,13 +304,13 @@ public class LogContextTest {
 
   @Test
   public void testMultipleRateLimiters_lowerLoggingRate() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    TestLogger logger = TestLogger.create(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = TestLogger.create(backend);
 
     // 10 logs per second over 6 seconds.
     long startNanos = MILLISECONDS.toNanos(System.currentTimeMillis());
     for (int millis = 0, count = 0; millis <= 6000; millis += 100) {
-      long timestampNanos = startNanos + MILLISECONDS.toNanos(millis);
+      var timestampNanos = startNanos + MILLISECONDS.toNanos(millis);
       // Fever than N logs occur in the rate limit period, so logging should occur every 15 logs.
       logger.at(INFO, timestampNanos).every(15).atMostEvery(1, SECONDS).log("Count=%d", count++);
     }
@@ -324,8 +325,8 @@ public class LogContextTest {
 
   @Test
   public void testPer_withStrategy() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    TestLogger logger = TestLogger.create(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = TestLogger.create(backend);
 
     // Logs for both types should appear (even though the 2nd log is within the rate limit period).
     // NOTE: It is important this is tested on a single log statement.
@@ -366,17 +367,17 @@ public class LogContextTest {
   enum LogType {
     FOO,
     BAR
-  };
+  }
 
   @Test
   public void testPer_enum() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    TestLogger logger = TestLogger.create(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = TestLogger.create(backend);
 
     // Logs for both types should appear (even though the 2nd log is within the rate limit period).
     // NOTE: It is important this is tested on a single log statement.
-    long nowNanos = MILLISECONDS.toNanos(System.currentTimeMillis());
-    for (LogType type : Arrays.asList(FOO, FOO, FOO, BAR, FOO, BAR, FOO)) {
+    var nowNanos = MILLISECONDS.toNanos(System.currentTimeMillis());
+    for (var type : Arrays.asList(FOO, FOO, FOO, BAR, FOO, BAR, FOO)) {
       logger.at(INFO, nowNanos).atMostEvery(1, SECONDS).per(type).log("Type: %s", type);
       nowNanos += MILLISECONDS.toNanos(100);
     }
@@ -397,21 +398,21 @@ public class LogContextTest {
 
   @Test
   public void testPer_scopeProvider() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    TestLogger logger = TestLogger.create(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = TestLogger.create(backend);
 
     // We can't test a specific implementation of ScopedLoggingContext here (there might not be one
     // available), so we fake it. The ScopedLoggingContext behaviour is well tested elsewhere. Only
     // tests should ever create "immediate providers" like this as it doesn't make sense otherwise.
-    LoggingScope fooScope = LoggingScope.create("foo");
-    LoggingScope barScope = LoggingScope.create("bar");
+    var fooScope = LoggingScope.create("foo");
+    var barScope = LoggingScope.create("bar");
     LoggingScopeProvider foo = () -> fooScope;
     LoggingScopeProvider bar = () -> barScope;
 
     // Logs for both scopes should appear (even though the 2nd log is within the rate limit period).
     // NOTE: It is important this is tested on a single log statement.
-    long nowNanos = MILLISECONDS.toNanos(System.currentTimeMillis());
-    for (LoggingScopeProvider sp : Arrays.asList(foo, foo, foo, bar, foo, bar, foo)) {
+    var nowNanos = MILLISECONDS.toNanos(System.currentTimeMillis());
+    for (var sp : Arrays.asList(foo, foo, foo, bar, foo, bar, foo)) {
       logger.at(INFO, nowNanos).atMostEvery(1, SECONDS).per(sp).log("message");
       nowNanos += MILLISECONDS.toNanos(100);
     }
@@ -430,7 +431,7 @@ public class LogContextTest {
 
   @Test
   public void testWasForced_level() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
+    var backend = new FakeLoggerBackend();
     backend.setLevel(Level.WARNING);
     TestLogger logger = TestLogger.create(backend);
 
@@ -468,12 +469,12 @@ public class LogContextTest {
 
   @Test
   public void testWasForced_atMostEvery() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    TestLogger logger = TestLogger.create(backend);
-    LogSite logSite = FakeLogSite.create("com.example.MyClass", "atMostEvery", 123, null);
+    var backend = new FakeLoggerBackend();
+    var logger = TestLogger.create(backend);
+    var logSite = FakeLogSite.create("com.example.MyClass", "atMostEvery", 123, null);
 
     // Log statements always get logged the first time.
-    long nowNanos = MILLISECONDS.toNanos(System.currentTimeMillis());
+    var nowNanos = MILLISECONDS.toNanos(System.currentTimeMillis());
     logger.at(INFO, nowNanos).atMostEvery(1, SECONDS).withInjectedLogSite(logSite).log("LOGGED 1");
 
     nowNanos += MILLISECONDS.toNanos(100);
@@ -512,10 +513,10 @@ public class LogContextTest {
 
   @Test
   public void testExplicitVarargs() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
 
-    Object[] args = new Object[] {"foo", null, "baz"};
+    var args = new Object[] {"foo", null, "baz"};
     logger.atInfo().logVarargs("Any message ...", args);
 
     backend.assertLastLogged().hasArguments("foo", null, "baz");
@@ -526,8 +527,8 @@ public class LogContextTest {
 
   @Test
   public void testNoArguments() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
 
     // Verify arguments passed in to the non-boxed fundamental type methods are mapped correctly.
     logger.atInfo().log();
@@ -538,8 +539,8 @@ public class LogContextTest {
   @SuppressWarnings({"FormatString", "OrphanedFormatString"})
   @Test
   public void testLiteralArgument_doesNotEscapePercent() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
     logger.atInfo().log("Hello %s World");
     backend.assertLastLogged().hasMessage("Hello %s World");
     backend.assertLastLogged().hasArguments();
@@ -547,8 +548,8 @@ public class LogContextTest {
 
   @Test
   public void testSingleParameter() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
     logger.atInfo().log("Hello %d World", 42);
     backend.assertLastLogged().hasMessage("Hello %d World");
     backend.assertLastLogged().hasArguments(42);
@@ -557,8 +558,8 @@ public class LogContextTest {
   // Tests that a null literal is passed unmodified to the backend without throwing an exception.
   @Test
   public void testNullLiteral() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
     // We want to call log(String) (not log(Object)) with a null value.
     logger.atInfo().log((String) null);
     backend.assertLastLogged().hasMessage(null);
@@ -567,8 +568,8 @@ public class LogContextTest {
   // Tests that null arguments are passed unmodified to the backend without throwing an exception.
   @Test
   public void testNullArgument() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
     logger.atInfo().log("Hello %d World", null);
     backend.assertLastLogged().hasMessage("Hello %d World");
     backend.assertLastLogged().hasArguments(new Object[] {null});
@@ -582,8 +583,8 @@ public class LogContextTest {
   // TODO(dbeaumont): Consider allowing this case to work without throwing a runtime exception.
   @Test
   public void testNullMessageAndArgument() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
     try {
       logger.atInfo().log(null, null);
       fail("null message and arguments should fail");
@@ -593,9 +594,9 @@ public class LogContextTest {
 
   @Test
   public void testManyObjectParameters() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
-    String ms = "Any message will do...";
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
+    var ms = "Any message will do...";
 
     // Verify that the arguments passed in to the Object based methods are mapped correctly.
     logger.atInfo().log(ms, "1");
@@ -630,9 +631,9 @@ public class LogContextTest {
 
   @Test
   public void testOneUnboxedArgument() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
-    String ms = "Any message will do...";
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
+    var ms = "Any message will do...";
 
     // Verify arguments passed in to the non-boxed fundamental type methods are mapped correctly.
     logger.atInfo().log(ms, BYTE_ARG);
@@ -649,9 +650,9 @@ public class LogContextTest {
 
   @Test
   public void testTwoUnboxedArguments() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
-    String ms = "Any message will do...";
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
+    var ms = "Any message will do...";
 
     // Verify arguments passed in to the non-boxed fundamental type methods are mapped correctly.
     logger.atInfo().log(ms, BYTE_ARG, BYTE_ARG);
@@ -712,9 +713,9 @@ public class LogContextTest {
 
   @Test
   public void testTwoMixedArguments() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
-    String ms = "Any message will do...";
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
+    var ms = "Any message will do...";
 
     // Verify arguments passed in to the non-boxed fundamental type methods are mapped correctly.
     logger.atInfo().log(ms, OBJECT_ARG, BYTE_ARG);
@@ -742,11 +743,11 @@ public class LogContextTest {
 
   @Test
   public void testWithStackTrace() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
 
     // Keep these 2 lines immediately adjacent to each other.
-    StackTraceElement expectedCaller = getCallerInfoFollowingLine();
+    var expectedCaller = getCallerInfoFollowingLine();
     logger.atSevere().withStackTrace(StackSize.FULL).log("Answer=%#x", 66);
 
     assertThat(backend.getLoggedCount()).isEqualTo(1);
@@ -759,8 +760,8 @@ public class LogContextTest {
     assertThat(cause).hasMessageThat().isEqualTo("FULL");
     assertThat(cause.getCause()).isNull();
 
-    List<StackTraceElement> actualStack = Arrays.asList(cause.getStackTrace());
-    List<StackTraceElement> expectedStack = Arrays.asList(new Throwable().getStackTrace());
+    var actualStack = Arrays.asList(cause.getStackTrace());
+    var expectedStack = Arrays.asList(new Throwable().getStackTrace());
     // Overwrite the first element to the expected value.
     expectedStack.set(0, expectedCaller);
     // Use string representation for comparison since synthetic stack elements are not "equal" to
@@ -773,9 +774,9 @@ public class LogContextTest {
 
   @Test
   public void testWithStackTraceAndCause() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
-    RuntimeException badness = new RuntimeException("badness");
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
+    var badness = new RuntimeException("badness");
 
     // Use "SMALL" size here because we rely on the total stack depth in this test being bigger
     // than that. Using "MEDIUM" or "LARGE" might cause the test to fail when verifying the
@@ -797,20 +798,20 @@ public class LogContextTest {
   // See b/27310448.
   @Test
   public void testStackTraceFormatting() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
 
     // Keep these 2 lines immediately adjacent to each other.
-    StackTraceElement expectedCaller = getCallerInfoFollowingLine();
+    var expectedCaller = getCallerInfoFollowingLine();
     logger.atWarning().withStackTrace(StackSize.MEDIUM).log("Message");
 
     // Print the stack trace via the expected method (ie, printStackTrace()).
-    Throwable cause = backend.getLogged(0).getMetadata().findValue(Key.LOG_CAUSE);
+    var cause = backend.getLogged(0).getMetadata().findValue(Key.LOG_CAUSE);
     assertThat(cause).hasMessageThat().isEqualTo("MEDIUM");
-    StringWriter out = new StringWriter();
+    var out = new StringWriter();
     cause.printStackTrace(new PrintWriter(out));
-    List<String> stackLines = Splitter.on('\n').trimResults().splitToList(out.toString());
-    ImmutableList<String> actualStackRefs =
+    var stackLines = Splitter.on('\n').trimResults().splitToList(out.toString());
+    var actualStackRefs =
         stackLines.stream()
             // Ignore lines that don't look like call-stack entries.
             .filter(s -> s.startsWith("at "))
@@ -821,7 +822,7 @@ public class LogContextTest {
     // We assume there's at least one element in the stack we're testing.
     assertThat(actualStackRefs).isNotEmpty();
 
-    StackTraceElement[] expectedElements = new Throwable().getStackTrace();
+    var expectedElements = new Throwable().getStackTrace();
     // Overwrite first element since we are starting from a different place (in the same method).
     expectedElements[0] = expectedCaller;
     // Mimic the standard formatting for stack traces (a bit fragile but at least it's explicit).
@@ -848,7 +849,7 @@ public class LogContextTest {
   }
 
   private static StackTraceElement getCallerInfoFollowingLine() {
-    StackTraceElement caller = new Exception().getStackTrace()[1];
+    var caller = new Exception().getStackTrace()[1];
     return new StackTraceElement(
         caller.getClassName(),
         caller.getMethodName(),
@@ -858,8 +859,8 @@ public class LogContextTest {
 
   @Test
   public void testExplicitLogSiteInjection() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
     // Tests it's the log site instance that controls rate limiting, even over different calls.
     // We don't expect this to ever happen in real code though.
     for (int i = 0; i <= 6; i++) {
@@ -878,7 +879,7 @@ public class LogContextTest {
   }
 
   // In normal use, the logger would never need to be passed in and you'd use logVarargs().
-  private static void logHelper(FluentLogger logger, LogSite logSite, int n, String message) {
+  private static void logHelper(FluentLogger2 logger, LogSite logSite, int n, String message) {
     logger.atInfo().withInjectedLogSite(logSite).every(n).log("%s", message);
   }
 
@@ -886,8 +887,8 @@ public class LogContextTest {
   // calculation rather than being a no-op.
   @Test
   public void testExplicitLogSiteSuppression() {
-    FakeLoggerBackend backend = new FakeLoggerBackend();
-    FluentLogger logger = new FluentLogger(backend);
+    var backend = new FakeLoggerBackend();
+    var logger = new FluentLogger2(backend);
 
     logger.atInfo().withInjectedLogSite(LogSite.INVALID).log("No log site here");
     logger.atInfo().withInjectedLogSite(null).log("No-op injection");
@@ -901,37 +902,37 @@ public class LogContextTest {
 
   @Test
   public void testLogSiteSpecializationSameMetadata() {
-    FakeMetadata fooMetadata = new FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo");
+    var fooMetadata = new FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo");
 
-    LogSite logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>");
-    LogSiteKey fooKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata);
+    var logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>");
+    var fooKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata);
 
     assertThat(fooKey).isEqualTo(LogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata));
   }
 
   @Test
   public void testLogSiteSpecializationKeyCountMatters() {
-    FakeMetadata fooMetadata = new FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo");
-    FakeMetadata repeatedMetadata =
+    var fooMetadata = new FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo");
+    var repeatedMetadata =
         new FakeMetadata()
             .add(Key.LOG_SITE_GROUPING_KEY, "foo")
             .add(Key.LOG_SITE_GROUPING_KEY, "foo");
 
-    LogSite logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>");
-    LogSiteKey fooKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata);
-    LogSiteKey repeatedKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, repeatedMetadata);
+    var logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>");
+    var fooKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata);
+    var repeatedKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, repeatedMetadata);
 
     assertThat(fooKey).isNotEqualTo(repeatedKey);
   }
 
   @Test
   public void testLogSiteSpecializationDifferentKeys() {
-    FakeMetadata fooMetadata = new FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo");
-    FakeMetadata barMetadata = new FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "bar");
+    var fooMetadata = new FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo");
+    var barMetadata = new FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "bar");
 
-    LogSite logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>");
-    LogSiteKey fooKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata);
-    LogSiteKey barKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, barMetadata);
+    var logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>");
+    var fooKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata);
+    var barKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, barMetadata);
 
     assertThat(fooKey).isNotEqualTo(barKey);
   }
@@ -942,18 +943,18 @@ public class LogContextTest {
   // in the same order at any given log statement.
   @Test
   public void testLogSiteSpecializationOrderMatters() {
-    FakeMetadata fooBarMetadata =
+    var fooBarMetadata =
         new FakeMetadata()
             .add(Key.LOG_SITE_GROUPING_KEY, "foo")
             .add(Key.LOG_SITE_GROUPING_KEY, "bar");
-    FakeMetadata barFooMetadata =
+    var barFooMetadata =
         new FakeMetadata()
             .add(Key.LOG_SITE_GROUPING_KEY, "bar")
             .add(Key.LOG_SITE_GROUPING_KEY, "foo");
 
-    LogSite logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>");
-    LogSiteKey fooBarKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, fooBarMetadata);
-    LogSiteKey barFooKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, barFooMetadata);
+    var logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>");
+    var fooBarKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, fooBarMetadata);
+    var barFooKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, barFooMetadata);
 
     assertThat(fooBarKey).isNotEqualTo(barFooKey);
   }
@@ -961,7 +962,7 @@ public class LogContextTest {
   @Test
   public void testLogSiteSpecializationKey() {
     Key.LOG_SITE_GROUPING_KEY.emitRepeated(
-        Iterators.<Object>forArray("foo"),
+        Iterators.forArray("foo"),
         (k, v) -> {
           assertThat(k).isEqualTo("group_by");
           assertThat(v).isEqualTo("foo");
@@ -970,7 +971,7 @@ public class LogContextTest {
     // We don't care too much about the case with multiple keys since it's so rare, but it should
     // be vaguely sensible.
     Key.LOG_SITE_GROUPING_KEY.emitRepeated(
-        Iterators.<Object>forArray("foo", "bar"),
+        Iterators.forArray("foo", "bar"),
         (k, v) -> {
           assertThat(k).isEqualTo("group_by");
           assertThat(v).isEqualTo("[foo,bar]");

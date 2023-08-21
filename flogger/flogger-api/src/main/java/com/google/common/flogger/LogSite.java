@@ -33,8 +33,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * adapted to its needs.
  * <p>
  * As a fallback, for cases where no injection mechanism is configured, a log site based upon stack
- * trace analysis is used. However due to limitations in the information available from
- * {@code StackTraceElement}, this log site will not be unique if multiple log statements are on the
+ * trace analysis is used. However, due to limitations in the information available from
+ * {@code StackTraceElement}, this log site will not be unique if multiple log statements are on
  * the same, or if line number information was stripped from the class file.
  */
 public abstract class LogSite implements LogSiteKey {

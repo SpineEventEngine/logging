@@ -24,27 +24,28 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.internal.dependency
+package io.spine.logging
 
-// https://github.com/grpc/grpc-java
-@Suppress("unused", "ConstPropertyName")
-object Grpc {
-    @Suppress("MemberVisibilityCanBePrivate")
-    const val version        = "1.57.2"
-    const val api            = "io.grpc:grpc-api:${version}"
-    const val auth           = "io.grpc:grpc-auth:${version}"
-    const val core           = "io.grpc:grpc-core:${version}"
-    @Deprecated("Use `api` instead.")
-    const val context        = "io.grpc:grpc-context:${version}"
-    const val stub           = "io.grpc:grpc-stub:${version}"
-    const val okHttp         = "io.grpc:grpc-okhttp:${version}"
-    const val protobuf       = "io.grpc:grpc-protobuf:${version}"
-    const val protobufLite   = "io.grpc:grpc-protobuf-lite:${version}"
-    const val netty          = "io.grpc:grpc-netty:${version}"
-    const val nettyShaded    = "io.grpc:grpc-netty-shaded:${version}"
+/**
+ *  A key for logging semi-structured metadata values.
+ *
+ *  @param T the type of the value associated with this key.
+ */
+public interface MetadataKey<T: Any> {
 
-    object ProtocPlugin {
-        const val id = "grpc"
-        const val artifact = "io.grpc:protoc-gen-grpc-java:${version}"
-    }
+    /**
+     * A short, human-readable text label which will prefix the metadata in
+     * cases where it is formatted as part of the log message.
+     */
+    public val label: String
+
+    /**
+     * Cast an arbitrary value to the type of this key.
+     */
+    public fun cast(value: Any): T
+
+    /**
+     * Whether this key can be used to set more than one value in the metadata.
+     */
+    public val canRepeat: Boolean
 }

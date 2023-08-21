@@ -26,21 +26,14 @@
 
 package io.spine.logging
 
-import com.google.common.base.Throwables
-import com.google.common.flogger.FluentLogger
-import com.google.common.flogger.backend.LoggerBackend
+import com.google.common.flogger.FluentLogger2
 import com.google.common.flogger.backend.Platform
-import java.lang.reflect.Constructor
 import kotlin.reflect.KClass
-
-private val logger = FluentLogger.forEnclosingClass()
 
 /**
  * Obtains a [JvmLogger] for a given class.
  */
 public actual object LoggingFactory: ClassValue<JvmLogger>() {
-
-    private val constructor: Constructor<FluentLogger> = ctor()
 
     @JvmStatic
     @JvmName("getLogger") // Set the name explicitly to avoid synthetic `$logging` suffix.
@@ -54,18 +47,43 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
         return createForClass(cls)
     }
 
+    @JvmStatic
     public actual fun loggingDomainOf(cls: KClass<*>): LoggingDomain {
         return LoggingDomainClassValue.get(cls)
     }
 
+    @JvmStatic
+    public actual fun <T : Any> singleMetadataKey(
+        label: String,
+        valueClass: KClass<T>
+    ): MetadataKey<T> {
+        return JvmMetadataKey.single(label, valueClass)
+    }
+
+    @JvmStatic
+    public fun <T: Any> singleMetadataKey(label: String, type: Class<T>): MetadataKey<T> =
+        singleMetadataKey(label, type.kotlin)
+
+    @JvmStatic
+    public actual fun <T : Any> repeatedMetadataKey(
+        label: String,
+        valueClass: KClass<T>
+    ): MetadataKey<T> {
+        return JvmMetadataKey.repeated(label, valueClass)
+    }
+
+    @JvmStatic
+    public fun <T : Any> repeatedMetadataKey(label: String, type: Class<T>): MetadataKey<T> =
+        repeatedMetadataKey(label, type.kotlin)
+
     /**
-     * Obtains an instance of [FluentLogger] for the given class.
+     * Obtains an instance of [FluentLogger2] for the given class.
      *
      * The same instance is returned for the same class.
      */
     @JvmStatic
     @JvmName("getFluentLogger") // Set the name explicitly to avoid synthetic `$logging` suffix.
-    internal fun getFluentLogger(cls: Class<*>): FluentLogger {
+    internal fun getFluentLogger(cls: Class<*>): FluentLogger2 {
         return get(cls).delegate
     }
 
@@ -74,35 +92,8 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
         return JvmLogger(cls.kotlin, impl)
     }
 
-    @Suppress("TooGenericExceptionCaught") // Several exception types could be thrown.
-    private fun createFluentLogger(cls: Class<*>): FluentLogger {
+    private fun createFluentLogger(cls: Class<*>): FluentLogger2 {
         val backend = Platform.getBackend(cls.name)
-        return try {
-            constructor.newInstance(backend)
-        } catch (e: Exception) {
-            logger.atSevere().withCause(e)
-                .log("Unable to create a logger for the class `${cls.name}`.")
-            throw illegalStateWithCauseOf(e)
-        }
+        return FluentLogger2(backend)
     }
-}
-
-private fun ctor(): Constructor<FluentLogger> {
-    val loggerClass = FluentLogger::class.java
-    val loggerBackendClass = LoggerBackend::class.java
-    return try {
-        val constructor = loggerClass.getDeclaredConstructor(loggerBackendClass)
-        constructor.isAccessible = true
-        constructor
-    } catch (e: NoSuchMethodException) {
-        logger.atSevere().withCause(e).log(
-            "Unable to find constructor `${loggerClass.name}(${loggerBackendClass.name})`."
-        )
-        throw illegalStateWithCauseOf(e)
-    }
-}
-
-private fun illegalStateWithCauseOf(throwable: Throwable): IllegalStateException {
-    val rootCause = Throwables.getRootCause(throwable)
-    throw IllegalStateException(rootCause)
 }
