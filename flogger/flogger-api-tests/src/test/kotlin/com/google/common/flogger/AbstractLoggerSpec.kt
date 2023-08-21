@@ -16,24 +16,29 @@
 package com.google.common.flogger
 
 import com.google.common.flogger.backend.LogData
-import com.google.common.flogger.backend.LoggerBackend
 import com.google.common.flogger.backend.LoggingException
+import com.google.common.flogger.given.MemoizingBackend
 import com.google.common.flogger.testing.TestLogger
-import com.google.common.truth.Truth.assertThat
 import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.string.shouldBeEmpty
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldMatch
 import io.kotest.matchers.string.shouldNotContain
 import io.spine.testing.logging.tapConsole
-import java.util.*
-import java.util.logging.Level
 import kotlin.text.RegexOption.DOT_MATCHES_ALL
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
  * See [LogContextSpec] for the most tests related to base logging behavior.
  */
+@DisplayName("`AbstractLogger` should")
 internal class AbstractLoggerSpec {
+
+    private val backend = MemoizingBackend()
+    private val logger = TestLogger.create(backend)
 
     companion object {
 
@@ -49,54 +54,45 @@ internal class AbstractLoggerSpec {
     }
 
     @Test
-    fun testErrorReporting() {
-        val backend = TestBackend()
-        val logger = TestLogger.create(backend)
+    fun `report an error`() {
         val bad: Any = object : Any() {
             override fun toString(): String = error("Ooopsie")
         }
         val output = tapConsole {
-            logger.atInfo().log("evil value: %s", bad)
+            logger.atInfo().log("bad value: %s", bad)
         }
-        assertThat(backend.logged).isEmpty()
+        backend.logged.shouldBeEmpty()
         output shouldMatch ISO_TIMESTAMP_PREFIX
         output shouldContain "logging error"
-        output shouldContain "com.google.common.flogger.AbstractLoggerSpec.testErrorReporting"
+        output shouldContain "com.google.common.flogger.AbstractLoggerSpec.report error"
         output shouldContain "java.lang.IllegalStateException: Ooopsie"
     }
 
     @Test
-    fun testBadError() {
-        val backend = TestBackend()
-        val logger = TestLogger.create(backend)
-        // A worst case scenario whereby an object's toString() throws an exception which itself throws
-        // an exception. If we can handle this, we can handle just about anything!
-        val evil: Any = object : Any() {
-            override fun toString(): String {
-                throw object : IllegalStateException("Ooopsie") {
-                    private val serialVersionUID: Long = -5383608141374997920L
-                    override fun toString(): String = error("<<IGNORED>>")
-                }
+    fun `report an inner error`() {
+        // A worst case scenario whereby an object's `toString()` throws an exception,
+        // which itself throws an exception. If we can handle this, we can handle
+        // just about anything!
+        val bad: Any = object : Any() {
+            override fun toString(): String = throw object : IllegalStateException("Ooopsie") {
+                private val serialVersionUID: Long = -5383608141374997920L
+                override fun toString(): String = error("<<IGNORED>>")
             }
         }
         val output = tapConsole {
-            logger.atInfo().log("evil value: %s", evil)
+            logger.atInfo().log("bad value: %s", bad)
         }
-        assertThat(backend.logged).isEmpty()
+        backend.logged.shouldBeEmpty()
         output shouldMatch ISO_TIMESTAMP_PREFIX
         output shouldContain "logging error"
-        // It is in a subclass of RuntimeException in this case, so only check the message.
-        output shouldContain "Ooopsie"
-        // We didn't handle the inner exception, but that's fine.
-        output shouldNotContain "<<IGNORED>>"
+        output shouldContain "Ooopsie" // Exception class is not printed in this case.
+        output shouldNotContain "<<IGNORED>>" // Also, we don't handle the inner exception.
     }
 
     @Test
-    fun testRecurionHandling() {
-        val backend = TestBackend()
-        // The test logger does not handle errors gracefully, which should trigger the fallback error
-        // handling in AbstractLogger (that is what we want to test).
-        val logger = TestLogger.create(backend)
+    fun `guard from significant recursion`() {
+        // The test logger does not handle errors gracefully, which should trigger
+        // the fallback error handling in `AbstractLogger`.
         val bad: Any = object : Any() {
             override fun toString(): String {
                 logger.atInfo().log("recursion: %s", this)
@@ -106,8 +102,7 @@ internal class AbstractLoggerSpec {
         val output = tapConsole {
             logger.atInfo().log("evil value: %s", bad)
         }
-        // Matches AbstractLogger#MAX_ALLOWED_RECURSION_DEPTH.
-        assertThat(backend.logged).hasSize(100)
+        backend.logged.shouldHaveSize(100) // Matches to `AbstractLogger.MAX_ALLOWED_DEPTH`.
         output shouldMatch ISO_TIMESTAMP_PREFIX
         output shouldContain "logging error"
         output shouldContain "unbounded recursion in log statement"
@@ -115,12 +110,10 @@ internal class AbstractLoggerSpec {
     }
 
     @Test
-    fun testLoggingExceptionAllowed() {
-        // A backend that deliberately triggers an internal error.
-        val backend = object : TestBackend() {
-            override fun log(data: LogData) {
-                throw LoggingException("Allowed")
-            }
+    fun `allow logging exceptions thrown by a backend`() {
+        // A backend that triggers a logging exception.
+        val backend = object : MemoizingBackend() {
+            override fun log(data: LogData) = throw LoggingException("allowed")
         }
         val logger = TestLogger.create(backend)
         val output = tapConsole {
@@ -128,60 +121,23 @@ internal class AbstractLoggerSpec {
                 logger.atInfo().log("doomed to fail")
             }
         }
-        assertThat(backend.logged).isEmpty()
-        assertThat(output).isEmpty()
+        backend.logged.shouldBeEmpty()
+        output.shouldBeEmpty()
     }
 
     @Test
-    fun testLoggingErrorAllowed() {
-        // A backend that triggers an Error of some kind.
-        val backend: TestBackend = object : TestBackend() {
-            override fun log(data: LogData) {
-                throw MyError("Allowed")
-            }
+    fun `allow logging errors thrown by a backend`() {
+        // A backend that triggers an `Error`.
+        val backend: MemoizingBackend = object : MemoizingBackend() {
+            override fun log(data: LogData) = throw Error("allowed")
         }
         val logger = TestLogger.create(backend)
         val output = tapConsole {
-            shouldThrow<MyError> {
+            shouldThrow<Error> {
                 logger.atInfo().log("doomed to fail")
             }
         }
-        assertThat(backend.logged).isEmpty()
-        assertThat(output).isEmpty()
+        backend.logged.shouldBeEmpty()
+        output.shouldBeEmpty()
     }
-}
-
-private open class TestBackend : LoggerBackend() {
-    val logged: MutableList<String?> = ArrayList()
-    override fun getLoggerName(): String {
-        return "<unused>"
-    }
-
-    override fun isLoggable(lvl: Level): Boolean {
-        return true
-    }
-
-    // Format without using Flogger util classes, so we can test what happens if arguments cause
-    // errors (the core utility classes handle this properly).
-    override fun log(data: LogData) {
-        if (data.getTemplateContext() != null) {
-            logged.add(
-                String.format(
-                    Locale.ROOT, data.getTemplateContext().message, *data.getArguments()
-                )
-            )
-        } else {
-            logged.add(data.getLiteralArgument().toString())
-        }
-    }
-
-    // Don't handle any errors in the backend, so we can test “last resort” error handling.
-    override fun handleError(error: RuntimeException, badData: LogData) {
-        throw error
-    }
-}
-
-// Needed for testing error handling since you can't catch raw “Error” in tests.
-private class MyError(message: String?) : Error(message) {
-    private val serialVersionUID: Long = -9141474175879098403L
 }
