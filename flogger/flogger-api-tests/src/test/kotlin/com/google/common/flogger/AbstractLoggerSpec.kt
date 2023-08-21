@@ -15,41 +15,36 @@
  */
 package com.google.common.flogger
 
-import com.google.common.base.Splitter
 import com.google.common.flogger.backend.LogData
 import com.google.common.flogger.backend.LoggerBackend
 import com.google.common.flogger.backend.LoggingException
 import com.google.common.flogger.testing.TestLogger
 import com.google.common.truth.Truth.assertThat
 import io.kotest.assertions.throwables.shouldThrow
-import java.io.ByteArrayOutputStream
-import java.io.PrintStream
-import java.io.UnsupportedEncodingException
-import java.nio.charset.StandardCharsets
+import io.kotest.matchers.string.shouldContain
+import io.kotest.matchers.string.shouldMatch
+import io.kotest.matchers.string.shouldNotContain
 import java.util.*
-import java.util.function.Consumer
 import java.util.logging.Level
-import java.util.regex.Pattern
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
+import kotlin.text.RegexOption.DOT_MATCHES_ALL
 import org.junit.jupiter.api.Test
 
-/* See LogContextTest.java for the most tests related to base logging behaviour. */
+/**
+ * See [LogContextSpec] for the most tests related to base logging behavior.
+ */
 internal class AbstractLoggerSpec {
 
-    private val err = ByteArrayOutputStream()
-    private var systemErr: PrintStream? = null
+    companion object {
 
-    @BeforeEach
-    @Throws(UnsupportedEncodingException::class)
-    fun redirectStderr() {
-        systemErr = System.err
-        System.setErr(PrintStream(err, true, StandardCharsets.UTF_8.name()))
-    }
-
-    @AfterEach
-    fun restoreStderr() {
-        System.setErr(systemErr)
+        /**
+         * Matches ISO 8601 date/time format.
+         *
+         * @see <a href="https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html">SimpleDateFormat</a>
+         */
+        private val ISO_TIMESTAMP_PREFIX =
+            "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}[-+]\\d{4}: .*".toRegex(
+                DOT_MATCHES_ALL // Makes a dot match a line terminator as well.
+            )
     }
 
     @Test
@@ -61,15 +56,14 @@ internal class AbstractLoggerSpec {
                 throw RuntimeException("Ooopsie")
             }
         }
-        logger.atInfo().log("evil value: %s", bad)
+        val output = tapConsole {
+            logger.atInfo().log("evil value: %s", bad)
+        }
         assertThat(backend.logged).isEmpty()
-        val stdErrLines = Splitter.on(System.lineSeparator()).splitToList(stdErrString())
-        assertThat(stdErrLines).isNotEmpty()
-        val errLine = stdErrLines[0]
-        assertThat(errLine).matches(ISO_TIMESTAMP_PREFIX)
-        assertThat(errLine).contains("logging error")
-        assertThat(errLine).contains("com.google.common.flogger.AbstractLoggerSpec.testErrorReporting")
-        assertThat(errLine).contains("java.lang.RuntimeException: Ooopsie")
+        output shouldMatch ISO_TIMESTAMP_PREFIX
+        output shouldContain "logging error"
+        output shouldContain "com.google.common.flogger.AbstractLoggerSpec.testErrorReporting"
+        output shouldContain "java.lang.RuntimeException: Ooopsie"
     }
 
     @Test
@@ -88,21 +82,16 @@ internal class AbstractLoggerSpec {
                 }
             }
         }
-        logger.atInfo().log("evil value: %s", evil)
+        val output = tapConsole {
+            logger.atInfo().log("evil value: %s", evil)
+        }
         assertThat(backend.logged).isEmpty()
-        val stdErrLines = Splitter.on(System.lineSeparator()).splitToList(stdErrString())
-        assertThat(stdErrLines).isNotEmpty()
-        val errLine = stdErrLines[0]
-        assertThat(errLine).matches(ISO_TIMESTAMP_PREFIX)
-        assertThat(errLine).contains("logging error")
+        output shouldMatch ISO_TIMESTAMP_PREFIX
+        output shouldContain "logging error"
         // It is in a subclass of RuntimeException in this case, so only check the message.
-        assertThat(errLine).contains("Ooopsie")
+        output shouldContain "Ooopsie"
         // We didn't handle the inner exception, but that's fine.
-        stdErrLines.forEach(Consumer { line: String? ->
-            assertThat(
-                line
-            ).doesNotContain("<<IGNORED>>")
-        })
+        output shouldNotContain "<<IGNORED>>"
     }
 
     @Test
@@ -117,16 +106,15 @@ internal class AbstractLoggerSpec {
                 return "<unused>"
             }
         }
-        logger.atInfo().log("evil value: %s", bad)
+        val output = tapConsole {
+            logger.atInfo().log("evil value: %s", bad)
+        }
         // Matches AbstractLogger#MAX_ALLOWED_RECURSION_DEPTH.
         assertThat(backend.logged).hasSize(100)
-        val stdErrLines = Splitter.on(System.lineSeparator()).splitToList(stdErrString())
-        assertThat(stdErrLines).isNotEmpty()
-        val errLine = stdErrLines[0]
-        assertThat(errLine).matches(ISO_TIMESTAMP_PREFIX)
-        assertThat(errLine).contains("logging error")
-        assertThat(errLine).contains("unbounded recursion in log statement")
-        assertThat(errLine).contains("com.google.common.flogger.AbstractLoggerSpec")
+        output shouldMatch ISO_TIMESTAMP_PREFIX
+        output shouldContain "logging error"
+        output shouldContain "unbounded recursion in log statement"
+        output shouldContain "com.google.common.flogger.AbstractLoggerSpec"
     }
 
     @Test
@@ -138,11 +126,13 @@ internal class AbstractLoggerSpec {
             }
         }
         val logger = TestLogger.create(backend)
-        shouldThrow<LoggingException> {
-            logger.atInfo().log("doomed to fail")
+        val output = tapConsole {
+            shouldThrow<LoggingException> {
+                logger.atInfo().log("doomed to fail")
+            }
         }
         assertThat(backend.logged).isEmpty()
-        assertThat(stdErrString()).isEmpty()
+        assertThat(output).isEmpty()
     }
 
     @Test
@@ -154,26 +144,13 @@ internal class AbstractLoggerSpec {
             }
         }
         val logger = TestLogger.create(backend)
-        shouldThrow<MyError> {
-            logger.atInfo().log("doomed to fail")
+        val output = tapConsole {
+            shouldThrow<MyError> {
+                logger.atInfo().log("doomed to fail")
+            }
         }
         assertThat(backend.logged).isEmpty()
-        assertThat(stdErrString()).isEmpty()
-    }
-
-    private fun stdErrString(): String {
-        return try {
-            err.toString(StandardCharsets.UTF_8.name())
-        } catch (impossible: UnsupportedEncodingException) {
-            throw AssertionError(impossible)
-        }
-    }
-
-    companion object {
-        // Matches ISO 8601 date/time format.
-        // See: https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html
-        private val ISO_TIMESTAMP_PREFIX =
-            Pattern.compile("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}[-+]\\d{4}: .*")
+        assertThat(output).isEmpty()
     }
 }
 
