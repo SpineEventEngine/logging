@@ -24,6 +24,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldMatch
 import io.kotest.matchers.string.shouldNotContain
+import io.spine.testing.logging.tapConsole
 import java.util.*
 import java.util.logging.Level
 import kotlin.text.RegexOption.DOT_MATCHES_ALL
@@ -52,9 +53,7 @@ internal class AbstractLoggerSpec {
         val backend = TestBackend()
         val logger = TestLogger.create(backend)
         val bad: Any = object : Any() {
-            override fun toString(): String {
-                throw RuntimeException("Ooopsie")
-            }
+            override fun toString(): String = error("Ooopsie")
         }
         val output = tapConsole {
             logger.atInfo().log("evil value: %s", bad)
@@ -63,7 +62,7 @@ internal class AbstractLoggerSpec {
         output shouldMatch ISO_TIMESTAMP_PREFIX
         output shouldContain "logging error"
         output shouldContain "com.google.common.flogger.AbstractLoggerSpec.testErrorReporting"
-        output shouldContain "java.lang.RuntimeException: Ooopsie"
+        output shouldContain "java.lang.IllegalStateException: Ooopsie"
     }
 
     @Test
@@ -74,11 +73,9 @@ internal class AbstractLoggerSpec {
         // an exception. If we can handle this, we can handle just about anything!
         val evil: Any = object : Any() {
             override fun toString(): String {
-                throw object : RuntimeException("Ooopsie") {
+                throw object : IllegalStateException("Ooopsie") {
                     private val serialVersionUID: Long = -5383608141374997920L
-                    override fun toString(): String {
-                        throw RuntimeException("<<IGNORED>>")
-                    }
+                    override fun toString(): String = error("<<IGNORED>>")
                 }
             }
         }

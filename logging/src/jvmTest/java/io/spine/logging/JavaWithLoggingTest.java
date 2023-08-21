@@ -31,6 +31,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static com.google.common.truth.Truth.assertThat;
+import static io.spine.testing.logging.TapConsoleKt.tapConsole;
 
 @DisplayName("In Java, `WithLogging` should")
 class JavaWithLoggingTest {
@@ -41,7 +42,7 @@ class JavaWithLoggingTest {
     @DisplayName("have `logger()` method without `get` prefix")
     void haveLoggerGetterWithoutPrefix() {
         var loggingClass = new LoggingClass();
-        var output = TapConsoleKt.tapConsole(() -> {
+        var output = tapConsole(() -> {
             loggingClass.myMethod(msg);
             return Unit.INSTANCE;
         });
