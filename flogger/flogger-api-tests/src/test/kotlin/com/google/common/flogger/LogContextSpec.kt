@@ -15,8 +15,6 @@
  */
 package com.google.common.flogger
 
-import com.google.common.base.Splitter
-import com.google.common.collect.ImmutableList
 import com.google.common.collect.Iterators
 import com.google.common.flogger.DurationRateLimiter.newRateLimitPeriod
 import com.google.common.flogger.LazyArgs.lazy
@@ -24,6 +22,7 @@ import com.google.common.flogger.LogContext.Key
 import com.google.common.flogger.MetadataKey.repeated
 import com.google.common.flogger.context.Tags
 import com.google.common.flogger.given.shouldContainInOrder
+import com.google.common.flogger.given.shouldContain
 import com.google.common.flogger.given.shouldHaveArguments
 import com.google.common.flogger.given.shouldHaveMessage
 import com.google.common.flogger.given.shouldHaveSize
@@ -33,7 +32,6 @@ import com.google.common.flogger.testing.FakeLogSite
 import com.google.common.flogger.testing.FakeLoggerBackend
 import com.google.common.flogger.testing.FakeMetadata
 import com.google.common.flogger.testing.TestLogger
-import com.google.common.truth.Correspondence
 import com.google.common.truth.Truth.assertThat
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeFalse
@@ -41,10 +39,9 @@ import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.ints.shouldBeInRange
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
-import java.io.PrintWriter
-import java.io.StringWriter
+import io.kotest.matchers.throwable.shouldHaveMessage
+import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 import java.lang.System.currentTimeMillis
-import java.util.*
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import java.util.concurrent.TimeUnit.SECONDS
 import java.util.logging.Level.INFO
@@ -284,7 +281,7 @@ internal class LogContextSpec {
         backend.loggedCount shouldBe 3
 
         // Check the first log we captured was the first one emitted.
-        backend.assertLogged(0).timestampNanos().isEqualTo(startNanos)
+        backend.firstLogged.timestampNanos shouldBe startNanos
         backend.firstLogged.metadata.shouldUniquelyContain(
             Key.LOG_AT_MOST_EVERY,
             newRateLimitPeriod(2, SECONDS)
@@ -299,7 +296,8 @@ internal class LogContextSpec {
         backend.logged[2].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 3)
     }
 
-    @Nested inner class
+    @Nested
+    inner class
     `when given multiple rate limiters` {
 
         @Test
@@ -354,7 +352,8 @@ internal class LogContextSpec {
         }
     }
 
-    @Nested inner class
+    @Nested
+    inner class
     `aggregate stateful logging with respect to` {
 
         @Test
@@ -478,335 +477,368 @@ internal class LogContextSpec {
         }
     }
 
-    @Test
-    fun testWasForced_level() {
-        val backend = FakeLoggerBackend()
-        backend.setLevel(WARNING)
-        val logger = TestLogger.create(backend)
-        logger.forceAt(INFO).log("LOGGED")
-        assertThat(backend.loggedCount).isEqualTo(1)
-        backend.assertLogged(0).hasMessage("LOGGED")
-        backend.assertLogged(0).metadata().hasSize(1)
-        backend.assertLogged(0).metadata().containsUniqueEntry(Key.WAS_FORCED, true)
-        backend.assertLogged(0).wasForced()
+    @Nested
+    inner class
+    `force logging at the given level` {
+
+        @Test
+        fun `without any rate limiting`() {
+            val backend = FakeLoggerBackend()
+            backend.setLevel(WARNING)
+            val logger = TestLogger.create(backend)
+            logger.forceAt(INFO).log("LOGGED")
+            backend.loggedCount shouldBe 1
+            backend.logged[0].shouldHaveMessage("LOGGED")
+            backend.logged[0].metadata.shouldHaveSize(1)
+            backend.logged[0].metadata.shouldUniquelyContain(Key.WAS_FORCED, true)
+            backend.logged[0].wasForced().shouldBeTrue()
+        }
+
+        @Test
+        fun `with 'every(n)' limiter`() {
+            val backend = FakeLoggerBackend()
+            val logger = TestLogger.create(backend)
+            val logSite = FakeLogSite.create("com.example.MyClass", "everyN", 123, null)
+
+            logger.atInfo()
+                .every(3)
+                .withInjectedLogSite(logSite) // Note that the log site is passed explicitly.
+                .log("LOGGED 1") // Log statements always get logged the first time.
+
+            // Not logged due to rate limiting.
+            logger.atInfo()
+                .every(3)
+                .withInjectedLogSite(logSite)
+                .log("NOT LOGGED")
+
+            // Manually create the forced context (there is no “normal” API for this).
+            logger.forceAt(INFO)
+                .every(3)
+                .withInjectedLogSite(logSite)
+                .log("LOGGED 2")
+
+            // This shows that the “forced” context does not count towards the rate limit count.
+            // Otherwise, this log statement would have been logged.
+            logger.atInfo()
+                .every(3)
+                .withInjectedLogSite(logSite)
+                .log("NOT LOGGED")
+
+            backend.loggedCount shouldBe 2
+            backend.logged[0].shouldHaveMessage("LOGGED 1")
+            backend.logged[1].shouldHaveMessage("LOGGED 2")
+            backend.logged[1].metadata.shouldHaveSize(1)
+            backend.logged[1].metadata.shouldUniquelyContain(Key.WAS_FORCED, true)
+        }
+
+        @Test
+        fun `with 'atMostEvery(n)' limiter`() {
+            val backend = FakeLoggerBackend()
+            val logger = TestLogger.create(backend)
+            val logSite = FakeLogSite.create("com.example.MyClass", "atMostEvery", 123, null)
+
+            var nowNanos = MILLISECONDS.toNanos(currentTimeMillis())
+            logger.at(INFO, nowNanos)
+                .atMostEvery(1, SECONDS)
+                .withInjectedLogSite(logSite) // Note that the log site is passed explicitly.
+                .log("LOGGED 1") // Log statements always get logged the first time.
+
+            // Not logged due to rate limiting.
+            nowNanos += MILLISECONDS.toNanos(100)
+            logger.at(INFO, nowNanos)
+                .atMostEvery(1, SECONDS)
+                .withInjectedLogSite(logSite)
+                .log("NOT LOGGED")
+
+            // Manually create the forced context (there is no “normal” API for this).
+            nowNanos += MILLISECONDS.toNanos(100)
+            logger.forceAt(INFO, nowNanos)
+                .atMostEvery(1, SECONDS)
+                .withInjectedLogSite(logSite)
+                .log("LOGGED 2")
+
+            // Not logged due to rate limiting.
+            nowNanos += MILLISECONDS.toNanos(100)
+            logger.at(INFO, nowNanos)
+                .atMostEvery(1, SECONDS)
+                .withInjectedLogSite(logSite)
+                .log("NOT LOGGED")
+
+            backend.loggedCount shouldBe 2
+            backend.logged[0].shouldHaveMessage("LOGGED 1")
+            backend.logged[0].metadata.shouldHaveSize(1)
+            backend.logged[0].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
+            backend.logged[1].shouldHaveMessage("LOGGED 2")
+            backend.logged[1].metadata.shouldHaveSize(1)
+            backend.logged[1].metadata.shouldUniquelyContain(Key.WAS_FORCED, true)
+        }
     }
 
-    @Test
-    fun testWasForced_everyN() {
-        val backend = FakeLoggerBackend()
-        val logger = TestLogger.create(backend)
-        val logSite = FakeLogSite.create("com.example.MyClass", "everyN", 123, null)
-
-        // Log statements always get logged the first time.
-        logger.atInfo().every(3).withInjectedLogSite(logSite).log("LOGGED 1")
-        logger.atInfo().every(3).withInjectedLogSite(logSite).log("NOT LOGGED")
-        // Manually create the forced context (there is no "normal" api for this).
-        logger.forceAt(INFO).every(3).withInjectedLogSite(logSite).log("LOGGED 2")
-        // This shows that the "forced" context does not count towards the rate limit count (otherwise
-        // this log statement would have been logged).
-        logger.atInfo().every(3).withInjectedLogSite(logSite).log("NOT LOGGED")
-        assertThat(backend.loggedCount).isEqualTo(2)
-        backend.assertLogged(0).hasMessage("LOGGED 1")
-        // No rate limit metadata was added, but it was marked as forced.
-        backend.assertLogged(1).hasMessage("LOGGED 2")
-        backend.assertLogged(1).metadata().hasSize(1)
-        backend.assertLogged(1).metadata().containsUniqueEntry(Key.WAS_FORCED, true)
-    }
+    // These tests verify that the mapping between the logging context,
+    // and the backend preserves arguments as expected.
 
     @Test
-    fun testWasForced_atMostEvery() {
-        val backend = FakeLoggerBackend()
-        val logger = TestLogger.create(backend)
-        val logSite = FakeLogSite.create("com.example.MyClass", "atMostEvery", 123, null)
-
-        // Log statements always get logged the first time.
-        var nowNanos = MILLISECONDS.toNanos(currentTimeMillis())
-        logger.at(INFO, nowNanos).atMostEvery(1, SECONDS)
-            .withInjectedLogSite(logSite).log("LOGGED 1")
-        nowNanos += MILLISECONDS.toNanos(100)
-        logger
-            .at(INFO, nowNanos)
-            .atMostEvery(1, SECONDS)
-            .withInjectedLogSite(logSite)
-            .log("NOT LOGGED")
-        nowNanos += MILLISECONDS.toNanos(100)
-        logger
-            .forceAt(INFO, nowNanos)
-            .atMostEvery(1, SECONDS)
-            .withInjectedLogSite(logSite)
-            .log("LOGGED 2")
-        nowNanos += MILLISECONDS.toNanos(100)
-        logger
-            .at(INFO, nowNanos)
-            .atMostEvery(1, SECONDS)
-            .withInjectedLogSite(logSite)
-            .log("NOT LOGGED")
-        assertThat(backend.loggedCount).isEqualTo(2)
-        backend.assertLogged(0).hasMessage("LOGGED 1")
-        backend.assertLogged(0).metadata().hasSize(1)
-        backend.assertLogged(0).metadata()
-            .containsUniqueEntry(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
-        backend.assertLogged(1).hasMessage("LOGGED 2")
-        backend.assertLogged(1).metadata().hasSize(1)
-        backend.assertLogged(1).metadata().containsUniqueEntry(Key.WAS_FORCED, true)
-    }
-
-    // These tests verify that the mapping between the logging context and the backend preserves
-    // arguments as expected.
-    @Test
-    fun testExplicitVarargs() {
+    fun `accept formatting arguments as array`() {
         val args = arrayOf<Any?>("foo", null, "baz")
         logger.atInfo().logVarargs("Any message ...", args)
-        backend.assertLastLogged().hasArguments("foo", null, "baz")
+        backend.lastLogged.shouldHaveArguments("foo", null, "baz")
+
         // Make sure we took a copy of the arguments rather than risk re-using them.
-        assertThat(backend.loggedCount).isEqualTo(1)
-        assertThat(backend.getLogged(0).getArguments()).isNotSameInstanceAs(args)
+        backend.loggedCount shouldBe 1
+        backend.lastLogged.arguments shouldNotBeSameInstanceAs args
     }
 
     @Test
-    fun testNoArguments() {
-
-        // Verify arguments passed in to the non-boxed fundamental type methods are mapped correctly.
+    fun `log an empty message without arguments`() {
         logger.atInfo().log()
-        backend.assertLastLogged().hasMessage("")
-        backend.assertLastLogged().hasArguments()
+        backend.lastLogged.shouldHaveMessage("")
+        backend.lastLogged.shouldHaveArguments()
     }
 
     @Test
-    fun testLiteralArgument_doesNotEscapePercent() {
+    fun `not escape percent char when given no arguments`() {
         logger.atInfo().log("Hello %s World")
-        backend.assertLastLogged().hasMessage("Hello %s World")
-        backend.assertLastLogged().hasArguments()
+        backend.lastLogged.shouldHaveMessage("Hello %s World")
+        backend.lastLogged.shouldHaveArguments()
     }
 
     @Test
-    fun testSingleParameter() {
+    fun `handle a single argument`() {
         logger.atInfo().log("Hello %d World", 42)
-        backend.assertLastLogged().hasMessage("Hello %d World")
-        backend.assertLastLogged().hasArguments(42)
+        backend.lastLogged.shouldHaveMessage("Hello %d World")
+        backend.lastLogged.shouldHaveArguments(42)
     }
 
-    // Tests that a null literal is passed unmodified to the backend without throwing an exception.
+    /**
+     * Tests that a `null` literal is passed unmodified to the backend
+     * without throwing an exception.
+     */
     @Test
-    fun testNullLiteral() {
-        // We want to call log(String) (not log(Object)) with a null value.
+    fun `accept 'null' literal`() {
+        // We want to call `log(String)`, not `log(Object)` with a null value.
         logger.atInfo().log(null as String?)
-        backend.assertLastLogged().hasMessage(null)
+        backend.lastLogged.shouldHaveMessage(null)
     }
 
-    // Tests that null arguments are passed unmodified to the backend without throwing an exception.
+    /**
+     * Tests that `null` arguments are passed unmodified to the backend
+     * without throwing an exception.
+     */
     @Test
-    fun testNullArgument() {
+    fun `accept 'null' argument`() {
         logger.atInfo().log("Hello %d World", null)
-        backend.assertLastLogged().hasMessage("Hello %d World")
-        backend.assertLastLogged().hasArguments(*arrayOf(null))
+        backend.lastLogged.shouldHaveMessage("Hello %d World")
+        backend.lastLogged.shouldHaveArguments(null)
     }
 
-    // Currently having a null message and a null argument will throw a runtime exception, but
-    // perhaps it shouldn't (it could come from data). In general it is expected that when there are
-    // arguments to a log statement the message is a literal, which makes this situation very
-    // unlikely and probably a code bug (but even then throwing an exception is something that will
-    // only happen when the log statement is enabled).
-    // TODO(dbeaumont): Consider allowing this case to work without throwing a runtime exception.
+    /**
+     * Currently having a `null` message and a `null` argument will throw a runtime exception,
+     * but perhaps it shouldn't (it could come from data).
+     *
+     * In general, it is expected that when there are arguments to a log statement,
+     * the message is a literal, which makes this situation very unlikely and probably
+     * a code bug. But even then, throwing an exception is something that will only
+     * happen when the log statement is enabled.
+     *
+     * Consider allowing this case to work without throwing a runtime exception.
+     */
     @Test
-    fun testNullMessageAndArgument() {
+    fun `throw when 'null' is passed for message and argument simultaneously`() {
         shouldThrow<NullPointerException> {
             logger.atInfo().log(null, null)
         }
     }
 
     @Test
-    fun testManyObjectParameters() {
-        val ms = "Any message will do..."
+    fun `provide shortcuts for passing up to 12 arguments`() {
+        val msg = "Any message will do..."
 
-        // Verify that the arguments passed in to the Object based methods are mapped correctly.
-        logger.atInfo().log(ms, "1")
-        backend.assertLastLogged().hasArguments("1")
-        logger.atInfo().log(ms, "1", "2")
-        backend.assertLastLogged().hasArguments("1", "2")
-        logger.atInfo().log(ms, "1", "2", "3")
-        backend.assertLastLogged().hasArguments("1", "2", "3")
-        logger.atInfo().log(ms, "1", "2", "3", "4")
-        backend.assertLastLogged().hasArguments("1", "2", "3", "4")
-        logger.atInfo().log(ms, "1", "2", "3", "4", "5")
-        backend.assertLastLogged().hasArguments("1", "2", "3", "4", "5")
-        logger.atInfo().log(ms, "1", "2", "3", "4", "5", "6")
-        backend.assertLastLogged().hasArguments("1", "2", "3", "4", "5", "6")
-        logger.atInfo().log(ms, "1", "2", "3", "4", "5", "6", "7")
-        backend.assertLastLogged().hasArguments("1", "2", "3", "4", "5", "6", "7")
-        logger.atInfo().log(ms, "1", "2", "3", "4", "5", "6", "7", "8")
-        backend.assertLastLogged().hasArguments("1", "2", "3", "4", "5", "6", "7", "8")
-        logger.atInfo().log(ms, "1", "2", "3", "4", "5", "6", "7", "8", "9")
-        backend.assertLastLogged().hasArguments("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        logger.atInfo().log(ms, "1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
-        backend.assertLastLogged().hasArguments("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
-        logger.atInfo().log(ms, "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11")
-        backend
-            .assertLastLogged()
-            .hasArguments("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11")
-        logger.atInfo().log(ms, "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
-        backend
-            .assertLastLogged()
-            .hasArguments("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
+        // Verify that the arguments passed in to the object-based methods
+        // are mapped correctly.
+        logger.atInfo().log(msg, "1")
+        backend.lastLogged.shouldHaveArguments("1")
+        logger.atInfo().log(msg, "1", "2")
+        backend.lastLogged.shouldHaveArguments("1", "2")
+        logger.atInfo().log(msg, "1", "2", "3")
+        backend.lastLogged.shouldHaveArguments("1", "2", "3")
+        logger.atInfo().log(msg, "1", "2", "3", "4")
+        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4")
+        logger.atInfo().log(msg, "1", "2", "3", "4", "5")
+        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5")
+        logger.atInfo().log(msg, "1", "2", "3", "4", "5", "6")
+        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5", "6")
+        logger.atInfo().log(msg, "1", "2", "3", "4", "5", "6", "7")
+        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5", "6", "7")
+        logger.atInfo().log(msg, "1", "2", "3", "4", "5", "6", "7", "8")
+        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8")
+        logger.atInfo().log(msg, "1", "2", "3", "4", "5", "6", "7", "8", "9")
+        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8", "9")
+        logger.atInfo().log(msg, "1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
+        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
+        logger.atInfo()
+            .log(msg, "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11")
+        backend.lastLogged
+            .shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11")
+        logger.atInfo()
+            .log(msg, "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
+        backend.lastLogged
+            .shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
     }
 
     @Test
-    fun testOneUnboxedArgument() {
-        val ms = "Any message will do..."
+    fun `provide shortcuts for passing a non-boxed argument`() {
+        val msg = "Any message will do..."
 
-        // Verify arguments passed in to the non-boxed fundamental type methods are mapped correctly.
-        logger.atInfo().log(ms, BYTE_ARG)
-        backend.assertLastLogged().hasArguments(BYTE_ARG)
-        logger.atInfo().log(ms, SHORT_ARG)
-        backend.assertLastLogged().hasArguments(SHORT_ARG)
-        logger.atInfo().log(ms, INT_ARG)
-        backend.assertLastLogged().hasArguments(INT_ARG)
-        logger.atInfo().log(ms, LONG_ARG)
-        backend.assertLastLogged().hasArguments(LONG_ARG)
-        logger.atInfo().log(ms, CHAR_ARG)
-        backend.assertLastLogged().hasArguments(CHAR_ARG)
+        // Verify arguments passed in to the non-boxed fundamental type methods
+        // are mapped correctly.
+        logger.atInfo().log(msg, BYTE_ARG)
+        backend.lastLogged.shouldHaveArguments(BYTE_ARG)
+        logger.atInfo().log(msg, SHORT_ARG)
+        backend.lastLogged.shouldHaveArguments(SHORT_ARG)
+        logger.atInfo().log(msg, INT_ARG)
+        backend.lastLogged.shouldHaveArguments(INT_ARG)
+        logger.atInfo().log(msg, LONG_ARG)
+        backend.lastLogged.shouldHaveArguments(LONG_ARG)
+        logger.atInfo().log(msg, CHAR_ARG)
+        backend.lastLogged.shouldHaveArguments(CHAR_ARG)
     }
 
     @Test
-    fun testTwoUnboxedArguments() {
-        val ms = "Any message will do..."
+    fun `provide shortcuts for passing two non-boxed arguments`() {
+        val msg = "Any message will do..."
 
-        // Verify arguments passed in to the non-boxed fundamental type methods are mapped correctly.
-        logger.atInfo().log(ms, BYTE_ARG, BYTE_ARG)
-        backend.assertLastLogged().hasArguments(BYTE_ARG, BYTE_ARG)
-        logger.atInfo().log(ms, BYTE_ARG, SHORT_ARG)
-        backend.assertLastLogged().hasArguments(BYTE_ARG, SHORT_ARG)
-        logger.atInfo().log(ms, BYTE_ARG, INT_ARG)
-        backend.assertLastLogged().hasArguments(BYTE_ARG, INT_ARG)
-        logger.atInfo().log(ms, BYTE_ARG, LONG_ARG)
-        backend.assertLastLogged().hasArguments(BYTE_ARG, LONG_ARG)
-        logger.atInfo().log(ms, BYTE_ARG, CHAR_ARG)
-        backend.assertLastLogged().hasArguments(BYTE_ARG, CHAR_ARG)
-        logger.atInfo().log(ms, SHORT_ARG, BYTE_ARG)
-        backend.assertLastLogged().hasArguments(SHORT_ARG, BYTE_ARG)
-        logger.atInfo().log(ms, SHORT_ARG, SHORT_ARG)
-        backend.assertLastLogged().hasArguments(SHORT_ARG, SHORT_ARG)
-        logger.atInfo().log(ms, SHORT_ARG, INT_ARG)
-        backend.assertLastLogged().hasArguments(SHORT_ARG, INT_ARG)
-        logger.atInfo().log(ms, SHORT_ARG, LONG_ARG)
-        backend.assertLastLogged().hasArguments(SHORT_ARG, LONG_ARG)
-        logger.atInfo().log(ms, SHORT_ARG, CHAR_ARG)
-        backend.assertLastLogged().hasArguments(SHORT_ARG, CHAR_ARG)
-        logger.atInfo().log(ms, INT_ARG, BYTE_ARG)
-        backend.assertLastLogged().hasArguments(INT_ARG, BYTE_ARG)
-        logger.atInfo().log(ms, INT_ARG, SHORT_ARG)
-        backend.assertLastLogged().hasArguments(INT_ARG, SHORT_ARG)
-        logger.atInfo().log(ms, INT_ARG, INT_ARG)
-        backend.assertLastLogged().hasArguments(INT_ARG, INT_ARG)
-        logger.atInfo().log(ms, INT_ARG, LONG_ARG)
-        backend.assertLastLogged().hasArguments(INT_ARG, LONG_ARG)
-        logger.atInfo().log(ms, INT_ARG, CHAR_ARG)
-        backend.assertLastLogged().hasArguments(INT_ARG, CHAR_ARG)
-        logger.atInfo().log(ms, LONG_ARG, BYTE_ARG)
-        backend.assertLastLogged().hasArguments(LONG_ARG, BYTE_ARG)
-        logger.atInfo().log(ms, LONG_ARG, SHORT_ARG)
-        backend.assertLastLogged().hasArguments(LONG_ARG, SHORT_ARG)
-        logger.atInfo().log(ms, LONG_ARG, INT_ARG)
-        backend.assertLastLogged().hasArguments(LONG_ARG, INT_ARG)
-        logger.atInfo().log(ms, LONG_ARG, LONG_ARG)
-        backend.assertLastLogged().hasArguments(LONG_ARG, LONG_ARG)
-        logger.atInfo().log(ms, LONG_ARG, CHAR_ARG)
-        backend.assertLastLogged().hasArguments(LONG_ARG, CHAR_ARG)
-        logger.atInfo().log(ms, CHAR_ARG, BYTE_ARG)
-        backend.assertLastLogged().hasArguments(CHAR_ARG, BYTE_ARG)
-        logger.atInfo().log(ms, CHAR_ARG, SHORT_ARG)
-        backend.assertLastLogged().hasArguments(CHAR_ARG, SHORT_ARG)
-        logger.atInfo().log(ms, CHAR_ARG, INT_ARG)
-        backend.assertLastLogged().hasArguments(CHAR_ARG, INT_ARG)
-        logger.atInfo().log(ms, CHAR_ARG, LONG_ARG)
-        backend.assertLastLogged().hasArguments(CHAR_ARG, LONG_ARG)
-        logger.atInfo().log(ms, CHAR_ARG, CHAR_ARG)
-        backend.assertLastLogged().hasArguments(CHAR_ARG, CHAR_ARG)
+        // Verify arguments passed in to the non-boxed fundamental type methods
+        // are mapped correctly.
+        logger.atInfo().log(msg, BYTE_ARG, BYTE_ARG)
+        backend.lastLogged.shouldHaveArguments(BYTE_ARG, BYTE_ARG)
+        logger.atInfo().log(msg, BYTE_ARG, SHORT_ARG)
+        backend.lastLogged.shouldHaveArguments(BYTE_ARG, SHORT_ARG)
+        logger.atInfo().log(msg, BYTE_ARG, INT_ARG)
+        backend.lastLogged.shouldHaveArguments(BYTE_ARG, INT_ARG)
+        logger.atInfo().log(msg, BYTE_ARG, LONG_ARG)
+        backend.lastLogged.shouldHaveArguments(BYTE_ARG, LONG_ARG)
+        logger.atInfo().log(msg, BYTE_ARG, CHAR_ARG)
+        backend.lastLogged.shouldHaveArguments(BYTE_ARG, CHAR_ARG)
+        logger.atInfo().log(msg, SHORT_ARG, BYTE_ARG)
+        backend.lastLogged.shouldHaveArguments(SHORT_ARG, BYTE_ARG)
+        logger.atInfo().log(msg, SHORT_ARG, SHORT_ARG)
+        backend.lastLogged.shouldHaveArguments(SHORT_ARG, SHORT_ARG)
+        logger.atInfo().log(msg, SHORT_ARG, INT_ARG)
+        backend.lastLogged.shouldHaveArguments(SHORT_ARG, INT_ARG)
+        logger.atInfo().log(msg, SHORT_ARG, LONG_ARG)
+        backend.lastLogged.shouldHaveArguments(SHORT_ARG, LONG_ARG)
+        logger.atInfo().log(msg, SHORT_ARG, CHAR_ARG)
+        backend.lastLogged.shouldHaveArguments(SHORT_ARG, CHAR_ARG)
+        logger.atInfo().log(msg, INT_ARG, BYTE_ARG)
+        backend.lastLogged.shouldHaveArguments(INT_ARG, BYTE_ARG)
+        logger.atInfo().log(msg, INT_ARG, SHORT_ARG)
+        backend.lastLogged.shouldHaveArguments(INT_ARG, SHORT_ARG)
+        logger.atInfo().log(msg, INT_ARG, INT_ARG)
+        backend.lastLogged.shouldHaveArguments(INT_ARG, INT_ARG)
+        logger.atInfo().log(msg, INT_ARG, LONG_ARG)
+        backend.lastLogged.shouldHaveArguments(INT_ARG, LONG_ARG)
+        logger.atInfo().log(msg, INT_ARG, CHAR_ARG)
+        backend.lastLogged.shouldHaveArguments(INT_ARG, CHAR_ARG)
+        logger.atInfo().log(msg, LONG_ARG, BYTE_ARG)
+        backend.lastLogged.shouldHaveArguments(LONG_ARG, BYTE_ARG)
+        logger.atInfo().log(msg, LONG_ARG, SHORT_ARG)
+        backend.lastLogged.shouldHaveArguments(LONG_ARG, SHORT_ARG)
+        logger.atInfo().log(msg, LONG_ARG, INT_ARG)
+        backend.lastLogged.shouldHaveArguments(LONG_ARG, INT_ARG)
+        logger.atInfo().log(msg, LONG_ARG, LONG_ARG)
+        backend.lastLogged.shouldHaveArguments(LONG_ARG, LONG_ARG)
+        logger.atInfo().log(msg, LONG_ARG, CHAR_ARG)
+        backend.lastLogged.shouldHaveArguments(LONG_ARG, CHAR_ARG)
+        logger.atInfo().log(msg, CHAR_ARG, BYTE_ARG)
+        backend.lastLogged.shouldHaveArguments(CHAR_ARG, BYTE_ARG)
+        logger.atInfo().log(msg, CHAR_ARG, SHORT_ARG)
+        backend.lastLogged.shouldHaveArguments(CHAR_ARG, SHORT_ARG)
+        logger.atInfo().log(msg, CHAR_ARG, INT_ARG)
+        backend.lastLogged.shouldHaveArguments(CHAR_ARG, INT_ARG)
+        logger.atInfo().log(msg, CHAR_ARG, LONG_ARG)
+        backend.lastLogged.shouldHaveArguments(CHAR_ARG, LONG_ARG)
+        logger.atInfo().log(msg, CHAR_ARG, CHAR_ARG)
+        backend.lastLogged.shouldHaveArguments(CHAR_ARG, CHAR_ARG)
     }
 
     @Test
-    fun testTwoMixedArguments() {
+    fun `provide shortcuts for passing two mixed, non-boxed arguments`() {
         val ms = "Any message will do..."
 
-        // Verify arguments passed in to the non-boxed fundamental type methods are mapped correctly.
+        // Verify arguments passed in to the non-boxed fundamental type methods
+        // are mapped correctly.
         logger.atInfo().log(ms, OBJECT_ARG, BYTE_ARG)
-        backend.assertLastLogged().hasArguments(OBJECT_ARG, BYTE_ARG)
+        backend.lastLogged.shouldHaveArguments(OBJECT_ARG, BYTE_ARG)
         logger.atInfo().log(ms, OBJECT_ARG, SHORT_ARG)
-        backend.assertLastLogged().hasArguments(OBJECT_ARG, SHORT_ARG)
+        backend.lastLogged.shouldHaveArguments(OBJECT_ARG, SHORT_ARG)
         logger.atInfo().log(ms, OBJECT_ARG, INT_ARG)
-        backend.assertLastLogged().hasArguments(OBJECT_ARG, INT_ARG)
+        backend.lastLogged.shouldHaveArguments(OBJECT_ARG, INT_ARG)
         logger.atInfo().log(ms, OBJECT_ARG, LONG_ARG)
-        backend.assertLastLogged().hasArguments(OBJECT_ARG, LONG_ARG)
+        backend.lastLogged.shouldHaveArguments(OBJECT_ARG, LONG_ARG)
         logger.atInfo().log(ms, OBJECT_ARG, CHAR_ARG)
-        backend.assertLastLogged().hasArguments(OBJECT_ARG, CHAR_ARG)
+        backend.lastLogged.shouldHaveArguments(OBJECT_ARG, CHAR_ARG)
         logger.atInfo().log(ms, BYTE_ARG, OBJECT_ARG)
-        backend.assertLastLogged().hasArguments(BYTE_ARG, OBJECT_ARG)
+        backend.lastLogged.shouldHaveArguments(BYTE_ARG, OBJECT_ARG)
         logger.atInfo().log(ms, SHORT_ARG, OBJECT_ARG)
-        backend.assertLastLogged().hasArguments(SHORT_ARG, OBJECT_ARG)
+        backend.lastLogged.shouldHaveArguments(SHORT_ARG, OBJECT_ARG)
         logger.atInfo().log(ms, INT_ARG, OBJECT_ARG)
-        backend.assertLastLogged().hasArguments(INT_ARG, OBJECT_ARG)
+        backend.lastLogged.shouldHaveArguments(INT_ARG, OBJECT_ARG)
         logger.atInfo().log(ms, LONG_ARG, OBJECT_ARG)
-        backend.assertLastLogged().hasArguments(LONG_ARG, OBJECT_ARG)
+        backend.lastLogged.shouldHaveArguments(LONG_ARG, OBJECT_ARG)
         logger.atInfo().log(ms, CHAR_ARG, OBJECT_ARG)
-        backend.assertLastLogged().hasArguments(CHAR_ARG, OBJECT_ARG)
+        backend.lastLogged.shouldHaveArguments(CHAR_ARG, OBJECT_ARG)
     }
 
     @Test
-    fun testWithStackTrace() {
+    fun `log with a stack trace`() {
 
-        // Keep these 2 lines immediately adjacent to each other.
+        // Keep these two lines immediately adjacent to each other.
         val expectedCaller = callerInfoFollowingLine()
         logger.atSevere().withStackTrace(StackSize.FULL).log("Answer=%#x", 66)
 
-        assertThat(backend.loggedCount).isEqualTo(1)
-        backend.assertLogged(0).hasMessage("Answer=%#x")
-        backend.assertLogged(0).hasArguments(66)
-        backend.assertLogged(0).metadata().hasSize(1)
-        backend.assertLogged(0).metadata().keys().contains(Key.LOG_CAUSE)
-        val cause = backend.getLogged(0).getMetadata().findValue(Key.LOG_CAUSE)
-        assertThat(cause).hasMessageThat().isEqualTo("FULL")
-        assertThat(cause!!.cause).isNull()
+        backend.loggedCount shouldBe 1
+        backend.firstLogged.shouldHaveMessage("Answer=%#x")
+        backend.firstLogged.shouldHaveArguments(66)
+        backend.firstLogged.metadata.shouldHaveSize(1)
+        backend.firstLogged.metadata.shouldContain(Key.LOG_CAUSE)
+
+        val cause = backend.firstLogged.metadata.findValue(Key.LOG_CAUSE)!!
+        cause.shouldHaveMessage("FULL")
+        cause.cause.shouldBeNull() // It is a synthetic exception.
+
         val actualStack = listOf(*cause.stackTrace)
-        val expectedStack = mutableListOf(*Throwable().stackTrace)
-        // Overwrite the first element to the expected value.
-        expectedStack[0] = expectedCaller
-        // Use string representation for comparison since synthetic stack elements are not "equal" to
-        // equivalent system stack elements.
+        val expectedStack = mutableListOf(*Throwable().stackTrace).also {
+            it[0] = expectedCaller // Overwrite the first element to the expected value.
+        }
 
+        // Use string representation for comparison since synthetic stack elements
+        // are not “equal” to equivalent system stack elements.
+        "$actualStack" shouldBe "$expectedStack"
         println(actualStack)
-        println()
-        println()
-        println()
-        println(expectedStack)
-
-        assertThat(actualStack)
-            .comparingElementsUsing(
-                Correspondence.transforming(
-                    { obj: Any? -> obj.toString() },
-                    { obj: Any? -> obj.toString() }, "toString"
-                )
-            )
-            .containsExactlyElementsIn(expectedStack)
-            .inOrder()
     }
 
     @Test
-    fun testWithStackTraceAndCause() {
+    fun `log with a stack trace and a cause`() {
         val badness = RuntimeException("badness")
 
-        // Use "SMALL" size here because we rely on the total stack depth in this test being bigger
-        // than that. Using "MEDIUM" or "LARGE" might cause the test to fail when verifying the
-        // truncated stack size.
-        logger.atInfo().withStackTrace(StackSize.SMALL).withCause(badness).log("Answer=%#x", 66)
-        assertThat(backend.loggedCount).isEqualTo(1)
-        backend.assertLogged(0).hasMessage("Answer=%#x")
-        backend.assertLogged(0).hasArguments(66)
-        backend.assertLogged(0).metadata().hasSize(1)
-        backend.assertLogged(0).metadata().keys().contains(Key.LOG_CAUSE)
-        val cause = backend.getLogged(0).getMetadata().findValue(Key.LOG_CAUSE)
-        assertThat(cause).hasMessageThat().isEqualTo("SMALL")
-        assertThat(cause!!.stackTrace.size).isEqualTo(StackSize.SMALL.maxDepth)
-        assertThat(cause.cause).isEqualTo(badness)
+        // Use “SMALL” size here because we rely on the total stack depth
+        // in this test being bigger than that. Using “MEDIUM” or “LARGE” might
+        // cause the test to fail when verifying the truncated stack size.
+        logger.atInfo()
+            .withStackTrace(StackSize.SMALL)
+            .withCause(badness)
+            .log("Answer=%#x", 66)
+
+        backend.loggedCount shouldBe 1
+        backend.firstLogged.shouldHaveMessage("Answer=%#x")
+        backend.firstLogged.shouldHaveArguments(66)
+        backend.firstLogged.metadata.shouldHaveSize(1)
+        backend.firstLogged.metadata.shouldContain(Key.LOG_CAUSE)
+
+        val cause = backend.firstLogged.metadata.findValue(Key.LOG_CAUSE)!!
+        cause shouldHaveMessage "SMALL"
+        cause.stackTrace.size shouldBe StackSize.SMALL.maxDepth
+        cause.cause shouldBe badness
     }
 
     // See b/27310448.
@@ -875,8 +907,8 @@ internal class LogContextSpec {
             ) // Log every 3rd (0, 3, 6)
         }
         // Expect: Foo -> 0, 2, 4, 6 and Bar -> 0, 3, 6 (but not in that order)
-        assertThat(backend.loggedCount).isEqualTo(7)
-        backend.assertLogged(0).hasArguments("Foo: 0")
+        backend.loggedCount shouldBe 7
+        backend.firstLogged.shouldHaveArguments("Foo: 0")
         backend.assertLogged(1).hasArguments("Bar: 0")
         backend.assertLogged(2).hasArguments("Foo: 2")
         backend.assertLogged(3).hasArguments("Bar: 3")
@@ -891,8 +923,8 @@ internal class LogContextSpec {
     fun testExplicitLogSiteSuppression() {
         logger.atInfo().withInjectedLogSite(LogSite.INVALID).log("No log site here")
         logger.atInfo().withInjectedLogSite(null).log("No-op injection")
-        assertThat(backend.loggedCount).isEqualTo(2)
-        backend.assertLogged(0).logSite().isEqualTo(LogSite.INVALID)
+        backend.loggedCount shouldBe 2
+        backend.firstLogged.logSite shouldBe LogSite.INVALID
         backend.assertLogged(1).logSite().isNotNull()
         backend.assertLogged(1).logSite().isNotEqualTo(LogSite.INVALID)
     }
@@ -902,8 +934,7 @@ internal class LogContextSpec {
         val fooMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo")
         val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
         val fooKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
-        assertThat(fooKey)
-            .isEqualTo(LogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata))
+        fooKey shouldBe LogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
     }
 
     @Test
@@ -951,8 +982,8 @@ internal class LogContextSpec {
         Key.LOG_SITE_GROUPING_KEY.emitRepeated(
             Iterators.forArray<Any>("foo")
         ) { k: String?, v: Any? ->
-            assertThat(k).isEqualTo("group_by")
-            assertThat(v).isEqualTo("foo")
+            k shouldBe "group_by"
+            v shouldBe "foo"
         }
 
         // We don't care too much about the case with multiple keys since it's so rare, but it should
@@ -960,8 +991,8 @@ internal class LogContextSpec {
         Key.LOG_SITE_GROUPING_KEY.emitRepeated(
             Iterators.forArray<Any>("foo", "bar")
         ) { k: String?, v: Any? ->
-            assertThat(k).isEqualTo("group_by")
-            assertThat(v).isEqualTo("[foo,bar]")
+            k shouldBe "group_by"
+            v shouldBe "[foo,bar]"
         }
     }
 }
