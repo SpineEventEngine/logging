@@ -31,6 +31,7 @@ import com.google.common.flogger.backend.Metadata
 import io.kotest.matchers.collections.shouldContainInOrder
 import io.kotest.matchers.ints.shouldBeExactly
 import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 
 /**
@@ -58,6 +59,10 @@ internal fun <T> Metadata.shouldHaveFirstValue(key: MetadataKey<T>, value: T) {
 
 internal infix fun <T> Metadata.shouldNotContain(key: MetadataKey<T>) {
     findValue(key).shouldBeNull()
+}
+
+internal infix fun <T> Metadata.shouldContain(key: MetadataKey<T>) {
+    findValue(key).shouldNotBeNull()
 }
 
 internal fun <T> Metadata.shouldUniquelyContain(key: MetadataKey<T>, value: T) {
