@@ -18,8 +18,17 @@ package com.google.common.flogger
 import com.google.common.base.Splitter
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.Iterators
-import com.google.common.collect.Range
+import com.google.common.flogger.DurationRateLimiter.newRateLimitPeriod
+import com.google.common.flogger.LazyArgs.lazy
+import com.google.common.flogger.LogContext.Key
+import com.google.common.flogger.MetadataKey.repeated
 import com.google.common.flogger.context.Tags
+import com.google.common.flogger.given.shouldContainInOrder
+import com.google.common.flogger.given.shouldHaveArguments
+import com.google.common.flogger.given.shouldHaveMessage
+import com.google.common.flogger.given.shouldHaveSize
+import com.google.common.flogger.given.shouldNotContain
+import com.google.common.flogger.given.shouldUniquelyContain
 import com.google.common.flogger.testing.FakeLogSite
 import com.google.common.flogger.testing.FakeLoggerBackend
 import com.google.common.flogger.testing.FakeMetadata
@@ -27,411 +36,458 @@ import com.google.common.flogger.testing.TestLogger
 import com.google.common.truth.Correspondence
 import com.google.common.truth.Truth.assertThat
 import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.ints.shouldBeInRange
+import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.shouldBe
 import java.io.PrintWriter
 import java.io.StringWriter
+import java.lang.System.currentTimeMillis
 import java.util.*
-import java.util.concurrent.TimeUnit
-import java.util.logging.Level
+import java.util.concurrent.TimeUnit.MILLISECONDS
+import java.util.concurrent.TimeUnit.SECONDS
+import java.util.logging.Level.INFO
+import java.util.logging.Level.WARNING
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 @DisplayName("`LogContext` should")
 internal class LogContextSpec {
 
-    @Test
-    fun testIsEnabled() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
-        backend.setLevel(Level.INFO)
-        assertThat(logger.atFine().isEnabled()).isFalse()
-        assertThat(logger.atInfo().isEnabled()).isTrue()
-        assertThat(logger.at(Level.WARNING).isEnabled()).isTrue()
+    private val backend = FakeLoggerBackend()
+    private val logger = FluentLogger2(backend)
+
+    companion object {
+        // Arbitrary constants of overloaded types for testing argument mappings.
+        private const val BYTE_ARG = Byte.MAX_VALUE
+        private const val SHORT_ARG = Short.MAX_VALUE
+        private const val INT_ARG = Int.MAX_VALUE
+        private const val LONG_ARG = Long.MAX_VALUE
+        private const val CHAR_ARG = 'X'
+        private val OBJECT_ARG = Any()
+        private val REPEATED_KEY = repeated("str", String::class.java)
+        private val FLAG_KEY = repeated("flag", Boolean::class.javaObjectType)
+        private val ONCE_PER_SECOND = newRateLimitPeriod(1, SECONDS)
+
+        // In normal use, the logger would never need to be passed in,
+        // and you'd use `logVarargs()`.
+        private fun logHelper(logger: FluentLogger2, logSite: LogSite, n: Int, message: String) {
+            logger.atInfo()
+                .withInjectedLogSite(logSite)
+                .every(n)
+                .log("%s", message)
+        }
     }
 
     @Test
-    fun testLoggingWithCause() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
+    fun `return 'true' if logging is enabled at the implied level`() {
+        backend.setLevel(INFO)
+        logger.atFine().isEnabled().shouldBeFalse()
+        logger.atInfo().isEnabled().shouldBeTrue()
+        logger.at(WARNING).isEnabled().shouldBeTrue()
+    }
+
+    @Test
+    fun `log with the given cause`() {
         val cause = Throwable()
-        logger.atInfo().withCause(cause).log("Hello World")
-        backend.assertLastLogged().metadata().hasSize(1)
-        backend.assertLastLogged().metadata().containsUniqueEntry(LogContext.Key.LOG_CAUSE, cause)
-        backend.assertLastLogged().hasMessage("Hello World")
+        logger.atInfo()
+            .withCause(cause)
+            .log("Hello World")
+
+        backend.lastLogged.metadata shouldHaveSize 1
+        backend.lastLogged.metadata.shouldUniquelyContain(Key.LOG_CAUSE, cause)
+        backend.lastLogged shouldHaveMessage "Hello World"
     }
 
     @Test
-    fun testLazyArgs() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
-        logger.atInfo().log("Hello %s", LazyArgs.lazy { "World" })
+    fun `lazily evaluate arguments`() {
+        logger.atInfo().log("Hello %s", lazy { "World" })
         logger.atFine().log(
             "Hello %s",
-            LazyArgs.lazy<Any> {
-                throw RuntimeException(
-                    "Lazy arguments should not be evaluated in a disabled log statement"
-                )
-            })
+            lazy { error("Lazy arguments should not be evaluated in a disabled log statement") }
+        )
 
-        // By the time the backend processes a log statement, lazy arguments have been evaluated.
-        backend.assertLastLogged().hasMessage("Hello %s")
-        backend.assertLastLogged().hasArguments("World")
+        backend.lastLogged shouldHaveMessage "Hello %s"
+        backend.lastLogged.shouldHaveArguments("World")
     }
 
     @Test
-    fun testFormattedMessage() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
-        logger.at(Level.INFO).log("Formatted %s", "Message")
-        assertThat(backend.loggedCount).isEqualTo(1)
-        backend.assertLastLogged().hasMessage("Formatted %s")
-        backend.assertLastLogged().hasArguments("Message")
+    fun `accept a formatted message`() {
+        logger.at(INFO).log("Formatted %s", "Message")
+        backend.loggedCount shouldBe 1
+        backend.lastLogged shouldHaveMessage "Formatted %s"
+        backend.lastLogged.shouldHaveArguments("Message")
 
-        // Cannot ask for literal argument as none exists.
+        // Should NOT ask for literal argument as none exists.
         shouldThrow<IllegalStateException> {
-            backend.getLogged(0).getLiteralArgument()
+            backend.lastLogged.literalArgument
         }
     }
 
     @Test
-    fun testLiteralMessage() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
-        logger.at(Level.INFO).log("Literal Message")
-        assertThat(backend.loggedCount).isEqualTo(1)
-        backend.assertLastLogged().hasMessage("Literal Message")
+    fun `accept a literal message`() {
+        logger.at(INFO).log("Literal Message")
+        backend.loggedCount shouldBe 1
+        backend.lastLogged shouldHaveMessage "Literal Message"
 
         // Cannot ask for format arguments as none exist.
-        assertThat(backend.getLogged(0).getTemplateContext()).isNull()
+        backend.lastLogged.templateContext.shouldBeNull()
         shouldThrow<IllegalStateException> {
-            backend.getLogged(0).getArguments()
+            backend.lastLogged.getArguments()
         }
     }
 
     @Test
-    fun testMultipleMetadata() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
-        val cause: Exception = RuntimeException()
-        logger.atInfo().withCause(cause).every(42).log("Hello World")
-        assertThat(backend.loggedCount).isEqualTo(1)
-        backend.assertLogged(0).metadata().hasSize(2)
-        backend.assertLogged(0).metadata().containsUniqueEntry(LogContext.Key.LOG_EVERY_N, 42)
-        backend.assertLogged(0).metadata().containsUniqueEntry(LogContext.Key.LOG_CAUSE, cause)
+    fun `accept multiple metadata entries`() {
+        val cause = RuntimeException()
+        logger.atInfo()
+            .withCause(cause)
+            .every(42)
+            .log("Hello World")
+        backend.loggedCount shouldBe 1
+        backend.lastLogged.metadata shouldHaveSize 2
+        backend.lastLogged.metadata.shouldUniquelyContain(Key.LOG_EVERY_N, 42)
+        backend.lastLogged.metadata.shouldUniquelyContain(Key.LOG_CAUSE, cause)
     }
 
     @Test
-    fun testMetadataKeys() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
-        logger.atInfo().with(REPEATED_KEY, "foo").with(REPEATED_KEY, "bar").log("Several values")
-        logger.atInfo().with(FLAG_KEY).log("Set Flag")
-        logger.atInfo().with(FLAG_KEY, false).log("No flag")
-        logger.atInfo().with(REPEATED_KEY, "foo").with(FLAG_KEY).with(REPEATED_KEY, "bar")
+    fun `handle multiple metadata keys`() {
+        logger.atInfo()
+            .with(REPEATED_KEY, "foo")
+            .with(REPEATED_KEY, "bar")
+            .log("Several values")
+        logger.atInfo()
+            .with(FLAG_KEY)
+            .log("Set Flag")
+        logger.atInfo()
+            .with(FLAG_KEY, false)
+            .log("No flag")
+        logger.atInfo()
+            .with(REPEATED_KEY, "foo")
+            .with(FLAG_KEY)
+            .with(REPEATED_KEY, "bar")
             .log("...")
-        assertThat(backend.loggedCount).isEqualTo(4)
-        backend.assertLogged(0).metadata().containsEntries(REPEATED_KEY, "foo", "bar")
-        backend.assertLogged(1).metadata().containsUniqueEntry(FLAG_KEY, true)
-        backend.assertLogged(2).metadata().containsUniqueEntry(FLAG_KEY, false)
-        // Just check nothing weird happens when the metadata is interleaved in the log statement.
-        backend.assertLogged(3).metadata().containsEntries(REPEATED_KEY, "foo", "bar")
-        backend.assertLogged(3).metadata().containsUniqueEntry(FLAG_KEY, true)
+
+        backend.loggedCount shouldBe 4
+        backend.logged[0].metadata.shouldContainInOrder(REPEATED_KEY, "foo", "bar")
+        backend.logged[1].metadata.shouldUniquelyContain(FLAG_KEY, true)
+        backend.logged[2].metadata.shouldUniquelyContain(FLAG_KEY, false)
+
+        // Just check nothing weird happens when the metadata
+        // is interleaved in the log statement.
+        backend.logged[3].metadata.shouldContainInOrder(REPEATED_KEY, "foo", "bar")
+        backend.logged[3].metadata.shouldUniquelyContain(FLAG_KEY, true)
     }
 
-    // For testing that log-site tags are correctly merged with metadata, see
-    // AbstractScopedLoggingContextTest.
+    /**
+     * For testing log-site tags are correctly merged with metadata,
+     * see [AbstractScopedLoggingContextTest][com.google.common.flogger.testing.AbstractScopedLoggingContextTest].
+     */
     @Test
-    fun testLoggedTags() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
+    fun `accept tags`() {
         val tags = Tags.of("foo", "bar")
-        logger.atInfo().with(LogContext.Key.TAGS, tags).log("With tags")
-        assertThat(backend.loggedCount).isEqualTo(1)
-        backend.assertLogged(0).metadata().containsUniqueEntry(LogContext.Key.TAGS, tags)
+        logger.atInfo()
+            .with(Key.TAGS, tags)
+            .log("With tags")
+        backend.loggedCount shouldBe 1
+        backend.lastLogged.metadata.shouldUniquelyContain(Key.TAGS, tags)
     }
 
     @Test
-    fun testEveryN() {
+    fun `log once per the given number of invocations`() {
         val backend = FakeLoggerBackend()
         val logger = TestLogger.create(backend)
-        val startNanos = TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis())
+        val startNanos = MILLISECONDS.toNanos(currentTimeMillis())
+
         // Logging occurs for counts: 0, 5, 10 (timestamp is not important).
-        var millis = 0
-        var count = 0
-        while (millis <= 1000) {
-            val timestampNanos = startNanos + TimeUnit.MILLISECONDS.toNanos(millis.toLong())
-            logger.at(Level.INFO, timestampNanos).every(5).log("Count=%d", count++)
-            millis += 100
+        for ((counter, millis) in (0..1000L step 100).withIndex()) {
+            val timestampNanos = startNanos + MILLISECONDS.toNanos(millis)
+            logger.at(INFO, timestampNanos)
+                .every(5)
+                .log("Count=%d", counter)
         }
-        assertThat(backend.loggedCount).isEqualTo(3)
-        backend.assertLogged(0).metadata().containsUniqueEntry(LogContext.Key.LOG_EVERY_N, 5)
-        // Check the first log we captured was the first one emitted.
-        backend.assertLogged(0).timestampNanos().isEqualTo(startNanos)
+
+        backend.loggedCount shouldBe 3
+
+        // The first log we captured should be the first one emitted.
+        backend.firstLogged.timestampNanos shouldBe startNanos
+        backend.firstLogged.metadata.shouldUniquelyContain(Key.LOG_EVERY_N, 5)
 
         // Check the expected count and skipped-count for each log.
-        backend.assertLogged(0).hasArguments(0)
-        backend.assertLogged(0).metadata().keys().doesNotContain(LogContext.Key.SKIPPED_LOG_COUNT)
-        backend.assertLogged(1).hasArguments(5)
-        backend.assertLogged(1).metadata().containsUniqueEntry(LogContext.Key.SKIPPED_LOG_COUNT, 4)
-        backend.assertLogged(2).hasArguments(10)
-        backend.assertLogged(2).metadata().containsUniqueEntry(LogContext.Key.SKIPPED_LOG_COUNT, 4)
+        backend.logged[0].shouldHaveArguments(0)
+        backend.logged[0].metadata.shouldNotContain(Key.SKIPPED_LOG_COUNT)
+        backend.logged[1].shouldHaveArguments(5)
+        backend.logged[1].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 4)
+        backend.logged[2].shouldHaveArguments(10)
+        backend.logged[2].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 4)
     }
 
     @Test
-    fun testOnAverageEveryN() {
+    fun `log with likelihood 1 in 'n'`() {
         val backend = FakeLoggerBackend()
         val logger = TestLogger.create(backend)
-        val startNanos = TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis())
+        val startNanos = MILLISECONDS.toNanos(currentTimeMillis())
+
         // Logging occurs randomly 1-in-5 times over 1000 log statements.
-        var millis = 0
-        var count = 0
-        while (millis <= 1000) {
-            val timestampNanos = startNanos + TimeUnit.MILLISECONDS.toNanos(millis.toLong())
-            logger.at(Level.INFO, timestampNanos).onAverageEvery(5).log("Count=%d", count++)
-            millis += 1
+        for ((counter, millis) in (0..1000L).withIndex()) {
+            val timestampNanos = startNanos + MILLISECONDS.toNanos(millis)
+            logger.at(INFO, timestampNanos)
+                .onAverageEvery(5)
+                .log("Count=%d", counter)
         }
 
-        // Satisically impossible that we randomly get +/- 100 over 1000 logs.
-        assertThat(backend.loggedCount).isIn(Range.closed(100, 300))
-        backend.assertLogged(0).metadata().containsUniqueEntry(LogContext.Key.LOG_SAMPLE_EVERY_N, 5)
+        // Statistically impossible that we randomly get +/- 100 over 1000 logs.
+        backend.loggedCount shouldBeInRange 100..300
+        backend.firstLogged.metadata.shouldUniquelyContain(Key.LOG_SAMPLE_EVERY_N, 5)
 
         // Check the expected count and skipped-count for each log based on the timestamp.
         var lastLogIndex = -1
         for (n in 0..<backend.loggedCount) {
-            // The timestamp increases by 1 millisecond each time so we can get the log index from it.
-            val deltaNanos = backend.getLogged(n).getTimestampNanos() - startNanos
-            val logIndex = (deltaNanos / TimeUnit.MILLISECONDS.toNanos(1)).toInt()
-            backend.assertLogged(n).hasArguments(logIndex)
-            // This works even if lastLogIndex == -1.
+            // The timestamp increases by 1 millisecond each time,
+            // so we can get the log index from it.
+            val deltaNanos = backend.logged[n].timestampNanos - startNanos
+            val logIndex = (deltaNanos / MILLISECONDS.toNanos(1)).toInt()
+            backend.logged[n].shouldHaveArguments(logIndex)
+
+            // This works even if `lastLogIndex` == -1.
             val skipped = logIndex - lastLogIndex - 1
+            val metadata = backend.logged[n].metadata
             if (skipped == 0) {
-                backend.assertLogged(n).metadata().keys()
-                    .doesNotContain(LogContext.Key.SKIPPED_LOG_COUNT)
+                metadata.shouldNotContain(Key.SKIPPED_LOG_COUNT)
             } else {
-                backend.assertLogged(n).metadata()
-                    .containsUniqueEntry(LogContext.Key.SKIPPED_LOG_COUNT, skipped)
+                metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, skipped)
             }
+
             lastLogIndex = logIndex
         }
     }
 
     @Test
-    fun testAtMostEvery() {
+    fun `log at most once per the specified time period`() {
         val backend = FakeLoggerBackend()
         val logger = TestLogger.create(backend)
+        val startNanos = MILLISECONDS.toNanos(currentTimeMillis())
 
-        // Logging occurs at: +0ms, +2400ms, +4800ms
-        // Note it will not occur at 4200ms (which is the first logging attempt after the
+        // Logging occurs at: +0ms, +2400ms, +4800ms.
+        // Note it will not occur at 4200ms, which is the first logging attempt after the
         // 2nd multiple of 2 seconds because the timestamp is reset to be (start + 2400ms)
-        // and not (start + 2000ms). atMostEvery() does not rate limit over multiple samples.
-        val startNanos = TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis())
-        var millis = 0
-        var count = 0
-        while (millis <= 5000) {
-            val timestampNanos = startNanos + TimeUnit.MILLISECONDS.toNanos(millis.toLong())
-            logger.at(Level.INFO, timestampNanos).atMostEvery(2, TimeUnit.SECONDS)
-                .log("Count=%d", count++)
-            millis += 600
+        // and not (start + 2000ms). `atMostEvery()` does not rate limit over multiple samples.
+        for ((counter, millis) in (0..5000L step 600).withIndex()) {
+            val timestampNanos = startNanos + MILLISECONDS.toNanos(millis)
+            logger.at(INFO, timestampNanos)
+                .atMostEvery(2, SECONDS)
+                .log("Count=%d", counter)
         }
-        assertThat(backend.loggedCount).isEqualTo(3)
-        val rateLimit = DurationRateLimiter.newRateLimitPeriod(2, TimeUnit.SECONDS)
-        backend.assertLogged(0).metadata()
-            .containsUniqueEntry(LogContext.Key.LOG_AT_MOST_EVERY, rateLimit)
+
+        backend.loggedCount shouldBe 3
+
         // Check the first log we captured was the first one emitted.
         backend.assertLogged(0).timestampNanos().isEqualTo(startNanos)
+        backend.firstLogged.metadata.shouldUniquelyContain(
+            Key.LOG_AT_MOST_EVERY,
+            newRateLimitPeriod(2, SECONDS)
+        )
 
         // Check the expected count and skipped-count for each log.
-        backend.assertLogged(0).hasArguments(0)
-        backend.assertLogged(0).metadata().keys().doesNotContain(LogContext.Key.SKIPPED_LOG_COUNT)
-        backend.assertLogged(1).hasArguments(4)
-        backend.assertLogged(1).metadata().containsUniqueEntry(LogContext.Key.SKIPPED_LOG_COUNT, 3)
-        backend.assertLogged(2).hasArguments(8)
-        backend.assertLogged(2).metadata().containsUniqueEntry(LogContext.Key.SKIPPED_LOG_COUNT, 3)
+        backend.logged[0].shouldHaveArguments(0)
+        backend.logged[0].metadata.shouldNotContain(Key.SKIPPED_LOG_COUNT)
+        backend.logged[1].shouldHaveArguments(4)
+        backend.logged[1].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 3)
+        backend.logged[2].shouldHaveArguments(8)
+        backend.logged[2].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 3)
     }
 
-    @Test
-    fun testMultipleRateLimiters_higherLoggingRate() {
-        val backend = FakeLoggerBackend()
-        val logger = TestLogger.create(backend)
+    @Nested inner class
+    `when given multiple rate limiters` {
 
-        // 10 logs per second over 6 seconds.
-        val startNanos = TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis())
-        var millis = 0
-        var count = 0
-        while (millis <= 6000) {
-            val timestampNanos = startNanos + TimeUnit.MILLISECONDS.toNanos(millis.toLong())
-            // More than N logs occur per rate limit period, so logging should occur every 2 seconds.
-            logger.at(Level.INFO, timestampNanos).every(15).atMostEvery(2, TimeUnit.SECONDS)
-                .log("Count=%d", count++)
-            millis += 100
+        @Test
+        fun `log with a higher invocation rate`() {
+            val backend = FakeLoggerBackend()
+            val logger = TestLogger.create(backend)
+            val startNanos = MILLISECONDS.toNanos(currentTimeMillis())
+
+            // 10 logs per second over 6 seconds.
+            for ((counter, millis) in (0..6000L step 100).withIndex()) {
+                val timestampNanos = startNanos + MILLISECONDS.toNanos(millis)
+                // More than N logs occur per rate limit period,
+                // so logging should occur every 2 seconds.
+                logger.at(INFO, timestampNanos)
+                    .every(15)
+                    .atMostEvery(2, SECONDS)
+                    .log("Count=%d", counter)
+            }
+
+            backend.loggedCount shouldBe 4
+            backend.logged[0].shouldHaveArguments(0)
+            backend.logged[1].shouldHaveArguments(20)
+            backend.logged[2].shouldHaveArguments(40)
+            backend.logged[3].shouldHaveArguments(60)
+            backend.logged[3].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 19)
         }
-        assertThat(backend.loggedCount).isEqualTo(4)
-        backend.assertLogged(0).hasArguments(0)
-        backend.assertLogged(1).hasArguments(20)
-        backend.assertLogged(2).hasArguments(40)
-        backend.assertLogged(3).hasArguments(60)
-        backend.assertLogged(3).metadata().containsUniqueEntry(LogContext.Key.SKIPPED_LOG_COUNT, 19)
+
+        @Test
+        fun `log with a lower invocation rate`() {
+            val backend = FakeLoggerBackend()
+            val logger = TestLogger.create(backend)
+            val startNanos = MILLISECONDS.toNanos(currentTimeMillis())
+
+            // 10 logs per second over 6 seconds.
+            for ((counter, millis) in (0..6000L step 100).withIndex()) {
+                val timestampNanos = startNanos + MILLISECONDS.toNanos(millis)
+                // Fever than N logs occur in the rate limit period,
+                // so logging should occur every 15 logs.
+                logger.at(INFO, timestampNanos)
+                    .every(15)
+                    .atMostEvery(1, SECONDS)
+                    .log("Count=%d", counter)
+            }
+
+            backend.loggedCount shouldBe 5
+            backend.logged[0].shouldHaveArguments(0)
+            backend.logged[1].shouldHaveArguments(15)
+            backend.logged[2].shouldHaveArguments(30)
+            backend.logged[3].shouldHaveArguments(45)
+            backend.logged[4].shouldHaveArguments(60)
+            backend.logged[4].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 14)
+        }
     }
 
-    @Test
-    fun testMultipleRateLimiters_lowerLoggingRate() {
-        val backend = FakeLoggerBackend()
-        val logger = TestLogger.create(backend)
+    @Nested inner class
+    `aggregate stateful logging with respect to` {
 
-        // 10 logs per second over 6 seconds.
-        val startNanos = TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis())
-        var millis = 0
-        var count = 0
-        while (millis <= 6000) {
-            val timestampNanos = startNanos + TimeUnit.MILLISECONDS.toNanos(millis.toLong())
-            // Fever than N logs occur in the rate limit period, so logging should occur every 15 logs.
-            logger.at(Level.INFO, timestampNanos).every(15).atMostEvery(1, TimeUnit.SECONDS)
-                .log("Count=%d", count++)
-            millis += 100
-        }
-        assertThat(backend.loggedCount).isEqualTo(5)
-        backend.assertLogged(0).hasArguments(0)
-        backend.assertLogged(1).hasArguments(15)
-        backend.assertLogged(2).hasArguments(30)
-        backend.assertLogged(3).hasArguments(45)
-        backend.assertLogged(4).hasArguments(60)
-        backend.assertLogged(4).metadata().containsUniqueEntry(LogContext.Key.SKIPPED_LOG_COUNT, 14)
-    }
+        @Test
+        fun `bucketing strategy`() {
+            val backend = FakeLoggerBackend()
+            val logger = TestLogger.create(backend)
 
-    @Test
-    fun testPer_withStrategy() {
-        val backend = FakeLoggerBackend()
-        val logger = TestLogger.create(backend)
+            // Logs for both types should appear.
+            // Even though the 2nd log is within the rate limit period.
+            // NOTE: It is important this is tested on a single log statement.
+            var nowNanos = MILLISECONDS.toNanos(currentTimeMillis())
+            listOf(
+                IllegalArgumentException(),
+                NullPointerException(),
+                NullPointerException(),
+                IllegalArgumentException(),
+            ).forEach { exception ->
+                logger.at(INFO, nowNanos)
+                    .atMostEvery(1, SECONDS)
+                    .per(exception, LogPerBucketingStrategy.byClass())
+                    .log("Err: %s", exception.message)
+                nowNanos += MILLISECONDS.toNanos(100)
+            }
 
-        // Logs for both types should appear (even though the 2nd log is within the rate limit period).
-        // NOTE: It is important this is tested on a single log statement.
-        var nowNanos = TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis())
-        for (err in listOf(
-            IllegalArgumentException(),
-            NullPointerException(),
-            NullPointerException(),
-            IllegalArgumentException()
-        )) {
-            logger
-                .at(Level.INFO, nowNanos)
-                .atMostEvery(1, TimeUnit.SECONDS)
-                .per(err, LogPerBucketingStrategy.byClass())
-                .log("Err: %s", err.message)
-            nowNanos += TimeUnit.MILLISECONDS.toNanos(100)
-        }
-        assertThat(backend.loggedCount).isEqualTo(2)
+            backend.loggedCount shouldBe 2
 
-        // Rate limit period and the aggregation key from "per"
-        backend.assertLogged(0).metadata().hasSize(2)
-        backend
-            .assertLogged(0)
-            .metadata()
-            .containsUniqueEntry(
-                LogContext.Key.LOG_SITE_GROUPING_KEY,
+            backend.logged[0].metadata.shouldHaveSize(2)
+            backend.logged[0].metadata.shouldUniquelyContain(
+                Key.LOG_SITE_GROUPING_KEY,
                 IllegalArgumentException::class.java
             )
-        backend.assertLogged(0).metadata()
-            .containsUniqueEntry(LogContext.Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
-        backend.assertLogged(1).metadata().hasSize(2)
-        backend
-            .assertLogged(1)
-            .metadata()
-            .containsUniqueEntry(
-                LogContext.Key.LOG_SITE_GROUPING_KEY,
+            backend.logged[0].metadata.shouldUniquelyContain(
+                Key.LOG_AT_MOST_EVERY,
+                ONCE_PER_SECOND
+            )
+
+            backend.logged[1].metadata.shouldHaveSize(2)
+            backend.logged[1].metadata.shouldUniquelyContain(
+                Key.LOG_SITE_GROUPING_KEY,
                 NullPointerException::class.java
             )
-        backend.assertLogged(1).metadata()
-            .containsUniqueEntry(LogContext.Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
-    }
-
-    // Non-private to allow static import to keep test code concise.
-    internal enum class LogType {
-        FOO,
-        BAR
-    }
-
-    @Test
-    fun testPer_enum() {
-        val backend = FakeLoggerBackend()
-        val logger = TestLogger.create(backend)
-
-        // Logs for both types should appear (even though the 2nd log is within the rate limit period).
-        // NOTE: It is important this is tested on a single log statement.
-        var nowNanos = TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis())
-        for (type in listOf(
-            LogType.FOO,
-            LogType.FOO,
-            LogType.FOO,
-            LogType.BAR,
-            LogType.FOO,
-            LogType.BAR,
-            LogType.FOO
-        )) {
-            logger.at(Level.INFO, nowNanos).atMostEvery(1, TimeUnit.SECONDS).per(type)
-                .log("Type: %s", type)
-            nowNanos += TimeUnit.MILLISECONDS.toNanos(100)
+            backend.logged[1].metadata.shouldUniquelyContain(
+                Key.LOG_AT_MOST_EVERY,
+                ONCE_PER_SECOND
+            )
         }
-        assertThat(backend.loggedCount).isEqualTo(2)
 
-        // Rate limit period and the aggregation key from "per"
-        backend.assertLogged(0).hasArguments(LogType.FOO)
-        backend.assertLogged(0).metadata().hasSize(2)
-        backend.assertLogged(0).metadata()
-            .containsUniqueEntry(LogContext.Key.LOG_SITE_GROUPING_KEY, LogType.FOO)
-        backend.assertLogged(0).metadata()
-            .containsUniqueEntry(LogContext.Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
-        backend.assertLogged(1).hasArguments(LogType.BAR)
-        backend.assertLogged(1).metadata().hasSize(2)
-        backend.assertLogged(1).metadata()
-            .containsUniqueEntry(LogContext.Key.LOG_SITE_GROUPING_KEY, LogType.BAR)
-        backend.assertLogged(1).metadata()
-            .containsUniqueEntry(LogContext.Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
-    }
+        @Test
+        fun `enum constant`() {
+            val backend = FakeLoggerBackend()
+            val logger = TestLogger.create(backend)
 
-    @Test
-    fun testPer_scopeProvider() {
-        val backend = FakeLoggerBackend()
-        val logger = TestLogger.create(backend)
+            // Logs for both types should appear.
+            // Even though the 2nd log is within the rate limit period.
+            // NOTE: It is important this is tested on a single log statement.
+            var nowNanos = MILLISECONDS.toNanos(currentTimeMillis())
+            listOf(
+                LogType.FOO,
+                LogType.FOO,
+                LogType.FOO,
+                LogType.BAR,
+                LogType.FOO,
+                LogType.BAR,
+                LogType.FOO
+            ).forEach { type ->
+                logger.at(INFO, nowNanos)
+                    .atMostEvery(1, SECONDS)
+                    .per(type)
+                    .log("Type: %s", type)
+                nowNanos += MILLISECONDS.toNanos(100)
+            }
 
-        // We can't test a specific implementation of ScopedLoggingContext here (there might not be one
-        // available), so we fake it. The ScopedLoggingContext behaviour is well tested elsewhere. Only
-        // tests should ever create "immediate providers" like this as it doesn't make sense otherwise.
-        val fooScope = LoggingScope.create("foo")
-        val barScope = LoggingScope.create("bar")
-        val foo = LoggingScopeProvider { fooScope }
-        val bar = LoggingScopeProvider { barScope }
+            backend.loggedCount shouldBe 2
 
-        // Logs for both scopes should appear (even though the 2nd log is within the rate limit period).
-        // NOTE: It is important this is tested on a single log statement.
-        var nowNanos = TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis())
-        for (sp in listOf(foo, foo, foo, bar, foo, bar, foo)) {
-            logger.at(Level.INFO, nowNanos).atMostEvery(1, TimeUnit.SECONDS).per(sp).log("message")
-            nowNanos += TimeUnit.MILLISECONDS.toNanos(100)
+            backend.logged[0].shouldHaveArguments(LogType.FOO)
+            backend.logged[0].metadata.shouldHaveSize(2)
+            backend.logged[0].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, LogType.FOO)
+            backend.logged[0].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
+
+            backend.logged[1].shouldHaveArguments(LogType.BAR)
+            backend.logged[1].metadata.shouldHaveSize(2)
+            backend.logged[1].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, LogType.BAR)
+            backend.logged[1].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
         }
-        assertThat(backend.loggedCount).isEqualTo(2)
 
-        // Rate limit period and the aggregation key from "per"
-        backend.assertLogged(0).metadata().hasSize(2)
-        backend.assertLogged(0).metadata()
-            .containsUniqueEntry(LogContext.Key.LOG_SITE_GROUPING_KEY, fooScope)
-        backend.assertLogged(0).metadata()
-            .containsUniqueEntry(LogContext.Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
-        backend.assertLogged(1).metadata().hasSize(2)
-        backend.assertLogged(1).metadata()
-            .containsUniqueEntry(LogContext.Key.LOG_SITE_GROUPING_KEY, barScope)
-        backend.assertLogged(1).metadata()
-            .containsUniqueEntry(LogContext.Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
+        @Test
+        fun `scope provider`() {
+            val backend = FakeLoggerBackend()
+            val logger = TestLogger.create(backend)
+
+            // We can't test a specific implementation of `ScopedLoggingContext` here,
+            // so we fake it. The `ScopedLoggingContext` behavior is well tested elsewhere.
+            // Only tests should ever create “immediate providers” like this
+            // as it doesn't make sense otherwise.
+            var nowNanos = MILLISECONDS.toNanos(currentTimeMillis())
+            val fooScope = LoggingScope.create("foo")
+            val barScope = LoggingScope.create("bar")
+            val foo = LoggingScopeProvider { fooScope }
+            val bar = LoggingScopeProvider { barScope }
+
+            // Logs for both scopes should appear.
+            // Even though the 2nd log is within the rate limit period.
+            // NOTE: It is important this is tested on a single log statement.
+            listOf(foo, foo, foo, bar, foo, bar, foo).forEach { provider ->
+                logger.at(INFO, nowNanos)
+                    .atMostEvery(1, SECONDS)
+                    .per(provider)
+                    .log("message")
+                nowNanos += MILLISECONDS.toNanos(100)
+            }
+
+            backend.loggedCount shouldBe 2
+
+            backend.logged[0].metadata.shouldHaveSize(2)
+            backend.logged[0].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, fooScope)
+            backend.logged[0].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
+
+            backend.logged[1].metadata.shouldHaveSize(2)
+            backend.logged[1].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, barScope)
+            backend.logged[1].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
+        }
     }
 
     @Test
     fun testWasForced_level() {
         val backend = FakeLoggerBackend()
-        backend.setLevel(Level.WARNING)
+        backend.setLevel(WARNING)
         val logger = TestLogger.create(backend)
-        logger.forceAt(Level.INFO).log("LOGGED")
+        logger.forceAt(INFO).log("LOGGED")
         assertThat(backend.loggedCount).isEqualTo(1)
         backend.assertLogged(0).hasMessage("LOGGED")
         backend.assertLogged(0).metadata().hasSize(1)
-        backend.assertLogged(0).metadata().containsUniqueEntry(LogContext.Key.WAS_FORCED, true)
+        backend.assertLogged(0).metadata().containsUniqueEntry(Key.WAS_FORCED, true)
         backend.assertLogged(0).wasForced()
     }
 
@@ -445,7 +501,7 @@ internal class LogContextSpec {
         logger.atInfo().every(3).withInjectedLogSite(logSite).log("LOGGED 1")
         logger.atInfo().every(3).withInjectedLogSite(logSite).log("NOT LOGGED")
         // Manually create the forced context (there is no "normal" api for this).
-        logger.forceAt(Level.INFO).every(3).withInjectedLogSite(logSite).log("LOGGED 2")
+        logger.forceAt(INFO).every(3).withInjectedLogSite(logSite).log("LOGGED 2")
         // This shows that the "forced" context does not count towards the rate limit count (otherwise
         // this log statement would have been logged).
         logger.atInfo().every(3).withInjectedLogSite(logSite).log("NOT LOGGED")
@@ -454,7 +510,7 @@ internal class LogContextSpec {
         // No rate limit metadata was added, but it was marked as forced.
         backend.assertLogged(1).hasMessage("LOGGED 2")
         backend.assertLogged(1).metadata().hasSize(1)
-        backend.assertLogged(1).metadata().containsUniqueEntry(LogContext.Key.WAS_FORCED, true)
+        backend.assertLogged(1).metadata().containsUniqueEntry(Key.WAS_FORCED, true)
     }
 
     @Test
@@ -464,43 +520,41 @@ internal class LogContextSpec {
         val logSite = FakeLogSite.create("com.example.MyClass", "atMostEvery", 123, null)
 
         // Log statements always get logged the first time.
-        var nowNanos = TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis())
-        logger.at(Level.INFO, nowNanos).atMostEvery(1, TimeUnit.SECONDS)
+        var nowNanos = MILLISECONDS.toNanos(currentTimeMillis())
+        logger.at(INFO, nowNanos).atMostEvery(1, SECONDS)
             .withInjectedLogSite(logSite).log("LOGGED 1")
-        nowNanos += TimeUnit.MILLISECONDS.toNanos(100)
+        nowNanos += MILLISECONDS.toNanos(100)
         logger
-            .at(Level.INFO, nowNanos)
-            .atMostEvery(1, TimeUnit.SECONDS)
+            .at(INFO, nowNanos)
+            .atMostEvery(1, SECONDS)
             .withInjectedLogSite(logSite)
             .log("NOT LOGGED")
-        nowNanos += TimeUnit.MILLISECONDS.toNanos(100)
+        nowNanos += MILLISECONDS.toNanos(100)
         logger
-            .forceAt(Level.INFO, nowNanos)
-            .atMostEvery(1, TimeUnit.SECONDS)
+            .forceAt(INFO, nowNanos)
+            .atMostEvery(1, SECONDS)
             .withInjectedLogSite(logSite)
             .log("LOGGED 2")
-        nowNanos += TimeUnit.MILLISECONDS.toNanos(100)
+        nowNanos += MILLISECONDS.toNanos(100)
         logger
-            .at(Level.INFO, nowNanos)
-            .atMostEvery(1, TimeUnit.SECONDS)
+            .at(INFO, nowNanos)
+            .atMostEvery(1, SECONDS)
             .withInjectedLogSite(logSite)
             .log("NOT LOGGED")
         assertThat(backend.loggedCount).isEqualTo(2)
         backend.assertLogged(0).hasMessage("LOGGED 1")
         backend.assertLogged(0).metadata().hasSize(1)
         backend.assertLogged(0).metadata()
-            .containsUniqueEntry(LogContext.Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
+            .containsUniqueEntry(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
         backend.assertLogged(1).hasMessage("LOGGED 2")
         backend.assertLogged(1).metadata().hasSize(1)
-        backend.assertLogged(1).metadata().containsUniqueEntry(LogContext.Key.WAS_FORCED, true)
+        backend.assertLogged(1).metadata().containsUniqueEntry(Key.WAS_FORCED, true)
     }
 
     // These tests verify that the mapping between the logging context and the backend preserves
     // arguments as expected.
     @Test
     fun testExplicitVarargs() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
         val args = arrayOf<Any?>("foo", null, "baz")
         logger.atInfo().logVarargs("Any message ...", args)
         backend.assertLastLogged().hasArguments("foo", null, "baz")
@@ -511,8 +565,6 @@ internal class LogContextSpec {
 
     @Test
     fun testNoArguments() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
 
         // Verify arguments passed in to the non-boxed fundamental type methods are mapped correctly.
         logger.atInfo().log()
@@ -522,8 +574,6 @@ internal class LogContextSpec {
 
     @Test
     fun testLiteralArgument_doesNotEscapePercent() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
         logger.atInfo().log("Hello %s World")
         backend.assertLastLogged().hasMessage("Hello %s World")
         backend.assertLastLogged().hasArguments()
@@ -531,8 +581,6 @@ internal class LogContextSpec {
 
     @Test
     fun testSingleParameter() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
         logger.atInfo().log("Hello %d World", 42)
         backend.assertLastLogged().hasMessage("Hello %d World")
         backend.assertLastLogged().hasArguments(42)
@@ -541,8 +589,6 @@ internal class LogContextSpec {
     // Tests that a null literal is passed unmodified to the backend without throwing an exception.
     @Test
     fun testNullLiteral() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
         // We want to call log(String) (not log(Object)) with a null value.
         logger.atInfo().log(null as String?)
         backend.assertLastLogged().hasMessage(null)
@@ -551,8 +597,6 @@ internal class LogContextSpec {
     // Tests that null arguments are passed unmodified to the backend without throwing an exception.
     @Test
     fun testNullArgument() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
         logger.atInfo().log("Hello %d World", null)
         backend.assertLastLogged().hasMessage("Hello %d World")
         backend.assertLastLogged().hasArguments(*arrayOf(null))
@@ -566,8 +610,6 @@ internal class LogContextSpec {
     // TODO(dbeaumont): Consider allowing this case to work without throwing a runtime exception.
     @Test
     fun testNullMessageAndArgument() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
         shouldThrow<NullPointerException> {
             logger.atInfo().log(null, null)
         }
@@ -575,8 +617,6 @@ internal class LogContextSpec {
 
     @Test
     fun testManyObjectParameters() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
         val ms = "Any message will do..."
 
         // Verify that the arguments passed in to the Object based methods are mapped correctly.
@@ -612,8 +652,6 @@ internal class LogContextSpec {
 
     @Test
     fun testOneUnboxedArgument() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
         val ms = "Any message will do..."
 
         // Verify arguments passed in to the non-boxed fundamental type methods are mapped correctly.
@@ -631,8 +669,6 @@ internal class LogContextSpec {
 
     @Test
     fun testTwoUnboxedArguments() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
         val ms = "Any message will do..."
 
         // Verify arguments passed in to the non-boxed fundamental type methods are mapped correctly.
@@ -690,8 +726,6 @@ internal class LogContextSpec {
 
     @Test
     fun testTwoMixedArguments() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
         val ms = "Any message will do..."
 
         // Verify arguments passed in to the non-boxed fundamental type methods are mapped correctly.
@@ -719,8 +753,6 @@ internal class LogContextSpec {
 
     @Test
     fun testWithStackTrace() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
 
         // Keep these 2 lines immediately adjacent to each other.
         val expectedCaller = callerInfoFollowingLine()
@@ -730,8 +762,8 @@ internal class LogContextSpec {
         backend.assertLogged(0).hasMessage("Answer=%#x")
         backend.assertLogged(0).hasArguments(66)
         backend.assertLogged(0).metadata().hasSize(1)
-        backend.assertLogged(0).metadata().keys().contains(LogContext.Key.LOG_CAUSE)
-        val cause = backend.getLogged(0).getMetadata().findValue(LogContext.Key.LOG_CAUSE)
+        backend.assertLogged(0).metadata().keys().contains(Key.LOG_CAUSE)
+        val cause = backend.getLogged(0).getMetadata().findValue(Key.LOG_CAUSE)
         assertThat(cause).hasMessageThat().isEqualTo("FULL")
         assertThat(cause!!.cause).isNull()
         val actualStack = listOf(*cause.stackTrace)
@@ -760,8 +792,6 @@ internal class LogContextSpec {
 
     @Test
     fun testWithStackTraceAndCause() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
         val badness = RuntimeException("badness")
 
         // Use "SMALL" size here because we rely on the total stack depth in this test being bigger
@@ -772,8 +802,8 @@ internal class LogContextSpec {
         backend.assertLogged(0).hasMessage("Answer=%#x")
         backend.assertLogged(0).hasArguments(66)
         backend.assertLogged(0).metadata().hasSize(1)
-        backend.assertLogged(0).metadata().keys().contains(LogContext.Key.LOG_CAUSE)
-        val cause = backend.getLogged(0).getMetadata().findValue(LogContext.Key.LOG_CAUSE)
+        backend.assertLogged(0).metadata().keys().contains(Key.LOG_CAUSE)
+        val cause = backend.getLogged(0).getMetadata().findValue(Key.LOG_CAUSE)
         assertThat(cause).hasMessageThat().isEqualTo("SMALL")
         assertThat(cause!!.stackTrace.size).isEqualTo(StackSize.SMALL.maxDepth)
         assertThat(cause.cause).isEqualTo(badness)
@@ -782,15 +812,13 @@ internal class LogContextSpec {
     // See b/27310448.
     @Test
     fun testStackTraceFormatting() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
 
         // Keep these 2 lines immediately adjacent to each other.
         val expectedCaller = callerInfoFollowingLine()
         logger.atWarning().withStackTrace(StackSize.MEDIUM).log("Message")
 
         // Print the stack trace via the expected method (ie, printStackTrace()).
-        val cause = backend.getLogged(0).getMetadata().findValue(LogContext.Key.LOG_CAUSE)
+        val cause = backend.getLogged(0).getMetadata().findValue(Key.LOG_CAUSE)
         assertThat(cause).hasMessageThat().isEqualTo("MEDIUM")
         val out = StringWriter()
         cause!!.printStackTrace(PrintWriter(out))
@@ -834,8 +862,6 @@ internal class LogContextSpec {
 
     @Test
     fun testExplicitLogSiteInjection() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
         // Tests it's the log site instance that controls rate limiting, even over different calls.
         // We don't expect this to ever happen in real code though.
         for (i in 0..6) {
@@ -863,8 +889,6 @@ internal class LogContextSpec {
     // calculation rather than being a no-op.
     @Test
     fun testExplicitLogSiteSuppression() {
-        val backend = FakeLoggerBackend()
-        val logger = FluentLogger2(backend)
         logger.atInfo().withInjectedLogSite(LogSite.INVALID).log("No log site here")
         logger.atInfo().withInjectedLogSite(null).log("No-op injection")
         assertThat(backend.loggedCount).isEqualTo(2)
@@ -875,7 +899,7 @@ internal class LogContextSpec {
 
     @Test
     fun testLogSiteSpecializationSameMetadata() {
-        val fooMetadata = FakeMetadata().add(LogContext.Key.LOG_SITE_GROUPING_KEY, "foo")
+        val fooMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo")
         val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
         val fooKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
         assertThat(fooKey)
@@ -884,10 +908,10 @@ internal class LogContextSpec {
 
     @Test
     fun testLogSiteSpecializationKeyCountMatters() {
-        val fooMetadata = FakeMetadata().add(LogContext.Key.LOG_SITE_GROUPING_KEY, "foo")
+        val fooMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo")
         val repeatedMetadata = FakeMetadata()
-            .add(LogContext.Key.LOG_SITE_GROUPING_KEY, "foo")
-            .add(LogContext.Key.LOG_SITE_GROUPING_KEY, "foo")
+            .add(Key.LOG_SITE_GROUPING_KEY, "foo")
+            .add(Key.LOG_SITE_GROUPING_KEY, "foo")
         val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
         val fooKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
         val repeatedKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, repeatedMetadata)
@@ -896,8 +920,8 @@ internal class LogContextSpec {
 
     @Test
     fun testLogSiteSpecializationDifferentKeys() {
-        val fooMetadata = FakeMetadata().add(LogContext.Key.LOG_SITE_GROUPING_KEY, "foo")
-        val barMetadata = FakeMetadata().add(LogContext.Key.LOG_SITE_GROUPING_KEY, "bar")
+        val fooMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo")
+        val barMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "bar")
         val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
         val fooKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
         val barKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, barMetadata)
@@ -911,11 +935,11 @@ internal class LogContextSpec {
     @Test
     fun testLogSiteSpecializationOrderMatters() {
         val fooBarMetadata = FakeMetadata()
-            .add(LogContext.Key.LOG_SITE_GROUPING_KEY, "foo")
-            .add(LogContext.Key.LOG_SITE_GROUPING_KEY, "bar")
+            .add(Key.LOG_SITE_GROUPING_KEY, "foo")
+            .add(Key.LOG_SITE_GROUPING_KEY, "bar")
         val barFooMetadata = FakeMetadata()
-            .add(LogContext.Key.LOG_SITE_GROUPING_KEY, "bar")
-            .add(LogContext.Key.LOG_SITE_GROUPING_KEY, "foo")
+            .add(Key.LOG_SITE_GROUPING_KEY, "bar")
+            .add(Key.LOG_SITE_GROUPING_KEY, "foo")
         val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
         val fooBarKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, fooBarMetadata)
         val barFooKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, barFooMetadata)
@@ -924,7 +948,7 @@ internal class LogContextSpec {
 
     @Test
     fun testLogSiteSpecializationKey() {
-        LogContext.Key.LOG_SITE_GROUPING_KEY.emitRepeated(
+        Key.LOG_SITE_GROUPING_KEY.emitRepeated(
             Iterators.forArray<Any>("foo")
         ) { k: String?, v: Any? ->
             assertThat(k).isEqualTo("group_by")
@@ -933,38 +957,22 @@ internal class LogContextSpec {
 
         // We don't care too much about the case with multiple keys since it's so rare, but it should
         // be vaguely sensible.
-        LogContext.Key.LOG_SITE_GROUPING_KEY.emitRepeated(
+        Key.LOG_SITE_GROUPING_KEY.emitRepeated(
             Iterators.forArray<Any>("foo", "bar")
         ) { k: String?, v: Any? ->
             assertThat(k).isEqualTo("group_by")
             assertThat(v).isEqualTo("[foo,bar]")
         }
     }
-
-    companion object {
-        // Arbitrary constants of overloaded types for testing argument mappings.
-        private const val BYTE_ARG = Byte.MAX_VALUE
-        private const val SHORT_ARG = Short.MAX_VALUE
-        private const val INT_ARG = Int.MAX_VALUE
-        private const val LONG_ARG = Long.MAX_VALUE
-        private const val CHAR_ARG = 'X'
-        private val OBJECT_ARG = Any()
-        private val REPEATED_KEY = MetadataKey.repeated("str", String::class.java)
-        private val FLAG_KEY = MetadataKey.repeated("flag", Boolean::class.javaObjectType)
-        private val ONCE_PER_SECOND = DurationRateLimiter.newRateLimitPeriod(1, TimeUnit.SECONDS)
-
-        // In normal use, the logger would never need to be passed in and you'd use logVarargs().
-        private fun logHelper(logger: FluentLogger2, logSite: LogSite, n: Int, message: String) {
-            logger.atInfo().withInjectedLogSite(logSite).every(n).log("%s", message)
-        }
-    }
 }
 
 /**
- * Returns a [StackTraceElement] with the incremented line number.
+ * Returns a [StackTraceElement] that points to the line, following right after
+ * the call to this method.
  */
 private fun callerInfoFollowingLine(): StackTraceElement {
-    // We reference third element due to Kotlin-generated intermediate Java classes.
+    // We reference the third element due to intermediate,
+    // Kotlin-generated Java classes.
     val caller = Exception().stackTrace[2]
     return StackTraceElement(
         caller.className,
@@ -972,4 +980,9 @@ private fun callerInfoFollowingLine(): StackTraceElement {
         caller.fileName,
         caller.lineNumber + 1
     )
+}
+
+private enum class LogType {
+    FOO,
+    BAR
 }
