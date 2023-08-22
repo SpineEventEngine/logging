@@ -34,7 +34,7 @@ import io.kotest.matchers.shouldBe
  * This file contains Kotest-like assertions for [LogData].
  */
 
-internal infix fun LogData.shouldHaveMessage(message: String) {
+internal infix fun LogData.shouldHaveMessage(message: String?) {
     if (templateContext != null) {
         templateContext.message shouldBe message
     } else {
@@ -42,6 +42,10 @@ internal infix fun LogData.shouldHaveMessage(message: String) {
     }
 }
 
-internal fun LogData.shouldHaveArguments(vararg args: Any) {
-    arguments.shouldContainExactly(*args)
+internal fun LogData.shouldHaveArguments(vararg args: Any?) {
+    if (templateContext == null && args.isEmpty()) {
+        return
+    } else {
+        arguments.shouldContainExactly(*args)
+    }
 }
