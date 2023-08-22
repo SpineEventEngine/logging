@@ -41,23 +41,29 @@ import io.kotest.matchers.shouldBe
  */
 
 internal fun Metadata.shouldBeEmpty() {
-    this.size() shouldBeExactly 0
+    size() shouldBeExactly 0
 }
 
 internal infix fun Metadata.shouldHaveSize(size: Int) {
-    this.size() shouldBeExactly size
+    size() shouldBeExactly size
 }
 
 internal fun <T> Metadata.shouldContainInOrder(key: MetadataKey<T>, vararg values: T) {
-    this.valuesOf(key) shouldContainInOrder values.asList()
+    valuesOf(key) shouldContainInOrder values.asList()
 }
 
 internal fun <T> Metadata.shouldHaveFirstValue(key: MetadataKey<T>, value: T) {
-    this.findValue(key) shouldBe value
+    findValue(key) shouldBe value
 }
 
 internal infix fun <T> Metadata.shouldNotContain(key: MetadataKey<T>) {
-    this.findValue(key).shouldBeNull()
+    findValue(key).shouldBeNull()
+}
+
+internal fun <T> Metadata.shouldUniquelyContain(key: MetadataKey<T>, value: T) {
+    findValue(key) shouldBe value
+    val allKeys = (0..<size()).map { i -> getKey(i) }.toList()
+    allKeys.indexOf(key) shouldBe allKeys.lastIndexOf(key)
 }
 
 private fun <T> Metadata.valuesOf(key: MetadataKey<T>): List<T> {
