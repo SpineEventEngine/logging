@@ -28,7 +28,6 @@ package com.google.common.flogger.context.given
 
 import com.google.common.flogger.MetadataKey
 import com.google.common.flogger.backend.Metadata
-import com.google.common.flogger.context.ContextMetadata
 import io.kotest.matchers.collections.shouldContainInOrder
 import io.kotest.matchers.ints.shouldBeExactly
 import io.kotest.matchers.nulls.shouldBeNull
@@ -41,27 +40,27 @@ import io.kotest.matchers.shouldBe
  * or any of its inheritors.
  */
 
-internal fun ContextMetadata.shouldBeEmpty() {
+internal fun Metadata.shouldBeEmpty() {
     this.size() shouldBeExactly 0
 }
 
-internal infix fun ContextMetadata.shouldHaveSize(size: Int) {
+internal infix fun Metadata.shouldHaveSize(size: Int) {
     this.size() shouldBeExactly size
 }
 
-internal fun <T> ContextMetadata.shouldContainInOrder(key: MetadataKey<T>, vararg values: T) {
+internal fun <T> Metadata.shouldContainInOrder(key: MetadataKey<T>, vararg values: T) {
     this.valuesOf(key) shouldContainInOrder values.asList()
 }
 
-internal fun <T> ContextMetadata.shouldHaveFirstValue(key: MetadataKey<T>, value: T) {
+internal fun <T> Metadata.shouldHaveFirstValue(key: MetadataKey<T>, value: T) {
     this.findValue(key) shouldBe value
 }
 
-internal infix fun <T> ContextMetadata.shouldNotContain(key: MetadataKey<T>) {
+internal infix fun <T> Metadata.shouldNotContain(key: MetadataKey<T>) {
     this.findValue(key).shouldBeNull()
 }
 
-internal fun <T> ContextMetadata.valuesOf(key: MetadataKey<T>): List<T> {
+internal fun <T> Metadata.valuesOf(key: MetadataKey<T>): List<T> {
     val values: MutableList<T> = ArrayList()
     for (n in 0..<size()) {
         if (getKey(n) == key) {
