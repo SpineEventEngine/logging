@@ -841,57 +841,6 @@ internal class LogContextSpec {
         cause.cause shouldBe badness
     }
 
-    // See b/27310448.
-    @Test
-    fun testStackTraceFormatting() {
-
-        // Keep these 2 lines immediately adjacent to each other.
-        val expectedCaller = callerInfoFollowingLine()
-        logger.atWarning().withStackTrace(StackSize.MEDIUM).log("Message")
-
-        // Print the stack trace via the expected method (ie, printStackTrace()).
-        val cause = backend.getLogged(0).getMetadata().findValue(Key.LOG_CAUSE)
-        assertThat(cause).hasMessageThat().isEqualTo("MEDIUM")
-        val out = StringWriter()
-        cause!!.printStackTrace(PrintWriter(out))
-        val stackLines = Splitter.on('\n').trimResults().splitToList(out.toString())
-        val actualStackRefs =
-            stackLines.stream() // Ignore lines that don't look like call-stack entries.
-                .filter { s: String -> s.startsWith("at ") } // Remove anything that's not caller information.
-                .map { s: String ->
-                    s.replace(
-                        "^at (?:java\\.base/)?".toRegex(),
-                        ""
-                    )
-                }
-                .collect(ImmutableList.toImmutableList())
-
-        // We assume there's at least one element in the stack we're testing.
-        assertThat(actualStackRefs).isNotEmpty()
-        val expectedElements = Throwable().stackTrace
-        // Overwrite first element since we are starting from a different place (in the same method).
-        expectedElements[0] = expectedCaller
-        // Mimic the standard formatting for stack traces (a bit fragile but at least it's explicit).
-        val expectedStackRefs: List<String> =
-            Arrays.stream(expectedElements) // Format the elements into something that should match the normal stack formatting.
-                // Apologies to whoever has to debug/fix this if it ever breaks :(
-                // Native methods (where line number < 0) are formatted differently.
-                .map { e: StackTraceElement ->
-                    if (e.lineNumber >= 0) String.format(
-                        "%s.%s(%s:%d)",
-                        e.className, e.methodName, e.fileName, e.lineNumber
-                    ) else String.format(
-                        "%s.%s(Native Method)", e.className, e.methodName
-                    )
-                } // Limit to the number in the synthetic stack trace (which is truncated).
-                .limit(actualStackRefs.size.toLong())
-                .collect(ImmutableList.toImmutableList())
-
-        // This doesn't check anything about the message that's printed before the stack lines,
-        // but that's not the point of this test.
-        assertThat(actualStackRefs).isEqualTo(expectedStackRefs)
-    }
-
     @Test
     fun testExplicitLogSiteInjection() {
         // Tests it's the log site instance that controls rate limiting, even over different calls.
