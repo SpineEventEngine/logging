@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.common.flogger.context.given
+package com.google.common.flogger.given
 
 import com.google.common.flogger.MetadataKey
 import com.google.common.flogger.backend.Metadata
