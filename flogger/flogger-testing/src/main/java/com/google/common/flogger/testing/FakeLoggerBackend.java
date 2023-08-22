@@ -17,6 +17,7 @@
 package com.google.common.flogger.testing;
 
 import static com.google.common.flogger.util.Checks.checkNotNull;
+import static java.util.Collections.unmodifiableList;
 
 import com.google.common.flogger.backend.LogData;
 import com.google.common.flogger.backend.LoggerBackend;
@@ -32,6 +33,7 @@ public final class FakeLoggerBackend extends LoggerBackend {
   private final String name;
   private Level minLevel = Level.INFO;
   private final List<LogData> logged = new ArrayList<LogData>();
+  private final List<LogData> unmodifiableLogged = unmodifiableList(logged);
 
   /**
    * Returns a fake backend with a fixed name. Use this constructor by default unless your tests
@@ -62,6 +64,28 @@ public final class FakeLoggerBackend extends LoggerBackend {
   /** Returns the {@code Nth} {@link LogData} entry captured by this backend. */
   public LogData getLogged(int n) {
     return logged.get(n);
+  }
+
+  /**
+   * Return all captured {@link LogData}s.
+   */
+  public List<LogData> getLogged() {
+    return unmodifiableLogged;
+  }
+
+  /**
+   * Returns the last {@link LogData} entry captured by this backend.
+   */
+  public LogData getLastLogged() {
+    var index = logged.size() - 1;
+    return logged.get(index);
+  }
+
+  /**
+   * Returns the first {@link LogData} entry captured by this backend.
+   */
+  public LogData getFirstLogged() {
+    return logged.get(0);
   }
 
   /** Asserts about the {@code Nth} logged entry. */
