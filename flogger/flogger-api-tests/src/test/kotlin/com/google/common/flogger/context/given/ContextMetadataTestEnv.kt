@@ -41,27 +41,27 @@ import io.kotest.matchers.shouldBe
  * or any of its inheritors.
  */
 
-fun ContextMetadata.shouldBeEmpty() {
+internal fun ContextMetadata.shouldBeEmpty() {
     this.size() shouldBeExactly 0
 }
 
-infix fun ContextMetadata.shouldHaveSize(size: Int) {
+internal infix fun ContextMetadata.shouldHaveSize(size: Int) {
     this.size() shouldBeExactly size
 }
 
-fun <T> ContextMetadata.shouldContainInOrder(key: MetadataKey<T>, vararg values: T) {
+internal fun <T> ContextMetadata.shouldContainInOrder(key: MetadataKey<T>, vararg values: T) {
     this.valuesOf(key) shouldContainInOrder values.asList()
 }
 
-fun <T> ContextMetadata.shouldHaveFirstValue(key: MetadataKey<T>, value: T) {
+internal fun <T> ContextMetadata.shouldHaveFirstValue(key: MetadataKey<T>, value: T) {
     this.findValue(key) shouldBe value
 }
 
-infix fun <T> ContextMetadata.shouldNotContain(key: MetadataKey<T>) {
+internal infix fun <T> ContextMetadata.shouldNotContain(key: MetadataKey<T>) {
     this.findValue(key).shouldBeNull()
 }
 
-fun <T> ContextMetadata.valuesOf(key: MetadataKey<T>): List<T> {
+internal fun <T> ContextMetadata.valuesOf(key: MetadataKey<T>): List<T> {
     val values: MutableList<T> = ArrayList()
     for (n in 0..<size()) {
         if (getKey(n) == key) {
