@@ -60,7 +60,7 @@ internal infix fun <T> Metadata.shouldNotContain(key: MetadataKey<T>) {
     this.findValue(key).shouldBeNull()
 }
 
-internal fun <T> Metadata.valuesOf(key: MetadataKey<T>): List<T> {
+private fun <T> Metadata.valuesOf(key: MetadataKey<T>): List<T> {
     val values: MutableList<T> = ArrayList()
     for (n in 0..<size()) {
         if (getKey(n) == key) {
