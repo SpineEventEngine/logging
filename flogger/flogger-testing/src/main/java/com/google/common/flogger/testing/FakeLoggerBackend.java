@@ -52,12 +52,16 @@ public final class FakeLoggerBackend extends LoggerBackend {
     this.name = checkNotNull(name, "name");
   }
 
-  /** Sets the current level of this backend. */
+  /**
+   * Sets the current level of this backend.
+   */
   public void setLevel(Level level) {
     this.minLevel = checkNotNull(level, "level");
   }
 
-  /** Returns the number of {@link LogData} entries captured by this backend. */
+  /**
+   *  Returns the number of {@link LogData} entries captured by this backend.
+   */
   public int getLoggedCount() {
     return logged.size();
   }
@@ -84,7 +88,9 @@ public final class FakeLoggerBackend extends LoggerBackend {
     return logged.get(0);
   }
 
-  /** Asserts about the {@code Nth} logged entry. */
+  /**
+   * Asserts about the {@code Nth} logged entry.
+   */
   LogDataSubject assertLogged(int n) {
     return LogDataSubject.assertThat(logged.get(n));
   }
