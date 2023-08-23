@@ -616,10 +616,10 @@ internal class LogContextSpec {
     }
 
     @Test
-    fun `handle a single argument`() {
-        logger.atInfo().log("Hello %d World", 42)
-        backend.lastLogged.shouldHaveMessage("Hello %d World")
-        backend.lastLogged.shouldHaveArguments(42)
+    fun `accept formatting arguments`() {
+        logger.atInfo().log("Hello %d World %s", 50, "!")
+        backend.lastLogged.shouldHaveMessage("Hello %d World %s")
+        backend.lastLogged.shouldHaveArguments(50, "!")
     }
 
     /**
@@ -627,7 +627,7 @@ internal class LogContextSpec {
      * without throwing an exception.
      */
     @Test
-    fun `accept 'null' literal`() {
+    fun `accept a nullable literal`() {
         // We want to call `log(String)`, not `log(Object)` with a null value.
         logger.atInfo().log(null as String?)
         backend.lastLogged.shouldHaveMessage(null)
@@ -638,7 +638,7 @@ internal class LogContextSpec {
      * without throwing an exception.
      */
     @Test
-    fun `accept 'null' argument`() {
+    fun `accept a nullable argument`() {
         logger.atInfo().log("Hello %d World", null)
         backend.lastLogged.shouldHaveMessage("Hello %d World")
         backend.lastLogged.shouldHaveArguments(null)

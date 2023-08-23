@@ -68,7 +68,7 @@ internal class AbstractLoggerSpec {
     }
 
     @Test
-    fun `report an error`() {
+    fun `report runtime exceptions`() {
         val bad: Any = object : Any() {
             override fun toString(): String = error("Ooopsie")
         }
@@ -83,7 +83,7 @@ internal class AbstractLoggerSpec {
     }
 
     @Test
-    fun `report an inner error`() {
+    fun `report nested runtime exceptions`() {
         // A worst case scenario whereby an object's `toString()` throws an exception,
         // which itself throws an exception. If we can handle this, we can handle
         // just about anything!

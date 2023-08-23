@@ -62,7 +62,7 @@ internal class FluentLogger2Spec {
     }
 
     @Test
-    fun `provide 'no op' API for disabled levels`() {
+    fun `provide a no-op API for disabled levels`() {
         val backend = FakeLoggerBackend()
         val logger = FluentLogger2(backend)
         backend.setLevel(Level.INFO)
