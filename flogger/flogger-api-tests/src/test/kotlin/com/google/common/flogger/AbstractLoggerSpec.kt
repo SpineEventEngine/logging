@@ -94,7 +94,7 @@ internal class AbstractLoggerSpec {
         // just about anything!
         val bad: Any = object : Any() {
             override fun toString(): String = throw object : IllegalStateException("Ooopsie") {
-                private val serialVersionUID: Long = -5383608141374997920L
+                private val serialVersionUID: Long = 42L
                 override fun toString(): String = error("<<IGNORED>>")
             }
         }
