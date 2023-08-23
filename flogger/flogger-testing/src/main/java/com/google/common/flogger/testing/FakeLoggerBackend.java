@@ -22,7 +22,6 @@ import static java.util.Collections.unmodifiableList;
 import com.google.common.flogger.backend.LogData;
 import com.google.common.flogger.backend.LoggerBackend;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -71,33 +70,37 @@ public final class FakeLoggerBackend extends LoggerBackend {
   /**
    * Returns all captured {@link LogData}s.
    */
-  public List<LogData> getLogged() {
+  public List<LogData> logged() {
     return unmodifiableLogged;
   }
 
   /**
-   * Returns the last {@link LogData} entry captured by this backend,
-   * or {@code null} if no entry has been captured.
+   * Returns the last {@link LogData} entry captured by this backend.
+   *
+   * @throws IllegalStateException when the backend hasn't captured any log entry
    */
-  @Nullable
   public LogData getLastLogged() {
     if (logged.isEmpty()) {
-      return null;
+      throwNoEntries();
     }
     var index = logged.size() - 1;
     return logged.get(index);
   }
 
   /**
-   * Returns the first {@link LogData} entry captured by this backend,
-   * or {@code null} if no entry has been captured.
+   * Returns the first {@link LogData} entry captured by this backend.
+   *
+   * @throws IllegalStateException when the backend hasn't captured any log entry
    */
-  @Nullable
   public LogData getFirstLogged() {
     if (logged.isEmpty()) {
-      return null;
+      throwNoEntries();
     }
     return logged.get(0);
+  }
+
+  private static void throwNoEntries() {
+    throw new IllegalStateException("Fake backend has not captured any log data.");
   }
 
   /**

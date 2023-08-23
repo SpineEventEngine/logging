@@ -112,9 +112,9 @@ internal class LogContextSpec {
             .withCause(cause)
             .log("Hello World")
 
-        backend.lastLogged.metadata shouldHaveSize 1
-        backend.lastLogged.metadata.shouldUniquelyContain(Key.LOG_CAUSE, cause)
-        backend.lastLogged shouldHaveMessage "Hello World"
+        backend.getLastLogged().metadata shouldHaveSize 1
+        backend.getLastLogged().metadata.shouldUniquelyContain(Key.LOG_CAUSE, cause)
+        backend.getLastLogged() shouldHaveMessage "Hello World"
     }
 
     @Test
@@ -125,20 +125,20 @@ internal class LogContextSpec {
             lazy { error("Lazy arguments should not be evaluated in a disabled log statement") }
         )
 
-        backend.lastLogged shouldHaveMessage "Hello %s"
-        backend.lastLogged.shouldHaveArguments("World")
+        backend.getLastLogged() shouldHaveMessage "Hello %s"
+        backend.getLastLogged().shouldHaveArguments("World")
     }
 
     @Test
     fun `accept a formatted message`() {
         logger.at(INFO).log("Formatted %s", "Message")
         backend.loggedCount shouldBe 1
-        backend.lastLogged shouldHaveMessage "Formatted %s"
-        backend.lastLogged.shouldHaveArguments("Message")
+        backend.getLastLogged() shouldHaveMessage "Formatted %s"
+        backend.getLastLogged().shouldHaveArguments("Message")
 
         // Should NOT ask for literal argument as none exists.
         shouldThrow<IllegalStateException> {
-            backend.lastLogged.literalArgument
+            backend.getLastLogged().literalArgument
         }
     }
 
@@ -146,12 +146,12 @@ internal class LogContextSpec {
     fun `accept a literal message`() {
         logger.at(INFO).log("Literal Message")
         backend.loggedCount shouldBe 1
-        backend.lastLogged shouldHaveMessage "Literal Message"
+        backend.getLastLogged() shouldHaveMessage "Literal Message"
 
         // Cannot ask for format arguments as none exist.
-        backend.lastLogged.templateContext.shouldBeNull()
+        backend.getLastLogged().templateContext.shouldBeNull()
         shouldThrow<IllegalStateException> {
-            backend.lastLogged.getArguments()
+            backend.getLastLogged().getArguments()
         }
     }
 
@@ -163,9 +163,9 @@ internal class LogContextSpec {
             .every(42)
             .log("Hello World")
         backend.loggedCount shouldBe 1
-        backend.lastLogged.metadata shouldHaveSize 2
-        backend.lastLogged.metadata.shouldUniquelyContain(Key.LOG_EVERY_N, 42)
-        backend.lastLogged.metadata.shouldUniquelyContain(Key.LOG_CAUSE, cause)
+        backend.getLastLogged().metadata shouldHaveSize 2
+        backend.getLastLogged().metadata.shouldUniquelyContain(Key.LOG_EVERY_N, 42)
+        backend.getLastLogged().metadata.shouldUniquelyContain(Key.LOG_CAUSE, cause)
     }
 
     @Test
@@ -187,14 +187,14 @@ internal class LogContextSpec {
             .log("...")
 
         backend.loggedCount shouldBe 4
-        backend.logged[0].metadata.shouldContainInOrder(REPEATED_KEY, "foo", "bar")
-        backend.logged[1].metadata.shouldUniquelyContain(FLAG_KEY, true)
-        backend.logged[2].metadata.shouldUniquelyContain(FLAG_KEY, false)
+        backend.logged()[0].metadata.shouldContainInOrder(REPEATED_KEY, "foo", "bar")
+        backend.logged()[1].metadata.shouldUniquelyContain(FLAG_KEY, true)
+        backend.logged()[2].metadata.shouldUniquelyContain(FLAG_KEY, false)
 
         // Just check nothing weird happens when the metadata
         // is interleaved in the log statement.
-        backend.logged[3].metadata.shouldContainInOrder(REPEATED_KEY, "foo", "bar")
-        backend.logged[3].metadata.shouldUniquelyContain(FLAG_KEY, true)
+        backend.logged()[3].metadata.shouldContainInOrder(REPEATED_KEY, "foo", "bar")
+        backend.logged()[3].metadata.shouldUniquelyContain(FLAG_KEY, true)
     }
 
     /**
@@ -208,7 +208,7 @@ internal class LogContextSpec {
             .with(Key.TAGS, tags)
             .log("With tags")
         backend.loggedCount shouldBe 1
-        backend.lastLogged.metadata.shouldUniquelyContain(Key.TAGS, tags)
+        backend.getLastLogged().metadata.shouldUniquelyContain(Key.TAGS, tags)
     }
 
     @Test
@@ -232,12 +232,12 @@ internal class LogContextSpec {
         backend.firstLogged.metadata.shouldUniquelyContain(Key.LOG_EVERY_N, 5)
 
         // Check the expected count and skipped-count for each log.
-        backend.logged[0].shouldHaveArguments(0)
-        backend.logged[0].metadata.shouldNotContain(Key.SKIPPED_LOG_COUNT)
-        backend.logged[1].shouldHaveArguments(5)
-        backend.logged[1].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 4)
-        backend.logged[2].shouldHaveArguments(10)
-        backend.logged[2].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 4)
+        backend.logged()[0].shouldHaveArguments(0)
+        backend.logged()[0].metadata.shouldNotContain(Key.SKIPPED_LOG_COUNT)
+        backend.logged()[1].shouldHaveArguments(5)
+        backend.logged()[1].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 4)
+        backend.logged()[2].shouldHaveArguments(10)
+        backend.logged()[2].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 4)
     }
 
     @Test
@@ -256,20 +256,20 @@ internal class LogContextSpec {
 
         // Statistically impossible that we randomly get +/- 100 over 1000 logs.
         backend.loggedCount shouldBeInRange 100..300
-        backend.firstLogged.metadata.shouldUniquelyContain(Key.LOG_SAMPLE_EVERY_N, 5)
+        backend.getFirstLogged().metadata.shouldUniquelyContain(Key.LOG_SAMPLE_EVERY_N, 5)
 
         // Check the expected count and skipped-count for each log based on the timestamp.
         var lastLogIndex = -1
         for (n in 0..<backend.loggedCount) {
             // The timestamp increases by 1 millisecond each time,
             // so we can get the log index from it.
-            val deltaNanos = backend.logged[n].timestampNanos - startNanos
+            val deltaNanos = backend.logged()[n].timestampNanos - startNanos
             val logIndex = (deltaNanos / MILLISECONDS.toNanos(1)).toInt()
-            backend.logged[n].shouldHaveArguments(logIndex)
+            backend.logged()[n].shouldHaveArguments(logIndex)
 
             // This works even if `lastLogIndex` == -1.
             val skipped = logIndex - lastLogIndex - 1
-            val metadata = backend.logged[n].metadata
+            val metadata = backend.logged()[n].metadata
             if (skipped == 0) {
                 metadata.shouldNotContain(Key.SKIPPED_LOG_COUNT)
             } else {
@@ -300,19 +300,19 @@ internal class LogContextSpec {
         backend.loggedCount shouldBe 3
 
         // Check the first log we captured was the first one emitted.
-        backend.firstLogged.timestampNanos shouldBe startNanos
-        backend.firstLogged.metadata.shouldUniquelyContain(
+        backend.getFirstLogged().timestampNanos shouldBe startNanos
+        backend.getFirstLogged().metadata.shouldUniquelyContain(
             Key.LOG_AT_MOST_EVERY,
             newRateLimitPeriod(2, SECONDS)
         )
 
         // Check the expected count and skipped-count for each log.
-        backend.logged[0].shouldHaveArguments(0)
-        backend.logged[0].metadata.shouldNotContain(Key.SKIPPED_LOG_COUNT)
-        backend.logged[1].shouldHaveArguments(4)
-        backend.logged[1].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 3)
-        backend.logged[2].shouldHaveArguments(8)
-        backend.logged[2].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 3)
+        backend.logged()[0].shouldHaveArguments(0)
+        backend.logged()[0].metadata.shouldNotContain(Key.SKIPPED_LOG_COUNT)
+        backend.logged()[1].shouldHaveArguments(4)
+        backend.logged()[1].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 3)
+        backend.logged()[2].shouldHaveArguments(8)
+        backend.logged()[2].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 3)
     }
 
     @Nested
@@ -337,11 +337,11 @@ internal class LogContextSpec {
             }
 
             backend.loggedCount shouldBe 4
-            backend.logged[0].shouldHaveArguments(0)
-            backend.logged[1].shouldHaveArguments(20)
-            backend.logged[2].shouldHaveArguments(40)
-            backend.logged[3].shouldHaveArguments(60)
-            backend.logged[3].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 19)
+            backend.logged()[0].shouldHaveArguments(0)
+            backend.logged()[1].shouldHaveArguments(20)
+            backend.logged()[2].shouldHaveArguments(40)
+            backend.logged()[3].shouldHaveArguments(60)
+            backend.logged()[3].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 19)
         }
 
         @Test
@@ -362,12 +362,12 @@ internal class LogContextSpec {
             }
 
             backend.loggedCount shouldBe 5
-            backend.logged[0].shouldHaveArguments(0)
-            backend.logged[1].shouldHaveArguments(15)
-            backend.logged[2].shouldHaveArguments(30)
-            backend.logged[3].shouldHaveArguments(45)
-            backend.logged[4].shouldHaveArguments(60)
-            backend.logged[4].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 14)
+            backend.logged()[0].shouldHaveArguments(0)
+            backend.logged()[1].shouldHaveArguments(15)
+            backend.logged()[2].shouldHaveArguments(30)
+            backend.logged()[3].shouldHaveArguments(45)
+            backend.logged()[4].shouldHaveArguments(60)
+            backend.logged()[4].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 14)
         }
     }
 
@@ -399,22 +399,22 @@ internal class LogContextSpec {
 
             backend.loggedCount shouldBe 2
 
-            backend.logged[0].metadata.shouldHaveSize(2)
-            backend.logged[0].metadata.shouldUniquelyContain(
+            backend.logged()[0].metadata.shouldHaveSize(2)
+            backend.logged()[0].metadata.shouldUniquelyContain(
                 Key.LOG_SITE_GROUPING_KEY,
                 IllegalArgumentException::class.java
             )
-            backend.logged[0].metadata.shouldUniquelyContain(
+            backend.logged()[0].metadata.shouldUniquelyContain(
                 Key.LOG_AT_MOST_EVERY,
                 ONCE_PER_SECOND
             )
 
-            backend.logged[1].metadata.shouldHaveSize(2)
-            backend.logged[1].metadata.shouldUniquelyContain(
+            backend.logged()[1].metadata.shouldHaveSize(2)
+            backend.logged()[1].metadata.shouldUniquelyContain(
                 Key.LOG_SITE_GROUPING_KEY,
                 NullPointerException::class.java
             )
-            backend.logged[1].metadata.shouldUniquelyContain(
+            backend.logged()[1].metadata.shouldUniquelyContain(
                 Key.LOG_AT_MOST_EVERY,
                 ONCE_PER_SECOND
             )
@@ -447,15 +447,15 @@ internal class LogContextSpec {
 
             backend.loggedCount shouldBe 2
 
-            backend.logged[0].shouldHaveArguments(LogType.FOO)
-            backend.logged[0].metadata.shouldHaveSize(2)
-            backend.logged[0].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, LogType.FOO)
-            backend.logged[0].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
+            backend.logged()[0].shouldHaveArguments(LogType.FOO)
+            backend.logged()[0].metadata.shouldHaveSize(2)
+            backend.logged()[0].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, LogType.FOO)
+            backend.logged()[0].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
 
-            backend.logged[1].shouldHaveArguments(LogType.BAR)
-            backend.logged[1].metadata.shouldHaveSize(2)
-            backend.logged[1].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, LogType.BAR)
-            backend.logged[1].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
+            backend.logged()[1].shouldHaveArguments(LogType.BAR)
+            backend.logged()[1].metadata.shouldHaveSize(2)
+            backend.logged()[1].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, LogType.BAR)
+            backend.logged()[1].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
         }
 
         @Test
@@ -486,13 +486,13 @@ internal class LogContextSpec {
 
             backend.loggedCount shouldBe 2
 
-            backend.logged[0].metadata.shouldHaveSize(2)
-            backend.logged[0].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, fooScope)
-            backend.logged[0].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
+            backend.logged()[0].metadata.shouldHaveSize(2)
+            backend.logged()[0].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, fooScope)
+            backend.logged()[0].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
 
-            backend.logged[1].metadata.shouldHaveSize(2)
-            backend.logged[1].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, barScope)
-            backend.logged[1].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
+            backend.logged()[1].metadata.shouldHaveSize(2)
+            backend.logged()[1].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, barScope)
+            backend.logged()[1].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
         }
     }
 
@@ -507,10 +507,10 @@ internal class LogContextSpec {
             val logger = TestLogger.create(backend)
             logger.forceAt(INFO).log("LOGGED")
             backend.loggedCount shouldBe 1
-            backend.logged[0].shouldHaveMessage("LOGGED")
-            backend.logged[0].metadata.shouldHaveSize(1)
-            backend.logged[0].metadata.shouldUniquelyContain(Key.WAS_FORCED, true)
-            backend.logged[0].wasForced().shouldBeTrue()
+            backend.logged()[0].shouldHaveMessage("LOGGED")
+            backend.logged()[0].metadata.shouldHaveSize(1)
+            backend.logged()[0].metadata.shouldUniquelyContain(Key.WAS_FORCED, true)
+            backend.logged()[0].wasForced().shouldBeTrue()
         }
 
         @Test
@@ -544,10 +544,10 @@ internal class LogContextSpec {
                 .log("NOT LOGGED")
 
             backend.loggedCount shouldBe 2
-            backend.logged[0].shouldHaveMessage("LOGGED 1")
-            backend.logged[1].shouldHaveMessage("LOGGED 2")
-            backend.logged[1].metadata.shouldHaveSize(1)
-            backend.logged[1].metadata.shouldUniquelyContain(Key.WAS_FORCED, true)
+            backend.logged()[0].shouldHaveMessage("LOGGED 1")
+            backend.logged()[1].shouldHaveMessage("LOGGED 2")
+            backend.logged()[1].metadata.shouldHaveSize(1)
+            backend.logged()[1].metadata.shouldUniquelyContain(Key.WAS_FORCED, true)
         }
 
         @Test
@@ -584,12 +584,12 @@ internal class LogContextSpec {
                 .log("NOT LOGGED")
 
             backend.loggedCount shouldBe 2
-            backend.logged[0].shouldHaveMessage("LOGGED 1")
-            backend.logged[0].metadata.shouldHaveSize(1)
-            backend.logged[0].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
-            backend.logged[1].shouldHaveMessage("LOGGED 2")
-            backend.logged[1].metadata.shouldHaveSize(1)
-            backend.logged[1].metadata.shouldUniquelyContain(Key.WAS_FORCED, true)
+            backend.logged()[0].shouldHaveMessage("LOGGED 1")
+            backend.logged()[0].metadata.shouldHaveSize(1)
+            backend.logged()[0].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
+            backend.logged()[1].shouldHaveMessage("LOGGED 2")
+            backend.logged()[1].metadata.shouldHaveSize(1)
+            backend.logged()[1].metadata.shouldUniquelyContain(Key.WAS_FORCED, true)
         }
     }
 
@@ -600,32 +600,32 @@ internal class LogContextSpec {
     fun `accept formatting arguments as array`() {
         val args = arrayOf<Any?>("foo", null, "baz")
         logger.atInfo().logVarargs("Any message ...", args)
-        backend.lastLogged.shouldHaveArguments("foo", null, "baz")
+        backend.getLastLogged().shouldHaveArguments("foo", null, "baz")
 
         // Make sure we took a copy of the arguments rather than risk re-using them.
         backend.loggedCount shouldBe 1
-        backend.lastLogged.arguments shouldNotBeSameInstanceAs args
+        backend.getLastLogged().arguments shouldNotBeSameInstanceAs args
     }
 
     @Test
     fun `log an empty message without arguments`() {
         logger.atInfo().log()
-        backend.lastLogged.shouldHaveMessage("")
-        backend.lastLogged.shouldHaveArguments()
+        backend.getLastLogged().shouldHaveMessage("")
+        backend.getLastLogged().shouldHaveArguments()
     }
 
     @Test
     fun `not escape percent char when given no arguments`() {
         logger.atInfo().log("Hello %s World")
-        backend.lastLogged.shouldHaveMessage("Hello %s World")
-        backend.lastLogged.shouldHaveArguments()
+        backend.getLastLogged().shouldHaveMessage("Hello %s World")
+        backend.getLastLogged().shouldHaveArguments()
     }
 
     @Test
     fun `accept formatting arguments`() {
         logger.atInfo().log("Hello %d World %s", 50, "!")
-        backend.lastLogged.shouldHaveMessage("Hello %d World %s")
-        backend.lastLogged.shouldHaveArguments(50, "!")
+        backend.getLastLogged().shouldHaveMessage("Hello %d World %s")
+        backend.getLastLogged().shouldHaveArguments(50, "!")
     }
 
     /**
@@ -636,7 +636,7 @@ internal class LogContextSpec {
     fun `accept a nullable literal`() {
         // We want to call `log(String)`, not `log(Object)` with a null value.
         logger.atInfo().log(null as String?)
-        backend.lastLogged.shouldHaveMessage(null)
+        backend.getLastLogged().shouldHaveMessage(null)
     }
 
     /**
@@ -646,8 +646,8 @@ internal class LogContextSpec {
     @Test
     fun `accept a nullable argument`() {
         logger.atInfo().log("Hello %d World", null)
-        backend.lastLogged.shouldHaveMessage("Hello %d World")
-        backend.lastLogged.shouldHaveArguments(null)
+        backend.getLastLogged().shouldHaveMessage("Hello %d World")
+        backend.getLastLogged().shouldHaveArguments(null)
     }
 
     /**
@@ -675,32 +675,32 @@ internal class LogContextSpec {
         // Verify that the arguments passed in to the object-based methods
         // are mapped correctly.
         logger.atInfo().log(msg, "1")
-        backend.lastLogged.shouldHaveArguments("1")
+        backend.getLastLogged().shouldHaveArguments("1")
         logger.atInfo().log(msg, "1", "2")
-        backend.lastLogged.shouldHaveArguments("1", "2")
+        backend.getLastLogged().shouldHaveArguments("1", "2")
         logger.atInfo().log(msg, "1", "2", "3")
-        backend.lastLogged.shouldHaveArguments("1", "2", "3")
+        backend.getLastLogged().shouldHaveArguments("1", "2", "3")
         logger.atInfo().log(msg, "1", "2", "3", "4")
-        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4")
+        backend.getLastLogged().shouldHaveArguments("1", "2", "3", "4")
         logger.atInfo().log(msg, "1", "2", "3", "4", "5")
-        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5")
+        backend.getLastLogged().shouldHaveArguments("1", "2", "3", "4", "5")
         logger.atInfo().log(msg, "1", "2", "3", "4", "5", "6")
-        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5", "6")
+        backend.getLastLogged().shouldHaveArguments("1", "2", "3", "4", "5", "6")
         logger.atInfo().log(msg, "1", "2", "3", "4", "5", "6", "7")
-        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5", "6", "7")
+        backend.getLastLogged().shouldHaveArguments("1", "2", "3", "4", "5", "6", "7")
         logger.atInfo().log(msg, "1", "2", "3", "4", "5", "6", "7", "8")
-        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8")
+        backend.getLastLogged().shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8")
         logger.atInfo().log(msg, "1", "2", "3", "4", "5", "6", "7", "8", "9")
-        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8", "9")
+        backend.getLastLogged().shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8", "9")
         logger.atInfo().log(msg, "1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
-        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
+        backend.getLastLogged().shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
         logger.atInfo()
             .log(msg, "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11")
-        backend.lastLogged
+        backend.getLastLogged()
             .shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11")
         logger.atInfo()
             .log(msg, "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
-        backend.lastLogged
+        backend.getLastLogged()
             .shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
     }
 
@@ -711,15 +711,15 @@ internal class LogContextSpec {
         // Verify arguments passed in to the non-boxed fundamental type methods
         // are mapped correctly.
         logger.atInfo().log(msg, BYTE_ARG)
-        backend.lastLogged.shouldHaveArguments(BYTE_ARG)
+        backend.getLastLogged().shouldHaveArguments(BYTE_ARG)
         logger.atInfo().log(msg, SHORT_ARG)
-        backend.lastLogged.shouldHaveArguments(SHORT_ARG)
+        backend.getLastLogged().shouldHaveArguments(SHORT_ARG)
         logger.atInfo().log(msg, INT_ARG)
-        backend.lastLogged.shouldHaveArguments(INT_ARG)
+        backend.getLastLogged().shouldHaveArguments(INT_ARG)
         logger.atInfo().log(msg, LONG_ARG)
-        backend.lastLogged.shouldHaveArguments(LONG_ARG)
+        backend.getLastLogged().shouldHaveArguments(LONG_ARG)
         logger.atInfo().log(msg, CHAR_ARG)
-        backend.lastLogged.shouldHaveArguments(CHAR_ARG)
+        backend.getLastLogged().shouldHaveArguments(CHAR_ARG)
     }
 
     @Test
@@ -729,55 +729,55 @@ internal class LogContextSpec {
         // Verify arguments passed in to the non-boxed fundamental type methods
         // are mapped correctly.
         logger.atInfo().log(msg, BYTE_ARG, BYTE_ARG)
-        backend.lastLogged.shouldHaveArguments(BYTE_ARG, BYTE_ARG)
+        backend.getLastLogged().shouldHaveArguments(BYTE_ARG, BYTE_ARG)
         logger.atInfo().log(msg, BYTE_ARG, SHORT_ARG)
-        backend.lastLogged.shouldHaveArguments(BYTE_ARG, SHORT_ARG)
+        backend.getLastLogged().shouldHaveArguments(BYTE_ARG, SHORT_ARG)
         logger.atInfo().log(msg, BYTE_ARG, INT_ARG)
-        backend.lastLogged.shouldHaveArguments(BYTE_ARG, INT_ARG)
+        backend.getLastLogged().shouldHaveArguments(BYTE_ARG, INT_ARG)
         logger.atInfo().log(msg, BYTE_ARG, LONG_ARG)
-        backend.lastLogged.shouldHaveArguments(BYTE_ARG, LONG_ARG)
+        backend.getLastLogged().shouldHaveArguments(BYTE_ARG, LONG_ARG)
         logger.atInfo().log(msg, BYTE_ARG, CHAR_ARG)
-        backend.lastLogged.shouldHaveArguments(BYTE_ARG, CHAR_ARG)
+        backend.getLastLogged().shouldHaveArguments(BYTE_ARG, CHAR_ARG)
         logger.atInfo().log(msg, SHORT_ARG, BYTE_ARG)
-        backend.lastLogged.shouldHaveArguments(SHORT_ARG, BYTE_ARG)
+        backend.getLastLogged().shouldHaveArguments(SHORT_ARG, BYTE_ARG)
         logger.atInfo().log(msg, SHORT_ARG, SHORT_ARG)
-        backend.lastLogged.shouldHaveArguments(SHORT_ARG, SHORT_ARG)
+        backend.getLastLogged().shouldHaveArguments(SHORT_ARG, SHORT_ARG)
         logger.atInfo().log(msg, SHORT_ARG, INT_ARG)
-        backend.lastLogged.shouldHaveArguments(SHORT_ARG, INT_ARG)
+        backend.getLastLogged().shouldHaveArguments(SHORT_ARG, INT_ARG)
         logger.atInfo().log(msg, SHORT_ARG, LONG_ARG)
-        backend.lastLogged.shouldHaveArguments(SHORT_ARG, LONG_ARG)
+        backend.getLastLogged().shouldHaveArguments(SHORT_ARG, LONG_ARG)
         logger.atInfo().log(msg, SHORT_ARG, CHAR_ARG)
-        backend.lastLogged.shouldHaveArguments(SHORT_ARG, CHAR_ARG)
+        backend.getLastLogged().shouldHaveArguments(SHORT_ARG, CHAR_ARG)
         logger.atInfo().log(msg, INT_ARG, BYTE_ARG)
-        backend.lastLogged.shouldHaveArguments(INT_ARG, BYTE_ARG)
+        backend.getLastLogged().shouldHaveArguments(INT_ARG, BYTE_ARG)
         logger.atInfo().log(msg, INT_ARG, SHORT_ARG)
-        backend.lastLogged.shouldHaveArguments(INT_ARG, SHORT_ARG)
+        backend.getLastLogged().shouldHaveArguments(INT_ARG, SHORT_ARG)
         logger.atInfo().log(msg, INT_ARG, INT_ARG)
-        backend.lastLogged.shouldHaveArguments(INT_ARG, INT_ARG)
+        backend.getLastLogged().shouldHaveArguments(INT_ARG, INT_ARG)
         logger.atInfo().log(msg, INT_ARG, LONG_ARG)
-        backend.lastLogged.shouldHaveArguments(INT_ARG, LONG_ARG)
+        backend.getLastLogged().shouldHaveArguments(INT_ARG, LONG_ARG)
         logger.atInfo().log(msg, INT_ARG, CHAR_ARG)
-        backend.lastLogged.shouldHaveArguments(INT_ARG, CHAR_ARG)
+        backend.getLastLogged().shouldHaveArguments(INT_ARG, CHAR_ARG)
         logger.atInfo().log(msg, LONG_ARG, BYTE_ARG)
-        backend.lastLogged.shouldHaveArguments(LONG_ARG, BYTE_ARG)
+        backend.getLastLogged().shouldHaveArguments(LONG_ARG, BYTE_ARG)
         logger.atInfo().log(msg, LONG_ARG, SHORT_ARG)
-        backend.lastLogged.shouldHaveArguments(LONG_ARG, SHORT_ARG)
+        backend.getLastLogged().shouldHaveArguments(LONG_ARG, SHORT_ARG)
         logger.atInfo().log(msg, LONG_ARG, INT_ARG)
-        backend.lastLogged.shouldHaveArguments(LONG_ARG, INT_ARG)
+        backend.getLastLogged().shouldHaveArguments(LONG_ARG, INT_ARG)
         logger.atInfo().log(msg, LONG_ARG, LONG_ARG)
-        backend.lastLogged.shouldHaveArguments(LONG_ARG, LONG_ARG)
+        backend.getLastLogged().shouldHaveArguments(LONG_ARG, LONG_ARG)
         logger.atInfo().log(msg, LONG_ARG, CHAR_ARG)
-        backend.lastLogged.shouldHaveArguments(LONG_ARG, CHAR_ARG)
+        backend.getLastLogged().shouldHaveArguments(LONG_ARG, CHAR_ARG)
         logger.atInfo().log(msg, CHAR_ARG, BYTE_ARG)
-        backend.lastLogged.shouldHaveArguments(CHAR_ARG, BYTE_ARG)
+        backend.getLastLogged().shouldHaveArguments(CHAR_ARG, BYTE_ARG)
         logger.atInfo().log(msg, CHAR_ARG, SHORT_ARG)
-        backend.lastLogged.shouldHaveArguments(CHAR_ARG, SHORT_ARG)
+        backend.getLastLogged().shouldHaveArguments(CHAR_ARG, SHORT_ARG)
         logger.atInfo().log(msg, CHAR_ARG, INT_ARG)
-        backend.lastLogged.shouldHaveArguments(CHAR_ARG, INT_ARG)
+        backend.getLastLogged().shouldHaveArguments(CHAR_ARG, INT_ARG)
         logger.atInfo().log(msg, CHAR_ARG, LONG_ARG)
-        backend.lastLogged.shouldHaveArguments(CHAR_ARG, LONG_ARG)
+        backend.getLastLogged().shouldHaveArguments(CHAR_ARG, LONG_ARG)
         logger.atInfo().log(msg, CHAR_ARG, CHAR_ARG)
-        backend.lastLogged.shouldHaveArguments(CHAR_ARG, CHAR_ARG)
+        backend.getLastLogged().shouldHaveArguments(CHAR_ARG, CHAR_ARG)
     }
 
     @Test
@@ -787,25 +787,25 @@ internal class LogContextSpec {
         // Verify arguments passed in to the non-boxed fundamental type methods
         // are mapped correctly.
         logger.atInfo().log(ms, OBJECT_ARG, BYTE_ARG)
-        backend.lastLogged.shouldHaveArguments(OBJECT_ARG, BYTE_ARG)
+        backend.getLastLogged().shouldHaveArguments(OBJECT_ARG, BYTE_ARG)
         logger.atInfo().log(ms, OBJECT_ARG, SHORT_ARG)
-        backend.lastLogged.shouldHaveArguments(OBJECT_ARG, SHORT_ARG)
+        backend.getLastLogged().shouldHaveArguments(OBJECT_ARG, SHORT_ARG)
         logger.atInfo().log(ms, OBJECT_ARG, INT_ARG)
-        backend.lastLogged.shouldHaveArguments(OBJECT_ARG, INT_ARG)
+        backend.getLastLogged().shouldHaveArguments(OBJECT_ARG, INT_ARG)
         logger.atInfo().log(ms, OBJECT_ARG, LONG_ARG)
-        backend.lastLogged.shouldHaveArguments(OBJECT_ARG, LONG_ARG)
+        backend.getLastLogged().shouldHaveArguments(OBJECT_ARG, LONG_ARG)
         logger.atInfo().log(ms, OBJECT_ARG, CHAR_ARG)
-        backend.lastLogged.shouldHaveArguments(OBJECT_ARG, CHAR_ARG)
+        backend.getLastLogged().shouldHaveArguments(OBJECT_ARG, CHAR_ARG)
         logger.atInfo().log(ms, BYTE_ARG, OBJECT_ARG)
-        backend.lastLogged.shouldHaveArguments(BYTE_ARG, OBJECT_ARG)
+        backend.getLastLogged().shouldHaveArguments(BYTE_ARG, OBJECT_ARG)
         logger.atInfo().log(ms, SHORT_ARG, OBJECT_ARG)
-        backend.lastLogged.shouldHaveArguments(SHORT_ARG, OBJECT_ARG)
+        backend.getLastLogged().shouldHaveArguments(SHORT_ARG, OBJECT_ARG)
         logger.atInfo().log(ms, INT_ARG, OBJECT_ARG)
-        backend.lastLogged.shouldHaveArguments(INT_ARG, OBJECT_ARG)
+        backend.getLastLogged().shouldHaveArguments(INT_ARG, OBJECT_ARG)
         logger.atInfo().log(ms, LONG_ARG, OBJECT_ARG)
-        backend.lastLogged.shouldHaveArguments(LONG_ARG, OBJECT_ARG)
+        backend.getLastLogged().shouldHaveArguments(LONG_ARG, OBJECT_ARG)
         logger.atInfo().log(ms, CHAR_ARG, OBJECT_ARG)
-        backend.lastLogged.shouldHaveArguments(CHAR_ARG, OBJECT_ARG)
+        backend.getLastLogged().shouldHaveArguments(CHAR_ARG, OBJECT_ARG)
     }
 
     @Test
@@ -816,12 +816,12 @@ internal class LogContextSpec {
         logger.atSevere().withStackTrace(StackSize.FULL).log("Answer=%#x", 66)
 
         backend.loggedCount shouldBe 1
-        backend.firstLogged.shouldHaveMessage("Answer=%#x")
-        backend.firstLogged.shouldHaveArguments(66)
-        backend.firstLogged.metadata.shouldHaveSize(1)
-        backend.firstLogged.metadata.shouldContain(Key.LOG_CAUSE)
+        backend.getFirstLogged().shouldHaveMessage("Answer=%#x")
+        backend.getFirstLogged().shouldHaveArguments(66)
+        backend.getFirstLogged().metadata.shouldHaveSize(1)
+        backend.getFirstLogged().metadata.shouldContain(Key.LOG_CAUSE)
 
-        val cause = backend.firstLogged.metadata.findValue(Key.LOG_CAUSE)!!
+        val cause = backend.getFirstLogged().metadata.findValue(Key.LOG_CAUSE)!!
         cause.shouldHaveMessage("FULL")
         cause.cause.shouldBeNull() // It is a synthetic exception.
 
@@ -848,12 +848,12 @@ internal class LogContextSpec {
             .log("Answer=%#x", 66)
 
         backend.loggedCount shouldBe 1
-        backend.firstLogged.shouldHaveMessage("Answer=%#x")
-        backend.firstLogged.shouldHaveArguments(66)
-        backend.firstLogged.metadata.shouldHaveSize(1)
-        backend.firstLogged.metadata.shouldContain(Key.LOG_CAUSE)
+        backend.getFirstLogged().shouldHaveMessage("Answer=%#x")
+        backend.getFirstLogged().shouldHaveArguments(66)
+        backend.getFirstLogged().metadata.shouldHaveSize(1)
+        backend.getFirstLogged().metadata.shouldContain(Key.LOG_CAUSE)
 
-        val cause = backend.firstLogged.metadata.findValue(Key.LOG_CAUSE)!!
+        val cause = backend.getFirstLogged().metadata.findValue(Key.LOG_CAUSE)!!
         cause shouldHaveMessage "SMALL"
         cause.stackTrace.size shouldBe StackSize.SMALL.maxDepth
         cause.cause shouldBe badness
@@ -871,13 +871,13 @@ internal class LogContextSpec {
             logHelper(logger, LogSites.logSite(), 3, "Bar: $i")
         }
         backend.loggedCount shouldBe 7
-        backend.firstLogged.shouldHaveArguments("Foo: 0")
-        backend.logged[1].shouldHaveArguments("Bar: 0")
-        backend.logged[2].shouldHaveArguments("Foo: 2")
-        backend.logged[3].shouldHaveArguments("Bar: 3")
-        backend.logged[4].shouldHaveArguments("Foo: 4")
-        backend.logged[5].shouldHaveArguments("Foo: 6")
-        backend.logged[6].shouldHaveArguments("Bar: 6")
+        backend.getFirstLogged().shouldHaveArguments("Foo: 0")
+        backend.logged()[1].shouldHaveArguments("Bar: 0")
+        backend.logged()[2].shouldHaveArguments("Foo: 2")
+        backend.logged()[3].shouldHaveArguments("Bar: 3")
+        backend.logged()[4].shouldHaveArguments("Foo: 4")
+        backend.logged()[5].shouldHaveArguments("Foo: 6")
+        backend.logged()[6].shouldHaveArguments("Bar: 6")
     }
 
     /**
@@ -894,10 +894,10 @@ internal class LogContextSpec {
             .log("No-op injection")
 
         backend.loggedCount shouldBe 2
-        backend.firstLogged.logSite shouldBe LogSite.INVALID
+        backend.getFirstLogged().logSite shouldBe LogSite.INVALID
 
-        backend.logged[1].logSite.shouldNotBeNull()
-        backend.logged[1].logSite shouldNotBe LogSite.INVALID
+        backend.logged()[1].logSite.shouldNotBeNull()
+        backend.logged()[1].logSite shouldNotBe LogSite.INVALID
     }
 
     @Nested inner class
