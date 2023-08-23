@@ -62,6 +62,11 @@ internal class AbstractLoggerSpec {
     companion object {
 
         /**
+         * The same as in [AbstractLogger.reportError] method.
+         */
+        private const val LOGGING_ERROR = "logging error"
+
+        /**
          * Matches ISO 8601 date/time format.
          *
          * [DOT_MATCHES_ALL] option makes `.*` match line terminators as well.
@@ -75,90 +80,108 @@ internal class AbstractLoggerSpec {
 
     @Test
     fun `report exceptions`() {
-        val bad: Any = object : Any() {
-            override fun toString(): String = error("Ooopsie")
-        }
+        val exception = IllegalStateException("Ooopsie")
+        val bad: Any = ThrowingAny(exception)
+
         val output = tapConsole {
-            logger.atInfo().log("bad value: %s", bad)
+            logger.atInfo().log("Bad value: %s.", bad)
         }
+
         backend.logged.shouldBeEmpty()
         output shouldMatch TIMESTAMP_PREFIX
-        output shouldContain "logging error"
-        output shouldContain "com.google.common.flogger.AbstractLoggerSpec.report exceptions"
-        output shouldContain "java.lang.IllegalStateException: Ooopsie"
+        output shouldContain LOGGING_ERROR
+        output shouldContain "${exception.stackTrace[0]}"
+        output shouldContain "${exception::class.simpleName}: ${exception.message}"
     }
 
+    /**
+     * Tests a worst case scenario whereby object's `toString()` method throws
+     * an exception, which itself throws an exception on `toString()` call.
+     */
     @Test
     fun `report nested exceptions`() {
-        // A worst case scenario whereby an object's `toString()` throws an exception,
-        // which itself throws an exception. If we can handle this, we can handle
-        // just about anything!
-        val bad: Any = object : Any() {
-            override fun toString(): String = throw object : IllegalStateException("Ooopsie") {
-                private val serialVersionUID: Long = 42L
-                override fun toString(): String = error("<<IGNORED>>")
-            }
+        val innerException = IllegalStateException("<<IGNORED>>")
+        val outerException = object : IllegalStateException("Ooopsie") {
+            private val serialVersionUID: Long = 42L
+            override fun toString(): String = throw innerException // It is a nested throwing.
         }
+        val bad: Any = ThrowingAny(outerException)
+
         val output = tapConsole {
-            logger.atInfo().log("bad value: %s", bad)
+            logger.atInfo().log("Bad value: %s.", bad)
         }
+
         backend.logged.shouldBeEmpty()
         output shouldMatch TIMESTAMP_PREFIX
-        output shouldContain "logging error"
-        output shouldContain "Ooopsie" // Exception class is not printed in this case.
-        output shouldNotContain "<<IGNORED>>" // Also, we don't handle the inner exception.
+        output shouldContain LOGGING_ERROR
+
+        // Exception class is not printed in this case.
+        output shouldContain outerException.message!!
+        // Also, the inner exception is not handled.
+        output shouldNotContain innerException.message!!
     }
 
     @Test
     fun `guard from significant recursion`() {
-        // The test logger does not handle errors gracefully, which should trigger
-        // the fallback error handling in `AbstractLogger`.
         val bad: Any = object : Any() {
             override fun toString(): String {
                 logger.atInfo().log("recursion: %s", this)
                 return "<unused>"
             }
         }
+
         val output = tapConsole {
-            logger.atInfo().log("evil value: %s", bad)
+            logger.atInfo().log("Evil value: %s.", bad)
         }
-        backend.logged.shouldHaveSize(100) // Matches to `AbstractLogger.MAX_ALLOWED_DEPTH`.
+
+        // Defined by `AbstractLogger.MAX_ALLOWED_RECURSION_DEPTH` constant.
+        backend.logged.shouldHaveSize(100)
+
         output shouldMatch TIMESTAMP_PREFIX
-        output shouldContain "logging error"
+        output shouldContain LOGGING_ERROR
+        output shouldContain this::class.simpleName!!
         output shouldContain "unbounded recursion in log statement"
-        output shouldContain "com.google.common.flogger.AbstractLoggerSpec"
     }
 
     @Test
     fun `allow logging exceptions thrown by a backend`() {
-        // A backend that triggers a logging exception.
         val backend = object : MemoizingBackend() {
             override fun log(data: LogData) = throw LoggingException("allowed")
         }
         val logger = TestLogger.create(backend)
+
         val output = tapConsole {
             shouldThrow<LoggingException> {
-                logger.atInfo().log("doomed to fail")
+                logger.atInfo().log()
             }
         }
+
         backend.logged.shouldBeEmpty()
         output.shouldBeEmpty()
     }
 
     @Test
-    @Suppress("TooGenericExceptionThrown") // Just `Error` is OK for tests.
+    @Suppress("TooGenericExceptionThrown") // Plain `Error` is OK for tests.
     fun `allow logging errors thrown by a backend`() {
-        // A backend that triggers an `Error`.
         val backend: MemoizingBackend = object : MemoizingBackend() {
             override fun log(data: LogData) = throw Error("allowed")
         }
         val logger = TestLogger.create(backend)
+
         val output = tapConsole {
             shouldThrow<Error> {
-                logger.atInfo().log("doomed to fail")
+                logger.atInfo().log()
             }
         }
+
         backend.logged.shouldBeEmpty()
         output.shouldBeEmpty()
     }
+}
+
+/**
+ * An [Any] that throws the given [exception] on call to [toString].
+ */
+private class ThrowingAny(private val exception: Exception): Any() {
+    override fun toString(): String = throw exception
 }
