@@ -87,7 +87,7 @@ kotlin {
         }
         val jvmTest by getting {
             dependencies {
-                implementation(project(":testutil"))
+                implementation(project(":logging-testutil"))
                 implementation(project(":flogger-system-backend"))
                 implementation(Spine.testlib) {
                     exclude(group = "com.google.flogger")

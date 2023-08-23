@@ -37,11 +37,11 @@ include(
     "logging",
     "logging-backend",
     "logging-context",
+    "logging-testutil",
 )
 
 includeTest(
     "fixtures",
-    "testutil",
     "jvm-our-backend-our-context",
     "jvm-our-backend-grpc-context",
     "jvm-log4j-backend-our-context",
