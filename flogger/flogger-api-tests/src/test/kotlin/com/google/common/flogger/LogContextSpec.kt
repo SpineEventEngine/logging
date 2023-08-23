@@ -15,12 +15,13 @@
  */
 package com.google.common.flogger
 
-import com.google.common.collect.Iterators
 import com.google.common.flogger.DurationRateLimiter.newRateLimitPeriod
 import com.google.common.flogger.LazyArgs.lazy
 import com.google.common.flogger.LogContext.Key
+import com.google.common.flogger.LogContext.specializeLogSiteKeyFromMetadata
 import com.google.common.flogger.MetadataKey.repeated
 import com.google.common.flogger.context.Tags
+import com.google.common.flogger.given.iterate
 import com.google.common.flogger.given.shouldContainInOrder
 import com.google.common.flogger.given.shouldContain
 import com.google.common.flogger.given.shouldHaveArguments
@@ -32,13 +33,14 @@ import com.google.common.flogger.testing.FakeLogSite
 import com.google.common.flogger.testing.FakeLoggerBackend
 import com.google.common.flogger.testing.FakeMetadata
 import com.google.common.flogger.testing.TestLogger
-import com.google.common.truth.Truth.assertThat
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.ints.shouldBeInRange
 import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 import java.lang.System.currentTimeMillis
@@ -842,104 +844,115 @@ internal class LogContextSpec {
     }
 
     @Test
-    fun testExplicitLogSiteInjection() {
-        // Tests it's the log site instance that controls rate limiting, even over different calls.
+    fun `explicitly inject the log site`() {
+        // Tests if it is the log site instance that controls rate limiting,
+        // even over different calls.
         // We don't expect this to ever happen in real code though.
         for (i in 0..6) {
-            logHelper(
-                logger, LogSites.logSite(), 2,
-                "Foo: $i"
-            ) // Log every 2nd (0, 2, 4, 6)
-            logHelper(
-                logger, LogSites.logSite(), 3,
-                "Bar: $i"
-            ) // Log every 3rd (0, 3, 6)
+            // Log every 2nd (0, 2, 4, 6)
+            logHelper(logger, LogSites.logSite(), 2, "Foo: $i")
+            // Log every 3rd (0, 3, 6)
+            logHelper(logger, LogSites.logSite(), 3, "Bar: $i")
         }
-        // Expect: Foo -> 0, 2, 4, 6 and Bar -> 0, 3, 6 (but not in that order)
         backend.loggedCount shouldBe 7
         backend.firstLogged.shouldHaveArguments("Foo: 0")
-        backend.assertLogged(1).hasArguments("Bar: 0")
-        backend.assertLogged(2).hasArguments("Foo: 2")
-        backend.assertLogged(3).hasArguments("Bar: 3")
-        backend.assertLogged(4).hasArguments("Foo: 4")
-        backend.assertLogged(5).hasArguments("Foo: 6")
-        backend.assertLogged(6).hasArguments("Bar: 6")
+        backend.logged[1].shouldHaveArguments("Bar: 0")
+        backend.logged[2].shouldHaveArguments("Foo: 2")
+        backend.logged[3].shouldHaveArguments("Bar: 3")
+        backend.logged[4].shouldHaveArguments("Foo: 4")
+        backend.logged[5].shouldHaveArguments("Foo: 6")
+        backend.logged[6].shouldHaveArguments("Bar: 6")
     }
 
-    // It's important that injecting an INVALID log site acts as a override to suppress log site
-    // calculation rather than being a no-op.
+    /**
+     * It is important that injecting an INVALID log site acts as an override
+     * to suppress log site analysis (i.e., rate limiting) rather than being a no-op.
+     */
     @Test
-    fun testExplicitLogSiteSuppression() {
-        logger.atInfo().withInjectedLogSite(LogSite.INVALID).log("No log site here")
-        logger.atInfo().withInjectedLogSite(null).log("No-op injection")
+    fun `suppress an invalid log site analysis`() {
+        logger.atInfo()
+            .withInjectedLogSite(LogSite.INVALID)
+            .log("No log site here")
+        logger.atInfo()
+            .withInjectedLogSite(null)
+            .log("No-op injection")
+
         backend.loggedCount shouldBe 2
         backend.firstLogged.logSite shouldBe LogSite.INVALID
-        backend.assertLogged(1).logSite().isNotNull()
-        backend.assertLogged(1).logSite().isNotEqualTo(LogSite.INVALID)
+
+        backend.logged[1].logSite.shouldNotBeNull()
+        backend.logged[1].logSite shouldNotBe LogSite.INVALID
     }
 
-    @Test
-    fun testLogSiteSpecializationSameMetadata() {
-        val fooMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo")
-        val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
-        val fooKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
-        fooKey shouldBe LogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
-    }
+    @Nested inner class
+    specialize {
 
-    @Test
-    fun testLogSiteSpecializationKeyCountMatters() {
-        val fooMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo")
-        val repeatedMetadata = FakeMetadata()
-            .add(Key.LOG_SITE_GROUPING_KEY, "foo")
-            .add(Key.LOG_SITE_GROUPING_KEY, "foo")
-        val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
-        val fooKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
-        val repeatedKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, repeatedMetadata)
-        assertThat(fooKey).isNotEqualTo(repeatedKey)
-    }
-
-    @Test
-    fun testLogSiteSpecializationDifferentKeys() {
-        val fooMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo")
-        val barMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "bar")
-        val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
-        val fooKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
-        val barKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, barMetadata)
-        assertThat(fooKey).isNotEqualTo(barKey)
-    }
-
-    // This is unfortunate but hard to work around unless SpecializedLogSiteKey can be made invariant
-    // to the order of specialization (but this class must be very efficient, so that would be hard).
-    // This should not be an issue in expected use, since specialization keys should always be applied
-    // in the same order at any given log statement.
-    @Test
-    fun testLogSiteSpecializationOrderMatters() {
-        val fooBarMetadata = FakeMetadata()
-            .add(Key.LOG_SITE_GROUPING_KEY, "foo")
-            .add(Key.LOG_SITE_GROUPING_KEY, "bar")
-        val barFooMetadata = FakeMetadata()
-            .add(Key.LOG_SITE_GROUPING_KEY, "bar")
-            .add(Key.LOG_SITE_GROUPING_KEY, "foo")
-        val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
-        val fooBarKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, fooBarMetadata)
-        val barFooKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, barFooMetadata)
-        assertThat(fooBarKey).isNotEqualTo(barFooKey)
-    }
-
-    @Test
-    fun testLogSiteSpecializationKey() {
-        Key.LOG_SITE_GROUPING_KEY.emitRepeated(
-            Iterators.forArray<Any>("foo")
-        ) { k: String?, v: Any? ->
-            k shouldBe "group_by"
-            v shouldBe "foo"
+        @Test
+        fun `log site key from a singleton key`() {
+            val fooMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo")
+            val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
+            val fooKey = specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
+            val singletonKey = specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
+            fooKey shouldBe singletonKey
         }
 
-        // We don't care too much about the case with multiple keys since it's so rare, but it should
-        // be vaguely sensible.
-        Key.LOG_SITE_GROUPING_KEY.emitRepeated(
-            Iterators.forArray<Any>("foo", "bar")
-        ) { k: String?, v: Any? ->
+        @Test
+        fun `log site key from a repeated key`() {
+            val fooMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo")
+            val repeatedMetadata = FakeMetadata()
+                .add(Key.LOG_SITE_GROUPING_KEY, "foo")
+                .add(Key.LOG_SITE_GROUPING_KEY, "foo")
+            val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
+            val fooKey = specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
+            val repeatedKey = specializeLogSiteKeyFromMetadata(logSite, repeatedMetadata)
+            fooKey shouldNotBe repeatedKey
+        }
+
+        @Test
+        fun `distinct log site keys from distinct metadata instances`() {
+            val fooMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo")
+            val barMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "bar")
+            val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
+            val fooKey = specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
+            val barKey = specializeLogSiteKeyFromMetadata(logSite, barMetadata)
+            fooKey shouldNotBe barKey
+        }
+
+        /**
+         * This is unfortunate but hard to work around unless [SpecializedLogSiteKey]
+         * can be made invariant to the order of specialization (but this class must be
+         * very efficient, so that would be hard).
+         *
+         * This should not be an issue in expected use, since specialization keys should
+         * always be applied in the same order at any given log statement.
+         */
+        @Test
+        fun `distinct log site keys from differently ordered metadata instances`() {
+            val fooBarMetadata = FakeMetadata()
+                .add(Key.LOG_SITE_GROUPING_KEY, "foo")
+                .add(Key.LOG_SITE_GROUPING_KEY, "bar")
+            val barFooMetadata = FakeMetadata()
+                .add(Key.LOG_SITE_GROUPING_KEY, "bar")
+                .add(Key.LOG_SITE_GROUPING_KEY, "foo")
+            val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
+            val fooBarKey = specializeLogSiteKeyFromMetadata(logSite, fooBarMetadata)
+            val barFooKey = specializeLogSiteKeyFromMetadata(logSite, barFooMetadata)
+            fooBarKey shouldNotBe barFooKey
+        }
+    }
+
+    @Test
+    fun `provide a grouping key for specialization`() {
+        val singletonKey = iterate("foo")
+        Key.LOG_SITE_GROUPING_KEY.emitRepeated(singletonKey) { key: String?, value: Any? ->
+            key shouldBe "group_by"
+            value shouldBe "foo"
+        }
+
+        // We don't care too much about the case with multiple keys
+        // because it is so rare, but it should be vaguely sensible.
+        val multipleKeys = iterate("foo", "bar")
+        Key.LOG_SITE_GROUPING_KEY.emitRepeated(multipleKeys) { k: String?, v: Any? ->
             k shouldBe "group_by"
             v shouldBe "[foo,bar]"
         }
