@@ -182,6 +182,7 @@ internal class AbstractLoggerSpec {
 /**
  * An [Any] that throws the given [exception] on call to [toString].
  */
-private class ThrowingAny(private val exception: Exception): Any() {
+@Suppress("ExceptionRaisedInUnexpectedLocation") // Intentional throwing in `toString()`.
+private class ThrowingAny(private val exception: Exception) {
     override fun toString(): String = throw exception
 }
