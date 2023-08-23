@@ -43,10 +43,15 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
+ * Tests for [AbstractLogger].
+ *
  * An abstract logger is a factory for instances of fluent logging APIs,
  * used to build log statements via method chaining.
  *
  * See [LogContextSpec] for the most tests related to base logging behavior.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/AbstractLoggerTest.java">
+ *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`AbstractLogger` should")
 internal class AbstractLoggerSpec {

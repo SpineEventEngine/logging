@@ -36,12 +36,17 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
+ * Tests for [FluentLogger2].
+ *
  * Fluent loggers are typically very simple classes whose only real
  * responsibility is to be a factory for specific API implementations.
  *
  * As such it needs very few tests itself.
  *
  * See [LogContextSpec] for the most tests related to base logging behavior.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/FluentLoggerTest.java">
+ *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`FluentLogger2` should")
 internal class FluentLogger2Spec {

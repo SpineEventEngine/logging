@@ -63,6 +63,12 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
+/**
+ * Tests for [LogContext].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/LogContextTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
 @DisplayName("`LogContext` should")
 internal class LogContextSpec {
 
