@@ -87,6 +87,10 @@ internal class LogContextSpec {
         private val FLAG_KEY = repeated("flag", Boolean::class.javaObjectType)
         private val ONCE_PER_SECOND = newRateLimitPeriod(1, SECONDS)
 
+        private const val MESSAGE_LITERAL = "Hello World"
+        private const val MESSAGE_PATTERN = "Hello %s"
+        private const val MESSAGE_ARGUMENT = "World"
+
         // In normal use, the logger would never need to be passed in,
         // and you'd use `logVarargs()`.
         private fun logHelper(logger: FluentLogger2, logSite: LogSite, n: Int, message: String) {
@@ -110,31 +114,29 @@ internal class LogContextSpec {
         val cause = Throwable()
         logger.atInfo()
             .withCause(cause)
-            .log("Hello World")
-
+            .log(MESSAGE_LITERAL)
         backend.lastLogged.metadata shouldHaveSize 1
         backend.lastLogged.metadata.shouldUniquelyContain(Key.LOG_CAUSE, cause)
-        backend.lastLogged shouldHaveMessage "Hello World"
+        backend.lastLogged shouldHaveMessage MESSAGE_LITERAL
     }
 
     @Test
     fun `lazily evaluate arguments`() {
-        logger.atInfo().log("Hello %s", lazy { "World" })
+        logger.atInfo().log(MESSAGE_PATTERN, lazy { MESSAGE_ARGUMENT })
         logger.atFine().log(
-            "Hello %s",
+            MESSAGE_PATTERN,
             lazy { error("Lazy arguments should not be evaluated in a disabled log statement") }
         )
-
-        backend.lastLogged shouldHaveMessage "Hello %s"
-        backend.lastLogged.shouldHaveArguments("World")
+        backend.lastLogged shouldHaveMessage MESSAGE_PATTERN
+        backend.lastLogged.shouldHaveArguments(MESSAGE_ARGUMENT)
     }
 
     @Test
     fun `accept a formatted message`() {
-        logger.at(INFO).log("Formatted %s", "Message")
+        logger.at(INFO).log(MESSAGE_PATTERN, MESSAGE_ARGUMENT)
         backend.loggedCount shouldBe 1
-        backend.lastLogged shouldHaveMessage "Formatted %s"
-        backend.lastLogged.shouldHaveArguments("Message")
+        backend.lastLogged shouldHaveMessage MESSAGE_PATTERN
+        backend.lastLogged.shouldHaveArguments(MESSAGE_ARGUMENT)
 
         // Should NOT ask for literal argument as none exists.
         shouldThrow<IllegalStateException> {
@@ -144,9 +146,9 @@ internal class LogContextSpec {
 
     @Test
     fun `accept a literal message`() {
-        logger.at(INFO).log("Literal Message")
+        logger.at(INFO).log(MESSAGE_LITERAL)
         backend.loggedCount shouldBe 1
-        backend.lastLogged shouldHaveMessage "Literal Message"
+        backend.lastLogged shouldHaveMessage MESSAGE_LITERAL
 
         // Cannot ask for format arguments as none exist.
         backend.lastLogged.templateContext.shouldBeNull()
@@ -158,43 +160,49 @@ internal class LogContextSpec {
     @Test
     fun `accept multiple metadata entries`() {
         val cause = RuntimeException()
+        val invocations = 42
         logger.atInfo()
             .withCause(cause)
-            .every(42)
-            .log("Hello World")
+            .every(invocations)
+            .log(MESSAGE_LITERAL)
         backend.loggedCount shouldBe 1
-        backend.lastLogged.metadata shouldHaveSize 2
-        backend.lastLogged.metadata.shouldUniquelyContain(Key.LOG_EVERY_N, 42)
+        backend.lastLogged.metadata shouldHaveSize 2 // Cause and rate.
+        backend.lastLogged.metadata.shouldUniquelyContain(Key.LOG_EVERY_N, invocations)
         backend.lastLogged.metadata.shouldUniquelyContain(Key.LOG_CAUSE, cause)
     }
 
     @Test
     fun `handle multiple metadata keys`() {
+        val values = arrayOf("foo", "bar")
         logger.atInfo()
-            .with(REPEATED_KEY, "foo")
-            .with(REPEATED_KEY, "bar")
-            .log("Several values")
+            .with(REPEATED_KEY, values[0])
+            .with(REPEATED_KEY, values[1])
+            .log()
+        backend.lastLogged.metadata.shouldContainInOrder(REPEATED_KEY, *values)
+    }
+
+    @Test
+    fun `handle tag keys`() {
         logger.atInfo()
             .with(FLAG_KEY)
-            .log("Set Flag")
+            .log()
+        backend.lastLogged.metadata.shouldUniquelyContain(FLAG_KEY, true)
         logger.atInfo()
             .with(FLAG_KEY, false)
-            .log("No flag")
+            .log()
+        backend.lastLogged.metadata.shouldUniquelyContain(FLAG_KEY, false)
+    }
+
+    @Test
+    fun `handle interleaved metadata keys`() {
+        val values = arrayOf("foo", "bar")
         logger.atInfo()
-            .with(REPEATED_KEY, "foo")
+            .with(REPEATED_KEY, values[0])
             .with(FLAG_KEY)
-            .with(REPEATED_KEY, "bar")
-            .log("...")
-
-        backend.loggedCount shouldBe 4
-        backend.logged[0].metadata.shouldContainInOrder(REPEATED_KEY, "foo", "bar")
-        backend.logged[1].metadata.shouldUniquelyContain(FLAG_KEY, true)
-        backend.logged[2].metadata.shouldUniquelyContain(FLAG_KEY, false)
-
-        // Just check nothing weird happens when the metadata
-        // is interleaved in the log statement.
-        backend.logged[3].metadata.shouldContainInOrder(REPEATED_KEY, "foo", "bar")
-        backend.logged[3].metadata.shouldUniquelyContain(FLAG_KEY, true)
+            .with(REPEATED_KEY, values[1])
+            .log()
+        backend.lastLogged.metadata.shouldContainInOrder(REPEATED_KEY, *values)
+        backend.lastLogged.metadata.shouldUniquelyContain(FLAG_KEY, true)
     }
 
     /**
@@ -600,7 +608,7 @@ internal class LogContextSpec {
     fun `accept formatting arguments as array`() {
         val args = arrayOf<Any?>("foo", null, "baz")
         logger.atInfo().logVarargs("Any message ...", args)
-        backend.lastLogged.shouldHaveArguments("foo", null, "baz")
+        backend.lastLogged.shouldHaveArguments(*args)
 
         // Make sure we took a copy of the arguments rather than risk re-using them.
         backend.loggedCount shouldBe 1
@@ -616,16 +624,9 @@ internal class LogContextSpec {
 
     @Test
     fun `not escape percent char when given no arguments`() {
-        logger.atInfo().log("Hello %s World")
-        backend.lastLogged.shouldHaveMessage("Hello %s World")
+        logger.atInfo().log(MESSAGE_PATTERN)
+        backend.lastLogged.shouldHaveMessage(MESSAGE_PATTERN)
         backend.lastLogged.shouldHaveArguments()
-    }
-
-    @Test
-    fun `accept formatting arguments`() {
-        logger.atInfo().log("Hello %d World %s", 50, "!")
-        backend.lastLogged.shouldHaveMessage("Hello %d World %s")
-        backend.lastLogged.shouldHaveArguments(50, "!")
     }
 
     /**
@@ -645,8 +646,8 @@ internal class LogContextSpec {
      */
     @Test
     fun `accept a nullable argument`() {
-        logger.atInfo().log("Hello %d World", null)
-        backend.lastLogged.shouldHaveMessage("Hello %d World")
+        logger.atInfo().log(MESSAGE_PATTERN, null)
+        backend.lastLogged.shouldHaveMessage(MESSAGE_PATTERN)
         backend.lastLogged.shouldHaveArguments(null)
     }
 
@@ -813,11 +814,11 @@ internal class LogContextSpec {
 
         // Keep these two lines immediately adjacent to each other.
         val expectedCaller = callerInfoFollowingLine()
-        logger.atSevere().withStackTrace(StackSize.FULL).log("Answer=%#x", 66)
+        logger.atSevere().withStackTrace(StackSize.FULL).log(MESSAGE_PATTERN, MESSAGE_ARGUMENT)
 
         backend.loggedCount shouldBe 1
-        backend.firstLogged.shouldHaveMessage("Answer=%#x")
-        backend.firstLogged.shouldHaveArguments(66)
+        backend.firstLogged.shouldHaveMessage(MESSAGE_PATTERN)
+        backend.firstLogged.shouldHaveArguments(MESSAGE_ARGUMENT)
         backend.firstLogged.metadata.shouldHaveSize(1)
         backend.firstLogged.metadata.shouldContain(Key.LOG_CAUSE)
 
@@ -845,11 +846,11 @@ internal class LogContextSpec {
         logger.atInfo()
             .withStackTrace(StackSize.SMALL)
             .withCause(badness)
-            .log("Answer=%#x", 66)
+            .log(MESSAGE_PATTERN, MESSAGE_ARGUMENT)
 
         backend.loggedCount shouldBe 1
-        backend.firstLogged.shouldHaveMessage("Answer=%#x")
-        backend.firstLogged.shouldHaveArguments(66)
+        backend.firstLogged.shouldHaveMessage(MESSAGE_PATTERN)
+        backend.firstLogged.shouldHaveArguments(MESSAGE_ARGUMENT)
         backend.firstLogged.metadata.shouldHaveSize(1)
         backend.firstLogged.metadata.shouldContain(Key.LOG_CAUSE)
 
