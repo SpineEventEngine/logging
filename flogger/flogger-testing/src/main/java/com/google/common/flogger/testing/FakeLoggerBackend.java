@@ -70,7 +70,7 @@ public final class FakeLoggerBackend extends LoggerBackend {
   /**
    * Returns all captured {@link LogData}s.
    */
-  public List<LogData> logged() {
+  public List<LogData> getLogged() {
     return unmodifiableLogged;
   }
 
