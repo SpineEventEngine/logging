@@ -64,12 +64,13 @@ internal class AbstractLoggerSpec {
         /**
          * Matches ISO 8601 date/time format.
          *
+         * [DOT_MATCHES_ALL] option makes `.*` match line terminators as well.
+         *
          * @see <a href="https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html">SimpleDateFormat</a>
          */
-        private val ISO_TIMESTAMP_PREFIX =
-            "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}[-+]\\d{4}: .*".toRegex(
-                DOT_MATCHES_ALL // Makes a dot match a line terminator as well.
-            )
+        private val TIMESTAMP_PREFIX =
+            "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}[-+]\\d{4}: .*"
+                .toRegex(DOT_MATCHES_ALL)
     }
 
     @Test
@@ -81,7 +82,7 @@ internal class AbstractLoggerSpec {
             logger.atInfo().log("bad value: %s", bad)
         }
         backend.logged.shouldBeEmpty()
-        output shouldMatch ISO_TIMESTAMP_PREFIX
+        output shouldMatch TIMESTAMP_PREFIX
         output shouldContain "logging error"
         output shouldContain "com.google.common.flogger.AbstractLoggerSpec.report exceptions"
         output shouldContain "java.lang.IllegalStateException: Ooopsie"
@@ -102,7 +103,7 @@ internal class AbstractLoggerSpec {
             logger.atInfo().log("bad value: %s", bad)
         }
         backend.logged.shouldBeEmpty()
-        output shouldMatch ISO_TIMESTAMP_PREFIX
+        output shouldMatch TIMESTAMP_PREFIX
         output shouldContain "logging error"
         output shouldContain "Ooopsie" // Exception class is not printed in this case.
         output shouldNotContain "<<IGNORED>>" // Also, we don't handle the inner exception.
@@ -122,7 +123,7 @@ internal class AbstractLoggerSpec {
             logger.atInfo().log("evil value: %s", bad)
         }
         backend.logged.shouldHaveSize(100) // Matches to `AbstractLogger.MAX_ALLOWED_DEPTH`.
-        output shouldMatch ISO_TIMESTAMP_PREFIX
+        output shouldMatch TIMESTAMP_PREFIX
         output shouldContain "logging error"
         output shouldContain "unbounded recursion in log statement"
         output shouldContain "com.google.common.flogger.AbstractLoggerSpec"
