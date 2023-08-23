@@ -833,7 +833,6 @@ internal class LogContextSpec {
         // Use string representation for comparison since synthetic stack elements
         // are not “equal” to equivalent system stack elements.
         "$actualStack" shouldBe "$expectedStack"
-        println(actualStack)
     }
 
     @Test
