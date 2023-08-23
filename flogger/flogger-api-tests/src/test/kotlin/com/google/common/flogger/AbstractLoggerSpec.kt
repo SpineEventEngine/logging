@@ -73,7 +73,7 @@ internal class AbstractLoggerSpec {
     }
 
     @Test
-    fun `report runtime exceptions`() {
+    fun `report exceptions`() {
         val bad: Any = object : Any() {
             override fun toString(): String = error("Ooopsie")
         }
@@ -83,12 +83,12 @@ internal class AbstractLoggerSpec {
         backend.logged.shouldBeEmpty()
         output shouldMatch ISO_TIMESTAMP_PREFIX
         output shouldContain "logging error"
-        output shouldContain "com.google.common.flogger.AbstractLoggerSpec.report an error"
+        output shouldContain "com.google.common.flogger.AbstractLoggerSpec.report exceptions"
         output shouldContain "java.lang.IllegalStateException: Ooopsie"
     }
 
     @Test
-    fun `report nested runtime exceptions`() {
+    fun `report nested exceptions`() {
         // A worst case scenario whereby an object's `toString()` throws an exception,
         // which itself throws an exception. If we can handle this, we can handle
         // just about anything!
