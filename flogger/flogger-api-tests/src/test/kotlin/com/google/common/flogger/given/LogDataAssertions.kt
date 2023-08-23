@@ -34,14 +34,28 @@ import io.kotest.matchers.shouldBe
  * This file contains Kotest-like assertions for [LogData].
  */
 
-internal infix fun LogData.shouldHaveMessage(message: String?) {
+/**
+ * Asserts that this [LogData] has a given [value] as a literal
+ * or template message.
+ *
+ * The message is literal when it is passed to the logger without
+ * any formatting arguments, otherwise it is part of [LogData.getTemplateContext].
+ */
+internal infix fun LogData.shouldHaveMessage(value: String?) {
     if (templateContext != null) {
-        templateContext.message shouldBe message
+        templateContext.message shouldBe value
     } else {
-        literalArgument shouldBe message
+        literalArgument shouldBe value
     }
 }
 
+/**
+ * Asserts that this [LogData] has given [args], which were passed
+ * for message formatting.
+ *
+ * This method will NOT fail if the passed [args] is empty as long as
+ * this [LogData] doesn't have any arguments too.
+ */
 internal fun LogData.shouldHaveArguments(vararg args: Any?) {
     if (templateContext == null && args.isEmpty()) {
         return
