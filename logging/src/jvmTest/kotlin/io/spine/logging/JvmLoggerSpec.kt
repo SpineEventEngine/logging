@@ -42,7 +42,7 @@ import io.spine.logging.given.expectedStamps
 import io.spine.logging.given.expectedTimestamps
 import io.spine.logging.given.randomLogSite
 import io.spine.testing.SlowTest
-import io.spine.testing.logging.tapConsole
+import io.spine.logging.testutil.tapConsole
 import java.lang.Thread.sleep
 import kotlin.time.DurationUnit.MILLISECONDS
 import org.junit.jupiter.api.DisplayName
