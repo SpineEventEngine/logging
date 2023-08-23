@@ -61,11 +61,6 @@ public final class FakeLoggerBackend extends LoggerBackend {
     return logged.size();
   }
 
-  /** Returns the {@code Nth} {@link LogData} entry captured by this backend. */
-  public LogData getLogged(int n) {
-    return logged.get(n);
-  }
-
   /**
    * Return all captured {@link LogData}s.
    */
@@ -91,11 +86,6 @@ public final class FakeLoggerBackend extends LoggerBackend {
   /** Asserts about the {@code Nth} logged entry. */
   public LogDataSubject assertLogged(int n) {
     return LogDataSubject.assertThat(logged.get(n));
-  }
-
-  /** Asserts about the most recent logged entry. */
-  public LogDataSubject assertLastLogged() {
-    return assertLogged(logged.size() - 1);
   }
 
   @Override public String getLoggerName() {
