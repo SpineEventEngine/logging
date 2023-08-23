@@ -26,13 +26,14 @@ import java.util.List;
 import java.util.logging.Level;
 
 /**
- * A logger backend which captures all {@code LogData} instances logged to it. This class is
- * mutable and not thread safe.
+ * A logger backend, which captures all {@code LogData} instances logged to it.
+ *
+ * <p>This class is mutable and not thread safe.
  */
 public final class FakeLoggerBackend extends LoggerBackend {
   private final String name;
   private Level minLevel = Level.INFO;
-  private final List<LogData> logged = new ArrayList<LogData>();
+  private final List<LogData> logged = new ArrayList<>();
   private final List<LogData> unmodifiableLogged = unmodifiableList(logged);
 
   /**
@@ -47,7 +48,7 @@ public final class FakeLoggerBackend extends LoggerBackend {
    * Returns a fake backend with the given name. Use this constructor only if your tests care about
    * the backend's name (which in general, they shouldn't).
    */
-  public FakeLoggerBackend(String name) {
+  private FakeLoggerBackend(String name) {
     this.name = checkNotNull(name, "name");
   }
 
@@ -84,7 +85,7 @@ public final class FakeLoggerBackend extends LoggerBackend {
   }
 
   /** Asserts about the {@code Nth} logged entry. */
-  public LogDataSubject assertLogged(int n) {
+  LogDataSubject assertLogged(int n) {
     return LogDataSubject.assertThat(logged.get(n));
   }
 
