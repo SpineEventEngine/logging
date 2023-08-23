@@ -215,7 +215,7 @@ internal class LogContextSpec {
     fun `log once per the given number of invocations`() {
         val backend = FakeLoggerBackend()
         val logger = TestLogger.create(backend)
-        val startNanos = MILLISECONDS.toNanos(currentTimeMillis())
+        val startNanos = currentTimeNanos()
 
         // Logging occurs for counts: 0, 5, 10 (timestamp is not important).
         for ((counter, millis) in (0..1000L step 100).withIndex()) {
@@ -244,7 +244,7 @@ internal class LogContextSpec {
     fun `log with likelihood 1 in 'n'`() {
         val backend = FakeLoggerBackend()
         val logger = TestLogger.create(backend)
-        val startNanos = MILLISECONDS.toNanos(currentTimeMillis())
+        val startNanos = currentTimeNanos()
 
         // Logging occurs randomly 1-in-5 times over 1000 log statements.
         for ((counter, millis) in (0..1000L).withIndex()) {
@@ -284,7 +284,7 @@ internal class LogContextSpec {
     fun `log at most once per the specified time period`() {
         val backend = FakeLoggerBackend()
         val logger = TestLogger.create(backend)
-        val startNanos = MILLISECONDS.toNanos(currentTimeMillis())
+        val startNanos = currentTimeNanos()
 
         // Logging occurs at: +0ms, +2400ms, +4800ms.
         // Note it will not occur at 4200ms, which is the first logging attempt after the
@@ -323,7 +323,7 @@ internal class LogContextSpec {
         fun `log with a higher invocation rate`() {
             val backend = FakeLoggerBackend()
             val logger = TestLogger.create(backend)
-            val startNanos = MILLISECONDS.toNanos(currentTimeMillis())
+            val startNanos = currentTimeNanos()
 
             // 10 logs per second over 6 seconds.
             for ((counter, millis) in (0..6000L step 100).withIndex()) {
@@ -348,7 +348,7 @@ internal class LogContextSpec {
         fun `log with a lower invocation rate`() {
             val backend = FakeLoggerBackend()
             val logger = TestLogger.create(backend)
-            val startNanos = MILLISECONDS.toNanos(currentTimeMillis())
+            val startNanos = currentTimeNanos()
 
             // 10 logs per second over 6 seconds.
             for ((counter, millis) in (0..6000L step 100).withIndex()) {
@@ -383,7 +383,7 @@ internal class LogContextSpec {
             // Logs for both types should appear.
             // Even though the 2nd log is within the rate limit period.
             // NOTE: It is important this is tested on a single log statement.
-            var nowNanos = MILLISECONDS.toNanos(currentTimeMillis())
+            var nowNanos = currentTimeNanos()
             listOf(
                 IllegalArgumentException(),
                 NullPointerException(),
@@ -428,7 +428,7 @@ internal class LogContextSpec {
             // Logs for both types should appear.
             // Even though the 2nd log is within the rate limit period.
             // NOTE: It is important this is tested on a single log statement.
-            var nowNanos = MILLISECONDS.toNanos(currentTimeMillis())
+            var nowNanos = currentTimeNanos()
             listOf(
                 LogType.FOO,
                 LogType.FOO,
@@ -467,7 +467,7 @@ internal class LogContextSpec {
             // so we fake it. The `ScopedLoggingContext` behavior is well tested elsewhere.
             // Only tests should ever create “immediate providers” like this
             // as it doesn't make sense otherwise.
-            var nowNanos = MILLISECONDS.toNanos(currentTimeMillis())
+            var nowNanos = currentTimeNanos()
             val fooScope = LoggingScope.create("foo")
             val barScope = LoggingScope.create("bar")
             val foo = LoggingScopeProvider { fooScope }
@@ -556,7 +556,7 @@ internal class LogContextSpec {
             val logger = TestLogger.create(backend)
             val logSite = FakeLogSite.create("com.example.MyClass", "atMostEvery", 123, null)
 
-            var nowNanos = MILLISECONDS.toNanos(currentTimeMillis())
+            var nowNanos = currentTimeNanos()
             logger.at(INFO, nowNanos)
                 .atMostEvery(1, SECONDS)
                 .withInjectedLogSite(logSite) // Note that the log site is passed explicitly.
@@ -990,6 +990,8 @@ private fun callerInfoFollowingLine(): StackTraceElement {
         caller.lineNumber + 1
     )
 }
+
+private fun currentTimeNanos(): Long = MILLISECONDS.toNanos(currentTimeMillis())
 
 private enum class LogType {
     FOO,
