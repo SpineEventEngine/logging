@@ -43,7 +43,7 @@ import org.junit.jupiter.api.Test
 internal class JvmLoggingFactorySpec {
 
     @Test
-    fun `provide a logger for enclosing class`() {
+    fun `provide a logger for the enclosing class`() {
         val logger = LoggingFactory.forEnclosingClass()
         val message = "expected message"
         val output = tapConsole {
