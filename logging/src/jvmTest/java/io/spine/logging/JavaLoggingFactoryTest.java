@@ -56,4 +56,18 @@ class JavaLoggingFactoryTest {
         var factoryClassName = LoggingFactory.class.getSimpleName();
         assertThat(output).doesNotContain(factoryClassName);
     }
+
+    @Test
+    @DisplayName("is it using a call site")
+    void isItUsingCallSite() {
+        var message = "another expected message";
+        var utilityLogger = LoggingUtility.logger();
+        var output = tapConsole(() -> {
+            utilityLogger.atInfo().log(() -> message);
+            return Unit.INSTANCE;
+        });
+
+        var testClassName = getClass().getSimpleName();
+        assertThat(output).doesNotContain(testClassName);
+    }
 }

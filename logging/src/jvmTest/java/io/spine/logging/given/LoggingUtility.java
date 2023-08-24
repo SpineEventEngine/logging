@@ -49,4 +49,11 @@ public final class LoggingUtility {
     public static void logFromStaticMethod(String message) {
         logger.atInfo().log(() -> message);
     }
+
+    /**
+     * Returns a logger used by this utility.
+     */
+    public static Logger<?> logger() {
+        return logger;
+    }
 }
