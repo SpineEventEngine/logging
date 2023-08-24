@@ -60,7 +60,7 @@ class JavaLoggingFactoryTest {
 
     @Test
     @DisplayName("provide different loggers for different enclosing classes")
-    void isItUsingCallSite() {
+    void provideDifferentLoggerForDifferentEnclosingClasses() {
         var utilityLogger = LoggingUtility.logger();
         var anotherUtilityLogger = AnotherLoggingUtility.logger();
         assertThat(utilityLogger).isNotEqualTo(anotherUtilityLogger);
