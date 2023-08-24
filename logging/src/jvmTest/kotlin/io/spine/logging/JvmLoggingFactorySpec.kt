@@ -35,8 +35,8 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
-@DisplayName("`JvmLoggerFactory` should")
-internal class JvmLoggerFactorySpec {
+@DisplayName("`JvmLoggingFactory` should")
+internal class JvmLoggingFactorySpec {
 
     @Nested
     inner class `obtain a logging domain for` {
