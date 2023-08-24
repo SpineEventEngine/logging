@@ -26,6 +26,7 @@
 
 package io.spine.logging;
 
+import io.spine.logging.given.AnotherLoggingUtility;
 import io.spine.logging.given.LoggingUtility;
 import kotlin.Unit;
 import org.junit.jupiter.api.DisplayName;
@@ -58,16 +59,10 @@ class JavaLoggingFactoryTest {
     }
 
     @Test
-    @DisplayName("is it using a call site")
+    @DisplayName("provide different loggers for different enclosing classes")
     void isItUsingCallSite() {
-        var message = "another expected message";
         var utilityLogger = LoggingUtility.logger();
-        var output = tapConsole(() -> {
-            utilityLogger.atInfo().log(() -> message);
-            return Unit.INSTANCE;
-        });
-
-        var testClassName = getClass().getSimpleName();
-        assertThat(output).doesNotContain(testClassName);
+        var anotherUtilityLogger = AnotherLoggingUtility.logger();
+        assertThat(utilityLogger).isNotEqualTo(anotherUtilityLogger);
     }
 }

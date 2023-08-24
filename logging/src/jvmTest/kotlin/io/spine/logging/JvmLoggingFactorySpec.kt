@@ -27,6 +27,7 @@
 package io.spine.logging
 
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.LoggingFactory.loggingDomainOf
@@ -59,6 +60,13 @@ internal class JvmLoggingFactorySpec {
         firstLogger shouldBeSameInstanceAs secondLogger
     }
 
+    @Test
+    fun `provide distinct loggers for different classes`() {
+        val loggerA = ClassA().logger
+        val loggerB = ClassB().logger
+        loggerA shouldNotBe loggerB
+    }
+
     @Nested
     inner class `obtain a logging domain for` {
 
@@ -80,4 +88,12 @@ internal class JvmLoggingFactorySpec {
             loggingDomain.name shouldBe "OnPackage"
         }
     }
+}
+
+private class ClassA {
+    val logger = LoggingFactory.forEnclosingClass()
+}
+
+private class ClassB {
+    val logger = LoggingFactory.forEnclosingClass()
 }
