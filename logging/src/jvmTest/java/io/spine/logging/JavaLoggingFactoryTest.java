@@ -45,10 +45,15 @@ class JavaLoggingFactoryTest {
             LoggingUtility.logFromStaticMethod(message);
             return Unit.INSTANCE;
         });
+
         var utilityName = LoggingUtility.class.getSimpleName();
-        var testClassName = getClass().getSimpleName();
         assertThat(output).contains(utilityName);
         assertThat(output).contains(message);
+
+        var testClassName = getClass().getSimpleName();
         assertThat(output).doesNotContain(testClassName);
+
+        var factoryClassName = LoggingFactory.class.getSimpleName();
+        assertThat(output).doesNotContain(factoryClassName);
     }
 }
