@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging
+package io.spine.logging.testutil
 
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
@@ -34,8 +34,8 @@ import java.io.PrintStream
  *
  * @see TapConsole
  */
-internal fun tapConsole(action: () -> Unit): String {
-    val tap = StringOutputStream(4096)
+public fun tapConsole(action: () -> Unit): String {
+    val tap = StringOutputStream()
     TapConsole.executeWithStream(tap, action)
     return tap.output()
 }
@@ -111,7 +111,7 @@ private class RedirectingPrintStream(initial: PrintStream): PrintStream(initial)
  *
  * @param size the initial size of the underlying byte array, which grows as needed.
  */
-private class StringOutputStream(size: Int): PrintStream(ByteArrayOutputStream(size), true) {
+private class StringOutputStream(size: Int = 4096): PrintStream(ByteArrayOutputStream(size), true) {
 
     /**
      * Flushes the underlying stream and returns the text written to it.

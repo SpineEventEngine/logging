@@ -29,11 +29,11 @@ package com.google.common.flogger.context
 import com.google.common.flogger.MetadataKey
 import com.google.common.flogger.MetadataKey.repeated
 import com.google.common.flogger.MetadataKey.single
-import com.google.common.flogger.context.given.shouldBeEmpty
-import com.google.common.flogger.context.given.shouldContainInOrder
-import com.google.common.flogger.context.given.shouldHaveFirstValue
-import com.google.common.flogger.context.given.shouldHaveSize
-import com.google.common.flogger.context.given.shouldNotContain
+import com.google.common.flogger.given.shouldBeEmpty
+import com.google.common.flogger.given.shouldContainInOrder
+import com.google.common.flogger.given.shouldHaveFirstValue
+import com.google.common.flogger.given.shouldHaveSize
+import com.google.common.flogger.given.shouldNotContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested

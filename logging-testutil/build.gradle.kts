@@ -24,38 +24,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging;
-
-import kotlin.Unit;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import static com.google.common.truth.Truth.assertThat;
-import static io.spine.logging.testutil.TapConsoleKt.tapConsole;
-
-@DisplayName("In Java, `WithLogging` should")
-class JavaWithLoggingTest {
-
-    private static final String msg = "JavaWithLoggingTest test message";
-
-    @Test
-    @DisplayName("have `logger()` method without `get` prefix")
-    void haveLoggerGetterWithoutPrefix() {
-        var loggingClass = new LoggingClass();
-        var output = tapConsole(() -> {
-            loggingClass.myMethod(msg);
-            return Unit.INSTANCE;
-        });
-
-        assertThat(output).contains(msg);
-        assertThat(output).contains(LoggingClass.class.getSimpleName());
-    }
-
-    private static class LoggingClass implements WithLogging {
-        private void myMethod(String message) {
-            logger().atWarning().log(() -> message);
-        }
-    }
+plugins {
+    `jvm-module`
 }
-
-

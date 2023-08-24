@@ -24,38 +24,42 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging;
+package com.google.common.flogger.given
 
-import kotlin.Unit;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.google.common.flogger.backend.LogData
+import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.shouldBe
 
-import static com.google.common.truth.Truth.assertThat;
-import static io.spine.logging.testutil.TapConsoleKt.tapConsole;
+/**
+ * This file contains Kotest-like assertions for [LogData].
+ */
 
-@DisplayName("In Java, `WithLogging` should")
-class JavaWithLoggingTest {
-
-    private static final String msg = "JavaWithLoggingTest test message";
-
-    @Test
-    @DisplayName("have `logger()` method without `get` prefix")
-    void haveLoggerGetterWithoutPrefix() {
-        var loggingClass = new LoggingClass();
-        var output = tapConsole(() -> {
-            loggingClass.myMethod(msg);
-            return Unit.INSTANCE;
-        });
-
-        assertThat(output).contains(msg);
-        assertThat(output).contains(LoggingClass.class.getSimpleName());
-    }
-
-    private static class LoggingClass implements WithLogging {
-        private void myMethod(String message) {
-            logger().atWarning().log(() -> message);
-        }
+/**
+ * Asserts that this [LogData] has a given [value] as a literal
+ * or template message.
+ *
+ * The message is literal when it is passed to the logger without
+ * any formatting arguments, otherwise it is part of [LogData.getTemplateContext].
+ */
+internal infix fun LogData.shouldHaveMessage(value: String?) {
+    if (templateContext != null) {
+        templateContext.message shouldBe value
+    } else {
+        literalArgument shouldBe value
     }
 }
 
-
+/**
+ * Asserts that this [LogData] has given [args], which were passed
+ * for message formatting.
+ *
+ * This method will NOT fail if the passed [args] is empty as long as
+ * this [LogData] doesn't have any arguments too.
+ */
+internal fun LogData.shouldHaveArguments(vararg args: Any?) {
+    if (templateContext == null && args.isEmpty()) {
+        return
+    } else {
+        arguments.shouldContainExactly(*args)
+    }
+}

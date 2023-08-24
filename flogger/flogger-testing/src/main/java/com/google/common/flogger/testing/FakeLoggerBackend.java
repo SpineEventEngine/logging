@@ -17,21 +17,25 @@
 package com.google.common.flogger.testing;
 
 import static com.google.common.flogger.util.Checks.checkNotNull;
+import static java.util.Collections.unmodifiableList;
 
 import com.google.common.flogger.backend.LogData;
 import com.google.common.flogger.backend.LoggerBackend;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
 /**
- * A logger backend which captures all {@code LogData} instances logged to it. This class is
- * mutable and not thread safe.
+ * A logger backend, which captures all {@code LogData} instances logged to it.
+ *
+ * <p>This class is mutable and not thread safe.
  */
 public final class FakeLoggerBackend extends LoggerBackend {
   private final String name;
   private Level minLevel = Level.INFO;
-  private final List<LogData> logged = new ArrayList<LogData>();
+  private final List<LogData> logged = new ArrayList<>();
+  private final List<LogData> unmodifiableLogged = unmodifiableList(logged);
 
   /**
    * Returns a fake backend with a fixed name. Use this constructor by default unless your tests
@@ -45,33 +49,65 @@ public final class FakeLoggerBackend extends LoggerBackend {
    * Returns a fake backend with the given name. Use this constructor only if your tests care about
    * the backend's name (which in general, they shouldn't).
    */
-  public FakeLoggerBackend(String name) {
+  private FakeLoggerBackend(String name) {
     this.name = checkNotNull(name, "name");
   }
 
-  /** Sets the current level of this backend. */
+  /**
+   * Sets the current level of this backend.
+   */
   public void setLevel(Level level) {
     this.minLevel = checkNotNull(level, "level");
   }
 
-  /** Returns the number of {@link LogData} entries captured by this backend. */
+  /**
+   *  Returns the number of {@link LogData} entries captured by this backend.
+   */
   public int getLoggedCount() {
     return logged.size();
   }
 
-  /** Returns the {@code Nth} {@link LogData} entry captured by this backend. */
-  public LogData getLogged(int n) {
-    return logged.get(n);
+  /**
+   * Returns all captured {@link LogData}s.
+   */
+  public List<LogData> getLogged() {
+    return unmodifiableLogged;
   }
 
-  /** Asserts about the {@code Nth} logged entry. */
-  public LogDataSubject assertLogged(int n) {
+  /**
+   * Returns the last {@link LogData} entry captured by this backend.
+   *
+   * @throws IllegalStateException when the backend hasn't captured any log entry
+   */
+  public LogData getLastLogged() {
+    if (logged.isEmpty()) {
+      throwNoEntries();
+    }
+    var index = logged.size() - 1;
+    return logged.get(index);
+  }
+
+  /**
+   * Returns the first {@link LogData} entry captured by this backend.
+   *
+   * @throws IllegalStateException when the backend hasn't captured any log entry
+   */
+  public LogData getFirstLogged() {
+    if (logged.isEmpty()) {
+      throwNoEntries();
+    }
+    return logged.get(0);
+  }
+
+  private static void throwNoEntries() {
+    throw new IllegalStateException("Fake backend has not captured any log data.");
+  }
+
+  /**
+   * Asserts about the {@code Nth} logged entry.
+   */
+  LogDataSubject assertLogged(int n) {
     return LogDataSubject.assertThat(logged.get(n));
-  }
-
-  /** Asserts about the most recent logged entry. */
-  public LogDataSubject assertLastLogged() {
-    return assertLogged(logged.size() - 1);
   }
 
   @Override public String getLoggerName() {
