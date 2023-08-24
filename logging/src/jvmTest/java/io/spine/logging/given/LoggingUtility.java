@@ -24,4 +24,29 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-val versionToPublish: String by extra("2.0.0-SNAPSHOT.209")
+package io.spine.logging.given;
+
+import io.spine.logging.Logger;
+import io.spine.logging.LoggingFactory;
+
+/**
+ * A test dummy utility class that gets a logger using
+ * {@link LoggingFactory#forEnclosingClass() LoggingFactory.forEnclosingClass()}.
+ */
+public final class LoggingUtility {
+
+    private static final Logger<?> logger = LoggingFactory.forEnclosingClass();
+
+    /**
+     * Prevents instantiation of this utility class.
+     */
+    private LoggingUtility() {
+    }
+
+    /**
+     * Logs the given message on behalf of this utility.
+     */
+    public static void logFromStaticMethod(String message) {
+        logger.atInfo().log(() -> message);
+    }
+}

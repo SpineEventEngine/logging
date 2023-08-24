@@ -24,39 +24,31 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging
+package io.spine.logging;
 
-import io.kotest.matchers.shouldBe
-import io.spine.logging.LoggingFactory.loggingDomainOf
-import io.spine.logging.given.domain.AnnotatedClass
-import io.spine.logging.given.domain.IndirectlyAnnotatedClass
-import io.spine.logging.given.domain.nested.NonAnnotatedNestedPackageClass
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
+import io.spine.logging.given.LoggingUtility;
+import kotlin.Unit;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
-@DisplayName("`JvmLoggerFactory` should")
-internal class JvmLoggerFactorySpec {
+import static com.google.common.truth.Truth.assertThat;
+import static io.spine.logging.testutil.TapConsoleKt.tapConsole;
 
-    @Nested
-    inner class `obtain a logging domain for` {
+@DisplayName("In Java, `LoggingFactory` should")
+class JavaLoggingFactoryTest {
 
-        @Test
-        fun `directly annotated class`() {
-            val loggingDomain = loggingDomainOf(AnnotatedClass::class)
-            loggingDomain.name shouldBe "OnClass"
-        }
-
-        @Test
-        fun `a class with annotated package`() {
-            val loggingDomain = loggingDomainOf(IndirectlyAnnotatedClass::class)
-            loggingDomain.name shouldBe "OnPackage"
-        }
-
-        @Test
-        fun `a class in a nested non-annotated package`() {
-            val loggingDomain = loggingDomainOf(NonAnnotatedNestedPackageClass::class)
-            loggingDomain.name shouldBe "OnPackage"
-        }
+    @Test
+    @DisplayName("provide a logger for enclosing class from a static context")
+    void provideLoggerForEnclosingClassFromStaticContext() {
+        var message = "expected message";
+        var output = tapConsole(() -> {
+            LoggingUtility.logFromStaticMethod(message);
+            return Unit.INSTANCE;
+        });
+        var utilityName = LoggingUtility.class.getSimpleName();
+        var testClassName = getClass().getSimpleName();
+        assertThat(output).contains(utilityName);
+        assertThat(output).contains(message);
+        assertThat(output).doesNotContain(testClassName);
     }
 }

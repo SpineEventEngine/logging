@@ -88,12 +88,14 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
     }
 
     private fun createForClass(cls: Class<*>): JvmLogger {
-        val impl = createFluentLogger(cls)
-        return JvmLogger(cls.kotlin, impl)
+        val floggerBackend = Platform.getBackend(cls.name)
+        val flogger = FluentLogger2(floggerBackend)
+        // As for now, `JvmLogger` just delegates actual work to Flogger.
+        return JvmLogger(cls.kotlin, flogger)
     }
 
-    private fun createFluentLogger(cls: Class<*>): FluentLogger2 {
-        val backend = Platform.getBackend(cls.name)
-        return FluentLogger2(backend)
+    @JvmStatic
+    public actual fun <API : LoggingApi<API>> forEnclosingClass(): Logger<API> {
+        return loggerFor(this::class)
     }
 }

@@ -53,7 +53,7 @@ import org.junit.jupiter.api.assertThrows
 @DisplayName("`JvmLogger` should")
 internal class JvmLoggerSpec {
 
-    private val logger = LoggingFactory.loggerFor(this::class)
+    private val logger = LoggingFactory.forEnclosingClass()
     private val message = "logging test message"
 
     @Test

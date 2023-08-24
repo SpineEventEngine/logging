@@ -34,6 +34,13 @@ import kotlin.reflect.KClass
 public expect object LoggingFactory {
 
     /**
+     * Obtains the logger for the enclosing class.
+     *
+     * Implementation should provide the same logger instance for the same class.
+     */
+    public fun <API: LoggingApi<API>> forEnclosingClass(): Logger<API>
+
+    /**
      * Obtains the logger for the given class.
      *
      * Implementation should provide the same logger instance for the same class.
