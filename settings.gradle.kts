@@ -52,7 +52,6 @@ includeTest(
 
 includeFlogger(
     "flogger-api",
-    "flogger-api-tests",
     "flogger-testing",
     "flogger-platform-generator",
     "flogger-system-backend",

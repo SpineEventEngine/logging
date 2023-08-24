@@ -24,18 +24,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import BuildSettings.javaVersion
-import io.spine.internal.dependency.CheckerFramework
-import io.spine.internal.dependency.ErrorProne
-import io.spine.internal.dependency.JUnit
-import io.spine.internal.dependency.Truth
-import io.spine.internal.gradle.report.license.LicenseReporter
+import net.ltgt.gradle.errorprone.errorprone
 
 plugins {
-    `java-library`
+    `jvm-module`
 }
-
-LicenseReporter.generateReportIn(project)
 
 dependencies {
     implementation(
@@ -44,22 +37,21 @@ dependencies {
             configuration = "generatedPlatformProvider"
         )
     )
-    implementation(CheckerFramework.annotations)
-    ErrorProne.annotations.forEach { implementation(it) }
-
     testImplementation(project(":flogger-testing"))
-    testImplementation(JUnit.legacy)
-    testImplementation("org.mockito:mockito-core:4.11.0")
-    Truth.libs.forEach { testImplementation(it) }
+    testImplementation(project(":logging-testutil"))
 }
 
 java {
-    toolchain.languageVersion.set(javaVersion)
-}
 
-tasks {
-    named<Javadoc>("javadoc") {
-        // Produces a lot of formatting/linkage errors.
-        enabled = false
+    /**
+     * Disables Java linters until main sources are migrated to Kotlin.
+     *
+     * As for now, they produce a lot of errors/warnings to original Flogger code,
+     * failing the build.
+     */
+    tasks {
+        named("checkstyleMain") { enabled = false }
+        named("pmdMain") { enabled = false }
+        compileJava { options.errorprone.isEnabled.set(false) }
     }
 }
