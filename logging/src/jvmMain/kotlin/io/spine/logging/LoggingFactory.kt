@@ -96,4 +96,9 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
         val backend = Platform.getBackend(cls.name)
         return FluentLogger2(backend)
     }
+
+    @JvmStatic
+    public actual fun <API : LoggingApi<API>> forEnclosingClass(): Logger<API> {
+        return loggerFor(this::class)
+    }
 }
