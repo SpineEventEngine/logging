@@ -1,6 +1,6 @@
 
 
-# Dependencies of `io.spine:spine-fixtures:2.0.0-SNAPSHOT.208`
+# Dependencies of `io.spine:spine-fixtures:2.0.0-SNAPSHOT.209`
 
 ## Runtime
 1.  **Group** : com.github.ajalt. **Name** : colormath. **Version** : 1.2.0.
@@ -510,10 +510,6 @@
      * **Project URL:** [https://checkerframework.org/](https://checkerframework.org/)
      * **License:** [The MIT License](http://opensource.org/licenses/MIT)
 
-1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.32.
-     * **Project URL:** [https://freemarker.apache.org/](https://freemarker.apache.org/)
-     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
 1.  **Group** : org.hamcrest. **Name** : hamcrest. **Version** : 2.2.
      * **Project URL:** [http://hamcrest.org/JavaHamcrest/](http://hamcrest.org/JavaHamcrest/)
      * **License:** [BSD License 3](http://opensource.org/licenses/BSD-3-Clause)
@@ -522,21 +518,21 @@
      * **Project URL:** [http://hamcrest.org/JavaHamcrest/](http://hamcrest.org/JavaHamcrest/)
      * **License:** [BSD License 3](http://opensource.org/licenses/BSD-3-Clause)
 
+1.  **Group** : org.jacoco. **Name** : org.jacoco.agent. **Version** : 0.8.10.
+     * **License:** [Eclipse Public License 2.0](https://www.eclipse.org/legal/epl-2.0/)
+
+1.  **Group** : org.jacoco. **Name** : org.jacoco.ant. **Version** : 0.8.10.
+     * **License:** [Eclipse Public License 2.0](https://www.eclipse.org/legal/epl-2.0/)
+
+1.  **Group** : org.jacoco. **Name** : org.jacoco.core. **Version** : 0.8.10.
+     * **License:** [Eclipse Public License 2.0](https://www.eclipse.org/legal/epl-2.0/)
+
+1.  **Group** : org.jacoco. **Name** : org.jacoco.report. **Version** : 0.8.10.
+     * **License:** [Eclipse Public License 2.0](https://www.eclipse.org/legal/epl-2.0/)
+
 1.  **Group** : org.jetbrains. **Name** : annotations. **Version** : 23.0.0.
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.jetbrains.intellij.deps. **Name** : coverage-report. **Version** : 1.0.21.
-     * **Project URL:** [https://github.com/JetBrains/coverage-report](https://github.com/JetBrains/coverage-report)
-     * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
-
-1.  **Group** : org.jetbrains.intellij.deps. **Name** : intellij-coverage-agent. **Version** : 1.0.724.
-     * **Project URL:** [https://github.com/JetBrains/intellij-coverage](https://github.com/JetBrains/intellij-coverage)
-     * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
-
-1.  **Group** : org.jetbrains.intellij.deps. **Name** : intellij-coverage-reporter. **Version** : 1.0.724.
-     * **Project URL:** [https://github.com/JetBrains/intellij-coverage](https://github.com/JetBrains/intellij-coverage)
-     * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 
 1.  **Group** : org.jetbrains.intellij.deps. **Name** : trove4j. **Version** : 1.0.20200330.
      * **Project URL:** [https://github.com/JetBrains/intellij-deps-trove4j](https://github.com/JetBrains/intellij-deps-trove4j)
@@ -680,6 +676,16 @@
      * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.ow2.asm. **Name** : asm-commons. **Version** : 9.5.
+     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
+     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.ow2.asm. **Name** : asm-tree. **Version** : 9.5.
+     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
+     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.snakeyaml. **Name** : snakeyaml-engine. **Version** : 2.6.
      * **Project URL:** [https://bitbucket.org/snakeyaml/snakeyaml-engine](https://bitbucket.org/snakeyaml/snakeyaml-engine)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -687,12 +693,12 @@
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Aug 24 13:46:34 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Aug 24 16:57:12 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-flogger-api:2.0.0-SNAPSHOT.208`
+# Dependencies of `io.spine:spine-flogger-api:2.0.0-SNAPSHOT.209`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -1457,12 +1463,12 @@ This report was generated on **Thu Aug 24 13:46:34 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Aug 24 13:46:37 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Aug 24 16:57:13 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-flogger-grpc-context:2.0.0-SNAPSHOT.208`
+# Dependencies of `io.spine:spine-flogger-grpc-context:2.0.0-SNAPSHOT.209`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -1648,12 +1654,12 @@ This report was generated on **Thu Aug 24 13:46:37 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Aug 24 13:46:37 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Aug 24 16:57:13 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-flogger-log4j2-backend:2.0.0-SNAPSHOT.208`
+# Dependencies of `io.spine:spine-flogger-log4j2-backend:2.0.0-SNAPSHOT.209`
 
 ## Runtime
 1.  **Group** : com.google.auto.value. **Name** : auto-value-annotations. **Version** : 1.10.2.
@@ -1884,12 +1890,12 @@ This report was generated on **Thu Aug 24 13:46:37 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Aug 24 13:46:37 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Aug 24 16:57:13 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-flogger-platform-generator:2.0.0-SNAPSHOT.208`
+# Dependencies of `io.spine:spine-flogger-platform-generator:2.0.0-SNAPSHOT.209`
 
 ## Runtime
 1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.2.
@@ -1906,12 +1912,12 @@ This report was generated on **Thu Aug 24 13:46:37 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Aug 24 13:46:37 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Aug 24 16:57:13 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-flogger-system-backend:2.0.0-SNAPSHOT.208`
+# Dependencies of `io.spine:spine-flogger-system-backend:2.0.0-SNAPSHOT.209`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -2114,12 +2120,12 @@ This report was generated on **Thu Aug 24 13:46:37 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Aug 24 13:46:37 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Aug 24 16:57:14 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-flogger-testing:2.0.0-SNAPSHOT.208`
+# Dependencies of `io.spine:spine-flogger-testing:2.0.0-SNAPSHOT.209`
 
 ## Runtime
 1.  **Group** : com.google.auto.value. **Name** : auto-value-annotations. **Version** : 1.10.2.
@@ -2330,12 +2336,12 @@ This report was generated on **Thu Aug 24 13:46:37 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Aug 24 13:46:38 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Aug 24 16:57:14 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-jvm-log4j-backend-our-context:2.0.0-SNAPSHOT.208`
+# Dependencies of `io.spine:spine-jvm-log4j-backend-our-context:2.0.0-SNAPSHOT.209`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -3112,12 +3118,12 @@ This report was generated on **Thu Aug 24 13:46:38 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Aug 24 13:46:38 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Aug 24 16:57:16 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-jvm-our-backend-grpc-context:2.0.0-SNAPSHOT.208`
+# Dependencies of `io.spine:spine-jvm-our-backend-grpc-context:2.0.0-SNAPSHOT.209`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -3890,12 +3896,12 @@ This report was generated on **Thu Aug 24 13:46:38 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Aug 24 13:46:39 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Aug 24 16:57:17 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-jvm-our-backend-our-context:2.0.0-SNAPSHOT.208`
+# Dependencies of `io.spine:spine-jvm-our-backend-our-context:2.0.0-SNAPSHOT.209`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -4664,12 +4670,12 @@ This report was generated on **Thu Aug 24 13:46:39 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Aug 24 13:46:40 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Aug 24 16:57:18 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-jvm-slf4j-jdk14-backend-our-context:2.0.0-SNAPSHOT.208`
+# Dependencies of `io.spine:spine-jvm-slf4j-jdk14-backend-our-context:2.0.0-SNAPSHOT.209`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -5450,12 +5456,12 @@ This report was generated on **Thu Aug 24 13:46:40 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Aug 24 13:46:41 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Aug 24 16:57:19 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-jvm-slf4j-reload4j-backend-our-context:2.0.0-SNAPSHOT.208`
+# Dependencies of `io.spine:spine-jvm-slf4j-reload4j-backend-our-context:2.0.0-SNAPSHOT.209`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -6240,12 +6246,12 @@ This report was generated on **Thu Aug 24 13:46:41 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Aug 24 13:46:42 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Aug 24 16:57:20 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging:2.0.0-SNAPSHOT.208`
+# Dependencies of `io.spine:spine-logging:2.0.0-SNAPSHOT.209`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -6903,12 +6909,12 @@ This report was generated on **Thu Aug 24 13:46:42 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Aug 24 13:46:43 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Aug 24 16:57:21 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-backend:2.0.0-SNAPSHOT.208`
+# Dependencies of `io.spine:spine-logging-backend:2.0.0-SNAPSHOT.209`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -7681,12 +7687,12 @@ This report was generated on **Thu Aug 24 13:46:43 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Aug 24 13:46:44 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Aug 24 16:57:21 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-context:2.0.0-SNAPSHOT.208`
+# Dependencies of `io.spine:spine-logging-context:2.0.0-SNAPSHOT.209`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -8455,12 +8461,12 @@ This report was generated on **Thu Aug 24 13:46:44 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Aug 24 13:46:44 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Aug 24 16:57:22 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-smoke-test:2.0.0-SNAPSHOT.208`
+# Dependencies of `io.spine:spine-logging-smoke-test:2.0.0-SNAPSHOT.209`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -9283,12 +9289,12 @@ This report was generated on **Thu Aug 24 13:46:44 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Aug 24 13:46:45 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Aug 24 16:57:23 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-testutil:2.0.0-SNAPSHOT.208`
+# Dependencies of `io.spine:spine-logging-testutil:2.0.0-SNAPSHOT.209`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -10053,4 +10059,4 @@ This report was generated on **Thu Aug 24 13:46:45 EEST 2023** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Aug 24 13:46:46 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Thu Aug 24 16:57:24 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
