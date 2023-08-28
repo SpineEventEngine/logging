@@ -28,41 +28,50 @@ package io.spine.logging;
 
 import io.spine.logging.given.AnotherLoggingUtility;
 import io.spine.logging.given.LoggingUtility;
-import kotlin.Unit;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static com.google.common.truth.Truth.assertThat;
-import static io.spine.logging.testutil.TapConsoleKt.tapConsole;
+import static kotlin.jvm.JvmClassMappingKt.getKotlinClass;
 
 @DisplayName("In Java, `LoggingFactory` should")
 class JavaLoggingFactoryTest {
 
-    @Test
-    @DisplayName("provide a logger for enclosing class from a static context")
-    void provideLoggerForEnclosingClassFromStaticContext() {
-        var message = "expected message";
-        var output = tapConsole(() -> {
-            LoggingUtility.logFromStaticMethod(message);
-            return Unit.INSTANCE;
-        });
+    @Nested
+    @DisplayName("in static context")
+    class InStaticContext {
 
-        var utilityName = LoggingUtility.class.getSimpleName();
-        assertThat(output).contains(utilityName);
-        assertThat(output).contains(message);
+        /**
+         * Tests that the logger was created for the expected outer class.
+         *
+         * <p>This test uses the protected {@link Logger#getCls() Logger.cls} property
+         * to assert the outer class. It is because Java can access {@code protected}
+         * members from other classes in the same package (while Kotlin doesn't),
+         * so Java classes have broader access to the code.
+         */
+        @Test
+        @DisplayName("provide a logger for enclosing class from a static context")
+        void provideLoggerForEnclosingClass() {
+            var logger = LoggingUtility.logger();
+            var kClass = getKotlinClass(LoggingUtility.class);
+            assertThat(logger.getCls()).isSameInstanceAs(kClass);
+        }
 
-        var testClassName = getClass().getSimpleName();
-        assertThat(output).doesNotContain(testClassName);
+        @Test
+        @DisplayName("provide the same logger for the same enclosing class")
+        void provideSameLoggerForSameEnclosingClasses() {
+            var logger1 = LoggingFactory.forEnclosingClass();
+            var logger2 = LoggingFactory.forEnclosingClass();
+            assertThat(logger1).isSameInstanceAs(logger2);
+        }
 
-        var factoryClassName = LoggingFactory.class.getSimpleName();
-        assertThat(output).doesNotContain(factoryClassName);
-    }
-
-    @Test
-    @DisplayName("provide different loggers for different enclosing classes")
-    void provideDifferentLoggerForDifferentEnclosingClasses() {
-        var utilityLogger = LoggingUtility.logger();
-        var anotherUtilityLogger = AnotherLoggingUtility.logger();
-        assertThat(utilityLogger).isNotEqualTo(anotherUtilityLogger);
+        @Test
+        @DisplayName("provide different loggers for different enclosing classes")
+        void provideDifferentLoggerForDifferentEnclosingClasses() {
+            var utilityLogger = LoggingUtility.logger();
+            var anotherUtilityLogger = AnotherLoggingUtility.logger();
+            assertThat(utilityLogger).isNotEqualTo(anotherUtilityLogger);
+        }
     }
 }

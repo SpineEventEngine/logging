@@ -44,13 +44,6 @@ public final class LoggingUtility {
     }
 
     /**
-     * Logs the given message on behalf of this utility.
-     */
-    public static void logFromStaticMethod(String message) {
-        logger.atInfo().log(() -> message);
-    }
-
-    /**
      * Returns a logger used by this utility.
      */
     public static Logger<?> logger() {

@@ -28,30 +28,17 @@ package io.spine.logging
 
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.LoggingFactory.loggingDomainOf
 import io.spine.logging.given.domain.AnnotatedClass
 import io.spine.logging.given.domain.IndirectlyAnnotatedClass
 import io.spine.logging.given.domain.nested.NonAnnotatedNestedPackageClass
-import io.spine.logging.testutil.tapConsole
-import kotlin.reflect.jvm.jvmName
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 @DisplayName("`JvmLoggingFactory` should")
 internal class JvmLoggingFactorySpec {
-
-    @Test
-    fun `provide a logger for the enclosing class`() {
-        val logger = LoggingFactory.forEnclosingClass()
-        val message = "expected message"
-        val output = tapConsole {
-            logger.atInfo().log { message }
-        }
-        output shouldContain this::class.jvmName
-    }
 
     @Test
     fun `provide the same logger for the same enclosing class`() {
@@ -61,7 +48,7 @@ internal class JvmLoggingFactorySpec {
     }
 
     @Test
-    fun `provide distinct loggers for different classes`() {
+    fun `provide different loggers for different classes`() {
         val loggerA = ClassA().logger
         val loggerB = ClassB().logger
         loggerA shouldNotBe loggerB
