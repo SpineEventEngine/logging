@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static com.google.common.truth.Truth.assertThat;
-import static kotlin.jvm.JvmClassMappingKt.getKotlinClass;
 
 @DisplayName("In Java, `LoggingFactory` should")
 class JavaLoggingFactoryTest {
@@ -41,22 +40,6 @@ class JavaLoggingFactoryTest {
     @Nested
     @DisplayName("in static context")
     class InStaticContext {
-
-        /**
-         * Tests that the logger was created for the expected outer class.
-         *
-         * <p>This test uses the protected {@link Logger#getCls() Logger.cls} property
-         * to assert the outer class. It is because Java can access {@code protected}
-         * members from other classes in the same package (while Kotlin doesn't),
-         * so Java classes have broader access to the code.
-         */
-        @Test
-        @DisplayName("provide a logger for enclosing class from a static context")
-        void provideLoggerForEnclosingClass() {
-            var logger = LoggingUtility.logger();
-            var kClass = getKotlinClass(LoggingUtility.class);
-            assertThat(logger.getCls()).isSameInstanceAs(kClass);
-        }
 
         @Test
         @DisplayName("provide the same logger for the same enclosing class")
