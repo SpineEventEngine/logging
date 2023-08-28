@@ -96,11 +96,13 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
     }
 
     @JvmStatic
+    @Suppress("UNCHECKED_CAST") // `JvmLogger` is casted to `Logger<API>`.
     public actual fun <API : LoggingApi<API>> forEnclosingClass(): Logger<API> {
         val factoryClass = LoggingFactory::class.java
         val callerStackElement = CallerFinder.findCallerOf(factoryClass, 0)
         val callerClassName = callerStackElement!!.className
-        val callerClass = Class.forName(callerClassName).kotlin as KClass<*>
-        return loggerFor(callerClass)
+        val callerClass = Class.forName(callerClassName)
+        val result = get(callerClass) as Logger<API>
+        return result
     }
 }
