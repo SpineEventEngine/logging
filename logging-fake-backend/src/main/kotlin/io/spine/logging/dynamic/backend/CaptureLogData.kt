@@ -53,7 +53,10 @@ public inline fun captureLogData(action: () -> Unit): List<LogData> {
 
     // It is important that all log statements came to the same backend, created within
     // the given action. Otherwise, we can't say if every log data has been captured.
-    check(memoizingFactory.createdBackends.size == 1)
+    check(memoizingFactory.createdBackends.size == 1) {
+        "Zero or multiple backends were created where only one was expected. " +
+                "Created backends: ${memoizingFactory.createdBackends}."
+    }
 
     val usedBackend = memoizingFactory.createdBackends.first()
     return usedBackend.logged
