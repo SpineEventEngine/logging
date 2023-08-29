@@ -30,6 +30,13 @@ import com.google.auto.service.AutoService
 import com.google.common.flogger.backend.LoggerBackend
 import com.google.common.flogger.backend.system.BackendFactory
 
+/**
+ * Adapts [DynamicBackendFactory] to be used as a service within
+ * Java's [ServiceLoader][java.util.ServiceLoader].
+ *
+ * Each service should have a public no-args constructor to be used by the loader.
+ * Which is not a case for object declarations, as they don't have any constructors at all.
+ */
 @AutoService(BackendFactory::class)
 public class DynamicBackendFactoryService : BackendFactory() {
 
