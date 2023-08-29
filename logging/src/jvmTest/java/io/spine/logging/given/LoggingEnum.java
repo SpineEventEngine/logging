@@ -30,45 +30,19 @@ import io.spine.logging.Logger;
 import io.spine.logging.LoggingFactory;
 
 /**
- * A utility class that gets a logger using
+ * An enum class that gets a logger using
  * {@link LoggingFactory#forEnclosingClass() LoggingFactory.forEnclosingClass()}.
  */
-public final class LoggingUtility {
+public enum LoggingEnum {
+
+    ONE, TWO, THREE;
 
     private static final Logger<?> logger = LoggingFactory.forEnclosingClass();
 
     /**
-     * Prevents instantiation of this utility class.
-     */
-    private LoggingUtility() {
-    }
-
-    /**
-     * Returns a logger used by this utility.
+     * Returns a logger used by this enum.
      */
     public static Logger<?> usedLogger() {
         return logger;
-    }
-
-    /**
-     * A nested utility class that gets a logger using
-     * {@link LoggingFactory#forEnclosingClass() LoggingFactory.forEnclosingClass()}.
-     */
-    public static final class InnerUtility {
-
-        private static final Logger<?> logger = LoggingFactory.forEnclosingClass();
-
-        /**
-         * Prevents instantiation of this utility class.
-         */
-        private InnerUtility() {
-        }
-
-        /**
-         * Returns a logger used by this utility.
-         */
-        public static Logger<?> usedLogger() {
-            return logger;
-        }
     }
 }

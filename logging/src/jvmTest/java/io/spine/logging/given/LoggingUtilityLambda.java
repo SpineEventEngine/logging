@@ -29,18 +29,22 @@ package io.spine.logging.given;
 import io.spine.logging.Logger;
 import io.spine.logging.LoggingFactory;
 
-/**
- * A utility class that gets a logger using
- * {@link LoggingFactory#forEnclosingClass() LoggingFactory.forEnclosingClass()}.
- */
-public final class LoggingUtility {
+import java.util.function.Supplier;
 
-    private static final Logger<?> logger = LoggingFactory.forEnclosingClass();
+/**
+ * A utility class that gets a logger calling
+ * {@link LoggingFactory#forEnclosingClass() LoggingFactory.forEnclosingClass()}
+ * from a lambda.
+ */
+public class LoggingUtilityLambda {
+
+    private static final Supplier<Logger<?>> lambdaLogger = createLambdaLogger();
+    private static final Logger<?> logger = lambdaLogger.get();
 
     /**
      * Prevents instantiation of this utility class.
      */
-    private LoggingUtility() {
+    private LoggingUtilityLambda() {
     }
 
     /**
@@ -51,24 +55,13 @@ public final class LoggingUtility {
     }
 
     /**
-     * A nested utility class that gets a logger using
-     * {@link LoggingFactory#forEnclosingClass() LoggingFactory.forEnclosingClass()}.
+     * Returns a class of the anonymous object used by this utility.
      */
-    public static final class InnerUtility {
+    public static Class<?> labmdaClass() {
+        return lambdaLogger.getClass();
+    }
 
-        private static final Logger<?> logger = LoggingFactory.forEnclosingClass();
-
-        /**
-         * Prevents instantiation of this utility class.
-         */
-        private InnerUtility() {
-        }
-
-        /**
-         * Returns a logger used by this utility.
-         */
-        public static Logger<?> usedLogger() {
-            return logger;
-        }
+    private static Supplier<Logger<?>> createLambdaLogger() {
+        return LoggingFactory::forEnclosingClass;
     }
 }

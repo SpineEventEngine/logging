@@ -26,9 +26,12 @@
 
 package io.spine.logging;
 
+import io.spine.logging.given.LoggingUtilityAnonymous;
+import io.spine.logging.given.LoggingEnum;
 import io.spine.logging.given.LoggingUtility;
 import io.spine.logging.given.LoggingUtilityA;
 import io.spine.logging.given.LoggingUtilityB;
+import io.spine.logging.given.LoggingUtilityLambda;
 import kotlin.Unit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -41,42 +44,100 @@ import static io.spine.logging.dynamic.backend.CaptureLogDataKt.captureLogData;
 class JavaLoggingFactoryTest {
 
     @Nested
-    @DisplayName("in static context")
-    class InStaticContext {
+    @DisplayName("create a logger")
+    class CreateLogger {
 
         @Test
-        @DisplayName("provide a logger for the enclosing class")
-        void provideLoggerForEnclosingClass() {
-            var message = "some expected message";
+        @DisplayName("for the enclosing class")
+        void forEnclosingClass() {
             var logged = captureLogData(() -> {
                 var logger = LoggingUtility.usedLogger();
-                logger.atInfo().log(() -> message);
-               return Unit.INSTANCE;
+                logger.atInfo().log();
+                return Unit.INSTANCE;
             });
-
+            var expectedLogger = LoggingUtility.class.getName();
             assertThat(logged.size()).isEqualTo(1);
-
-            var logData = logged.get(0);
-            assertThat(logData.getLiteralArgument()).isEqualTo(message);
-            assertThat(logData.getLoggerName()).isEqualTo(LoggingUtility.class.getName());
+            assertThat(logged.get(0).getLoggerName()).isEqualTo(expectedLogger);
         }
 
         @Test
-        @DisplayName("provide the same logger for the same enclosing class")
-        void provideSameLoggerForSameEnclosingClasses() {
-            var logger1 = LoggingFactory.forEnclosingClass();
-            var logger2 = LoggingFactory.forEnclosingClass();
-            assertThat(logger1).isSameInstanceAs(logger2);
-            assertThat(logger1).isEqualTo(logger2);
+        @DisplayName("for the enclosing nested class")
+        void forEnclosingNestedClass() {
+            var logged = captureLogData(() -> {
+                var logger = LoggingUtility.InnerUtility.usedLogger();
+                logger.atInfo().log();
+                return Unit.INSTANCE;
+            });
+            var expectedLogger = LoggingUtility.InnerUtility.class.getName();
+            assertThat(logged.size()).isEqualTo(1);
+            assertThat(logged.get(0).getLoggerName()).isEqualTo(expectedLogger);
         }
 
         @Test
-        @DisplayName("provide different loggers for different enclosing classes")
-        void provideDifferentLoggerForDifferentEnclosingClasses() {
-            var loggerA = LoggingUtilityA.usedLogger();
-            var loggerB = LoggingUtilityB.usedLogger();
-            assertThat(loggerA).isNotSameInstanceAs(loggerB);
-            assertThat(loggerA).isNotEqualTo(loggerB);
+        @DisplayName("for the enclosing enum class")
+        void forEnclosingEnumClass() {
+            var logged = captureLogData(() -> {
+                var logger = LoggingEnum.usedLogger();
+                logger.atInfo().log();
+                return Unit.INSTANCE;
+            });
+            var expectedLogger = LoggingEnum.class.getName();
+            assertThat(logged.size()).isEqualTo(1);
+            assertThat(logged.get(0).getLoggerName()).isEqualTo(expectedLogger);
         }
+
+        @Test
+        @DisplayName("for the enclosing anonymous class")
+        void forEnclosingAnonymousClass() {
+            var logged = captureLogData(() -> {
+                var logger = LoggingUtilityAnonymous.usedLogger();
+                logger.atInfo().log();
+                return Unit.INSTANCE;
+            });
+            // A class name followed by a dollar sign and number: `AnonymousLoggingUtility$1`.
+            var expectedLogger = LoggingUtilityAnonymous.anonymousClass().getName();
+            assertThat(logged.size()).isEqualTo(1);
+            assertThat(logged.get(0).getLoggerName()).isEqualTo(expectedLogger);
+        }
+    }
+
+    @Test
+    @DisplayName("provide the same logger for the same enclosing class")
+    void provideSameLoggerForSameEnclosingClasses() {
+        var logger1 = LoggingFactory.forEnclosingClass();
+        var logger2 = LoggingFactory.forEnclosingClass();
+        assertThat(logger1).isSameInstanceAs(logger2);
+        assertThat(logger1).isEqualTo(logger2);
+    }
+
+    @Test
+    @DisplayName("provide different loggers for different enclosing classes")
+    void provideDifferentLoggerForDifferentEnclosingClasses() {
+        var loggerA = LoggingUtilityA.usedLogger();
+        var loggerB = LoggingUtilityB.usedLogger();
+        assertThat(loggerA).isNotSameInstanceAs(loggerB);
+        assertThat(loggerA).isNotEqualTo(loggerB);
+    }
+
+    @Test
+    @DisplayName("NOT provide a logger for the enclosing lambda")
+    void notProviderLoggerForEnclosingLambda() {
+        var logged = captureLogData(() -> {
+            var logger = LoggingUtilityLambda.usedLogger();
+            logger.atInfo().log();
+            return Unit.INSTANCE;
+        });
+        assertThat(logged.size()).isEqualTo(1);
+
+        // Lambda class is named like: `LoggingUtilityLambda$$Lambda$13434/2147972`.
+        // This one should NOT be used.
+        var lambdaClass = LoggingUtilityLambda.labmdaClass().getName();
+        assertThat(logged.get(0).getLoggerName()).isNotEqualTo(lambdaClass);
+
+        // An outer class, which contain the lambda should BE used instead.
+        var expectedLogger = LoggingUtilityLambda.class.getName();
+        assertThat(logged.get(0).getLoggerName()).isEqualTo(expectedLogger);
+
+
     }
 }
