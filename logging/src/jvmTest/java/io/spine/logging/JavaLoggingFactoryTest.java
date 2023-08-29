@@ -26,13 +26,16 @@
 
 package io.spine.logging;
 
-import io.spine.logging.given.AnotherLoggingUtility;
 import io.spine.logging.given.LoggingUtility;
+import io.spine.logging.given.LoggingUtilityA;
+import io.spine.logging.given.LoggingUtilityB;
+import kotlin.Unit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static com.google.common.truth.Truth.assertThat;
+import static io.spine.logging.dynamic.backend.CaptureLogDataKt.captureLogData;
 
 @DisplayName("In Java, `LoggingFactory` should")
 class JavaLoggingFactoryTest {
@@ -42,19 +45,38 @@ class JavaLoggingFactoryTest {
     class InStaticContext {
 
         @Test
+        @DisplayName("provide a logger for the enclosing class")
+        void provideLoggerForEnclosingClass() {
+            var message = "some expected message";
+            var logged = captureLogData(() -> {
+                var logger = LoggingUtility.usedLogger();
+                logger.atInfo().log(() -> message);
+               return Unit.INSTANCE;
+            });
+
+            assertThat(logged.size()).isEqualTo(1);
+
+            var logData = logged.get(0);
+            assertThat(logData.getLiteralArgument()).isEqualTo(message);
+            assertThat(logData.getLoggerName()).isEqualTo(LoggingUtility.class.getName());
+        }
+
+        @Test
         @DisplayName("provide the same logger for the same enclosing class")
         void provideSameLoggerForSameEnclosingClasses() {
             var logger1 = LoggingFactory.forEnclosingClass();
             var logger2 = LoggingFactory.forEnclosingClass();
             assertThat(logger1).isSameInstanceAs(logger2);
+            assertThat(logger1).isEqualTo(logger2);
         }
 
         @Test
         @DisplayName("provide different loggers for different enclosing classes")
         void provideDifferentLoggerForDifferentEnclosingClasses() {
-            var utilityLogger = LoggingUtility.logger();
-            var anotherUtilityLogger = AnotherLoggingUtility.logger();
-            assertThat(utilityLogger).isNotEqualTo(anotherUtilityLogger);
+            var loggerA = LoggingUtilityA.usedLogger();
+            var loggerB = LoggingUtilityB.usedLogger();
+            assertThat(loggerA).isNotSameInstanceAs(loggerB);
+            assertThat(loggerA).isNotEqualTo(loggerB);
         }
     }
 }

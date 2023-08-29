@@ -26,18 +26,14 @@
 
 package io.spine.logging
 
-import com.google.common.flogger.backend.LoggerBackend
-import com.google.common.flogger.testing.FakeLoggerBackend
-import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.LoggingFactory.loggingDomainOf
+import io.spine.logging.dynamic.backend.captureLogData
 import io.spine.logging.given.domain.AnnotatedClass
 import io.spine.logging.given.domain.IndirectlyAnnotatedClass
 import io.spine.logging.given.domain.nested.NonAnnotatedNestedPackageClass
-import io.spine.logging.testutil.BackendProvider
-import io.spine.logging.testutil.withBackend
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -47,19 +43,15 @@ internal class JvmLoggingFactorySpec {
 
     @Test
     fun `provide a logger for the enclosing class`() {
-        val fakeBackends = { loggingClassName: String -> FakeLoggerBackend(loggingClassName) }
-        val memoizingBackendProvider = MemoizingBackendProvider(fakeBackends)
         val message = "some expected message"
-
-        withBackend(memoizingBackendProvider) {
+        val logged = captureLogData {
             val logger = LoggingFactory.forEnclosingClass()
             logger.atInfo().log { message }
         }
 
-        memoizingBackendProvider.createdBackends shouldHaveSize 1
-        val usedBackend = memoizingBackendProvider.createdBackends.first()
-        usedBackend.loggedCount shouldBe 1
-        usedBackend.lastLogged.loggerName shouldBe JvmLoggingFactorySpec::class.qualifiedName
+        logged.size shouldBe 1
+        logged.first().literalArgument shouldBe message
+        logged.first().loggerName shouldBe JvmLoggingFactorySpec::class.qualifiedName
     }
 
     @Test

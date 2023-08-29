@@ -30,23 +30,23 @@ import io.spine.logging.Logger;
 import io.spine.logging.LoggingFactory;
 
 /**
- * A test dummy utility class that gets a logger using
+ * A test utility class that gets a logger using
  * {@link LoggingFactory#forEnclosingClass() LoggingFactory.forEnclosingClass()}.
  */
-public final class AnotherLoggingUtility {
+public final class LoggingUtilityA {
 
     private static final Logger<?> logger = LoggingFactory.forEnclosingClass();
 
     /**
      * Prevents instantiation of this utility class.
      */
-    private AnotherLoggingUtility() {
+    private LoggingUtilityA() {
     }
 
     /**
      * Returns a logger used by this utility.
      */
-    public static Logger<?> logger() {
+    public static Logger<?> usedLogger() {
         return logger;
     }
 }

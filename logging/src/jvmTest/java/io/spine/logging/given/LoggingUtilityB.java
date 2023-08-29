@@ -33,14 +33,14 @@ import io.spine.logging.LoggingFactory;
  * A test utility class that gets a logger using
  * {@link LoggingFactory#forEnclosingClass() LoggingFactory.forEnclosingClass()}.
  */
-public final class LoggingUtility {
+public final class LoggingUtilityB {
 
     private static final Logger<?> logger = LoggingFactory.forEnclosingClass();
 
     /**
      * Prevents instantiation of this utility class.
      */
-    private LoggingUtility() {
+    private LoggingUtilityB() {
     }
 
     /**
