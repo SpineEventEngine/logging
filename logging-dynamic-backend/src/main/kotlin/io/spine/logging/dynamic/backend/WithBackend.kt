@@ -24,42 +24,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.testutil
+package io.spine.logging.dynamic.backend
 
-import com.google.auto.service.AutoService
 import com.google.common.flogger.backend.LoggerBackend
-import com.google.common.flogger.backend.system.BackendFactory
-import com.google.common.flogger.backend.system.SimpleBackendFactory
 
-@AutoService(BackendFactory::class)
-public class DynamicBackendFactoryService : BackendFactory() {
-
-    override fun create(loggingClassName: String): LoggerBackend =
-        DynamicBackendFactory.create(loggingClassName)
-
-    override fun toString(): String = DynamicBackendFactory.toString()
-}
-
-public object DynamicBackendFactory : BackendFactory() {
-
-    private val simpleBackends = SimpleBackendFactory.getInstance()
-    private var customBackends: BackendProvider<*>? = null
-
-    public fun from(backends: BackendProvider<*>) {
-        this.customBackends = backends
-    }
-
-    public fun useDefaultBackend() {
-        this.customBackends = null
-    }
-
-    override fun create(loggingClassName: String): LoggerBackend =
-        customBackends?.create(loggingClassName) ?: simpleBackends.create(loggingClassName)
-
-    override fun toString(): String = "Dynamic Backend Factory"
-}
-
-public fun interface BackendProvider<out T : LoggerBackend> {
-
-    public fun create(loggingClassName: String): T
+public inline fun <T : LoggerBackend> withBackend(backends: BackendProvider<T>,
+                                                  action: () -> Unit) {
+    DynamicBackendFactory.from(backends)
+    action()
+    DynamicBackendFactory.useDefaultBackend()
 }
