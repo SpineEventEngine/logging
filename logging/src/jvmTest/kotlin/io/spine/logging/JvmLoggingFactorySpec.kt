@@ -45,18 +45,6 @@ import org.junit.jupiter.api.Test
 @DisplayName("`JvmLoggingFactory` should")
 internal class JvmLoggingFactorySpec {
 
-    class MemoizingBackendProvider<out T : LoggerBackend>(
-        private val backends: BackendProvider<T>
-    ) : BackendProvider<T> {
-
-        private val _createdBackends = mutableListOf<T>()
-        val createdBackends: List<T>
-            get() = _createdBackends
-
-        override fun create(loggingClassName: String): T =
-            backends.create(loggingClassName).also { _createdBackends.add(it) }
-    }
-
     @Test
     fun `provide a logger for the enclosing class`() {
         val fakeBackends = { loggingClassName: String -> FakeLoggerBackend(loggingClassName) }
