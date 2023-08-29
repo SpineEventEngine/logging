@@ -28,9 +28,23 @@ package io.spine.logging.dynamic.backend
 
 import com.google.common.flogger.backend.LoggerBackend
 
-public inline fun <T : LoggerBackend> withBackend(backends: TypedBackendFactory<T>,
-                                                  action: () -> Unit) {
-    DynamicBackendFactory.from(backends)
-    action()
-    DynamicBackendFactory.useDefaultBackend()
+/**
+ * A typed [BackendFactory][com.google.common.flogger.backend.system.BackendFactory].
+ *
+ * This interface can't extend the original factory because it is an abstract class.
+ *
+ * Knowing a type of the returned backend is useful when it is used in a pair with
+ * [DynamicBackendFactory] to perform test assertions.
+ *
+ * @param T type of the returned backends
+ */
+public fun interface TypedBackendFactory<out T : LoggerBackend> {
+
+    /**
+     * Creates a logger backend for the given class name.
+     *
+     * Further, this name is usually propagated down to the used logger and
+     * produced [LogData][com.google.common.flogger.backend.LogData].
+     */
+    public fun create(loggingClassName: String): T
 }

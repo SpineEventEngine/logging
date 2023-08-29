@@ -43,9 +43,9 @@ public class DynamicBackendFactoryService : BackendFactory() {
 public object DynamicBackendFactory : BackendFactory() {
 
     private val simpleBackends = SimpleBackendFactory.getInstance()
-    private var customBackends: BackendProvider<*>? = null
+    private var customBackends: TypedBackendFactory<*>? = null
 
-    public fun from(backends: BackendProvider<*>) {
+    public fun from(backends: TypedBackendFactory<*>) {
         customBackends = backends
     }
 
@@ -57,9 +57,4 @@ public object DynamicBackendFactory : BackendFactory() {
         customBackends?.create(loggingClassName) ?: simpleBackends.create(loggingClassName)
 
     override fun toString(): String = "Dynamic Backend Factory"
-}
-
-public fun interface BackendProvider<out T : LoggerBackend> {
-
-    public fun create(loggingClassName: String): T
 }
