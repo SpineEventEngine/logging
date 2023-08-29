@@ -24,16 +24,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.dependency.AutoService
+package io.spine.logging.dynamic.backend
 
-plugins {
-    `jvm-module`
-    `kotlin-kapt`
-}
+import com.google.common.flogger.testing.FakeLoggerBackend
 
-dependencies {
-    implementation(project(":flogger-api"))
-    implementation(project(":flogger-system-backend"))
-    implementation(AutoService.annotations)
-    kapt(AutoService.processor)
+/**
+ * A factory of [FakeLoggerBackend].
+ */
+public class FakeLoggerBackendFactory : TypedBackendFactory<FakeLoggerBackend> {
+
+    override fun create(loggingClassName: String): FakeLoggerBackend =
+        FakeLoggerBackend(loggingClassName)
 }

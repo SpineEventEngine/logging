@@ -42,7 +42,7 @@ import com.google.common.flogger.backend.system.SimpleBackendFactory
  * their “enriched” API. So, having a factory that can change the underlying backend
  * in runtime is quite useful for logging tests.
  *
- * Making this factory an `object` eases access to it from [withBackend] method.
+ * Making this factory an `object` eases access to it from [withBackendFactory] method.
  * Also, backend factories are meant to be used as singletons.
  *
  * ## Default delegate
