@@ -24,16 +24,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.dependency.AutoService
+package io.spine.logging.testutil
 
-plugins {
-    `jvm-module`
-    `kotlin-kapt`
-}
+import com.google.common.flogger.backend.LoggerBackend
 
-dependencies {
-    implementation(project(":flogger-api"))
-    implementation(project(":flogger-system-backend"))
-    implementation(AutoService.annotations)
-    kapt(AutoService.processor)
+public inline fun <T : LoggerBackend> withBackend(backends: BackendProvider<T>, action: () -> Unit) {
+    DynamicBackendFactory.from(backends)
+    action()
+    DynamicBackendFactory.useDefaultBackend()
 }
