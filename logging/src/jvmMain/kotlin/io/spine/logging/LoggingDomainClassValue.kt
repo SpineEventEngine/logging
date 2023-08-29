@@ -58,7 +58,8 @@ internal object LoggingDomainClassValue: ClassValue<LoggingDomain>() {
 
     @Suppress("ReturnCount") // to ease the flow on null results
     override fun computeValue(javaClass: Class<*>): LoggingDomain {
-        with(javaClass.kotlin) {
+
+        with(javaClass) {
             findWithNesting<LoggingDomain>()?.let {
                 return it
             }
@@ -77,17 +78,25 @@ internal object LoggingDomainClassValue: ClassValue<LoggingDomain>() {
  * Attempts to find the annotation of type [T] in this [KClass] or enclosing classes.
  */
 @Suppress("ReturnCount") // to ease the flow on null results
-private inline fun <reified T: Annotation> KClass<*>.findWithNesting(): T? {
-    findAnnotation<T>()?.let {
-        return it
+private inline fun <reified T: Annotation> Class<*>.findWithNesting(): T? {
+
+    // `findAnnotation` throws an error on an attempt to be called upon anonymous class.
+    if (!isAnonymousClass) {
+        kotlin.findAnnotation<T>()?.let {
+            return it
+        }
     }
-    var enclosingClass = java.enclosingClass
+
+    // Recursive search on any of enclosing classes.
+    // Although, deep class nesting is not typical for Java or Kotlin code.
+    var enclosingClass = this.enclosingClass
     while (enclosingClass != null) {
         enclosingClass.kotlin.findAnnotation<T>()?.let {
             return it
         }
         enclosingClass = enclosingClass.enclosingClass
     }
+
     return null
 }
 
