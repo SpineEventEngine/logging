@@ -49,7 +49,7 @@ public final class FakeLoggerBackend extends LoggerBackend {
    * Returns a fake backend with the given name. Use this constructor only if your tests care about
    * the backend's name (which in general, they shouldn't).
    */
-  private FakeLoggerBackend(String name) {
+  public FakeLoggerBackend(String name) {
     this.name = checkNotNull(name, "name");
   }
 
