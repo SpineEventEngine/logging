@@ -24,16 +24,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.dependency.AutoService
-
 plugins {
     `jvm-module`
-    `kotlin-kapt`
-}
-
-dependencies {
-    implementation(project(":flogger-api"))
-    implementation(project(":flogger-system-backend"))
-    implementation(AutoService.annotations)
-    kapt(AutoService.processor)
 }
