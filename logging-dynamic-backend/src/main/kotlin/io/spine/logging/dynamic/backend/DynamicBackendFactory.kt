@@ -30,15 +30,44 @@ import com.google.common.flogger.backend.LoggerBackend
 import com.google.common.flogger.backend.system.BackendFactory
 import com.google.common.flogger.backend.system.SimpleBackendFactory
 
+/**
+ * A factory that delegates backends creation to another factory,
+ * and allows changing of the underlying factory in runtime.
+ *
+ * In general, it is prohibited to change the underlying backend factory
+ * in runtime as it shouldn't make any sense in real code.
+ *
+ * But different tests may need different backend stubs to perform their assertions.
+ * More importantly, they need those stubs [typed][TypedBackendFactory] to access
+ * their “enriched” API. So, having a factory that can change the underlying backend
+ * in runtime is quite useful for logging tests.
+ *
+ * Making this factory an `object` eases access to it from [withBackend] method.
+ * Also, backend factories are meant to be used as singletons.
+ *
+ * ## Default delegate
+ *
+ * Backend factories should be operational from the very beginning.
+ * Since this factory always exists (remember, it is an object), it is impossible
+ * to provide the default delegate during initialization. Thus, this factory
+ * always rolls back to [SimpleBackendFactory] if no factory is [provided][delegate].
+ */
 public object DynamicBackendFactory : BackendFactory() {
 
     private val simpleBackends = SimpleBackendFactory.getInstance()
     private var delegate: TypedBackendFactory<*>? = null
 
-    public fun delegate(backends: TypedBackendFactory<*>) {
-        delegate = backends
+    /**
+     * Makes the factory delegate backends creation to the given [factory].
+     */
+    public fun delegate(factory: TypedBackendFactory<*>) {
+        delegate = factory
     }
 
+    /**
+     * Resets the custom delegate, and makes the factory delegate
+     * backends creation to the default [SimpleBackendFactory].
+     */
     public fun reset() {
         delegate = null
     }
