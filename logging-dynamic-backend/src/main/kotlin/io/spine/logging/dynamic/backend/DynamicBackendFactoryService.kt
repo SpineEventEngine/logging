@@ -26,25 +26,15 @@
 
 package io.spine.logging.dynamic.backend
 
+import com.google.auto.service.AutoService
 import com.google.common.flogger.backend.LoggerBackend
 import com.google.common.flogger.backend.system.BackendFactory
-import com.google.common.flogger.backend.system.SimpleBackendFactory
 
-public object DynamicBackendFactory : BackendFactory() {
-
-    private val simpleBackends = SimpleBackendFactory.getInstance()
-    private var delegate: TypedBackendFactory<*>? = null
-
-    public fun delegate(backends: TypedBackendFactory<*>) {
-        delegate = backends
-    }
-
-    public fun reset() {
-        delegate = null
-    }
+@AutoService(BackendFactory::class)
+public class DynamicBackendFactoryService : BackendFactory() {
 
     override fun create(loggingClassName: String): LoggerBackend =
-        delegate?.create(loggingClassName) ?: simpleBackends.create(loggingClassName)
+        DynamicBackendFactory.create(loggingClassName)
 
-    override fun toString(): String = "Dynamic Backend Factory"
+    override fun toString(): String = DynamicBackendFactory.toString()
 }
