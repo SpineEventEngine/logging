@@ -64,11 +64,11 @@ class JavaLoggingFactoryTest {
         @DisplayName("nested class")
         void nestedClass() {
             var logged = captureLogData(() -> {
-                var logger = LoggingUtility.InnerUtility.usedLogger();
+                var logger = LoggingUtility.NestedUtility.usedLogger();
                 logger.atInfo().log();
                 return Unit.INSTANCE;
             });
-            var expectedLogger = LoggingUtility.InnerUtility.class.getName();
+            var expectedLogger = LoggingUtility.NestedUtility.class.getName();
             assertThat(logged.size()).isEqualTo(1);
             assertThat(logged.get(0).getLoggerName()).isEqualTo(expectedLogger);
         }

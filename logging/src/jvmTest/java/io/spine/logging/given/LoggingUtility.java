@@ -54,14 +54,14 @@ public final class LoggingUtility {
      * A nested utility class that gets a logger using
      * {@link LoggingFactory#forEnclosingClass() LoggingFactory.forEnclosingClass()}.
      */
-    public static final class InnerUtility {
+    public static final class NestedUtility {
 
         private static final Logger<?> logger = LoggingFactory.forEnclosingClass();
 
         /**
          * Prevents instantiation of this utility class.
          */
-        private InnerUtility() {
+        private NestedUtility() {
         }
 
         /**
