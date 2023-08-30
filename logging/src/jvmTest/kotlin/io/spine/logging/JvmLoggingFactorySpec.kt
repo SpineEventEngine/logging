@@ -30,6 +30,7 @@ import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 import io.spine.logging.LoggingFactory.loggingDomainOf
 import io.spine.logging.dynamic.backend.captureLogData
 import io.spine.logging.given.EnclosingClass
@@ -159,7 +160,7 @@ internal class JvmLoggingFactorySpec {
     fun `provide different loggers for different classes`() {
         val loggerA = EnclosingClassA().logger
         val loggerB = EnclosingClassB().logger
-        loggerA shouldBeSameInstanceAs loggerB
+        loggerA shouldNotBeSameInstanceAs loggerB
         loggerA shouldNotBe loggerB
     }
 
