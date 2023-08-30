@@ -31,11 +31,23 @@ import com.google.common.flogger.backend.LoggerBackend
 import com.google.common.flogger.backend.system.BackendFactory
 
 /**
- * Adapts [DynamicBackendFactory] to be used as a service within
- * Java's [ServiceLoader][java.util.ServiceLoader].
+ * Adapts [DynamicBackendFactory] to be used with Java's
+ * [ServiceLoader][java.util.ServiceLoader].
  *
- * Each service should have a public no-args constructor to be used by the loader.
- * Which is not a case for object declarations, as they don't have any constructors at all.
+ * Each service should have a public no-args constructor to be used
+ * by the loader. Which is not a case for object declarations, as they
+ * don't have any constructors at all.
+ *
+ * Until [KT-25892](https://youtrack.jetbrains.com/issue/KT-25892/Allow-objects-to-be-loaded-via-ServiceLoader-or-similar-API)
+ * is implemented, we need a proxy class for object services.
+ *
+ * An explicit delegation can't be applied here because [BackendFactory] is a class.
+ * Thus, the following snippet fails to compile:
+ *
+ * ```
+ * @AutoService(BackendFactory::class)
+ * class DynamicBackendFactoryService : BackendFactory() by DynamicBackendFactory
+ * ```
  */
 @AutoService(BackendFactory::class)
 public class DynamicBackendFactoryService : BackendFactory() {
