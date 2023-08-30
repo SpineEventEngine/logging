@@ -29,20 +29,38 @@ package io.spine.logging.dynamic.backend
 import com.google.common.flogger.backend.LogData
 
 /**
- * Runs the given [action] using [FakeLoggerBackendFactory].
+ * Runs the given [action], capturing all log data that are passed
+ * to backend by the API.
  *
- * This method substitutes the default backend factory (JUL-based backend)
- * with [FakeLoggerBackendFactory], executes the given [action] and
- * returns the captured log data.
+ * To make this work, please create a logger instance inside of [action].
+ * This method captures log data for loggers that are both created and used
+ * within the [action].
  *
- * Please make sure, the [action] doesn't use a logger from the outside,
- * but creates its own. Otherwise, the substituted backend factory will NOT be
- * used because a logger had already been created, and the corresponding backend too.
- * A logger instantiation should be done within the [action].
+ * For example:
  *
- * This method has been made `inline` to preserve the original the log site.
- * *
- * @return all [LogData], captured by the created fake backend.
+ * ```
+ * val message = "logged text"
+ * val logged = captureLogData {
+ *     val logger = LoggingFactory.forEnclosingClass()
+ *     logger.atInfo().log { message }
+ * }
+ * check(logged[0].literalArgument == message)
+ * ```
+ *
+ * ### Implementation details
+ *
+ * `logging-fake-backend` configures [DynamicBackendFactory] for the API.
+ * And until [captureLogData] is called, this factory delegates backend creation
+ * to `SimpleBackendFactory`. Thus, making no difference with the system backend.
+ *
+ * [captureLogData] substitutes simple backend factory with [FakeLoggerBackendFactory]
+ * (which memoizes log data), executes the given [action], switches back to simple
+ * backend factory, and returns the captured log data. Out of this comes a restriction
+ * on logger creation within the [action]. If a logger is created outside the [action],
+ * its log data will be passed to simple backend because the factory has not been
+ * substituted in the moment of a logger creation.
+ *
+ * The method is inlined to preserve the original log site.
  */
 public inline fun captureLogData(action: () -> Unit): List<LogData> {
     val fakeBackends = FakeLoggerBackendFactory()
@@ -51,11 +69,14 @@ public inline fun captureLogData(action: () -> Unit): List<LogData> {
     // Runs the given action with a substituted backend factory.
     withBackendFactory(memoizingFactory, action)
 
-    // ...
+    // Makes sure `action` has created at least one logger inside the `action`.
+    // Otherwise, calling of this method is doubtful.
     check(memoizingFactory.createdBackends.isNotEmpty()) {
         "Zero backends were created where at least one was expected."
     }
 
+    // Several loggers could have been created within the `action`.
+    // Each logger spawns its own instance of backend.
     val loggedFromAllBackends = memoizingFactory.createdBackends.flatMap { it.logged }
     return loggedFromAllBackends
 }
@@ -63,11 +84,9 @@ public inline fun captureLogData(action: () -> Unit): List<LogData> {
 /**
  * Sets the given backend [factory], and runs the given [action].
  *
- * After [action] is performed, the default backend factory (JUL-based one)
- * is restored.
+ * After [action] is performed, simple backend factory is restored.
  *
- * This method is public due to presence of `inline` modifier.
- * Otherwise, it would have been private.
+ * This method is public because it is inlined.
  */
 public inline fun withBackendFactory(factory: TypedBackendFactory<*>, action: () -> Unit) {
     DynamicBackendFactory.delegate(factory)
