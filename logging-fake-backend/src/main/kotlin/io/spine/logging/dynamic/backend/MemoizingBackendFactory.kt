@@ -39,6 +39,10 @@ public class MemoizingBackendFactory<out T : LoggerBackend>(
 
     private val _createdBackends = mutableListOf<T>()
 
+    /**
+     * Returns all backend instances that were created
+     * by the [underlying factory][delegate].
+     */
     public val createdBackends: List<T>
         get() = _createdBackends
 
