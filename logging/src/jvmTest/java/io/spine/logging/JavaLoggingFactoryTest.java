@@ -137,7 +137,5 @@ class JavaLoggingFactoryTest {
         // An outer class, which contains the lambda should BE used instead.
         var expectedLogger = LoggingUtilityLambda.class.getName();
         assertThat(logged.get(0).getLoggerName()).isEqualTo(expectedLogger);
-
-
     }
 }
