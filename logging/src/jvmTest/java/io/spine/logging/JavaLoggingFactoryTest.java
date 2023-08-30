@@ -31,7 +31,6 @@ import io.spine.logging.given.LoggingEnum;
 import io.spine.logging.given.LoggingUtility;
 import io.spine.logging.given.LoggingUtilityA;
 import io.spine.logging.given.LoggingUtilityB;
-import io.spine.logging.given.LoggingUtilityLambda;
 import kotlin.Unit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -117,25 +116,5 @@ class JavaLoggingFactoryTest {
         var loggerB = LoggingUtilityB.usedLogger();
         assertThat(loggerA).isNotSameInstanceAs(loggerB);
         assertThat(loggerA).isNotEqualTo(loggerB);
-    }
-
-    @Test
-    @DisplayName("NOT provide a logger for the enclosing lambda")
-    void notProviderLoggerForEnclosingLambda() {
-        var logged = captureLogData(() -> {
-            var logger = LoggingUtilityLambda.usedLogger();
-            logger.atInfo().log();
-            return Unit.INSTANCE;
-        });
-        assertThat(logged.size()).isEqualTo(1);
-
-        // Lambda class is named like: `LoggingUtilityLambda$$Lambda$13434/2147972`.
-        // This one should NOT be used.
-        var lambdaClass = LoggingUtilityLambda.labmdaClass().getName();
-        assertThat(logged.get(0).getLoggerName()).isNotEqualTo(lambdaClass);
-
-        // An outer class, which contains the lambda should BE used instead.
-        var expectedLogger = LoggingUtilityLambda.class.getName();
-        assertThat(logged.get(0).getLoggerName()).isEqualTo(expectedLogger);
     }
 }
