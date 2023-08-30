@@ -26,6 +26,7 @@
 
 package io.spine.logging.given
 
+import io.spine.logging.Logger
 import io.spine.logging.LoggingFactory
 
 internal class EnclosingClass {
@@ -38,4 +39,36 @@ internal class EnclosingClassA {
 
 internal class EnclosingClassB {
     val logger = LoggingFactory.forEnclosingClass()
+}
+
+internal sealed class EnclosingSealedClass {
+    open val logger = LoggingFactory.forEnclosingClass()
+}
+
+internal class SealedInheritingChild : EnclosingSealedClass()
+
+internal class SealedOverridingChild : EnclosingSealedClass() {
+    override val logger = LoggingFactory.forEnclosingClass()
+}
+
+internal data class EnclosingDataClass(
+    val logger: Logger<*> = LoggingFactory.forEnclosingClass()
+)
+
+@Suppress("unused")
+internal enum class EnclosingEnumClass {
+
+    ONE, TWO, THREE;
+
+    val logger = LoggingFactory.forEnclosingClass()
+}
+
+internal object EnclosingObject {
+    val logger = LoggingFactory.forEnclosingClass()
+}
+
+internal class EnclosingCompanionObject {
+    companion object {
+        val logger = LoggingFactory.forEnclosingClass()
+    }
 }

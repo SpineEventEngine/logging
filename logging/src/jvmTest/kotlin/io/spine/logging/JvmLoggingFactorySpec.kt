@@ -26,6 +26,7 @@
 
 package io.spine.logging
 
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
@@ -34,9 +35,18 @@ import io.spine.logging.dynamic.backend.captureLogData
 import io.spine.logging.given.EnclosingClass
 import io.spine.logging.given.EnclosingClassA
 import io.spine.logging.given.EnclosingClassB
+import io.spine.logging.given.EnclosingCompanionObject
+import io.spine.logging.given.EnclosingDataClass
+import io.spine.logging.given.EnclosingEnumClass
+import io.spine.logging.given.EnclosingObject
+import io.spine.logging.given.EnclosingSealedClass
+import io.spine.logging.given.SealedInheritingChild
+import io.spine.logging.given.SealedOverridingChild
 import io.spine.logging.given.domain.AnnotatedClass
 import io.spine.logging.given.domain.IndirectlyAnnotatedClass
 import io.spine.logging.given.domain.nested.NonAnnotatedNestedPackageClass
+import kotlin.reflect.KClass
+import kotlin.reflect.jvm.jvmName
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -51,19 +61,95 @@ internal class JvmLoggingFactorySpec {
     }
 
     @Nested inner class
-    `create a logger` {
+    `create a logger for the enclosing` {
 
         @Test
-        fun `for the enclosing class`() {
-            val message = "some expected message"
+        fun `class`() {
             val logged = captureLogData {
-                val logger = EnclosingClass().logger
-                logger.atInfo().log { message }
+                EnclosingClass().logger.atInfo().log()
+            }
+            logged shouldHaveSize 1
+            logged.first().loggerName shouldBe EnclosingClass::class.qualifiedName
+        }
+
+        @Test
+        fun `sealed class`() {
+            val logged = captureLogData {
+                SealedInheritingChild().logger.atInfo().log()
+                SealedOverridingChild().logger.atInfo().log()
+            }
+            logged shouldHaveSize 2
+            logged[0].loggerName shouldBe EnclosingSealedClass::class.qualifiedName
+            logged[1].loggerName shouldBe SealedOverridingChild::class.qualifiedName
+        }
+
+        @Test
+        fun `data class`() {
+            val logged = captureLogData {
+                EnclosingDataClass().logger.atInfo().log()
+            }
+            logged shouldHaveSize 1
+            logged.first().loggerName shouldBe EnclosingDataClass::class.qualifiedName
+        }
+
+        @Test
+        fun `enum class`() {
+            val logged = captureLogData {
+                EnclosingEnumClass.ONE.logger.atInfo().log()
+                EnclosingEnumClass.TWO.logger.atInfo().log()
+                EnclosingEnumClass.THREE.logger.atInfo().log()
+            }
+            logged shouldHaveSize 3
+            logged.map { it.loggerName }.distinct() shouldHaveSize 1
+            logged.first().loggerName shouldBe EnclosingEnumClass::class.qualifiedName
+        }
+
+        @Test
+        fun `local class`() {
+            class EnclosingLocalClass {
+                val logger = LoggingFactory.forEnclosingClass()
             }
 
-            logged.size shouldBe 1
-            logged.first().literalArgument shouldBe message
-            logged.first().loggerName shouldBe EnclosingClass::class.qualifiedName
+            val logged = captureLogData {
+                EnclosingLocalClass().logger.atInfo().log()
+            }
+
+            logged shouldHaveSize 1
+            // A local class doesn't have a qualified name.
+            logged.first().loggerName shouldBe EnclosingLocalClass::class.jvmName
+        }
+
+        @Test
+        fun `object`() {
+            val logged = captureLogData {
+                EnclosingObject.logger.atInfo().log()
+            }
+            logged shouldHaveSize 1
+            logged.first().loggerName shouldBe EnclosingObject::class.qualifiedName
+        }
+
+        @Test
+        fun `companion object`() {
+            val logged = captureLogData {
+                EnclosingCompanionObject.logger.atInfo().log()
+            }
+            logged shouldHaveSize 1
+            logged.first().loggerName shouldBe EnclosingCompanionObject::class.qualifiedName
+        }
+
+        @Test
+        fun `anonymous object`() {
+            var anonymousClass: KClass<*>? = null // Will be used for assertion.
+            val logged = captureLogData {
+                val anonymous = object {
+                    val logger = LoggingFactory.forEnclosingClass()
+                }
+                anonymousClass = anonymous::class
+                anonymous.logger.atInfo().log()
+            }
+            logged shouldHaveSize 1
+            // An anonymous object doesn't have a qualified name.
+            logged.first().loggerName shouldBe anonymousClass!!.jvmName
         }
     }
 
