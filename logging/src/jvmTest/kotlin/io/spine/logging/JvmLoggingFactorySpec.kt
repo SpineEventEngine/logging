@@ -44,6 +44,15 @@ import org.junit.jupiter.api.Test
 @DisplayName("`JvmLoggingFactory` should")
 internal class JvmLoggingFactorySpec {
 
+    init {
+        // Triggers loading of Java classes to the runtime classpath.
+        // Needed to correctly initialize `LoggingDomainClassValue.annotatedPackages`.
+        IndirectlyAnnotatedClass::class.simpleName shouldBe "IndirectlyAnnotatedClass"
+    }
+
+    @Nested inner class
+    `create a logger` {
+
         @Test
         fun `for the enclosing class`() {
             val message = "some expected message"
