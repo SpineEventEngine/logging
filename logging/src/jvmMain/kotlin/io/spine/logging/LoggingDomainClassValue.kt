@@ -87,8 +87,6 @@ private inline fun <reified T: Annotation> Class<*>.findWithNesting(): T? {
         }
     }
 
-    // Recursive search on any of enclosing classes.
-    // Although, deep class nesting is not typical for Java or Kotlin code.
     var enclosingClass = this.enclosingClass
     while (enclosingClass != null) {
         enclosingClass.kotlin.findAnnotation<T>()?.let {
