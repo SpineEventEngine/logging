@@ -152,12 +152,14 @@ internal class JvmLoggingFactorySpec {
         val firstLogger = LoggingFactory.forEnclosingClass()
         val secondLogger = LoggingFactory.forEnclosingClass()
         firstLogger shouldBeSameInstanceAs secondLogger
+        firstLogger shouldBe secondLogger
     }
 
     @Test
     fun `provide different loggers for different classes`() {
         val loggerA = EnclosingClassA().logger
         val loggerB = EnclosingClassB().logger
+        loggerA shouldBeSameInstanceAs loggerB
         loggerA shouldNotBe loggerB
     }
 
