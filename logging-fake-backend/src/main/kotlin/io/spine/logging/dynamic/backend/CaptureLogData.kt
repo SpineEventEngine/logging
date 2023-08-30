@@ -51,15 +51,13 @@ public inline fun captureLogData(action: () -> Unit): List<LogData> {
     // Runs the given action with a substituted backend factory.
     withBackendFactory(memoizingFactory, action)
 
-    // It is important that all log statements came to the same backend, created within
-    // the given action. Otherwise, we can't say if every log data has been captured.
-    check(memoizingFactory.createdBackends.size == 1) {
-        "Zero or multiple backends were created where only one was expected. " +
-                "Created backends: ${memoizingFactory.createdBackends}."
+    // ...
+    check(memoizingFactory.createdBackends.isNotEmpty()) {
+        "Zero backends were created where at least one was expected."
     }
 
-    val usedBackend = memoizingFactory.createdBackends.first()
-    return usedBackend.logged
+    val loggedFromAllBackends = memoizingFactory.createdBackends.flatMap { it.logged }
+    return loggedFromAllBackends
 }
 
 /**
