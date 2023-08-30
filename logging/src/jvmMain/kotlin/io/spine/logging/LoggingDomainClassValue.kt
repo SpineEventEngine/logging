@@ -80,7 +80,9 @@ internal object LoggingDomainClassValue: ClassValue<LoggingDomain>() {
 @Suppress("ReturnCount") // to ease the flow on null results
 private inline fun <reified T: Annotation> Class<*>.findWithNesting(): T? {
 
-    // `findAnnotation` throws an error on an attempt to be called upon anonymous class.
+    // `kotlin.reflect.findAnnotation()` throws an error on an attempt
+    // to be called upon Java anonymous class. Anyway, the domain annotation
+    // can't be applied to local members.
     if (!isAnonymousClass) {
         kotlin.findAnnotation<T>()?.let {
             return it
