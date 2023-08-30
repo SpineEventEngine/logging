@@ -30,7 +30,7 @@ import io.spine.logging.Logger;
 import io.spine.logging.LoggingFactory;
 
 /**
- * An enum class that gets a logger using
+ * A test enum class that gets a logger using
  * {@link LoggingFactory#forEnclosingClass() LoggingFactory.forEnclosingClass()}.
  */
 public enum LoggingEnum {

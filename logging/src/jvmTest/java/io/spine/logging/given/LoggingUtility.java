@@ -30,7 +30,7 @@ import io.spine.logging.Logger;
 import io.spine.logging.LoggingFactory;
 
 /**
- * A utility class that gets a logger using
+ * A test utility class that gets a logger using
  * {@link LoggingFactory#forEnclosingClass() LoggingFactory.forEnclosingClass()}.
  */
 public final class LoggingUtility {
@@ -51,7 +51,7 @@ public final class LoggingUtility {
     }
 
     /**
-     * A nested utility class that gets a logger using
+     * A nested test utility class that gets a logger using
      * {@link LoggingFactory#forEnclosingClass() LoggingFactory.forEnclosingClass()}.
      */
     public static final class NestedUtility {
