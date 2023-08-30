@@ -31,6 +31,9 @@ import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.LoggingFactory.loggingDomainOf
 import io.spine.logging.dynamic.backend.captureLogData
+import io.spine.logging.given.EnclosingClass
+import io.spine.logging.given.EnclosingClassA
+import io.spine.logging.given.EnclosingClassB
 import io.spine.logging.given.domain.AnnotatedClass
 import io.spine.logging.given.domain.IndirectlyAnnotatedClass
 import io.spine.logging.given.domain.nested.NonAnnotatedNestedPackageClass
@@ -41,17 +44,18 @@ import org.junit.jupiter.api.Test
 @DisplayName("`JvmLoggingFactory` should")
 internal class JvmLoggingFactorySpec {
 
-    @Test
-    fun `provide a logger for the enclosing class`() {
-        val message = "some expected message"
-        val logged = captureLogData {
-            val logger = LoggingFactory.forEnclosingClass()
-            logger.atInfo().log { message }
-        }
+        @Test
+        fun `for the enclosing class`() {
+            val message = "some expected message"
+            val logged = captureLogData {
+                val logger = EnclosingClass().logger
+                logger.atInfo().log { message }
+            }
 
-        logged.size shouldBe 1
-        logged.first().literalArgument shouldBe message
-        logged.first().loggerName shouldBe JvmLoggingFactorySpec::class.qualifiedName
+            logged.size shouldBe 1
+            logged.first().literalArgument shouldBe message
+            logged.first().loggerName shouldBe EnclosingClass::class.qualifiedName
+        }
     }
 
     @Test
@@ -63,13 +67,13 @@ internal class JvmLoggingFactorySpec {
 
     @Test
     fun `provide different loggers for different classes`() {
-        val loggerA = ClassA().logger
-        val loggerB = ClassB().logger
+        val loggerA = EnclosingClassA().logger
+        val loggerB = EnclosingClassB().logger
         loggerA shouldNotBe loggerB
     }
 
-    @Nested
-    inner class `obtain a logging domain for` {
+    @Nested inner class
+    `obtain a logging domain for` {
 
         @Test
         fun `directly annotated class`() {
@@ -89,12 +93,4 @@ internal class JvmLoggingFactorySpec {
             loggingDomain.name shouldBe "OnPackage"
         }
     }
-}
-
-private class ClassA {
-    val logger = LoggingFactory.forEnclosingClass()
-}
-
-private class ClassB {
-    val logger = LoggingFactory.forEnclosingClass()
 }
