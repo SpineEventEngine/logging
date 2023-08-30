@@ -30,6 +30,8 @@ import com.google.common.flogger.testing.FakeLoggerBackend
 
 /**
  * A factory of [FakeLoggerBackend].
+ *
+ *  The type is public because it is used in a public inline method.
  */
 public class FakeLoggerBackendFactory : TypedBackendFactory<FakeLoggerBackend> {
 

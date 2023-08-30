@@ -44,6 +44,8 @@ import com.google.common.flogger.backend.system.SimpleBackendFactory
  *
  * This factory uses [SimpleBackendFactory] as a fall-back options,
  * when no custom [delegate] is specified.
+ *
+ * The type is public because it is used in a public inline method.
  */
 public object DynamicBackendFactory : BackendFactory() {
 

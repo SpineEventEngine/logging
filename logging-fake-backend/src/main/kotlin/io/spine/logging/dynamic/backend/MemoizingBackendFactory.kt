@@ -32,6 +32,8 @@ import com.google.common.flogger.backend.LoggerBackend
  * A backend factory that remembers the created backends.
  *
  * Actual backend creation is performed by the given [delegate].
+ *
+ *  The type is public because it is used in a public inline method.
  */
 public class MemoizingBackendFactory<out T : LoggerBackend>(
     private val delegate: TypedBackendFactory<T>

@@ -38,6 +38,8 @@ import com.google.common.flogger.backend.LoggerBackend
  * we don't lose the API of stub backends. For example, allowing to retrieve
  * the remembered log data from `FakeLoggerBackend`.
  *
+ *  The type is public because it is used in a public inline method.
+ *
  * @param T type of the returned backends
  */
 public fun interface TypedBackendFactory<out T : LoggerBackend> {
