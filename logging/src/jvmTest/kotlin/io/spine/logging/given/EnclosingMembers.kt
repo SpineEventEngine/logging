@@ -29,6 +29,13 @@ package io.spine.logging.given
 import io.spine.logging.Logger
 import io.spine.logging.LoggingFactory
 
+/**
+ * This file contains different class and object declarations
+ * for which a logging factory can provide a logger.
+ *
+ * @see [LoggingFactory.forEnclosingClass]
+ */
+
 internal class EnclosingClass {
     val logger = LoggingFactory.forEnclosingClass()
 }
