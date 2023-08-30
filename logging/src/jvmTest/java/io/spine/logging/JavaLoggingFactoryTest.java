@@ -44,8 +44,8 @@ import static io.spine.logging.dynamic.backend.CaptureLogDataKt.captureLogData;
 class JavaLoggingFactoryTest {
 
     @Nested
-    @DisplayName("create a logger")
-    class CreateLogger {
+    @DisplayName("create a logger from a static context")
+    class CreateLoggerFromStaticContext {
 
         @Test
         @DisplayName("for the enclosing class")
@@ -134,7 +134,7 @@ class JavaLoggingFactoryTest {
         var lambdaClass = LoggingUtilityLambda.labmdaClass().getName();
         assertThat(logged.get(0).getLoggerName()).isNotEqualTo(lambdaClass);
 
-        // An outer class, which contain the lambda should BE used instead.
+        // An outer class, which contains the lambda should BE used instead.
         var expectedLogger = LoggingUtilityLambda.class.getName();
         assertThat(logged.get(0).getLoggerName()).isEqualTo(expectedLogger);
 
