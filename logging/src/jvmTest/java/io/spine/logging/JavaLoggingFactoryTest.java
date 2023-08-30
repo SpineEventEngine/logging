@@ -26,7 +26,6 @@
 
 package io.spine.logging;
 
-import io.spine.logging.given.LoggingUtilityAnonymous;
 import io.spine.logging.given.LoggingEnum;
 import io.spine.logging.given.LoggingUtility;
 import io.spine.logging.given.LoggingUtilityA;
@@ -36,6 +35,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.function.Supplier;
+
 import static com.google.common.truth.Truth.assertThat;
 import static io.spine.logging.dynamic.backend.CaptureLogDataKt.captureLogData;
 
@@ -43,12 +44,12 @@ import static io.spine.logging.dynamic.backend.CaptureLogDataKt.captureLogData;
 class JavaLoggingFactoryTest {
 
     @Nested
-    @DisplayName("create a logger from a static context")
-    class CreateLoggerFromStaticContext {
+    @DisplayName("create a logger for the enclosing")
+    class CreateLoggerForEnclosing {
 
         @Test
-        @DisplayName("for the enclosing class")
-        void forEnclosingClass() {
+        @DisplayName("class")
+        void clazz() {
             var logged = captureLogData(() -> {
                 var logger = LoggingUtility.usedLogger();
                 logger.atInfo().log();
@@ -60,8 +61,8 @@ class JavaLoggingFactoryTest {
         }
 
         @Test
-        @DisplayName("for the enclosing nested class")
-        void forEnclosingNestedClass() {
+        @DisplayName("nested class")
+        void nestedClass() {
             var logged = captureLogData(() -> {
                 var logger = LoggingUtility.InnerUtility.usedLogger();
                 logger.atInfo().log();
@@ -73,8 +74,8 @@ class JavaLoggingFactoryTest {
         }
 
         @Test
-        @DisplayName("for the enclosing enum class")
-        void forEnclosingEnumClass() {
+        @DisplayName("enum class")
+        void enumClass() {
             var logged = captureLogData(() -> {
                 var logger = LoggingEnum.usedLogger();
                 logger.atInfo().log();
@@ -86,15 +87,21 @@ class JavaLoggingFactoryTest {
         }
 
         @Test
-        @DisplayName("for the enclosing anonymous class")
-        void forEnclosingAnonymousClass() {
+        @DisplayName("anonymous class")
+        @SuppressWarnings("TypeMayBeWeakened") // Avoids explicit type declaration.
+        void anonymousClass() {
+            var anonymous =  new Supplier<>() {
+                @Override
+                public Logger<?> get() {
+                    return LoggingFactory.forEnclosingClass();
+                }
+            };
             var logged = captureLogData(() -> {
-                var logger = LoggingUtilityAnonymous.usedLogger();
+                var logger = anonymous.get();
                 logger.atInfo().log();
                 return Unit.INSTANCE;
             });
-            // A class name followed by a dollar sign and number: `AnonymousLoggingUtility$1`.
-            var expectedLogger = LoggingUtilityAnonymous.anonymousClass().getName();
+            var expectedLogger = anonymous.getClass().getName();
             assertThat(logged.size()).isEqualTo(1);
             assertThat(logged.get(0).getLoggerName()).isEqualTo(expectedLogger);
         }
