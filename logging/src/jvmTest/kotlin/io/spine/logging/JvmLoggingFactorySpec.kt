@@ -54,12 +54,6 @@ import org.junit.jupiter.api.Test
 @DisplayName("`JvmLoggingFactory` should")
 internal class JvmLoggingFactorySpec {
 
-    init {
-        // Triggers loading of Java classes to the runtime classpath.
-        // Needed to correctly initialize `LoggingDomainClassValue.annotatedPackages`.
-        IndirectlyAnnotatedClass::class.simpleName shouldBe "IndirectlyAnnotatedClass"
-    }
-
     @Nested inner class
     `create a logger for the enclosing` {
 
@@ -176,12 +170,18 @@ internal class JvmLoggingFactorySpec {
             loggingDomain.name shouldBe "OnClass"
         }
 
+        /**
+         * This test may fail due to [#39](https://github.com/SpineEventEngine/logging/issues/39).
+         */
         @Test
         fun `a class with annotated package`() {
             val loggingDomain = loggingDomainOf(IndirectlyAnnotatedClass::class)
             loggingDomain.name shouldBe "OnPackage"
         }
 
+        /**
+         * This test may fail due to [#39](https://github.com/SpineEventEngine/logging/issues/39).
+         */
         @Test
         fun `a class in a nested non-annotated package`() {
             val loggingDomain = loggingDomainOf(NonAnnotatedNestedPackageClass::class)
