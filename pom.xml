@@ -72,6 +72,12 @@ all modules and does not describe the project structure per-subproject.
     <scope>test</scope>
   </dependency>
   <dependency>
+    <groupId>com.google.auto.service</groupId>
+    <artifactId>auto-service-annotations</artifactId>
+    <version>1.1.1</version>
+    <scope>test</scope>
+  </dependency>
+  <dependency>
     <groupId>com.google.flogger</groupId>
     <artifactId>flogger-slf4j-backend</artifactId>
     <version>0.7.4</version>
@@ -292,6 +298,11 @@ all modules and does not describe the project structure per-subproject.
   </dependency>
   <dependency>
     <groupId>org.jetbrains.kotlin</groupId>
+    <artifactId>kotlin-annotation-processing-gradle</artifactId>
+    <version>1.8.22</version>
+  </dependency>
+  <dependency>
+    <groupId>org.jetbrains.kotlin</groupId>
     <artifactId>kotlin-compiler-embeddable</artifactId>
     <version>1.8.22</version>
   </dependency>
@@ -303,6 +314,11 @@ all modules and does not describe the project structure per-subproject.
   <dependency>
     <groupId>org.jetbrains.kotlin</groupId>
     <artifactId>kotlin-scripting-compiler-embeddable</artifactId>
+    <version>1.8.22</version>
+  </dependency>
+  <dependency>
+    <groupId>org.jetbrains.kotlin</groupId>
+    <artifactId>kotlin-stdlib</artifactId>
     <version>1.8.22</version>
   </dependency>
   <dependency>
