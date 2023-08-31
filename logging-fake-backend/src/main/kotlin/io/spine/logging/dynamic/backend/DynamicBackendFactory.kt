@@ -42,7 +42,7 @@ import com.google.common.flogger.backend.system.SimpleBackendFactory
  * More importantly, they need those stubs [typed][TypedBackendFactory] to access
  * their “enriched” API.
  *
- * This factory uses [SimpleBackendFactory] as a fall-back options,
+ * This factory uses [SimpleBackendFactory] as a fall-back option,
  * when no custom [delegate] is specified.
  *
  * The type is public because it is used in a public inline method.
