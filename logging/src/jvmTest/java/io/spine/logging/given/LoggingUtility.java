@@ -30,7 +30,7 @@ import io.spine.logging.Logger;
 import io.spine.logging.LoggingFactory;
 
 /**
- * A test dummy utility class that gets a logger using
+ * A test utility class that gets a logger using
  * {@link LoggingFactory#forEnclosingClass() LoggingFactory.forEnclosingClass()}.
  */
 public final class LoggingUtility {
@@ -44,9 +44,31 @@ public final class LoggingUtility {
     }
 
     /**
-     * Logs the given message on behalf of this utility.
+     * Returns a logger used by this utility.
      */
-    public static void logFromStaticMethod(String message) {
-        logger.atInfo().log(() -> message);
+    public static Logger<?> usedLogger() {
+        return logger;
+    }
+
+    /**
+     * A nested test utility class that gets a logger using
+     * {@link LoggingFactory#forEnclosingClass() LoggingFactory.forEnclosingClass()}.
+     */
+    public static final class NestedUtility {
+
+        private static final Logger<?> logger = LoggingFactory.forEnclosingClass();
+
+        /**
+         * Prevents instantiation of this utility class.
+         */
+        private NestedUtility() {
+        }
+
+        /**
+         * Returns a logger used by this utility.
+         */
+        public static Logger<?> usedLogger() {
+            return logger;
+        }
     }
 }

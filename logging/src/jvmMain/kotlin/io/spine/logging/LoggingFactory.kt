@@ -28,6 +28,7 @@ package io.spine.logging
 
 import com.google.common.flogger.FluentLogger2
 import com.google.common.flogger.backend.Platform
+import com.google.common.flogger.util.CallerFinder
 import kotlin.reflect.KClass
 
 /**
@@ -95,7 +96,13 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
     }
 
     @JvmStatic
+    @Suppress("UNCHECKED_CAST") // `JvmLogger` is casted to `Logger<API>`.
     public actual fun <API : LoggingApi<API>> forEnclosingClass(): Logger<API> {
-        return loggerFor(this::class)
+        val factoryClass = LoggingFactory::class.java
+        val callerStackElement = CallerFinder.findCallerOf(factoryClass, 0)
+        val callerClassName = callerStackElement!!.className
+        val callerClass = Class.forName(callerClassName)
+        val result = get(callerClass) as Logger<API>
+        return result
     }
 }

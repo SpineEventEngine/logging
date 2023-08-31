@@ -24,8 +24,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-@file:Suppress("UNUSED_VARIABLE") // for source sets.
-
 import io.spine.internal.dependency.Guava
 import io.spine.internal.dependency.JUnit
 import io.spine.internal.dependency.Kotest
@@ -88,7 +86,7 @@ kotlin {
         val jvmTest by getting {
             dependencies {
                 implementation(project(":logging-testutil"))
-                implementation(project(":flogger-system-backend"))
+                implementation(project(":logging-fake-backend"))
                 implementation(Spine.testlib) {
                     exclude(group = "com.google.flogger")
                 }
@@ -101,7 +99,7 @@ kotlin {
 }
 
 detekt {
-    source = files(
+    source.from(
         "src/commonMain",
         "src/jvmMain"
     )

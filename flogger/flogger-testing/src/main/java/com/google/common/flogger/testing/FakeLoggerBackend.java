@@ -38,18 +38,23 @@ public final class FakeLoggerBackend extends LoggerBackend {
   private final List<LogData> unmodifiableLogged = unmodifiableList(logged);
 
   /**
-   * Returns a fake backend with a fixed name. Use this constructor by default unless your tests
-   * care about the backend's name (which in general, they shouldn't).
+   * Returns a fake backend with a fixed name.
+   *
+   * <p>Use this constructor by default unless your tests care about
+   * the backend's name (which in general, they shouldn't).
    */
   public FakeLoggerBackend() {
     this("com.example.MyClass");
   }
 
   /**
-   * Returns a fake backend with the given name. Use this constructor only if your tests care about
-   * the backend's name (which in general, they shouldn't).
+   * Returns a fake backend with the given name.
+   *
+   * <p>Use this constructor only if your tests care about the backend's name.
+   * For example, when testing a logger factory that should create logger for
+   * the given class. Then the class name is used for backend name.
    */
-  private FakeLoggerBackend(String name) {
+  public FakeLoggerBackend(String name) {
     this.name = checkNotNull(name, "name");
   }
 

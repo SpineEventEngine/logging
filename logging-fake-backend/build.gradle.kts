@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,48 +24,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-    }
+import io.spine.internal.dependency.AutoService
+
+plugins {
+    `jvm-module`
+
+    /**
+     * Although, Kapt is being replaced with KSP now, the official implementation
+     * of AutoService for KSP is not available yet.
+     *
+     * See [KSP Implementation of AutoService](https://github.com/google/auto/issues/882).
+     */
+    `kotlin-kapt`
 }
 
-rootProject.name = "spine-logging"
-
-include(
-    "logging",
-    "logging-backend",
-    "logging-context",
-    "logging-testutil",
-    "logging-fake-backend",
-)
-
-includeTest(
-    "fixtures",
-    "jvm-our-backend-our-context",
-    "jvm-our-backend-grpc-context",
-    "jvm-log4j-backend-our-context",
-    "jvm-slf4j-jdk14-backend-our-context",
-    "jvm-slf4j-reload4j-backend-our-context",
-    "logging-smoke-test",
-)
-
-includeFlogger(
-    "flogger-api",
-    "flogger-testing",
-    "flogger-platform-generator",
-    "flogger-system-backend",
-    "flogger-log4j2-backend",
-    "flogger-grpc-context",
-)
-
-fun includeTest(vararg names: String) = names.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("tests/$name")
-}
-
-fun includeFlogger(vararg names: String) = names.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("flogger/$name")
+dependencies {
+    implementation(project(":flogger-api"))
+    implementation(project(":flogger-system-backend"))
+    implementation(project(":flogger-testing"))
+    implementation(AutoService.annotations)
+    kapt(AutoService.processor)
 }

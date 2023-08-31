@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,48 +24,29 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
+package io.spine.logging.given;
+
+import io.spine.logging.Logger;
+import io.spine.logging.LoggingFactory;
+
+/**
+ * A test utility class that gets a logger using
+ * {@link LoggingFactory#forEnclosingClass() LoggingFactory.forEnclosingClass()}.
+ */
+public final class LoggingUtilityA {
+
+    private static final Logger<?> logger = LoggingFactory.forEnclosingClass();
+
+    /**
+     * Prevents instantiation of this utility class.
+     */
+    private LoggingUtilityA() {
     }
-}
 
-rootProject.name = "spine-logging"
-
-include(
-    "logging",
-    "logging-backend",
-    "logging-context",
-    "logging-testutil",
-    "logging-fake-backend",
-)
-
-includeTest(
-    "fixtures",
-    "jvm-our-backend-our-context",
-    "jvm-our-backend-grpc-context",
-    "jvm-log4j-backend-our-context",
-    "jvm-slf4j-jdk14-backend-our-context",
-    "jvm-slf4j-reload4j-backend-our-context",
-    "logging-smoke-test",
-)
-
-includeFlogger(
-    "flogger-api",
-    "flogger-testing",
-    "flogger-platform-generator",
-    "flogger-system-backend",
-    "flogger-log4j2-backend",
-    "flogger-grpc-context",
-)
-
-fun includeTest(vararg names: String) = names.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("tests/$name")
-}
-
-fun includeFlogger(vararg names: String) = names.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("flogger/$name")
+    /**
+     * Returns a logger used by this utility.
+     */
+    public static Logger<?> usedLogger() {
+        return logger;
+    }
 }

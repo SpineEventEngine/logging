@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,48 +24,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-    }
-}
+package io.spine.logging.dynamic.backend
 
-rootProject.name = "spine-logging"
+import com.google.common.flogger.testing.FakeLoggerBackend
 
-include(
-    "logging",
-    "logging-backend",
-    "logging-context",
-    "logging-testutil",
-    "logging-fake-backend",
-)
+/**
+ * A factory of [FakeLoggerBackend].
+ *
+ *  The type is public because it is used in a public inline method.
+ */
+public class FakeLoggerBackendFactory : TypedBackendFactory<FakeLoggerBackend> {
 
-includeTest(
-    "fixtures",
-    "jvm-our-backend-our-context",
-    "jvm-our-backend-grpc-context",
-    "jvm-log4j-backend-our-context",
-    "jvm-slf4j-jdk14-backend-our-context",
-    "jvm-slf4j-reload4j-backend-our-context",
-    "logging-smoke-test",
-)
-
-includeFlogger(
-    "flogger-api",
-    "flogger-testing",
-    "flogger-platform-generator",
-    "flogger-system-backend",
-    "flogger-log4j2-backend",
-    "flogger-grpc-context",
-)
-
-fun includeTest(vararg names: String) = names.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("tests/$name")
-}
-
-fun includeFlogger(vararg names: String) = names.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("flogger/$name")
+    override fun create(loggingClassName: String): FakeLoggerBackend =
+        FakeLoggerBackend(loggingClassName)
 }

@@ -46,7 +46,7 @@ dependencies {
     testImplementation("org.mockito:mockito-core:4.11.0")
     Truth.libs.forEach { testImplementation(it) }
 
-    testImplementation(AutoService.processor)
+    testImplementation(AutoService.annotations)
     testAnnotationProcessor(AutoService.processor)
 }
 
