@@ -39,7 +39,7 @@ import com.google.common.flogger.backend.system.BackendFactory
  * don't have any constructors at all.
  *
  * Until [KT-25892](https://youtrack.jetbrains.com/issue/KT-25892/Allow-objects-to-be-loaded-via-ServiceLoader-or-similar-API)
- * is implemented, we need a proxy class for object services.
+ * is implemented, we need an adapter for object services.
  *
  * An explicit delegation can't be applied here because [BackendFactory] is a class.
  * Thus, the following snippet fails to compile:
@@ -55,5 +55,5 @@ public class DynamicBackendFactoryService : BackendFactory() {
     override fun create(loggingClassName: String): LoggerBackend =
         DynamicBackendFactory.create(loggingClassName)
 
-    override fun toString(): String = DynamicBackendFactory.toString()
+    override fun toString(): String = "Java Service adapter for `$DynamicBackendFactory`"
 }
