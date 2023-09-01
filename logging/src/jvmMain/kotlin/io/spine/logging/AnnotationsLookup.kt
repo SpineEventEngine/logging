@@ -119,38 +119,3 @@ public class AnnotatedPackagesLookup<T : Annotation>(
     private fun updateKnownPackages(traversedPackages: Collection<Pair<PackageName, T?>>) =
         traversedPackages.forEach { knownPackages[it.first] = it.second }
 }
-
-/**
- * During the sorting, parent packages go first.
- */
-public fun main() {
-    val packages = listOf(
-        "io.spine.logging.domain",
-        "io.spine.logging.adapter",
-        "io.spine.logging",
-        "io.spine.logging.context.filter",
-        "io.spine"
-    )
-    println(packages.sorted())
-    /*
-    io.spine,
-    io.spine.logging,
-    io.spine.logging.adapter,
-    io.spine.logging.context.filter,
-    io.spine.logging.domain
-     */
-}
-
-// For example: io.spine.logging.domain
-
-// Case 1: `io` is annotated.
-// io, io.spine, io.spine.logging, io.spine.logging.domain
-
-// Case 2: `io.spine` is annotated.
-// io.spine, io.spine.logging, io.spine.logging.domain
-
-// Case 3: `io.spine.logging` is annotated.
-// io.spine.logging, io.spine.logging.domain
-
-// Case 4: `io.spine.logging.domain` is annotated.
-// io.spine.logging.domain
