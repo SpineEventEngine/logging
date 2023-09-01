@@ -31,21 +31,21 @@ import kotlin.reflect.KClass
 private typealias PackageName = String
 
 /**
- * Locates annotations of type [T] for the requested packages.
+ * Locates annotations of type [T] for the asked packages.
  *
  * This lookup is similar to [AnnotatedPackages][io.spine.reflect.AnnotatedPackages].
  *
  * [AnnotatedPackages][io.spine.reflect.AnnotatedPackages] eagerly traverses
  * all loaded packages during the instance creation. It looks for ones
  * that are annotated with the given annotation type, remembers them,
- * and then allows retrieving of an annotation for the requested package.
+ * and then allows retrieving of an annotation for the asked package.
  *
  * But as more classes are loaded by the classloader, more new packages appear.
  * As a result, data within the collection become insufficient. An instance
  * doesn't know about every currently loaded package.
  *
  * This implementation performs searching on demand. It does the actual search
- * for packages that are requested the first time. The search result is remembered,
+ * for packages that are asked the first time. The search result is remembered,
  * so consequent requests for previously searched packages don't need
  * an actual search.
  */
@@ -66,7 +66,7 @@ public class AnnotationsLookup<T : Annotation>(
     private val knownPackages = hashMapOf<PackageName, T?>()
 
     /**
-     * Returns annotation of type [T] that is applied to the given [requestedPackage],
+     * Returns annotation of type [T] that is applied to the given [askedPackage],
      * or any of its parental packages.
      *
      * This method considers the following cases:
@@ -83,12 +83,12 @@ public class AnnotationsLookup<T : Annotation>(
      * If, for example, two [Package]s with the same name are both annotated with [T],
      * the method will just return the first found one.
      */
-    public fun getFor(requestedPackage: Package): T? {
-        val packageName = requestedPackage.name
+    public fun getFor(askedPackage: Package): T? {
+        val packageName = askedPackage.name
         val isPackageUnknown = knownPackages.contains(packageName).not()
 
         if (isPackageUnknown) {
-            val annotation = requestedPackage.findAnnotation(annotationClass)
+            val annotation = askedPackage.findAnnotation(annotationClass)
             if (annotation != null) {
                 // The simplest case is when the package itself is annotated.
                 knownPackages[packageName] = annotation
@@ -104,19 +104,19 @@ public class AnnotationsLookup<T : Annotation>(
     }
 
     /**
-     * Searches for the nearest parent of the [requestedPackage]
+     * Searches for the nearest parent of the [askedPackage]
      * that is annotated with [T].
      *
      * Returns all parental packages that have been checked for presence of [T],
-     * starting from the direct parent of [requestedPackage] down to the one,
+     * starting from the direct parent of [askedPackage] down to the one,
      * that is annotated with [T]. Information about the checked packages will be
      * cached for consequent requests.
      *
      * If no parent has [T] applied, [SearchResult.foundAnnotation] will contain `null`.
-     * And [SearchResult.checkedParents] will contain all parents of the [requestedPackage].
+     * And [SearchResult.checkedParents] will contain all parents of the [askedPackage].
      */
-    private fun searchWithinParents(requestedPackage: PackageName): SearchResult<T> {
-        val parentalPackages = parentalPackages(requestedPackage)
+    private fun searchWithinParents(askedPackage: PackageName): SearchResult<T> {
+        val parentalPackages = parentalPackages(askedPackage)
         val checkedParents = mutableListOf<PackageName>()
         var foundAnnotation: T? = null
 
@@ -135,13 +135,13 @@ public class AnnotationsLookup<T : Annotation>(
 
     /**
      * Iterates through the all currently loaded packages
-     * to find parents of the [requestedPackage].
+     * to find parents of the [askedPackage].
      */
-    private fun parentalPackages(requestedPackage: PackageName): List<Package> {
+    private fun parentalPackages(askedPackage: PackageName): List<Package> {
         val currentlyLoadedPackages = Package.getPackages()
         val parentalPackages = currentlyLoadedPackages
-            .filter { requestedPackage.startsWith(it.name) }
-            .filter { it.name != requestedPackage }
+            .filter { askedPackage.startsWith(it.name) }
+            .filter { it.name != askedPackage }
             .sortedByDescending { it.name.length }
         return parentalPackages
     }
