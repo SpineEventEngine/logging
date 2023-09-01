@@ -55,6 +55,14 @@ public class AnnotationsLookup<T : Annotation>(
      * Type of annotations this lookup can locate.
      */
     private val annotationClass: KClass<T>,
+
+    /**
+     * Provider of the currently loaded packages.
+     *
+     * The default supplier is [Package.getPackages].
+     */
+    private val currentlyLoadedPackages: () -> Iterable<Package> =
+        { Package.getPackages().asIterable() }
 ) {
 
     /**
@@ -138,8 +146,7 @@ public class AnnotationsLookup<T : Annotation>(
      * to find parents of the [askedPackage].
      */
     private fun parentalPackages(askedPackage: PackageName): List<Package> {
-        val currentlyLoadedPackages = Package.getPackages()
-        val parentalPackages = currentlyLoadedPackages
+        val parentalPackages = currentlyLoadedPackages()
             .filter { askedPackage.startsWith(it.name) }
             .filter { it.name != askedPackage }
             .sortedByDescending { it.name.length }
