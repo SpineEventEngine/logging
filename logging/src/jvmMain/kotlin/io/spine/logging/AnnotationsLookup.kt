@@ -44,10 +44,10 @@ private typealias PackageName = String
  * As a result, data within the collection become insufficient. An instance
  * doesn't know about every currently loaded package.
  *
- * This implementation performs searching on demand, and remembers
- * the already visited packages to optimize consequent requests.
- * It works because presence of [Package] instance guarantees
- * that the package is already loaded.
+ * This implementation performs searching on demand. It does the actual search
+ * for packages that are requested the first time. The search result is remembered,
+ * so consequent requests for previously searched packages don't need
+ * an actual search.
  */
 public class AnnotationsLookup<T : Annotation>(
 
@@ -58,15 +58,18 @@ public class AnnotationsLookup<T : Annotation>(
 ) {
 
     /**
+     * Packages for which presence of [T] annotation is already known.
+     *
      * Hash map is quite fast when retrieving values by string key.
+     * So, annotations are mapped to [Package.name] instead of [Package].
      */
     private val knownPackages = hashMapOf<PackageName, T?>()
 
     /**
-     * Returns annotation of type [T] that is applied to the given
-     * [requestedPackage] or any of its parental packages.
+     * Returns annotation of type [T] that is applied to the given [requestedPackage],
+     * or any of its parental packages.
      *
-     * This method considers three general cases:
+     * This method considers the following cases:
      *
      * 1. The given package itself is annotated with [T].
      * The method returns that annotation.
@@ -75,93 +78,84 @@ public class AnnotationsLookup<T : Annotation>(
      * 3. Neither the given package nor any of its parental packages is annotated.
      * The method will return `null`.
      *
-     * Besides the general cases, there is a special: different class loaders
-     * (within the same hierarchy) may load the same package several times.
-     * They put several [Package] instances with the same [Package.name].
-     * Although such is not expected in a typical flow, the method will
-     * report conflicting annotations. It throws [IllegalStateException]
-     * when two or more [Package] instances with the same name are annotated
-     * with [T]. In this case, the method can't surely say whose [T]
-     * should be returned.
+     * Please note, it can happen that different class loaders may load the same
+     * package several times. See docs to [Package.getPackages] for details.
+     * If, for example, two [Package]s with the same name are both annotated with [T],
+     * the method will just return the first found one.
      */
     public fun getFor(requestedPackage: Package): T? {
         val packageName = requestedPackage.name
+        val isPackageUnknown = knownPackages.contains(packageName).not()
 
-        // Map values are nullable, so check the key presence explicitly.
-        val isAlreadyKnown = knownPackages.contains(packageName)
-        if (isAlreadyKnown) {
-            return knownPackages[packageName]
+        if (isPackageUnknown) {
+            val annotation = requestedPackage.findAnnotation(annotationClass)
+            if (annotation != null) {
+                // The simplest case is when the package itself is annotated.
+                knownPackages[packageName] = annotation
+            } else {
+                // Otherwise, the method has to search it within the parental packages.
+                val searchResult = searchWithinParents(packageName)
+                val packagesToUpdate = searchResult.checkedParents + packageName
+                updateKnownPackages(packagesToUpdate, searchResult.foundAnnotation)
+            }
         }
-
-        val scannedPackages = scan(requestedPackage)
-        updateKnownPackages(scannedPackages)
 
         return knownPackages[packageName]
     }
 
-    private fun scan(requestedPackage: Package): Collection<Pair<PackageName, T?>> {
-
-        val packageName = requestedPackage.name
-
-        // Case 1: the package itself IS annotated.
-        // Return only the requested package along with the applied annotation.
-
-        // Case 2: the package itself is NOT annotated, but it may have an annotated parent.
-        // Let's go up the package hierarchy to find the closest annotated package.
-
-        // P.S. Cases 1 AND 2 have been merged. As implementation of case 2 also covers case 1.
-
-        // Packages are loaded along with classes.
-        // The number of loaded packages may increase as the program runs.
-        val allLoadedPackages = Package.getPackages()
-
-        // Find all parental packages along with the requested one.
-        // The closest ones go first.
-        val parentalPackages = allLoadedPackages.filter { packageName.startsWith(it.name) }
-            .sortedByDescending { it.name.length }
-
-        // We will stop traversing upon the first occurrence of the wanted annotation.
-        // If found, all already traversed packages will inherit the found annotation.
-        val alreadyVisited = mutableListOf<PackageName>()
+    /**
+     * Searches for the nearest parent of the [requestedPackage]
+     * that is annotated with [T].
+     *
+     * Returns all parental packages that have been checked for presence of [T],
+     * starting from the direct parent of [requestedPackage] down to the one,
+     * that is annotated with [T]. Information about the checked packages will be
+     * cached for consequent requests.
+     *
+     * If no parent has [T] applied, [SearchResult.foundAnnotation] will contain `null`.
+     * And [SearchResult.checkedParents] will contain all parents of the [requestedPackage].
+     */
+    private fun searchWithinParents(requestedPackage: PackageName): SearchResult<T> {
+        val parentalPackages = parentalPackages(requestedPackage)
+        val checkedParents = mutableListOf<PackageName>()
         var foundAnnotation: T? = null
-        for (parentalPackage in parentalPackages) {
-            @Suppress("UNCHECKED_CAST") // Cast to `annotationClass` type is safe.
-            val appliedAnnotation = parentalPackage.annotations
-                .firstOrNull { annotationClass.isInstance(it) } as T?
-            val name = parentalPackage.name
-            alreadyVisited.add(name)
 
-            if (appliedAnnotation != null) {
-                foundAnnotation = appliedAnnotation
+        for (parentPackage in parentalPackages) {
+            val annotation = parentPackage.findAnnotation(annotationClass)
+            checkedParents.add(parentPackage.name)
+            if (annotation != null) {
+                foundAnnotation = annotation
                 break
             }
         }
 
-        // If found, all traversed will get the found one. Otherwise, they will get `null`.
-        val traversedPackages = alreadyVisited.map { it to foundAnnotation }
-
-        // Covers a case, when the same package is loaded from different classloaders,
-        // and they both are annotated. Whose annotation should be returned?
-
-        // In general, it is a possible case, which we don't support explicitly.
-        // If there are several packages with the same name, and only one of them
-        // is annotated – that annotation would be returned.
-
-        // But if there are two or more same-named packages are annotated, we would throw.
-        // It is unclear whose annotation should be returned.
-
-        val conflictingDuplicates = traversedPackages.groupBy({ it.first }, { it.second })
-            .filter { it.value.filterNotNull().size > 1 }
-            .filter { it.value.size > it.value.distinct().size }
-        check(conflictingDuplicates.isEmpty()) {
-            "The same package is loaded several times from different classloaders, " +
-                    "and two or more of them are annotated with `@${annotationClass.simpleName}`."
-        }
-
-        // At this stage we have done out best.
-        return traversedPackages
+        val result = SearchResult(checkedParents, foundAnnotation)
+        return result
     }
 
-    private fun updateKnownPackages(traversedPackages: Collection<Pair<PackageName, T?>>) =
-        traversedPackages.forEach { knownPackages[it.first] = it.second }
+    /**
+     * Iterates through the all currently loaded packages
+     * to find parents of the [requestedPackage].
+     */
+    private fun parentalPackages(requestedPackage: PackageName): List<Package> {
+        val currentlyLoadedPackages = Package.getPackages()
+        val parentalPackages = currentlyLoadedPackages
+            .filter { requestedPackage.startsWith(it.name) }
+            .filter { it.name != requestedPackage }
+            .sortedByDescending { it.name.length }
+        return parentalPackages
+    }
+
+    private fun updateKnownPackages(packages: List<PackageName>, annotation: T?) =
+        packages.forEach { knownPackages[it] = annotation }
+
+    private class SearchResult<T : Annotation>(
+        val checkedParents: List<PackageName>,
+        val foundAnnotation: T?
+    )
+}
+
+private fun <T: Annotation> Package.findAnnotation(annotationClass: KClass<in T>): T? {
+    @Suppress("UNCHECKED_CAST") // Cast to `annotationClass` is safe.
+    return annotations.firstOrNull { annotationClass.isInstance(it) } as T?
 }
