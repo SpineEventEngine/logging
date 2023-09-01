@@ -45,9 +45,9 @@ private typealias PackageName = String
  * doesn't know about every currently loaded package.
  *
  * This implementation performs searching on demand. It does the actual search
- * for packages that are asked the first time. The search result is remembered,
- * so consequent requests for previously searched packages don't need
- * an actual search.
+ * for packages that are asked for the first time. The search result is
+ * remembered, so consequent requests for the previously searched packages
+ * don't need an actual search.
  */
 public class AnnotationsLookup<T : Annotation>(
 
