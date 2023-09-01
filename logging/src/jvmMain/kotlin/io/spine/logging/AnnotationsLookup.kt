@@ -30,14 +30,59 @@ import kotlin.reflect.KClass
 
 private typealias PackageName = String
 
+/**
+ * Locates annotations of type [T] for the requested packages.
+ *
+ * This lookup is similar to [AnnotatedPackages][io.spine.reflect.AnnotatedPackages].
+ *
+ * [AnnotatedPackages][io.spine.reflect.AnnotatedPackages] eagerly traverses
+ * all loaded packages during the instance creation. It looks for ones
+ * that are annotated with the given annotation type, remembers them,
+ * and then allows retrieving of an annotation for the requested package.
+ *
+ * But as more classes are loaded by the classloader, more new packages appear.
+ * As a result, data within the collection become insufficient. An instance
+ * doesn't know about every currently loaded package.
+ *
+ * This implementation performs searching on demand, and remembers
+ * the already visited packages to optimize consequent requests.
+ * It works because presence of [Package] instance guarantees
+ * that the package is already loaded.
+ */
 public class AnnotationsLookup<T : Annotation>(
+
+    /**
+     * Type of annotations this lookup can locate.
+     */
     private val annotationClass: KClass<T>,
 ) {
 
+    /**
+     * Hash map is quite fast when retrieving values by string key.
+     */
     private val knownPackages = hashMapOf<PackageName, T?>()
 
     /**
-     * `java.lang.Package` doesn't have a counterpart in Kotlin.
+     * Returns annotation of type [T] that is applied to the given
+     * [requestedPackage] or any of its parental packages.
+     *
+     * This method considers three general cases:
+     *
+     * 1. The given package itself is annotated with [T].
+     * The method returns that annotation.
+     * 2. The given package is NOT annotated, but one of the parental packages is.
+     * The method returns annotation of the closest annotated parent.
+     * 3. Neither the given package nor any of its parental packages is annotated.
+     * The method will return `null`.
+     *
+     * Besides the general cases, there is a special: different class loaders
+     * (within the same hierarchy) may load the same package several times.
+     * They put several [Package] instances with the same [Package.name].
+     * Although such is not expected in a typical flow, the method will
+     * report conflicting annotations. It throws [IllegalStateException]
+     * when two or more [Package] instances with the same name are annotated
+     * with [T]. In this case, the method can't surely say whose [T]
+     * should be returned.
      */
     public fun getFor(requestedPackage: Package): T? {
         val packageName = requestedPackage.name
