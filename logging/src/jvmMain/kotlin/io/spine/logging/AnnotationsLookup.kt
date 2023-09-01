@@ -30,7 +30,7 @@ import kotlin.reflect.KClass
 
 private typealias PackageName = String
 
-public class AnnotatedPackagesLookup<T : Annotation>(
+public class AnnotationsLookup<T : Annotation>(
     private val annotationClass: KClass<T>,
 ) {
 
@@ -39,9 +39,10 @@ public class AnnotatedPackagesLookup<T : Annotation>(
     /**
      * `java.lang.Package` doesn't have a counterpart in Kotlin.
      */
-    public fun search(requestedPackage: Package): T? {
+    public fun getFor(requestedPackage: Package): T? {
         val packageName = requestedPackage.name
 
+        // Map values are nullable, so check the key presence explicitly.
         val isAlreadyKnown = knownPackages.contains(packageName)
         if (isAlreadyKnown) {
             return knownPackages[packageName]
