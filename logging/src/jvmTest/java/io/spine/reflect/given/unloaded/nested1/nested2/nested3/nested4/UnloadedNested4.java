@@ -24,7 +24,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-@TestAnnotation(anchor = Nested2.class)
-package io.spine.reflect.given.nested1.nested2;
+package io.spine.reflect.given.unloaded.nested1.nested2.nested3.nested4;
 
-import io.spine.reflect.given.TestAnnotation;
+public class UnloadedNested4 {
+
+}

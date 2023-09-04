@@ -24,7 +24,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-@TestAnnotation(anchor = Nested2.class)
-package io.spine.reflect.given.nested1.nested2;
+package io.spine.reflect.given;
 
-import io.spine.reflect.given.TestAnnotation;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Repeatable;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target(ElementType.PACKAGE)
+@Retention(RetentionPolicy.RUNTIME)
+@Repeatable(TestAnnotationContainer.class)
+public @interface RepeatableTestAnnotation {
+
+}

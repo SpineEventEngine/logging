@@ -24,15 +24,4 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.reflect.given;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-@Target(ElementType.PACKAGE)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface LookupTestPackage {
-    Class<?> anchor();
-}
+package io.spine.reflect.given.unloaded.nested1.nested2.nested3.nested4;
