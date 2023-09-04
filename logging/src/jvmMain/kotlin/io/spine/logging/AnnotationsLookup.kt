@@ -31,7 +31,7 @@ import kotlin.reflect.KClass
 private typealias PackageName = String
 
 /**
- * Locates annotations of type [T] for the asked packages.
+ * Locates an annotation of type [T] for the asked package, if any.
  *
  * This lookup is similar to [AnnotatedPackages][io.spine.reflect.AnnotatedPackages].
  *
@@ -44,10 +44,10 @@ private typealias PackageName = String
  * As a result, data within the collection become insufficient. An instance
  * doesn't know about every currently loaded package.
  *
- * This implementation performs searching on demand. It does the actual search
- * for packages that are asked for the first time. The search result is
- * remembered, so consequent requests for the previously searched packages
- * don't need an actual search.
+ * This implementation performs searching on demand with caching. It does
+ * the actual search for packages that are asked for the first time.
+ * The search result is remembered, so consequent requests for the previously
+ * searched packages don't need an actual search.
  */
 public class AnnotationsLookup<T : Annotation>(
 
@@ -68,7 +68,7 @@ public class AnnotationsLookup<T : Annotation>(
     /**
      * Packages for which presence of [T] annotation is already known.
      *
-     * Hash map is quite fast when retrieving values by string key.
+     * Hash map is fast when retrieving values by string key.
      * So, annotations are mapped to [Package.name] instead of [Package].
      */
     private val knownPackages = hashMapOf<PackageName, T?>()
@@ -117,8 +117,7 @@ public class AnnotationsLookup<T : Annotation>(
      *
      * Returns all parental packages that have been checked for presence of [T],
      * starting from the direct parent of [askedPackage] down to the one,
-     * that is annotated with [T]. Information about the checked packages will be
-     * cached for consequent requests.
+     * that is annotated with [T].
      *
      * If no parent has [T] applied, [SearchResult.foundAnnotation] will contain `null`.
      * And [SearchResult.checkedParents] will contain all parents of the [askedPackage].
@@ -162,7 +161,7 @@ public class AnnotationsLookup<T : Annotation>(
     )
 }
 
-private fun <T: Annotation> Package.findAnnotation(annotationClass: KClass<in T>): T? {
+private fun <T: Annotation> Package.findAnnotation(annotationClass: Class<in T>): T? {
     @Suppress("UNCHECKED_CAST") // Cast to `annotationClass` is safe.
     return annotations.firstOrNull { annotationClass.isInstance(it) } as T?
 }
