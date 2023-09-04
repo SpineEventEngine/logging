@@ -91,7 +91,7 @@ public class PackageAnnotationLookup<T : Annotation>(
     }
 
     /**
-     * Returns annotation of type [T] that is applied to the given [package],
+     * Returns annotation of type [T] that is applied to the given [pkg],
      * or any of its parental packages.
      *
      * This method considers the following cases:
@@ -108,12 +108,12 @@ public class PackageAnnotationLookup<T : Annotation>(
      * If, for example, two [Package]s with the same name are both annotated with [T],
      * the method will just return the first found one.
      */
-    public fun getFor(`package`: Package): T? {
-        val packageName = `package`.name
+    public fun getFor(pkg: Package): T? {
+        val packageName = pkg.name
         val isPackageUnknown = knownPackages.contains(packageName).not()
 
         if (isPackageUnknown) {
-            val annotation = `package`.getAnnotation(annotationClass)
+            val annotation = pkg.getAnnotation(annotationClass)
             if (annotation != null) {
                 // The simplest case is when the package itself is annotated.
                 knownPackages[packageName] = annotation
@@ -129,18 +129,18 @@ public class PackageAnnotationLookup<T : Annotation>(
     }
 
     /**
-     * Searches for the nearest parent of the [package]
+     * Searches for the nearest parent of the [pkg]
      * that is annotated with [T].
      *
      * Returns all parental packages that have been checked for presence of [T],
-     * starting from the direct parent of [package] down to the one,
+     * starting from the direct parent of [pkg] down to the one,
      * that is annotated with [T].
      *
      * If no parent has [T] applied, [SearchResult.foundAnnotation] will contain `null`.
-     * And [SearchResult.checkedParents] will contain all parents of the [package].
+     * And [SearchResult.checkedParents] will contain all parents of the [pkg].
      */
-    private fun searchWithinParents(`package`: PackageName): SearchResult<T> {
-        val parentalPackages = parentalPackages(`package`)
+    private fun searchWithinParents(pkg: PackageName): SearchResult<T> {
+        val parentalPackages = parentalPackages(pkg)
         val checkedParents = mutableListOf<PackageName>()
         var foundAnnotation: T? = null
 
@@ -159,18 +159,15 @@ public class PackageAnnotationLookup<T : Annotation>(
 
     /**
      * Iterates through the all currently loaded packages
-     * to find parents of the [package].
+     * to find parents of the [pkg].
      */
-    private fun parentalPackages(`package`: PackageName): Map<PackageName, Package?> {
+    private fun parentalPackages(pkg: PackageName): Map<PackageName, Package?> {
         val alreadyLoadedParents = currentlyLoadedPackages()
-            .filter { `package`.startsWith(it.name) }
-            .filter { it.name != `package` }
+            .filter { pkg.startsWith(it.name) }
+            .filter { it.name != pkg }
             .sortedByDescending { it.name.length }
-        val expectedParents = expectedParents(`package`)
+        val expectedParents = expectedParents(pkg)
         val currentlyLoadedParents = loadAbsentParents(expectedParents, alreadyLoadedParents)
-        currentlyLoadedParents.forEach { t, u ->
-            println("$t: $u")
-        }
         return currentlyLoadedParents
     }
 
@@ -185,7 +182,7 @@ public class PackageAnnotationLookup<T : Annotation>(
             } else {
                 val packageInfo: Class<*>? = try {
                     Class.forName("$name.package-info")
-                } catch (e: ClassNotFoundException) {
+                } catch (_: ClassNotFoundException) {
                     null
                 }
                 name to packageInfo?.`package`
@@ -193,10 +190,10 @@ public class PackageAnnotationLookup<T : Annotation>(
         }.toMap() // The returned map preserves the iteration order.
     }
 
-    private fun expectedParents(`package`: PackageName): List<PackageName> {
-        val allParents = `package`.mapIndexed { index, c ->
+    private fun expectedParents(pkg: PackageName): List<PackageName> {
+        val allParents = pkg.mapIndexed { index, c ->
             if (c == '.') {
-                `package`.substring(0, index)
+                pkg.substring(0, index)
             } else {
                 null
             }
