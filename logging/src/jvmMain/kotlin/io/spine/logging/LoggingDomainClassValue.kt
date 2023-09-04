@@ -44,7 +44,7 @@ import kotlin.reflect.full.findAnnotation
  */
 internal object LoggingDomainClassValue: ClassValue<LoggingDomain>() {
 
-    private val jvmLoggingDomains = AnnotationsLookup(JvmLoggingDomain::class.java)
+    private val jvmLoggingDomains = PackageAnnotationLookup(JvmLoggingDomain::class.java)
 
     internal fun get(cls: KClass<*>) = get(cls.java)
 

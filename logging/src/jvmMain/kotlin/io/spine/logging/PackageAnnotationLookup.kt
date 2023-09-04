@@ -26,6 +26,10 @@
 
 package io.spine.logging
 
+import java.lang.annotation.ElementType
+import java.lang.annotation.Repeatable
+import java.lang.annotation.Target
+
 private typealias PackageName = String
 
 /**
@@ -47,7 +51,7 @@ private typealias PackageName = String
  * The search result is remembered, so consequent requests for the previously
  * searched packages don't need an actual search.
  */
-public class AnnotationsLookup<T : Annotation>(
+public class PackageAnnotationLookup<T : Annotation>(
 
     /**
      * Type of annotations this lookup can locate.
@@ -71,8 +75,23 @@ public class AnnotationsLookup<T : Annotation>(
      */
     private val knownPackages = hashMapOf<PackageName, T?>()
 
+    init {
+        val annotations = annotationClass.annotations
+
+        require(annotations.all { it.annotationClass != Repeatable::class }) {
+            "The configured annotation should NOT be repeatable."
+        }
+
+        val target = annotations.firstOrNull { it.annotationClass == Target::class } as Target?
+        if (target != null) { // Not present `@Target` allows applying to packages.
+            require(target.value.contains(ElementType.PACKAGE)) {
+                "The configured annotation should be applicable to packages."
+            }
+        }
+    }
+
     /**
-     * Returns annotation of type [T] that is applied to the given [askedPackage],
+     * Returns annotation of type [T] that is applied to the given [package],
      * or any of its parental packages.
      *
      * This method considers the following cases:
@@ -89,12 +108,12 @@ public class AnnotationsLookup<T : Annotation>(
      * If, for example, two [Package]s with the same name are both annotated with [T],
      * the method will just return the first found one.
      */
-    public fun getFor(askedPackage: Package): T? {
-        val packageName = askedPackage.name
+    public fun getFor(`package`: Package): T? {
+        val packageName = `package`.name
         val isPackageUnknown = knownPackages.contains(packageName).not()
 
         if (isPackageUnknown) {
-            val annotation = askedPackage.findAnnotation(annotationClass)
+            val annotation = `package`.getAnnotation(annotationClass)
             if (annotation != null) {
                 // The simplest case is when the package itself is annotated.
                 knownPackages[packageName] = annotation
@@ -110,24 +129,24 @@ public class AnnotationsLookup<T : Annotation>(
     }
 
     /**
-     * Searches for the nearest parent of the [askedPackage]
+     * Searches for the nearest parent of the [package]
      * that is annotated with [T].
      *
      * Returns all parental packages that have been checked for presence of [T],
-     * starting from the direct parent of [askedPackage] down to the one,
+     * starting from the direct parent of [package] down to the one,
      * that is annotated with [T].
      *
      * If no parent has [T] applied, [SearchResult.foundAnnotation] will contain `null`.
-     * And [SearchResult.checkedParents] will contain all parents of the [askedPackage].
+     * And [SearchResult.checkedParents] will contain all parents of the [package].
      */
-    private fun searchWithinParents(askedPackage: PackageName): SearchResult<T> {
-        val parentalPackages = parentalPackages(askedPackage)
+    private fun searchWithinParents(`package`: PackageName): SearchResult<T> {
+        val parentalPackages = parentalPackages(`package`)
         val checkedParents = mutableListOf<PackageName>()
         var foundAnnotation: T? = null
 
         for (parentPackage in parentalPackages) {
-            val annotation = parentPackage.findAnnotation(annotationClass)
-            checkedParents.add(parentPackage.name)
+            val annotation = parentPackage.value?.getAnnotation(annotationClass)
+            checkedParents.add(parentPackage.key)
             if (annotation != null) {
                 foundAnnotation = annotation
                 break
@@ -140,14 +159,50 @@ public class AnnotationsLookup<T : Annotation>(
 
     /**
      * Iterates through the all currently loaded packages
-     * to find parents of the [askedPackage].
+     * to find parents of the [package].
      */
-    private fun parentalPackages(askedPackage: PackageName): List<Package> {
-        val parentalPackages = currentlyLoadedPackages()
-            .filter { askedPackage.startsWith(it.name) }
-            .filter { it.name != askedPackage }
+    private fun parentalPackages(`package`: PackageName): Map<PackageName, Package?> {
+        val alreadyLoadedParents = currentlyLoadedPackages()
+            .filter { `package`.startsWith(it.name) }
+            .filter { it.name != `package` }
             .sortedByDescending { it.name.length }
-        return parentalPackages
+        val expectedParents = expectedParents(`package`)
+        val currentlyLoadedParents = loadAbsentParents(expectedParents, alreadyLoadedParents)
+        currentlyLoadedParents.forEach { t, u ->
+            println("$t: $u")
+        }
+        return currentlyLoadedParents
+    }
+
+    private fun loadAbsentParents(
+        expectedParents: List<PackageName>,
+        alreadyLoadedParents: List<Package>
+    ): Map<PackageName, Package?> {
+        return expectedParents.mapIndexed { i, name ->
+            val loaded = alreadyLoadedParents.getOrNull(i)
+            if (loaded != null && loaded.name == name) {
+                name to loaded
+            } else {
+                val packageInfo: Class<*>? = try {
+                    Class.forName("$name.package-info")
+                } catch (e: ClassNotFoundException) {
+                    null
+                }
+                name to packageInfo?.`package`
+            }
+        }.toMap() // The returned map preserves the iteration order.
+    }
+
+    private fun expectedParents(`package`: PackageName): List<PackageName> {
+        val allParents = `package`.mapIndexed { index, c ->
+            if (c == '.') {
+                `package`.substring(0, index)
+            } else {
+                null
+            }
+        }
+        val sorted = allParents.filterNotNull().sortedByDescending { it.length }
+        return sorted
     }
 
     private fun updateKnownPackages(packages: List<PackageName>, annotation: T?) =
@@ -157,9 +212,4 @@ public class AnnotationsLookup<T : Annotation>(
         val checkedParents: List<PackageName>,
         val foundAnnotation: T?
     )
-}
-
-private fun <T: Annotation> Package.findAnnotation(annotationClass: Class<in T>): T? {
-    @Suppress("UNCHECKED_CAST") // Cast to `annotationClass` is safe.
-    return annotations.firstOrNull { annotationClass.isInstance(it) } as T?
 }
