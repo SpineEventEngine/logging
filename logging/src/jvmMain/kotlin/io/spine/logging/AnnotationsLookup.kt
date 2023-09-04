@@ -26,8 +26,6 @@
 
 package io.spine.logging
 
-import kotlin.reflect.KClass
-
 private typealias PackageName = String
 
 /**
@@ -54,7 +52,7 @@ public class AnnotationsLookup<T : Annotation>(
     /**
      * Type of annotations this lookup can locate.
      */
-    private val annotationClass: KClass<T>,
+    private val annotationClass: Class<T>,
 
     /**
      * Provider of the currently loaded packages.
