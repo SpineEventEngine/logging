@@ -64,7 +64,10 @@ public class PackageAnnotationLookup<T : Annotation>(
      * The default supplier is [Package.getPackages].
      */
     private val currentlyLoadedPackages: () -> Iterable<Package> =
-        { Package.getPackages().asIterable() }
+        { Package.getPackages().asIterable() },
+
+    private val packageLoader: (PackageName) -> Package? =
+        { DefaultPackageLoader.load(it) }
 ) {
 
     /**
@@ -162,6 +165,7 @@ public class PackageAnnotationLookup<T : Annotation>(
      * to find parents of the [pkg].
      */
     private fun parentalPackages(pkg: PackageName): Map<PackageName, Package?> {
+        println("Fetching parents of $pkg.")
         val alreadyLoadedParents = currentlyLoadedPackages()
             .filter { pkg.startsWith(it.name) }
             .filter { it.name != pkg }
@@ -180,12 +184,8 @@ public class PackageAnnotationLookup<T : Annotation>(
             if (loaded != null && loaded.name == name) {
                 name to loaded
             } else {
-                val packageInfo: Class<*>? = try {
-                    Class.forName("$name.package-info")
-                } catch (_: ClassNotFoundException) {
-                    null
-                }
-                name to packageInfo?.`package`
+                val loadedPackage = packageLoader(name)
+                name to loadedPackage
             }
         }.toMap() // The returned map preserves the iteration order.
     }
@@ -209,4 +209,19 @@ public class PackageAnnotationLookup<T : Annotation>(
         val checkedParents: List<PackageName>,
         val foundAnnotation: T?
     )
+
+    private class DefaultPackageLoader {
+        companion object {
+            fun load(name: PackageName): Package? {
+                val packageInfoClassName = "$name.package-info"
+                val packageInfoClass: Class<*>? =
+                    try {
+                        Class.forName(packageInfoClassName)
+                    } catch (_: ClassNotFoundException) {
+                        null
+                    }
+                return packageInfoClass?.`package`
+            }
+        }
+    }
 }
