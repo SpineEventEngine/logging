@@ -50,7 +50,12 @@ internal class PackageAnnotationLookupSpec {
 
     private val annotationClass = TestAnnotation::class.java
     private val loadedPackages = MemoizingPackagesProvider()
-    private val lookup = PackageAnnotationLookup(annotationClass, loadedPackages::get)
+    private val packageLoadings = MemoizingPackageLoader()
+    private val lookup = PackageAnnotationLookup(
+        annotationClass,
+        loadedPackages::get,
+        packageLoadings::load
+    )
 
     @Nested inner class
     `throw when given` {
@@ -189,6 +194,29 @@ internal class PackageAnnotationLookupSpec {
         val annotation = lookup.getFor(nested1.java.`package`)
         annotation.shouldBeNull()
     }
+
+    @Test
+    fun `avoid loading of higher-level packages when the annotated one is already found`() {
+
+        // `nested1` is not annotated itself.
+        // And its parental packages are not annotated.
+        lookup.getFor(Nested1::class.java.`package`).shouldBeNull()
+        packageLoadings.askedLoadings["io"] shouldBe 1
+        packageLoadings.askedLoadings["io.spine"] shouldBe 1
+
+        // `nested3` is not annotated itself.
+        // But its direct parent is. We should not go up to `io` and `io.spine` at all.
+        lookup.getFor(Nested3::class.java.`package`).shouldNotBeNull()
+        packageLoadings.askedLoadings["io"] shouldBe 1
+        packageLoadings.askedLoadings["io.spine"] shouldBe 1
+
+        // `nested4` is not annotated itself.
+        // But its direct parent has already inherited the annotation and has been cached.
+        // We should not go up to `io` and `io.spine` at all.
+        lookup.getFor(Nested4::class.java.`package`).shouldNotBeNull()
+        packageLoadings.askedLoadings["io"] shouldBe 1
+        packageLoadings.askedLoadings["io.spine"] shouldBe 1
+    }
 }
 
 private class MemoizingPackagesProvider {
@@ -203,4 +231,16 @@ private class MemoizingPackagesProvider {
 
     fun contains(packageSuffix: String) =
         Package.getPackages().any { it.name.endsWith(packageSuffix) }
+}
+
+private class MemoizingPackageLoader {
+
+    private val _askedLoadings = mutableMapOf<PackageName, Int>()
+    val askedLoadings: Map<PackageName, Int> = _askedLoadings
+
+    fun load(packageName: PackageName): Package? {
+        val result = DefaultPackageLoader.load(packageName)
+        _askedLoadings[packageName] = (askedLoadings[packageName] ?: 0) + 1
+        return result
+    }
 }
