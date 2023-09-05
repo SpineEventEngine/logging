@@ -95,26 +95,28 @@ internal class PackageAnnotationLookupSpec {
         }
 
         /**
-         * Tests how the lookup loads annotated parental packages.
+         * Tests how the lookup loads parental packages on its own.
          *
          * This test uses its own hierarchy of test packages, making sure
          * no one else would load them in advance. This hierarchy is similar
          * to the one used by other tests, but is located under `unloaded` package.
          * Anchor classes are also prefixed with “Unloaded” word.
+         *
+         * Gradle test task has also been configured to skip loading any members
+         * from “unloaded” package hierarchy in advance.
          */
         @Test
         fun `is indirectly annotated by an unloaded package`() {
-            val nested4 = UnloadedNested4::class // `nested4` is NOT annotated.
-
-            // These packages are used only in this test,
-            // and should NOT be loaded by this time.
-            val nested2L = "unloaded.nested1.nested2" // Use literals to prevent package loading.
+            // Let's make sure the packages that are expected
+            // to be unloaded are indeed unloaded.
+            val nested2L = "unloaded.nested1.nested2" // Use literals to prevent their loading.
             val nested3L = "$nested2L.nested3"
             loadedPackages.contains(nested2L).shouldBeFalse()
             loadedPackages.contains(nested3L).shouldBeFalse()
 
-            // Traversing parental packages will unveil they are unloaded.
-            // The lookup will load the ones that are annotated.
+            // Call to the lookup should trigger loading of
+            // the parental package with annotations.
+            val nested4 = UnloadedNested4::class // `nested4` is NOT annotated.
             val annotation = lookup.getFor(nested4.java.`package`)
             loadedPackages.traversedTimes shouldBe 1
 
