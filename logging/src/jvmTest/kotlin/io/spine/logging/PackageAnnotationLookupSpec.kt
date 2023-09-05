@@ -224,8 +224,11 @@ internal class PackageAnnotationLookupSpec {
     @Test
     fun `avoid loading of higher-level packages when the annotated one is already found`() {
 
+        packageLoadings.askedLoadings["io"].shouldBeNull()
+        packageLoadings.askedLoadings["io.spine"].shouldBeNull()
+
         // `nested1` is not annotated itself.
-        // And its parental packages are not annotated.
+        // And its parental packages are not annotated. We should traverse and load.
         lookup.getFor(Nested1::class.java.`package`).shouldBeNull()
         packageLoadings.askedLoadings["io"] shouldBe 1
         packageLoadings.askedLoadings["io.spine"] shouldBe 1
