@@ -80,7 +80,7 @@ internal class PackageAnnotationLookupSpec {
     private val lookup = PackageAnnotationLookup(
         annotationClass,
         loadedPackages::get,
-        packageLoadings::load
+        packageLoadings
     )
 
     @Nested inner class
@@ -262,14 +262,14 @@ private class MemoizingPackagesProvider {
         Package.getPackages().any { it.name.endsWith(packageSuffix) }
 }
 
-private class MemoizingPackageLoader {
+private class MemoizingPackageLoader : JavaPackageLoader {
 
+    private val packageInfoLoader = PackageInfoPackageLoader()
     private val _askedLoadings = mutableMapOf<PackageName, Int>()
     val askedLoadings: Map<PackageName, Int> = _askedLoadings
 
-    fun load(packageName: PackageName): Package? {
-        val result = DefaultPackageLoader.load(packageName)
-        _askedLoadings[packageName] = (askedLoadings[packageName] ?: 0) + 1
-        return result
-    }
+    override fun tryLoading(name: PackageName): Package? {
+        val result = packageInfoLoader.tryLoading(name)
+        _askedLoadings[name] = (askedLoadings[name] ?: 0) + 1
+        return result    }
 }

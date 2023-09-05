@@ -30,7 +30,7 @@ import java.lang.annotation.ElementType
 import java.lang.annotation.Repeatable
 import java.lang.annotation.Target
 
-private typealias PackageName = String
+internal typealias PackageName = String
 
 /**
  * Locates an annotation of type [T] for the asked package, if any.
@@ -54,20 +54,25 @@ private typealias PackageName = String
 public class PackageAnnotationLookup<T : Annotation>(
 
     /**
-     * Type of annotations this lookup can locate.
+     * The type of annotations this lookup will be looking for.
      */
     private val annotationClass: Class<T>,
 
     /**
      * Provider of the currently loaded packages.
      *
-     * The default supplier is [Package.getPackages].
+     * The default provider is [Package.getPackages].
      */
-    private val currentlyLoadedPackages: () -> Iterable<Package> =
+    private val loadedPackages: () -> Iterable<Package> =
         { Package.getPackages().asIterable() },
 
-    private val packageLoader: (PackageName) -> Package? =
-        { DefaultPackageLoader.load(it) }
+    /**
+     * Java package loading mechanism.
+     *
+     * The default one is based on loading of `package-info` class.
+     * Take a look on [PackageInfoPackageLoader] for details.
+     */
+    private val packageLoader: JavaPackageLoader = PackageInfoPackageLoader()
 ) {
 
     /**
@@ -166,7 +171,7 @@ public class PackageAnnotationLookup<T : Annotation>(
      */
     private fun parentalPackages(pkg: PackageName): Map<PackageName, Package?> {
         println("Fetching parents of $pkg.")
-        val alreadyLoadedParents = currentlyLoadedPackages()
+        val alreadyLoadedParents = loadedPackages()
             .filter { pkg.startsWith(it.name) }
             .filter { it.name != pkg }
             .sortedByDescending { it.name.length }
@@ -184,8 +189,8 @@ public class PackageAnnotationLookup<T : Annotation>(
             if (loaded != null && loaded.name == name) {
                 name to loaded
             } else {
-                val loadedPackage = packageLoader(name)
-                name to loadedPackage
+                val maybeLoadedPackage = packageLoader.tryLoading(name)
+                name to maybeLoadedPackage
             }
         }.toMap() // The returned map preserves the iteration order.
     }
@@ -209,19 +214,4 @@ public class PackageAnnotationLookup<T : Annotation>(
         val checkedParents: List<PackageName>,
         val foundAnnotation: T?
     )
-
-    private class DefaultPackageLoader {
-        companion object {
-            fun load(name: PackageName): Package? {
-                val packageInfoClassName = "$name.package-info"
-                val packageInfoClass: Class<*>? =
-                    try {
-                        Class.forName(packageInfoClassName)
-                    } catch (_: ClassNotFoundException) {
-                        null
-                    }
-                return packageInfoClass?.`package`
-            }
-        }
-    }
 }
