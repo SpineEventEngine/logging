@@ -30,10 +30,16 @@ import java.lang.annotation.ElementType
 import java.lang.annotation.Repeatable
 import java.lang.annotation.Target
 
+/**
+ * Name of a Java package.
+ *
+ * Usually, it is a value from [Package.name].
+ */
 internal typealias PackageName = String
 
 /**
- * Locates an annotation of type [T] for the asked package, if any.
+ * Locates an annotation of type [T] for the asked package,
+ * or for any of its parental packages.
  *
  * This lookup is similar to [AnnotatedPackages][io.spine.reflect.AnnotatedPackages].
  *
@@ -49,9 +55,10 @@ internal typealias PackageName = String
  * This implementation performs searching on demand with caching. It does
  * the actual search for packages that are asked for the first time.
  * The search result is remembered, so consequent requests for the previously
- * searched packages don't need an actual search.
+ * searched packages don't need an actual search. The inspected midway parental
+ * packages are also cached.
  */
-public class PackageAnnotationLookup<T : Annotation>(
+internal class PackageAnnotationLookup<T : Annotation>(
 
     /**
      * The type of annotations this lookup will be looking for.
@@ -71,12 +78,19 @@ public class PackageAnnotationLookup<T : Annotation>(
      *
      * The default one is based on loading of `package-info` class.
      * Take a look on [PackageInfoPackageLoader] for details.
+     *
+     * Anyway, the provided mechanism should be able to load
+     * packages that have at least one runtime-available annotation.
+     * And it doesn't matter whether it is of type [T] or not.
      */
     private val packageLoader: JavaPackageLoader = PackageInfoPackageLoader()
 ) {
 
     /**
      * Packages for which presence of [T] annotation is already known.
+     *
+     * This map contains both directly annotated packages and ones
+     * that have any parent annotated with [T].
      *
      * Hash map is fast when retrieving values by string key.
      * So, annotations are mapped to [Package.name] instead of [Package].
@@ -87,7 +101,7 @@ public class PackageAnnotationLookup<T : Annotation>(
         val annotations = annotationClass.annotations
 
         require(annotations.all { it.annotationClass != Repeatable::class }) {
-            "The configured annotation should NOT be repeatable."
+            "Lookup for repeatable annotations is not supported."
         }
 
         val target = annotations.firstOrNull { it.annotationClass == Target::class } as Target?
@@ -100,7 +114,7 @@ public class PackageAnnotationLookup<T : Annotation>(
 
     /**
      * Returns annotation of type [T] that is applied to the given [pkg],
-     * or any of its parental packages.
+     * or to any of its parental packages.
      *
      * This method considers the following cases:
      *
@@ -111,41 +125,52 @@ public class PackageAnnotationLookup<T : Annotation>(
      * 3. Neither the given package nor any of its parental packages is annotated.
      * The method will return `null`.
      *
-     * Please note, it can happen that different class loaders may load the same
-     * package several times. See docs to [Package.getPackages] for details.
-     * If, for example, two [Package]s with the same name are both annotated with [T],
-     * the method will just return the first found one.
+     * Please note, it may happen that [loadedPackages] return several [Package]s
+     * with the same name. Such is acceptable by the rules of JVM (see docs
+     * to [Package.getPackages] for details). So, if, for example, two [Package]s
+     * with the same name are both annotated with [T], the method will just return
+     * the first found one.
      */
-    public fun getFor(pkg: Package): T? {
+    fun getFor(pkg: Package): T? {
         val packageName = pkg.name
-        val isPackageUnknown = knownPackages.contains(packageName).not()
+        val isPackageAlreadyKnown = knownPackages.contains(packageName)
 
-        if (isPackageUnknown) {
-            val annotation = pkg.getAnnotation(annotationClass)
-            if (annotation != null) {
-                // The simplest case is when the package itself is annotated.
-                knownPackages[packageName] = annotation
-            } else {
-                // Otherwise, the method has to search it within the parental packages.
-                val searchResult = searchWithinParents(packageName)
-                val packagesToUpdate = searchResult.checkedParents + packageName
-                updateKnownPackages(packagesToUpdate, searchResult.foundAnnotation)
-            }
+        // The best option. Immediate return.
+        if (isPackageAlreadyKnown) {
+            return knownPackages[packageName]
         }
 
-        return knownPackages[packageName]
+        // Directly annotated package is also a good and quick option.
+        val annotation = pkg.getAnnotation(annotationClass)
+        if (annotation != null) {
+            knownPackages[packageName] = annotation
+            return annotation
+        }
+
+        // If not, the method has to search within the parental packages.
+        val searchResult = searchWithinParents(packageName)
+        val inspectedPackages = searchResult.inspectedParents + packageName
+        val maybeFoundAnnotation = searchResult.maybeFoundAnnotation
+        updateKnownPackages(inspectedPackages, maybeFoundAnnotation)
+
+        return maybeFoundAnnotation
     }
 
     /**
-     * Searches for the nearest parent of the [pkg]
+     * Searches for the nearest parent of the given [pkg]
      * that is annotated with [T].
      *
      * Returns all parental packages that have been checked for presence of [T],
-     * starting from the direct parent of [pkg] down to the one,
+     * starting from the direct parent of [pkg] up to the one,
      * that is annotated with [T].
      *
-     * If no parent has [T] applied, [SearchResult.foundAnnotation] will contain `null`.
-     * And [SearchResult.checkedParents] will contain all parents of the [pkg].
+     * If no parent has [T] applied, [SearchResult.maybeFoundAnnotation]
+     * will contain `null`. [SearchResult.inspectedParents] will contain
+     * all parents of the [pkg] which could have this annotation but do not.
+     * For already loaded packages, this capability is checked by [Package.getAnnotation].
+     * For not loaded packages, [packageLoader] is used. It should successfully
+     * load a package if one has at least one annotation. So, it could be
+     * the wanted annotation of type [T].
      */
     private fun searchWithinParents(pkg: PackageName): SearchResult<T> {
         val parentalPackages = parentalPackages(pkg)
@@ -166,11 +191,13 @@ public class PackageAnnotationLookup<T : Annotation>(
     }
 
     /**
-     * Iterates through the all currently loaded packages
-     * to find parents of the [pkg].
+     * Iterates through the all parental packages of the given [pkg]
+     * that MAY HAVE annotations.
+     *
+     * This method forces loading of parental packages that are not loaded yet,
+     * but may be annotated with [T].
      */
     private fun parentalPackages(pkg: PackageName): Map<PackageName, Package?> {
-        println("Fetching parents of $pkg.")
         val alreadyLoadedParents = loadedPackages()
             .filter { pkg.startsWith(it.name) }
             .filter { it.name != pkg }
@@ -211,7 +238,7 @@ public class PackageAnnotationLookup<T : Annotation>(
         packages.forEach { knownPackages[it] = annotation }
 
     private class SearchResult<T : Annotation>(
-        val checkedParents: List<PackageName>,
-        val foundAnnotation: T?
+        val inspectedParents: List<PackageName>,
+        val maybeFoundAnnotation: T?
     )
 }
