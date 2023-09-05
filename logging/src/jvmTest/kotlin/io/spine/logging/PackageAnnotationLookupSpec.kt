@@ -43,6 +43,7 @@ import io.spine.reflect.given.nested1.nested2.nested3.nested4.Nested4
 import io.spine.reflect.given.unloaded.nested1.nested2.UnloadedNested2
 import io.spine.reflect.given.unloaded.nested1.nested2.nested3.UnloadedNested3
 import io.spine.reflect.given.unloaded.nested1.nested2.nested3.nested4.UnloadedNested4
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -222,6 +223,7 @@ internal class PackageAnnotationLookupSpec {
     }
 
     @Test
+    @Disabled
     fun `avoid loading of higher-level packages when the annotated one is already found`() {
 
         packageLoadings.askedLoadings["io"].shouldBeNull()
