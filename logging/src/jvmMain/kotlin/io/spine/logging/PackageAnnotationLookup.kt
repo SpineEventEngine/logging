@@ -167,6 +167,7 @@ internal class PackageAnnotationLookup<T : Annotation>(
      * If no parent has [T] applied, [SearchResult.maybeFoundAnnotation]
      * will contain `null`. [SearchResult.inspectedParents] will contain
      * all parents of the [pkg] which could have this annotation but do not.
+     *
      * For already loaded packages, this capability is checked by [Package.getAnnotation].
      * For not loaded packages, [packageLoader] is used. It should successfully
      * load a package if one has at least one annotation. So, it could be
@@ -196,41 +197,63 @@ internal class PackageAnnotationLookup<T : Annotation>(
      *
      * This method forces loading of parental packages that are not loaded yet,
      * but may be annotated with [T].
+     *
+     * Unfortunately, this method can't use [Sequence] because we have
+     * to sort found parental packages down from the closest one.
+     * Otherwise, [searchWithinParents] would have returned the annotation
+     * for the first found parent instead of the closest one.
+     *
+     * Please see docs to [packageLoader].
      */
     private fun parentalPackages(pkg: PackageName): Map<PackageName, Package?> {
         val alreadyLoadedParents = loadedPackages()
             .filter { pkg.startsWith(it.name) }
             .filter { it.name != pkg }
             .sortedByDescending { it.name.length }
-        val expectedParents = expectedParents(pkg)
-        val currentlyLoadedParents = loadAbsentParents(expectedParents, alreadyLoadedParents)
-        return currentlyLoadedParents
+            .distinctBy { it.name }
+        val allPossibleParents = allPossibleParents(pkg)
+        val loadedParents = forceLoading(allPossibleParents, alreadyLoadedParents)
+        return loadedParents
     }
 
-    private fun loadAbsentParents(
+    private fun forceLoading(
         expectedParents: List<PackageName>,
         alreadyLoadedParents: List<Package>
     ): Map<PackageName, Package?> {
-        return expectedParents.mapIndexed { i, name ->
-            val loaded = alreadyLoadedParents.getOrNull(i)
-            if (loaded != null && loaded.name == name) {
-                name to loaded
+
+        val loadedParents = mutableMapOf<PackageName, Package?>()
+        var alreadyIndex = 0
+
+        for (expectedIndex in expectedParents.indices) {
+            val expectedName = expectedParents[expectedIndex]
+            val alreadyLoaded = alreadyLoadedParents.getOrNull(alreadyIndex)
+            if (alreadyLoaded != null && alreadyLoaded.name == expectedName) {
+                loadedParents[expectedName] = alreadyLoaded
+                alreadyIndex++
             } else {
-                val maybeLoadedPackage = packageLoader.tryLoading(name)
-                name to maybeLoadedPackage
+                val forceLoaded = packageLoader.tryLoading(expectedName)
+                loadedParents[expectedName] = forceLoaded
             }
-        }.toMap() // The returned map preserves the iteration order.
+        }
+
+        // The returned map preserved the iteration order.
+        return loadedParents
     }
 
-    private fun expectedParents(pkg: PackageName): List<PackageName> {
-        val allParents = pkg.mapIndexed { index, c ->
+    /**
+     * Returns all possible parental packages for the package
+     * with the given [name].
+     */
+    private fun allPossibleParents(name: PackageName): List<PackageName> {
+        val allParents = name.mapIndexed { index, c ->
             if (c == '.') {
-                pkg.substring(0, index)
+                name.substring(0, index)
             } else {
                 null
             }
         }
-        val sorted = allParents.filterNotNull().sortedByDescending { it.length }
+        val sorted = allParents.filterNotNull()
+            .sortedByDescending { it.length }
         return sorted
     }
 
