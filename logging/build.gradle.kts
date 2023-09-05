@@ -121,7 +121,7 @@ tasks {
          * JUnit loads test classes in advance to support their features.
          * For example, test includes and excludes functionality.
          */
-        testClassesDirs = testClassesDirs.filter { it.name.contains("unloaded") }
+        filter.excludeTestsMatching("io.spine.reflect.given.unloaded*")
 
         useJUnitPlatform()
         configureLogging()
