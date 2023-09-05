@@ -133,27 +133,23 @@ internal class PackageAnnotationLookup<T : Annotation>(
      */
     fun getFor(pkg: Package): T? {
         val packageName = pkg.name
-        val isPackageAlreadyKnown = knownPackages.contains(packageName)
+        val isAlreadyKnown = knownPackages.contains(packageName)
 
-        // The best option. Immediate return.
-        if (isPackageAlreadyKnown) {
+        if (isAlreadyKnown) {
             return knownPackages[packageName]
         }
 
-        // Directly annotated package is also a good and quick option.
         val annotation = pkg.getAnnotation(annotationClass)
         if (annotation != null) {
             knownPackages[packageName] = annotation
-            return annotation
+        } else {
+            val searchResult = searchWithinParents(packageName)
+            val inspectedPackages = searchResult.inspectedParents + packageName
+            val maybeFoundAnnotation = searchResult.maybeFoundAnnotation
+            updateKnownPackages(inspectedPackages, maybeFoundAnnotation)
         }
 
-        // If not, the method has to search within the parental packages.
-        val searchResult = searchWithinParents(packageName)
-        val inspectedPackages = searchResult.inspectedParents + packageName
-        val maybeFoundAnnotation = searchResult.maybeFoundAnnotation
-        updateKnownPackages(inspectedPackages, maybeFoundAnnotation)
-
-        return maybeFoundAnnotation
+        return knownPackages[packageName]
     }
 
     /**
