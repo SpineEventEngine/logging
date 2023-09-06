@@ -56,7 +56,7 @@ internal class PackageAnnotationLookup<T : Annotation>(
     /**
      * The type of annotations this lookup will be looking for.
      */
-    private val annotationClass: Class<T>,
+    private val wantedAnnotation: Class<T>,
 
     /**
      * A tool for working with [packages][Package].
@@ -83,7 +83,7 @@ internal class PackageAnnotationLookup<T : Annotation>(
     private val knownPackages = hashMapOf<PackageName, T?>()
 
     init {
-        val annotations = annotationClass.annotations
+        val annotations = wantedAnnotation.annotations
 
         require(annotations.all { it.annotationClass != Repeatable::class }) {
             "Lookup for repeatable annotations is not supported."
@@ -110,7 +110,7 @@ internal class PackageAnnotationLookup<T : Annotation>(
      * 3. Neither the given package nor any of its parental packages is annotated.
      * The method will return `null`.
      *
-     * Please note, it may happen that [loadedPackages] return several [Package]s
+     * Please note, it may happen that return several [Package]s
      * with the same name. Such is acceptable by the rules of JVM (see docs
      * to [Package.getPackages] for details). So, if, for example, two [Package]s
      * with the same name are both annotated with [T], the method will just return
@@ -124,7 +124,7 @@ internal class PackageAnnotationLookup<T : Annotation>(
             return knownPackages[packageName]
         }
 
-        val directAnnotation = pkg.getAnnotation(annotationClass)
+        val directAnnotation = pkg.getAnnotation(wantedAnnotation)
         if (directAnnotation != null) {
             knownPackages[packageName] = directAnnotation
         } else {
@@ -140,30 +140,19 @@ internal class PackageAnnotationLookup<T : Annotation>(
     private fun searchWithinHierarchy(packageName: PackageName): Map<PackageName, T?> {
         val expectedHierarchy = jvmPackages.expand(packageName)
         val alreadyLoadedPackages by lazy { alreadyLoaded(packageName) }
+
         val inspectedPackages = mutableMapOf<PackageName, T?>()
         var lastFound: T? = null
 
         for (name in expectedHierarchy) {
+            val fromAlreadyLoaded by lazy { alreadyLoadedPackages[name]?.findAnnotation() }
+            val fromForcedLoaded by lazy { jvmPackages.tryLoading(name)?.findAnnotation() }
 
-            val isAlreadyKnown = knownPackages.contains(name)
-            if (isAlreadyKnown) {
-                knownPackages[name]?.let { lastFound = it }
-                inspectedPackages[name] = lastFound
-                continue
-            }
-
-            val alreadyLoaded = alreadyLoadedPackages[name]
-            if (alreadyLoaded != null) {
-                alreadyLoaded.getAnnotation(annotationClass)?.let { lastFound = it }
-                inspectedPackages[name] = lastFound
-                continue
-            }
-
-            val forceLoaded = jvmPackages.tryLoading(name)
-            if (forceLoaded != null) {
-                forceLoaded.getAnnotation(annotationClass)?.let { lastFound = it }
-                inspectedPackages[name] = lastFound
-                continue
+            lastFound = when {
+                knownPackages.contains(name) -> knownPackages[name]
+                fromAlreadyLoaded != null -> fromAlreadyLoaded
+                fromForcedLoaded != null -> fromForcedLoaded
+                else -> lastFound
             }
 
             // Here we don't care much whether a package `name` exists or not.
@@ -188,4 +177,6 @@ internal class PackageAnnotationLookup<T : Annotation>(
         jvmPackages.alreadyLoaded()
             .filter { packageName.startsWith(it.name) }
             .associateBy { it.name }
+
+    private fun Package.findAnnotation() = getAnnotation(wantedAnnotation)
 }
