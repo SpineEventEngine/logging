@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging
+package io.spine.reflect
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.inspectors.shouldForAll
@@ -34,8 +34,8 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.spine.reflect.given.InapplicableTestAnnotation
-import io.spine.reflect.given.TestAnnotation
 import io.spine.reflect.given.RepeatableTestAnnotation
+import io.spine.reflect.given.TestAnnotation
 import io.spine.reflect.given.nested1.Nested1
 import io.spine.reflect.given.nested1.nested2.Nested2
 import io.spine.reflect.given.nested1.nested2.nested3.Nested3
@@ -84,7 +84,8 @@ internal class PackageAnnotationLookupSpec {
         packageLoadings
     )
 
-    @Nested inner class
+    @Nested
+    inner class
     `throw when given` {
 
         @Test
@@ -104,7 +105,8 @@ internal class PackageAnnotationLookupSpec {
         }
     }
 
-    @Nested inner class
+    @Nested
+    inner class
     `return annotation if the package` {
 
         @Test
@@ -174,7 +176,8 @@ internal class PackageAnnotationLookupSpec {
         }
     }
 
-    @Nested inner class
+    @Nested
+    inner class
     `cache midway parental package` {
 
         @Test

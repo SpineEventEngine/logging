@@ -24,30 +24,36 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging
+package io.spine.reflect
 
 /**
- * Java package loading mechanism.
+ * Java package loading mechanism based on loading of JVM-internal `package-info` class.
  *
- * JDK doesn't provide a straight way to force a package loading as, for example,
- * it provides for classes: [ClassLoader.loadClass]. Packages are loaded
- * along with classes. Loading of the first class from the package loads
- * the containing package itself.
+ * `package-info.java` is usually placed along the package itself. It is used
+ * to document and annotate the package. Internally, in runtime, it is represented
+ * as a class with a special name.
  *
- * So, this interface describes custom mechanisms for the package loading.
+ * Loading of this class triggers loading of the containing package.
+ * But such a class is present only if the package has at least one annotation.
+ * Otherwise, `package-info.java` will not have the corresponding internal class.
+ * It is because no information is needed to be bypassed to the runtime.
  */
-public interface JavaPackageLoader {
+internal class PackageInfoPackageLoader : JavaPackageLoader {
 
     /**
-     * Tries to load a package by the given [name].
+     * Tries to load a package with the given [name].
      *
-     * Returns the loaded package on success. Otherwise, returns `null`.
-     *
-     * Please note, this method doesn't guarantee that the requested package
-     * will actually be loaded. Even if the requested package is on classpath.
-     *
-     * Implementations should clearly state when they can load the package,
-     * and when not.
+     * Returns the loaded package if it is on classpath and has at least
+     * one runtime-available annotation. Otherwise, returns `null`.
      */
-    public fun tryLoading(name: PackageName): Package?
+    override fun tryLoading(name: PackageName): Package? {
+        val packageInfoClassName = "$name.package-info"
+        val packageInfoClass: Class<*>? =
+            try {
+                Class.forName(packageInfoClassName)
+            } catch (_: ClassNotFoundException) {
+                null
+            }
+        return packageInfoClass?.`package`
+    }
 }

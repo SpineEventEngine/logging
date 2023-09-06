@@ -27,6 +27,7 @@
 package io.spine.logging
 
 import io.spine.logging.LoggingDomain.Companion.noOp
+import io.spine.reflect.PackageAnnotationLookup
 import kotlin.reflect.KClass
 import kotlin.reflect.full.findAnnotation
 
