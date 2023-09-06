@@ -139,53 +139,39 @@ internal class PackageAnnotationLookup<T : Annotation>(
 
     private fun searchWithinHierarchy(packageName: PackageName): Map<PackageName, T?> {
         val expectedHierarchy = jvmPackages.expand(packageName)
-        expectedHierarchy.forEach(::println)
-        println()
-
         val alreadyLoadedPackages by lazy { alreadyLoaded(packageName) }
-
         val inspectedPackages = mutableMapOf<PackageName, T?>()
+        var lastFound: T? = null
 
-        var lastFoundAnnotation: T? = null
         for (name in expectedHierarchy) {
+
             val isAlreadyKnown = knownPackages.contains(name)
             if (isAlreadyKnown) {
-                val annotation = knownPackages[name]
-                if (annotation != null) {
-                    lastFoundAnnotation = annotation
-                }
-                inspectedPackages[name] = lastFoundAnnotation
+                knownPackages[name]?.let { lastFound = it }
+                inspectedPackages[name] = lastFound
                 continue
             }
 
             val alreadyLoaded = alreadyLoadedPackages[name]
             if (alreadyLoaded != null) {
-                val annotation = alreadyLoaded.getAnnotation(annotationClass)
-                if (annotation != null) {
-                    lastFoundAnnotation = annotation
-                }
-                inspectedPackages[name] = lastFoundAnnotation
+                alreadyLoaded.getAnnotation(annotationClass)?.let { lastFound = it }
+                inspectedPackages[name] = lastFound
                 continue
             }
 
             val forceLoaded = jvmPackages.tryLoading(name)
             if (forceLoaded != null) {
-                val annotation = forceLoaded.getAnnotation(annotationClass)
-                if (annotation != null) {
-                    lastFoundAnnotation = annotation
-                }
-                inspectedPackages[name] = lastFoundAnnotation
+                forceLoaded.getAnnotation(annotationClass)?.let { lastFound = it }
+                inspectedPackages[name] = lastFound
                 continue
             }
 
             // Here we don't care much whether a package `name` exists or not.
             // If it doesn't – it wouldn't ever be asked. If it would – will inherit
             // annotation from the closest parent.
-            knownPackages[name] = lastFoundAnnotation
+            inspectedPackages[name] = lastFound
         }
 
-        inspectedPackages.entries.forEach(::println)
-        println()
         return inspectedPackages
     }
 
