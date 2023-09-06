@@ -26,6 +26,7 @@
 
 package io.spine.reflect
 
+import java.lang.StringBuilder
 import java.lang.annotation.ElementType
 import java.lang.annotation.Repeatable
 import java.lang.annotation.Target
@@ -139,125 +140,111 @@ internal class PackageAnnotationLookup<T : Annotation>(
             return knownPackages[packageName]
         }
 
-        val annotation = pkg.getAnnotation(annotationClass)
-        if (annotation != null) {
-            knownPackages[packageName] = annotation
+        val directAnnotation = pkg.getAnnotation(annotationClass)
+        if (directAnnotation != null) {
+            knownPackages[packageName] = directAnnotation
         } else {
-            val searchResult = searchWithinParents(packageName)
-            val inspectedPackages = searchResult.inspectedParents + packageName
-            val maybeFoundAnnotation = searchResult.maybeFoundAnnotation
-            updateKnownPackages(inspectedPackages, maybeFoundAnnotation)
+            val searchResult = searchWithinHierarchy(packageName)
+            searchResult.forEach { (name, annotation) ->
+                knownPackages[name] = annotation
+            }
         }
 
         return knownPackages[packageName]
     }
 
-    /**
-     * Searches for the nearest parent of the given [pkg]
-     * that is annotated with [T].
-     *
-     * Returns all parental packages that have been checked for presence of [T],
-     * starting from the direct parent of [pkg] up to the one,
-     * that is annotated with [T].
-     *
-     * If no parent has [T] applied, [SearchResult.maybeFoundAnnotation]
-     * will contain `null`. [SearchResult.inspectedParents] will contain
-     * all parents of the [pkg] which could have this annotation but do not.
-     *
-     * For already loaded packages, this capability is checked by [Package.getAnnotation].
-     * For not loaded packages, [packageLoader] is used. It should successfully
-     * load a package if one has at least one annotation. So, it could be
-     * the wanted annotation of type [T].
-     */
-    private fun searchWithinParents(pkg: PackageName): SearchResult<T> {
-        val parentalPackages = parentalPackages(pkg)
-        val checkedParents = mutableListOf<PackageName>()
-        var foundAnnotation: T? = null
+    private fun searchWithinHierarchy(packageName: PackageName): Map<PackageName, T?> {
+        val expectedHierarchy = parseHierarchy(packageName)
+        expectedHierarchy.forEach(::println)
+        println()
 
-        for (parentPackage in parentalPackages) {
-            val annotation = parentPackage.value?.getAnnotation(annotationClass)
-            checkedParents.add(parentPackage.key)
-            if (annotation != null) {
-                foundAnnotation = annotation
-                break
+        val alreadyLoadedPackages by lazy { alreadyLoaded(packageName) }
+
+        val inspectedPackages = mutableMapOf<PackageName, T?>()
+
+        var lastFoundAnnotation: T? = null
+        for (name in expectedHierarchy) {
+            val isAlreadyKnown = knownPackages.contains(name)
+            if (isAlreadyKnown) {
+                val annotation = knownPackages[name]
+                if (annotation != null) {
+                    lastFoundAnnotation = annotation
+                }
+                inspectedPackages[name] = lastFoundAnnotation
+                continue
             }
+
+            val alreadyLoaded = alreadyLoadedPackages[name]
+            if (alreadyLoaded != null) {
+                val annotation = alreadyLoaded.getAnnotation(annotationClass)
+                if (annotation != null) {
+                    lastFoundAnnotation = annotation
+                }
+                inspectedPackages[name] = lastFoundAnnotation
+                continue
+            }
+
+            val forceLoaded = packageLoader.tryLoading(name)
+            if (forceLoaded != null) {
+                val annotation = forceLoaded.getAnnotation(annotationClass)
+                if (annotation != null) {
+                    lastFoundAnnotation = annotation
+                }
+                inspectedPackages[name] = lastFoundAnnotation
+                continue
+            }
+
+            // Here we don't care much whether a package `name` exists or not.
+            // If it doesn't – it wouldn't ever be asked. If it would – will inherit
+            // annotation from the closest parent.
+            knownPackages[name] = lastFoundAnnotation
         }
 
-        val result = SearchResult(checkedParents, foundAnnotation)
-        return result
-    }
-
-    /**
-     * Iterates through the all parental packages of the given [pkg]
-     * that MAY HAVE annotations.
-     *
-     * This method forces loading of parental packages that are not loaded yet,
-     * but may be annotated with [T].
-     *
-     * Unfortunately, this method can't use [Sequence] because we have
-     * to sort found parental packages down from the closest one.
-     * Otherwise, [searchWithinParents] would have returned the annotation
-     * for the first found parent instead of the closest one.
-     *
-     * Please see docs to [packageLoader].
-     */
-    private fun parentalPackages(pkg: PackageName): Map<PackageName, Package?> {
-        val alreadyLoadedParents = loadedPackages()
-            .filter { pkg.startsWith(it.name) }
-            .filter { it.name != pkg }
-            .sortedByDescending { it.name.length }
-            .distinctBy { it.name }
-        val allPossibleParents = allPossibleParents(pkg)
-        val loadedParents = forceLoading(allPossibleParents, alreadyLoadedParents)
-        return loadedParents
-    }
-
-    private fun forceLoading(
-        expectedParents: List<PackageName>,
-        alreadyLoadedParents: List<Package>
-    ): Map<PackageName, Package?> {
-
-        val loadedParents = mutableMapOf<PackageName, Package?>()
-        var alreadyIndex = 0
-
-        for (expectedIndex in expectedParents.indices) {
-            val expectedName = expectedParents[expectedIndex]
-            val alreadyLoaded = alreadyLoadedParents.getOrNull(alreadyIndex)
-            if (alreadyLoaded != null && alreadyLoaded.name == expectedName) {
-                loadedParents[expectedName] = alreadyLoaded
-                alreadyIndex++
-            } else {
-                val forceLoaded = packageLoader.tryLoading(expectedName)
-                loadedParents[expectedName] = forceLoaded
-            }
-        }
-
-        // The returned map preserved the iteration order.
-        return loadedParents
+        inspectedPackages.entries.forEach(::println)
+        println()
+        return inspectedPackages
     }
 
     /**
-     * Returns all possible parental packages for the package
-     * with the given [name].
+     * Fetches already loaded packages that relate to the given [packageName].
+     *
+     * It includes all loaded parental packages of [packageName] as well
+     * as the asked package itself.
+     *
+     * Although the lookup already has an instance of [Package] for [packageName],
+     * its repeated fetching along with parents is cheaper than filtering out.
      */
-    private fun allPossibleParents(name: PackageName): List<PackageName> {
-        val allParents = name.mapIndexed { index, c ->
-            if (c == '.') {
-                name.substring(0, index)
-            } else {
-                null
+    private fun alreadyLoaded(packageName: PackageName): Map<PackageName, Package> =
+        loadedPackages()
+            .filter { packageName.startsWith(it.name) }
+            .associateBy { it.name }
+
+    /**
+     * Parses all packages starting from the root of [packageName]
+     * down to [packageName] itself.
+     *
+     * Please note, this method just operates upon the given package name.
+     * Its result is not guaranteed to correspond to a real hierarchy of
+     * loaded or existent packages.
+     *
+     * For example, for `io.spine.reflect` this method would return the following:
+     *
+     * ```
+     * io
+     * io.spine
+     * io.spine.reflect
+     * ```
+     */
+    private fun parseHierarchy(packageName: PackageName): List<PackageName> {
+        val buffer = StringBuilder(packageName.length)
+        val parents = mutableListOf<PackageName>()
+        packageName.forEach { symbol ->
+            if (symbol == '.') {
+                parents.add("$buffer")
             }
+            buffer.append(symbol)
         }
-        val sorted = allParents.filterNotNull()
-            .sortedByDescending { it.length }
-        return sorted
+        parents.add(packageName)
+        return parents
     }
-
-    private fun updateKnownPackages(packages: List<PackageName>, annotation: T?) =
-        packages.forEach { knownPackages[it] = annotation }
-
-    private class SearchResult<T : Annotation>(
-        val inspectedParents: List<PackageName>,
-        val maybeFoundAnnotation: T?
-    )
 }
