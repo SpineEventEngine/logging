@@ -24,36 +24,30 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.reflect
+package io.spine.reflect.given
 
-/**
- * Java package loading mechanism based on loading of JVM-internal `package-info` class.
- *
- * `package-info.java` is usually placed along the package itself. It is used
- * to document and annotate the package. Internally, in runtime, it is represented
- * as a class with a special name.
- *
- * Loading of this class triggers loading of the containing package.
- * But such a class is present only if the package has at least one annotation.
- * Otherwise, `package-info.java` will not have the corresponding internal class.
- * It is because no information is needed to be bypassed to the runtime.
- */
-internal class PackageInfoPackageLoader : JavaPackageLoader {
+import io.spine.reflect.JvmPackages
+import io.spine.reflect.PackageName
 
-    /**
-     * Tries to load a package with the given [name].
-     *
-     * Returns the loaded package if it is on classpath and has at least
-     * one runtime-available annotation. Otherwise, returns `null`.
-     */
-    override fun tryLoading(name: PackageName): Package? {
-        val packageInfoClassName = "$name.package-info"
-        val packageInfoClass: Class<*>? =
-            try {
-                Class.forName(packageInfoClassName)
-            } catch (_: ClassNotFoundException) {
-                null
-            }
-        return packageInfoClass?.`package`
+class MemoizingJvmPackages : JvmPackages {
+
+    private val mutableLoadings = mutableMapOf<PackageName, Int>()
+
+    val askedLoadings: Map<PackageName, Int> = mutableLoadings
+
+    var askedLoaded = 0
+        private set
+
+    override fun alreadyLoaded(): Iterable<Package> {
+        askedLoaded++
+        return super.alreadyLoaded()
     }
+
+    override fun tryLoading(name: PackageName): Package? {
+        mutableLoadings[name] = (mutableLoadings[name] ?: 0) + 1
+        return super.tryLoading(name)
+    }
+
+    fun isLoaded(packageSuffix: String) =
+        alreadyLoaded().any { it.name.endsWith(packageSuffix) }
 }

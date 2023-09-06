@@ -26,17 +26,9 @@
 
 package io.spine.reflect
 
-import java.lang.StringBuilder
 import java.lang.annotation.ElementType
 import java.lang.annotation.Repeatable
 import java.lang.annotation.Target
-
-/**
- * Name of a Java package.
- *
- * Usually, it is a value from [Package.name].
- */
-internal typealias PackageName = String
 
 /**
  * Locates an annotation of type [T] for the asked package,
@@ -67,24 +59,16 @@ internal class PackageAnnotationLookup<T : Annotation>(
     private val annotationClass: Class<T>,
 
     /**
-     * Provider of the currently loaded packages.
+     * A tool for working with [packages][Package].
      *
-     * The default provider is [Package.getPackages].
+     * [JvmPackages] already provides default implementation for all methods.
+     * And this class doesn't need more.
+     *
+     * The ability to pass another implementation is preserved for tests.
+     * This class is performance-sensitive, so tests should also assert
+     * whether it uses cached whenever it is possible.
      */
-    private val loadedPackages: () -> Iterable<Package> =
-        { Package.getPackages().asIterable() },
-
-    /**
-     * Java package loading mechanism.
-     *
-     * The default one is based on loading of `package-info` class.
-     * Take a look on [PackageInfoPackageLoader] for details.
-     *
-     * Anyway, the provided mechanism should be able to load
-     * packages that have at least one runtime-available annotation.
-     * And it doesn't matter whether it is of type [T] or not.
-     */
-    private val packageLoader: JavaPackageLoader = PackageInfoPackageLoader()
+    private val jvmPackages: JvmPackages = object : JvmPackages { }
 ) {
 
     /**
@@ -154,7 +138,7 @@ internal class PackageAnnotationLookup<T : Annotation>(
     }
 
     private fun searchWithinHierarchy(packageName: PackageName): Map<PackageName, T?> {
-        val expectedHierarchy = parseHierarchy(packageName)
+        val expectedHierarchy = jvmPackages.expand(packageName)
         expectedHierarchy.forEach(::println)
         println()
 
@@ -184,7 +168,7 @@ internal class PackageAnnotationLookup<T : Annotation>(
                 continue
             }
 
-            val forceLoaded = packageLoader.tryLoading(name)
+            val forceLoaded = jvmPackages.tryLoading(name)
             if (forceLoaded != null) {
                 val annotation = forceLoaded.getAnnotation(annotationClass)
                 if (annotation != null) {
@@ -215,36 +199,7 @@ internal class PackageAnnotationLookup<T : Annotation>(
      * its repeated fetching along with parents is cheaper than filtering out.
      */
     private fun alreadyLoaded(packageName: PackageName): Map<PackageName, Package> =
-        loadedPackages()
+        jvmPackages.alreadyLoaded()
             .filter { packageName.startsWith(it.name) }
             .associateBy { it.name }
-
-    /**
-     * Parses all packages starting from the root of [packageName]
-     * down to [packageName] itself.
-     *
-     * Please note, this method just operates upon the given package name.
-     * Its result is not guaranteed to correspond to a real hierarchy of
-     * loaded or existent packages.
-     *
-     * For example, for `io.spine.reflect` this method would return the following:
-     *
-     * ```
-     * io
-     * io.spine
-     * io.spine.reflect
-     * ```
-     */
-    private fun parseHierarchy(packageName: PackageName): List<PackageName> {
-        val buffer = StringBuilder(packageName.length)
-        val parents = mutableListOf<PackageName>()
-        packageName.forEach { symbol ->
-            if (symbol == '.') {
-                parents.add("$buffer")
-            }
-            buffer.append(symbol)
-        }
-        parents.add(packageName)
-        return parents
-    }
 }

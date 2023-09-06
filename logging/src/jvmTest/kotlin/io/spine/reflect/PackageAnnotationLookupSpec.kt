@@ -35,6 +35,7 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.spine.reflect.given.InapplicableTestAnnotation
+import io.spine.reflect.given.MemoizingJvmPackages
 import io.spine.reflect.given.RepeatableTestAnnotation
 import io.spine.reflect.given.TestAnnotation
 import io.spine.reflect.given.nested1.Nested1
@@ -44,7 +45,6 @@ import io.spine.reflect.given.nested1.nested2.nested3.nested4.Nested4
 import io.spine.reflect.given.unloaded.nested1.nested2.UnloadedNested2
 import io.spine.reflect.given.unloaded.nested1.nested2.nested3.UnloadedNested3
 import io.spine.reflect.given.unloaded.nested1.nested2.nested3.nested4.UnloadedNested4
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -77,13 +77,8 @@ import org.junit.jupiter.api.Test
 internal class PackageAnnotationLookupSpec {
 
     private val annotationClass = TestAnnotation::class.java
-    private val loadedPackages = MemoizingPackagesProvider()
-    private val packageLoadings = MemoizingPackageLoader()
-    private val lookup = PackageAnnotationLookup(
-        annotationClass,
-        loadedPackages::get,
-        packageLoadings
-    )
+    private val jvmPackages = MemoizingJvmPackages()
+    private val lookup = PackageAnnotationLookup(annotationClass, jvmPackages)
 
     @Nested
     inner class
@@ -116,7 +111,7 @@ internal class PackageAnnotationLookupSpec {
             val annotation = lookup.getFor(nested2.java.`package`)
             annotation.shouldNotBeNull()
             annotation.anchor shouldBe nested2
-            loadedPackages.traversedTimes shouldBe 0
+            jvmPackages.askedLoaded shouldBe 0
         }
 
         @Test
@@ -126,7 +121,7 @@ internal class PackageAnnotationLookupSpec {
             val annotation = lookup.getFor(nested4.java.`package`)
             annotation.shouldNotBeNull()
             annotation.anchor shouldBe nested2
-            loadedPackages.traversedTimes shouldBe 1
+            jvmPackages.askedLoaded shouldBe 1
         }
 
         /**
@@ -146,19 +141,19 @@ internal class PackageAnnotationLookupSpec {
             // to be unloaded are indeed unloaded.
             val nested2L = "unloaded.nested1.nested2" // Use literals to prevent their loading.
             val nested3L = "$nested2L.nested3"
-            loadedPackages.contains(nested2L).shouldBeFalse()
-            loadedPackages.contains(nested3L).shouldBeFalse()
+            jvmPackages.isLoaded(nested2L).shouldBeFalse()
+            jvmPackages.isLoaded(nested3L).shouldBeFalse()
 
             // Call to the lookup should trigger loading of
             // the parental package with annotations.
             val nested4 = UnloadedNested4::class // `nested4` is NOT annotated.
             val annotation = lookup.getFor(nested4.java.`package`)
-            loadedPackages.traversedTimes shouldBe 1
+            jvmPackages.askedLoaded shouldBe 1
 
             // `nested2` has been loaded because it is annotated.
             // `nested3` has NOT been loaded because it has no annotations.
-            loadedPackages.contains(nested2L).shouldBeTrue()
-            loadedPackages.contains(nested3L).shouldBeFalse()
+            jvmPackages.isLoaded(nested2L).shouldBeTrue()
+            jvmPackages.isLoaded(nested3L).shouldBeFalse()
 
             val nested2 = UnloadedNested2::class
             annotation.shouldNotBeNull()
@@ -168,7 +163,7 @@ internal class PackageAnnotationLookupSpec {
             // annotation for `nested2` or `nested3` doesn't trigger an actual search.
             val annotation2 = lookup.getFor(UnloadedNested2::class.java.`package`)
             val annotation3 = lookup.getFor(UnloadedNested3::class.java.`package`)
-            loadedPackages.traversedTimes shouldBe 1
+            jvmPackages.askedLoaded shouldBe 1
 
             annotation2.shouldNotBeNull()
             annotation2.anchor shouldBe nested2
@@ -192,7 +187,7 @@ internal class PackageAnnotationLookupSpec {
                 lookup.getFor(nested3.java.`package`)
             )
 
-            loadedPackages.traversedTimes shouldBe 1
+            jvmPackages.askedLoaded shouldBe 1
             annotations shouldHaveSize 3
             annotations.shouldForAll {
                 it.shouldNotBeNull()
@@ -211,7 +206,7 @@ internal class PackageAnnotationLookupSpec {
                 lookup.getFor(nested2.java.`package`)
             )
 
-            loadedPackages.traversedTimes shouldBe 1
+            jvmPackages.askedLoaded shouldBe 1
             annotations shouldHaveSize 3
             annotations.shouldForAll {
                 it.shouldNotBeNull()
@@ -230,52 +225,26 @@ internal class PackageAnnotationLookupSpec {
     @Test
     fun `avoid loading of higher-level packages when the annotated one is already found`() {
 
-        packageLoadings.askedLoadings["io"].shouldBeNull()
-        packageLoadings.askedLoadings["io.spine"].shouldBeNull()
+        jvmPackages.askedLoadings["io"].shouldBeNull()
+        jvmPackages.askedLoadings["io.spine"].shouldBeNull()
 
         // `nested1` is not annotated itself.
         // And its parental packages are not annotated. We should traverse and load.
         lookup.getFor(Nested1::class.java.`package`).shouldBeNull()
-        packageLoadings.askedLoadings["io"] shouldBe 1
-        packageLoadings.askedLoadings["io.spine"] shouldBe 1
+        jvmPackages.askedLoadings["io"] shouldBe 1
+        jvmPackages.askedLoadings["io.spine"] shouldBe 1
 
         // `nested3` is not annotated itself.
         // But its direct parent is. We should not go up to `io` and `io.spine` at all.
         lookup.getFor(Nested3::class.java.`package`).shouldNotBeNull()
-        packageLoadings.askedLoadings["io"] shouldBe 1
-        packageLoadings.askedLoadings["io.spine"] shouldBe 1
+        jvmPackages.askedLoadings["io"] shouldBe 1
+        jvmPackages.askedLoadings["io.spine"] shouldBe 1
 
         // `nested4` is not annotated itself.
         // But its direct parent has already inherited the annotation and has been cached.
         // We should not go up to `io` and `io.spine` at all.
         lookup.getFor(Nested4::class.java.`package`).shouldNotBeNull()
-        packageLoadings.askedLoadings["io"] shouldBe 1
-        packageLoadings.askedLoadings["io.spine"] shouldBe 1
+        jvmPackages.askedLoadings["io"] shouldBe 1
+        jvmPackages.askedLoadings["io.spine"] shouldBe 1
     }
-}
-
-private class MemoizingPackagesProvider {
-
-    var traversedTimes = 0
-        private set
-
-    fun get(): Iterable<Package> {
-        traversedTimes++
-        return Package.getPackages().asIterable()
-    }
-
-    fun contains(packageSuffix: String) =
-        Package.getPackages().any { it.name.endsWith(packageSuffix) }
-}
-
-private class MemoizingPackageLoader : JavaPackageLoader {
-
-    private val packageInfoLoader = PackageInfoPackageLoader()
-    private val _askedLoadings = mutableMapOf<PackageName, Int>()
-    val askedLoadings: Map<PackageName, Int> = _askedLoadings
-
-    override fun tryLoading(name: PackageName): Package? {
-        val result = packageInfoLoader.tryLoading(name)
-        _askedLoadings[name] = (askedLoadings[name] ?: 0) + 1
-        return result    }
 }
