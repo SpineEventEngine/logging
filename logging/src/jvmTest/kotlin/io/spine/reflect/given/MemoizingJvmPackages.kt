@@ -48,6 +48,9 @@ class MemoizingJvmPackages : JvmPackages {
         return super.tryLoading(name)
     }
 
+    /**
+     * Avoid call to overridden [askedLoaded].
+     */
     fun isLoaded(packageSuffix: String) =
-        alreadyLoaded().any { it.name.endsWith(packageSuffix) }
+        super.alreadyLoaded().any { it.name.endsWith(packageSuffix) }
 }
