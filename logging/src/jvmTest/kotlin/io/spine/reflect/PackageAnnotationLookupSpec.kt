@@ -30,6 +30,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.inspectors.shouldForAll
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
@@ -192,10 +193,10 @@ internal class PackageAnnotationLookupSpec {
             )
 
             loadedPackages.traversedTimes shouldBe 1
-            val nested2 = Nested2::class
+            annotations shouldHaveSize 3
             annotations.shouldForAll {
                 it.shouldNotBeNull()
-                it.anchor shouldBe nested2
+                it.anchor shouldBe Nested2::class
             }
         }
 
@@ -211,6 +212,7 @@ internal class PackageAnnotationLookupSpec {
             )
 
             loadedPackages.traversedTimes shouldBe 1
+            annotations shouldHaveSize 3
             annotations.shouldForAll {
                 it.shouldNotBeNull()
                 it.anchor shouldBe nested2
@@ -226,7 +228,6 @@ internal class PackageAnnotationLookupSpec {
     }
 
     @Test
-    @Disabled
     fun `avoid loading of higher-level packages when the annotated one is already found`() {
 
         packageLoadings.askedLoadings["io"].shouldBeNull()
