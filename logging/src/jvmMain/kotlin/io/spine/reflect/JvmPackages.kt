@@ -51,8 +51,14 @@ internal interface JvmPackages {
      * During the runtime, the number of the loaded packages usually increases
      * as more classes become loaded. It decreases only if the caller's class
      * loader (or any of its ancestors) is garbage collected.
+     *
+     * Please note, if different class loaders (in the same hierarchy) load
+     * the same package two or more times, this method would return only
+     * the first loaded one.
      */
-    fun alreadyLoaded(): Iterable<Package> = Package.getPackages().asIterable()
+    fun alreadyLoaded(): Iterable<Package> = Package.getPackages()
+        .asIterable()
+        .distinctBy { it.name }
 
     /**
      * Tries to load a package with the given [name].
