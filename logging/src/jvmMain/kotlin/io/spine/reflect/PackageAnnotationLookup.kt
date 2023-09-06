@@ -55,6 +55,12 @@ internal class PackageAnnotationLookup<T : Annotation>(
 
     /**
      * The type of annotations this lookup will be looking for.
+     *
+     * There are two requirements for the passed annotation:
+     *
+     * 1. It should NOT be repeatable. As for now, lookup for repeatable
+     * annotations is not supported.
+     * 2. It should be applicable to packages. Otherwise, the lookup is useless.
      */
     private val wantedAnnotation: Class<T>,
 
@@ -66,7 +72,7 @@ internal class PackageAnnotationLookup<T : Annotation>(
      *
      * The ability to pass another implementation is preserved for tests.
      * This class is performance-sensitive, so tests should also assert
-     * whether it uses cached whenever it is possible.
+     * whether it uses cached data whenever it is possible.
      */
     private val jvmPackages: JvmPackages = object : JvmPackages { }
 ) {
@@ -75,7 +81,7 @@ internal class PackageAnnotationLookup<T : Annotation>(
      * Packages for which presence of [T] annotation is already known.
      *
      * This map contains both directly annotated packages and ones
-     * that have any parent annotated with [T].
+     * that have any parent annotated with [T] (propagated annotation).
      *
      * Hash map is fast when retrieving values by string key.
      * So, annotations are mapped to [Package.name] instead of [Package].
@@ -84,16 +90,12 @@ internal class PackageAnnotationLookup<T : Annotation>(
 
     init {
         val annotations = wantedAnnotation.annotations
-
         require(annotations.all { it.annotationClass != Repeatable::class }) {
             "Lookup for repeatable annotations is not supported."
         }
-
         val target = annotations.firstOrNull { it.annotationClass == Target::class } as Target?
-        if (target != null) { // Not present `@Target` allows applying to packages.
-            require(target.value.contains(ElementType.PACKAGE)) {
-                "The configured annotation should be applicable to packages."
-            }
+        require(target == null || target.value.contains(ElementType.PACKAGE)) {
+            "The configured annotation should be applicable to packages."
         }
     }
 
@@ -109,55 +111,77 @@ internal class PackageAnnotationLookup<T : Annotation>(
      * The method returns annotation of the closest annotated parent.
      * 3. Neither the given package nor any of its parental packages is annotated.
      * The method will return `null`.
-     *
-     * Please note, it may happen that return several [Package]s
-     * with the same name. Such is acceptable by the rules of JVM (see docs
-     * to [Package.getPackages] for details). So, if, for example, two [Package]s
-     * with the same name are both annotated with [T], the method will just return
-     * the first found one.
      */
     fun getFor(pkg: Package): T? {
         val packageName = pkg.name
-        val isAlreadyKnown = knownPackages.contains(packageName)
+        val isKnown = knownPackages.contains(packageName)
 
-        if (isAlreadyKnown) {
-            return knownPackages[packageName]
-        }
-
-        val directAnnotation = pkg.getAnnotation(wantedAnnotation)
-        if (directAnnotation != null) {
-            knownPackages[packageName] = directAnnotation
-        } else {
-            val searchResult = searchWithinHierarchy(packageName)
-            searchResult.forEach { (name, annotation) ->
-                knownPackages[name] = annotation
+        if (!isKnown) {
+            val annotation = pkg.getAnnotation(wantedAnnotation)
+            if (annotation != null) {
+                knownPackages[packageName] = annotation
+            } else {
+                val inspectedPackages = searchWithinHierarchy(packageName)
+                inspectedPackages.forEach { (name, annotation) ->
+                    knownPackages[name] = annotation
+                }
             }
         }
 
         return knownPackages[packageName]
     }
 
+    /**
+     * Iterates from a root package down to the given one,
+     * looking for applied annotations of type [T].
+     *
+     * This method would propagate a found annotation to child packages,
+     * which don't have their own.
+     *
+     * For example, consider the following package: `p1.p2.p3.p4.p5.p6`.
+     * Let's say `p1` and `p4` are annotated with `t1` and `t4`.
+     * Without propagation, we would get the following map:
+     *
+     * ```
+     * p1 to t1
+     * p2 to null
+     * p3 to null
+     * p4 to t4
+     * p5 to null
+     * p6 to null
+     * ```
+     *
+     * With propagation, the following result will be returned:
+     *
+     * ```
+     * p1 to t1
+     * p2 to t1
+     * p3 to t1
+     * p4 to t4
+     * p5 to t4
+     * p6 to t4
+     * ```
+     */
     private fun searchWithinHierarchy(packageName: PackageName): Map<PackageName, T?> {
         val expectedHierarchy = jvmPackages.expand(packageName)
-        val alreadyLoadedPackages by lazy { alreadyLoaded(packageName) }
+        val alreadyLoaded by lazy { alreadyLoaded(packageName) } // It may not be needed.
 
         val inspectedPackages = mutableMapOf<PackageName, T?>()
         var lastFound: T? = null
 
-        for (name in expectedHierarchy) {
-            val fromAlreadyLoaded by lazy { alreadyLoadedPackages[name]?.findAnnotation() }
+        expectedHierarchy.forEach { name ->
+
+            // In the best case, these two are not evaluated in `when`.
+            val fromAlreadyLoaded by lazy { alreadyLoaded[name]?.findAnnotation() }
             val fromForcedLoaded by lazy { jvmPackages.tryLoading(name)?.findAnnotation() }
 
             lastFound = when {
                 knownPackages.contains(name) -> knownPackages[name]
                 fromAlreadyLoaded != null -> fromAlreadyLoaded
                 fromForcedLoaded != null -> fromForcedLoaded
-                else -> lastFound
+                else -> lastFound // Uses previously found one.
             }
 
-            // Here we don't care much whether a package `name` exists or not.
-            // If it doesn't – it wouldn't ever be asked. If it would – will inherit
-            // annotation from the closest parent.
             inspectedPackages[name] = lastFound
         }
 
@@ -167,16 +191,16 @@ internal class PackageAnnotationLookup<T : Annotation>(
     /**
      * Fetches already loaded packages that relate to the given [packageName].
      *
-     * It includes all loaded parental packages of [packageName] as well
+     * It includes all parental packages of [packageName] as well
      * as the asked package itself.
-     *
-     * Although the lookup already has an instance of [Package] for [packageName],
-     * its repeated fetching along with parents is cheaper than filtering out.
      */
     private fun alreadyLoaded(packageName: PackageName): Map<PackageName, Package> =
         jvmPackages.alreadyLoaded()
             .filter { packageName.startsWith(it.name) }
             .associateBy { it.name }
 
-    private fun Package.findAnnotation() = getAnnotation(wantedAnnotation)
+    /**
+     * Returns annotation of type [T] applied to this [Package], if any.
+     */
+    private fun Package.findAnnotation(): T? = getAnnotation(wantedAnnotation)
 }
