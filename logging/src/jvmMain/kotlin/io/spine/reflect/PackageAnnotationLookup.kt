@@ -191,7 +191,7 @@ internal class PackageAnnotationLookup<T : Annotation>(
      * Please note, this method would stop traversing through [possiblePackages]
      * when it meets an already known package. It means all upcoming packages
      * are also already known. In this case, the returned map will not contain
-     * all packages from [possiblePackages] collection, and doesn't need to.
+     * all packages from [possiblePackages] collection, and it doesn't need to.
      */
     private fun findAnnotations(
         possiblePackages: List<PackageName>,
