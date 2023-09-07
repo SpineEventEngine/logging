@@ -42,8 +42,8 @@ import java.lang.annotation.Target
  * and then allows retrieving of an annotation for the asked package.
  *
  * But as more classes are loaded by the classloader, more new packages appear.
- * As a result, data within the collection become insufficient. An instance
- * doesn't know about every currently loaded package.
+ * As a result, data within the collection becomes outdated. An instance doesn't
+ * know about every currently loaded package.
  *
  * This implementation performs searching on demand with caching. It does
  * the actual search for packages that are asked for the first time.
@@ -60,11 +60,13 @@ import java.lang.annotation.Target
  * already found the closest annotated parent. Checking two-three-five more
  * packages is not costly when instances of [Package] are already at hand.
  * Otherwise, it may cause many unnecessary repeated force-loadings.
+ *
+ * @param T type of annotations this lookup looks for
  */
 internal class PackageAnnotationLookup<T : Annotation>(
 
     /**
-     * The type of annotations this lookup will be looking for.
+     * The class of annotations this lookup will be looking for.
      *
      * There are two requirements for the passed annotation:
      *
