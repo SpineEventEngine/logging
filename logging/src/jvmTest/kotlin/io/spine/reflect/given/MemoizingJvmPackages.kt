@@ -29,12 +29,22 @@ package io.spine.reflect.given
 import io.spine.reflect.JvmPackages
 import io.spine.reflect.PackageName
 
+/**
+ * [JvmPackages] that remembers number of calls to its methods.
+ */
 class MemoizingJvmPackages : JvmPackages {
 
     private val mutableLoadings = mutableMapOf<PackageName, Int>()
 
+    /**
+     * Returns packages, for which [tryLoading] method
+     * has been called one or more times.
+     */
     val askedForceLoadings: Map<PackageName, Int> = mutableLoadings
 
+    /**
+     * Returns how many times [alreadyLoaded] packages has been called.
+     */
     var traversedLoadedTimes = 0
         private set
 
@@ -49,7 +59,9 @@ class MemoizingJvmPackages : JvmPackages {
     }
 
     /**
-     * Avoid call to overridden [traversedLoadedTimes].
+     * Tells whether the given package is loaded.
+     *
+     * This class does not count calls to this method.
      */
     fun isLoaded(name: PackageName) =
         super.alreadyLoaded().any { it.name == name }

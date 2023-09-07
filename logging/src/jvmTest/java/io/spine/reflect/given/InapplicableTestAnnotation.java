@@ -31,6 +31,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * An annotation that can't be used with {@code PackageAnnotationLookup}
+ * because it is applicable only to methods.
+ */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface InapplicableTestAnnotation {

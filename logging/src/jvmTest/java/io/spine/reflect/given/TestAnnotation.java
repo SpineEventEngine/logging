@@ -31,6 +31,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * A valid annotation to be used with {@code PackageAnnotationLookup}.
+ */
 @Target(ElementType.PACKAGE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TestAnnotation {

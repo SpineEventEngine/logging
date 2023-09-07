@@ -32,6 +32,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * An annotation that can't be used with {@code PackageAnnotationLookup}
+ * because it is repeatable.
+ */
 @Target(ElementType.PACKAGE)
 @Retention(RetentionPolicy.RUNTIME)
 @Repeatable(TestAnnotationContainer.class)

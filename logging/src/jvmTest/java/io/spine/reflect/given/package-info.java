@@ -24,4 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/**
+ * Contains test hierarchy of packages for {@link io.spine.reflect.PackageAnnotationLookupSpec}.
+ */
 package io.spine.reflect.given;
