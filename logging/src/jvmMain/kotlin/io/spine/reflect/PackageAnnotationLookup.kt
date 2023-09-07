@@ -97,11 +97,14 @@ internal class PackageAnnotationLookup<T : Annotation>(
 
     init {
         val annotations = wantedAnnotation.annotations
-        require(annotations.all { it.annotationClass != Repeatable::class }) {
+        val isRepeatable = annotations.any { it.annotationClass == Repeatable::class }
+        require(isRepeatable.not()) {
             "Lookup for repeatable annotations is not supported."
         }
+
         val target = annotations.firstOrNull { it.annotationClass == Target::class } as Target?
-        require(target == null || target.value.contains(ElementType.PACKAGE)) {
+        val isPackageApplicable = target == null || target.value.contains(ElementType.PACKAGE)
+        require(isPackageApplicable) {
             "The configured annotation should be applicable to packages."
         }
     }
@@ -121,9 +124,9 @@ internal class PackageAnnotationLookup<T : Annotation>(
      */
     fun getFor(pkg: Package): T? {
         val packageName = pkg.name
-        val isKnown = knownPackages.contains(packageName)
+        val isUnknown = knownPackages.contains(packageName).not()
 
-        if (!isKnown) {
+        if (isUnknown) {
             val annotation = pkg.getAnnotation(wantedAnnotation)
             if (annotation != null) {
                 knownPackages[packageName] = annotation
