@@ -59,7 +59,7 @@ import java.lang.annotation.Target
  * Traversing and caching of parental packages will continue even if we have
  * already found the closest annotated parent. Checking two-three-five more
  * packages is not costly when instances of [Package] are already at hand.
- * Otherwise, it may cause many unnecessary force-loadings.
+ * Otherwise, it may cause many unnecessary repeated force-loadings.
  */
 internal class PackageAnnotationLookup<T : Annotation>(
 
