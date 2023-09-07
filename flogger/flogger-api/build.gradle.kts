@@ -38,7 +38,7 @@ dependencies {
         )
     )
     testImplementation(project(":flogger-testing"))
-    testImplementation(project(":logging-testutil"))
+    testImplementation(project(":testutil-logging"))
 }
 
 java {

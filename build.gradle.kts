@@ -49,7 +49,7 @@ spinePublishing {
         "logging-backend",
         "logging-context",
         "logging-smoke-test",
-        "logging-testutil",
+        "testutil-logging",
         "flogger-api",
         "flogger-system-backend",
         "flogger-log4j2-backend",
