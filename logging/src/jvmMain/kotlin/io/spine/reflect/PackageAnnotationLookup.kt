@@ -166,10 +166,7 @@ internal class PackageAnnotationLookup<T : Annotation>(
         val possibleHierarchy = jvmPackages.expand(packageName) // package + its POSSIBLE parents.
         val loadedHierarchy = loadedHierarchy(packageName) // package + its LOADED parents.
         val withAnnotations = annotate(possibleHierarchy, loadedHierarchy)
-        println(withAnnotations)
         val withPropagation = propagate(withAnnotations)
-        println(withPropagation)
-        println()
         return withPropagation
     }
 
