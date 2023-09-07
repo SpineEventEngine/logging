@@ -61,7 +61,7 @@ import java.lang.annotation.Target
  * packages is not costly when instances of [Package] are already at hand.
  * Otherwise, it may cause many unnecessary repeated force-loadings.
  *
- * @param T type of annotations this lookup looks for
+ * @param T the type of annotations this lookup searches for
  */
 internal class PackageAnnotationLookup<T : Annotation>(
 
@@ -101,13 +101,15 @@ internal class PackageAnnotationLookup<T : Annotation>(
         val annotations = wantedAnnotation.annotations
         val isRepeatable = annotations.any { it.annotationClass == Repeatable::class }
         require(isRepeatable.not()) {
-            "Lookup for repeatable annotations is not supported."
+            "The passed `${wantedAnnotation.name}` annotation is repeatable. " +
+                    "Lookup for repeatable annotations is not supported."
         }
 
         val target = annotations.firstOrNull { it.annotationClass == Target::class } as Target?
         val isPackageApplicable = target == null || target.value.contains(ElementType.PACKAGE)
         require(isPackageApplicable) {
-            "The configured annotation should be applicable to packages."
+            "The passed `${wantedAnnotation.name}` annotation is not applicable to packages. " +
+                    "Searching this annotation on packages is useless."
         }
     }
 
