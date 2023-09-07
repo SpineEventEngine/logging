@@ -33,13 +33,13 @@ class MemoizingJvmPackages : JvmPackages {
 
     private val mutableLoadings = mutableMapOf<PackageName, Int>()
 
-    val askedLoadings: Map<PackageName, Int> = mutableLoadings
+    val askedForceLoadings: Map<PackageName, Int> = mutableLoadings
 
-    var askedLoaded = 0
+    var traversedLoadedTimes = 0
         private set
 
     override fun alreadyLoaded(): Iterable<Package> {
-        askedLoaded++
+        traversedLoadedTimes++
         return super.alreadyLoaded()
     }
 
@@ -49,8 +49,8 @@ class MemoizingJvmPackages : JvmPackages {
     }
 
     /**
-     * Avoid call to overridden [askedLoaded].
+     * Avoid call to overridden [traversedLoadedTimes].
      */
-    fun isLoaded(packageSuffix: String) =
-        super.alreadyLoaded().any { it.name.endsWith(packageSuffix) }
+    fun isLoaded(name: PackageName) =
+        super.alreadyLoaded().any { it.name == name }
 }
