@@ -173,18 +173,12 @@ internal class JvmLoggingFactorySpec {
             loggingDomain.name shouldBe "OnClass"
         }
 
-        /**
-         * This test may fail due to [#39](https://github.com/SpineEventEngine/logging/issues/39).
-         */
         @Test
         fun `a class with annotated package`() {
             val loggingDomain = loggingDomainOf(IndirectlyAnnotatedClass::class)
             loggingDomain.name shouldBe "OnPackage"
         }
 
-        /**
-         * This test may fail due to [#39](https://github.com/SpineEventEngine/logging/issues/39).
-         */
         @Test
         fun `a class in a nested non-annotated package`() {
             val loggingDomain = loggingDomainOf(NonAnnotatedNestedPackageClass::class)

@@ -24,4 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-val versionToPublish: String by extra("2.0.0-SNAPSHOT.211")
+@TestAnnotation(anchor = Nested2.class)
+package io.spine.reflect.given.nested1.nested2;
+
+import io.spine.reflect.given.TestAnnotation;

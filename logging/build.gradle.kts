@@ -108,6 +108,21 @@ detekt {
 tasks {
     registerTestTasks()
     named<Test>("jvmTest") {
+
+        /**
+         * Prevents loading any members from “unloaded” package
+         * hierarchy in advance.
+         *
+         * `PackageAnnotationLookupSpec` needs these members to be
+         * unloaded from the beginning. This behavior matches
+         * the production runtime, in which classes (and packages)
+         * are loaded as needed.
+         *
+         * JUnit loads test classes in advance to support their features.
+         * For example, test includes and excludes functionality.
+         */
+        filter.excludeTestsMatching("io.spine.reflect.given.unloaded*")
+
         useJUnitPlatform()
         configureLogging()
     }

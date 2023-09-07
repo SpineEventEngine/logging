@@ -24,4 +24,45 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-val versionToPublish: String by extra("2.0.0-SNAPSHOT.211")
+package io.spine.reflect.given
+
+import io.spine.reflect.JvmPackages
+import io.spine.reflect.PackageName
+
+/**
+ * [JvmPackages] that remembers number of calls to its methods.
+ */
+class MemoizingJvmPackages : JvmPackages {
+
+    private val mutableLoadings = mutableMapOf<PackageName, Int>()
+
+    /**
+     * Returns packages, for which [tryLoading] method
+     * has been called one or more times.
+     */
+    val askedForceLoadings: Map<PackageName, Int> = mutableLoadings
+
+    /**
+     * Returns how many times [alreadyLoaded] packages has been called.
+     */
+    var traversedLoadedTimes = 0
+        private set
+
+    override fun alreadyLoaded(): Iterable<Package> {
+        traversedLoadedTimes++
+        return super.alreadyLoaded()
+    }
+
+    override fun tryLoading(name: PackageName): Package? {
+        mutableLoadings[name] = (mutableLoadings[name] ?: 0) + 1
+        return super.tryLoading(name)
+    }
+
+    /**
+     * Tells whether the given package is loaded.
+     *
+     * This class does not count calls to this method.
+     */
+    fun isLoaded(name: PackageName) =
+        super.alreadyLoaded().any { it.name == name }
+}
