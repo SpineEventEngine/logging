@@ -63,7 +63,8 @@ internal object LoggingDomainClassValue: ClassValue<LoggingDomain>() {
 
         val classPackage = javaClass.`package`
         val jvmLoggingDomain = jvmLoggingDomains.getFor(classPackage)
-        return jvmLoggingDomain?.toLoggingDomain() ?: noOp
+        val loggingDomain = jvmLoggingDomain?.toLoggingDomain() ?: noOp
+        return loggingDomain
     }
 }
 
