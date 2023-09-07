@@ -48,8 +48,18 @@ import java.lang.annotation.Target
  * This implementation performs searching on demand with caching. It does
  * the actual search for packages that are asked for the first time.
  * The search result is remembered, so consequent requests for the previously
- * searched packages don't need an actual search. The inspected midway parental
- * packages are also cached.
+ * searched packages don't need an actual search.
+ *
+ * ## Caching
+ *
+ * When the lookup inspects parental packages, they are also all cached.
+ * Since we have already fetched the loaded parental packages (or tried
+ * to force-load them), there's no reason not to cache them too.
+ *
+ * Traversing and caching of parental packages will continue even if we have
+ * already found the closest annotated parent. Checking two-three-five more
+ * packages is not costly when instances of [Package] are already at hand.
+ * Otherwise, it may cause many unnecessary force-loadings.
  */
 internal class PackageAnnotationLookup<T : Annotation>(
 
@@ -60,15 +70,15 @@ internal class PackageAnnotationLookup<T : Annotation>(
      *
      * 1. It should NOT be repeatable. As for now, lookup for repeatable
      * annotations is not supported.
-     * 2. It should be applicable to packages. Otherwise, the lookup is useless.
+     * 2. It should be applicable to packages. Otherwise, lookup is useless.
      */
     private val wantedAnnotation: Class<T>,
 
     /**
      * A tool for working with [packages][Package].
      *
-     * [JvmPackages] already provides default implementation for all methods.
-     * And this class doesn't need more.
+     * The requested interface already provides default implementation
+     * for all methods. And this class doesn't need more.
      *
      * The ability to pass another implementation is preserved for tests.
      * This class is performance-sensitive, so tests should also assert
@@ -82,9 +92,6 @@ internal class PackageAnnotationLookup<T : Annotation>(
      *
      * This map contains both directly annotated packages and ones
      * that have any parent annotated with [T] (propagated annotation).
-     *
-     * Hash map is fast when retrieving values by string key.
-     * So, annotations are mapped to [Package.name] instead of [Package].
      */
     private val knownPackages = hashMapOf<PackageName, T?>()
 
@@ -110,7 +117,7 @@ internal class PackageAnnotationLookup<T : Annotation>(
      * 2. The given package is NOT annotated, but one of the parental packages is.
      * The method returns annotation of the closest annotated parent.
      * 3. Neither the given package nor any of its parental packages is annotated.
-     * The method will return `null`.
+     * The method returns `null`.
      */
     fun getFor(pkg: Package): T? {
         val packageName = pkg.name
@@ -132,80 +139,25 @@ internal class PackageAnnotationLookup<T : Annotation>(
     }
 
     /**
-     * Iterates from a root package down to the given one,
+     * Iterates from the given [packageName] down to a root package,
      * looking for applied annotations of type [T].
      *
-     * This method would propagate a found annotation to child packages,
-     * which don't have their own.
-     *
-     * For example, consider the following package: `p1.p2.p3.p4.p5.p6`.
-     * Let's say `p1` and `p4` are annotated with `t1` and `t4`.
-     * Without propagation, we would get the following map:
-     *
-     * ```
-     * p1 to t1
-     * p2 to null
-     * p3 to null
-     * p4 to t4
-     * p5 to null
-     * p6 to null
-     * ```
-     *
-     * With propagation, the following result will be returned:
-     *
-     * ```
-     * p1 to t1
-     * p2 to t1
-     * p3 to t1
-     * p4 to t4
-     * p5 to t4
-     * p6 to t4
-     * ```
+     * Also, this method propagates the found annotations from parental
+     * packages to nested ones if they are not annotated themselves.
+     * Take a look on example in docs to [propagateAnnotations] method.
      */
     private fun searchWithinHierarchy(packageName: PackageName): Map<PackageName, T?> {
         val possibleHierarchy = jvmPackages.expand(packageName) // package + its POSSIBLE parents.
         val loadedHierarchy = loadedHierarchy(packageName) // package + its LOADED parents.
-        val withAnnotations = annotate(possibleHierarchy, loadedHierarchy)
-        val withPropagation = propagate(withAnnotations)
+        val withAnnotations = findAnnotations(possibleHierarchy, loadedHierarchy)
+        val withPropagation = propagateAnnotations(withAnnotations)
         return withPropagation
-    }
-
-    private fun propagate(withAnnotations: Map<PackageName, T?>): Map<PackageName, T?> {
-        var lastFound: T? = null
-        val propagated = withAnnotations.entries
-            .reversed()
-            .associate { (name, annotation) ->
-                if (annotation != null) {
-                    lastFound = annotation
-                    name to annotation
-                } else {
-                    name to lastFound
-                }
-            }
-        return propagated
-    }
-
-    private fun annotate(
-        possiblePackages: List<PackageName>,
-        loadedPackages: Map<PackageName, Package>
-    ): Map<PackageName, T?> {
-        val result = mutableMapOf<PackageName, T?>()
-        for (name in possiblePackages) {
-            if (knownPackages.contains(name)) {
-                val knownAnnotation = knownPackages[name]
-                result[name] = knownAnnotation
-                break
-            }
-            val foundAnnotation = findAnnotation(name, loadedPackages)
-            result[name] = foundAnnotation
-        }
-        return result
     }
 
     /**
      * Fetches already loaded packages that relate to the given [packageName].
      *
-     * It includes all parental packages of [packageName] and the asked
+     * It includes all loaded parental packages of [packageName] and the asked
      * package itself.
      */
     private fun loadedHierarchy(packageName: PackageName): Map<PackageName, Package> =
@@ -213,17 +165,84 @@ internal class PackageAnnotationLookup<T : Annotation>(
             .filter { packageName.startsWith(it.name) }
             .associateBy { it.name }
 
-    private fun findAnnotation(name: PackageName, loadedPackages: Map<PackageName, Package>): T? {
-        val fromAlreadyLoaded = loadedPackages[name]?.findAnnotation()
-        if (fromAlreadyLoaded != null) {
-            return fromAlreadyLoaded
+    /**
+     * Associates an instance of [wantedAnnotation] with each package
+     * from [possiblePackages], if a package has one directly applied.
+     *
+     * Otherwise, associates `null`.
+     *
+     * The returned map preserves iteration order of [possiblePackages].
+     *
+     * We can know whether a package is annoted only if it is loaded.
+     * So, firstly, this method checks if a package is already loaded.
+     * If not, it tries to force its loading.
+     *
+     * A failed loading indicates one of the following:
+     *
+     * 1. The package doesn't exist at all.
+     * 2. It doesn't have any runtime-retained annotation.
+     *
+     * For this method, it doesn't matter why exactly it can't be force-loaded.
+     * Both cases are counted as "the package is not annotated".
+     *
+     * Please note, this method would stop traversing through [possiblePackages]
+     * when it meets an already known package. It means all upcoming packages
+     * are also already known. In this case, the returned map will not contain
+     * all packages from [possiblePackages] collection, and doesn't need to.
+     */
+    private fun findAnnotations(
+        possiblePackages: List<PackageName>,
+        loadedPackages: Map<PackageName, Package>
+    ): Map<PackageName, T?> {
+        val result = linkedMapOf<PackageName, T?>()
+        for (name in possiblePackages) {
+            if (knownPackages.contains(name)) {
+                result[name] = knownPackages[name] // It will be used for the propagation.
+                break // All further packages are already known.
+            }
+            val loadedPackage = loadedPackages[name] ?: jvmPackages.tryLoading(name)
+            val foundAnnotation = loadedPackage?.getAnnotation(wantedAnnotation)
+            result[name] = foundAnnotation
         }
-        val fromForcedLoaded = jvmPackages.tryLoading(name)?.findAnnotation()
-        return fromForcedLoaded
+        return result
     }
 
     /**
-     * Returns annotation of type [T] applied to this [Package], if any.
+     * Propagates found annotations to child packages that don't have
+     * their own annotations.
+     *
+     * For example, consider the following package: `P1.P2.P3.P4.P5.P6`.
+     * Let's say `P1` and `P4` are annotated with `A1` and `A4`.
+     * Without propagation, we would get the following map:
+     *
+     * ```
+     * P1 to A1
+     * P2 to null
+     * P3 to null
+     * P4 to A4
+     * P5 to null
+     * P6 to null
+     * ```
+     *
+     * With propagation, the following result will be returned:
+     *
+     * ```
+     * P1 to A1
+     * P2 to A1
+     * P3 to A1
+     * P4 to A4
+     * P5 to A4
+     * P6 to A4
+     * ```
      */
-    private fun Package.findAnnotation(): T? = getAnnotation(wantedAnnotation)
+    private fun propagateAnnotations(withAnnotations: Map<PackageName, T?>): Map<PackageName, T?> {
+        var lastFound: T? = null
+        val propagated = withAnnotations.entries
+            .reversed()
+            .associate { (name, annotation) ->
+                lastFound = annotation ?: lastFound
+                name to lastFound
+            }
+        return propagated
+    }
 }
