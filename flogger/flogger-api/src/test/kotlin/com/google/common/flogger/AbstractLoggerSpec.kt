@@ -37,7 +37,7 @@ import io.kotest.matchers.string.shouldBeEmpty
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldMatch
 import io.kotest.matchers.string.shouldNotContain
-import io.spine.logging.testutil.tapConsole
+import io.spine.logging.testing.tapConsole
 import kotlin.text.RegexOption.DOT_MATCHES_ALL
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
