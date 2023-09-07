@@ -96,9 +96,9 @@ internal interface JvmPackages {
      * return the following:
      *
      * ```
-     * io
-     * io.spine
      * io.spine.reflect
+     * io.spine
+     * io
      * ```
      *
      * Please note, this method just operates upon the given package name.
@@ -114,6 +114,7 @@ internal interface JvmPackages {
             buffer.append(symbol)
         }
         expanded.add(name)
+        expanded.reverse()
         return expanded
     }
 }

@@ -163,41 +163,67 @@ internal class PackageAnnotationLookup<T : Annotation>(
      * ```
      */
     private fun searchWithinHierarchy(packageName: PackageName): Map<PackageName, T?> {
-        val expectedHierarchy = jvmPackages.expand(packageName)
-        val alreadyLoaded by lazy { alreadyLoaded(packageName) } // It may not be needed.
+        val possibleHierarchy = jvmPackages.expand(packageName) // package + its POSSIBLE parents.
+        val loadedHierarchy = loadedHierarchy(packageName) // package + its LOADED parents.
+        val withAnnotations = annotate(possibleHierarchy, loadedHierarchy)
+        println(withAnnotations)
+        val withPropagation = propagate(withAnnotations)
+        println(withPropagation)
+        println()
+        return withPropagation
+    }
 
-        val inspectedPackages = mutableMapOf<PackageName, T?>()
+    private fun propagate(withAnnotations: Map<PackageName, T?>): Map<PackageName, T?> {
         var lastFound: T? = null
-
-        expectedHierarchy.forEach { name ->
-
-            // In the best case, these two are not evaluated in `when`.
-            val fromAlreadyLoaded by lazy { alreadyLoaded[name]?.findAnnotation() }
-            val fromForcedLoaded by lazy { jvmPackages.tryLoading(name)?.findAnnotation() }
-
-            lastFound = when {
-                knownPackages.contains(name) -> knownPackages[name]
-                fromAlreadyLoaded != null -> fromAlreadyLoaded
-                fromForcedLoaded != null -> fromForcedLoaded
-                else -> lastFound // Uses previously found one.
+        val propagated = withAnnotations.entries
+            .reversed()
+            .associate { (name, annotation) ->
+                if (annotation != null) {
+                    lastFound = annotation
+                    name to annotation
+                } else {
+                    name to lastFound
+                }
             }
+        return propagated
+    }
 
-            inspectedPackages[name] = lastFound
+    private fun annotate(
+        possiblePackages: List<PackageName>,
+        loadedPackages: Map<PackageName, Package>
+    ): Map<PackageName, T?> {
+        val result = mutableMapOf<PackageName, T?>()
+        for (name in possiblePackages) {
+            if (knownPackages.contains(name)) {
+                val knownAnnotation = knownPackages[name]
+                result[name] = knownAnnotation
+                break
+            }
+            val foundAnnotation = findAnnotation(name, loadedPackages)
+            result[name] = foundAnnotation
         }
-
-        return inspectedPackages
+        return result
     }
 
     /**
      * Fetches already loaded packages that relate to the given [packageName].
      *
-     * It includes all parental packages of [packageName] as well
-     * as the asked package itself.
+     * It includes all parental packages of [packageName] and the asked
+     * package itself.
      */
-    private fun alreadyLoaded(packageName: PackageName): Map<PackageName, Package> =
+    private fun loadedHierarchy(packageName: PackageName): Map<PackageName, Package> =
         jvmPackages.alreadyLoaded()
             .filter { packageName.startsWith(it.name) }
             .associateBy { it.name }
+
+    private fun findAnnotation(name: PackageName, loadedPackages: Map<PackageName, Package>): T? {
+        val fromAlreadyLoaded = loadedPackages[name]?.findAnnotation()
+        if (fromAlreadyLoaded != null) {
+            return fromAlreadyLoaded
+        }
+        val fromForcedLoaded = jvmPackages.tryLoading(name)?.findAnnotation()
+        return fromForcedLoaded
+    }
 
     /**
      * Returns annotation of type [T] applied to this [Package], if any.
