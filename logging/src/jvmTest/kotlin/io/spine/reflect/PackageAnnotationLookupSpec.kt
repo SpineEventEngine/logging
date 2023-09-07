@@ -165,7 +165,7 @@ internal class PackageAnnotationLookupSpec {
     `cache midway parental package` {
 
         @Test
-        fun `that are NOT annotated`() {
+        fun `that are not annotated`() {
             val nested4 = Nested4::class
             val nested3 = Nested3::class
 
