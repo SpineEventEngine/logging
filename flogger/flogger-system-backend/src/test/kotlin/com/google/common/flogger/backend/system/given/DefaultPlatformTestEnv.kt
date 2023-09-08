@@ -65,11 +65,11 @@ internal class NoOpCallerFinder : Platform.LogCallerFinder() {
      * Throws [IllegalStateException].
      */
     override fun findLoggingClass(loggerClass: Class<out AbstractLogger<*>>?): String =
-        error("Not implemented")
+        throw UnsupportedOperationException()
 
     /**
      * Throws [IllegalStateException].
      */
     override fun findLogSite(loggerApi: Class<*>?, stackFramesToSkip: Int): LogSite =
-        error("Not implemented")
+        throw UnsupportedOperationException()
 }
