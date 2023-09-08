@@ -34,7 +34,7 @@ plugins {
 dependencies {
     implementation(project(":flogger-api"))
     testImplementation(project(":flogger-testing"))
-    testImplementation(AutoService.processor)
+    testImplementation(AutoService.annotations)
     testAnnotationProcessor(AutoService.processor)
 }
 
