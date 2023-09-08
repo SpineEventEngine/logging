@@ -41,7 +41,7 @@ import com.google.common.flogger.testing.FakeLogData
  * are indeed called when expected.
  */
 @Suppress("serial") // Serial number is not needed.
-internal class TestRecord(message: String, vararg args: Any?) :
+internal class TestAbstractRecord(message: String, vararg args: Any?) :
     AbstractLogRecord(FakeLogData.withPrintfStyle(message, *args), Metadata.empty()) {
 
     private val formatter = TestLogMessageFormatter()

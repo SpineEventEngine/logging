@@ -26,7 +26,7 @@
 
 package com.google.common.flogger.backend.system
 
-import com.google.common.flogger.backend.system.given.TestRecord
+import com.google.common.flogger.backend.system.given.TestAbstractRecord
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
@@ -44,7 +44,7 @@ internal class AbstractLogRecordSpec {
 
     @Test
     fun `cache the returned message`() {
-        val record = TestRecord(literal, argument)
+        val record = TestAbstractRecord(literal, argument)
         val message = record.message
         message shouldBe expectedMessage
         record.message shouldBeSameInstanceAs message
@@ -53,7 +53,7 @@ internal class AbstractLogRecordSpec {
     @Test
     fun `cache the returned formatted message`() {
         val mutableArgument = StringBuilder(argument)
-        val record = TestRecord(literal, mutableArgument)
+        val record = TestAbstractRecord(literal, mutableArgument)
         val formatted = record.formattedMessage
         formatted shouldBe expectedMessage
         record.formattedMessage shouldBeSameInstanceAs formatted
@@ -61,7 +61,7 @@ internal class AbstractLogRecordSpec {
 
     @Test
     fun `override the initially supplied message`() {
-        val record = TestRecord(literal, argument)
+        val record = TestAbstractRecord(literal, argument)
         record.message shouldBe expectedMessage
         val overriddenMessage = "Custom"
         record.message = overriddenMessage
@@ -72,7 +72,7 @@ internal class AbstractLogRecordSpec {
 
     @Test
     fun `override with parameters`() {
-        val record = TestRecord(literal, argument)
+        val record = TestAbstractRecord(literal, argument)
         record.message shouldBe expectedMessage
         record.parameters.shouldBeEmpty()
 
@@ -102,7 +102,7 @@ internal class AbstractLogRecordSpec {
         // until `AbstractLogRecord.getMessage()` is called.
 
         val mutableArgument = StringBuilder(argument)
-        val record = TestRecord(literal, mutableArgument)
+        val record = TestAbstractRecord(literal, mutableArgument)
         "${record.appendFormattedMessageTo(StringBuilder())}" shouldBe expectedAppended
 
         // Since the message is not cached, it is still can be modified
@@ -116,7 +116,7 @@ internal class AbstractLogRecordSpec {
     @Test
     fun `append formatted message to a buffer with caching`() {
         val mutableArgument = StringBuilder(argument)
-        val record = TestRecord(literal, mutableArgument)
+        val record = TestAbstractRecord(literal, mutableArgument)
         "${record.appendFormattedMessageTo(StringBuilder())}" shouldBe expectedAppended
 
         // After a call to `AbstractLogRecord.getMessage()`, the message is cached.
