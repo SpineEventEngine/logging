@@ -118,11 +118,12 @@ public final class AbstractLogRecordTest {
   }
 
   @Test
+  @SuppressWarnings("UnnecessaryStringBuilder") // `StringBuilder` is used intentionally.
   public void testGetFormattedMessage_doesCacheByDefault() {
-    StringBuilder mutable = new StringBuilder("World");
+    var mutable = new StringBuilder("World");
     AbstractLogRecord record = new TestRecord("Hello %s", mutable);
 
-    String message = record.getFormattedMessage();
+    var message = record.getFormattedMessage();
     assertThat(message).isEqualTo("Copied: Hello World");
     assertThat(record.getFormattedMessage()).isSameInstanceAs(message);
   }

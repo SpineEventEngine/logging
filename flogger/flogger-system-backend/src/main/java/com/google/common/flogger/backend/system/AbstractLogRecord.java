@@ -16,10 +16,10 @@
 
 package com.google.common.flogger.backend.system;
 
+import static java.time.Instant.ofEpochMilli;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static java.util.logging.Level.WARNING;
 
-import com.google.common.flogger.LogSite;
 import com.google.common.flogger.backend.LogData;
 import com.google.common.flogger.backend.LogMessageFormatter;
 import com.google.common.flogger.backend.MessageUtils;
@@ -27,6 +27,7 @@ import com.google.common.flogger.backend.Metadata;
 import com.google.common.flogger.backend.MetadataProcessor;
 import com.google.common.flogger.backend.SimpleMessageFormatter;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Formatter;
@@ -118,11 +119,12 @@ public abstract class AbstractLogRecord extends LogRecord {
     this.metadata = MetadataProcessor.forScopeAndLogSite(scope, data.getMetadata());
 
     // Apply any data which is known or easily available without any effort.
-    LogSite logSite = data.getLogSite();
+    var logSite = data.getLogSite();
+    var timestampMillis = NANOSECONDS.toMillis(data.getTimestampNanos());
     setSourceClassName(logSite.getClassName());
     setSourceMethodName(logSite.getMethodName());
     setLoggerName(data.getLoggerName());
-    setMillis(NANOSECONDS.toMillis(data.getTimestampNanos()));
+    setInstant(ofEpochMilli(timestampMillis));
 
     // It was discovered that some null-hostile application code resets "parameters" to an empty
     // array when it discovers null, so preempt that here by initializing the parameters array (but
@@ -257,12 +259,12 @@ public abstract class AbstractLogRecord extends LogRecord {
    * {@code AbstractLogRecord} can be subject to.
    */
   public final LogRecord toMutableLogRecord() {
-    LogRecord copy = new LogRecord(getLevel(), getFormattedMessage());
+    var copy = new LogRecord(getLevel(), getFormattedMessage());
     copy.setParameters(NO_PARAMETERS);
     copy.setSourceClassName(getSourceClassName());
     copy.setSourceMethodName(getSourceMethodName());
     copy.setLoggerName(getLoggerName());
-    copy.setMillis(getMillis());
+    copy.setInstant(getInstant());
     copy.setThrown(getThrown());
 
     // Not set explicitly normally, but a copy should be safe (even if it's null). We don't copy

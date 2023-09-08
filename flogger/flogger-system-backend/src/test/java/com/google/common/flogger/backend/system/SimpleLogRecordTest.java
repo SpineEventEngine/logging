@@ -17,6 +17,7 @@
 package com.google.common.flogger.backend.system;
 
 import static com.google.common.truth.Truth.assertThat;
+import static java.time.Instant.ofEpochMilli;
 import static org.junit.Assert.fail;
 
 import com.google.common.base.Joiner;
@@ -28,6 +29,7 @@ import com.google.common.flogger.context.Tags;
 import com.google.common.flogger.parser.ParseException;
 import com.google.common.flogger.testing.FakeLogData;
 import com.google.common.flogger.testing.FakeMetadata;
+
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -139,7 +141,7 @@ public class SimpleLogRecordTest {
     assertThat(record.getMessage()).isEqualTo("Foo='bar' [CONTEXT count=23 id=\"test ID\" ]");
     assertThat(record.getParameters()).isEmpty();
     // Just do this once for sanity checking - it's only for debugging.
-    record.setMillis(123456789);
+    record.setInstant(ofEpochMilli(123456789));
     assertThat(record.toString())
          .isEqualTo(
             "SimpleLogRecord {\n"
