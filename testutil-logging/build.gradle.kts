@@ -27,3 +27,5 @@
 plugins {
     `jvm-module`
 }
+
+group = "io.spine.tools"

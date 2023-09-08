@@ -37,8 +37,8 @@ include(
     "logging",
     "logging-backend",
     "logging-context",
-    "logging-testutil",
     "logging-fake-backend",
+    "testutil-logging"
 )
 
 includeTest(

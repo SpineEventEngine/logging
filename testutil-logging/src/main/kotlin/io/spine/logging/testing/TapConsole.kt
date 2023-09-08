@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.testutil
+package io.spine.logging.testing
 
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
