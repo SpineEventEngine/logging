@@ -22,12 +22,9 @@ import com.google.auto.service.AutoService;
 import com.google.common.flogger.backend.LoggerBackend;
 import com.google.common.flogger.context.ContextDataProvider;
 import com.google.common.flogger.context.ScopedLoggingContext;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
 /** Tests how {@code DefaultPlatform} loads services from the classpath. */
-@RunWith(JUnit4.class)
 public final class DefaultPlatformServiceLoadingTest {
 
   @Test

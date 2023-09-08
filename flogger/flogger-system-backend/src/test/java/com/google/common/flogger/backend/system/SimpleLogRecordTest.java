@@ -29,15 +29,12 @@ import com.google.common.flogger.context.Tags;
 import com.google.common.flogger.parser.ParseException;
 import com.google.common.flogger.testing.FakeLogData;
 import com.google.common.flogger.testing.FakeMetadata;
+import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
-@RunWith(JUnit4.class)
 public class SimpleLogRecordTest {
   private static final MetadataKey<Integer> COUNT_KEY = MetadataKey.single("count", Integer.class);
   private static final MetadataKey<String> ID_KEY = MetadataKey.single("id", String.class);

@@ -16,27 +16,23 @@
 
 package com.google.common.flogger.backend.system;
 
-import static com.google.common.flogger.testing.FakeLogData.withBraceStyle;
-import static com.google.common.flogger.testing.FakeLogData.withPrintfStyle;
-import static com.google.common.truth.Truth.assertThat;
-import static java.util.logging.Level.INFO;
-import static org.junit.Assert.fail;
-
 import com.google.common.flogger.backend.LogData;
 import com.google.common.flogger.backend.LoggerBackend;
 import com.google.common.flogger.parser.ParseException;
 import com.google.common.flogger.testing.AssertingLogger;
 import com.google.common.flogger.testing.FakeLogData;
+import org.junit.jupiter.api.Test;
+
 import java.util.Calendar;
 import java.util.Formattable;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 import java.util.logging.Logger;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
-@RunWith(JUnit4.class)
+import static com.google.common.truth.Truth.assertThat;
+import static java.util.logging.Level.INFO;
+import static org.junit.Assert.fail;
+
 public class SimpleBackendLoggerTest {
   private static LoggerBackend newBackend(Logger logger) {
     return new SimpleLoggerBackend(logger);

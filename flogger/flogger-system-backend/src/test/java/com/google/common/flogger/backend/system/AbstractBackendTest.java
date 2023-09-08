@@ -19,16 +19,14 @@ package com.google.common.flogger.backend.system;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.common.flogger.backend.LogData;
+import org.junit.jupiter.api.Test;
+
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
 /** Tests for the abstract logger base-class which don't rely on any specific logging details. */
-@RunWith(JUnit4.class)
 public class AbstractBackendTest {
 
   private static class TestBackend extends AbstractBackend {

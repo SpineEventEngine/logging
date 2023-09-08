@@ -24,11 +24,8 @@ import com.google.common.flogger.backend.Metadata;
 import com.google.common.flogger.backend.MetadataProcessor;
 import com.google.common.flogger.backend.SimpleMessageFormatter;
 import com.google.common.flogger.testing.FakeLogData;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
 public final class AbstractLogRecordTest {
   private static final LogMessageFormatter DEFAULT_FORMATTER =
       SimpleMessageFormatter.getDefaultFormatter();
