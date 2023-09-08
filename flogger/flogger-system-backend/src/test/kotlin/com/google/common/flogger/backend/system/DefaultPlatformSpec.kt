@@ -26,13 +26,13 @@
 
 package com.google.common.flogger.backend.system
 
-import com.google.auto.service.AutoService
-import com.google.common.flogger.backend.LoggerBackend
 import com.google.common.flogger.backend.system.given.FakeBackendFactory
 import com.google.common.flogger.backend.system.given.FixedTime
 import com.google.common.flogger.backend.system.given.NoOpCallerFinder
+import com.google.common.flogger.backend.system.given.TestClockService
+import com.google.common.flogger.backend.system.given.TestContextDataProviderService
+import com.google.common.flogger.backend.system.given.TestServices
 import com.google.common.flogger.context.ContextDataProvider
-import com.google.common.flogger.context.ScopedLoggingContext
 import com.google.common.flogger.testing.FakeLoggerBackend
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
@@ -103,7 +103,7 @@ internal class DefaultPlatformSpec {
         val platform = DefaultPlatform()
         val configInfo = platform.configInfoImpl.trimEnd()
         val expectedServices = setOf(
-            "BackendFactory: ${TestBackendFactoryService::class.simpleName}",
+            "BackendFactory: ${TestServices::class.simpleName}",
             "Clock: ${TestClockService::class.simpleName}",
             "ContextDataProvider: ${TestContextDataProviderService::class.simpleName}"
         )
@@ -111,30 +111,4 @@ internal class DefaultPlatformSpec {
             configInfo shouldContain service
         }
     }
-}
-
-@AutoService(BackendFactory::class)
-private class TestBackendFactoryService : BackendFactory() {
-
-    override fun create(loggingClassName: String): LoggerBackend =
-        throw UnsupportedOperationException()
-
-    override fun toString(): String = this::class.simpleName!!
-}
-
-
-@AutoService(ContextDataProvider::class)
-private class TestContextDataProviderService : ContextDataProvider() {
-
-    override fun getContextApiSingleton(): ScopedLoggingContext =
-        throw UnsupportedOperationException()
-
-    override fun toString(): String = this::class.simpleName!!
-}
-
-@AutoService(Clock::class)
-private class TestClockService : Clock() {
-
-    override fun getCurrentTimeNanos(): Long =
-        throw UnsupportedOperationException()
 }
