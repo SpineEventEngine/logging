@@ -29,14 +29,23 @@ import net.ltgt.gradle.errorprone.errorprone
 
 plugins {
     `jvm-module`
+
+    /**
+     * Although, Kapt is being replaced with KSP now, the official implementation
+     * of AutoService for KSP is not available yet.
+     *
+     * See [KSP Implementation of AutoService](https://github.com/google/auto/issues/882).
+     */
+    `kotlin-kapt`
 }
 
 dependencies {
     implementation(project(":flogger-api"))
     testImplementation(project(":flogger-testing"))
     testImplementation(AutoService.annotations)
-    testAnnotationProcessor(AutoService.processor)
+    kaptTest(AutoService.processor)
 }
+
 
 java {
 
