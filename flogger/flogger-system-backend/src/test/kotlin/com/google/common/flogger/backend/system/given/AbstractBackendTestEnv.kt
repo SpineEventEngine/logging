@@ -71,11 +71,6 @@ internal class TestBackend(logger: Logger) : AbstractBackend(logger) {
     override fun getForcingLogger(parent: Logger): Logger {
         return ForcingLogger(parent)
     }
-
-    fun assertUsedForcingLogger(expectForced: Boolean) {
-        Truth.assertThat(wasForcingLoggerUsed).isEqualTo(expectForced)
-        wasForcingLoggerUsed = false
-    }
 }
 
 
@@ -91,8 +86,6 @@ internal class TestLogger(name: String?, level: Level?) : Logger(name, null) {
         setLevel(level)
         addHandler(object : Handler() {
             override fun publish(record: LogRecord) {
-                val exception = Throwable()
-                exception.printStackTrace()
                 published = record.message
             }
 
@@ -105,15 +98,5 @@ internal class TestLogger(name: String?, level: Level?) : Logger(name, null) {
         logged = record.message
         published = null // On this stage, it is unclear whether it will be published.
         super.log(record)
-    }
-
-    fun assertLogged(expectedLogMessage: String?) {
-        Truth.assertThat(logged).isEqualTo(expectedLogMessage)
-        logged = null
-    }
-
-    fun assertPublished(expectedLogMessage: String?) {
-        Truth.assertThat(published).isEqualTo(expectedLogMessage)
-        published = null
     }
 }
