@@ -28,7 +28,6 @@ package com.google.common.flogger.backend.system.given
 
 import com.google.common.flogger.backend.LogData
 import com.google.common.flogger.backend.system.AbstractBackend
-import com.google.common.truth.Truth
 import java.util.logging.Handler
 import java.util.logging.Level
 import java.util.logging.LogRecord
@@ -89,8 +88,13 @@ internal class TestLogger(name: String?, level: Level?) : Logger(name, null) {
                 published = record.message
             }
 
-            override fun close() {}
-            override fun flush() {}
+            @Suppress("EmptyFunctionBlock") // xc.
+            override fun flush() {
+            }
+
+            @Suppress("EmptyFunctionBlock") // Detekt's false-positive.
+            override fun close() {
+            }
         })
     }
 
