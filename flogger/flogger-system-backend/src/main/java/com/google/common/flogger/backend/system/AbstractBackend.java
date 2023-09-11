@@ -38,7 +38,8 @@ public abstract class AbstractBackend extends LoggerBackend {
 
   // Internal constructor used by legacy callers - should be updated to just pass in the logging
   // class name. This needs work to handle anonymous loggers however (if that's ever supported).
-  AbstractBackend(Logger logger) {
+  // Should be removed or become `internal` when migrated to Kotlin.
+  protected AbstractBackend(Logger logger) {
     this.logger = logger;
   }
 
@@ -198,7 +199,8 @@ public abstract class AbstractBackend extends LoggerBackend {
   // Pass in the logger (even though it's in our instance) so that it's accessible for testing
   // without needing to make the field accessible.
   // VisibleForTesting
-  Logger getForcingLogger(Logger parent) {
+  // Should become `internal` when migrated to Kotlin.
+  protected Logger getForcingLogger(Logger parent) {
     return Logger.getLogger(parent.getName() + ".__forced__");
   }
 }
