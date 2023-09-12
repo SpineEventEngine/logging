@@ -47,6 +47,9 @@ import org.junit.jupiter.api.Test
  * platform “plugins” works as expected, but it doesn't really test
  * the singleton behavior, since the precise platform loaded at runtime
  * can vary in details.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/backend/system/DefaultPlatformTest.java">
+ *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`DefaultPlatform` should")
 internal class DefaultPlatformSpec {

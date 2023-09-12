@@ -38,6 +38,12 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
+/**
+ * Tests for [AbstractBackend].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/backend/system/AbstractBackendTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
 @DisplayName("`AbstractBackend` should")
 internal class AbstractBackendSpec {
 

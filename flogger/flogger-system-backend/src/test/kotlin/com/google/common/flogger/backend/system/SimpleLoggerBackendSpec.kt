@@ -41,6 +41,12 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
+/**
+ * Tests [SimpleLoggerBackend].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/backend/system/SimpleBackendLoggerTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
 @DisplayName("`SimpleLoggerBackend` should")
 internal class SimpleLoggerBackendSpec {
 

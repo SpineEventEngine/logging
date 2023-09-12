@@ -34,6 +34,12 @@ import io.kotest.matchers.types.shouldBeSameInstanceAs
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
+/**
+ * Tests for [AbstractLogRecord].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/backend/system/AbstractLogRecordTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
 @DisplayName("`AbstractLogRecord` should")
 internal class AbstractLogRecordSpec {
 
