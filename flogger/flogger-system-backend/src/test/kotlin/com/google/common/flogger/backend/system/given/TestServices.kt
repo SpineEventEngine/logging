@@ -42,7 +42,7 @@ import com.google.common.flogger.context.ScopedLoggingContext
  * A stub Java [service][java.util.ServiceLoader] for [BackendFactory].
  */
 @AutoService(BackendFactory::class)
-class TestServices : BackendFactory() {
+internal class TestServices : BackendFactory() {
 
     override fun create(loggingClassName: String): LoggerBackend =
         throw UnsupportedOperationException()
@@ -54,7 +54,7 @@ class TestServices : BackendFactory() {
  * A stub Java [service][java.util.ServiceLoader] for [ContextDataProvider].
  */
 @AutoService(ContextDataProvider::class)
-class TestContextDataProviderService : ContextDataProvider() {
+internal class TestContextDataProviderService : ContextDataProvider() {
 
     override fun getContextApiSingleton(): ScopedLoggingContext =
         throw UnsupportedOperationException()
@@ -66,7 +66,7 @@ class TestContextDataProviderService : ContextDataProvider() {
  * A stub Java [service][java.util.ServiceLoader] for [Clock].
  */
 @AutoService(Clock::class)
-class TestClockService : Clock() {
+internal class TestClockService : Clock() {
 
     override fun getCurrentTimeNanos(): Long =
         throw UnsupportedOperationException()
