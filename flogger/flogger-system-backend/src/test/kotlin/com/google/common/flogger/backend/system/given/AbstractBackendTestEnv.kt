@@ -34,11 +34,51 @@ import java.util.logging.LogRecord
 import java.util.logging.Logger
 
 /**
- * An instantiatable [AbstractBackend].
+ * An instantiatable [AbstractBackend] that remembers the fact
+ * of usage of [ForcingLogger].
  */
 internal class TestBackend(logger: Logger) : AbstractBackend(logger) {
 
-    // Faked forcing logger (because we don't get our test loggers from the LogManager).
+    /**
+     * Tells whether the last call to [AbstractBackend.log]
+     * used a forcing logger.
+     */
+    internal var wasForcingLoggerUsed = false
+        private set
+
+    /**
+     * This method is not used by [AbstractBackend].
+     *
+     * [LogData] tests are in `SimpleBackendLoggerSpec`.
+     */
+    override fun log(data: LogData) {
+        // no-op
+    }
+
+    /**
+     * This class never tries to format anything in [TestLogger.log],
+     * so this method is not expected to be ever called.
+     */
+    override fun handleError(error: RuntimeException, badData: LogData) {
+        throw UnsupportedOperationException()
+    }
+
+    /**
+     * Explicitly creates a forcing child logger.
+     *
+     * Normally, the forcing logger is obtained from [LogManager][java.util.logging.LogManager].
+     * But in tests, the used [TestLogger] is an explicit subclass of [Logger],
+     * that is not a part of log manager's hierarchy. So, we have to create
+     * an explicit forcing child logger too.
+     */
+    override fun getForcingLogger(parent: Logger): Logger {
+        return ForcingLogger(parent)
+    }
+
+    /**
+     * An explicit forcing logger that notifies the outer [TestBackend]
+     * that it was used.
+     */
     private inner class ForcingLogger(parent: Logger) :
         Logger(parent.name + ".__forced__", null) {
 
@@ -51,56 +91,57 @@ internal class TestBackend(logger: Logger) : AbstractBackend(logger) {
             super.log(record)
         }
     }
-
-    internal var wasForcingLoggerUsed = false
-        private set
-
-    override fun log(data: LogData) {
-        // LogData tests are in sub-class tests.
-    }
-
-    override fun handleError(error: RuntimeException, badData: LogData) {
-        // Because log() never tries to format anything, this can never be called.
-        throw UnsupportedOperationException()
-    }
-
-    // Normally the forcing logger is obtained from the LogManager (so we get the sub-class
-    // implementation), but in tests the Logger used is an explicit subclass that's not in the
-    // LogManager hierarchy, so we have to make an explicit child logger here too.
-    override fun getForcingLogger(parent: Logger): Logger {
-        return ForcingLogger(parent)
-    }
 }
 
+/**
+ * A Java logger that remembers the captured and published log messages.
+ *
+ * A message is [captured] when it arrives to [Logger.log] method.
+ * Then, if it passes [Logger.log] and arrives to handlers, it is [published].
+ */
+internal class TestLogger(name: String, level: Level) : Logger(name, null) {
 
-internal class TestLogger(name: String?, level: Level?) : Logger(name, null) {
-
-    internal var logged: String? = null
+    /**
+     * Contains the message from the last call to [TestLogger.log].
+     */
+    var captured: String? = null
         private set
 
-    internal var published: String? = null
+    /**
+     * Contains the message from the last call to handlers of this logger.
+     *
+     * This property would have a message only if it has been passed down
+     * to handlers by [Logger.log] method.
+     */
+    var published: String? = null
         private set
 
     init {
+        val handler = TestHandler()
         setLevel(level)
-        addHandler(object : Handler() {
-            override fun publish(record: LogRecord) {
-                published = record.message
-            }
-
-            @Suppress("EmptyFunctionBlock") // xc.
-            override fun flush() {
-            }
-
-            @Suppress("EmptyFunctionBlock") // Detekt's false-positive.
-            override fun close() {
-            }
-        })
+        addHandler(handler)
     }
 
     override fun log(record: LogRecord) {
-        logged = record.message
-        published = null // On this stage, it is unclear whether it will be published.
+        captured = record.message
         super.log(record)
+    }
+
+    /**
+     * A handler that returns the message back to the outer [TestLogger].
+     */
+    private inner class TestHandler : Handler() {
+
+        override fun publish(record: LogRecord) {
+            published = record.message
+        }
+
+        override fun flush() {
+            // no-op
+        }
+
+        override fun close() {
+            // no-op
+        }
     }
 }
