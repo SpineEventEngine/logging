@@ -26,6 +26,7 @@
 
 import BuildSettings.javaVersion
 import io.spine.internal.dependency.CheckerFramework
+import io.spine.internal.dependency.JUnit
 import io.spine.internal.dependency.Truth
 import io.spine.internal.gradle.report.license.LicenseReporter
 
@@ -43,5 +44,6 @@ dependencies {
     implementation(project(":flogger-api"))
     implementation(project(":flogger-system-backend"))
     implementation(CheckerFramework.annotations)
+    JUnit.api.forEach { implementation(it) }
     Truth.libs.forEach { implementation(it) }
 }

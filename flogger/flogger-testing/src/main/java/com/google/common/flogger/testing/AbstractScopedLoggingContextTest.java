@@ -33,17 +33,19 @@ import com.google.common.flogger.context.ScopedLoggingContext.LoggingContextClos
 import com.google.common.flogger.context.ScopedLoggingContexts;
 import com.google.common.flogger.context.Tags;
 import com.google.common.truth.BooleanSubject;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
- * A JUnit4 compatible helper class to allow implementations of {@link ContextDataProvider} to be
- * tested against a suite of common tests.
+ * A JUnit5 compatible helper class to allow implementations of {@link ContextDataProvider}
+ * to be tested against a suite of common tests.
  */
 public abstract class AbstractScopedLoggingContextTest {
+
   private static final MetadataKey<String> FOO_KEY = MetadataKey.single("FOO", String.class);
   private static final MetadataKey<String> BAR_KEY = MetadataKey.repeated("BAR", String.class);
 
@@ -57,7 +59,7 @@ public abstract class AbstractScopedLoggingContextTest {
   // Flag set inside innermost callbacks to prove they were executed.
   private boolean testWasDone = false;
 
-  @Before
+  @BeforeEach
   public final void setImplementation() {
     this.dataProvider = getImplementationUnderTest();
     this.context = dataProvider.getContextApiSingleton();
@@ -69,7 +71,7 @@ public abstract class AbstractScopedLoggingContextTest {
     assertThat(testWasDone).isTrue();
   }
 
-  private final void markTestAsDone() {
+  private void markTestAsDone() {
     this.testWasDone = true;
   }
 
