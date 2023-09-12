@@ -35,6 +35,12 @@ import java.util.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
+/**
+ * Tests for [GrpcContextDataProvider].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/master/grpc/src/test/java/com/google/common/flogger/grpc/GrpcContextDataProviderTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
 @DisplayName("`GrpcContextDataProvider` should")
 internal class GrpcContextDataProviderSpec : AbstractScopedLoggingContextTest() {
 
