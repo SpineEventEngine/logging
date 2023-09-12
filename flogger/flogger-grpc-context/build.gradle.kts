@@ -24,29 +24,27 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import BuildSettings.javaVersion
-import io.spine.internal.dependency.CheckerFramework
-import io.spine.internal.dependency.ErrorProne
 import io.spine.internal.dependency.Grpc
-import io.spine.internal.dependency.Truth
-import io.spine.internal.gradle.report.license.LicenseReporter
 
 plugins {
-    `java-library`
+    `jvm-module`
 }
-
-LicenseReporter.generateReportIn(project)
 
 dependencies {
     implementation(project(":flogger-api"))
     implementation(Grpc.api)
-    implementation(CheckerFramework.annotations)
-    ErrorProne.annotations.forEach { implementation(it) }
-
     testImplementation(project(":flogger-testing"))
-    Truth.libs.forEach { testImplementation(it) }
 }
 
 java {
-    toolchain.languageVersion.set(javaVersion)
+
+    /**
+     * Disables PMD checks until main sources are migrated to Kotlin.
+     *
+     * As for now, they produce a lot of errors/warnings to original Flogger code,
+     * failing the build.
+     */
+    tasks {
+        named("pmdMain") { enabled = false }
+    }
 }
