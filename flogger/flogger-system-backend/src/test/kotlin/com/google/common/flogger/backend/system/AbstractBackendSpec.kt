@@ -59,8 +59,8 @@ internal class AbstractBackendSpec {
         fun `log at an enabled level using the underlying logger`() {
             val message = "Enabled and Unforced"
             val record = LogRecord(Level.INFO, message)
-            backend.log(record, forced) // Unforced logging.
-            logger.logged shouldBe message
+            backend.log(record, forced)
+            logger.captured shouldBe message
             logger.published shouldBe message
             backend.wasForcingLoggerUsed.shouldBeFalse()
         }
@@ -69,9 +69,9 @@ internal class AbstractBackendSpec {
         fun `not log at a disabled level`() {
             val message = "Disabled and Unforced"
             val record = LogRecord(Level.FINE, message)
-            backend.log(record, forced) // Unforced logging.
-            logger.logged shouldBe message
-            logger.published.shouldBeNull()
+            backend.log(record, forced)
+            logger.captured shouldBe message // Passed to the logger.
+            logger.published.shouldBeNull() // But not published.
             backend.wasForcingLoggerUsed.shouldBeFalse()
         }
     }
@@ -83,23 +83,40 @@ internal class AbstractBackendSpec {
 
         @Test
         fun `log at an enabled level using the underlying logger`() {
-            // Forced and unforced logging is treated the same
+            // Forced and unforced logging is treated the same way
             // if the used level is enabled.
             val message = "Enabled and Forced"
             val record = LogRecord(Level.INFO, message)
             backend.log(record, forced)
-            logger.logged shouldBe message
+            logger.captured shouldBe message
             logger.published shouldBe message
             backend.wasForcingLoggerUsed.shouldBeFalse()
         }
 
+        /**
+         * Tests how the abstract backend pushes a forced log statement
+         * through a disabled level.
+         *
+         * To achieve this, it creates another logger without any
+         * level restrictions:
+         *
+         * ```
+         * val forcingLogger = crateOrGetForcingLogger(underlyingLogger)
+         * forcingLogger.setLevel(Level.ALL)
+         * forcingLogger.log(...)
+         * ```
+         *
+         * The underlying logger will not receive a call to `Logger.log()`.
+         * This method will be called upon a forcing logger. But when a forcing
+         * logger calls log handlers, the parental handlers are also called.
+         */
         @Test
         fun `log at a disabled level using a special forcing logger`() {
             val message = "Disabled and Forced"
             val record = LogRecord(Level.FINE, message)
             backend.log(record, forced)
-            logger.logged.shouldBe(null)
-            logger.published.shouldBe(message)
+            logger.captured.shouldBeNull()
+            logger.published shouldBe message
             backend.wasForcingLoggerUsed.shouldBeTrue()
         }
     }
