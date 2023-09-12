@@ -161,7 +161,7 @@ internal class SimpleLogRecordSpec {
     }
 
     @Test
-    fun `substitute brace style arguments`() {
+    fun `format brace pattern`() {
         val data = FakeLogData.withBraceStyle("Answer={0}", 42)
         val record = SimpleLogRecord.create(data, Metadata.empty())
         record.message shouldBe "Answer=42"
