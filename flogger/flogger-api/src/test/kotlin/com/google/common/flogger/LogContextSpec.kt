@@ -33,13 +33,13 @@ import com.google.common.flogger.LogContext.specializeLogSiteKeyFromMetadata
 import com.google.common.flogger.MetadataKey.repeated
 import com.google.common.flogger.context.Tags
 import com.google.common.flogger.given.iterate
-import com.google.common.flogger.given.shouldContainInOrder
-import com.google.common.flogger.given.shouldContain
+import com.google.common.flogger.testing.shouldContainInOrder
+import com.google.common.flogger.testing.shouldContain
 import com.google.common.flogger.given.shouldHaveArguments
 import com.google.common.flogger.given.shouldHaveMessage
-import com.google.common.flogger.given.shouldHaveSize
-import com.google.common.flogger.given.shouldNotContain
-import com.google.common.flogger.given.shouldUniquelyContain
+import com.google.common.flogger.testing.shouldHaveSize
+import com.google.common.flogger.testing.shouldNotContain
+import com.google.common.flogger.testing.shouldUniquelyContain
 import com.google.common.flogger.testing.FakeLogSite
 import com.google.common.flogger.testing.FakeLoggerBackend
 import com.google.common.flogger.testing.FakeMetadata
@@ -207,7 +207,7 @@ internal class LogContextSpec {
 
     /**
      * For testing log-site tags are correctly merged with metadata,
-     * see [AbstractScopedLoggingContextTest][com.google.common.flogger.testing.AbstractScopedLoggingContextTest].
+     * see [AbstractScopedLoggingContextTest][com.google.common.flogger.testing.AbstractScopedLoggingContextSpec].
      */
     @Test
     fun `accept tags`() {
