@@ -27,7 +27,7 @@
 package com.google.common.flogger.grpc
 
 import com.google.common.flogger.context.ContextDataProvider
-import com.google.common.flogger.testing.AbstractScopedLoggingContextTest
+import com.google.common.flogger.testing.AbstractScopedLoggingContextSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.optional.shouldBePresent
 import io.kotest.matchers.types.shouldBeInstanceOf
@@ -42,11 +42,10 @@ import org.junit.jupiter.api.Test
  *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`GrpcContextDataProvider` should")
-internal class GrpcContextDataProviderSpec : AbstractScopedLoggingContextTest() {
+internal class GrpcContextDataProviderSpec : AbstractScopedLoggingContextSpec() {
 
-    override fun getImplementationUnderTest(): ContextDataProvider {
-        return GrpcContextDataProvider.getInstance()
-    }
+    override val implementationUnderTest: ContextDataProvider =
+        GrpcContextDataProvider.getInstance()
 
     @Test
     fun `be able to be loaded as a Java service`() {
