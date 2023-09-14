@@ -50,11 +50,11 @@ internal class GrpcContextDataProviderSpec : AbstractScopedLoggingContextSpec() 
     @Test
     fun `be able to be loaded as a Java service`() {
         val serviceLoader = ServiceLoader.load(ContextDataProvider::class.java)
-        val optionalProvider = serviceLoader.findFirst()
-        optionalProvider.shouldBePresent()
+        val optionalContextDataProvider = serviceLoader.findFirst()
+        optionalContextDataProvider.shouldBePresent()
 
-        val provider = optionalProvider.get()
-        provider.shouldNotBeNull()
-        provider.shouldBeInstanceOf<GrpcContextDataProvider>()
+        val contextDataProvider = optionalContextDataProvider.get()
+        contextDataProvider.shouldNotBeNull()
+        contextDataProvider.shouldBeInstanceOf<GrpcContextDataProvider>()
     }
 }
