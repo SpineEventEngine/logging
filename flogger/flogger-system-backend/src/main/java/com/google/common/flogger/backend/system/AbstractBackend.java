@@ -38,7 +38,8 @@ public abstract class AbstractBackend extends LoggerBackend {
 
   // Internal constructor used by legacy callers - should be updated to just pass in the logging
   // class name. This needs work to handle anonymous loggers however (if that's ever supported).
-  // Should be removed or become `internal` when migrated to Kotlin.
+  // TODO:2023-09-14:yevhenii.nadtochii: Should become `internal` when migrated to Kotlin.
+  // See issue: https://github.com/SpineEventEngine/logging/issues/47
   protected AbstractBackend(Logger logger) {
     this.logger = logger;
   }
@@ -199,7 +200,8 @@ public abstract class AbstractBackend extends LoggerBackend {
   // Pass in the logger (even though it's in our instance) so that it's accessible for testing
   // without needing to make the field accessible.
   // VisibleForTesting
-  // Should become `internal` when migrated to Kotlin.
+  // TODO:2023-09-14:yevhenii.nadtochii: Should become `internal` when migrated to Kotlin.
+  // See issue: https://github.com/SpineEventEngine/logging/issues/47
   protected Logger getForcingLogger(Logger parent) {
     return Logger.getLogger(parent.getName() + ".__forced__");
   }
