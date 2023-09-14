@@ -29,9 +29,9 @@ package com.google.common.flogger.backend.system
 import com.google.common.flogger.backend.system.given.FakeBackendFactory
 import com.google.common.flogger.backend.system.given.FixedTime
 import com.google.common.flogger.backend.system.given.NoOpCallerFinder
-import com.google.common.flogger.backend.system.given.TestClockService
-import com.google.common.flogger.backend.system.given.TestContextDataProviderService
-import com.google.common.flogger.backend.system.given.TestServices
+import com.google.common.flogger.backend.system.given.StubClockService
+import com.google.common.flogger.backend.system.given.StubContextDataProviderService
+import com.google.common.flogger.backend.system.given.StubBackendFactoryService
 import com.google.common.flogger.context.ContextDataProvider
 import com.google.common.flogger.testing.FakeLoggerBackend
 import io.kotest.matchers.shouldBe
@@ -106,9 +106,9 @@ internal class DefaultPlatformSpec {
         val platform = DefaultPlatform()
         val configInfo = platform.configInfoImpl.trimEnd()
         val expectedServices = setOf(
-            "BackendFactory: ${TestServices::class.simpleName}",
-            "Clock: ${TestClockService::class.simpleName}",
-            "ContextDataProvider: ${TestContextDataProviderService::class.simpleName}"
+            "BackendFactory: ${StubBackendFactoryService::class.simpleName}",
+            "Clock: ${StubClockService::class.simpleName}",
+            "ContextDataProvider: ${StubContextDataProviderService::class.simpleName}"
         )
         expectedServices.forEach { service ->
             configInfo shouldContain service
