@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test
 /**
  * Tests for [GrpcContextDataProvider].
  *
- * @see <a href="https://github.com/google/flogger/blob/master/grpc/src/test/java/com/google/common/flogger/grpc/GrpcContextDataProviderTest.java">
+ * @see <a href="https://github.com/google/flogger/blob/70c5aea863952ee61b3d33afb41f2841b6d63455/grpc/src/test/java/com/google/common/flogger/grpc/GrpcContextDataProviderTest.java">
  *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`GrpcContextDataProvider` should")
