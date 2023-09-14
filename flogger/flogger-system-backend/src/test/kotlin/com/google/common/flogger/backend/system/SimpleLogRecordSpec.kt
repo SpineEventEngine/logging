@@ -61,7 +61,7 @@ internal class SimpleLogRecordSpec {
     companion object {
 
         /**
-         * `INT_KEY` uses `Int::class.javaObjectType` to make sure we get
+         * [COUNT_KEY] uses `Int::class.javaObjectType` to make sure we get
          * `Integer` class on JVM.
          *
          * Otherwise, Kotlin compiler passes `int` class for primitives.
