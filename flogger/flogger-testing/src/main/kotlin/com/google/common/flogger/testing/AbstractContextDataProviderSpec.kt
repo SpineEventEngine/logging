@@ -184,7 +184,7 @@ public abstract class AbstractContextDataProviderSpec {
                         .run {
                             // Double-check to be sure.
                             providerTags shouldBe allTags.asMap()
-                            providerTags shouldContain (name to listOf(value1, value2))
+                            providerTags[name] shouldBe setOf(value1, value2)
                             markCallbackExecuted()
                         }
                     providerTags shouldBe outerTags.asMap()
