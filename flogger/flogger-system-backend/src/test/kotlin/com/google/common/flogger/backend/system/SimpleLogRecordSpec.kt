@@ -52,7 +52,7 @@ import org.junit.jupiter.api.Test
 /**
  * Tests [SimpleLogRecord].
  *
- * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/backend/system/SimpleLogRecordTest.java">
+ * @see <a href="https://github.com/google/flogger/blob/70c5aea863952ee61b3d33afb41f2841b6d63455/api/src/test/java/com/google/common/flogger/backend/system/SimpleLogRecordTest.java">
  *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`SimpleLogRecord` should")
