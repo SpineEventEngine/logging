@@ -50,10 +50,9 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 /**
- * A JUnit5 compatible helper class to allow implementations
- * of [ContextDataProvider] to be tested against a suite of common tests.
+ * Set of common tests for [ContextDataProvider]s.
  *
- * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/testing/AbstractScopedLoggingContextTest.java">
+ * @see <a href="https://github.com/google/flogger/blob/70c5aea863952ee61b3d33afb41f2841b6d63455/api/src/test/java/com/google/common/flogger/testing/AbstractScopedLoggingContextTest.java">
  *     Original Java code of Google Flogger</a>
  */
 @Suppress("FunctionName", "ClassName") // Tests aren't recognized in `main` sources.
