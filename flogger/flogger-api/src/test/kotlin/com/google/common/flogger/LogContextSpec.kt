@@ -207,7 +207,7 @@ internal class LogContextSpec {
 
     /**
      * For testing log-site tags are correctly merged with metadata,
-     * see [AbstractScopedLoggingContextTest][com.google.common.flogger.testing.AbstractScopedLoggingContextSpec].
+     * see [AbstractContextDataProviderSpec][com.google.common.flogger.testing.AbstractContextDataProviderSpec].
      */
     @Test
     fun `accept tags`() {

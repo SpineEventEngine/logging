@@ -56,9 +56,9 @@ import org.junit.jupiter.api.Test
  * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/testing/AbstractScopedLoggingContextTest.java">
  *     Original Java code of Google Flogger</a>
  */
-@Suppress("FunctionName", "ClassName") // In `main` sources tests are not detected.
-@DisplayName("`ContextDataProvider` should")
-public abstract class AbstractScopedLoggingContextSpec {
+@Suppress("FunctionName", "ClassName") // Tests aren't recognized in `main` sources.
+@DisplayName("`ContextDataProvider` should") // This name is to be overridden by inheritors.
+public abstract class AbstractContextDataProviderSpec {
 
     private lateinit var dataProvider: ContextDataProvider
     private lateinit var context: ScopedLoggingContext
