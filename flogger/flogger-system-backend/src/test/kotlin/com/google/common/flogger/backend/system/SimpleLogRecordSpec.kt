@@ -61,15 +61,15 @@ internal class SimpleLogRecordSpec {
     companion object {
 
         /**
-         * [COUNT_KEY] uses `Int::class.javaObjectType` to make sure we get
+         * [INT_KEY] uses `Int::class.javaObjectType` to make sure we get
          * `Integer` class on JVM.
          *
          * Otherwise, Kotlin compiler passes `int` class for primitives.
          * It is important because metadata objects are generified,
          * which means they would use boxed primitives.
          */
-        private val COUNT_KEY = MetadataKey.single("count", Int::class.javaObjectType)
-        private val ID_KEY = MetadataKey.single("id", String::class.java)
+        private val INT_KEY = MetadataKey.single("int", Int::class.javaObjectType)
+        private val STR_KEY = MetadataKey.single("str", String::class.java)
         private val PATH_KEY = object : MetadataKey<String>("path", String::class.java, true) {
             override fun emitRepeated(values: Iterator<String>, out: KeyValueHandler) {
                 val joined = values.asSequence().joinToString("/")
@@ -122,39 +122,58 @@ internal class SimpleLogRecordSpec {
         @Test
         fun `log statement metadata`() {
             val timestampNanos = 123456789000L
+            val intValue = 23
+            val strValue = "test value"
+
             val data = FakeLogData.of(LITERAL)
                 .setTimestampNanos(timestampNanos)
-                .addMetadata(COUNT_KEY, 23)
-                .addMetadata(ID_KEY, "test ID")
+                .addMetadata(INT_KEY, intValue)
+                .addMetadata(STR_KEY, strValue)
             val record = SimpleLogRecord.create(data, Metadata.empty())
-            record.message shouldBe "$LITERAL [CONTEXT count=23 id=\"test ID\" ]"
+
+            val expectedMetadata = "int=$intValue str=\"$strValue\""
+            record.message shouldBe "$LITERAL [CONTEXT $expectedMetadata ]"
             record.instant shouldBe ofEpochMilli(NANOSECONDS.toMillis(timestampNanos))
             record.parameters.shouldBeEmpty()
         }
 
         @Test
         fun `merged scope and log statement metadata`() {
+            val intValue = 23
+            val strValue = "test value"
+            val pathTree = listOf("foo", "bar", "baz")
+
             val scope = FakeMetadata()
-                .add(PATH_KEY, "foo")
-                .add(COUNT_KEY, 23)
-                .add(PATH_KEY, "bar")
+                .add(PATH_KEY, pathTree[0])
+                .add(INT_KEY, intValue)
+                .add(PATH_KEY, pathTree[1])
             val data = FakeLogData.of(LITERAL)
-                .addMetadata(ID_KEY, "foo")
-                .addMetadata(PATH_KEY, "baz")
+                .addMetadata(STR_KEY, strValue)
+                .addMetadata(PATH_KEY, pathTree[2])
             val record = SimpleLogRecord.create(data, scope)
-            record.message shouldBe "$LITERAL [CONTEXT path=\"foo/bar/baz\" count=23 id=\"foo\" ]"
+
+            val expectedPath = pathTree.joinToString("/")
+            val expectedMetadata = "path=\"$expectedPath\" int=$intValue str=\"$strValue\""
+            record.message shouldBe "$LITERAL [CONTEXT $expectedMetadata ]"
         }
 
         @Test
         fun `provided tags`() {
+            val (foo, fooValue) = "foo" to "FOO"
+            val (bar, barValue) = "bar" to "BAR"
+            val baz = "baz"
+
             val tags = Tags.builder()
-                .addTag("foo", "FOO")
-                .addTag("bar", "BAR")
-                .addTag("baz")
+                .addTag(foo, fooValue)
+                .addTag(bar, barValue)
+                .addTag(baz)
                 .build()
             val data = FakeLogData.of(LITERAL).addMetadata(Key.TAGS, tags)
             val record = SimpleLogRecord.create(data, Metadata.empty())
-            record.message shouldBe "$LITERAL [CONTEXT bar=\"BAR\" baz=true foo=\"FOO\" ]"
+
+            // Tags are returned in alphabetical order.
+            val expectedTags = "$bar=\"$barValue\" $baz=true $foo=\"$fooValue\""
+            record.message shouldBe "$LITERAL [CONTEXT $expectedTags ]"
         }
     }
 
@@ -209,7 +228,7 @@ internal class SimpleLogRecordSpec {
         val argument = "FOO"
         val data = FakeLogData.withPrintfStyle(pattern, argument)
         val record = SimpleLogRecord.create(data, Metadata.empty())
-        record.message shouldEndWith "bar=[ERROR: MISSING LOG ARGUMENT]"
+        record.message shouldEndWith "[ERROR: MISSING LOG ARGUMENT]"
     }
 
     @Test
