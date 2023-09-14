@@ -39,6 +39,7 @@ import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.maps.shouldBeEmpty
+import io.kotest.matchers.maps.shouldContain
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
@@ -86,6 +87,10 @@ public abstract class AbstractContextDataProviderSpec {
 
     /**
      * Specifies an actual implementation as a test subject.
+     *
+     * These properties are not initialized during declaration because open
+     * members should not be used during an instance initialization.
+     * Such is reported as a compiler warning.
      */
     @BeforeEach
     public fun setImplementation() {
@@ -97,7 +102,7 @@ public abstract class AbstractContextDataProviderSpec {
      * Checks that an innermost callback within a test was executed.
      *
      * To make this method work, call [markCallbackExecuted] at the end
-     * of the callback.
+     * of the innermost callback.
      *
      * Don't use `@AfterEach` here because the subclass may not use this in
      * its own tests. Just put it at the end of tests with a nested callback.
@@ -133,11 +138,12 @@ public abstract class AbstractContextDataProviderSpec {
 
         @Test
         public fun `with metadata`() {
-            val (key, value) = FOO to "foo" // It is a singleton key.
+            val (key, value) = FOO to "foo"
             providerMetadata.shouldBeEmpty()
             context.newContext()
                 .withMetadata(key, value)
                 .run {
+                    // Should be unique because the key is singleton.
                     providerMetadata.shouldUniquelyContain(key, value)
                     markCallbackExecuted()
                 }
@@ -164,18 +170,21 @@ public abstract class AbstractContextDataProviderSpec {
 
         @Test
         public fun `with merged tags`() {
-            val outerTags = Tags.of("foo", "bar")
+            val (name, value1, value2) = listOf("foo", "bar", "baz")
+            val outerTags = Tags.of(name, value1)
             providerTags.shouldBeEmpty()
             context.newContext()
                 .withTags(outerTags)
                 .run {
                     providerTags shouldBe outerTags.asMap()
-                    val innerTags = Tags.of("foo", "baz")
+                    val innerTags = Tags.of(name, value2)
                     val allTags = outerTags.merge(innerTags)
                     context.newContext()
                         .withTags(innerTags)
                         .run {
+                            // Double-check to be sure.
                             providerTags shouldBe allTags.asMap()
+                            providerTags shouldContain (name to listOf(value1, value2))
                             markCallbackExecuted()
                         }
                     providerTags shouldBe outerTags.asMap()
@@ -184,10 +193,18 @@ public abstract class AbstractContextDataProviderSpec {
             checkCallbackWasExecuted()
         }
 
+        /**
+         * Tests a context with concatenated metadata.
+         *
+         * Please note, metadata concatenation is different from metadata merging.
+         * In particular, if during concatenation, several values are discovered
+         * for a singleton key, then it effectively becomes repeated.
+         *
+         * And this aspect is checked by the test.
+         */
         @Test
         @Suppress("MagicNumber") // The assertion is readable without a constant.
         public fun `with concatenated metadata`() {
-            // `FOO` is a singleton key, `BAR` is repeated.
             val outerFoo = "outer-foo"
             val outerBar = "outer-bar"
 
@@ -196,6 +213,8 @@ public abstract class AbstractContextDataProviderSpec {
                 .withMetadata(FOO, outerFoo)
                 .withMetadata(BAR, outerBar)
                 .run {
+                    // `FOO` is a singleton key, so it should be unique.
+                    // `BAR` is repeated, so it can't be asserted as unique.
                     providerMetadata shouldHaveSize 2
                     providerMetadata.shouldUniquelyContain(FOO, outerFoo)
                     providerMetadata.shouldContainInOrder(BAR, outerBar)
@@ -207,8 +226,7 @@ public abstract class AbstractContextDataProviderSpec {
                         .withMetadata(FOO, innerFoo)
                         .withMetadata(BAR, innerBar)
                         .run {
-                            // `ContextMetadata` entries allows single-values keys
-                            // to appear multiple times during concatenation.
+                            // Note that singleton `FOO` is now asserted as a repeated key.
                             providerMetadata shouldHaveSize 4
                             providerMetadata.shouldContainInOrder(FOO, outerFoo, innerFoo)
                             providerMetadata.shouldContainInOrder(BAR, outerBar, innerBar)
@@ -228,8 +246,14 @@ public abstract class AbstractContextDataProviderSpec {
 
         @Test
         public fun `with merged level maps`() {
+            // Although, a logger name can be any `string`,
+            // it is usually the name of a package or a class.
             val all = listOf("other.package", "foo.bar", "foo.bar.Baz")
-            val (other, fooBar, fooBaz) = all
+            val (other, fooBar, fooBarBaz) = all
+
+            all.forEach { pkg ->
+                dataProvider.isLoggingForced(pkg, Level.FINE).shouldBeFalse()
+            }
 
             // Everything in "foo.bar" gets at least FINE logging.
             val fooBarFine = LogLevelMap.create(
@@ -237,18 +261,17 @@ public abstract class AbstractContextDataProviderSpec {
                 Level.INFO
             )
 
-            all.forEach { dataProvider.isLoggingForced(it, Level.FINE).shouldBeFalse() }
             context.newContext()
                 .withLogLevelMap(fooBarFine)
                 .run {
                     dataProvider.isLoggingForced(other, Level.FINE).shouldBeFalse()
                     dataProvider.isLoggingForced(fooBar, Level.FINE).shouldBeTrue()
-                    dataProvider.isLoggingForced(fooBaz, Level.FINE).shouldBeTrue()
-                    dataProvider.isLoggingForced(fooBaz, Level.FINEST).shouldBeFalse()
+                    dataProvider.isLoggingForced(fooBarBaz, Level.FINE).shouldBeTrue()
+                    dataProvider.isLoggingForced(fooBarBaz, Level.FINEST).shouldBeFalse()
 
                     // Everything in "foo.bar.Baz" gets at least FINEST logging.
                     val fooBazFinest = LogLevelMap.create(
-                        mapOf(fooBaz to Level.FINEST),
+                        mapOf(fooBarBaz to Level.FINEST),
                         Level.INFO
                     )
 
@@ -257,19 +280,21 @@ public abstract class AbstractContextDataProviderSpec {
                         .run {
                             dataProvider.isLoggingForced(other, Level.FINE).shouldBeFalse()
                             dataProvider.isLoggingForced(fooBar, Level.FINE).shouldBeTrue()
-                            dataProvider.isLoggingForced(fooBaz, Level.FINEST).shouldBeTrue()
+                            dataProvider.isLoggingForced(fooBarBaz, Level.FINEST).shouldBeTrue()
                             markCallbackExecuted()
                         }
 
                     // Everything is restored after a scope.
                     dataProvider.isLoggingForced(other, Level.FINE).shouldBeFalse()
                     dataProvider.isLoggingForced(fooBar, Level.FINE).shouldBeTrue()
-                    dataProvider.isLoggingForced(fooBaz, Level.FINE).shouldBeTrue()
-                    dataProvider.isLoggingForced(fooBaz, Level.FINEST).shouldBeFalse()
+                    dataProvider.isLoggingForced(fooBarBaz, Level.FINE).shouldBeTrue()
+                    dataProvider.isLoggingForced(fooBarBaz, Level.FINEST).shouldBeFalse()
                 }
 
             // Everything is restored after a scope.
-            all.forEach { dataProvider.isLoggingForced(it, Level.FINE).shouldBeFalse() }
+            all.forEach { pkg ->
+                dataProvider.isLoggingForced(pkg, Level.FINE).shouldBeFalse()
+            }
             checkCallbackWasExecuted()
         }
 
@@ -280,7 +305,6 @@ public abstract class AbstractContextDataProviderSpec {
 
             context.newContext(SUB_TASK)
                 .run {
-
                     val taskScope = dataProvider.getScope(SUB_TASK)
                     taskScope.shouldNotBeNull()
                     dataProvider.getScope(BATCH_JOB).shouldBeNull()
@@ -306,11 +330,17 @@ public abstract class AbstractContextDataProviderSpec {
     }
 
     /**
-     * As for now, general [Metadata] is not merged automatically in the same
-     * way as [Tags].
+     * As for now, general [Metadata] is not merged automatically
+     * in the same way as [Tags].
      *
-     * This code only needs to be tested by one “real” implementation
+     * The code below only needs to be tested by one “real” implementation
      * to get coverage as tags merging is not done directly by data provider.
+     *
+     * Please note, it is needed to add tags manually inside a context to check
+     * if there is a “real” context data provider installed. We can't use
+     * [implementationUnderTest] here because these APIs go via the `Platform`
+     * class, which uses the installed provider that may differ from what's
+     * returned by [implementationUnderTest].
      */
     @Test
     public fun `merge scope and log site tags`() {
@@ -318,12 +348,6 @@ public abstract class AbstractContextDataProviderSpec {
         val logger = TestLogger.create(backend)
         val logSiteTags = Tags.of("foo", "bar")
         val scopeTags = Tags.of("foo", "baz")
-
-        // We need to add tags manually inside a context to check if there
-        // is a “real” context data provider installed. We can't use
-        // `getImplementationUnderTest()` here because these APIs go via
-        // the `Platform` class, which uses the installed provider that can
-        // differ from what's returned by `getImplementationUnderTest()`.
 
         var canAddTags: Boolean
         ScopedLoggingContexts.newContext()
@@ -335,8 +359,7 @@ public abstract class AbstractContextDataProviderSpec {
                     .log("With tags")
             }
 
-        // Merged tag values are ordered based on the values,
-        // not the order in which that are added.
+        // Merged tag values are ordered alphabetically.
         val merged = logSiteTags.merge(scopeTags)
         val expected = if (canAddTags) merged else logSiteTags
         backend.logged shouldHaveSize 1
