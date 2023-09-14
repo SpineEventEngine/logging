@@ -26,8 +26,8 @@
 
 package com.google.common.flogger.backend.system
 
-import com.google.common.flogger.backend.system.given.TestBackend
-import com.google.common.flogger.backend.system.given.TestLogger
+import com.google.common.flogger.backend.system.given.MemoizingBackend
+import com.google.common.flogger.backend.system.given.MemoizingLogger
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.nulls.shouldBeNull
@@ -47,8 +47,8 @@ import org.junit.jupiter.api.Test
 @DisplayName("`AbstractBackend` should")
 internal class AbstractBackendSpec {
 
-    private val logger = TestLogger("unused", Level.INFO)
-    private val backend = TestBackend(logger)
+    private val logger = MemoizingLogger("unused", Level.INFO)
+    private val backend = MemoizingBackend(logger)
 
     @Test
     fun `say whether logging is enabled for the given level`() {

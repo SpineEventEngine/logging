@@ -37,7 +37,7 @@ import java.util.logging.Logger
  * An instantiatable [AbstractBackend] that remembers the fact
  * of usage of [ForcingLogger].
  */
-internal class TestBackend(logger: Logger) : AbstractBackend(logger) {
+internal class MemoizingBackend(logger: Logger) : AbstractBackend(logger) {
 
     /**
      * Tells whether the last call to [AbstractBackend.log]
@@ -56,7 +56,7 @@ internal class TestBackend(logger: Logger) : AbstractBackend(logger) {
     }
 
     /**
-     * This class never tries to format anything in [TestLogger.log],
+     * This class never tries to format anything in [MemoizingLogger.log],
      * so this method is not expected to be ever called.
      */
     override fun handleError(error: RuntimeException, badData: LogData) {
@@ -67,7 +67,7 @@ internal class TestBackend(logger: Logger) : AbstractBackend(logger) {
      * Explicitly creates a forcing child logger.
      *
      * Normally, the forcing logger is obtained from [LogManager][java.util.logging.LogManager].
-     * But in tests, the used [TestLogger] is an explicit subclass of [Logger],
+     * But in tests, the used [MemoizingLogger] is an explicit subclass of [Logger],
      * that is not a part of log manager's hierarchy. So, we have to create
      * an explicit forcing child logger too.
      */
@@ -76,7 +76,7 @@ internal class TestBackend(logger: Logger) : AbstractBackend(logger) {
     }
 
     /**
-     * An explicit forcing logger that notifies the outer [TestBackend]
+     * An explicit forcing logger that notifies the outer [MemoizingBackend]
      * that it was used.
      */
     private inner class ForcingLogger(parent: Logger) :
@@ -99,10 +99,10 @@ internal class TestBackend(logger: Logger) : AbstractBackend(logger) {
  * A message is [captured] when it arrives to [Logger.log] method.
  * Then, if it passes [Logger.log] and arrives to handlers, it is [published].
  */
-internal class TestLogger(name: String, level: Level) : Logger(name, null) {
+internal class MemoizingLogger(name: String, level: Level) : Logger(name, null) {
 
     /**
-     * Contains the message from the last call to [TestLogger.log].
+     * Contains the message from the last call to [MemoizingLogger.log].
      */
     var captured: String? = null
         private set
@@ -128,7 +128,7 @@ internal class TestLogger(name: String, level: Level) : Logger(name, null) {
     }
 
     /**
-     * A handler that returns the message back to the outer [TestLogger].
+     * A handler that returns the message back to the outer [MemoizingLogger].
      */
     private inner class TestHandler : Handler() {
 
