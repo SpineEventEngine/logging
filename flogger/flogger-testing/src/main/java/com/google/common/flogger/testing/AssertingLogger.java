@@ -18,14 +18,18 @@ package com.google.common.flogger.testing;
 
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
+import static java.util.Collections.unmodifiableList;
+import static java.util.stream.Collectors.toList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * Helper class for testing system backends, which need to mimic the JDK's log record.
@@ -121,7 +125,26 @@ public class AssertingLogger extends Logger {
     }
   }
 
-  public void assertThrown(int index, Throwable thrown) {
-    assertThat(entries.get(index).thrown).isSameInstanceAs(thrown);
+  /**
+   * Returns the last logged message.
+   *
+   * <p>{@code get} prefix is preserved for this method to keep
+   * it a Kotlin-compatible property.
+   */
+  public String getLastLogged() {
+    var index = entries.size() - 1;
+    return entries.get(index).message;
+  }
+
+  /**
+   * Returns all logged messages.
+   *
+   * <p>{@code get} prefix is preserved for this method to keep
+   * it a Kotlin-compatible property.
+   */
+  public List<String> getLogged() {
+    return entries.stream()
+            .map(entry -> entry.message)
+            .collect(toList());
   }
 }

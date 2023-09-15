@@ -24,39 +24,40 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import BuildSettings.javaVersion
 import io.spine.internal.dependency.AutoService
-import io.spine.internal.dependency.CheckerFramework
-import io.spine.internal.dependency.ErrorProne
-import io.spine.internal.dependency.Truth
-import io.spine.internal.gradle.report.license.LicenseReporter
+import net.ltgt.gradle.errorprone.errorprone
 
 plugins {
-    `java-library`
-}
+    `jvm-module`
 
-LicenseReporter.generateReportIn(project)
+    /**
+     * Although, Kapt is being replaced with KSP now, the official implementation
+     * of AutoService for KSP is not available yet.
+     *
+     * See [KSP Implementation of AutoService](https://github.com/google/auto/issues/882).
+     */
+    `kotlin-kapt`
+}
 
 dependencies {
     implementation(project(":flogger-api"))
-    implementation(CheckerFramework.annotations)
-    ErrorProne.annotations.forEach { implementation(it) }
-
     testImplementation(project(":flogger-testing"))
-    testImplementation("org.mockito:mockito-core:4.11.0")
-    Truth.libs.forEach { testImplementation(it) }
-
     testImplementation(AutoService.annotations)
-    testAnnotationProcessor(AutoService.processor)
+    kaptTest(AutoService.processor)
 }
+
 
 java {
-    toolchain.languageVersion.set(javaVersion)
-}
 
-tasks {
-    named<Javadoc>("javadoc") {
-        // Produces a lot of formatting/linkage errors.
-        enabled = false
+    /**
+     * Disables Java linters until main sources are migrated to Kotlin.
+     *
+     * As for now, they produce a lot of errors/warnings to original Flogger code,
+     * failing the build.
+     */
+    tasks {
+        named("checkstyleMain") { enabled = false }
+        named("pmdMain") { enabled = false }
+        compileJava { options.errorprone.isEnabled.set(false) }
     }
 }
