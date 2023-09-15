@@ -34,8 +34,8 @@ import java.util.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-@DisplayName("`Log4jBackendFactory` should")
-internal class Log4jBackendFactorySpec {
+@DisplayName("`Log4j2BackendFactory` should")
+internal class Log4j2BackendFactorySpec {
 
     @Test
     fun `be able to be loaded as a Java service`() {
