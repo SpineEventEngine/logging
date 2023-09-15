@@ -31,7 +31,7 @@ plugins {
 }
 
 dependencies {
-    api("org.apache.logging.log4j:log4j-core:2.17.1")
+    api("org.apache.logging.log4j:log4j-core:2.20.0")
     implementation(project(":flogger-api"))
     implementation(project(":flogger-system-backend"))
     testImplementation(project(":flogger-testing"))
