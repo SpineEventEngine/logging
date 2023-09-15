@@ -24,24 +24,32 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import BuildSettings.javaVersion
-import io.spine.internal.dependency.CheckerFramework
+import io.spine.internal.dependency.JUnit
+import io.spine.internal.dependency.Kotest
 import io.spine.internal.dependency.Truth
-import io.spine.internal.gradle.report.license.LicenseReporter
 
 plugins {
-    `java-library`
-}
-
-LicenseReporter.generateReportIn(project)
-
-java {
-    toolchain.languageVersion.set(javaVersion)
+    `jvm-module`
 }
 
 dependencies {
     implementation(project(":flogger-api"))
     implementation(project(":flogger-system-backend"))
-    implementation(CheckerFramework.annotations)
+    implementation(Kotest.assertions)
+    JUnit.api.forEach { implementation(it) }
     Truth.libs.forEach { implementation(it) }
+}
+
+java {
+
+    /**
+     * Disables Java linters until main sources are migrated to Kotlin.
+     *
+     * As for now, they produce a lot of errors/warnings to original Flogger code,
+     * failing the build.
+     */
+    tasks {
+        named("checkstyleMain") { enabled = false }
+        named("pmdMain") { enabled = false }
+    }
 }
