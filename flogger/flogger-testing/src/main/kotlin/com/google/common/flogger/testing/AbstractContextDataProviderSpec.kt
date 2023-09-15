@@ -39,7 +39,6 @@ import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.maps.shouldBeEmpty
-import io.kotest.matchers.maps.shouldContain
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
@@ -60,13 +59,13 @@ import org.junit.jupiter.api.Test
 @DisplayName("`ContextDataProvider` should") // This name is to be overridden by inheritors.
 public abstract class AbstractContextDataProviderSpec {
 
-    private lateinit var dataProvider: ContextDataProvider
+    private lateinit var contextData: ContextDataProvider
     private lateinit var context: ScopedLoggingContext
 
-    private val providerTags: Map<String?, Set<Any?>?>
-        get() = dataProvider.tags.asMap()
-    private val providerMetadata: Metadata
-        get() = dataProvider.metadata
+    private val contextTags: Map<String?, Set<Any?>?>
+        get() = contextData.tags.asMap()
+    private val contextMetadata: Metadata
+        get() = contextData.metadata
 
     /**
      * A flag to be set inside an innermost callback to prove it was executed.
@@ -94,8 +93,8 @@ public abstract class AbstractContextDataProviderSpec {
      */
     @BeforeEach
     public fun setImplementation() {
-        dataProvider = implementationUnderTest
-        context = dataProvider.getContextApiSingleton()
+        contextData = implementationUnderTest
+        context = contextData.getContextApiSingleton()
     }
 
     /**
@@ -125,29 +124,29 @@ public abstract class AbstractContextDataProviderSpec {
         @Test
         public fun `with tags`() {
             val tags = Tags.of("foo", "bar")
-            providerTags.shouldBeEmpty()
+            contextTags.shouldBeEmpty()
             context.newContext()
                 .withTags(tags)
                 .run {
-                    providerTags shouldBe tags.asMap()
+                    contextTags shouldBe tags.asMap()
                     markCallbackExecuted()
                 }
-            providerTags.shouldBeEmpty()
+            contextTags.shouldBeEmpty()
             checkCallbackWasExecuted()
         }
 
         @Test
         public fun `with metadata`() {
             val (key, value) = FOO to "foo"
-            providerMetadata.shouldBeEmpty()
+            contextMetadata.shouldBeEmpty()
             context.newContext()
                 .withMetadata(key, value)
                 .run {
                     // Should be unique because the key is singleton.
-                    providerMetadata.shouldUniquelyContain(key, value)
+                    contextMetadata.shouldUniquelyContain(key, value)
                     markCallbackExecuted()
                 }
-            providerMetadata.shouldBeEmpty()
+            contextMetadata.shouldBeEmpty()
             checkCallbackWasExecuted()
         }
 
@@ -157,14 +156,14 @@ public abstract class AbstractContextDataProviderSpec {
             val mapping = "foo.bar" to defaultLevel
             val levelMap = LogLevelMap.create(mapOf(mapping), defaultLevel)
             val (logger, level) = mapping
-            dataProvider.isLoggingForced(logger, level).shouldBeFalse()
+            contextData.isLoggingForced(logger, level).shouldBeFalse()
             context.newContext()
                 .withLogLevelMap(levelMap)
                 .run {
-                    dataProvider.isLoggingForced(logger, level).shouldBeTrue()
+                    contextData.isLoggingForced(logger, level).shouldBeTrue()
                     markCallbackExecuted()
                 }
-            dataProvider.isLoggingForced(logger, level).shouldBeFalse()
+            contextData.isLoggingForced(logger, level).shouldBeFalse()
             checkCallbackWasExecuted()
         }
 
@@ -172,24 +171,24 @@ public abstract class AbstractContextDataProviderSpec {
         public fun `with merged tags`() {
             val (name, value1, value2) = listOf("foo", "bar", "baz")
             val outerTags = Tags.of(name, value1)
-            providerTags.shouldBeEmpty()
+            contextTags.shouldBeEmpty()
             context.newContext()
                 .withTags(outerTags)
                 .run {
-                    providerTags shouldBe outerTags.asMap()
+                    contextTags shouldBe outerTags.asMap()
                     val innerTags = Tags.of(name, value2)
                     val allTags = outerTags.merge(innerTags)
                     context.newContext()
                         .withTags(innerTags)
                         .run {
                             // Double-check to be sure.
-                            providerTags shouldBe allTags.asMap()
-                            providerTags[name] shouldBe setOf(value1, value2)
+                            contextTags shouldBe allTags.asMap()
+                            contextTags[name] shouldBe setOf(value1, value2)
                             markCallbackExecuted()
                         }
-                    providerTags shouldBe outerTags.asMap()
+                    contextTags shouldBe outerTags.asMap()
                 }
-            providerTags.shouldBeEmpty()
+            contextTags.shouldBeEmpty()
             checkCallbackWasExecuted()
         }
 
@@ -208,16 +207,16 @@ public abstract class AbstractContextDataProviderSpec {
             val outerFoo = "outer-foo"
             val outerBar = "outer-bar"
 
-            providerMetadata.shouldBeEmpty()
+            contextMetadata.shouldBeEmpty()
             context.newContext()
                 .withMetadata(FOO, outerFoo)
                 .withMetadata(BAR, outerBar)
                 .run {
                     // `FOO` is a singleton key, so it should be unique.
                     // `BAR` is repeated, so it can't be asserted as unique.
-                    providerMetadata shouldHaveSize 2
-                    providerMetadata.shouldUniquelyContain(FOO, outerFoo)
-                    providerMetadata.shouldContainInOrder(BAR, outerBar)
+                    contextMetadata shouldHaveSize 2
+                    contextMetadata.shouldUniquelyContain(FOO, outerFoo)
+                    contextMetadata.shouldContainInOrder(BAR, outerBar)
 
                     val innerFoo = "inner-foo"
                     val innerBar = "inner-bar"
@@ -227,20 +226,20 @@ public abstract class AbstractContextDataProviderSpec {
                         .withMetadata(BAR, innerBar)
                         .run {
                             // Note that singleton `FOO` is now asserted as a repeated key.
-                            providerMetadata shouldHaveSize 4
-                            providerMetadata.shouldContainInOrder(FOO, outerFoo, innerFoo)
-                            providerMetadata.shouldContainInOrder(BAR, outerBar, innerBar)
+                            contextMetadata shouldHaveSize 4
+                            contextMetadata.shouldContainInOrder(FOO, outerFoo, innerFoo)
+                            contextMetadata.shouldContainInOrder(BAR, outerBar, innerBar)
                             markCallbackExecuted()
                         }
 
                     // Everything is restored after a scope.
-                    providerMetadata shouldHaveSize 2
-                    providerMetadata.shouldUniquelyContain(FOO, outerFoo)
-                    providerMetadata.shouldContainInOrder(BAR, outerBar)
+                    contextMetadata shouldHaveSize 2
+                    contextMetadata.shouldUniquelyContain(FOO, outerFoo)
+                    contextMetadata.shouldContainInOrder(BAR, outerBar)
                 }
 
             // Everything is restored after a scope.
-            providerMetadata.shouldBeEmpty()
+            contextMetadata.shouldBeEmpty()
             checkCallbackWasExecuted()
         }
 
@@ -252,7 +251,7 @@ public abstract class AbstractContextDataProviderSpec {
             val (other, fooBar, fooBarBaz) = all
 
             all.forEach { pkg ->
-                dataProvider.isLoggingForced(pkg, Level.FINE).shouldBeFalse()
+                contextData.isLoggingForced(pkg, Level.FINE).shouldBeFalse()
             }
 
             // Everything in "foo.bar" gets at least FINE logging.
@@ -264,10 +263,10 @@ public abstract class AbstractContextDataProviderSpec {
             context.newContext()
                 .withLogLevelMap(fooBarFine)
                 .run {
-                    dataProvider.isLoggingForced(other, Level.FINE).shouldBeFalse()
-                    dataProvider.isLoggingForced(fooBar, Level.FINE).shouldBeTrue()
-                    dataProvider.isLoggingForced(fooBarBaz, Level.FINE).shouldBeTrue()
-                    dataProvider.isLoggingForced(fooBarBaz, Level.FINEST).shouldBeFalse()
+                    contextData.isLoggingForced(other, Level.FINE).shouldBeFalse()
+                    contextData.isLoggingForced(fooBar, Level.FINE).shouldBeTrue()
+                    contextData.isLoggingForced(fooBarBaz, Level.FINE).shouldBeTrue()
+                    contextData.isLoggingForced(fooBarBaz, Level.FINEST).shouldBeFalse()
 
                     // Everything in "foo.bar.Baz" gets at least FINEST logging.
                     val fooBazFinest = LogLevelMap.create(
@@ -278,52 +277,52 @@ public abstract class AbstractContextDataProviderSpec {
                     context.newContext()
                         .withLogLevelMap(fooBazFinest)
                         .run {
-                            dataProvider.isLoggingForced(other, Level.FINE).shouldBeFalse()
-                            dataProvider.isLoggingForced(fooBar, Level.FINE).shouldBeTrue()
-                            dataProvider.isLoggingForced(fooBarBaz, Level.FINEST).shouldBeTrue()
+                            contextData.isLoggingForced(other, Level.FINE).shouldBeFalse()
+                            contextData.isLoggingForced(fooBar, Level.FINE).shouldBeTrue()
+                            contextData.isLoggingForced(fooBarBaz, Level.FINEST).shouldBeTrue()
                             markCallbackExecuted()
                         }
 
                     // Everything is restored after a scope.
-                    dataProvider.isLoggingForced(other, Level.FINE).shouldBeFalse()
-                    dataProvider.isLoggingForced(fooBar, Level.FINE).shouldBeTrue()
-                    dataProvider.isLoggingForced(fooBarBaz, Level.FINE).shouldBeTrue()
-                    dataProvider.isLoggingForced(fooBarBaz, Level.FINEST).shouldBeFalse()
+                    contextData.isLoggingForced(other, Level.FINE).shouldBeFalse()
+                    contextData.isLoggingForced(fooBar, Level.FINE).shouldBeTrue()
+                    contextData.isLoggingForced(fooBarBaz, Level.FINE).shouldBeTrue()
+                    contextData.isLoggingForced(fooBarBaz, Level.FINEST).shouldBeFalse()
                 }
 
             // Everything is restored after a scope.
             all.forEach { pkg ->
-                dataProvider.isLoggingForced(pkg, Level.FINE).shouldBeFalse()
+                contextData.isLoggingForced(pkg, Level.FINE).shouldBeFalse()
             }
             checkCallbackWasExecuted()
         }
 
         @Test
         public fun `with bound scope types`() {
-            dataProvider.getScope(SUB_TASK).shouldBeNull()
-            dataProvider.getScope(BATCH_JOB).shouldBeNull()
+            contextData.getScope(SUB_TASK).shouldBeNull()
+            contextData.getScope(BATCH_JOB).shouldBeNull()
 
             context.newContext(SUB_TASK)
                 .run {
-                    val taskScope = dataProvider.getScope(SUB_TASK)
+                    val taskScope = contextData.getScope(SUB_TASK)
                     taskScope.shouldNotBeNull()
-                    dataProvider.getScope(BATCH_JOB).shouldBeNull()
+                    contextData.getScope(BATCH_JOB).shouldBeNull()
 
                     context.newContext(BATCH_JOB)
                         .run {
-                            dataProvider.getScope(SUB_TASK) shouldBeSameInstanceAs taskScope
-                            dataProvider.getScope(BATCH_JOB).shouldNotBeNull()
+                            contextData.getScope(SUB_TASK) shouldBeSameInstanceAs taskScope
+                            contextData.getScope(BATCH_JOB).shouldNotBeNull()
                             markCallbackExecuted()
                         }
 
                     // Everything is restored after a scope.
-                    dataProvider.getScope(SUB_TASK) shouldBeSameInstanceAs taskScope
-                    dataProvider.getScope(BATCH_JOB).shouldBeNull()
+                    contextData.getScope(SUB_TASK) shouldBeSameInstanceAs taskScope
+                    contextData.getScope(BATCH_JOB).shouldBeNull()
                 }
 
             // Everything is restored after a scope.
-            dataProvider.getScope(SUB_TASK).shouldBeNull()
-            dataProvider.getScope(BATCH_JOB).shouldBeNull()
+            contextData.getScope(SUB_TASK).shouldBeNull()
+            contextData.getScope(BATCH_JOB).shouldBeNull()
 
             checkCallbackWasExecuted()
         }
@@ -368,21 +367,21 @@ public abstract class AbstractContextDataProviderSpec {
 
     @Test
     public fun `not create a new scope instance if the same type is bound twice`() {
-        dataProvider.getScope(SUB_TASK).shouldBeNull()
+        contextData.getScope(SUB_TASK).shouldBeNull()
         context.newContext(SUB_TASK)
             .run {
-                val taskScope = dataProvider.getScope(SUB_TASK)
+                val taskScope = contextData.getScope(SUB_TASK)
                 "$taskScope" shouldBe "sub task"
 
                 context.newContext(SUB_TASK)
                     .run {
-                        dataProvider.getScope(SUB_TASK) shouldBeSameInstanceAs taskScope
+                        contextData.getScope(SUB_TASK) shouldBeSameInstanceAs taskScope
                         markCallbackExecuted()
                     }
 
-                dataProvider.getScope(SUB_TASK) shouldBeSameInstanceAs taskScope
+                contextData.getScope(SUB_TASK) shouldBeSameInstanceAs taskScope
             }
-        dataProvider.getScope(SUB_TASK).shouldBeNull()
+        contextData.getScope(SUB_TASK).shouldBeNull()
         checkCallbackWasExecuted()
     }
 }
