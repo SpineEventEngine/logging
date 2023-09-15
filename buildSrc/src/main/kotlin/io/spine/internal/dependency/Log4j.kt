@@ -24,31 +24,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.dependency.Log4j
-import net.ltgt.gradle.errorprone.errorprone
+package io.spine.internal.dependency
 
-plugins {
-    `jvm-module`
-}
-
-dependencies {
-    api(Log4j.core)
-    implementation(project(":flogger-api"))
-    implementation(project(":flogger-system-backend"))
-    testImplementation(project(":flogger-testing"))
-}
-
-java {
-
-    /**
-     * Disables Java linters until main sources are migrated to Kotlin.
-     *
-     * As for now, they produce a lot of errors/warnings to original Flogger code,
-     * failing the build.
-     */
-    tasks {
-        named("checkstyleMain") { enabled = false }
-        named("pmdMain") { enabled = false }
-        compileJava { options.errorprone.isEnabled.set(false) }
-    }
+/**
+ * An open-source logging framework.
+ *
+ * Spine uses its own [logging library][Spine.Logging], but also
+ * provides a backend implementation for [Log4j]. This is why
+ * this dependency is needed.
+ *
+ * @see <a href="https://github.com/apache/logging-log4j2">Log4j releases at GitHub</a>
+ */
+@Suppress("unused", "ConstPropertyName")
+object Log4j {
+    private const val version = "2.20.0"
+    const val core = "org.apache.logging.log4j:log4j-core:$version"
 }
