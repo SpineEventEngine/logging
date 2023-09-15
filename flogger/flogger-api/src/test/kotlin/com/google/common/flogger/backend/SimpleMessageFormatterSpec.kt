@@ -50,10 +50,12 @@ internal class SimpleMessageFormatterSpec {
     companion object {
 
         /**
-         * `INT_KEY` uses `Int::class.javaObjectType` to make sure we get `Integer` class on JVM.
+         * [INT_KEY] uses `Int::class.javaObjectType` to make sure
+         * we get `Integer` class on JVM.
          *
-         * Otherwise, Kotlin compiler passes `int` class for primitives. It is important because
-         * metadata objects are generified, which means they would use boxed primitives.
+         * Otherwise, Kotlin compiler passes `int` class for primitives.
+         * It is important because metadata objects are generified,
+         * which means they would use boxed primitives.
          *
          * The same story with [BOOL_KEY].
          */
