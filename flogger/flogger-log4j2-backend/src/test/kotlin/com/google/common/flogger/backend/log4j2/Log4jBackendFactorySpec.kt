@@ -24,9 +24,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.common.flogger.backend.log4j
+package com.google.common.flogger.backend.log4j2
 
-import com.google.common.flogger.backend.log4j2.Log4j2BackendFactory
 import com.google.common.flogger.backend.system.BackendFactory
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.optional.shouldBePresent
