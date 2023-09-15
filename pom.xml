@@ -85,12 +85,6 @@ all modules and does not describe the project structure per-subproject.
   </dependency>
   <dependency>
     <groupId>com.google.auto.service</groupId>
-    <artifactId>auto-service</artifactId>
-    <version>1.1.1</version>
-    <scope>test</scope>
-  </dependency>
-  <dependency>
-    <groupId>com.google.auto.service</groupId>
     <artifactId>auto-service-annotations</artifactId>
     <version>1.1.1</version>
     <scope>test</scope>
@@ -150,12 +144,6 @@ all modules and does not describe the project structure per-subproject.
     <scope>test</scope>
   </dependency>
   <dependency>
-    <groupId>org.mockito</groupId>
-    <artifactId>mockito-core</artifactId>
-    <version>4.11.0</version>
-    <scope>test</scope>
-  </dependency>
-  <dependency>
     <groupId>org.slf4j</groupId>
     <artifactId>slf4j-jdk14</artifactId>
     <version>2.0.7</version>
@@ -171,6 +159,11 @@ all modules and does not describe the project structure per-subproject.
     <groupId>com.github.stefanbirkner</groupId>
     <artifactId>system-lambda</artifactId>
     <version>1.2.1</version>
+  </dependency>
+  <dependency>
+    <groupId>com.google.auto.service</groupId>
+    <artifactId>auto-service</artifactId>
+    <version>1.1.1</version>
   </dependency>
   <dependency>
     <groupId>com.google.errorprone</groupId>
