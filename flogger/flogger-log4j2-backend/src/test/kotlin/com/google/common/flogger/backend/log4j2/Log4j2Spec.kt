@@ -26,18 +26,19 @@
 
 package com.google.common.flogger.backend.log4j2
 
-import com.google.common.flogger.LogContext
+import com.google.common.flogger.LogContext.Key
 import com.google.common.flogger.MetadataKey
-import com.google.common.flogger.backend.LogData
 import com.google.common.flogger.backend.log4j2.given.MemoizingAppender
 import com.google.common.flogger.parser.ParseException
 import com.google.common.flogger.testing.FakeLogData
 import com.google.common.flogger.testing.FakeLogSite
-import com.google.common.truth.Truth.assertThat
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldContain
+import io.kotest.matchers.types.shouldBeSameInstanceAs
 import java.util.concurrent.atomic.AtomicInteger
-import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.core.LogEvent
 import org.apache.logging.log4j.core.Logger
@@ -46,8 +47,11 @@ import org.apache.logging.log4j.core.config.DefaultConfiguration
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
+
+private typealias JulLevel = java.util.logging.Level
+private typealias Log4jLevel = org.apache.logging.log4j.Level
 
 @DisplayName("`Log4j2` should")
 internal class Log4j2Spec {
@@ -72,14 +76,14 @@ internal class Log4j2Spec {
         private val INT_KEY = MetadataKey.repeated("int", Int::class.javaObjectType)
         private val STR_KEY = MetadataKey.single("str", String::class.java)
         private const val LITERAL = "Hello world"
-        private val DEFAULT_LEVEL = Level.INFO
+        private val DEFAULT_LEVEL = Log4jLevel.INFO
     }
 
     @BeforeEach
     fun setUp() {
         resetLoggingConfig()
         logger.apply {
-            level = Level.TRACE
+            level = Log4jLevel.TRACE
             addAppender(appender)
         }
     }
@@ -89,44 +93,6 @@ internal class Log4j2Spec {
         logger.removeAppender(appender)
         appender.stop()
     }
-
-    // -------- Test helper methods --------
-    private fun getMessage(index: Int): String {
-        return logged[index].message.formattedMessage
-    }
-
-    private fun assertLogCount(count: Int) {
-        assertThat(logged).hasSize(count)
-    }
-
-    private fun assertLogEntry(index: Int, message: String, level: Level) {
-        val event = logged[index]
-        assertThat(event.loggerName).isEqualTo(logger.name)
-        assertThat(event.level).isEqualTo(level)
-        assertThat(event.message.formattedMessage).isEqualTo(message)
-        assertThat(event.thrown).isNull()
-    }
-
-    private fun assertLogSite(
-        index: Int,
-        className: String?,
-        methodName: String?,
-        line: Int,
-        file: String?
-    ) {
-        val event = logged[index]
-        val source = event.source
-        assertThat(source.className).isEqualTo(className)
-        assertThat(source.methodName).isEqualTo(methodName)
-        assertThat(source.fileName).isEqualTo(file)
-        assertThat(source.lineNumber).isEqualTo(line)
-    }
-
-    private fun assertThrown(index: Int, thrown: Throwable?) {
-        assertThat(logged[index].thrown).isSameInstanceAs(thrown)
-    }
-
-    // -------- Unit tests start here (largely copied from the log4j tests) --------
 
     @Test
     fun `log messages`() {
@@ -142,83 +108,118 @@ internal class Log4j2Spec {
         logged[1].formatted shouldBe LITERAL
     }
 
-    @Test
-    fun `handle the given metadata`() {
-        val intValue = 23
-        val strValue = "str value"
-        val (pattern, argument) = "Foo='%s'" to "bar"
-        val data = FakeLogData.withPrintfStyle(pattern, argument)
-            .addMetadata(INT_KEY, intValue)
-            .addMetadata(STR_KEY, strValue)
+    @Nested inner class
+    `append metadata` {
 
-        backend.log(data)
+        @Test
+        fun `with custom keys`() {
+            val intValue = 23
+            val strValue = "str value"
+            val (pattern, argument) = "Foo='%s'" to "bar"
+            val data = FakeLogData.withPrintfStyle(pattern, argument)
+                .addMetadata(INT_KEY, intValue)
+                .addMetadata(STR_KEY, strValue)
 
-        val expectedMessage = pattern.format(argument)
-        val expectedContext = "int=$intValue str=\"$strValue\""
-        logged shouldHaveSize 1
-        lastLogged.level shouldBe DEFAULT_LEVEL
-        lastLogged.formatted shouldBe "$expectedMessage [CONTEXT $expectedContext ]"
-    }
-
-    @Test
-    fun testLevels() {
-        backend.log(FakeLogData.of("finest").setLevel(java.util.logging.Level.FINEST))
-        backend.log(FakeLogData.of("finer").setLevel(java.util.logging.Level.FINER))
-        backend.log(FakeLogData.of("fine").setLevel(java.util.logging.Level.FINE))
-        backend.log(FakeLogData.of("config").setLevel(java.util.logging.Level.CONFIG))
-        backend.log(FakeLogData.of("info").setLevel(java.util.logging.Level.INFO))
-        backend.log(FakeLogData.of("warning").setLevel(java.util.logging.Level.WARNING))
-        backend.log(FakeLogData.of("severe").setLevel(java.util.logging.Level.SEVERE))
-        assertLogCount(7)
-        assertLogEntry(0, "finest", Level.TRACE)
-        assertLogEntry(1, "finer", Level.TRACE)
-        assertLogEntry(2, "fine", Level.DEBUG)
-        assertLogEntry(3, "config", Level.DEBUG)
-        assertLogEntry(4, "info", Level.INFO)
-        assertLogEntry(5, "warning", Level.WARN)
-        assertLogEntry(6, "severe", Level.ERROR)
-    }
-
-    @Test
-    fun testSource() {
-        backend.log(
-            FakeLogData.of("First")
-                .setLogSite(FakeLogSite.create("<class>", "<method>", 42, "<file>"))
-        )
-        backend.log(
-            FakeLogData.of("No file")
-                .setLogSite(FakeLogSite.create("<class>", "<method>", 42, null))
-        )
-        backend.log(
-            FakeLogData.of("No line")
-                .setLogSite(FakeLogSite.create("<class>", "<method>", -1, null))
-        )
-        assertLogCount(3)
-        assertLogSite(0, "<class>", "<method>", 42, "<file>")
-        assertLogSite(1, "<class>", "<method>", 42, null)
-        assertLogSite(2, "<class>", "<method>", -1, null)
-    }
-
-    @Test
-    fun testErrorHandling() {
-        val data: LogData = FakeLogData.withPrintfStyle("Hello %?X World", "ignored")
-        try {
             backend.log(data)
-            Assertions.fail("expected ParseException")
-        } catch (expected: ParseException) {
-            assertLogCount(0)
-            backend.handleError(expected, data)
-            assertLogCount(1)
-            assertThat(getMessage(0)).contains("lo %[?]X Wo")
+
+            val expectedMessage = pattern.format(argument)
+            val expectedMetadata = "int=$intValue str=\"$strValue\""
+            logged shouldHaveSize 1
+            lastLogged.level shouldBe DEFAULT_LEVEL
+            lastLogged.formatted shouldBe "$expectedMessage [CONTEXT $expectedMetadata ]"
+        }
+
+        @Test
+        fun `with log cause`() {
+            val cause = Throwable("Original Cause")
+            val data = FakeLogData.of(LITERAL)
+                .addMetadata(Key.LOG_CAUSE, cause)
+            backend.log(data)
+            lastLogged.thrown shouldBeSameInstanceAs cause
         }
     }
 
     @Test
-    fun testWithThrown() {
-        val cause = Throwable("Original Cause")
-        backend.log(FakeLogData.of("Hello World").addMetadata(LogContext.Key.LOG_CAUSE, cause))
-        assertLogCount(1)
-        assertThrown(0, cause)
+    fun `match Java logging levels`() {
+        val expectedMatches = mapOf(
+            JulLevel.FINEST to Log4jLevel.TRACE,
+            JulLevel.FINER to Log4jLevel.TRACE,
+            JulLevel.FINE to Log4jLevel.DEBUG,
+            JulLevel.CONFIG to Log4jLevel.DEBUG,
+            JulLevel.INFO to Log4jLevel.INFO,
+            JulLevel.WARNING to Log4jLevel.WARN,
+            JulLevel.SEVERE to Log4jLevel.ERROR
+        )
+        expectedMatches.forEach { (julLevel, expectedLog4jLevel) ->
+            val message = julLevel.name
+            val data = FakeLogData.of(message)
+            data.setLevel(julLevel)
+            backend.log(data)
+            lastLogged.level shouldBe expectedLog4jLevel
+            lastLogged.formatted shouldBe message
+        }
+    }
+
+    @Nested
+    inner class
+    `append log site` {
+
+        @Test
+        fun `with full information`() {
+            val logSite = FakeLogSite.create("<class>", "<method>", 42, "<file>")
+            val data = FakeLogData.of("Full log site info")
+                .setLogSite(logSite)
+            backend.log(data)
+            val actual = lastLogged.source
+            with(actual) {
+                className shouldBe logSite.className
+                methodName shouldBe logSite.methodName
+                lineNumber shouldBe logSite.lineNumber
+                fileName shouldBe logSite.fileName
+            }
+        }
+
+        @Test
+        fun `without source file`() {
+            val logSite = FakeLogSite.create("<class>", "<method>", 42, null)
+            val data = FakeLogData.of("Full log site info")
+                .setLogSite(logSite)
+            backend.log(data)
+            val actual = lastLogged.source
+            with(actual) {
+                className shouldBe logSite.className
+                methodName shouldBe logSite.methodName
+                lineNumber shouldBe logSite.lineNumber
+                fileName shouldBe logSite.fileName
+            }
+        }
+
+        @Test
+        fun `without line number and source file`() {
+            val logSite = FakeLogSite.create("<class>", "<method>", -1, null)
+            val data = FakeLogData.of("Full log site info")
+                .setLogSite(logSite)
+            backend.log(data)
+            val actual = lastLogged.source
+            with(actual) {
+                className shouldBe logSite.className
+                methodName shouldBe logSite.methodName
+                lineNumber shouldBe logSite.lineNumber
+                fileName shouldBe logSite.fileName
+            }
+        }
+    }
+
+    @Test
+    fun `propagate parsing errors`() {
+        val data = FakeLogData.withPrintfStyle("Hello %?X World", "ignored")
+        val parseException = shouldThrow<ParseException> {
+            backend.log(data)
+        }
+        logged.shouldBeEmpty()
+        backend.handleError(parseException, data)
+        logged shouldHaveSize 1
+        lastLogged.formatted shouldContain "Hello %[?]X World"
     }
 }
 
@@ -244,7 +245,7 @@ private val serialNumbers = AtomicInteger()
  * allowing tests to be run in parallel.
  */
 private fun createLogger(): Logger {
-    val suiteName = Log4j2Test::class.simpleName!!
+    val suiteName = Log4j2Spec::class.simpleName!!
     val testSerial = serialNumbers.incrementAndGet()
     val loggerName = "%s_%02d".format(suiteName, testSerial)
     val logger = LogManager.getLogger(loggerName) as Logger
