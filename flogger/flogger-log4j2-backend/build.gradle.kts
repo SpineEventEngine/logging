@@ -36,6 +36,7 @@ dependencies {
     implementation(project(":flogger-api"))
     implementation(project(":flogger-system-backend"))
     testImplementation(project(":flogger-testing"))
+    testImplementation(project(":flogger-grpc-context"))
 }
 
 java {
