@@ -105,6 +105,13 @@ public class MetadataKey<T> {
    * <p>Key instances behave like singletons, and two key instances with the same label will still
    * be considered distinct. The recommended approach is to always assign {@code MetadataKey}
    * instances to static final constants.
+   *
+   * <p>When calling from Kotlin, please give preference to
+   * {@code MetadataKeysKt.singleKey()}. In Kotlin, there's no explicit
+   * difference between primitive and object classes. When compiling to JVM,
+   * it is resolved during the compilation. An accident passing of a potentially
+   * primitive class may lead to a runtime exception because metadata keys
+   * are used with generics.
    */
   public static <T> MetadataKey<T> single(String label, Class<? extends T> clazz) {
     return new MetadataKey<>(label, clazz, false, false);
@@ -118,6 +125,13 @@ public class MetadataKey<T> {
    * <p>Key instances behave like singletons, and two key instances with the same label will still
    * be considered distinct. The recommended approach is to always assign {@code MetadataKey}
    * instances to static final constants.
+   *
+   * <p>When calling from Kotlin, please give preference to
+   * {@code MetadataKeysKt.repeatedKey()}. In Kotlin, there's no explicit
+   * difference between primitive and object classes. When compiling to JVM,
+   * it is resolved during the compilation. An accident passing of a potentially
+   * primitive class may lead to a runtime exception because metadata keys
+   * are used with generics.
    */
   public static <T> MetadataKey<T> repeated(String label, Class<T> clazz) {
     return new MetadataKey<>(label, clazz, true, false);
