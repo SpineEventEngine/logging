@@ -206,7 +206,6 @@ internal class Log4j2LoggerBackendSpec {
         logged.shouldBeEmpty()
         backend.handleError(parseException, data)
         logged shouldHaveSize 1
-        println(lastLogged.formatted)
         lastLogged.formatted shouldContain "LOGGING ERROR: invalid flag"
     }
 }
