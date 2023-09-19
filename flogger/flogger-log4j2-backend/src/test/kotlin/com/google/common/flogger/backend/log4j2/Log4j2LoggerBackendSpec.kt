@@ -53,8 +53,8 @@ import org.junit.jupiter.api.Nested
 private typealias JulLevel = java.util.logging.Level
 private typealias Log4jLevel = org.apache.logging.log4j.Level
 
-@DisplayName("`Log4j2` should")
-internal class Log4j2Spec {
+@DisplayName("`Log4j2LoggerBackendSpec` should")
+internal class Log4j2LoggerBackendSpec {
 
     private val logger = createLogger()
     private val appender = MemoizingAppender()
@@ -245,7 +245,7 @@ private val serialNumbers = AtomicInteger()
  * allowing tests to be run in parallel.
  */
 private fun createLogger(): Logger {
-    val suiteName = Log4j2Spec::class.simpleName!!
+    val suiteName = Log4j2LoggerBackendSpec::class.simpleName!!
     val testSerial = serialNumbers.incrementAndGet()
     val loggerName = "%s_%02d".format(suiteName, testSerial)
     val logger = LogManager.getLogger(loggerName) as Logger
