@@ -27,8 +27,8 @@
 package com.google.common.flogger.backend.log4j2
 
 import com.google.common.flogger.backend.system.BackendFactory
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.optional.shouldBePresent
 import io.kotest.matchers.types.shouldBeInstanceOf
 import java.util.*
 import org.junit.jupiter.api.DisplayName
@@ -45,12 +45,12 @@ import org.junit.jupiter.api.Test
 internal class Log4j2BackendFactorySpec {
 
     @Test
-    fun `be able to be loaded as a Java service`() {
+    fun `be loaded as a Java service`() {
         val serviceLoader = ServiceLoader.load(BackendFactory::class.java)
-        val optionalFactory = serviceLoader.findFirst()
-        optionalFactory.shouldBePresent()
+        val loadedServices = serviceLoader.toList()
+        loadedServices shouldHaveSize 1
 
-        val factory = optionalFactory.get()
+        val factory = loadedServices.first()
         factory.shouldNotBeNull()
         factory.shouldBeInstanceOf<Log4j2BackendFactory>()
     }
