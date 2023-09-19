@@ -33,7 +33,7 @@ package io.spine.internal.dependency
  * provides a backend implementation for [Log4j2]. This is why
  * this dependency is needed.
  *
- * @see <a href="https://github.com/apache/logging-log4j2">Log4j releases at GitHub</a>
+ * @see <a href="https://github.com/apache/logging-log4j2">Log4j2 releases at GitHub</a>
  */
 @Suppress("unused", "ConstPropertyName")
 object Log4j2 {
