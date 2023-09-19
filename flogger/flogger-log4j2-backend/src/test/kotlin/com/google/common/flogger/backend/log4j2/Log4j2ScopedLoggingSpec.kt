@@ -430,10 +430,9 @@ internal class Log4j2ScopedLoggingSpec {
                     .addTag("foo")
                     .addTag("baz", "bar2")
                     .build()
-
                 val expectedInnerContext = mapOf(
                     "tags" to stringify(outerTags.merge(innerTags)),
-                    key.label to innerValue // It is a singleton key. It uses the last value.
+                    key.label to innerValue // Singleton keys use the last specified value.
                 )
 
                 context.newContext()
@@ -451,7 +450,8 @@ internal class Log4j2ScopedLoggingSpec {
 private val serialNumbers = AtomicInteger()
 
 /**
- * Creates a logger with a unique name and the given [appender].
+ * Creates a [ConfigurableLogger] with a unique name and
+ * the given Log4j's [appender].
  *
  * The default console appender is removed.
  *
@@ -474,8 +474,8 @@ private fun createLogger(appender: Appender): ConfigurableLogger {
 }
 
 /**
- * Converts the given [tags] to string in a way similar to
- * values from Log4j's `ReadOnlyStringMap`.
+ * Converts the given [tags] to string in a way that is similar to
+ * how Log4j's `StringMap` does it.
  */
 private fun stringify(tags: Tags): String {
     val entries = tags.asMap().map { (name, values) ->
