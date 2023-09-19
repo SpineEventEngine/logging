@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.dependency.Log4j
+import io.spine.internal.dependency.Log4j2
 import net.ltgt.gradle.errorprone.errorprone
 
 plugins {
@@ -32,7 +32,7 @@ plugins {
 }
 
 dependencies {
-    api(Log4j.core)
+    api(Log4j2.core)
     implementation(project(":flogger-api"))
     implementation(project(":flogger-system-backend"))
     testImplementation(project(":flogger-testing"))
