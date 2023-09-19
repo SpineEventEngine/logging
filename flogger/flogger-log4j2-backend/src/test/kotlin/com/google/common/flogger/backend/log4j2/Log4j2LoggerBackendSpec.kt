@@ -40,16 +40,15 @@ import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import java.util.concurrent.atomic.AtomicInteger
 import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.core.Appender
 import org.apache.logging.log4j.core.LogEvent
 import org.apache.logging.log4j.core.Logger
-import org.apache.logging.log4j.core.LoggerContext
-import org.apache.logging.log4j.core.config.DefaultConfiguration
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 
+// These aliases help to distinguish different levels without FQN.
 private typealias JulLevel = java.util.logging.Level
 private typealias Log4jLevel = org.apache.logging.log4j.Level
 
@@ -62,18 +61,15 @@ private typealias Log4jLevel = org.apache.logging.log4j.Level
 @DisplayName("`Log4j2LoggerBackendSpec` should")
 internal class Log4j2LoggerBackendSpec {
 
-    private val logger = createLogger()
-    private val appender = MemoizingAppender()
-    private val backend = Log4j2LoggerBackend(logger)
-    private val logged = appender.events
-    private val lastLogged
-        get() = logged.last()
+    private lateinit var backend: Log4j2LoggerBackend
+    private lateinit var logged: List<LogEvent>
+    private val lastLogged get() = logged.last()
 
     companion object {
 
         /**
-         * [INT_KEY] uses `Int::class.javaObjectType` to make sure
-         * we get `Integer` class on JVM.
+         * [INT_KEY] uses `Int::class.javaObjectType` to make sure we get
+         * `Integer` class on JVM.
          *
          * Otherwise, Kotlin compiler passes `int` class for primitives.
          * It is important because metadata objects are generified,
@@ -81,23 +77,16 @@ internal class Log4j2LoggerBackendSpec {
          */
         private val INT_KEY = MetadataKey.repeated("int", Int::class.javaObjectType)
         private val STR_KEY = MetadataKey.single("str", String::class.java)
-        private const val LITERAL = "Hello world"
         private val DEFAULT_LEVEL = Log4jLevel.INFO
+        private const val LITERAL = "Hello world"
     }
 
     @BeforeEach
     fun setUp() {
-        resetLoggingConfig()
-        logger.apply {
-            level = Log4jLevel.TRACE
-            addAppender(appender)
-        }
-    }
-
-    @AfterEach
-    fun tearDown() {
-        logger.removeAppender(appender)
-        appender.stop()
+        val memoizingAppender = MemoizingAppender()
+        val logger = createLogger(memoizingAppender)
+        backend = Log4j2LoggerBackend(logger)
+        logged = memoizingAppender.events
     }
 
     @Test
@@ -229,32 +218,26 @@ internal class Log4j2LoggerBackendSpec {
     }
 }
 
-/**
- * Resets the logger configuration to prevent a clash
- * with [Log4j2ScopedLoggingSpec].
- */
-private fun resetLoggingConfig() {
-    val classloaderSpecific = false
-    val context = LoggerContext.getContext(classloaderSpecific)
-    context.apply {
-        configuration = DefaultConfiguration()
-        updateLoggers()
-    }
-}
-
 private val serialNumbers = AtomicInteger()
 
 /**
- * Creates a logger with a unique name.
+ * Creates a logger with a unique name and the given [appender].
+ *
+ * The default console appender is removed.
  *
  * A unique name should produce a different logger for each test,
  * allowing tests to be run in parallel.
  */
-private fun createLogger(): Logger {
+private fun createLogger(appender: Appender): Logger {
     val suiteName = Log4j2LoggerBackendSpec::class.simpleName!!
     val testSerial = serialNumbers.incrementAndGet()
     val loggerName = "%s_%02d".format(suiteName, testSerial)
     val logger = LogManager.getLogger(loggerName) as Logger
+    logger.apply {
+        level = Log4jLevel.TRACE
+        appenders.forEach { removeAppender(it.value) }
+        addAppender(appender)
+    }
     return logger
 }
 
