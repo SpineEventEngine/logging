@@ -31,7 +31,7 @@ import com.google.common.flogger.MetadataKey
 import com.google.common.flogger.backend.log4j2.given.MemoizingAppender
 import com.google.common.flogger.context.ContextDataProvider
 import com.google.common.flogger.context.Tags
-import com.google.common.flogger.testing.TestLogger
+import com.google.common.flogger.testing.ConfigurableLogger
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import java.util.concurrent.atomic.AtomicInteger
@@ -61,7 +61,7 @@ import org.junit.jupiter.api.Test
 internal class Log4j2ScopedLoggingSpec {
 
     private val context = ContextDataProvider.getInstance().contextApiSingleton
-    private lateinit var logger: TestLogger
+    private lateinit var logger: ConfigurableLogger
     private lateinit var logged: List<LogEvent>
     private val lastLogged get() = logged.last()
 
@@ -458,7 +458,7 @@ private val serialNumbers = AtomicInteger()
  * A unique name should produce a different logger for each test,
  * allowing tests to be run in parallel.
  */
-private fun createLogger(appender: Appender): TestLogger {
+private fun createLogger(appender: Appender): ConfigurableLogger {
     val suiteName = Log4j2ScopedLoggingSpec::class.simpleName!!
     val testSerial = serialNumbers.incrementAndGet()
     val loggerName = "%s_%02d".format(suiteName, testSerial)
@@ -469,7 +469,7 @@ private fun createLogger(appender: Appender): TestLogger {
         addAppender(appender)
     }
     val backend = Log4j2LoggerBackend(log4jLogger)
-    val logger = TestLogger.create(backend)
+    val logger = ConfigurableLogger.create(backend)
     return logger
 }
 

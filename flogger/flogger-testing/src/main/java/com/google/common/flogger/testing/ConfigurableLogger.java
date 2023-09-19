@@ -25,25 +25,26 @@ import com.google.common.flogger.parser.MessageParser;
 import java.util.logging.Level;
 
 /**
- * Helper class for unit tests which need to test backend or context behavior. Unlike normal
- * logger instances, this one can be reconfigured dynamically and has specific methods for
- * injecting timestamps and forcing log statements.
+ * Helper class for unit tests, which need to test backend or context behavior.
+ *
+ * <p>Unlike normal logger instances, this one can be reconfigured dynamically.
+ * It has specific methods for injecting timestamps and forcing log statements.
  *
  * <p>This class is mutable and not thread safe.
  */
-public final class TestLogger extends AbstractLogger<TestLogger.Api> {
+public final class ConfigurableLogger extends AbstractLogger<ConfigurableLogger.Api> {
   // Midnight Jan 1st, 2000 (GMT)
   private static final long DEFAULT_TIMESTAMP_NANOS = 946684800000000000L;
 
   public interface Api extends LoggingApi<Api> { }
 
   /** Returns a test logger for the default logging API. */
-  public static TestLogger create(LoggerBackend backend) {
-    return new TestLogger(backend);
+  public static ConfigurableLogger create(LoggerBackend backend) {
+    return new ConfigurableLogger(backend);
   }
 
   /** Constructs a test logger with the given backend. */
-  private TestLogger(LoggerBackend backend) {
+  private ConfigurableLogger(LoggerBackend backend) {
     super(backend);
   }
 
@@ -70,14 +71,14 @@ public final class TestLogger extends AbstractLogger<TestLogger.Api> {
   }
 
   /** Logging context implementing the basic logging API. */
-  private final class TestContext extends LogContext<TestLogger, Api> implements Api {
+  private final class TestContext extends LogContext<ConfigurableLogger, Api> implements Api {
     private TestContext(Level level, boolean isForced, long timestampNanos) {
       super(level, isForced, timestampNanos);
     }
 
     @Override
-    protected TestLogger getLogger() {
-      return TestLogger.this;
+    protected ConfigurableLogger getLogger() {
+      return ConfigurableLogger.this;
     }
 
     @Override
@@ -92,7 +93,7 @@ public final class TestLogger extends AbstractLogger<TestLogger.Api> {
     }
 
     @Override
-    protected final MessageParser getMessageParser() {
+    protected MessageParser getMessageParser() {
       return DefaultPrintfMessageParser.getInstance();
     }
   }

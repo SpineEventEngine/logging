@@ -29,7 +29,7 @@ package com.google.common.flogger
 import com.google.common.flogger.backend.LogData
 import com.google.common.flogger.backend.LoggingException
 import com.google.common.flogger.given.MemoizingBackend
-import com.google.common.flogger.testing.TestLogger
+import com.google.common.flogger.testing.ConfigurableLogger
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldHaveSize
@@ -57,7 +57,7 @@ import org.junit.jupiter.api.Test
 internal class AbstractLoggerSpec {
 
     private val backend = MemoizingBackend()
-    private val logger = TestLogger.create(backend)
+    private val logger = ConfigurableLogger.create(backend)
 
     companion object {
 
@@ -148,7 +148,7 @@ internal class AbstractLoggerSpec {
         val backend = object : MemoizingBackend() {
             override fun log(data: LogData) = throw LoggingException("allowed")
         }
-        val logger = TestLogger.create(backend)
+        val logger = ConfigurableLogger.create(backend)
 
         val output = tapConsole {
             shouldThrow<LoggingException> {
@@ -166,7 +166,7 @@ internal class AbstractLoggerSpec {
         val backend: MemoizingBackend = object : MemoizingBackend() {
             override fun log(data: LogData) = throw Error("allowed")
         }
-        val logger = TestLogger.create(backend)
+        val logger = ConfigurableLogger.create(backend)
 
         val output = tapConsole {
             shouldThrow<Error> {
