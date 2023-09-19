@@ -36,7 +36,7 @@ dependencies {
     implementation(project(":flogger-api"))
     implementation(project(":flogger-system-backend"))
     testImplementation(project(":flogger-testing"))
-    testImplementation(project(":flogger-grpc-context"))
+    testRuntimeOnly(project(":flogger-grpc-context"))
 }
 
 java {
@@ -44,8 +44,8 @@ java {
     /**
      * Disables Java linters until main sources are migrated to Kotlin.
      *
-     * As for now, they produce a lot of errors/warnings to original Flogger code,
-     * failing the build.
+     * As for now, they produce a lot of errors/warnings to original
+     * Flogger code, failing the build.
      */
     tasks {
         named("checkstyleMain") { enabled = false }
