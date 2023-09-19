@@ -37,6 +37,7 @@ import io.kotest.matchers.shouldBe
 import java.util.concurrent.atomic.AtomicInteger
 import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.core.Appender
 import org.apache.logging.log4j.core.LogEvent
 import org.apache.logging.log4j.core.Logger
 import org.junit.jupiter.api.AfterEach
@@ -59,28 +60,28 @@ import org.junit.jupiter.api.Test
 @DisplayName("With Log4j backend, `ScopedLoggingContext` should")
 internal class Log4j2ScopedLoggingSpec {
 
-    private val logger = createLogger()
-    private val appender = MemoizingAppender()
-    private var testLogger = createTestLogger(logger)
-    private val logged = appender.events
     private val context = ContextDataProvider.getInstance().contextApiSingleton
+    private lateinit var logger: TestLogger
+    private lateinit var logged: List<LogEvent>
     private val lastLogged get() = logged.last()
 
     @BeforeEach
     fun setUp() {
-        logger.apply {
-            level = Level.TRACE
-            addAppender(appender)
-        }
+        val memoizingAppender = MemoizingAppender()
+        logger = createLogger(memoizingAppender)
+        logged = memoizingAppender.events
     }
 
+    /**
+     * Asserts that a test has logged exactly once.
+     *
+     * Each test within this suite uses a lambda to run code
+     * within the scope. And we should be sure that the passed
+     * lambda with a `log(...)` call was indeed executed.
+     */
     @AfterEach
     fun tearDown() {
-        // Makes sure code within the scope has been executed.
-        // Each test logs exactly once.
         logged.shouldHaveSize(1)
-        logger.removeAppender(appender)
-        appender.stop()
     }
 
     @Nested
@@ -96,7 +97,7 @@ internal class Log4j2ScopedLoggingSpec {
                 .withTags(singleTag)
                 .install()
                 .use {
-                    testLogger.atInfo().log()
+                    logger.atInfo().log()
                     lastLogged.contextTags shouldBe expectedTags
                 }
         }
@@ -107,7 +108,7 @@ internal class Log4j2ScopedLoggingSpec {
                 .withMetadata(Key.TAGS, singleTag)
                 .install()
                 .use {
-                    testLogger.atInfo().log()
+                    logger.atInfo().log()
                     lastLogged.contextTags shouldBe expectedTags
                 }
         }
@@ -119,7 +120,7 @@ internal class Log4j2ScopedLoggingSpec {
                 .withMetadata(key, singleTag)
                 .install()
                 .use {
-                    testLogger.atInfo().log()
+                    logger.atInfo().log()
                     lastLogged.contextTags shouldBe expectedTags
                 }
         }
@@ -142,7 +143,7 @@ internal class Log4j2ScopedLoggingSpec {
                 .withTags(severalTags)
                 .install()
                 .use {
-                    testLogger.atInfo().log()
+                    logger.atInfo().log()
                     lastLogged.contextTags shouldBe expectedTags
                 }
         }
@@ -153,7 +154,7 @@ internal class Log4j2ScopedLoggingSpec {
                 .withMetadata(Key.TAGS, severalTags)
                 .install()
                 .use {
-                    testLogger.atInfo().log()
+                    logger.atInfo().log()
                     lastLogged.contextTags shouldBe expectedTags
                 }
         }
@@ -165,7 +166,7 @@ internal class Log4j2ScopedLoggingSpec {
                 .withMetadata(key, severalTags)
                 .install()
                 .use {
-                    testLogger.atInfo().log()
+                    logger.atInfo().log()
                     lastLogged.contextTags shouldBe expectedTags
                 }
         }
@@ -184,7 +185,7 @@ internal class Log4j2ScopedLoggingSpec {
                 .withTags(emptyTags)
                 .install()
                 .use {
-                    testLogger.atInfo().log()
+                    logger.atInfo().log()
                     lastLogged.contextTags shouldBe expectedTags
                 }
         }
@@ -195,7 +196,7 @@ internal class Log4j2ScopedLoggingSpec {
                 .withMetadata(Key.TAGS, emptyTags)
                 .install()
                 .use {
-                    testLogger.atInfo().log()
+                    logger.atInfo().log()
                     lastLogged.contextTags shouldBe expectedTags
                 }
         }
@@ -207,7 +208,7 @@ internal class Log4j2ScopedLoggingSpec {
                 .withMetadata(key, emptyTags)
                 .install()
                 .use {
-                    testLogger.atInfo().log()
+                    logger.atInfo().log()
                     lastLogged.contextTags shouldBe expectedTags
                 }
         }
@@ -236,7 +237,7 @@ internal class Log4j2ScopedLoggingSpec {
                 .withTags(contextTags)
                 .install()
                 .use {
-                    testLogger.atInfo().log()
+                    logger.atInfo().log()
                     lastLogged.contextTags shouldBe expectedTags
                 }
         }
@@ -252,7 +253,7 @@ internal class Log4j2ScopedLoggingSpec {
                 .withTags(contextTags)
                 .install()
                 .use {
-                    testLogger.atInfo().log()
+                    logger.atInfo().log()
                     lastLogged.contextTags shouldBe expectedTags
                 }
         }
@@ -266,7 +267,7 @@ internal class Log4j2ScopedLoggingSpec {
                 .withTags(contextTags)
                 .install()
                 .use {
-                    testLogger.atInfo().log()
+                    logger.atInfo().log()
                     lastLogged.contextTags shouldBe expectedTags
                 }
         }
@@ -280,7 +281,7 @@ internal class Log4j2ScopedLoggingSpec {
                 .withTags(contextTags)
                 .install()
                 .use {
-                    testLogger.atInfo().log()
+                    logger.atInfo().log()
                     lastLogged.contextTags shouldBe expectedTags
                 }
         }
@@ -297,7 +298,7 @@ internal class Log4j2ScopedLoggingSpec {
                 .withTags(contextTags)
                 .install()
                 .use {
-                    testLogger.atInfo().log()
+                    logger.atInfo().log()
                     lastLogged.contextTags shouldBe expectedTags
                 }
         }
@@ -316,7 +317,7 @@ internal class Log4j2ScopedLoggingSpec {
                 .withTags(contextTags)
                 .install()
                 .use {
-                    testLogger.atInfo().log("test")
+                    logger.atInfo().log("test")
                     lastLogged.contextTags shouldBe expectedTags
                 }
         }
@@ -336,7 +337,7 @@ internal class Log4j2ScopedLoggingSpec {
                 .withMetadata(key, value)
                 .install()
                 .use {
-                    testLogger.atInfo().log()
+                    logger.atInfo().log()
                     lastLogged.contextDataMap shouldBe expectedContext
                 }
         }
@@ -351,7 +352,7 @@ internal class Log4j2ScopedLoggingSpec {
                 .withMetadata(singletonKey, values[2]) // Only the last one should be kept.
                 .install()
                 .use {
-                    testLogger.atInfo().log()
+                    logger.atInfo().log()
                     lastLogged.contextDataMap shouldBe expectedContext
                 }
         }
@@ -367,7 +368,7 @@ internal class Log4j2ScopedLoggingSpec {
                 .withMetadata(key2, value2) // In this case, values are concatenated.
                 .install()
                 .use {
-                    testLogger.atInfo().log()
+                    logger.atInfo().log()
                     lastLogged.contextDataMap shouldBe expectedContext
                 }
         }
@@ -381,7 +382,7 @@ internal class Log4j2ScopedLoggingSpec {
                 .withMetadata(listKey, items)
                 .install()
                 .use {
-                    testLogger.atInfo().log()
+                    logger.atInfo().log()
                     lastLogged.contextDataMap shouldBe expectedContext
                 }
         }
@@ -404,7 +405,7 @@ internal class Log4j2ScopedLoggingSpec {
             .withTags(tags)
             .install()
             .use {
-                testLogger.atInfo().log()
+                logger.atInfo().log()
                 lastLogged.contextDataMap shouldBe expectedContext
             }
     }
@@ -440,7 +441,7 @@ internal class Log4j2ScopedLoggingSpec {
                     .withTags(innerTags)
                     .install()
                     .use {
-                        testLogger.atInfo().log()
+                        logger.atInfo().log()
                         lastLogged.contextDataMap shouldBe expectedInnerContext
                     }
             }
@@ -450,27 +451,26 @@ internal class Log4j2ScopedLoggingSpec {
 private val serialNumbers = AtomicInteger()
 
 /**
- * Creates a logger with a unique name.
+ * Creates a logger with a unique name and the given [appender].
+ *
+ * The default console appender is removed.
  *
  * A unique name should produce a different logger for each test,
  * allowing tests to be run in parallel.
  */
-private fun createLogger(): Logger {
+private fun createLogger(appender: Appender): TestLogger {
     val suiteName = Log4j2ScopedLoggingSpec::class.simpleName!!
     val testSerial = serialNumbers.incrementAndGet()
     val loggerName = "%s_%02d".format(suiteName, testSerial)
-    val logger = LogManager.getLogger(loggerName) as Logger
+    val log4jLogger = LogManager.getLogger(loggerName) as Logger
+    log4jLogger.apply {
+        level = Level.TRACE
+        appenders.forEach { removeAppender(it.value) }
+        addAppender(appender)
+    }
+    val backend = Log4j2LoggerBackend(log4jLogger)
+    val logger = TestLogger.create(backend)
     return logger
-}
-
-/**
- * Creates a new [TestLogger] with the given [logger] to be used
- * as a delegate.
- */
-private fun createTestLogger(logger: Logger): TestLogger {
-    val backend = Log4j2LoggerBackend(logger)
-    val testLogger = TestLogger.create(backend)
-    return testLogger
 }
 
 /**
