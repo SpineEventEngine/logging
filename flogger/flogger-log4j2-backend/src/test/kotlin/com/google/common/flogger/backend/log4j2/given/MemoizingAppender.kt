@@ -31,22 +31,32 @@ import org.apache.logging.log4j.core.appender.AbstractAppender
 import org.apache.logging.log4j.core.layout.PatternLayout.createDefaultLayout
 
 /**
- * A Log4j event appender that remember all received events.
+ * A Log4j event appender that remembers the received events.
+ *
+ * Until [AbstractAppender] is in Java, it is impossible to use
+ * named arguments.
  */
 internal class MemoizingAppender : AbstractAppender(
-    "MemoizingAppender",
-    null,
+    MemoizingAppender::class.simpleName,
+    null, // No filtering.
     createDefaultLayout(),
-    true,
-    null
+    true, // Propagate exceptions to the app.
+    null // No properties.
 ) {
     private val mutableEvents = arrayListOf<LogEvent>()
+
+    /**
+     * All events that have been remembered by this appender.
+     */
     val events: List<LogEvent> = mutableEvents
 
     init {
         start()
     }
 
+    /**
+     * Remembers the given [event].
+     */
     override fun append(event: LogEvent) {
         mutableEvents.add(event)
     }
