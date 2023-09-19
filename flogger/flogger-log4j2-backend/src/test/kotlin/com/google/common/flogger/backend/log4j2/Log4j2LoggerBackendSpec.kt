@@ -28,9 +28,10 @@ package com.google.common.flogger.backend.log4j2
 
 import com.google.common.flogger.LogContext.Key
 import com.google.common.flogger.LogSite
-import com.google.common.flogger.MetadataKey
 import com.google.common.flogger.backend.log4j2.given.MemoizingAppender
 import com.google.common.flogger.parser.ParseException
+import com.google.common.flogger.repeatedKey
+import com.google.common.flogger.singleKey
 import com.google.common.flogger.testing.FakeLogData
 import com.google.common.flogger.testing.FakeLogSite
 import io.kotest.assertions.throwables.shouldThrow
@@ -67,17 +68,8 @@ internal class Log4j2LoggerBackendSpec {
     private val lastLogged get() = logged.last()
 
     companion object {
-
-        /**
-         * [INT_KEY] uses `Int::class.javaObjectType` to make sure we get
-         * `Integer` class on JVM.
-         *
-         * Otherwise, Kotlin compiler passes `int` class for primitives.
-         * It is important because metadata objects are generified,
-         * which means they would use boxed primitives.
-         */
-        private val INT_KEY = MetadataKey.repeated("int", Int::class.javaObjectType)
-        private val STR_KEY = MetadataKey.single("str", String::class.java)
+        private val INT_KEY = repeatedKey<Int>("int")
+        private val STR_KEY = singleKey<String>("str")
         private const val LITERAL = "Hello world"
     }
 

@@ -28,8 +28,8 @@ package com.google.common.flogger.backend
 
 import com.google.common.collect.Iterators
 import com.google.common.flogger.MetadataKey
-import com.google.common.flogger.MetadataKey.repeated
-import com.google.common.flogger.MetadataKey.single
+import com.google.common.flogger.repeatedKey
+import com.google.common.flogger.singleKey
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeTrue
@@ -49,11 +49,11 @@ import org.junit.jupiter.api.Test
 internal abstract class MetadataProcessorSpec(private val factory: ProcessorFactory) {
 
     companion object {
-        private val KEY_1 = single("K1", String::class.java)
-        private val KEY_2 = single("K2", String::class.java)
-        private val KEY_3 = single("K3", String::class.java)
-        private val REP_1 = repeated("R1", String::class.java)
-        private val REP_2 = repeated("R2", String::class.java)
+        private val KEY_1 = singleKey<String>("K1")
+        private val KEY_2 = singleKey<String>("K2")
+        private val KEY_3 = singleKey<String>("K3")
+        private val REP_1 = repeatedKey<String>("R1")
+        private val REP_2 = repeatedKey<String>("R2")
     }
 
     @Nested inner class
@@ -129,7 +129,7 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
         fun `with distinct keys`() {
             val scope = FakeMetadata()
             repeat(28) { i -> // 28 is a max number of entries for the lightweight processor.
-                val key = single("K$i", String::class.java)
+                val key = singleKey<String>("K$i")
                 val value = "v$i"
                 scope.add(key, value)
             }
@@ -150,7 +150,7 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
         // the same repeated key 14 times. This means (N/2)^2 key accesses.
         val scope = FakeMetadata()
         for (n in 0..13) {
-            val key = single("K$n", String::class.java)
+            val key = singleKey<String>("K$n")
             val value = "v$n"
             scope.add(key, value)
         }

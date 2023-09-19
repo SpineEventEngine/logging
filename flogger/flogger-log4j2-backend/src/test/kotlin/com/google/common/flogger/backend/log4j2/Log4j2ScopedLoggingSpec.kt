@@ -27,10 +27,11 @@
 package com.google.common.flogger.backend.log4j2
 
 import com.google.common.flogger.LogContext.Key
-import com.google.common.flogger.MetadataKey
 import com.google.common.flogger.backend.log4j2.given.MemoizingAppender
 import com.google.common.flogger.context.ContextDataProvider
 import com.google.common.flogger.context.Tags
+import com.google.common.flogger.repeatedKey
+import com.google.common.flogger.singleKey
 import com.google.common.flogger.testing.ConfigurableLogger
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
@@ -115,7 +116,7 @@ internal class Log4j2ScopedLoggingSpec {
 
         @Test
         fun `using a custom key`() {
-            val key = MetadataKey.single("tags", Tags::class.java)
+            val key = singleKey<Tags>("tags")
             context.newContext()
                 .withMetadata(key, singleTag)
                 .install()
@@ -161,7 +162,7 @@ internal class Log4j2ScopedLoggingSpec {
 
         @Test
         fun `using a custom key`() {
-            val key = MetadataKey.single("tags", Tags::class.java)
+            val key = singleKey<Tags>("tags")
             context.newContext()
                 .withMetadata(key, severalTags)
                 .install()
@@ -203,7 +204,7 @@ internal class Log4j2ScopedLoggingSpec {
 
         @Test
         fun `using a custom key`() {
-            val key = MetadataKey.single("tags", Tags::class.java)
+            val key = singleKey<Tags>("tags")
             context.newContext()
                 .withMetadata(key, emptyTags)
                 .install()
@@ -224,9 +225,9 @@ internal class Log4j2ScopedLoggingSpec {
             .addTag("bar", "baz2")
             .build()
         private val expectedContextTags = stringify(contextTags).substring(1)
-        private val singletonKey = MetadataKey.single("tags", String::class.java)
-        private val singletonListKey = MetadataKey.single("tags", List::class.java)
-        private val repeatedKey = MetadataKey.repeated("tags", String::class.java)
+        private val singletonKey = singleKey<String>("tags")
+        private val singletonListKey = singleKey<List<*>>("tags")
+        private val repeatedKey = repeatedKey<String>("tags")
 
         @Test
         fun `and a singleton metadata key`() {
@@ -327,7 +328,7 @@ internal class Log4j2ScopedLoggingSpec {
     inner class
     `append metadata entries` {
 
-        private val singletonKey = MetadataKey.single("sKey", Int::class.javaObjectType)
+        private val singletonKey = singleKey<Int>("sKey")
 
         @Test
         fun `using a singleton metadata key`() {
@@ -360,8 +361,8 @@ internal class Log4j2ScopedLoggingSpec {
         @Test
         fun `using different singleton keys with the same label`() {
             val label = "id"
-            val (key1, value1) = MetadataKey.single(label, String::class.java) to "001"
-            val (key2, value2) = MetadataKey.single(label, String::class.java) to "002"
+            val (key1, value1) = singleKey<String>(label) to "001"
+            val (key2, value2) = singleKey<String>(label) to "002"
             val expectedContext = mapOf(label to "${listOf(value1, value2)}")
             context.newContext()
                 .withMetadata(key1, value1)
@@ -375,7 +376,7 @@ internal class Log4j2ScopedLoggingSpec {
 
         @Test
         fun `using a singleton key for lists`() {
-            val listKey = MetadataKey.single("items", List::class.java)
+            val listKey = singleKey<List<*>>("items")
             val items = listOf(23, 33, 56)
             val expectedContext = mapOf(listKey.label to "$items")
             context.newContext()
@@ -390,7 +391,7 @@ internal class Log4j2ScopedLoggingSpec {
 
     @Test
     fun `append arbitrary metadata and tags`() {
-        val (key, value) = MetadataKey.single("count", Int::class.javaObjectType) to 23
+        val (key, value) = singleKey<Int>("count") to 23
         val tags = Tags.builder()
             .addTag("foo")
             .addTag("baz", "bar")
@@ -412,7 +413,7 @@ internal class Log4j2ScopedLoggingSpec {
 
     @Test
     fun `use metadata from an outer context`() {
-        val key = MetadataKey.single("id", String::class.java)
+        val key = singleKey<String>("id")
         val outerValue = "outerID"
         val outerTags = Tags.builder()
             .addTag("foo")

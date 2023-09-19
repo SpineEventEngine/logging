@@ -30,7 +30,6 @@ import com.google.common.flogger.DurationRateLimiter.newRateLimitPeriod
 import com.google.common.flogger.LazyArgs.lazy
 import com.google.common.flogger.LogContext.Key
 import com.google.common.flogger.LogContext.specializeLogSiteKeyFromMetadata
-import com.google.common.flogger.MetadataKey.repeated
 import com.google.common.flogger.context.Tags
 import com.google.common.flogger.given.iterate
 import com.google.common.flogger.testing.shouldContainInOrder
@@ -83,8 +82,8 @@ internal class LogContextSpec {
         private const val LONG_ARG = Long.MAX_VALUE
         private const val CHAR_ARG = 'X'
         private val OBJECT_ARG = Any()
-        private val REPEATED_KEY = repeated("str", String::class.java)
-        private val FLAG_KEY = repeated("flag", Boolean::class.javaObjectType)
+        private val REPEATED_KEY = repeatedKey<String>("str")
+        private val FLAG_KEY = repeatedKey<Boolean>("flag")
         private val ONCE_PER_SECOND = newRateLimitPeriod(1, SECONDS)
 
         private const val MESSAGE_LITERAL = "Hello World"

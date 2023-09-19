@@ -29,8 +29,8 @@ package com.google.common.flogger.backend
 import com.google.common.base.Joiner
 import com.google.common.collect.Iterators
 import com.google.common.flogger.MetadataKey
-import com.google.common.flogger.MetadataKey.repeated
-import com.google.common.flogger.MetadataKey.single
+import com.google.common.flogger.repeatedKey
+import com.google.common.flogger.singleKey
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
@@ -47,7 +47,7 @@ internal class MetadataHandlerSpec {
 
     @Test
     fun `use a default singleton value handler for unknown keys`() {
-        val unknownKey = single("unknown", String::class.java)
+        val unknownKey = singleKey<String>("unknown")
         val handler = MetadataHandler.builder(::appendUnknownValue)
             .build()
 
@@ -59,8 +59,8 @@ internal class MetadataHandlerSpec {
 
     @Test
     fun `use a singleton value handler for any keys`() {
-        val key = single("key", String::class.java)
-        val rep = repeated("rep", String::class.java)
+        val key = singleKey<String>("key")
+        val rep = repeatedKey<String>("rep")
         val handler = MetadataHandler.builder(::appendUnknownValue)
             .addHandler(key, ::appendValue)
             .addHandler(rep, ::appendValue)
@@ -77,7 +77,7 @@ internal class MetadataHandlerSpec {
 
     @Test
     fun `use a repeated value handler for repeated keys`() {
-        val key = repeated("key", String::class.java)
+        val key = repeatedKey<String>("key")
         val handler = MetadataHandler.builder(::appendUnknownValue)
             .addRepeatedHandler(key, ::appendValues)
             .build()
@@ -92,14 +92,8 @@ internal class MetadataHandlerSpec {
 
     @Test
     fun `use key-specific handlers over the default ones`() {
-
-        /*
-        `barKey` uses `Int::class.javaObjectType` to make sure we get `Integer` class on JVM.
-        Otherwise, Kotlin compiler passes `int` class for primitives. It is important because
-        metadata objects are generified, which means they would use boxed primitives.
-        */
-        val barKey = repeated("bar", Int::class.javaObjectType)
-        val fooKey = repeated("foo", String::class.java)
+        val barKey = repeatedKey<Int>("bar")
+        val fooKey = repeatedKey<String>("foo")
         val handler = MetadataHandler.builder(::appendUnknownValue)
             .setDefaultRepeatedHandler(::appendUnknownValues)
             .addHandler(fooKey, ::appendValue) // Explicit individual handler takes precedence.
@@ -118,15 +112,9 @@ internal class MetadataHandlerSpec {
 
     @Test
     fun `use multiple value handlers`() {
-
-        /*
-        `barKey` uses `Int::class.javaObjectType` to make sure we get `Integer` class on JVM.
-        Otherwise, Kotlin compiler passes `int` class for primitives. It is important because
-        metadata objects are generified, which means they would use boxed primitives.
-        */
-        val barKey = repeated("bar", Int::class.javaObjectType)
-        val fooKey = repeated("foo", String::class.java)
-        val unknownKey = single("unknown", String::class.java)
+        val barKey = repeatedKey<Int>("bar")
+        val fooKey = repeatedKey<String>("foo")
+        val unknownKey = singleKey<String>("unknown")
         val handler = MetadataHandler.builder(::appendUnknownValue)
             .addRepeatedHandler(barKey, ::appendSum)
             .addHandler(fooKey, ::appendValue)
@@ -146,7 +134,7 @@ internal class MetadataHandlerSpec {
 
     @Test
     fun `use the latest specified handler`() {
-        val foo = repeated("foo", String::class.java)
+        val foo = repeatedKey<String>("foo")
         val handler = MetadataHandler.builder(::appendUnknownValue)
             .addRepeatedHandler(foo, ::appendValues)
             .addHandler(foo, ::appendValue)
@@ -162,7 +150,7 @@ internal class MetadataHandlerSpec {
 
     @Test
     fun `remove previously specified handlers`() {
-        val foo = repeated("foo", String::class.java)
+        val foo = repeatedKey<String>("foo")
         val builder = MetadataHandler.builder(::appendUnknownValue)
             .addRepeatedHandler(foo, ::appendValues)
 

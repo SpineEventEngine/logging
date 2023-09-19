@@ -26,14 +26,13 @@
 
 package com.google.common.flogger.backend
 
-import com.google.common.flogger.MetadataKey
-import com.google.common.flogger.MetadataKey.repeated
-import com.google.common.flogger.MetadataKey.single
 import com.google.common.flogger.backend.MetadataKeyValueHandlers.getDefaultHandler
 import com.google.common.flogger.backend.MetadataKeyValueHandlers.getDefaultRepeatedValueHandler
 import com.google.common.flogger.backend.MetadataKeyValueHandlers.getDefaultValueHandler
 import com.google.common.flogger.given.MemoizingKvHandler
 import com.google.common.flogger.given.iterate
+import com.google.common.flogger.repeatedKey
+import com.google.common.flogger.singleKey
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import org.junit.jupiter.api.DisplayName
@@ -49,9 +48,9 @@ import org.junit.jupiter.api.Test
 internal class MetadataKeyValueHandlersSpec {
 
     companion object {
-        private val single: MetadataKey<Any> = single("single", Any::class.java)
-        private val repeated: MetadataKey<Any> = repeated("repeated", Any::class.java)
-        private val ignored: MetadataKey<Any> = single("ignored", Any::class.java)
+        private val single = singleKey<Any>("single")
+        private val repeated = repeatedKey<Any>("repeated")
+        private val ignored = singleKey<Any>("ignored")
     }
 
     @Test

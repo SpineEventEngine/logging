@@ -27,7 +27,6 @@
 package com.google.common.flogger.testing
 
 import com.google.common.flogger.LogContext.Key
-import com.google.common.flogger.MetadataKey
 import com.google.common.flogger.backend.Metadata
 import com.google.common.flogger.context.ContextDataProvider
 import com.google.common.flogger.context.LogLevelMap
@@ -35,6 +34,8 @@ import com.google.common.flogger.context.ScopeType
 import com.google.common.flogger.context.ScopedLoggingContext
 import com.google.common.flogger.context.ScopedLoggingContexts
 import com.google.common.flogger.context.Tags
+import com.google.common.flogger.repeatedKey
+import com.google.common.flogger.singleKey
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldHaveSize
@@ -80,8 +81,8 @@ public abstract class AbstractContextDataProviderSpec {
     protected abstract val implementationUnderTest: ContextDataProvider
 
     private companion object {
-        private val FOO = MetadataKey.single("foo", String::class.java)
-        private val BAR = MetadataKey.repeated("bar", String::class.java)
+        private val FOO = singleKey<String>("foo")
+        private val BAR = repeatedKey<String>("bar")
         private val SUB_TASK = ScopeType.create("sub task")
         private val BATCH_JOB = ScopeType.create("batch job")
     }
