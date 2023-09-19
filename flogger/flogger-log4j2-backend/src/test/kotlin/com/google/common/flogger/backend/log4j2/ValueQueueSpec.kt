@@ -28,9 +28,11 @@ package com.google.common.flogger.backend.log4j2
 
 import com.google.common.flogger.backend.log4j2.ValueQueue.appendValueToNewQueue
 import com.google.common.flogger.backend.log4j2.ValueQueue.maybeWrap
-import com.google.common.flogger.backend.system.AbstractLogRecord
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.matchers.shouldBe
+import io.kotest.matchers.collections.shouldContainInOrder
+import io.kotest.matchers.collections.shouldHaveSingleElement
+import io.kotest.matchers.types.shouldBeInstanceOf
+import io.kotest.matchers.types.shouldBeSameInstanceAs
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -52,52 +54,49 @@ internal class ValueQueueSpec {
         fun `with a value`() {
             val list = listOf(1, 2, 3)
             val queue = appendValueToNewQueue(list)
-            "$queue" shouldBe "$list"
+            queue shouldHaveSingleElement list
         }
 
         @Test
-        fun `with a value and 'null'`() {
-            val value = 1
-            val existingValue = null
-            val queue = maybeWrap(value, existingValue)
-            "$queue" shouldBe "$value"
+        fun `with another and existing values`() {
+            val existingValue = 1
+            val anotherValue = 2
+            val queue = maybeWrap(anotherValue, existingValue)
+            queue.shouldBeInstanceOf<ValueQueue>()
+            queue.shouldContainInOrder(existingValue, anotherValue)
         }
 
         @Test
         fun `with a value and another queue`() {
-            val values = listOf(1, 2)
-            val existingQueue = maybeWrap(values[0], null)
-            val queue = maybeWrap(values[1], existingQueue) as ValueQueue
-            "$queue" shouldBe "$values"
+            val existingValue = 1
+            val anotherValue = 2
+            val existingQueue = appendValueToNewQueue(existingValue)
+            val queue = maybeWrap(anotherValue, existingQueue)
+            queue.shouldBeInstanceOf<ValueQueue>()
+            queue.shouldContainInOrder(existingValue, anotherValue)
         }
 
         @Test
         fun `with a value and a nested queue`() {
-            val values = listOf(1, 2, 3)
-            val existingQueue1 = maybeWrap(1, null)
-            val existingQueue2 = maybeWrap(2, existingQueue1) as ValueQueue
-            val queue = maybeWrap(3, existingQueue2) as ValueQueue
-            "$queue" shouldBe "$values"
-        }
-
-        @Test
-        fun `with an empty string`() {
-            val value = ""
-            val queue = appendValueToNewQueue(value)
-            "$queue" shouldBe value
-        }
-
-        @Test
-        fun `with nested lists`() {
-            val innerList = listOf(1, 2)
-            val outerList = listOf(innerList, 3)
-            val queue = appendValueToNewQueue(outerList)
-            "$queue" shouldBe "$outerList"
+            val (rootValue, innerValue, outerValue) = listOf(1, 2, 3)
+            val rootQueue = appendValueToNewQueue(rootValue)
+            val innerQueue = maybeWrap(innerValue, rootQueue)
+            val outerQueue = maybeWrap(outerValue, innerQueue)
+            outerQueue.shouldBeInstanceOf<ValueQueue>()
+            outerQueue.shouldContainInOrder(rootValue, innerValue, outerValue)
         }
     }
 
     @Test
-    fun `throw when given a nullable value`() {
+    fun `not create a new instance when existing value is 'null'`() {
+        val value = 1
+        val existingValue = null
+        val queue = maybeWrap(value, existingValue)
+        queue shouldBeSameInstanceAs value
+    }
+
+    @Test
+    fun `throw when given a 'null' value`() {
         val value = null
         val existingValue = null
         shouldThrow<NullPointerException> {
