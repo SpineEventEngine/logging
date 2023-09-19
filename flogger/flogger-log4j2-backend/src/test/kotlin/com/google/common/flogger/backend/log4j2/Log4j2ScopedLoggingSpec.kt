@@ -46,14 +46,15 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for scoped logging when used with the Log4j backend.
+ * Tests for interaction between [ScopedLoggingContext][com.google.common.flogger.context.ScopedLoggingContext]
+ * and [Log4j2LoggerBackend].
  *
  * [ScopedLoggingContext][com.google.common.flogger.context.ScopedLoggingContext]
  * is abstract. To test it with Log4j backend, a concrete implementation
  * is needed. This test suite uses [GrpcScopedLoggingContext][com.google.common.flogger.grpc.GrpcScopedLoggingContext].
  *
- * In Log4j, all scope information goes to `ReadOnlyStringMap`,
- * which can be obtained from [LogEvent.getContextData].
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/log4j2/src/test/java/com/google/common/flogger/backend/log4j2/Log4j2ScopedLoggingTest.java">
+ *     Original Java code of Google Flogger</a>
  */
 @DisplayName("With Log4j backend, `ScopedLoggingContext` should")
 internal class Log4j2ScopedLoggingSpec {

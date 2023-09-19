@@ -53,6 +53,12 @@ import org.junit.jupiter.api.Nested
 private typealias JulLevel = java.util.logging.Level
 private typealias Log4jLevel = org.apache.logging.log4j.Level
 
+/**
+ * Tests for [Log4j2LoggerBackend].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/log4j2/src/test/java/com/google/common/flogger/backend/log4j2/Log4j2Test.java">
+ *     Original Java code of Google Flogger</a>
+ */
 @DisplayName("`Log4j2LoggerBackendSpec` should")
 internal class Log4j2LoggerBackendSpec {
 
