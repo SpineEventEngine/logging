@@ -80,7 +80,7 @@ internal class Log4j2ScopedLoggingSpec {
      * lambda with a `log(...)` call was indeed executed.
      */
     @AfterEach
-    fun tearDown() {
+    fun assertLoggedExactlyOnce() {
         logged.shouldHaveSize(1)
     }
 
