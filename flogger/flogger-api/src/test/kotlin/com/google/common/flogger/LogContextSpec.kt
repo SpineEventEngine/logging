@@ -30,7 +30,6 @@ import com.google.common.flogger.DurationRateLimiter.newRateLimitPeriod
 import com.google.common.flogger.LazyArgs.lazy
 import com.google.common.flogger.LogContext.Key
 import com.google.common.flogger.LogContext.specializeLogSiteKeyFromMetadata
-import com.google.common.flogger.MetadataKey.repeated
 import com.google.common.flogger.context.Tags
 import com.google.common.flogger.given.iterate
 import com.google.common.flogger.testing.shouldContainInOrder
@@ -43,7 +42,7 @@ import com.google.common.flogger.testing.shouldUniquelyContain
 import com.google.common.flogger.testing.FakeLogSite
 import com.google.common.flogger.testing.FakeLoggerBackend
 import com.google.common.flogger.testing.FakeMetadata
-import com.google.common.flogger.testing.TestLogger
+import com.google.common.flogger.testing.ConfigurableLogger
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
@@ -83,8 +82,8 @@ internal class LogContextSpec {
         private const val LONG_ARG = Long.MAX_VALUE
         private const val CHAR_ARG = 'X'
         private val OBJECT_ARG = Any()
-        private val REPEATED_KEY = repeated("str", String::class.java)
-        private val FLAG_KEY = repeated("flag", Boolean::class.javaObjectType)
+        private val REPEATED_KEY = repeatedKey<String>("str")
+        private val FLAG_KEY = repeatedKey<Boolean>("flag")
         private val ONCE_PER_SECOND = newRateLimitPeriod(1, SECONDS)
 
         private const val MESSAGE_LITERAL = "Hello World"
@@ -222,7 +221,7 @@ internal class LogContextSpec {
     @Test
     fun `log once per the given number of invocations`() {
         val backend = FakeLoggerBackend()
-        val logger = TestLogger.create(backend)
+        val logger = ConfigurableLogger.create(backend)
         val startNanos = currentTimeNanos()
 
         // Logging occurs for counts: 0, 5, 10 (timestamp is not important).
@@ -251,7 +250,7 @@ internal class LogContextSpec {
     @Test
     fun `log with likelihood 1 in 'n'`() {
         val backend = FakeLoggerBackend()
-        val logger = TestLogger.create(backend)
+        val logger = ConfigurableLogger.create(backend)
         val startNanos = currentTimeNanos()
 
         // Logging occurs randomly 1-in-5 times over 1000 log statements.
@@ -291,7 +290,7 @@ internal class LogContextSpec {
     @Test
     fun `log at most once per the specified time period`() {
         val backend = FakeLoggerBackend()
-        val logger = TestLogger.create(backend)
+        val logger = ConfigurableLogger.create(backend)
         val startNanos = currentTimeNanos()
 
         // Logging occurs at: +0ms, +2400ms, +4800ms.
@@ -330,7 +329,7 @@ internal class LogContextSpec {
         @Test
         fun `log with a higher invocation rate`() {
             val backend = FakeLoggerBackend()
-            val logger = TestLogger.create(backend)
+            val logger = ConfigurableLogger.create(backend)
             val startNanos = currentTimeNanos()
 
             // 10 logs per second over 6 seconds.
@@ -355,7 +354,7 @@ internal class LogContextSpec {
         @Test
         fun `log with a lower invocation rate`() {
             val backend = FakeLoggerBackend()
-            val logger = TestLogger.create(backend)
+            val logger = ConfigurableLogger.create(backend)
             val startNanos = currentTimeNanos()
 
             // 10 logs per second over 6 seconds.
@@ -386,7 +385,7 @@ internal class LogContextSpec {
         @Test
         fun `bucketing strategy`() {
             val backend = FakeLoggerBackend()
-            val logger = TestLogger.create(backend)
+            val logger = ConfigurableLogger.create(backend)
 
             // Logs for both types should appear.
             // Even though the 2nd log is within the rate limit period.
@@ -431,7 +430,7 @@ internal class LogContextSpec {
         @Test
         fun `enum constant`() {
             val backend = FakeLoggerBackend()
-            val logger = TestLogger.create(backend)
+            val logger = ConfigurableLogger.create(backend)
 
             // Logs for both types should appear.
             // Even though the 2nd log is within the rate limit period.
@@ -469,7 +468,7 @@ internal class LogContextSpec {
         @Test
         fun `scope provider`() {
             val backend = FakeLoggerBackend()
-            val logger = TestLogger.create(backend)
+            val logger = ConfigurableLogger.create(backend)
 
             // We can't test a specific implementation of `ScopedLoggingContext` here,
             // so we fake it. The `ScopedLoggingContext` behavior is well tested elsewhere.
@@ -512,7 +511,7 @@ internal class LogContextSpec {
         fun `without any rate limiting`() {
             val backend = FakeLoggerBackend()
             backend.setLevel(WARNING)
-            val logger = TestLogger.create(backend)
+            val logger = ConfigurableLogger.create(backend)
             logger.forceAt(INFO).log("LOGGED")
             backend.loggedCount shouldBe 1
             backend.logged[0].shouldHaveMessage("LOGGED")
@@ -524,7 +523,7 @@ internal class LogContextSpec {
         @Test
         fun `with 'every(n)' limiter`() {
             val backend = FakeLoggerBackend()
-            val logger = TestLogger.create(backend)
+            val logger = ConfigurableLogger.create(backend)
             val logSite = FakeLogSite.create("com.example.MyClass", "everyN", 123, null)
 
             logger.atInfo()
@@ -561,7 +560,7 @@ internal class LogContextSpec {
         @Test
         fun `with 'atMostEvery(n)' limiter`() {
             val backend = FakeLoggerBackend()
-            val logger = TestLogger.create(backend)
+            val logger = ConfigurableLogger.create(backend)
             val logSite = FakeLogSite.create("com.example.MyClass", "atMostEvery", 123, null)
 
             var nowNanos = currentTimeNanos()

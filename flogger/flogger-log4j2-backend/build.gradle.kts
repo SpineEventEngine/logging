@@ -24,30 +24,32 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import BuildSettings.javaVersion
-import io.spine.internal.dependency.CheckerFramework
-import io.spine.internal.dependency.Truth
-import io.spine.internal.gradle.report.license.LicenseReporter
+import io.spine.internal.dependency.Log4j2
+import net.ltgt.gradle.errorprone.errorprone
 
 plugins {
-    `java-library`
+    `jvm-module`
 }
 
-LicenseReporter.generateReportIn(project)
-
 dependencies {
-    api("org.apache.logging.log4j:log4j-core:2.17.0")
-
+    api(Log4j2.core)
     implementation(project(":flogger-api"))
     implementation(project(":flogger-system-backend"))
-    implementation(CheckerFramework.annotations)
-
     testImplementation(project(":flogger-testing"))
-    Truth.libs.forEach { implementation(it) }
-
     testRuntimeOnly(project(":flogger-grpc-context"))
 }
 
 java {
-    toolchain.languageVersion.set(javaVersion)
+
+    /**
+     * Disables Java linters until main sources are migrated to Kotlin.
+     *
+     * As for now, they produce a lot of errors/warnings to original
+     * Flogger code, failing the build.
+     */
+    tasks {
+        named("checkstyleMain") { enabled = false }
+        named("pmdMain") { enabled = false }
+        compileJava { options.errorprone.isEnabled.set(false) }
+    }
 }

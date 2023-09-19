@@ -26,9 +26,8 @@
 
 package com.google.common.flogger.context
 
-import com.google.common.flogger.MetadataKey
-import com.google.common.flogger.MetadataKey.repeated
-import com.google.common.flogger.MetadataKey.single
+import com.google.common.flogger.repeatedKey
+import com.google.common.flogger.singleKey
 import com.google.common.flogger.testing.shouldBeEmpty
 import com.google.common.flogger.testing.shouldContainInOrder
 import com.google.common.flogger.testing.shouldHaveFirstValue
@@ -50,9 +49,9 @@ import org.junit.jupiter.api.assertThrows
 internal class ContextMetadataSpec {
 
     companion object {
-        private val FOO_KEY: MetadataKey<String> = single("FOO", String::class.java)
-        private val BAR_KEY: MetadataKey<String> = repeated("BAR", String::class.java)
-        private val UNUSED_KEY: MetadataKey<String> = single("UNUSED", String::class.java)
+        private val FOO_KEY = singleKey<String>("FOO")
+        private val BAR_KEY = repeatedKey<String>("BAR")
+        private val UNUSED_KEY = singleKey<String>("UNUSED")
     }
 
     @Test

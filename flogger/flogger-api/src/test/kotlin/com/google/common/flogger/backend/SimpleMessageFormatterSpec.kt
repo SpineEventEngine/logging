@@ -27,9 +27,9 @@
 package com.google.common.flogger.backend
 
 import com.google.common.flogger.LogContext
-import com.google.common.flogger.MetadataKey.repeated
-import com.google.common.flogger.MetadataKey.single
 import com.google.common.flogger.context.Tags
+import com.google.common.flogger.repeatedKey
+import com.google.common.flogger.singleKey
 import com.google.common.flogger.testing.FakeLogData
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.matchers.shouldBe
@@ -48,18 +48,9 @@ import org.junit.jupiter.api.Test
 internal class SimpleMessageFormatterSpec {
 
     companion object {
-
-        /**
-         * `INT_KEY` uses `Int::class.javaObjectType` to make sure we get `Integer` class on JVM.
-         *
-         * Otherwise, Kotlin compiler passes `int` class for primitives. It is important because
-         * metadata objects are generified, which means they would use boxed primitives.
-         *
-         * The same story with [BOOL_KEY].
-         */
-        private val INT_KEY = repeated("int", Int::class.javaObjectType)
-        private val BOOL_KEY = single("bool", Boolean::class.javaObjectType)
-        private val STRING_KEY = single("string", String::class.java)
+        private val INT_KEY = repeatedKey<Int>("int")
+        private val BOOL_KEY = singleKey<Boolean>("bool")
+        private val STRING_KEY = singleKey<String>("string")
         private val EMPTY_SCOPE = Metadata.empty()
         private const val LITERAL = "Hello World"
     }

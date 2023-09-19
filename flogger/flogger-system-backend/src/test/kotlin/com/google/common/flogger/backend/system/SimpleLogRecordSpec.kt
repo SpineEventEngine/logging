@@ -31,6 +31,7 @@ import com.google.common.flogger.MetadataKey
 import com.google.common.flogger.backend.Metadata
 import com.google.common.flogger.context.Tags
 import com.google.common.flogger.parser.ParseException
+import com.google.common.flogger.singleKey
 import com.google.common.flogger.testing.FakeLogData
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.assertions.throwables.shouldNotThrow
@@ -59,17 +60,8 @@ import org.junit.jupiter.api.Test
 internal class SimpleLogRecordSpec {
 
     companion object {
-
-        /**
-         * [INT_KEY] uses `Int::class.javaObjectType` to make sure we get
-         * `Integer` class on JVM.
-         *
-         * Otherwise, Kotlin compiler passes `int` class for primitives.
-         * It is important because metadata objects are generified,
-         * which means they would use boxed primitives.
-         */
-        private val INT_KEY = MetadataKey.single("int", Int::class.javaObjectType)
-        private val STR_KEY = MetadataKey.single("str", String::class.java)
+        private val INT_KEY = singleKey<Int>("int")
+        private val STR_KEY = singleKey<String>("str")
         private val PATH_KEY = object : MetadataKey<String>("path", String::class.java, true) {
             override fun emitRepeated(values: Iterator<String>, out: KeyValueHandler) {
                 val joined = values.asSequence().joinToString("/")

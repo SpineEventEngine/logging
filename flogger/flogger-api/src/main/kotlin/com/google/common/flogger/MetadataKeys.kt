@@ -24,4 +24,30 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-val versionToPublish: String by extra("2.0.0-SNAPSHOT.215")
+package com.google.common.flogger
+
+/**
+ * Creates a new single [MetadataKey] with the given [label].
+ *
+ * In JVM, if the given type [T] describes a Java primitive,
+ * this method would use a type of the corresponding object wrapper.
+ * Thus, making type [T] safe to be used with Java generics, that is
+ * the case for metadata keys.
+ *
+ * @param T type of values that can be associated with this key
+ */
+public inline fun <reified T : Any> singleKey(label: String): MetadataKey<T> =
+    MetadataKey.single(label, T::class.javaObjectType)
+
+/**
+ * Creates a new repeated [MetadataKey] with the given [label].
+ *
+ * In JVM, if the given type [T] describes a Java primitive,
+ * this method would use a type of the corresponding object wrapper.
+ * Thus, making type [T] safe to be used with Java generics, that is
+ * the case for metadata keys.
+ *
+ * @param T type of values that can be associated with this key
+ */
+public inline fun <reified T : Any> repeatedKey(label: String): MetadataKey<T> =
+    MetadataKey.repeated(label, T::class.javaObjectType)
