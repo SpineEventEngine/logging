@@ -90,17 +90,18 @@ internal class Log4j2LoggerBackendSpec {
     }
 
     @Test
-    fun `log messages`() {
+    fun `log a literal message`() {
+        val literalData = FakeLogData.of(LITERAL)
+        backend.log(literalData)
+        lastLogged.formatted shouldBe LITERAL
+    }
+
+    @Test
+    fun `log a formatted message`() {
         val (pattern, arguments) = "Hello %s %s" to arrayOf("Foo", "Bar")
         val printfData = FakeLogData.withPrintfStyle(pattern, *arguments)
-        val literalData = FakeLogData.of(LITERAL)
-
         backend.log(printfData)
-        backend.log(literalData)
-
-        logged shouldHaveSize 2
-        logged[0].formatted shouldBe pattern.format(*arguments)
-        logged[1].formatted shouldBe LITERAL
+        lastLogged.formatted shouldBe pattern.format(*arguments)
     }
 
     @Nested inner class
