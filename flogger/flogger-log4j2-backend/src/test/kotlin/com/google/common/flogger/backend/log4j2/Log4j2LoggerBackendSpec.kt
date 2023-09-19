@@ -27,6 +27,7 @@
 package com.google.common.flogger.backend.log4j2
 
 import com.google.common.flogger.LogContext.Key
+import com.google.common.flogger.LogSite
 import com.google.common.flogger.MetadataKey
 import com.google.common.flogger.backend.log4j2.given.MemoizingAppender
 import com.google.common.flogger.parser.ParseException
@@ -77,7 +78,6 @@ internal class Log4j2LoggerBackendSpec {
          */
         private val INT_KEY = MetadataKey.repeated("int", Int::class.javaObjectType)
         private val STR_KEY = MetadataKey.single("str", String::class.java)
-        private val DEFAULT_LEVEL = Log4jLevel.INFO
         private const val LITERAL = "Hello world"
     }
 
@@ -104,7 +104,16 @@ internal class Log4j2LoggerBackendSpec {
         lastLogged.formatted shouldBe pattern.format(*arguments)
     }
 
-    @Nested inner class
+    @Test
+    fun `use the default level`() {
+        val defaultLevel = Log4jLevel.INFO // By default Log4j settings.
+        val data = FakeLogData.of(LITERAL)
+        backend.log(data)
+        lastLogged.level shouldBe defaultLevel
+    }
+
+    @Nested
+    inner class
     `append metadata` {
 
         @Test
@@ -115,13 +124,9 @@ internal class Log4j2LoggerBackendSpec {
             val data = FakeLogData.withPrintfStyle(pattern, argument)
                 .addMetadata(INT_KEY, intValue)
                 .addMetadata(STR_KEY, strValue)
-
             backend.log(data)
-
             val expectedMessage = pattern.format(argument)
             val expectedMetadata = "int=$intValue str=\"$strValue\""
-            logged shouldHaveSize 1
-            lastLogged.level shouldBe DEFAULT_LEVEL
             lastLogged.formatted shouldBe "$expectedMessage [CONTEXT $expectedMetadata ]"
         }
 
@@ -149,7 +154,7 @@ internal class Log4j2LoggerBackendSpec {
         expectedMatches.forEach { (julLevel, expectedLog4jLevel) ->
             val message = julLevel.name
             val data = FakeLogData.of(message)
-            data.setLevel(julLevel)
+                .setLevel(julLevel)
             backend.log(data)
             lastLogged.level shouldBe expectedLog4jLevel
             lastLogged.formatted shouldBe message
@@ -163,37 +168,23 @@ internal class Log4j2LoggerBackendSpec {
         @Test
         fun `with full information`() {
             val logSite = FakeLogSite.create("<class>", "<method>", 42, "<file>")
-            val data = FakeLogData.of("Full log site info")
-                .setLogSite(logSite)
-            backend.log(data)
-            val actual = lastLogged.source
-            with(actual) {
-                className shouldBe logSite.className
-                methodName shouldBe logSite.methodName
-                lineNumber shouldBe logSite.lineNumber
-                fileName shouldBe logSite.fileName
-            }
+            testLogSite(logSite)
         }
 
         @Test
         fun `without source file`() {
             val logSite = FakeLogSite.create("<class>", "<method>", 42, null)
-            val data = FakeLogData.of("Full log site info")
-                .setLogSite(logSite)
-            backend.log(data)
-            val actual = lastLogged.source
-            with(actual) {
-                className shouldBe logSite.className
-                methodName shouldBe logSite.methodName
-                lineNumber shouldBe logSite.lineNumber
-                fileName shouldBe logSite.fileName
-            }
+            testLogSite(logSite)
         }
 
         @Test
         fun `without line number and source file`() {
             val logSite = FakeLogSite.create("<class>", "<method>", -1, null)
-            val data = FakeLogData.of("Full log site info")
+            testLogSite(logSite)
+        }
+
+        private fun testLogSite(logSite: LogSite) {
+            val data = FakeLogData.of("")
                 .setLogSite(logSite)
             backend.log(data)
             val actual = lastLogged.source
@@ -215,7 +206,8 @@ internal class Log4j2LoggerBackendSpec {
         logged.shouldBeEmpty()
         backend.handleError(parseException, data)
         logged shouldHaveSize 1
-        lastLogged.formatted shouldContain "Hello %[?]X World"
+        println(lastLogged.formatted)
+        lastLogged.formatted shouldContain "LOGGING ERROR: invalid flag"
     }
 }
 
