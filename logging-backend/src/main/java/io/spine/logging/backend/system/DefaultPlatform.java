@@ -97,7 +97,7 @@ public class DefaultPlatform extends Platform {
     // instance. This avoids a bunch of potentially unnecessary static initialization.
     BackendFactory backendFactory = loadService(BackendFactory.class, BACKEND_FACTORY);
     this.backendFactory =
-            backendFactory != null ? backendFactory : SimpleBackendFactory.getInstance();
+            backendFactory != null ? backendFactory : new StdBackendFactory();
 
     ContextDataProvider contextDataProvider =
         loadService(ContextDataProvider.class, CONTEXT_DATA_PROVIDER);
