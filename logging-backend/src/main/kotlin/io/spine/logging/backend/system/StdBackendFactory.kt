@@ -26,17 +26,15 @@
 
 package io.spine.logging.backend.system
 
-import com.google.common.flogger.backend.LogData
 import com.google.common.flogger.backend.LoggerBackend
-import com.google.common.flogger.backend.Platform
-import java.util.logging.Handler
-import java.util.logging.Level
-import java.util.logging.LogRecord
-import java.util.logging.Logger
 
 /**
  * A [BackendFactory] producing [LoggerBackend] which supports publishing
  * of logging records according to configured [LogLevelMap][io.spine.logging.context.LogLevelMap].
+ *
+ * This class is `public` because it should be loaded as a service
+ * by [ServiceLoader][java.util.ServiceLoader]. Check `META-INF.services`
+ * directory in resources.
  */
 public class StdBackendFactory: BackendFactory() {
 
@@ -44,113 +42,7 @@ public class StdBackendFactory: BackendFactory() {
         StdLoggerBackend(loggingClass)
 
     /**
-     * Returns a fully-qualified name of this class.
+     * Returns a fully qualified name of this class.
      */
     override fun toString(): String = javaClass.name
 }
-
-/**
- * A [LoggerBackend] which allows forced publishing of logging records.
- *
- * @param loggingClass
- *          a name of the logger created for this backend. A better name for the parameter
- *          would be `loggerName`, but we keep the naming consistent with the API
- *          we extend. Please also see the constructor of `AbstractBackend` which accepts
- *          `String` for the operation with the given class name.
- * @see AbstractBackend
- */
-internal class StdLoggerBackend(loggingClass: String): AbstractBackend(loggingClass) {
-
-    private val logger: Logger by lazy {
-        Logger.getLogger(loggerName)
-    }
-
-    override fun log(data: LogData) = doLog(
-        SimpleLogRecord.create(data, Platform.getInjectedMetadata()),
-        data.wasForced()
-    )
-
-    override fun handleError(error: RuntimeException, badData: LogData) = doLog(
-        SimpleLogRecord.error(error, badData, Platform.getInjectedMetadata()),
-        badData.wasForced()
-    )
-
-    /**
-     * Logs the given record using the [logger] associated with this backend.
-     *
-     * If [wasForced] is set, forces the publishing by increasing the level
-     * of handlers of the [logger].
-     *
-     * ## Implementation Note
-     *
-     * This method is a replacement of [AbstractBackend.log], which fails to
-     * handle the forcing in cases when [parent handlers][Logger.getUseParentHandlers]
-     * are involved.
-     *
-     * When a [parent logger][Logger.getParent] has a higher level
-     * (which is [Level.INFO][java.util.logging.Level.INFO] by default) its handler has
-     * this level too. Because of this the method [Handler.isLoggable] filters
-     * out the record.
-     *
-     * Therefore, a reliable method is to temporarily force the level of
-     * the [Handler] when publishing. A side effect of this operation may be
-     * unwanted publication of other logging records produced for the same logger
-     * by other threads during the "window" of temporarily raised level.
-     * But the chance of this is not very high and the downside is low.
-     *
-     * @see publishForced
-     */
-    private fun doLog(record: LogRecord, wasForced: Boolean) {
-        // If not forced, do work as usually.
-        if (!wasForced || isLoggable(record.level)) {
-            logger.log(record)
-            return
-        }
-        // If a filter is set, let it do its work.
-        if (logger.filter?.isLoggable(record) == true) {
-            return
-        }
-        publishForced(logger, record)
-    }
-}
-
-/**
- * Publishes the given [record] using the handlers of the [logger].
- *
- * If the logger is configured to [use parent handlers][Logger.getUseParentHandlers]
- * propagates publishing to the [parent logger][Logger.getParent] too.
- */
-private fun publishForced(logger: Logger, record: LogRecord) {
-    for (handler in logger.handlers) {
-        if (handler.level > record.level) {
-            publishForced(handler, record)
-        } else {
-            handler.publish(record)
-        }
-    }
-    if (logger.useParentHandlers) {
-        logger.parent?.let {
-            publishForced(it, record)
-        }
-    }
-}
-
-/**
- * Publishes the [record] temporarily forcing the level of the [handler] to
- * that of the [record].
- */
-private fun publishForced(handler: Handler, record: LogRecord) {
-    val prevLevel = handler.level
-    try {
-        handler.level = record.level
-        handler.publish(record)
-    } finally {
-        handler.level = prevLevel
-    }
-}
-
-/**
- * Compares Java logging levels using their [values][Level.intValue].
- */
-internal operator fun Level.compareTo(other: Level): Int =
-    intValue().compareTo(other.intValue())
