@@ -44,18 +44,18 @@ import java.util.logging.Logger
  *          `String` for the operation with the given class name.
  * @see AbstractBackend
  */
-internal class StdLoggerBackend(loggingClass: String): AbstractBackend(loggingClass) {
+public class StdLoggerBackend(loggingClass: String): AbstractBackend(loggingClass) {
 
     private val logger: Logger by lazy {
         Logger.getLogger(loggerName)
     }
 
-    override fun log(data: LogData) = doLog(
+    override fun log(data: LogData): Unit = doLog(
         SimpleLogRecord.create(data, Platform.getInjectedMetadata()),
         data.wasForced()
     )
 
-    override fun handleError(error: RuntimeException, badData: LogData) = doLog(
+    override fun handleError(error: RuntimeException, badData: LogData): Unit = doLog(
         SimpleLogRecord.error(error, badData, Platform.getInjectedMetadata()),
         badData.wasForced()
     )

@@ -31,10 +31,6 @@ import com.google.common.flogger.backend.LoggerBackend
 /**
  * A [BackendFactory] producing [LoggerBackend] which supports publishing
  * of logging records according to configured [LogLevelMap][io.spine.logging.context.LogLevelMap].
- *
- * This class is `public` because it should be loaded as a service
- * by [ServiceLoader][java.util.ServiceLoader]. Check `META-INF.services`
- * directory in resources.
  */
 public class StdBackendFactory: BackendFactory() {
 

@@ -31,6 +31,12 @@ plugins {
 dependencies {
     testImplementation(project(":logging"))
     testImplementation(project(":fixtures"))
-    testRuntimeOnly(project(":logging-backend"))
-    testRuntimeOnly(project(":logging-context"))
+
+    /**
+     * Backend and context should have been added to [runtimeOnly].
+     * But tests make sure that the platform indeed picked up the expected
+     * backend and context implementations from the classpath.
+     */
+    testImplementation(project(":logging-backend"))
+    testImplementation(project(":logging-context"))
 }

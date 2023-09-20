@@ -24,7 +24,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import com.google.common.flogger.backend.Platform
+import io.kotest.matchers.shouldBe
+import io.spine.logging.backend.system.StdLoggerBackend
 import io.spine.logging.context.JulLogLevelMapTest
+import io.spine.logging.context.system.StdContextDataProvider
+import org.junit.jupiter.api.Test
 
 /**
  * This is a non-abstract integration test of [LogLevelMap][io.spine.logging.context.LogLevelMap]
@@ -32,4 +37,18 @@ import io.spine.logging.context.JulLogLevelMapTest
  *
  * Please see `build.gradle.kts` of this module for the details.
  */
-internal class LogLevelMapITest: JulLogLevelMapTest()
+internal class LogLevelMapITest : JulLogLevelMapTest() {
+
+    @Test
+    fun `should use 'StdLoggerBackend`() {
+        val loggerName = this::class.qualifiedName!!
+        val backend = Platform.getBackend(loggerName)
+        backend::class shouldBe StdLoggerBackend::class
+    }
+
+    @Test
+    fun `should use 'StdContextDataProvider'`() {
+        val provider = Platform.getContextDataProvider()
+        provider::class shouldBe StdContextDataProvider::class
+    }
+}
