@@ -29,9 +29,6 @@ package io.spine.logging.backend.system
 import com.google.common.flogger.backend.LogData
 import com.google.common.flogger.backend.LoggerBackend
 import com.google.common.flogger.backend.Platform
-import com.google.common.flogger.backend.system.AbstractBackend
-import com.google.common.flogger.backend.system.BackendFactory
-import com.google.common.flogger.backend.system.SimpleLogRecord
 import java.util.logging.Handler
 import java.util.logging.Level
 import java.util.logging.LogRecord
