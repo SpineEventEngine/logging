@@ -51,7 +51,6 @@ spinePublishing {
         "logging-smoke-test",
         "testutil-logging",
         "flogger-api",
-        "flogger-system-backend",
         "flogger-log4j2-backend",
         "flogger-platform-generator",
         "flogger-grpc-context",

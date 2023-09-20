@@ -55,7 +55,6 @@ includeFlogger(
     "flogger-api",
     "flogger-testing",
     "flogger-platform-generator",
-    "flogger-system-backend",
     "flogger-log4j2-backend",
     "flogger-grpc-context",
 )

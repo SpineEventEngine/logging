@@ -34,7 +34,7 @@ plugins {
 
 dependencies {
     implementation(project(":flogger-api"))
-    implementation(project(":flogger-system-backend"))
+    implementation(project(":logging-backend"))
     implementation(Kotest.assertions)
     JUnit.api.forEach { implementation(it) }
     Truth.libs.forEach { implementation(it) }

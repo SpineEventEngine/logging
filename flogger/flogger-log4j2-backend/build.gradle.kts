@@ -34,7 +34,7 @@ plugins {
 dependencies {
     api(Log4j2.core)
     implementation(project(":flogger-api"))
-    implementation(project(":flogger-system-backend"))
+    implementation(project(":logging-backend"))
     testImplementation(project(":flogger-testing"))
     testRuntimeOnly(project(":flogger-grpc-context"))
 }

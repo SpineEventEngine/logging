@@ -40,7 +40,7 @@ plugins {
 
 dependencies {
     implementation(project(":flogger-api"))
-    implementation(project(":flogger-system-backend"))
+    implementation(project(":logging-backend"))
     implementation(project(":flogger-testing"))
     implementation(AutoService.annotations)
     kapt(AutoService.processor)
