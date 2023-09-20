@@ -79,6 +79,8 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
+
+                // `FluentLogger2` is exposed by the deprecated `Logging` interface.
                 api(project(":flogger-api"))
                 implementation(Guava.lib)
             }
