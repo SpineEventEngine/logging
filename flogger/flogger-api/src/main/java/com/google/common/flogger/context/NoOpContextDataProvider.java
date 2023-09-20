@@ -52,7 +52,7 @@ final class NoOpContextDataProvider extends ContextDataProvider {
 
     private void logWarningOnceOnly() {
       if (haveWarned.compareAndSet(false, true)) {
-        var defaultPlatform = "com.google.common.flogger.backend.system.DefaultPlatform";
+        var defaultPlatform = "io.spine.logging.backend.system.DefaultPlatform";
         LazyLogger.logger
             .atWarning()
             .withStackTrace(StackSize.SMALL)
