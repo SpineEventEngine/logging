@@ -33,7 +33,7 @@ import com.google.common.flogger.backend.LoggerBackend
  *
  * Actual backend creation is performed by the given [delegate].
  *
- *  The type is public because it is used in a public inline method.
+ * The type is public because it is used in a public inline method.
  */
 public class MemoizingBackendFactory<out T : LoggerBackend>(
     private val delegate: TypedBackendFactory<T>
