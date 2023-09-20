@@ -45,7 +45,7 @@ public abstract class Platform {
   // non-final to prevent javac inlining.
   @SuppressWarnings("ConstantField")
   private static String DEFAULT_PLATFORM =
-      "com.google.common.flogger.backend.system.DefaultPlatform";
+      "io.spine.logging.backend.system.DefaultPlatform";
 
   // The first available platform from this list is used. Each platform is defined separately
   // outside of this array so that the IdentifierNameString annotation can be applied to each. This
