@@ -63,7 +63,7 @@ internal class StdLoggerBackend(loggingClass: String): AbstractBackend(loggingCl
     /**
      * Logs the given record using the [logger] associated with this backend.
      *
-     * If [wasForced] is set, forces the publishing by increasing the level
+     * If [wasForced] is `true`, forces the publishing by increasing the level
      * of handlers of the [logger].
      *
      * ## Implementation Note
