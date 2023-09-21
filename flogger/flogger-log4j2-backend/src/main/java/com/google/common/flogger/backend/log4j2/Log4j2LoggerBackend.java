@@ -31,7 +31,7 @@ import org.apache.logging.log4j.core.Logger;
  * log4j backend in any significant way, this difference should be called out clearly in the
  * documentation.
  */
-public final class Log4j2LoggerBackend extends LoggerBackend {
+final class Log4j2LoggerBackend extends LoggerBackend {
   private final Logger logger;
 
   // VisibleForTesting

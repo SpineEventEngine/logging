@@ -24,7 +24,7 @@ import org.apache.logging.log4j.core.Logger;
 /**
  * BackendFactory for log4j2.
  *
- * <p>When using Flogger's {@link com.google.common.flogger.backend.system.DefaultPlatform}, this
+ * <p>When using Flogger's {@link io.spine.logging.backend.system.DefaultPlatform}, this
  * factory will automatically be used if it is included on the classpath and no other implementation
  * of {@code BackendFactory} (other than the default implementation) is. To specify it more
  * explicitly or to work around an issue where multiple {@code BackendFactory} implementations are

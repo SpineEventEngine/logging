@@ -25,7 +25,7 @@
  */
 
 import com.google.common.flogger.backend.Platform
-import com.google.common.flogger.backend.log4j2.Log4j2LoggerBackend
+import com.google.common.flogger.backend.log4j2.Log4j2BackendFactory
 import io.kotest.matchers.shouldBe
 import io.spine.logging.Level
 import io.spine.logging.context.BaseLogLevelMapTest
@@ -47,8 +47,9 @@ internal class LogLevelMapLog4jBackendITest: BaseLogLevelMapTest() {
     @Test
     fun `should use 'Log4j2LoggerBackend`() {
         val loggerName = this::class.qualifiedName!!
-        val backend = Platform.getBackend(loggerName)
-        backend::class shouldBe Log4j2LoggerBackend::class
+        val platformProvided = Platform.getBackend(loggerName)
+        val factoryProvided = Log4j2BackendFactory().create(loggerName)
+        platformProvided::class shouldBe factoryProvided::class
     }
 
     @Test

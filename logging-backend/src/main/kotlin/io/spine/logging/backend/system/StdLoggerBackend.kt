@@ -44,7 +44,7 @@ import java.util.logging.Logger
  *          `String` for the operation with the given class name.
  * @see AbstractBackend
  */
-public class StdLoggerBackend(loggingClass: String): AbstractBackend(loggingClass) {
+internal class StdLoggerBackend(loggingClass: String): AbstractBackend(loggingClass) {
 
     private val logger: Logger by lazy {
         Logger.getLogger(loggerName)
