@@ -26,7 +26,7 @@
 
 /**
  * Contains implementation of the default backend, which uses
- * `java.util.logging` (JUL) to output log statements.
+ * {@code java.util.logging} (JUL) to output log statements.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/package-info.java">
  *     Original Java code of Google Flogger</a>
