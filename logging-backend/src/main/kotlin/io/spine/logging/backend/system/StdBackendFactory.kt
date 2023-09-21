@@ -38,7 +38,7 @@ public class StdBackendFactory: BackendFactory() {
         StdLoggerBackend(loggingClass)
 
     /**
-     * Returns a fully qualified name of this class.
+     * Returns a fully-qualified name of this class.
      */
     override fun toString(): String = javaClass.name
 }
