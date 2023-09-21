@@ -22,23 +22,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
 /**
- * BackendFactory for log4j2.
+ * Backend factory for Log4j2.
  *
- * <p>When using Flogger's {@link io.spine.logging.backend.system.DefaultPlatform}, this
- * factory will automatically be used if it is included on the classpath and no other implementation
- * of {@code BackendFactory} (other than the default implementation) is. To specify it more
- * explicitly or to work around an issue where multiple {@code BackendFactory} implementations are
- * on the classpath, you can set the {@code flogger.backend_factory} system property:
+ * <p>When using {@link io.spine.logging.backend.system.DefaultPlatform},
+ * this factory will automatically be used if it is included on the classpath,
+ * and no other implementation of {@code BackendFactory} (other than the default
+ * implementation) is present.
  *
- * <ul>
- *   <li>{@code
- *       flogger.backend_factory=com.google.common.flogger.backend.log4j2.Log4j2BackendFactory}
- * </ul>
- *
- * <p>Note: Any changes in this code should, as far as possible, be reflected in the equivalently
- * named log4j implementation. If the behaviour of this class starts to deviate from that of the
- * log4j backend in any significant way, this difference should be called out clearly in the
- * documentation.
+ * <p>To specify it more explicitly or to work around an issue where multiple
+ * backend implementations are on the classpath, you can set {@code flogger.backend_factory}
+ * system property to {@code com.google.common.flogger.backend.log4j2.Log4j2BackendFactory}.
  */
 public final class Log4j2BackendFactory extends BackendFactory {
 
