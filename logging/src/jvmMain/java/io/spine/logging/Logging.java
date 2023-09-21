@@ -48,6 +48,8 @@ import static com.google.common.flogger.LogSites.callerOf;
  *          distinguishable from the real code.
  * @deprecated This interface is scheduled for removal. Please use {@link WithLogging} instead.
  */
+// TODO:2023-09-21:yevhenii.nadtochii: Remove this interface.
+// See issue: https://github.com/SpineEventEngine/logging/issues/51
 @Deprecated(forRemoval = true)
 @SuppressWarnings({
         "NewMethodNamingConvention", "PMD.MethodNamingConventions"
