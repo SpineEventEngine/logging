@@ -61,11 +61,14 @@ import com.google.common.flogger.backend.LoggerBackend;
  * the jar file containing the implementation. When creating an implementation of this class, you
  * can provide serivce metadata (and thereby allow users to get your implementation just by
  * including your jar file) by either manually including a {@code
- * META-INF/services/com.google.common.flogger.backend.system.BackendFactory} file containing the
+ * META-INF/services/io.spine.logging.backend.system.BackendFactory} file containing the
  * name of your implementation class or by annotating your implementation class using <a
  * href="https://github.com/google/auto/tree/master/service">
  * {@code @AutoService(BackendFactory.class)}</a>. See the documentation of both {@link
  * java.util.ServiceLoader} and {@link DefaultPlatform} for more information.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/BackendFactory.java">
+ *     Original Java code of Google Flogger</a>
  */
 public abstract class BackendFactory {
   /**

@@ -31,7 +31,12 @@ import com.google.common.flogger.backend.Platform;
 
 import java.util.logging.Logger;
 
-/** A logging backend that uses the {@code java.util.logging} classes to output log statements. */
+/**
+ * A logging backend that uses the {@code java.util.logging} classes to output log statements.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/SimpleLoggerBackend.java">
+ *     Original Java code of Google Flogger</a>
+ */
 public class SimpleLoggerBackend extends AbstractBackend {
 
   public SimpleLoggerBackend(Logger logger) {

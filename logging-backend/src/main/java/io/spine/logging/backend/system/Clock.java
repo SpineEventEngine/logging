@@ -64,6 +64,9 @@ package io.spine.logging.backend.system;
  * href="https://github.com/google/auto/tree/master/service">{@code @AutoService(Clock.class)}</a>.
  * See the documentation of both {@link java.util.ServiceLoader} and {@link DefaultPlatform} for
  * more information.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/Clock.java">
+ *     Original Java code of Google Flogger</a>
  */
 public abstract class Clock {
   /**

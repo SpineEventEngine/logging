@@ -32,8 +32,12 @@ import com.google.common.flogger.context.ScopeType;
 import com.google.common.flogger.context.ScopedLoggingContext;
 import com.google.common.flogger.context.ScopedLoggingContext.LoggingContextCloseable;
 import com.google.common.flogger.context.Tags;
+
 /**
  * @deprecated Replaced by ContextDataProvider.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/LoggingContext.java">
+ *     Original Java code of Google Flogger</a>
  */
 // TODO(b/173778154): Delete this class once nothing external relies on it.
 @Deprecated
