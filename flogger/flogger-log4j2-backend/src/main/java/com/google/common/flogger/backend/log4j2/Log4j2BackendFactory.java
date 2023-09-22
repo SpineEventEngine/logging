@@ -24,7 +24,7 @@ import org.apache.logging.log4j.core.Logger;
 /**
  * Backend factory for Log4j2.
  *
- * <p>When using {@link io.spine.logging.backend.system.DefaultPlatform},
+ * <p>When using {@link io.spine.logging.backend.system.DefaultPlatform DefaultPlatform},
  * this factory will automatically be used if it is included on the classpath,
  * and no other implementation of {@code BackendFactory} (other than the default
  * implementation) is present.
