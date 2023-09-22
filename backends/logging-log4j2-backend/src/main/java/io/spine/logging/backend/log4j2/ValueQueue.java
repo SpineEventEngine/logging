@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.common.flogger.backend.log4j2;
+package io.spine.logging.backend.log4j2;
 
 import static com.google.common.flogger.util.Checks.checkNotNull;
 

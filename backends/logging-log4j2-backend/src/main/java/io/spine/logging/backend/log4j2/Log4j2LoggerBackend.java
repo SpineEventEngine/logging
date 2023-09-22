@@ -24,14 +24,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.common.flogger.backend.log4j2;
-
-import static com.google.common.flogger.backend.log4j2.Log4j2LogEventUtil.toLog4jLevel;
-import static com.google.common.flogger.backend.log4j2.Log4j2LogEventUtil.toLog4jLogEvent;
+package io.spine.logging.backend.log4j2;
 
 import com.google.common.flogger.backend.LogData;
 import com.google.common.flogger.backend.LoggerBackend;
 import org.apache.logging.log4j.core.Logger;
+
+import static io.spine.logging.backend.log4j2.Log4j2LogEventUtil.toLog4jLevel;
+import static io.spine.logging.backend.log4j2.Log4j2LogEventUtil.toLog4jLogEvent;
 
 /**
  * A logging backend that uses Log4j2 to output log statements.

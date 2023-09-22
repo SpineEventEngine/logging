@@ -24,15 +24,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.common.flogger.backend.log4j2
+package io.spine.logging.backend.log4j2
 
-import com.google.common.flogger.backend.log4j2.ValueQueue.appendValueToNewQueue
-import com.google.common.flogger.backend.log4j2.ValueQueue.maybeWrap
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldContainInOrder
 import io.kotest.matchers.collections.shouldHaveSingleElement
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.logging.backend.log4j2.ValueQueue.appendValueToNewQueue
+import io.spine.logging.backend.log4j2.ValueQueue.maybeWrap
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
