@@ -39,7 +39,6 @@ import com.google.common.flogger.backend.LogData;
 import com.google.common.flogger.backend.MessageUtils;
 import com.google.common.flogger.backend.Metadata;
 import com.google.common.flogger.backend.MetadataHandler;
-import com.google.common.flogger.backend.MetadataProcessor;
 import com.google.common.flogger.backend.Platform;
 import com.google.common.flogger.backend.SimpleMessageFormatter;
 import com.google.common.flogger.context.ScopedLoggingContext;
