@@ -33,9 +33,20 @@ dependencies {
     testImplementation(project(":fixtures"))
 
     /**
-     * Backend and context should have been added to [runtimeOnly].
-     * But tests make sure that the platform indeed picked up the expected
-     * backend and context implementations from the classpath.
+     * Adds `log4j2` backend and the default context to the classpath.
+     *
+     * The logging `Platform` discovers backend and context implementations
+     * automatically via Java's `ServiceLoader`. A user doesn't need to
+     * interact with “hard” classes from these dependencies. So, they are
+     * usually added to [runtimeOnly] configuration.
+     *
+     * But for this test, it is important to make sure that the actually
+     * discovered implementations match the test expectations. With a small
+     * chance, but the `Platform` may surprisingly load another backend,
+     * and it will pass all tests.
+     *
+     * So, we use “hard” classes from these dependencies to assert that
+     * the actually loaded backend and context match the test expectations.
      */
     testImplementation(project(":flogger-log4j2-backend"))
     testImplementation(project(":logging-context"))
