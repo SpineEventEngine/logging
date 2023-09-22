@@ -27,8 +27,8 @@
 package io.spine.logging.dynamic.backend
 
 import com.google.common.flogger.backend.LoggerBackend
-import com.google.common.flogger.backend.system.BackendFactory
-import com.google.common.flogger.backend.system.SimpleBackendFactory
+import io.spine.logging.backend.system.BackendFactory
+import io.spine.logging.backend.system.SimpleBackendFactory
 
 /**
  * A factory that delegates backends creation to another factory,

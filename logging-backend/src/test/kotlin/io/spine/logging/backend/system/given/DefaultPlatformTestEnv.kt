@@ -24,21 +24,52 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.system
+package io.spine.logging.backend.system.given
 
+import com.google.common.flogger.AbstractLogger
+import com.google.common.flogger.LogSite
 import com.google.common.flogger.backend.LoggerBackend
+import com.google.common.flogger.backend.Platform
+import io.spine.logging.backend.system.BackendFactory
+import io.spine.logging.backend.system.Clock
+import com.google.common.flogger.testing.FakeLoggerBackend
 
 /**
- * A [BackendFactory] producing [LoggerBackend] which supports publishing
- * of logging records according to configured [LogLevelMap][io.spine.logging.context.LogLevelMap].
+ * A primitive factory of [FakeLoggerBackend].
  */
-public class StdBackendFactory: BackendFactory() {
+internal class FakeBackendFactory : BackendFactory() {
 
-    public override fun create(loggingClass: String): LoggerBackend =
-        StdLoggerBackend(loggingClass)
+    override fun create(loggingClassName: String?): LoggerBackend =
+        FakeLoggerBackend(loggingClassName)
+}
+
+/**
+ * A clock that always returns the configured [returnedTimestamp].
+ */
+internal class FixedTime : Clock() {
 
     /**
-     * Returns a fully-qualified name of this class.
+     * A timestamp that this clock always returns.
      */
-    override fun toString(): String = javaClass.name
+    var returnedTimestamp = 0L
+
+    override fun getCurrentTimeNanos(): Long = returnedTimestamp
+}
+
+/**
+ * No-op implementation of [Platform.LogCallerFinder].
+ */
+internal class NoOpCallerFinder : Platform.LogCallerFinder() {
+
+    /**
+     * Throws [IllegalStateException].
+     */
+    override fun findLoggingClass(loggerClass: Class<out AbstractLogger<*>>?): String =
+        throw UnsupportedOperationException()
+
+    /**
+     * Throws [IllegalStateException].
+     */
+    override fun findLogSite(loggerApi: Class<*>?, stackFramesToSkip: Int): LogSite =
+        throw UnsupportedOperationException()
 }

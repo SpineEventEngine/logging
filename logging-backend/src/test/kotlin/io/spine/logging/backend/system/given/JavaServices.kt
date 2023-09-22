@@ -24,36 +24,55 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.dynamic.backend
+package io.spine.logging.backend.system.given
 
 import com.google.auto.service.AutoService
 import com.google.common.flogger.backend.LoggerBackend
 import io.spine.logging.backend.system.BackendFactory
+import io.spine.logging.backend.system.Clock
+import com.google.common.flogger.context.ContextDataProvider
+import com.google.common.flogger.context.ScopedLoggingContext
 
 /**
- * Adapts [DynamicBackendFactory] to be used with Java's
- * [ServiceLoader][java.util.ServiceLoader].
- *
- * Each service should have a public no-args constructor to be used
- * by the loader. Which is not a case for object declarations, as they
- * don't have any constructors at all.
- *
- * Until [KT-25892](https://youtrack.jetbrains.com/issue/KT-25892/Allow-objects-to-be-loaded-via-ServiceLoader-or-similar-API)
- * is implemented, we need an adapter for object services.
- *
- * An explicit delegation can't be applied here because [BackendFactory] is a class.
- * Thus, the following snippet fails to compile:
- *
- * ```
- * @AutoService(BackendFactory::class)
- * class DynamicBackendFactoryService : BackendFactory() by DynamicBackendFactory
- * ```
+ * This file contains Java services that are used to test how
+ * the default platform picks up the services in the runtime.
+ */
+
+/**
+ * A stub service for [BackendFactory] that can be loaded
+ * by Java's [ServiceLoader][java.util.ServiceLoader].
  */
 @AutoService(BackendFactory::class)
-public class DynamicBackendFactoryService : BackendFactory() {
+internal class StubBackendFactoryService : BackendFactory() {
 
     override fun create(loggingClassName: String): LoggerBackend =
-        DynamicBackendFactory.create(loggingClassName)
+        throw UnsupportedOperationException()
 
-    override fun toString(): String = "Java Service adapter for `$DynamicBackendFactory`"
+    override fun toString(): String = this::class.simpleName!!
+}
+
+/**
+ * A stub service for [ContextDataProvider] that can be loaded
+ * by Java's [ServiceLoader][java.util.ServiceLoader].
+ */
+@AutoService(ContextDataProvider::class)
+internal class StubContextDataProviderService : ContextDataProvider() {
+
+    override fun getContextApiSingleton(): ScopedLoggingContext =
+        throw UnsupportedOperationException()
+
+    override fun toString(): String = this::class.simpleName!!
+}
+
+/**
+ * A stub service for [Clock] that can be loaded
+ * by Java's [ServiceLoader][java.util.ServiceLoader].
+ */
+@AutoService(Clock::class)
+internal class StubClockService : Clock() {
+
+    override fun getCurrentTimeNanos(): Long =
+        throw UnsupportedOperationException()
+
+    override fun toString(): String = this::class.simpleName!!
 }

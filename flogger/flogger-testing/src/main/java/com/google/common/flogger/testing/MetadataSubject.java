@@ -99,11 +99,6 @@ public final class MetadataSubject extends Subject {
     }
   }
 
-  public <T> void containsEntries(MetadataKey<T> key, T... values) {
-    checkNotNull(key, "key must not be null");
-    check("<values of>(%s)", key).that(valuesOf(key)).containsExactlyElementsIn(values).inOrder();
-  }
-
   public IterableSubject keys() {
     return check("keys()").that(keyList());
   }

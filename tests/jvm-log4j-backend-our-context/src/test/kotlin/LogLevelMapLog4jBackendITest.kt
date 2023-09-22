@@ -24,9 +24,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import com.google.common.flogger.backend.Platform
+import com.google.common.flogger.backend.log4j2.Log4j2BackendFactory
+import io.kotest.matchers.shouldBe
 import io.spine.logging.Level
 import io.spine.logging.context.BaseLogLevelMapTest
+import io.spine.logging.context.system.StdContextDataProvider
 import io.spine.testing.logging.Recorder
+import org.junit.jupiter.api.Test
 
 /**
  * This is a non-abstract integration test of [LogLevelMap][io.spine.logging.context.LogLevelMap]
@@ -38,4 +43,18 @@ internal class LogLevelMapLog4jBackendITest: BaseLogLevelMapTest() {
 
     override fun createRecorder(loggerName: String, minLevel: Level): Recorder =
         Log4jRecorder(loggerName, minLevel)
+
+    @Test
+    fun `should use 'Log4j2LoggerBackend`() {
+        val loggerName = this::class.qualifiedName!!
+        val platformProvided = Platform.getBackend(loggerName)
+        val factoryProvided = Log4j2BackendFactory().create(loggerName)
+        platformProvided::class shouldBe factoryProvided::class
+    }
+
+    @Test
+    fun `should use 'StdContextDataProvider'`() {
+        val provider = Platform.getContextDataProvider()
+        provider::class shouldBe StdContextDataProvider::class
+    }
 }

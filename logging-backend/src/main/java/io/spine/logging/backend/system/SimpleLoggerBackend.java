@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2012, The Flogger Authors; 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,30 +24,32 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-plugins {
-    `jvm-module`
-}
+package io.spine.logging.backend.system;
 
-dependencies {
-    testImplementation(project(":logging"))
-    testImplementation(project(":fixtures"))
+import com.google.common.flogger.backend.LogData;
+import com.google.common.flogger.backend.Platform;
 
-    /**
-     * Adds `log4j2` backend and the default context to the classpath.
-     *
-     * The logging `Platform` discovers backend and context implementations
-     * automatically via Java's `ServiceLoader`. A user doesn't need to
-     * interact with “hard” classes from these dependencies. So, they are
-     * usually added to [runtimeOnly] configuration.
-     *
-     * But for this test, it is important to make sure that the actually
-     * discovered implementations match the test expectations. With a small
-     * chance, but the `Platform` may surprisingly load another backend,
-     * and it will pass all tests.
-     *
-     * So, we use “hard” classes from these dependencies to assert that
-     * the actually loaded backend and context match the test expectations.
-     */
-    testImplementation(project(":flogger-log4j2-backend"))
-    testImplementation(project(":logging-context"))
+import java.util.logging.Logger;
+
+/**
+ * A logging backend that uses the {@code java.util.logging} classes to output log statements.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/SimpleLoggerBackend.java">
+ *     Original Java code of Google Flogger</a>
+ */
+public class SimpleLoggerBackend extends AbstractBackend {
+
+  public SimpleLoggerBackend(Logger logger) {
+    super(logger);
+  }
+
+  @Override
+  public void log(LogData data) {
+    log(SimpleLogRecord.create(data, Platform.getInjectedMetadata()), data.wasForced());
+  }
+
+  @Override
+  public void handleError(RuntimeException error, LogData badData) {
+    log(SimpleLogRecord.error(error, badData, Platform.getInjectedMetadata()), badData.wasForced());
+  }
 }

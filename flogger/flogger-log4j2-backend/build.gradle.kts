@@ -33,8 +33,8 @@ plugins {
 
 dependencies {
     api(Log4j2.core)
+    api(project(":logging-backend"))
     implementation(project(":flogger-api"))
-    implementation(project(":flogger-system-backend"))
     testImplementation(project(":flogger-testing"))
     testRuntimeOnly(project(":flogger-grpc-context"))
 }
@@ -47,6 +47,8 @@ java {
      * As for now, they produce a lot of errors/warnings to original
      * Flogger code, failing the build.
      */
+    // TODO:2023-09-22:yevhenii.nadtochii: Remove this piece of configuration.
+    // See issue: https://github.com/SpineEventEngine/logging/issues/56
     tasks {
         named("checkstyleMain") { enabled = false }
         named("pmdMain") { enabled = false }
