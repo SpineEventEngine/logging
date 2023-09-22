@@ -16,6 +16,7 @@
 
 package com.google.common.flogger.backend.log4j2;
 
+import static com.google.common.flogger.backend.MetadataProcessor.forScopeAndLogSite;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.logging.Level.WARNING;
@@ -49,20 +50,14 @@ import org.apache.logging.log4j.message.SimpleMessage;
 import org.apache.logging.log4j.util.StringMap;
 
 /**
- * Helper to format LogData.
- *
- * <p>Note: Any changes in this code should, as far as possible, be reflected in the equivalently
- * named log4j implementation. If the behaviour of this class starts to deviate from that of the
- * log4j backend in any significant way, this difference should be called out clearly in the
- * documentation.
+ * Helper to format {@link LogData}.
  */
 final class Log4j2LogEventUtil {
 
   private Log4j2LogEventUtil() {}
 
   static LogEvent toLog4jLogEvent(String loggerName, LogData logData) {
-    MetadataProcessor metadata =
-        MetadataProcessor.forScopeAndLogSite(Platform.getInjectedMetadata(), logData.getMetadata());
+    var metadata = forScopeAndLogSite(Platform.getInjectedMetadata(), logData.getMetadata());
 
     /*
      * If no configuration file could be located, Log4j2 will use the DefaultConfiguration. This
@@ -244,8 +239,8 @@ final class Log4j2LogEventUtil {
    * event.
    */
   private static StringMap createContextMap(LogData logData) {
-    MetadataProcessor metadataProcessor =
-        MetadataProcessor.forScopeAndLogSite(Platform.getInjectedMetadata(), logData.getMetadata());
+    var metadataProcessor = forScopeAndLogSite(Platform.getInjectedMetadata(),
+                                               logData.getMetadata());
 
     StringMap contextData = ContextDataFactory.createContextData(metadataProcessor.keyCount());
     metadataProcessor.process(

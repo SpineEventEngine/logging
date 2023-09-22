@@ -40,13 +40,15 @@ public final class Log4j2BackendFactory extends BackendFactory {
 
   @Override
   public LoggerBackend create(String loggingClassName) {
-    // Compute the logger name exactly the same way as in SimpleBackendFactory.
-    // The logger name must match the name of the logging class so that we can return it from
-    // Log4j2LoggerBackend#getLoggerName().
-    // We cast org.apache.logging.log4j.core.Logger here so that
-    // we can access the methods only avilable under org.apache.logging.log4j.core.Logger.
-    // TODO(b/27920233): Strip inner/nested classes when deriving logger name.
-    Logger logger = (Logger) LogManager.getLogger(loggingClassName.replace('$', '.'));
+
+    // Compute the logger name the same way as in `SimpleBackendFactory`.
+    var name = loggingClassName.replace('$', '.');
+
+    // There is `log4j.Logger` interface and `log4j.core.Logger` implementation.
+    // Implementation exposes more methods that are needed by the backend.
+    // So, we have to cast an interface back to its implementation.
+    var logger = (Logger) LogManager.getLogger(name);
+
     return new Log4j2LoggerBackend(logger);
   }
 

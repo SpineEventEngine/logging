@@ -24,12 +24,7 @@ import com.google.common.flogger.backend.LoggerBackend;
 import org.apache.logging.log4j.core.Logger;
 
 /**
- * A logging backend that uses log4j2 to output log statements.
- *
- * <p>Note: Any changes in this code should, as far as possible, be reflected in the equivalently
- * named log4j implementation. If the behaviour of this class starts to deviate from that of the
- * log4j backend in any significant way, this difference should be called out clearly in the
- * documentation.
+ * A logging backend that uses Log4j2 to output log statements.
  */
 final class Log4j2LoggerBackend extends LoggerBackend {
   private final Logger logger;
@@ -41,8 +36,6 @@ final class Log4j2LoggerBackend extends LoggerBackend {
 
   @Override
   public String getLoggerName() {
-    // Logger#getName() returns exactly the name that we used to create the Logger in
-    // Log4jBackendFactory.
     return logger.getName();
   }
 
@@ -53,8 +46,9 @@ final class Log4j2LoggerBackend extends LoggerBackend {
 
   @Override
   public void log(LogData logData) {
-    // The caller is responsible to call isLoggable() before calling this method to ensure that only
-    // messages above the given threshold are logged.
+    // The caller is responsible to call `isLoggable()` before calling
+    // this method to ensure that only messages above the given
+    // threshold are logged.
     logger.get().log(toLog4jLogEvent(logger.getName(), logData));
   }
 

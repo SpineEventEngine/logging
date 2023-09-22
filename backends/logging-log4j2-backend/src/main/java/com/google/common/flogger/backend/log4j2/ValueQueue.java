@@ -27,20 +27,25 @@ import java.util.Objects;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
- * A simple FIFO queue linked-list implementation designed to store multiple metadata values in a
- * StringMap. There are two aspects worth pointing out:
+ * A simple FIFO queue linked-list implementation designed to store multiple
+ * metadata values in a {@link org.apache.logging.log4j.util.StringMap StringMap}.
  *
- * <p>First, it is expected that a value queue always contains at least a single item. You cannot
- * add null references to the queue and you cannot create an empty queue.
+ * <p>There are two aspects worth pointing out:
  *
- * <p>Second, it is expected to access the contents of the value queue via an iterator only. Hence
- * we do not provide a method for taking the first item in the value queue..
+ * <p>First, it is expected that a value queue always contains at least
+ * a single item. You cannot add null references to the queue, and you cannot
+ * create an empty queue.
  *
- * <p>Metadata values in Flogger always have unique keys, but those keys can have the same label.
- * Because Log4j2 uses a {@code String} keyed map, we would risk clashing of values if we just used
- * the label to store each value directly. This class lets us store a list of values for a single
- * label while being memory efficient in the common case where each label really does only have one
- * value.
+ * <p>Second, it is expected to access the contents of the value queue via
+ * an iterator only. Hence, we do not provide a method for taking the first
+ * item in the value queue.
+ *
+ * <p>Metadata values in Flogger always have unique keys, but those keys can
+ * have the same label. Because Log4j2 uses a {@code String} keyed map,
+ * we would risk clashing of values if we just used the label to store each
+ * value directly. This class lets us store a list of values for a single
+ * label while being memory efficient in the common case where each label
+ * really does only have one value.
  */
 final class ValueQueue implements Iterable<Object> {
   // Since the number of elements is almost never above 1 or 2, a LinkedList saves space.
