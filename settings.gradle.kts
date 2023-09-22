@@ -41,6 +41,10 @@ include(
     "testutil-logging"
 )
 
+includeBackend(
+    "logging-log4j2-backend"
+)
+
 includeTest(
     "fixtures",
     "jvm-our-backend-our-context",
@@ -55,9 +59,13 @@ includeFlogger(
     "flogger-api",
     "flogger-testing",
     "flogger-platform-generator",
-    "flogger-log4j2-backend",
     "flogger-grpc-context",
 )
+
+fun includeBackend(vararg names: String) = names.forEach { name ->
+    include(name)
+    project(":$name").projectDir = file("backends/$name")
+}
 
 fun includeTest(vararg names: String) = names.forEach { name ->
     include(name)
