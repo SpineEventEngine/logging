@@ -26,10 +26,10 @@
 
 package io.spine.logging.backend.log4j2
 
-import com.google.common.flogger.LogContext.Key
-import com.google.common.flogger.LogSite
+import io.spine.logging.flogger.LogContext.Key
+import io.spine.logging.flogger.LogSite
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
-import com.google.common.flogger.parser.ParseException
+import io.spine.logging.flogger.parser.ParseException
 import com.google.common.flogger.repeatedKey
 import com.google.common.flogger.singleKey
 import com.google.common.flogger.testing.FakeLogData
@@ -175,7 +175,7 @@ internal class Log4j2LoggerBackendSpec {
             testLogSite(logSite)
         }
 
-        private fun testLogSite(logSite: LogSite) {
+        private fun testLogSite(logSite: io.spine.logging.flogger.LogSite) {
             val data = FakeLogData.of("")
                 .setLogSite(logSite)
             backend.log(data)
@@ -192,7 +192,7 @@ internal class Log4j2LoggerBackendSpec {
     @Test
     fun `propagate parsing errors`() {
         val data = FakeLogData.withPrintfStyle("Hello %?X World", "ignored")
-        val parseException = shouldThrow<ParseException> {
+        val parseException = shouldThrow<io.spine.logging.flogger.parser.ParseException> {
             backend.log(data)
         }
         logged.shouldBeEmpty()

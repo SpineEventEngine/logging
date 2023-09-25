@@ -16,10 +16,10 @@
 
 package com.google.common.flogger.testing;
 
-import com.google.common.flogger.LogContext;
-import com.google.common.flogger.backend.LogData;
-import com.google.common.flogger.backend.Metadata;
 import io.spine.logging.backend.system.AbstractLogRecord;
+import io.spine.logging.flogger.LogContext;
+import io.spine.logging.flogger.backend.LogData;
+import io.spine.logging.flogger.backend.Metadata;
 
 /**
  * A fake Flogger based {@link java.util.logging.LogRecord} which extends {@link AbstractLogRecord}

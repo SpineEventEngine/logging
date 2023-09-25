@@ -33,7 +33,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":flogger-api"))
+    implementation(project(":logging"))
     implementation(project(":logging-backend"))
     implementation(Kotest.assertions)
     JUnit.api.forEach { implementation(it) }

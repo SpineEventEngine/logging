@@ -71,7 +71,7 @@ public final class PlatformProviderGenerator {
     classWriter.visit(
         V1_6,
         ACC_PUBLIC + ACC_FINAL + ACC_SUPER,
-        "com/google/common/flogger/backend/PlatformProvider",
+        "io/spine/logging/flogger/backend/PlatformProvider",
         null,
         "java/lang/Object",
         null);
@@ -90,7 +90,7 @@ public final class PlatformProviderGenerator {
         classWriter.visitMethod(
             ACC_PUBLIC + ACC_STATIC,
             "getPlatform",
-            "()Lcom/google/common/flogger/backend/Platform;",
+            "()Lio/spine/logging/flogger/backend/Platform;",
             null,
             null);
     // Try the different platforms.
@@ -111,7 +111,7 @@ public final class PlatformProviderGenerator {
     Files.createDirectories(path.getParent());
     try (JarOutputStream jar =
         new JarOutputStream(Files.newOutputStream(path, StandardOpenOption.CREATE_NEW))) {
-      ZipEntry entry = new ZipEntry("com/google/common/flogger/backend/PlatformProvider.class");
+      ZipEntry entry = new ZipEntry("io/spine/logging/flogger/backend/PlatformProvider.class");
       entry.setTime(0); // clear timestamp to ensure JAR is deterministic for cache during builds.
       jar.putNextEntry(entry);
       jar.write(classWriter.toByteArray());
@@ -174,7 +174,7 @@ public final class PlatformProviderGenerator {
         "newInstance",
         "([Ljava/lang/Object;)Ljava/lang/Object;",
         false);
-    methodVisitor.visitTypeInsn(CHECKCAST, "com/google/common/flogger/backend/Platform");
+    methodVisitor.visitTypeInsn(CHECKCAST, "io/spine/logging/flogger/backend/Platform");
     methodVisitor.visitLabel(endLabel);
     methodVisitor.visitInsn(ARETURN);
 

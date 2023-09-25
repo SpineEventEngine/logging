@@ -16,11 +16,11 @@
 
 package com.google.common.flogger.testing;
 
-import static com.google.common.flogger.util.Checks.checkNotNull;
-import static java.util.Collections.unmodifiableList;
+import io.spine.logging.flogger.backend.LogData;
+import io.spine.logging.flogger.backend.LoggerBackend;
 
-import com.google.common.flogger.backend.LogData;
-import com.google.common.flogger.backend.LoggerBackend;
+import static io.spine.logging.flogger.util.Checks.checkNotNull;
+import static java.util.Collections.unmodifiableList;
 
 import java.util.ArrayList;
 import java.util.List;

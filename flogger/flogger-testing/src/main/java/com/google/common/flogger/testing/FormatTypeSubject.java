@@ -19,9 +19,9 @@ package com.google.common.flogger.testing;
 import static com.google.common.truth.Truth.assertAbout;
 import static com.google.common.truth.Truth.assertWithMessage;
 
-import com.google.common.flogger.backend.FormatType;
 import com.google.common.truth.FailureMetadata;
 import com.google.common.truth.Subject;
+import io.spine.logging.flogger.backend.FormatType;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**

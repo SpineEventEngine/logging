@@ -20,13 +20,14 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.truth.Truth.assertAbout;
 
-import com.google.common.flogger.MetadataKey;
-import com.google.common.flogger.backend.Metadata;
 import com.google.common.truth.FailureMetadata;
 import com.google.common.truth.IterableSubject;
 import com.google.common.truth.Subject;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.spine.logging.flogger.MetadataKey;
+import io.spine.logging.flogger.backend.Metadata;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /** A <a href="https://github.com/google/truth">Truth</a> subject for {@link Metadata}. */

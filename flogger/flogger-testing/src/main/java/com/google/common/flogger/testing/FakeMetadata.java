@@ -16,14 +16,15 @@
 
 package com.google.common.flogger.testing;
 
-import static com.google.common.flogger.util.Checks.checkNotNull;
-
-import com.google.common.flogger.MetadataKey;
-import com.google.common.flogger.backend.Metadata;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.spine.logging.flogger.MetadataKey;
+import io.spine.logging.flogger.backend.Metadata;
 import org.checkerframework.checker.nullness.qual.Nullable;
+
+import static io.spine.logging.flogger.util.Checks.checkNotNull;
 
 /**
  * A mutable fake {@link Metadata} implementation to help test logging backends and other log

@@ -26,8 +26,8 @@
 
 package io.spine.logging.backend.system;
 
-import com.google.common.flogger.backend.LogData;
-import com.google.common.flogger.backend.Platform;
+import io.spine.logging.flogger.backend.LogData;
+import io.spine.logging.flogger.backend.Platform;
 
 import java.util.logging.Logger;
 

@@ -26,7 +26,7 @@
 
 package com.google.common.flogger.grpc
 
-import com.google.common.flogger.context.ContextDataProvider
+import io.spine.logging.flogger.context.ContextDataProvider
 import com.google.common.flogger.testing.AbstractContextDataProviderSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.optional.shouldBePresent
@@ -44,12 +44,12 @@ import org.junit.jupiter.api.Test
 @DisplayName("`GrpcContextDataProvider` should")
 internal class GrpcContextDataProviderSpec : AbstractContextDataProviderSpec() {
 
-    override val implementationUnderTest: ContextDataProvider =
+    override val implementationUnderTest: io.spine.logging.flogger.context.ContextDataProvider =
         GrpcContextDataProvider.getInstance()
 
     @Test
     fun `be able to be loaded as a Java service`() {
-        val serviceLoader = ServiceLoader.load(ContextDataProvider::class.java)
+        val serviceLoader = ServiceLoader.load(io.spine.logging.flogger.context.ContextDataProvider::class.java)
         val optionalContextDataProvider = serviceLoader.findFirst()
         optionalContextDataProvider.shouldBePresent()
 

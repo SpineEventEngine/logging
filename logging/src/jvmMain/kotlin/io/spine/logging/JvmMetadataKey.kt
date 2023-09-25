@@ -28,7 +28,7 @@ package io.spine.logging
 
 import kotlin.reflect.KClass
 import kotlin.reflect.cast
-import com.google.common.flogger.MetadataKey as FMetadataKey
+import io.spine.logging.flogger.MetadataKey as FMetadataKey
 
 /**
  * Flogger-based implementation of [MetadataKey].

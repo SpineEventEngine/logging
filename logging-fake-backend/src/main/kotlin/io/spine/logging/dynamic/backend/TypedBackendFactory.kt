@@ -26,10 +26,10 @@
 
 package io.spine.logging.dynamic.backend
 
-import com.google.common.flogger.backend.LoggerBackend
+import io.spine.logging.flogger.backend.LoggerBackend
 
 /**
- * A typed [BackendFactory][com.google.common.flogger.backend.system.BackendFactory].
+ * A typed [BackendFactory][io.spine.logging.backend.system.BackendFactory].
  *
  * This interface can't extend the original factory because it is an abstract class.
  *

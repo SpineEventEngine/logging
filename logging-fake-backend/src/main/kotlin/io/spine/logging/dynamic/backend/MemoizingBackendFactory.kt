@@ -26,7 +26,7 @@
 
 package io.spine.logging.dynamic.backend
 
-import com.google.common.flogger.backend.LoggerBackend
+import io.spine.logging.flogger.backend.LoggerBackend
 
 /**
  * A backend factory that remembers the created backends.

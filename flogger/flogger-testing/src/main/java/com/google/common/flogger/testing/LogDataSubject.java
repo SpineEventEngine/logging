@@ -20,12 +20,13 @@ import static com.google.common.truth.Fact.simpleFact;
 import static com.google.common.truth.Truth.assertAbout;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.flogger.backend.LogData;
 import com.google.common.truth.FailureMetadata;
 import com.google.common.truth.LongSubject;
 import com.google.common.truth.Subject;
 import java.util.Arrays;
 import java.util.List;
+
+import io.spine.logging.flogger.backend.LogData;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /** A <a href="https://github.com/google/truth">Truth</a> subject for {@link LogData}. */

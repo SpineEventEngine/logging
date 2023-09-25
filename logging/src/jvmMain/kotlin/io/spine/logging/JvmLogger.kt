@@ -26,14 +26,14 @@
 
 package io.spine.logging
 
-import com.google.common.flogger.FluentLogger2
-import com.google.common.flogger.LogSites.callerOf
+import io.spine.logging.flogger.FluentLogger2
+import io.spine.logging.flogger.LogSites.callerOf
 import com.google.errorprone.annotations.CheckReturnValue
 import kotlin.reflect.KClass
 import kotlin.time.DurationUnit
 import kotlin.time.toTimeUnit
 import java.util.logging.Level as JLevel
-import com.google.common.flogger.LogSite as FloggerLogSite
+import io.spine.logging.flogger.LogSite as FloggerLogSite
 
 /**
  * Implements [Logger] using [FluentLogger2] as the underlying implementation.

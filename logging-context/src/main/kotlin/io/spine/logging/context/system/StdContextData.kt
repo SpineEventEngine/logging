@@ -26,11 +26,11 @@
 
 package io.spine.logging.context.system
 
-import com.google.common.flogger.LoggingScope
-import com.google.common.flogger.context.ContextMetadata
-import com.google.common.flogger.context.ScopeType
-import com.google.common.flogger.context.ScopedLoggingContext.ScopeList
-import com.google.common.flogger.context.Tags
+import io.spine.logging.flogger.LoggingScope
+import io.spine.logging.flogger.context.ContextMetadata
+import io.spine.logging.flogger.context.ScopeType
+import io.spine.logging.flogger.context.ScopedLoggingContext.ScopeList
+import io.spine.logging.flogger.context.Tags
 import io.spine.logging.Level
 import io.spine.logging.compareTo
 import io.spine.logging.context.LogLevelMap

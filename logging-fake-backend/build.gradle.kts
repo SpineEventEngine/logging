@@ -32,7 +32,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":flogger-api"))
+    implementation(project(":logging"))
     implementation(project(":logging-backend"))
     implementation(project(":flogger-testing"))
     implementation(AutoService.annotations)

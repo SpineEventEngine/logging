@@ -35,9 +35,9 @@ import io.spine.logging.toJavaLogging
 import io.spine.logging.toLevel
 import io.spine.logging.toLoggerName
 import kotlin.reflect.KClass
-import com.google.common.flogger.context.ContextDataProvider as FContextDataProvider
-import com.google.common.flogger.context.LogLevelMap as FLogLevelMap
-import com.google.common.flogger.context.ScopedLoggingContext as FScopedLoggingContext
+import io.spine.logging.flogger.context.ContextDataProvider as FContextDataProvider
+import io.spine.logging.flogger.context.LogLevelMap as FLogLevelMap
+import io.spine.logging.flogger.context.ScopedLoggingContext as FScopedLoggingContext
 
 /**
  * A JVM implementation of `LoggingContextFactory`.

@@ -79,16 +79,12 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-
-                /**
-                 * Exposes the original Flogger classes to the library users.
-                 *
-                 * We need it because the deprecated `io.spine.logging.Logging` interface
-                 * returns `FluentLogger2` in its methods.
-                 *
-                 * See [issue](https://github.com/SpineEventEngine/logging/issues/51).
-                 */
-                api(project(":flogger-api"))
+                implementation(
+                    project(
+                        ":flogger-platform-generator",
+                        configuration = "generatedPlatformProvider"
+                    )
+                )
                 implementation(Guava.lib)
             }
         }
@@ -96,6 +92,7 @@ kotlin {
             dependencies {
                 implementation(project(":testutil-logging"))
                 implementation(project(":logging-fake-backend"))
+                implementation(project(":flogger-testing"))
                 implementation(Spine.testlib) {
                     exclude(group = "com.google.flogger")
                 }

@@ -26,10 +26,10 @@
 
 package io.spine.logging
 
-import com.google.common.flogger.backend.Platform
+import io.spine.logging.flogger.backend.Platform
 import kotlin.reflect.KClass
-import com.google.common.flogger.LogSite as FloggerLogSite
-import com.google.common.flogger.LogSites as FloggerLogSites
+import io.spine.logging.flogger.LogSite as FloggerLogSite
+import io.spine.logging.flogger.LogSites as FloggerLogSites
 
 /**
  * Determines log sites for the current line of code using Flogger utils.

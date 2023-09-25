@@ -26,10 +26,10 @@
 
 package io.spine.logging.backend.log4j2
 
-import com.google.common.flogger.LogContext.Key
+import io.spine.logging.flogger.LogContext.Key
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
-import com.google.common.flogger.context.ContextDataProvider
-import com.google.common.flogger.context.Tags
+import io.spine.logging.flogger.context.ContextDataProvider
+import io.spine.logging.flogger.context.Tags
 import com.google.common.flogger.repeatedKey
 import com.google.common.flogger.singleKey
 import com.google.common.flogger.testing.ConfigurableLogger
@@ -61,7 +61,7 @@ import org.junit.jupiter.api.Test
 @DisplayName("With Log4j backend, `ScopedLoggingContext` should")
 internal class Log4j2ScopedLoggingSpec {
 
-    private val context = ContextDataProvider.getInstance().contextApiSingleton
+    private val context = io.spine.logging.flogger.context.ContextDataProvider.getInstance().contextApiSingleton
     private lateinit var logger: ConfigurableLogger
     private lateinit var logged: List<LogEvent>
     private val lastLogged get() = logged.last()
@@ -89,7 +89,7 @@ internal class Log4j2ScopedLoggingSpec {
     inner class
     `append a single tag` {
 
-        private val singleTag = Tags.of("foo", "bar")
+        private val singleTag = io.spine.logging.flogger.context.Tags.of("foo", "bar")
         private val expectedTags = stringify(singleTag)
 
         @Test
@@ -116,7 +116,7 @@ internal class Log4j2ScopedLoggingSpec {
 
         @Test
         fun `using a custom key`() {
-            val key = singleKey<Tags>("tags")
+            val key = singleKey<io.spine.logging.flogger.context.Tags>("tags")
             context.newContext()
                 .withMetadata(key, singleTag)
                 .install()
@@ -131,7 +131,7 @@ internal class Log4j2ScopedLoggingSpec {
     inner class
     `append several tags` {
 
-        private val severalTags = Tags.builder()
+        private val severalTags = io.spine.logging.flogger.context.Tags.builder()
             .addTag("foo")
             .addTag("bar", "baz")
             .addTag("bar", "baz2")
@@ -162,7 +162,7 @@ internal class Log4j2ScopedLoggingSpec {
 
         @Test
         fun `using a custom key`() {
-            val key = singleKey<Tags>("tags")
+            val key = singleKey<io.spine.logging.flogger.context.Tags>("tags")
             context.newContext()
                 .withMetadata(key, severalTags)
                 .install()
@@ -177,7 +177,7 @@ internal class Log4j2ScopedLoggingSpec {
     inner class
     `ignore empty tags appended` {
 
-        private val emptyTags = Tags.empty()
+        private val emptyTags = io.spine.logging.flogger.context.Tags.empty()
         private val expectedTags = null
 
         @Test
@@ -204,7 +204,7 @@ internal class Log4j2ScopedLoggingSpec {
 
         @Test
         fun `using a custom key`() {
-            val key = singleKey<Tags>("tags")
+            val key = singleKey<io.spine.logging.flogger.context.Tags>("tags")
             context.newContext()
                 .withMetadata(key, emptyTags)
                 .install()
@@ -219,7 +219,7 @@ internal class Log4j2ScopedLoggingSpec {
     inner class
     `merge tags appended using the context` {
 
-        private val contextTags = Tags.builder()
+        private val contextTags = io.spine.logging.flogger.context.Tags.builder()
             .addTag("foo")
             .addTag("bar", "baz")
             .addTag("bar", "baz2")
@@ -392,7 +392,7 @@ internal class Log4j2ScopedLoggingSpec {
     @Test
     fun `append arbitrary metadata and tags`() {
         val (key, value) = singleKey<Int>("count") to 23
-        val tags = Tags.builder()
+        val tags = io.spine.logging.flogger.context.Tags.builder()
             .addTag("foo")
             .addTag("baz", "bar")
             .addTag("baz", "bar2")
@@ -415,7 +415,7 @@ internal class Log4j2ScopedLoggingSpec {
     fun `use metadata from an outer context`() {
         val key = singleKey<String>("id")
         val outerValue = "outerID"
-        val outerTags = Tags.builder()
+        val outerTags = io.spine.logging.flogger.context.Tags.builder()
             .addTag("foo")
             .addTag("baz", "bar")
             .build()
@@ -427,7 +427,7 @@ internal class Log4j2ScopedLoggingSpec {
             .use {
 
                 val innerValue = "innerID"
-                val innerTags = Tags.builder()
+                val innerTags = io.spine.logging.flogger.context.Tags.builder()
                     .addTag("foo")
                     .addTag("baz", "bar2")
                     .build()
@@ -478,7 +478,7 @@ private fun createLogger(appender: Appender): ConfigurableLogger {
  * Converts the given [tags] to string in a way that is similar to
  * how Log4j's `StringMap` does it.
  */
-private fun stringify(tags: Tags): String {
+private fun stringify(tags: io.spine.logging.flogger.context.Tags): String {
     val entries = tags.asMap().map { (name, values) ->
         if (values.size == 0) {
             name
