@@ -48,7 +48,7 @@ internal class StubBackendFactoryService : BackendFactory() {
     override fun create(loggingClassName: String): LoggerBackend =
         throw UnsupportedOperationException()
 
-    override fun toString(): String = this::class.simpleName!!
+    override fun toString(): String = this::class.qualifiedName!!
 }
 
 /**
@@ -61,7 +61,7 @@ internal class StubContextDataProviderService : ContextDataProvider() {
     override fun getContextApiSingleton(): ScopedLoggingContext =
         throw UnsupportedOperationException()
 
-    override fun toString(): String = this::class.simpleName!!
+    override fun toString(): String = this::class.qualifiedName!!
 }
 
 /**
@@ -74,5 +74,5 @@ internal class StubClockService : Clock() {
     override fun getCurrentTimeNanos(): Long =
         throw UnsupportedOperationException()
 
-    override fun toString(): String = this::class.simpleName!!
+    override fun toString(): String = this::class.qualifiedName!!
 }

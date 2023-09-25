@@ -1,5 +1,5 @@
 /*
- * Copyright 2018, The Flogger Authors; 2023, TeamDev. All rights reserved.
+ * Copyright 2019, The Flogger Authors; 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,42 +24,46 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.system;
+package io.spine.logging.backend.log4j2;
 
+import com.google.common.flogger.backend.LogData;
 import com.google.common.flogger.backend.LoggerBackend;
+import org.apache.logging.log4j.core.Logger;
 
-import java.util.logging.Logger;
+import static io.spine.logging.backend.log4j2.Log4j2LogEventUtil.toLog4jLevel;
+import static io.spine.logging.backend.log4j2.Log4j2LogEventUtil.toLog4jLogEvent;
 
 /**
- * Default factory for creating logger backends.
- *
- * <p>See class documentation in {@link BackendFactory} for important implementation restrictions.
- *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/SimpleBackendFactory.java">
- *     Original Java code of Google Flogger</a>
+ * A logging backend that uses Log4j2 to output log statements.
  */
-public final class SimpleBackendFactory extends BackendFactory {
-  private static final BackendFactory INSTANCE = new SimpleBackendFactory();
+final class Log4j2LoggerBackend extends LoggerBackend {
+  private final Logger logger;
 
-  // Called during logging platform initialization; MUST NOT call any code that might log.
-  public static BackendFactory getInstance() {
-    return INSTANCE;
+  // VisibleForTesting
+  Log4j2LoggerBackend(Logger logger) {
+    this.logger = logger;
   }
 
-  private SimpleBackendFactory() {}
-
   @Override
-  public LoggerBackend create(String loggingClass) {
-    // TODO(b/27920233): Strip inner/nested classes when deriving logger name.
-    Logger logger = Logger.getLogger(loggingClass.replace('$', '.'));
-    return new SimpleLoggerBackend(logger);
+  public String getLoggerName() {
+    return logger.getName();
   }
 
-  /**
-   * Returns a fully-qualified name of this class.
-   */
   @Override
-  public String toString() {
-    return getClass().getName();
+  public boolean isLoggable(java.util.logging.Level level) {
+    return logger.isEnabled(toLog4jLevel(level));
+  }
+
+  @Override
+  public void log(LogData logData) {
+    // The caller is responsible to call `isLoggable()` before calling
+    // this method to ensure that only messages above the given
+    // threshold are logged.
+    logger.get().log(toLog4jLogEvent(logger.getName(), logData));
+  }
+
+  @Override
+  public void handleError(RuntimeException error, LogData badData) {
+    logger.get().log(toLog4jLogEvent(logger.getName(), error, badData));
   }
 }

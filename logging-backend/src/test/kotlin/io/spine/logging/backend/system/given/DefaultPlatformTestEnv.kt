@@ -41,6 +41,8 @@ internal class FakeBackendFactory : BackendFactory() {
 
     override fun create(loggingClassName: String?): LoggerBackend =
         FakeLoggerBackend(loggingClassName)
+
+    override fun toString(): String = javaClass.name
 }
 
 /**

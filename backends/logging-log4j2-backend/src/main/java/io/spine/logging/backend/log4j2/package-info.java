@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,55 +24,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-    }
-}
+/**
+ * Contains implementation of Apache Log4j2 backend.
+ */
+@CheckReturnValue
+package io.spine.logging.backend.log4j2;
 
-rootProject.name = "spine-logging"
-
-include(
-    "logging",
-    "logging-backend",
-    "logging-context",
-    "logging-fake-backend",
-    "testutil-logging"
-)
-
-includeBackend(
-    "logging-log4j2-backend"
-)
-
-includeTest(
-    "fixtures",
-    "jvm-our-backend-our-context",
-    "jvm-our-backend-grpc-context",
-    "jvm-log4j-backend-our-context",
-    "jvm-slf4j-jdk14-backend-our-context",
-    "jvm-slf4j-reload4j-backend-our-context",
-    "logging-smoke-test",
-)
-
-includeFlogger(
-    "flogger-api",
-    "flogger-testing",
-    "flogger-platform-generator",
-    "flogger-grpc-context",
-)
-
-fun includeBackend(vararg names: String) = names.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("backends/$name")
-}
-
-fun includeTest(vararg names: String) = names.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("tests/$name")
-}
-
-fun includeFlogger(vararg names: String) = names.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("flogger/$name")
-}
+import com.google.errorprone.annotations.CheckReturnValue;

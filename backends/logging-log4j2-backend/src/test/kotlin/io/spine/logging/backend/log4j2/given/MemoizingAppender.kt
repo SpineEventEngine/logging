@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,55 +24,40 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
+package io.spine.logging.backend.log4j2.given
+
+import org.apache.logging.log4j.core.LogEvent
+import org.apache.logging.log4j.core.appender.AbstractAppender
+import org.apache.logging.log4j.core.layout.PatternLayout.createDefaultLayout
+
+/**
+ * A Log4j event appender that remembers the received events.
+ *
+ * Until [AbstractAppender] is in Java, it is impossible to use
+ * named arguments.
+ */
+internal class MemoizingAppender : AbstractAppender(
+    MemoizingAppender::class.simpleName,
+    null, // No filtering.
+    createDefaultLayout(),
+    true, // Propagate exceptions to the app.
+    null // No properties.
+) {
+    private val mutableEvents = arrayListOf<LogEvent>()
+
+    /**
+     * All events that have been remembered by this appender.
+     */
+    val events: List<LogEvent> = mutableEvents
+
+    init {
+        start()
     }
-}
 
-rootProject.name = "spine-logging"
-
-include(
-    "logging",
-    "logging-backend",
-    "logging-context",
-    "logging-fake-backend",
-    "testutil-logging"
-)
-
-includeBackend(
-    "logging-log4j2-backend"
-)
-
-includeTest(
-    "fixtures",
-    "jvm-our-backend-our-context",
-    "jvm-our-backend-grpc-context",
-    "jvm-log4j-backend-our-context",
-    "jvm-slf4j-jdk14-backend-our-context",
-    "jvm-slf4j-reload4j-backend-our-context",
-    "logging-smoke-test",
-)
-
-includeFlogger(
-    "flogger-api",
-    "flogger-testing",
-    "flogger-platform-generator",
-    "flogger-grpc-context",
-)
-
-fun includeBackend(vararg names: String) = names.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("backends/$name")
-}
-
-fun includeTest(vararg names: String) = names.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("tests/$name")
-}
-
-fun includeFlogger(vararg names: String) = names.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("flogger/$name")
+    /**
+     * Remembers the given [event].
+     */
+    override fun append(event: LogEvent) {
+        mutableEvents.add(event)
+    }
 }

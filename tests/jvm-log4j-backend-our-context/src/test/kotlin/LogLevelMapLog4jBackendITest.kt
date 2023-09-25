@@ -25,9 +25,9 @@
  */
 
 import com.google.common.flogger.backend.Platform
-import com.google.common.flogger.backend.log4j2.Log4j2BackendFactory
 import io.kotest.matchers.shouldBe
 import io.spine.logging.Level
+import io.spine.logging.backend.log4j2.Log4j2BackendFactory
 import io.spine.logging.context.BaseLogLevelMapTest
 import io.spine.logging.context.system.StdContextDataProvider
 import io.spine.testing.logging.Recorder

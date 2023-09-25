@@ -106,9 +106,9 @@ internal class DefaultPlatformSpec {
         val platform = DefaultPlatform()
         val configInfo = platform.configInfoImpl.trimEnd()
         val expectedServices = setOf(
-            "BackendFactory: ${StubBackendFactoryService::class.simpleName}",
-            "Clock: ${StubClockService::class.simpleName}",
-            "ContextDataProvider: ${StubContextDataProviderService::class.simpleName}"
+            "BackendFactory: ${StubBackendFactoryService::class.java.name}",
+            "Clock: ${StubClockService::class.java.name}",
+            "ContextDataProvider: ${StubContextDataProviderService::class.java.name}"
         )
         expectedServices.forEach { service ->
             configInfo shouldContain service
