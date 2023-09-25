@@ -25,7 +25,7 @@
  */
 
 /**
- * Contains implementation of `Log4j2` backend.
+ * Contains implementation of Apache Log4j2 backend.
  */
 @CheckReturnValue
 package io.spine.logging.backend.log4j2;
