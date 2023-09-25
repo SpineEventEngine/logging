@@ -31,7 +31,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":flogger-api"))
+    implementation(project(":logging"))
     implementation(Grpc.api)
     testImplementation(project(":flogger-testing"))
 }

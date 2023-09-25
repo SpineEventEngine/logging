@@ -56,7 +56,6 @@ includeTest(
 )
 
 includeFlogger(
-    "flogger-api",
     "flogger-testing",
     "flogger-platform-generator",
     "flogger-grpc-context",

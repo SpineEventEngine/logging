@@ -31,7 +31,6 @@ import io.spine.logging.flogger.MetadataKey
 import io.spine.logging.flogger.backend.Metadata
 import io.spine.logging.flogger.context.Tags
 import io.spine.logging.flogger.parser.ParseException
-import com.google.common.flogger.singleKey
 import com.google.common.flogger.testing.FakeLogData
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.assertions.throwables.shouldNotThrow
@@ -43,6 +42,7 @@ import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldEndWith
 import io.kotest.matchers.string.shouldNotContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.logging.flogger.singleKey
 import java.time.Instant.ofEpochMilli
 import java.util.concurrent.TimeUnit.NANOSECONDS
 import java.util.logging.Level

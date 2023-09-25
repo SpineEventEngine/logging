@@ -26,12 +26,6 @@
 
 package io.spine.logging.backend.log4j2
 
-import io.spine.logging.flogger.LogContext.Key
-import io.spine.logging.flogger.LogSite
-import io.spine.logging.backend.log4j2.given.MemoizingAppender
-import io.spine.logging.flogger.parser.ParseException
-import com.google.common.flogger.repeatedKey
-import com.google.common.flogger.singleKey
 import com.google.common.flogger.testing.FakeLogData
 import com.google.common.flogger.testing.FakeLogSite
 import io.kotest.assertions.throwables.shouldThrow
@@ -40,15 +34,21 @@ import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.logging.backend.log4j2.given.MemoizingAppender
+import io.spine.logging.flogger.LogContext.Key
+import io.spine.logging.flogger.LogSite
+import io.spine.logging.flogger.parser.ParseException
+import io.spine.logging.flogger.repeatedKey
+import io.spine.logging.flogger.singleKey
 import java.util.concurrent.atomic.AtomicInteger
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.core.Appender
 import org.apache.logging.log4j.core.LogEvent
 import org.apache.logging.log4j.core.Logger
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
 
 // These aliases help to distinguish different levels without FQN.
 private typealias JulLevel = java.util.logging.Level
@@ -175,7 +175,7 @@ internal class Log4j2LoggerBackendSpec {
             testLogSite(logSite)
         }
 
-        private fun testLogSite(logSite: io.spine.logging.flogger.LogSite) {
+        private fun testLogSite(logSite: LogSite) {
             val data = FakeLogData.of("")
                 .setLogSite(logSite)
             backend.log(data)
@@ -192,7 +192,7 @@ internal class Log4j2LoggerBackendSpec {
     @Test
     fun `propagate parsing errors`() {
         val data = FakeLogData.withPrintfStyle("Hello %?X World", "ignored")
-        val parseException = shouldThrow<io.spine.logging.flogger.parser.ParseException> {
+        val parseException = shouldThrow<ParseException> {
             backend.log(data)
         }
         logged.shouldBeEmpty()

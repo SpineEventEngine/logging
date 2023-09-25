@@ -26,26 +26,26 @@
 
 package io.spine.logging.backend.log4j2;
 
-import static com.google.common.flogger.backend.MetadataProcessor.forScopeAndLogSite;
+import static io.spine.logging.flogger.backend.MetadataProcessor.forScopeAndLogSite;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.logging.Level.WARNING;
 
-import com.google.common.flogger.LogContext;
-import com.google.common.flogger.LogSite;
-import com.google.common.flogger.MetadataKey;
-import com.google.common.flogger.backend.BaseMessageFormatter;
-import com.google.common.flogger.backend.LogData;
-import com.google.common.flogger.backend.MessageUtils;
-import com.google.common.flogger.backend.Metadata;
-import com.google.common.flogger.backend.MetadataHandler;
-import com.google.common.flogger.backend.Platform;
-import com.google.common.flogger.backend.SimpleMessageFormatter;
-import com.google.common.flogger.context.ScopedLoggingContext;
-import com.google.common.flogger.context.Tags;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+
+import io.spine.logging.flogger.LogContext;
+import io.spine.logging.flogger.LogSite;
+import io.spine.logging.flogger.MetadataKey;
+import io.spine.logging.flogger.backend.BaseMessageFormatter;
+import io.spine.logging.flogger.backend.LogData;
+import io.spine.logging.flogger.backend.MessageUtils;
+import io.spine.logging.flogger.backend.Metadata;
+import io.spine.logging.flogger.backend.MetadataHandler;
+import io.spine.logging.flogger.backend.Platform;
+import io.spine.logging.flogger.backend.SimpleMessageFormatter;
+import io.spine.logging.flogger.context.Tags;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.Configuration;
@@ -241,11 +241,11 @@ final class Log4j2LogEventUtil {
   /**
    * We do not support {@code MDC.getContext()} and {@code NDC.getStack()} and we do not make any
    * attempt to merge Log4j2 context data with Flogger's context data. Instead, users should use the
-   * {@link ScopedLoggingContext}.
+   * {@link io.spine.logging.flogger.context.ScopedLoggingContext ScopedLoggingContext}.
    *
-   * <p>Flogger's {@link ScopedLoggingContext} allows to include additional metadata and tags into
-   * logs which are written from current thread. This context data will be added to the log4j2
-   * event.
+   * <p>It allows including additional metadata and tags into logs,
+   * which are written from current thread. This context data will be added
+   * to the Log4j2 event.
    */
   private static StringMap createContextMap(LogData logData) {
     var metadataProcessor = forScopeAndLogSite(Platform.getInjectedMetadata(),

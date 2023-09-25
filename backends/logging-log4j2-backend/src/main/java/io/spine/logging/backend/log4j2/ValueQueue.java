@@ -1,5 +1,5 @@
 /*
- * Copyright 2021, The Flogger Authors; 2023, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,15 +26,16 @@
 
 package io.spine.logging.backend.log4j2;
 
-import static com.google.common.flogger.util.Checks.checkNotNull;
-
-import com.google.common.flogger.MetadataKey;
-import com.google.common.flogger.context.Tags;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+
+import io.spine.logging.flogger.MetadataKey.KeyValueHandler;
+import io.spine.logging.flogger.context.Tags;
 import org.checkerframework.checker.nullness.qual.Nullable;
+
+import static io.spine.logging.flogger.util.Checks.checkNotNull;
 
 /**
  * A simple FIFO queue linked-list implementation designed to store multiple
@@ -85,7 +86,7 @@ final class ValueQueue implements Iterable<Object> {
     }
   }
 
-  static void appendValues(String label, Object valueOrQueue, MetadataKey.KeyValueHandler kvh) {
+  static void appendValues(String label, Object valueOrQueue, KeyValueHandler kvh) {
     if (valueOrQueue instanceof ValueQueue) {
       for (Object value : (ValueQueue) valueOrQueue) {
         emit(label, value, kvh);
@@ -130,7 +131,7 @@ final class ValueQueue implements Iterable<Object> {
    * <p>Reusing the label 'tags' is intentional as this allows us to store the flatten tags in
    * Log4j2's ContextMap.
    */
-  static void emit(String label, Object value, MetadataKey.KeyValueHandler kvh) {
+  static void emit(String label, Object value, KeyValueHandler kvh) {
     if (value instanceof Tags) {
       // Flatten tags to treat them as keys or key/value pairs, e.g. tags=[baz=bar, baz=bar2, foo]
       ((Tags) value)

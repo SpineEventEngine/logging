@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, The Flogger Authors; 2023, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +26,8 @@
 
 package io.spine.logging.backend.log4j2;
 
-import com.google.common.flogger.backend.LogData;
-import com.google.common.flogger.backend.LoggerBackend;
+import io.spine.logging.flogger.backend.LogData;
+import io.spine.logging.flogger.backend.LoggerBackend;
 import org.apache.logging.log4j.core.Logger;
 
 import static io.spine.logging.backend.log4j2.Log4j2LogEventUtil.toLog4jLevel;

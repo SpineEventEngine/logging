@@ -44,21 +44,21 @@ import io.kotest.matchers.shouldBe
 /**
  * Asserts that this [Metadata] doesn't have any key/value pairs.
  */
-public fun io.spine.logging.flogger.backend.Metadata.shouldBeEmpty() {
+public fun Metadata.shouldBeEmpty() {
     size() shouldBeExactly 0
 }
 
 /**
  * Asserts that this [Metadata] has the given [number] of key/value pairs.
  */
-public infix fun io.spine.logging.flogger.backend.Metadata.shouldHaveSize(number: Int) {
+public infix fun Metadata.shouldHaveSize(number: Int) {
     size() shouldBeExactly number
 }
 
 /**
  * Asserts that this [Metadata] has a [key] with the mapped [values].
  */
-public fun <T> io.spine.logging.flogger.backend.Metadata.shouldContainInOrder(key: io.spine.logging.flogger.MetadataKey<T>, vararg values: T) {
+public fun <T> Metadata.shouldContainInOrder(key: MetadataKey<T>, vararg values: T) {
     valuesOf(key) shouldContainInOrder values.asList()
 }
 
@@ -67,34 +67,34 @@ public fun <T> io.spine.logging.flogger.backend.Metadata.shouldContainInOrder(ke
  *
  * The given [value] should be the first one, which was mapped to the [key].
  */
-public fun <T> io.spine.logging.flogger.backend.Metadata.shouldHaveFirstValue(key: io.spine.logging.flogger.MetadataKey<T>, value: T) {
+public fun <T> Metadata.shouldHaveFirstValue(key: MetadataKey<T>, value: T) {
     findValue(key) shouldBe value
 }
 
 /**
  * Asserts that this [Metadata] does NOT HAVE a value for the given [key].
  */
-public infix fun <T> io.spine.logging.flogger.backend.Metadata.shouldNotContain(key: io.spine.logging.flogger.MetadataKey<T>) {
+public infix fun <T> Metadata.shouldNotContain(key: MetadataKey<T>) {
     findValue(key).shouldBeNull()
 }
 
 /**
  * Asserts that this [Metadata] has one or more values for the given [key]
  */
-public infix fun <T> io.spine.logging.flogger.backend.Metadata.shouldContain(key: io.spine.logging.flogger.MetadataKey<T>) {
+public infix fun <T> Metadata.shouldContain(key: MetadataKey<T>) {
     findValue(key).shouldNotBeNull()
 }
 
 /**
  * Asserts that this [Metadata] has a [key] to which only a single [value] is mapped.
  */
-public fun <T> io.spine.logging.flogger.backend.Metadata.shouldUniquelyContain(key: io.spine.logging.flogger.MetadataKey<T>, value: T) {
+public fun <T> Metadata.shouldUniquelyContain(key: MetadataKey<T>, value: T) {
     findValue(key) shouldBe value
     val allKeys = (0..<size()).map { i -> getKey(i) }.toList()
     allKeys.indexOf(key) shouldBe allKeys.lastIndexOf(key)
 }
 
-private fun <T> io.spine.logging.flogger.backend.Metadata.valuesOf(key: io.spine.logging.flogger.MetadataKey<T>): List<T> {
+private fun <T> Metadata.valuesOf(key: MetadataKey<T>): List<T> {
     val values: MutableList<T> = ArrayList()
     for (n in 0..<size()) {
         if (getKey(n) == key) {

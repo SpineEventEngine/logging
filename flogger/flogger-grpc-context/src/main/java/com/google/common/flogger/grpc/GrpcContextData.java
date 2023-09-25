@@ -16,15 +16,18 @@
 
 package com.google.common.flogger.grpc;
 
-import com.google.common.flogger.LoggingScope;
-import com.google.common.flogger.context.ContextMetadata;
-import com.google.common.flogger.context.LogLevelMap;
-import com.google.common.flogger.context.ScopeType;
-import com.google.common.flogger.context.ScopedLoggingContext.ScopeList;
-import com.google.common.flogger.context.Tags;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
+
+import io.spine.logging.flogger.LoggingScope;
+import io.spine.logging.flogger.context.ContextMetadata;
+import io.spine.logging.flogger.context.LogLevelMap;
+import io.spine.logging.flogger.context.ScopeType;
+import io.spine.logging.flogger.context.ScopedLoggingContext.ScopeList;
+import io.spine.logging.flogger.context.Tags;
 import org.checkerframework.checker.nullness.qual.Nullable;
+
+import static io.spine.logging.flogger.context.ScopedLoggingContext.ScopeList.addScope;
 
 /** A mutable thread-safe holder for context scoped logging information. */
 final class GrpcContextData {
@@ -102,7 +105,7 @@ final class GrpcContextData {
       @Nullable GrpcContextData parent,
       @Nullable ScopeType scopeType,
       GrpcContextDataProvider provider) {
-    this.scopes = ScopeList.addScope(parent != null ? parent.scopes : null, scopeType);
+    this.scopes = addScope(parent != null ? parent.scopes : null, scopeType);
     this.tagRef =
         new ScopedReference<Tags>(parent != null ? parent.tagRef.get() : null) {
           @Override
