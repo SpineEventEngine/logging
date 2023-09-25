@@ -62,8 +62,11 @@ public final class Log4j2BackendFactory extends BackendFactory {
     return new Log4j2LoggerBackend(logger);
   }
 
+  /**
+   * Returns a fully-qualified name of this class.
+   */
   @Override
   public String toString() {
-    return "Log4j2 backend";
+    return getClass().getName();
   }
 }

@@ -55,9 +55,11 @@ public final class SimpleBackendFactory extends BackendFactory {
     return new SimpleLoggerBackend(logger);
   }
 
+  /**
+   * Returns a fully-qualified name of this class.
+   */
   @Override
   public String toString() {
-    // This should probably be changed (it's not useful if it doesn't contain the class name).
-    return "Default logger backend factory";
+    return getClass().getName();
   }
 }

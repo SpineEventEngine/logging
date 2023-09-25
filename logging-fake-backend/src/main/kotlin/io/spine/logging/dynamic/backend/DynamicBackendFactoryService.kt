@@ -52,8 +52,14 @@ import io.spine.logging.backend.system.BackendFactory
 @AutoService(BackendFactory::class)
 public class DynamicBackendFactoryService : BackendFactory() {
 
+    /**
+     * Delegates actual backend creation to [DynamicBackendFactory] object.
+     */
     override fun create(loggingClassName: String): LoggerBackend =
         DynamicBackendFactory.create(loggingClassName)
 
-    override fun toString(): String = "Java Service adapter for `$DynamicBackendFactory`"
+    /**
+     * Returns a fully-qualified name of this class.
+     */
+    override fun toString(): String = javaClass.name
 }

@@ -67,8 +67,16 @@ public object DynamicBackendFactory : BackendFactory() {
         delegate = null
     }
 
+    /**
+     * Creates a new backend using the configured [delegate], if any.
+     *
+     * Otherwise, uses [SimpleBackendFactory] to create a backend.
+     */
     override fun create(loggingClassName: String): LoggerBackend =
         delegate?.create(loggingClassName) ?: simpleBackends.create(loggingClassName)
 
-    override fun toString(): String = "Dynamic Backend Factory"
+    /**
+     * Returns a fully-qualified name of this class.
+     */
+    override fun toString(): String = javaClass.name
 }
