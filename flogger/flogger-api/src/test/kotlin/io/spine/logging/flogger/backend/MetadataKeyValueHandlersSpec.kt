@@ -29,8 +29,8 @@ package io.spine.logging.flogger.backend
 import io.spine.logging.flogger.backend.MetadataKeyValueHandlers.getDefaultHandler
 import io.spine.logging.flogger.backend.MetadataKeyValueHandlers.getDefaultRepeatedValueHandler
 import io.spine.logging.flogger.backend.MetadataKeyValueHandlers.getDefaultValueHandler
-import com.google.common.flogger.given.MemoizingKvHandler
-import com.google.common.flogger.given.iterate
+import io.spine.logging.flogger.given.MemoizingKvHandler
+import io.spine.logging.flogger.given.iterate
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.spine.logging.flogger.repeatedKey

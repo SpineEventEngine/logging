@@ -29,8 +29,8 @@ package io.spine.logging.flogger
 import io.spine.logging.flogger.MetadataKey.repeated
 import io.spine.logging.flogger.MetadataKey.single
 import io.spine.logging.flogger.backend.Platform
-import com.google.common.flogger.given.MemoizingKvHandler
-import com.google.common.flogger.given.iterate
+import io.spine.logging.flogger.given.MemoizingKvHandler
+import io.spine.logging.flogger.given.iterate
 import io.spine.logging.flogger.util.RecursionDepth
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldContain

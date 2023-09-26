@@ -30,11 +30,11 @@ import io.spine.logging.flogger.DurationRateLimiter.newRateLimitPeriod
 import io.spine.logging.flogger.LogContext.Key
 import io.spine.logging.flogger.LogContext.specializeLogSiteKeyFromMetadata
 import io.spine.logging.flogger.context.Tags
-import com.google.common.flogger.given.iterate
+import io.spine.logging.flogger.given.iterate
 import com.google.common.flogger.testing.shouldContainInOrder
 import com.google.common.flogger.testing.shouldContain
-import com.google.common.flogger.given.shouldHaveArguments
-import com.google.common.flogger.given.shouldHaveMessage
+import io.spine.logging.flogger.given.shouldHaveArguments
+import io.spine.logging.flogger.given.shouldHaveMessage
 import com.google.common.flogger.testing.shouldHaveSize
 import com.google.common.flogger.testing.shouldNotContain
 import com.google.common.flogger.testing.shouldUniquelyContain
