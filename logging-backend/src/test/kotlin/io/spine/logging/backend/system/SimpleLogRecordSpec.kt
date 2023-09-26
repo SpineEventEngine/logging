@@ -30,7 +30,7 @@ import io.spine.logging.flogger.LogContext.Key
 import io.spine.logging.flogger.MetadataKey
 import io.spine.logging.flogger.backend.Metadata
 import io.spine.logging.flogger.context.Tags
-import com.google.common.flogger.parser.ParseException
+import io.spine.logging.flogger.parser.ParseException
 import io.spine.logging.flogger.singleKey
 import com.google.common.flogger.testing.FakeLogData
 import com.google.common.flogger.testing.FakeMetadata

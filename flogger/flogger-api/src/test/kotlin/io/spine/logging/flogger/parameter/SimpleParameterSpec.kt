@@ -35,7 +35,7 @@ import io.spine.logging.flogger.backend.FormatChar.FLOAT
 import io.spine.logging.flogger.backend.FormatChar.HEX
 import io.spine.logging.flogger.backend.FormatChar.STRING
 import io.spine.logging.flogger.parameter.SimpleParameter.buildFormatString
-import com.google.common.flogger.parser.ParseException
+import io.spine.logging.flogger.parser.ParseException
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs

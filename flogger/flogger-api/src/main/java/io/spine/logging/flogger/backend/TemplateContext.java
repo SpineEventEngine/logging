@@ -18,7 +18,7 @@ package io.spine.logging.flogger.backend;
 
 import static com.google.common.flogger.util.Checks.checkNotNull;
 
-import com.google.common.flogger.parser.MessageParser;
+import io.spine.logging.flogger.parser.MessageParser;
 
 /**
  * A context object for templates that allows caches to validate existing templates or create new

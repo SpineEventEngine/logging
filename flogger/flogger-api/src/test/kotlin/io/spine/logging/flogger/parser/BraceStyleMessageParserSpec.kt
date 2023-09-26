@@ -24,12 +24,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.common.flogger.parser
+package io.spine.logging.flogger.parser
 
-import com.google.common.flogger.parser.BraceStyleMessageParser.nextBraceFormatTerm
-import com.google.common.flogger.parser.given.FakeParameter
-import com.google.common.flogger.parser.given.assertParse
-import com.google.common.flogger.parser.given.assertParseError
+import io.spine.logging.flogger.parser.BraceStyleMessageParser.nextBraceFormatTerm
+import io.spine.logging.flogger.parser.given.FakeParameter
+import io.spine.logging.flogger.parser.given.assertParse
+import io.spine.logging.flogger.parser.given.assertParseError
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import org.junit.jupiter.api.DisplayName

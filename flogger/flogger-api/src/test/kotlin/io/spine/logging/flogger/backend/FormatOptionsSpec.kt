@@ -36,7 +36,7 @@ import io.spine.logging.flogger.backend.FormatOptions.FLAG_SHOW_LEADING_ZEROS
 import io.spine.logging.flogger.backend.FormatOptions.FLAG_UPPER_CASE
 import io.spine.logging.flogger.backend.FormatOptions.UNSET
 import io.spine.logging.flogger.backend.FormatOptions.parse
-import com.google.common.flogger.parser.ParseException
+import io.spine.logging.flogger.parser.ParseException
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeFalse

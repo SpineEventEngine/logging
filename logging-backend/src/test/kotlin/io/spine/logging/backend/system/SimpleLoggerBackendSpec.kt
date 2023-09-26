@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.system
 
-import com.google.common.flogger.parser.ParseException
+import io.spine.logging.flogger.parser.ParseException
 import com.google.common.flogger.testing.AssertingLogger
 import com.google.common.flogger.testing.FakeLogData
 import io.kotest.assertions.throwables.shouldThrow

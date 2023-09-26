@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.common.flogger.parser.given
+package io.spine.logging.flogger.parser.given
 
 import io.spine.logging.flogger.backend.FormatChar
 import io.spine.logging.flogger.backend.FormatOptions
@@ -32,9 +32,9 @@ import io.spine.logging.flogger.backend.TemplateContext
 import io.spine.logging.flogger.parameter.DateTimeFormat
 import io.spine.logging.flogger.parameter.Parameter
 import io.spine.logging.flogger.parameter.ParameterVisitor
-import com.google.common.flogger.parser.MessageBuilder
-import com.google.common.flogger.parser.MessageParser
-import com.google.common.flogger.parser.ParseException
+import io.spine.logging.flogger.parser.MessageBuilder
+import io.spine.logging.flogger.parser.MessageParser
+import io.spine.logging.flogger.parser.ParseException
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.string.shouldContain
 import kotlin.properties.Delegates.notNull

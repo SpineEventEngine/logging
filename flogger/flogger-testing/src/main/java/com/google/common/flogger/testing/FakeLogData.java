@@ -25,9 +25,9 @@ import io.spine.logging.flogger.MetadataKey;
 import io.spine.logging.flogger.backend.LogData;
 import io.spine.logging.flogger.backend.Metadata;
 import io.spine.logging.flogger.backend.TemplateContext;
-import com.google.common.flogger.parser.DefaultBraceStyleMessageParser;
-import com.google.common.flogger.parser.DefaultPrintfMessageParser;
-import com.google.common.flogger.parser.MessageParser;
+import io.spine.logging.flogger.parser.DefaultBraceStyleMessageParser;
+import io.spine.logging.flogger.parser.DefaultPrintfMessageParser;
+import io.spine.logging.flogger.parser.MessageParser;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.util.logging.Level;
 

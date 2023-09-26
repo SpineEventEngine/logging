@@ -22,7 +22,7 @@ import static com.google.common.flogger.util.Checks.checkNotNull;
 import io.spine.logging.flogger.parameter.DateTimeFormat;
 import io.spine.logging.flogger.parameter.Parameter;
 import io.spine.logging.flogger.parameter.ParameterVisitor;
-import com.google.common.flogger.parser.MessageBuilder;
+import io.spine.logging.flogger.parser.MessageBuilder;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.util.Calendar;
 import java.util.Date;

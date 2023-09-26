@@ -24,14 +24,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.common.flogger.parser
+package io.spine.logging.flogger.parser
 
 import io.spine.logging.flogger.backend.FormatChar
-import io.spine.logging.flogger.backend.FormatOptions
-import io.spine.logging.flogger.backend.FormatOptions.FLAG_SHOW_GROUPING
-import io.spine.logging.flogger.backend.FormatOptions.UNSET
-import com.google.common.flogger.parser.given.MemoizingMessageBuilder
-import com.google.common.flogger.parser.given.MemoizingParameterVisitor
+import io.spine.logging.flogger.parser.given.MemoizingMessageBuilder
+import io.spine.logging.flogger.parser.given.MemoizingParameterVisitor
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import org.junit.jupiter.api.DisplayName
@@ -39,50 +36,57 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 /**
- * Tests for [DefaultBraceStyleMessageParser].
+ * Tests for [DefaultPrintfMessageParser].
  *
- * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/parser/DefaultBraceStyleMessageParserTest.java">
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/parser/DefaultPrintfMessageParserTest.java">
  *     Original Java code of Google Flogger</a>
  */
-@DisplayName("`DefaultBraceStyleMessageParser` should")
-internal class DefaultBraceStyleMessageParserSpec {
+@DisplayName("`DefaultPrintfMessageParser` should")
+internal class DefaultPrintfMessageParserSpec {
 
-    companion object {
-        private val PARSER = DefaultBraceStyleMessageParser.getInstance()
-        private val WITH_GROUPING = FormatOptions.of(FLAG_SHOW_GROUPING, UNSET, UNSET)
-    }
+    private val parser = DefaultPrintfMessageParser.getInstance()
 
     @Test
-    fun `parse brace-based format string`() {
-        // Parse just 3 characters representing the brace format specifier between position 6 and 9.
-        // "-1" indicates that there's no additional formatting information after the index.
-        val memoizingBuilder = MemoizingMessageBuilder(PARSER)
-        PARSER.parseBraceFormatTerm(memoizingBuilder, 1, "Hello {1} World", 6, -1, 9)
+    fun `parse printf-based format string`() {
+        val memoizingBuilder = MemoizingMessageBuilder(parser)
+        parser.parsePrintfTerm(memoizingBuilder, 1, "Hello %2$+06.2f World", 6, 9, 14)
 
-        // Check the parameter created by the parsing of the printf term.
+        // Check how a parser uses the given builder.
         with(memoizingBuilder) {
             termStart shouldBe 6
-            termEnd shouldBe 9
+            termEnd shouldBe 15
             param.index shouldBe 1
         }
 
-        // Now visit the parameter and verify the expected callback occurred.
+        // Now visit the parameter and remember its state.
         val param = memoizingBuilder.param
         val memoizingVisitor = MemoizingParameterVisitor()
-        param.accept(memoizingVisitor, arrayOf("Answer: ", 42))
+        param.accept(memoizingVisitor, arrayOf("Answer: ", 42.0))
 
+        // Recover the remembered arguments and check that the right formatting was done.
         with(memoizingVisitor) {
             value shouldBe 42
-            format shouldBe FormatChar.DECIMAL
-            options shouldBe WITH_GROUPING
+            format shouldBe FormatChar.FLOAT
+            options.width shouldBe 6
+            options.precision shouldBe 2
+            options.shouldShowLeadingZeros() shouldBe true
+            options.shouldPrefixPlusForPositiveValues() shouldBe true
         }
     }
 
     @Test
-    fun `fail on trailing format specifiers`() {
+    fun `fail on unknown printf format`() {
         val exception = assertThrows<ParseException> {
-            PARSER.parseBraceFormatTerm(null, 0, "{0:x}", 0, 3, 5)
+            parser.parsePrintfTerm(null, 0, "%Q", 0, 1, 1)
         }
-        exception.message shouldContain "[:x]"
+        exception.message shouldContain "[%Q]"
+    }
+
+    @Test
+    fun `fail on invalid printf flag`() {
+        val exception = assertThrows<ParseException> {
+            parser.parsePrintfTerm(null, 0, "%0s", 0, 1, 2)
+        }
+        exception.message shouldContain "[%0s]"
     }
 }

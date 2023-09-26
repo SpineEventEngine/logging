@@ -16,7 +16,7 @@
 
 package io.spine.logging.flogger.backend;
 
-import com.google.common.flogger.parser.ParseException;
+import io.spine.logging.flogger.parser.ParseException;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
