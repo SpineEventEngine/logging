@@ -89,6 +89,9 @@ import java.util.Iterator;
  * <p>Note that some metadata entries are handled prior to being processed by the backend (e.g. rate
  * limiting), but a metadata entry remains present to record the fact that rate limiting was
  * enabled.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/MetadataKey.java">
+ *     Original Java code of Google Flogger</a>
  */
 public class MetadataKey<T> {
   // High levels of reentrant logging could well be caused by custom metadata keys. This is set

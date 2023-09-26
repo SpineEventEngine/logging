@@ -34,6 +34,9 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * A structured representation of formatting options compatible with printf style formatting.
  * <p>
  * This class is immutable and thread safe.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/FormatOptions.java">
+ *     Original Java code of Google Flogger</a>
  */
 public final class FormatOptions {
 

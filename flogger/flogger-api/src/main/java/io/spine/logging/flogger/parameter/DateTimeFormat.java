@@ -36,6 +36,9 @@ import java.util.Map;
  * WARNING: Many date/time format specifiers use the system default time-zone for formatting
  * {@code Date} or {@code long} arguments. This makes it non system-portable, and its use is heavily
  * discouraged with non-{@code Calendar} arguments.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parameter/DateTimeFormat.java">
+ *     Original Java code of Google Flogger</a>
  */
 public enum DateTimeFormat {
   // The following conversion characters are used for formatting times:

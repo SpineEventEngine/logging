@@ -44,6 +44,9 @@ import io.spine.logging.flogger.parameter.SimpleParameter;
  * from this class.
  * <p>
  * This class is immutable and thread safe (and any subclasses must also be so).
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parser/DefaultPrintfMessageParser.java">
+ *     Original Java code of Google Flogger</a>
  */
 public class DefaultPrintfMessageParser extends PrintfMessageParser {
   private static final PrintfMessageParser INSTANCE = new DefaultPrintfMessageParser();

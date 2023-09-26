@@ -34,6 +34,9 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * This is used for logging platform "plugins". It is expected that these constructors/methods will
  * be invoked once during logger initialization and then the results cached in the platform class
  * (thus there is no requirement for the class being invoked to handle caching of the result).
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/util/StaticMethodCaller.java">
+ *     Original Java code of Google Flogger</a>
  */
 public final class StaticMethodCaller {
   // TODO(cgdecker): Rename this class; eventually perhaps just roll it into DefaultPlatform

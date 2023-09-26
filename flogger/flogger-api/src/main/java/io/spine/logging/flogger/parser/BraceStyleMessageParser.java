@@ -34,6 +34,9 @@ package io.spine.logging.flogger.parser;
  * <p>
  * Typically you should not subclass this class, but instead subclass
  * {@link DefaultBraceStyleMessageParser}, which provides default behavior for simple place-holders.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parser/BraceStyleMessageParser.java">
+ *     Original Java code of Google Flogger</a>
  */
 public abstract class BraceStyleMessageParser extends MessageParser {
   /**

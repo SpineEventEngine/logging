@@ -39,6 +39,9 @@ import java.util.Map;
  * by {@link FormatChar}.
  * <p>
  * This class is immutable and thread safe, as per the Parameter contract.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parameter/SimpleParameter.java">
+ *     Original Java code of Google Flogger</a>
  */
 public final class SimpleParameter extends Parameter {
   /** Cache parameters with indices 0-9 to cover the vast majority of cases. */

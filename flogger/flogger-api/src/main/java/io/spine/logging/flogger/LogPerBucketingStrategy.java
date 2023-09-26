@@ -53,6 +53,9 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * <p>The additional complexity created by this approach really tells us that types which require
  * interning in order to be used as aggregation keys should be considered unsuitable, and callers
  * should seek alternatives.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogPerBucketingStrategy.java">
+ *     Original Java code of Google Flogger</a>
  */
 public abstract class LogPerBucketingStrategy<T> {
   private static final LogPerBucketingStrategy<Object> KNOWN_BOUNDED =

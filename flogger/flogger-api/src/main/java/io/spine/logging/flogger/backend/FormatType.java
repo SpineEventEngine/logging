@@ -31,6 +31,9 @@ import java.math.BigInteger;
 
 /**
  * The general formatting type of any one of the predefined {@code FormatChar} instances.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/FormatType.java">
+ *     Original Java code of Google Flogger</a>
  */
 public enum FormatType {
   /** General formatting that can be applied to any type. */

@@ -28,7 +28,12 @@ package io.spine.logging.flogger.util;
 
 import static io.spine.logging.flogger.util.Checks.checkArgument;
 
-/** Default implementation of {@link StackGetter} using {@link Throwable#getStackTrace}. */
+/**
+ * Default implementation of {@link StackGetter} using {@link Throwable#getStackTrace}.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/util/ThrowableStackGetter.java">
+ *     Original Java code of Google Flogger</a>
+ */
 final class ThrowableStackGetter implements StackGetter {
 
   @Override

@@ -60,6 +60,9 @@ import java.util.Set;
  *
  * <p>Instances of MetadataProcessor are reusable, but not thread safe. All metadata processing must
  * be done in the logging thread.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/MetadataProcessor.java">
+ *     Original Java code of Google Flogger</a>
  */
 public abstract class MetadataProcessor {
   // Immutable empty processor which never handles any metadata.

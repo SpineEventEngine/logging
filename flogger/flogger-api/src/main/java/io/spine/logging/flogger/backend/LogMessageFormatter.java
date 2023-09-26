@@ -34,6 +34,9 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
  * <p>This API is not used directly in the core Flogger libraries yet, but will become part of the
  * log message formatting API eventually. For now it should be considered an implementation detail
  * and definitely unstable.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/LogMessageFormatter.java">
+ *     Original Java code of Google Flogger</a>
  */
 // TODO(dbeaumont): This needs to either move into "system" or be extended somehow.
 // This is currently tightly coupled with the JDK log handler behaviour (by virtue of what data is

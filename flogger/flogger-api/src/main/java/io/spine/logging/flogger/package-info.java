@@ -27,8 +27,8 @@
 /**
  * Flogger is a fluent API for writing log messages.
  *
- * <p>This package is a part of the open-source
- * <a href="https://google.github.io/flogger">Flogger library</a>.
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/package-info.java">
+ *     Original Java code of Google Flogger</a>
  */
 @CheckReturnValue
 package io.spine.logging.flogger;

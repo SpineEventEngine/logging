@@ -51,6 +51,9 @@ import java.util.concurrent.TimeUnit;
  * In this example the {@code whenSystem()} method would return its own API with several context
  * specific methods ({@code isLowOnMemory()}, {@code isThrashing()} etc...), however each of these
  * sub-APIs must eventually return the original logging API.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LoggingApi.java">
+ *     Original Java code of Google Flogger</a>
  */
 // NOTE: new methods to this interface should be coordinated with google-java-format
 public interface LoggingApi<API extends LoggingApi<API>> {

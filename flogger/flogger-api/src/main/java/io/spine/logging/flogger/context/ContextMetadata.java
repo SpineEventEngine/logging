@@ -42,6 +42,9 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * be concatenated to inherit metadata from a parent context. This class is only expected to be
  * needed by implementations of {@link ScopedLoggingContext} and should not be considered a stable
  * API.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/ContextMetadata.java">
+ *     Original Java code of Google Flogger</a>
  */
 public abstract class ContextMetadata extends Metadata {
   private static final class Entry<T> {

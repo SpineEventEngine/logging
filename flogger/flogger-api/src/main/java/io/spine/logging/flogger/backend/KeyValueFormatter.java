@@ -61,6 +61,9 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  *
  * The result is that this string should be fully reparsable (with the exception of replaced unsafe
  * characters) and easily searchable by text based tools such as "grep".
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/KeyValueFormatter.java">
+ *     Original Java code of Google Flogger</a>
  */
 public final class KeyValueFormatter implements KeyValueHandler {
   // If a single-line log message is > NEWLINE_LIMIT characters long, emit a newline first. Having

@@ -36,6 +36,9 @@ import java.util.Locale;
 
 /**
  * A parameter implementation to mimic the formatting of brace style placeholders (ie, "{n}").
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parameter/BraceStyleParameter.java">
+ *     Original Java code of Google Flogger</a>
  */
 public class BraceStyleParameter extends Parameter {
 

@@ -36,6 +36,9 @@ import io.spine.logging.flogger.util.Checks;
  * message that's parsed.
  *
  * @param <T> The message type being built.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parser/MessageBuilder.java">
+ *     Original Java code of Google Flogger</a>
  */
 public abstract class MessageBuilder<T> {
   private final TemplateContext context;

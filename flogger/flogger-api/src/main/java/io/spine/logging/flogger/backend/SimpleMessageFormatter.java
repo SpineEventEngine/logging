@@ -60,6 +60,9 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * <p>If additional metadata keys, other than the {@code cause} are to be omitted, then {@link
  * #getSimpleFormatterIgnoring(MetadataKey...)} can be used to obtain a static formatter, instead of
  * using the default.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/SimpleMessageFormatter.java">
+ *     Original Java code of Google Flogger</a>
  */
 public final class SimpleMessageFormatter {
   @SuppressWarnings("ConstantCaseForConstants")

@@ -50,6 +50,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * <p>Note that scopes have no effect when applied to stateless log statements (e.g. log statements
  * without rate limiting) since the log site key for that log statement will not be used in any
  * maps.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LoggingScope.java">
+ *     Original Java code of Google Flogger</a>
  */
 public abstract class LoggingScope {
   /**

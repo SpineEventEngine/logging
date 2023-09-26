@@ -30,7 +30,12 @@ import static io.spine.logging.flogger.util.Checks.checkNotNull;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-/** A helper class for determining callers of a specified class currently on the stack. */
+/**
+ * A helper class for determining callers of a specified class currently on the stack.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/util/CallerFinder.java">
+ *     Original Java code of Google Flogger</a>
+ */
 public final class CallerFinder {
 
   private static final StackGetter STACK_GETTER = getBestStackGetter();

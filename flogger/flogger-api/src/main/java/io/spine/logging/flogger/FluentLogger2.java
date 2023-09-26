@@ -43,6 +43,9 @@ import java.util.logging.Level;
  * <p>
  * The choice to prevent direct extension of loggers was made deliberately to ensure that users of
  * a specific logger implementation always get the same behavior.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/FluentLogger.java">
+ *     Original Java code of Google Flogger</a>
  */
 public final class FluentLogger2 extends AbstractLogger<FluentLogger2.Api> {
   /**

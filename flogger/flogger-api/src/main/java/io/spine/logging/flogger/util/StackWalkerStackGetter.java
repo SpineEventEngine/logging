@@ -37,6 +37,9 @@ import java.util.stream.Stream;
  *
  * <p>Note, that since this is using Java 9 api, it is being compiled separately from the rest of
  * the source code.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/util/StackWalkerStackGetter.java">
+ *     Original Java code of Google Flogger</a>
  */
 final class StackWalkerStackGetter implements StackGetter {
   private static final StackWalker STACK_WALKER =

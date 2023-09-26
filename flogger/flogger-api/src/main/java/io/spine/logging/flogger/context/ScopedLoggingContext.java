@@ -89,6 +89,9 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * environments, or when called at some points in an application. If application code relies on
  * modifications to an existing, implicit logging context, it should always check the return values
  * of any modification methods called (e.g. {@link #addTags(Tags)}).
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/ScopedLoggingContext.java">
+ *     Original Java code of Google Flogger</a>
  */
 public abstract class ScopedLoggingContext {
   /** A logging context which must be closed in the reverse order to which it was created. */

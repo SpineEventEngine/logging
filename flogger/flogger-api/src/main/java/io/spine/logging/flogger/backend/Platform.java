@@ -46,6 +46,9 @@ import java.util.logging.Level;
  * Platform implementation classes must subclass {@code Platform} and have a public, no-argument
  * constructor. Platform instances are created on first-use of a fluent logger and platform
  * implementors must take care to avoid cycles during initialization and re-entrant behaviour.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/Platform.java">
+ *     Original Java code of Google Flogger</a>
  */
 public abstract class Platform {
   // non-final to prevent javac inlining.

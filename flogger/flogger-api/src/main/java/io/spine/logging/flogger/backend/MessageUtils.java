@@ -44,6 +44,9 @@ import java.util.Locale;
  * Static utilities for classes wishing to implement their own log message formatting. None of the
  * methods here are required in a formatter, but they should help solve problems common to log
  * message formatting.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/MessageUtils.java">
+ *     Original Java code of Google Flogger</a>
  */
 public final class MessageUtils {
 

@@ -33,9 +33,9 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * A sequence of metadata key/value pairs which can be associated to a log statement, either
  * directly via methods in the fluent API, of as part of a scoped logging context.
  *
- * <p>Metadata keys can "single valued" or "repeating" based on {@link MetadataKey#canRepeat}, but
- * it is permitted for a {@code Metadata} implementation to retain multiple single valued keys, and
- * in that situation the key at the largest index is the one which should be used.
+ * <p>Metadata keys can "single valued" or "repeating" based on {@link MetadataKey#canRepeat() MetadataKey.canRepeat()},
+ * but it is permitted for a {@code Metadata} implementation to retain multiple single valued keys,
+ * and in that situation the key at the largest index is the one that should be used.
  *
  * <p>Multiple {@code Metadata} instances can be merged, in order, to provide a final sequence for
  * a log statement. When {@code Metadata} instance are merged, the result is just the concatenation
@@ -45,6 +45,9 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * <p>If the value of a single valued key is required, the {@link #findValue(MetadataKey)} method
  * should be used to look it up. For all other metadata processing, a {@link MetadataProcessor}
  * should be created to ensure that scope and log site metadata can be merged correctly.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/Metadata.java">
+ *     Original Java code of Google Flogger</a>
  */
 public abstract class Metadata {
 

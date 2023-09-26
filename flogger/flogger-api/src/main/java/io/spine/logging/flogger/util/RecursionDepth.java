@@ -37,6 +37,9 @@ import java.io.Closeable;
  * <p>This class is an internal detail and must not be used outside the core Flogger library.
  * Backends which need to know the recursion depth for any reason should call {@code
  * Platform.getCurrentRecursionDepth()}.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/util/RecursionDepth.java">
+ *     Original Java code of Google Flogger</a>
  */
 public final class RecursionDepth implements Closeable {
   private static final ThreadLocal<RecursionDepth> holder = new ThreadLocal<RecursionDepth>() {

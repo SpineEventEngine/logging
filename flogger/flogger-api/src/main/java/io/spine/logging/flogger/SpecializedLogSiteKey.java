@@ -34,6 +34,9 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * Used by Scope/LogSiteMap and in response to "per()" or "perUnique()" (which is an implicitly
  * unbounded scope. This should avoid it needing to be made public assuming it's in the same
  * package.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/SpecializedLogSiteKey.java">
+ *     Original Java code of Google Flogger</a>
  */
 final class SpecializedLogSiteKey implements LogSiteKey {
   static LogSiteKey of(LogSiteKey key, Object qualifier) {

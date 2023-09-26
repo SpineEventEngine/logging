@@ -37,6 +37,9 @@ import io.spine.logging.flogger.parameter.BraceStyleParameter;
  * Note also that the implicit place holder syntax used by Log4J (i.e. "{}") is not currently
  * supported, however this may change. Currently an unescaped "{}" term in a log message will cause
  * a parse error, so adding support for it should not be an issue.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parser/DefaultBraceStyleMessageParser.java">
+ *     Original Java code of Google Flogger</a>
  */
 public class DefaultBraceStyleMessageParser extends BraceStyleMessageParser {
   private static final BraceStyleMessageParser INSTANCE = new DefaultBraceStyleMessageParser();

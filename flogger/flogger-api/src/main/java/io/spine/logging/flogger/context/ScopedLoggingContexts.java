@@ -37,6 +37,9 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
  * Static methods equivalent to the instance methods on {@link ScopedLoggingContext} but which
  * always operate on the current {@link ScopedLoggingContext} that would be returned by {@link
  * ScopedLoggingContext#getInstance}.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/ScopedLoggingContexts.java">
+ *     Original Java code of Google Flogger</a>
  */
 public final class ScopedLoggingContexts {
   private static final FluentLogger2 logger = FluentLogger2.forEnclosingClass();

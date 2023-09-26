@@ -46,6 +46,9 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * trace analysis is used. However, due to limitations in the information available from
  * {@code StackTraceElement}, this log site will not be unique if multiple log statements are on
  * the same, or if line number information was stripped from the class file.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSite.java">
+ *     Original Java code of Google Flogger</a>
  */
 public abstract class LogSite implements LogSiteKey {
   /** A value used for line numbers when the true information is not available. */

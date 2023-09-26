@@ -38,6 +38,9 @@ import static io.spine.logging.flogger.util.Checks.checkNotNull;
  *
  * <p>If lambdas are available, users should prefer using this class rather than explicitly creating
  * {@code LazyArg} instances.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LazyArgs.java">
+ *     Original Java code of Google Flogger</a>
  */
 // TODO: Add other generally useful methods here, especially things which help non-lambda users.
 public final class LazyArgs {

@@ -44,6 +44,9 @@ import java.util.Formattable;
  * <p>This formatter can be overridden to modify the behaviour of the {@link ParameterVisitor}
  * methods, but this is not expected to be common. Most logger backends will only ever need to use
  * {@link #appendFormattedMessage(LogData, StringBuilder)}.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/BaseMessageFormatter.java">
+ *     Original Java code of Google Flogger</a>
  */
 public class BaseMessageFormatter extends MessageBuilder<StringBuilder>
     implements ParameterVisitor {

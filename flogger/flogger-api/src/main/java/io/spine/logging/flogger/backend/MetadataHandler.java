@@ -45,6 +45,9 @@ import java.util.Map;
  * however the class can also just be extended to implement alternate/custom behavior.
  *
  * @param <C> the arbitrary context type.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/MetadataHandler.java">
+ *     Original Java code of Google Flogger</a>
  */
 public abstract class MetadataHandler<C> {
   /**

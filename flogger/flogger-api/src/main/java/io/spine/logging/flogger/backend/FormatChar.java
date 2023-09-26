@@ -34,6 +34,9 @@ package io.spine.logging.flogger.backend;
  * The default term formatter takes care of supporting all these options when expressed in their
  * normal '%X' form (including flags, width and precision). Custom messages parsers must convert
  * arguments into one of these forms before passing then through to the backend.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/FormatChar.java">
+ *     Original Java code of Google Flogger</a>
  */
 public enum FormatChar {
   /**

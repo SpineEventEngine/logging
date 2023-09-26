@@ -32,6 +32,9 @@ package io.spine.logging.flogger;
  *
  * <p>Note that the precise value returned by {@link #getMaxDepth()} may change over time, but it
  * can be assumed that {@code SMALL <= MEDIUM <= LARGE <= FULL}.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/StackSize.java">
+ *     Original Java code of Google Flogger</a>
  */
 public enum StackSize {
   /**

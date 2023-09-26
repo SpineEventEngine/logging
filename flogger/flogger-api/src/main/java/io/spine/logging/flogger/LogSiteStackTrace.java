@@ -34,6 +34,9 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * <p>
  * The name of this class may become relied upon implicitly by tools such as ECatcher. Do not
  * rename or move this class without checking for implicit in logging tools.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSiteStackTrace.java">
+ *     Original Java code of Google Flogger</a>
  */
 public final class LogSiteStackTrace extends Exception {
   /**

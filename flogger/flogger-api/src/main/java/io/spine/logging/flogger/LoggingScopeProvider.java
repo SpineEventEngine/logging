@@ -35,6 +35,9 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * around in user code. The scope provider can lookup the correct scope instance for the current
  * thread, and different providers can provide different types of scope (e.g. you can have a
  * provider for "request" scopes and a provider for "sub-task" scopes)
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LoggingScopeProvider.java">
+ *     Original Java code of Google Flogger</a>
  */
 public interface LoggingScopeProvider {
   /**

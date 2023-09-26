@@ -31,6 +31,9 @@ import io.spine.logging.flogger.backend.FormatOptions;
 
 /**
  * A visitor of log message arguments, dispatched by {@code Parameter} instances.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parameter/ParameterVisitor.java">
+ *     Original Java code of Google Flogger</a>
  */
 // TODO: When all other refactoring done, rename to ArgumentVisitor
 public interface ParameterVisitor {

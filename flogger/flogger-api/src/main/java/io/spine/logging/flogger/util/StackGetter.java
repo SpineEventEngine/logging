@@ -26,7 +26,12 @@
 
 package io.spine.logging.flogger.util;
 
-/** Interface for finding call site information. */
+/**
+ * Interface for finding call site information.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/util/StackGetter.java">
+ *     Original Java code of Google Flogger</a>
+ */
 interface StackGetter {
   /**
    * Returns the first caller of a method on the {@code target} class that is *not* a member of

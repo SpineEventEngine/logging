@@ -37,6 +37,9 @@ import static java.lang.String.format;
 
 /**
  * Fallback context data provider used when no other implementations are available for a platform.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/NoOpContextDataProvider.java">
+ *     Original Java code of Google Flogger</a>
  */
 final class NoOpContextDataProvider extends ContextDataProvider {
   private static final ContextDataProvider NO_OP_INSTANCE = new NoOpContextDataProvider();
