@@ -25,7 +25,7 @@ package io.spine.logging.flogger;
  */
 public enum StackSize {
   /**
-   * Produces a small stack suitable for more fine grained debugging. For performance reasons, this
+   * Produces a small stack suitable for finer grained debugging. For performance reasons, this
    * is the only stack size suitable for log statements at level {@code INFO} or finer, but is may
    * also be useful for {@code WARNING} level log statements in cases where context is not as
    * important. For {@code SEVERE} log statements, it is advised to use a stack size of
@@ -34,7 +34,7 @@ public enum StackSize {
    * Requesting a small stack trace for log statements which occur under normal circumstances is
    * acceptable, but may affect performance. Consider using
    * {@link LoggingApi#withStackTrace(StackSize)} in conjunction with rate limiting methods,
-   * such as {@link LoggingApi#atMostEvery(int, TimeUnit)}, to mitigate performance issues.
+   * such as {@link LoggingApi#atMostEvery(int, java.util.concurrent.TimeUnit)}, to mitigate performance issues.
    * <p>
    * The current maximum size of a {@code SMALL} stack trace is 10 elements, but this may change.
    */
