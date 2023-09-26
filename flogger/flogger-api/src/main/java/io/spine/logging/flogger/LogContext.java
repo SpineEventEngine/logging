@@ -26,16 +26,15 @@
 
 package io.spine.logging.flogger;
 
-import static io.spine.logging.flogger.util.CallerFinder.getStackForCallerOf;
-import static io.spine.logging.flogger.util.Checks.checkNotNull;
-import static java.util.concurrent.TimeUnit.NANOSECONDS;
-
+import io.spine.logging.flogger.DurationRateLimiter.RateLimitPeriod;
 import io.spine.logging.flogger.backend.LogData;
 import io.spine.logging.flogger.backend.Metadata;
 import io.spine.logging.flogger.backend.Platform;
 import io.spine.logging.flogger.backend.TemplateContext;
 import io.spine.logging.flogger.context.Tags;
 import io.spine.logging.flogger.parser.MessageParser;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
@@ -43,8 +42,9 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
-import io.spine.logging.flogger.DurationRateLimiter.RateLimitPeriod;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import static io.spine.logging.flogger.util.CallerFinder.getStackForCallerOf;
+import static io.spine.logging.flogger.util.Checks.checkNotNull;
+import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 /**
  * The base context for a logging statement, which implements the base logging API.

@@ -26,12 +26,13 @@
 
 package io.spine.logging.flogger;
 
-import static io.spine.logging.flogger.LogContext.Key.LOG_SAMPLE_EVERY_N;
-
 import io.spine.logging.flogger.backend.Metadata;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.checkerframework.checker.nullness.qual.Nullable;
+
+import static io.spine.logging.flogger.LogContext.Key.LOG_SAMPLE_EVERY_N;
 
 /**
  * Rate limiter to support {@code onAverageEvery(N)} functionality.
