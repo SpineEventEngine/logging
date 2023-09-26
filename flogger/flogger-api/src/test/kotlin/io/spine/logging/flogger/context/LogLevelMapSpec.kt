@@ -24,9 +24,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.common.flogger.context
+package io.spine.logging.flogger.context
 
-import com.google.common.flogger.context.LogLevelMap.create
+import io.spine.logging.flogger.context.LogLevelMap.create
 import io.kotest.matchers.shouldBe
 import java.util.logging.Level
 

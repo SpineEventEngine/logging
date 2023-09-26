@@ -28,8 +28,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * An opaque scope marker which can be attached to log sites to provide "per scope" behaviour for
  * stateful logging operations (e.g. rate limiting).
  *
- * <p>Scopes are provided via the {@link Provider} interface and found by looking for
- * the current {@link com.google.common.flogger.context.ScopedLoggingContext ScopedLoggingContexts}.
+ * <p>Scopes are provided via the {@link LoggingScopeProvider} interface and found by looking for
+ * the current {@link io.spine.logging.flogger.context.ScopedLoggingContext ScopedLoggingContexts}.
  *
  * <p>Stateful fluent logging APIs which need to look up per log site information (e.g. rate limit
  * state) should do so via a {@link LogSiteMap} using the {@link LogSiteKey} passed into the {@link

@@ -28,7 +28,7 @@ package io.spine.logging.backend.system;
 
 import io.spine.logging.flogger.backend.LoggerBackend;
 import io.spine.logging.flogger.backend.Platform;
-import com.google.common.flogger.context.ContextDataProvider;
+import io.spine.logging.flogger.context.ContextDataProvider;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;

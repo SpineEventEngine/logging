@@ -125,7 +125,7 @@ public abstract class MetadataProcessor {
    * </ul>
    *
    * <p>Note that equal or identical repeated values are permitted, and no "deduplication" is
-   * performed. This is very much in contrast to the {@link com.google.common.flogger.context.Tags
+   * performed. This is very much in contrast to the {@link io.spine.logging.flogger.context.Tags
    * Tags} mechanism, which de-duplicates mappings and reorders keys and values to generate a
    * minimal, canonical representation.
    *

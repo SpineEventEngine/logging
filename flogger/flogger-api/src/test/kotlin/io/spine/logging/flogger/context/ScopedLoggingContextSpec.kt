@@ -24,10 +24,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.common.flogger.context
+package io.spine.logging.flogger.context
 
-import com.google.common.flogger.context.ScopedLoggingContext.InvalidLoggingContextStateException
-import com.google.common.flogger.context.ScopedLoggingContext.LoggingContextCloseable
+import io.spine.logging.flogger.context.ScopedLoggingContext.InvalidLoggingContextStateException
+import io.spine.logging.flogger.context.ScopedLoggingContext.LoggingContextCloseable
 import io.kotest.matchers.throwable.shouldHaveMessage
 import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.DisplayName

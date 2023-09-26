@@ -28,8 +28,8 @@ package io.spine.logging.backend.log4j2
 
 import io.spine.logging.flogger.LogContext.Key
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
-import com.google.common.flogger.context.ContextDataProvider
-import com.google.common.flogger.context.Tags
+import io.spine.logging.flogger.context.ContextDataProvider
+import io.spine.logging.flogger.context.Tags
 import io.spine.logging.flogger.repeatedKey
 import io.spine.logging.flogger.singleKey
 import com.google.common.flogger.testing.ConfigurableLogger

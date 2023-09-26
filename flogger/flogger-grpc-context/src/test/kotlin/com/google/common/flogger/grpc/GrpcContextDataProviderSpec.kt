@@ -26,7 +26,7 @@
 
 package com.google.common.flogger.grpc
 
-import com.google.common.flogger.context.ContextDataProvider
+import io.spine.logging.flogger.context.ContextDataProvider
 import com.google.common.flogger.testing.AbstractContextDataProviderSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.optional.shouldBePresent

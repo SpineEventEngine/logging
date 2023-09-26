@@ -20,8 +20,8 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import io.spine.logging.flogger.AbstractLogger;
 import io.spine.logging.flogger.LogSite;
-import com.google.common.flogger.context.ContextDataProvider;
-import com.google.common.flogger.context.Tags;
+import io.spine.logging.flogger.context.ContextDataProvider;
+import io.spine.logging.flogger.context.Tags;
 import com.google.common.flogger.util.RecursionDepth;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;

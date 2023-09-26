@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.google.common.flogger.context;
+package io.spine.logging.flogger.context;
 
 import io.spine.logging.flogger.FluentLogger2;
 import io.spine.logging.flogger.MetadataKey;
 import io.spine.logging.flogger.StackSize;
-import com.google.common.flogger.context.ScopedLoggingContext.LoggingContextCloseable;
+import io.spine.logging.flogger.context.ScopedLoggingContext.LoggingContextCloseable;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 

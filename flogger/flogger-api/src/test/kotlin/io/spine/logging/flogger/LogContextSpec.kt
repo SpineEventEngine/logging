@@ -29,7 +29,7 @@ package io.spine.logging.flogger
 import io.spine.logging.flogger.DurationRateLimiter.newRateLimitPeriod
 import io.spine.logging.flogger.LogContext.Key
 import io.spine.logging.flogger.LogContext.specializeLogSiteKeyFromMetadata
-import com.google.common.flogger.context.Tags
+import io.spine.logging.flogger.context.Tags
 import com.google.common.flogger.given.iterate
 import com.google.common.flogger.testing.shouldContainInOrder
 import com.google.common.flogger.testing.shouldContain

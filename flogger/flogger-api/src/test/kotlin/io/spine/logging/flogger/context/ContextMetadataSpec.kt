@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.common.flogger.context
+package io.spine.logging.flogger.context
 
 import com.google.common.flogger.testing.shouldBeEmpty
 import com.google.common.flogger.testing.shouldContainInOrder

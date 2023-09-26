@@ -24,7 +24,7 @@ import io.spine.logging.flogger.backend.LogData;
 import io.spine.logging.flogger.backend.Metadata;
 import io.spine.logging.flogger.backend.Platform;
 import io.spine.logging.flogger.backend.TemplateContext;
-import com.google.common.flogger.context.Tags;
+import io.spine.logging.flogger.context.Tags;
 import com.google.common.flogger.parser.MessageParser;
 import java.util.Arrays;
 import java.util.Iterator;

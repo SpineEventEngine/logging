@@ -28,10 +28,10 @@ package io.spine.logging.context.system
 
 import io.spine.logging.flogger.LoggingScope
 import io.spine.logging.flogger.backend.Metadata
-import com.google.common.flogger.context.ContextDataProvider
-import com.google.common.flogger.context.ScopeType
-import com.google.common.flogger.context.ScopedLoggingContext
-import com.google.common.flogger.context.Tags
+import io.spine.logging.flogger.context.ContextDataProvider
+import io.spine.logging.flogger.context.ScopeType
+import io.spine.logging.flogger.context.ScopedLoggingContext
+import io.spine.logging.flogger.context.Tags
 import io.spine.logging.context.system.StdContextData.Companion.shouldForceLoggingFor
 import io.spine.logging.context.toMap
 import io.spine.logging.toLevel

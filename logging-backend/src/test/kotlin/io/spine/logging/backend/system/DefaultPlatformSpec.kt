@@ -32,7 +32,7 @@ import io.spine.logging.backend.system.given.NoOpCallerFinder
 import io.spine.logging.backend.system.given.StubClockService
 import io.spine.logging.backend.system.given.StubContextDataProviderService
 import io.spine.logging.backend.system.given.StubBackendFactoryService
-import com.google.common.flogger.context.ContextDataProvider
+import io.spine.logging.flogger.context.ContextDataProvider
 import com.google.common.flogger.testing.FakeLoggerBackend
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain

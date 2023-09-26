@@ -24,9 +24,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.common.flogger.context
+package io.spine.logging.flogger.context
 
-import com.google.common.flogger.context.SegmentTrie.create
+import io.spine.logging.flogger.context.SegmentTrie.create
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
