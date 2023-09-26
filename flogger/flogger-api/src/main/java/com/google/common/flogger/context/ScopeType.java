@@ -18,8 +18,8 @@ package com.google.common.flogger.context;
 
 import static com.google.common.flogger.util.Checks.checkNotNull;
 
-import com.google.common.flogger.LoggingScope;
-import com.google.common.flogger.LoggingScopeProvider;
+import io.spine.logging.flogger.LoggingScope;
+import io.spine.logging.flogger.LoggingScopeProvider;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**

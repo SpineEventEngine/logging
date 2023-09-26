@@ -26,8 +26,8 @@
 
 package io.spine.logging.backend.system.given
 
-import com.google.common.flogger.AbstractLogger
-import com.google.common.flogger.LogSite
+import io.spine.logging.flogger.AbstractLogger
+import io.spine.logging.flogger.LogSite
 import com.google.common.flogger.backend.LoggerBackend
 import com.google.common.flogger.backend.Platform
 import io.spine.logging.backend.system.BackendFactory

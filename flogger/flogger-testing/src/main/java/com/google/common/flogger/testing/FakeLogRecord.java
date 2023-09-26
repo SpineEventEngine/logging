@@ -16,7 +16,7 @@
 
 package com.google.common.flogger.testing;
 
-import com.google.common.flogger.LogContext;
+import io.spine.logging.flogger.LogContext;
 import com.google.common.flogger.backend.LogData;
 import com.google.common.flogger.backend.Metadata;
 import io.spine.logging.backend.system.AbstractLogRecord;

@@ -16,9 +16,9 @@
 
 package com.google.common.flogger.context;
 
-import com.google.common.flogger.FluentLogger2;
-import com.google.common.flogger.MetadataKey;
-import com.google.common.flogger.StackSize;
+import io.spine.logging.flogger.FluentLogger2;
+import io.spine.logging.flogger.MetadataKey;
+import io.spine.logging.flogger.StackSize;
 import com.google.common.flogger.context.ScopedLoggingContext.LoggingContextCloseable;
 
 import java.util.concurrent.atomic.AtomicBoolean;

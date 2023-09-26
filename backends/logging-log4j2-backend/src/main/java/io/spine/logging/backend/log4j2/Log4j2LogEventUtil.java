@@ -31,9 +31,9 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.logging.Level.WARNING;
 
-import com.google.common.flogger.LogContext;
-import com.google.common.flogger.LogSite;
-import com.google.common.flogger.MetadataKey;
+import io.spine.logging.flogger.LogContext;
+import io.spine.logging.flogger.LogSite;
+import io.spine.logging.flogger.MetadataKey;
 import com.google.common.flogger.backend.BaseMessageFormatter;
 import com.google.common.flogger.backend.LogData;
 import com.google.common.flogger.backend.MessageUtils;

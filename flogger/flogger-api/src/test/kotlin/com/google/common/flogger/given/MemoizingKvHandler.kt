@@ -26,7 +26,7 @@
 
 package com.google.common.flogger.given
 
-import com.google.common.flogger.MetadataKey
+import io.spine.logging.flogger.MetadataKey
 
 /**
  * Remembers all handled key/value pairs.

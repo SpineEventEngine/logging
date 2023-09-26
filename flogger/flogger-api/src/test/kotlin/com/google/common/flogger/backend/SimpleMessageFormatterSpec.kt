@@ -26,14 +26,14 @@
 
 package com.google.common.flogger.backend
 
-import com.google.common.flogger.LogContext
 import com.google.common.flogger.context.Tags
-import com.google.common.flogger.repeatedKey
-import com.google.common.flogger.singleKey
 import com.google.common.flogger.testing.FakeLogData
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.logging.flogger.LogContext.Key
+import io.spine.logging.flogger.repeatedKey
+import io.spine.logging.flogger.singleKey
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -75,7 +75,7 @@ internal class SimpleMessageFormatterSpec {
         fun `with a cause`() {
             // Having a cause is a special case and never formatted.
             val cause: Throwable = IllegalArgumentException("Badness")
-            val logged = FakeLogData.of(LITERAL).addMetadata(LogContext.Key.LOG_CAUSE, cause)
+            val logged = FakeLogData.of(LITERAL).addMetadata(Key.LOG_CAUSE, cause)
             format(logged, EMPTY_SCOPE) shouldBeSameInstanceAs LITERAL
         }
 
@@ -103,7 +103,7 @@ internal class SimpleMessageFormatterSpec {
             appendFormatted(logged, scope) shouldBe "answer=42 [CONTEXT int=1 ]"
 
             val cause: Throwable = IllegalArgumentException("Badness")
-            logged.addMetadata(LogContext.Key.LOG_CAUSE, cause)
+            logged.addMetadata(Key.LOG_CAUSE, cause)
             appendFormatted(logged, scope) shouldBe "answer=42 [CONTEXT int=1 ]"
 
             logged.addMetadata(INT_KEY, 2)
@@ -121,7 +121,7 @@ internal class SimpleMessageFormatterSpec {
                 .addTag("two", "bar")
                 .addTag("one", "foo")
                 .build()
-            logged.addMetadata(LogContext.Key.TAGS, tags)
+            logged.addMetadata(Key.TAGS, tags)
             val withTags = "answer=42 [CONTEXT int=1 int=2 string=\"Hi\" one=\"foo\" two=\"bar\" ]"
             appendFormatted(logged, scope) shouldBe withTags
         }
@@ -132,7 +132,7 @@ internal class SimpleMessageFormatterSpec {
                 .addTag("two", "bar")
                 .addTag("one", "foo")
                 .build()
-            val logged = FakeLogData.of("message").addMetadata(LogContext.Key.TAGS, tags)
+            val logged = FakeLogData.of("message").addMetadata(Key.TAGS, tags)
             val scope = FakeMetadata().add(STRING_KEY, "Hi")
 
             val formatter = SimpleMessageFormatter.getDefaultFormatter()
@@ -152,14 +152,14 @@ internal class SimpleMessageFormatterSpec {
                 .addTag("two", "bar")
                 .addTag("one", "foo")
                 .build()
-            val logged = FakeLogData.of("msg").addMetadata(LogContext.Key.TAGS, tags)
+            val logged = FakeLogData.of("msg").addMetadata(Key.TAGS, tags)
             val scope = FakeMetadata().add(STRING_KEY, "Hi")
             val formatter = SimpleMessageFormatter.getSimpleFormatterIgnoring(STRING_KEY)
 
             // Cause is ignored in “simple” message formatting, and should not appear
             // in the output even though it is not explicitly ignored above.
             val cause: Throwable = IllegalArgumentException("Badness")
-            logged.addMetadata(LogContext.Key.LOG_CAUSE, cause)
+            logged.addMetadata(Key.LOG_CAUSE, cause)
             val metadata = MetadataProcessor.forScopeAndLogSite(scope, logged.metadata)
             formatter.format(logged, metadata) shouldBe "msg [CONTEXT one=\"foo\" two=\"bar\" ]"
 

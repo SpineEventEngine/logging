@@ -31,10 +31,10 @@ import com.google.common.flogger.backend.MetadataKeyValueHandlers.getDefaultRepe
 import com.google.common.flogger.backend.MetadataKeyValueHandlers.getDefaultValueHandler
 import com.google.common.flogger.given.MemoizingKvHandler
 import com.google.common.flogger.given.iterate
-import com.google.common.flogger.repeatedKey
-import com.google.common.flogger.singleKey
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
+import io.spine.logging.flogger.repeatedKey
+import io.spine.logging.flogger.singleKey
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 

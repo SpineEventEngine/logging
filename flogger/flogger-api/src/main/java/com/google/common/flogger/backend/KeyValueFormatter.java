@@ -16,7 +16,7 @@
 
 package com.google.common.flogger.backend;
 
-import com.google.common.flogger.MetadataKey.KeyValueHandler;
+import io.spine.logging.flogger.MetadataKey.KeyValueHandler;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;

@@ -26,9 +26,9 @@
 
 package io.spine.logging.backend.system;
 
-import com.google.common.flogger.AbstractLogger;
-import com.google.common.flogger.LogSite;
-import com.google.common.flogger.LogSites;
+import io.spine.logging.flogger.AbstractLogger;
+import io.spine.logging.flogger.LogSite;
+import io.spine.logging.flogger.LogSites;
 import com.google.common.flogger.backend.Platform.LogCallerFinder;
 import com.google.common.flogger.util.CallerFinder;
 

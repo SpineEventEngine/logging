@@ -18,7 +18,7 @@ package com.google.common.flogger.grpc;
 
 import static com.google.common.flogger.util.Checks.checkNotNull;
 
-import com.google.common.flogger.MetadataKey;
+import io.spine.logging.flogger.MetadataKey;
 import com.google.common.flogger.context.ContextMetadata;
 import com.google.common.flogger.context.LogLevelMap;
 import com.google.common.flogger.context.ScopeType;

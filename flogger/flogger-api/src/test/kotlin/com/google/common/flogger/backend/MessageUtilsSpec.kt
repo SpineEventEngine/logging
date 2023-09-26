@@ -26,7 +26,6 @@
 
 package com.google.common.flogger.backend
 
-import com.google.common.flogger.LogSite
 import com.google.common.flogger.backend.FormatOptions.FLAG_SHOW_ALT_FORM
 import com.google.common.flogger.backend.FormatOptions.FLAG_SHOW_LEADING_ZEROS
 import com.google.common.flogger.backend.FormatOptions.FLAG_UPPER_CASE
@@ -44,6 +43,7 @@ import io.kotest.matchers.string.shouldBeEmpty
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldNotContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.logging.flogger.LogSite
 import java.util.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested

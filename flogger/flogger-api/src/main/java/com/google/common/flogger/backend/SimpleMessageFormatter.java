@@ -16,9 +16,9 @@
 
 package com.google.common.flogger.backend;
 
-import com.google.common.flogger.LogContext;
-import com.google.common.flogger.MetadataKey;
-import com.google.common.flogger.MetadataKey.KeyValueHandler;
+import io.spine.logging.flogger.LogContext;
+import io.spine.logging.flogger.MetadataKey;
+import io.spine.logging.flogger.MetadataKey.KeyValueHandler;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.util.Collections;
 import java.util.HashSet;

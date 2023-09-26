@@ -16,7 +16,7 @@
 
 package com.google.common.flogger.context;
 
-import com.google.common.flogger.LoggingScope;
+import io.spine.logging.flogger.LoggingScope;
 import com.google.common.flogger.backend.Metadata;
 import com.google.common.flogger.backend.Platform;
 import java.util.logging.Level;

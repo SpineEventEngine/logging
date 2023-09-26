@@ -26,7 +26,7 @@
 
 package io.spine.logging.context.system
 
-import com.google.common.flogger.LoggingScope
+import io.spine.logging.flogger.LoggingScope
 import com.google.common.flogger.context.ContextMetadata
 import com.google.common.flogger.context.ScopeType
 import com.google.common.flogger.context.ScopedLoggingContext.ScopeList

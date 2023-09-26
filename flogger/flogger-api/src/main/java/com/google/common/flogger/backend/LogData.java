@@ -16,7 +16,7 @@
 
 package com.google.common.flogger.backend;
 
-import com.google.common.flogger.LogSite;
+import io.spine.logging.flogger.LogSite;
 import java.util.logging.Level;
 
 /**

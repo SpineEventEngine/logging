@@ -20,7 +20,7 @@ import static com.google.common.flogger.backend.FormatOptions.FLAG_LEFT_ALIGN;
 import static com.google.common.flogger.backend.FormatOptions.FLAG_SHOW_ALT_FORM;
 import static com.google.common.flogger.backend.FormatOptions.FLAG_UPPER_CASE;
 
-import com.google.common.flogger.LogSite;
+import io.spine.logging.flogger.LogSite;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.io.IOException;
 import java.math.BigInteger;

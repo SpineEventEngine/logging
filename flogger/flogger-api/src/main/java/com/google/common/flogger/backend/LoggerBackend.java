@@ -25,13 +25,15 @@ import java.util.logging.Level;
  *
  * <h2>Implementation Notes:</h2>
  *
- * Often each {@link com.google.common.flogger.AbstractLogger} instance will be instantiated with a
- * new logger backend (to permit per-class logging behavior). Because of this it is important that
- * LoggerBackends have as little per-instance state as possible.
+ * Often each {@link io.spine.logging.flogger.AbstractLogger AbstractLogger}
+ * instance will be instantiated with a new logger backend to permit per-class
+ * logging behavior. Because of this, it is important that logger backends have
+ * as little per-instance state as possible.
  *
- * <p>It is also essential that no implementation of {@code LoggerBackend} ever holds onto user
- * supplied objects (especially log statement arguments) after the {@code log()} or {@code
- * handleError()} methods to which they were passed have exited.
+ * <p>It is also essential that no implementation of {@code LoggerBackend}
+ * ever holds onto user supplied objects (especially log statement arguments)
+ * after the {@code log()} or {@code handleError()} methods to which they
+ * were passed have exited.
  *
  * <p>This means that <em>ALL</em> formatting or serialization of log statement arguments or
  * metadata values <em>MUST</em> be completed inside the log method itself. If the backend needs to

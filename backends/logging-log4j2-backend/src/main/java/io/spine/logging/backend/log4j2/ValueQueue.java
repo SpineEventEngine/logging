@@ -28,7 +28,7 @@ package io.spine.logging.backend.log4j2;
 
 import static com.google.common.flogger.util.Checks.checkNotNull;
 
-import com.google.common.flogger.MetadataKey;
+import io.spine.logging.flogger.MetadataKey;
 import com.google.common.flogger.context.Tags;
 import java.util.Iterator;
 import java.util.LinkedList;

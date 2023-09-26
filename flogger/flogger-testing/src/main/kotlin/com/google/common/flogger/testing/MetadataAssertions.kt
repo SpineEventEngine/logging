@@ -26,7 +26,7 @@
 
 package com.google.common.flogger.testing
 
-import com.google.common.flogger.MetadataKey
+import io.spine.logging.flogger.MetadataKey
 import com.google.common.flogger.backend.Metadata
 import io.kotest.matchers.collections.shouldContainInOrder
 import io.kotest.matchers.ints.shouldBeExactly

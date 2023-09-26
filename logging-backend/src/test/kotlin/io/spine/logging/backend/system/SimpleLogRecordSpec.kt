@@ -26,12 +26,12 @@
 
 package io.spine.logging.backend.system
 
-import com.google.common.flogger.LogContext.Key
-import com.google.common.flogger.MetadataKey
+import io.spine.logging.flogger.LogContext.Key
+import io.spine.logging.flogger.MetadataKey
 import com.google.common.flogger.backend.Metadata
 import com.google.common.flogger.context.Tags
 import com.google.common.flogger.parser.ParseException
-import com.google.common.flogger.singleKey
+import io.spine.logging.flogger.singleKey
 import com.google.common.flogger.testing.FakeLogData
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.assertions.throwables.shouldNotThrow

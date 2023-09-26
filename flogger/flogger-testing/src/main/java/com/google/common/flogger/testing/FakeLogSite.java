@@ -16,7 +16,7 @@
 
 package com.google.common.flogger.testing;
 
-import com.google.common.flogger.LogSite;
+import io.spine.logging.flogger.LogSite;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 

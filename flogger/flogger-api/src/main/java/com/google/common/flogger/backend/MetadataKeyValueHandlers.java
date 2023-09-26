@@ -16,8 +16,8 @@
 
 package com.google.common.flogger.backend;
 
-import com.google.common.flogger.MetadataKey;
-import com.google.common.flogger.MetadataKey.KeyValueHandler;
+import io.spine.logging.flogger.MetadataKey;
+import io.spine.logging.flogger.MetadataKey.KeyValueHandler;
 import com.google.common.flogger.backend.MetadataHandler.RepeatedValueHandler;
 import com.google.common.flogger.backend.MetadataHandler.ValueHandler;
 import java.util.Iterator;

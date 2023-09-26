@@ -16,7 +16,7 @@
 
 package com.google.common.flogger.backend;
 
-import com.google.common.flogger.MetadataKey;
+import io.spine.logging.flogger.MetadataKey;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**

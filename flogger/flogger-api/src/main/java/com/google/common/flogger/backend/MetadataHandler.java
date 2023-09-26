@@ -19,7 +19,7 @@ package com.google.common.flogger.backend;
 import static com.google.common.flogger.util.Checks.checkArgument;
 import static com.google.common.flogger.util.Checks.checkNotNull;
 
-import com.google.common.flogger.MetadataKey;
+import io.spine.logging.flogger.MetadataKey;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.util.HashMap;
 import java.util.Iterator;

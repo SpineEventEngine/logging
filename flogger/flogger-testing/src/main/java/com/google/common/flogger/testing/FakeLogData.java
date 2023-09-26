@@ -19,9 +19,9 @@ package com.google.common.flogger.testing;
 import static com.google.common.flogger.util.Checks.checkState;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
-import com.google.common.flogger.LogContext;
-import com.google.common.flogger.LogSite;
-import com.google.common.flogger.MetadataKey;
+import io.spine.logging.flogger.LogContext;
+import io.spine.logging.flogger.LogSite;
+import io.spine.logging.flogger.MetadataKey;
 import com.google.common.flogger.backend.LogData;
 import com.google.common.flogger.backend.Metadata;
 import com.google.common.flogger.backend.TemplateContext;

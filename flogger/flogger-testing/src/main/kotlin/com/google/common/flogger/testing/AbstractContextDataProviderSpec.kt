@@ -26,7 +26,7 @@
 
 package com.google.common.flogger.testing
 
-import com.google.common.flogger.LogContext.Key
+import io.spine.logging.flogger.LogContext.Key
 import com.google.common.flogger.backend.Metadata
 import com.google.common.flogger.context.ContextDataProvider
 import com.google.common.flogger.context.LogLevelMap
@@ -34,8 +34,8 @@ import com.google.common.flogger.context.ScopeType
 import com.google.common.flogger.context.ScopedLoggingContext
 import com.google.common.flogger.context.ScopedLoggingContexts
 import com.google.common.flogger.context.Tags
-import com.google.common.flogger.repeatedKey
-import com.google.common.flogger.singleKey
+import io.spine.logging.flogger.repeatedKey
+import io.spine.logging.flogger.singleKey
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldHaveSize
