@@ -26,8 +26,8 @@
 
 package io.spine.logging.flogger
 
-import com.google.common.flogger.backend.LogData
-import com.google.common.flogger.backend.LoggingException
+import io.spine.logging.flogger.backend.LogData
+import io.spine.logging.flogger.backend.LoggingException
 import com.google.common.flogger.given.MemoizingBackend
 import com.google.common.flogger.testing.ConfigurableLogger
 import io.kotest.assertions.throwables.shouldThrow

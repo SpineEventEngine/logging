@@ -27,7 +27,7 @@
 package com.google.common.flogger.testing
 
 import io.spine.logging.flogger.LogContext.Key
-import com.google.common.flogger.backend.Metadata
+import io.spine.logging.flogger.backend.Metadata
 import com.google.common.flogger.context.ContextDataProvider
 import com.google.common.flogger.context.LogLevelMap
 import com.google.common.flogger.context.ScopeType

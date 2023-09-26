@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.log4j2;
 
-import static com.google.common.flogger.backend.MetadataProcessor.forScopeAndLogSite;
+import static io.spine.logging.flogger.backend.MetadataProcessor.forScopeAndLogSite;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.logging.Level.WARNING;
@@ -34,13 +34,13 @@ import static java.util.logging.Level.WARNING;
 import io.spine.logging.flogger.LogContext;
 import io.spine.logging.flogger.LogSite;
 import io.spine.logging.flogger.MetadataKey;
-import com.google.common.flogger.backend.BaseMessageFormatter;
-import com.google.common.flogger.backend.LogData;
-import com.google.common.flogger.backend.MessageUtils;
-import com.google.common.flogger.backend.Metadata;
-import com.google.common.flogger.backend.MetadataHandler;
-import com.google.common.flogger.backend.Platform;
-import com.google.common.flogger.backend.SimpleMessageFormatter;
+import io.spine.logging.flogger.backend.BaseMessageFormatter;
+import io.spine.logging.flogger.backend.LogData;
+import io.spine.logging.flogger.backend.MessageUtils;
+import io.spine.logging.flogger.backend.Metadata;
+import io.spine.logging.flogger.backend.MetadataHandler;
+import io.spine.logging.flogger.backend.Platform;
+import io.spine.logging.flogger.backend.SimpleMessageFormatter;
 import com.google.common.flogger.context.ScopedLoggingContext;
 import com.google.common.flogger.context.Tags;
 import java.util.logging.Level;

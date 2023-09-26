@@ -26,7 +26,7 @@
 
 package com.google.common.flogger.given
 
-import com.google.common.flogger.backend.LogData
+import io.spine.logging.flogger.backend.LogData
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 

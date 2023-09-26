@@ -16,8 +16,8 @@
 
 package com.google.common.flogger.parameter;
 
-import com.google.common.flogger.backend.FormatChar;
-import com.google.common.flogger.backend.FormatOptions;
+import io.spine.logging.flogger.backend.FormatChar;
+import io.spine.logging.flogger.backend.FormatOptions;
 
 /**
  * A visitor of log message arguments, dispatched by {@code Parameter} instances.

@@ -26,14 +26,14 @@
 
 package com.google.common.flogger.parameter
 
-import com.google.common.flogger.backend.FormatChar
-import com.google.common.flogger.backend.FormatOptions
+import io.spine.logging.flogger.backend.FormatChar
+import io.spine.logging.flogger.backend.FormatOptions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import com.google.common.flogger.backend.FormatChar.DECIMAL
-import com.google.common.flogger.backend.FormatChar.FLOAT
-import com.google.common.flogger.backend.FormatChar.HEX
-import com.google.common.flogger.backend.FormatChar.STRING
+import io.spine.logging.flogger.backend.FormatChar.DECIMAL
+import io.spine.logging.flogger.backend.FormatChar.FLOAT
+import io.spine.logging.flogger.backend.FormatChar.HEX
+import io.spine.logging.flogger.backend.FormatChar.STRING
 import com.google.common.flogger.parameter.SimpleParameter.buildFormatString
 import com.google.common.flogger.parser.ParseException
 import io.kotest.matchers.shouldBe

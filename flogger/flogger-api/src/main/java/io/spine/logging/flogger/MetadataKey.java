@@ -20,7 +20,7 @@ import static com.google.common.flogger.util.Checks.checkMetadataIdentifier;
 import static com.google.common.flogger.util.Checks.checkNotNull;
 import static com.google.common.flogger.util.Checks.checkState;
 
-import com.google.common.flogger.backend.Platform;
+import io.spine.logging.flogger.backend.Platform;
 import java.util.Iterator;
 
 /**

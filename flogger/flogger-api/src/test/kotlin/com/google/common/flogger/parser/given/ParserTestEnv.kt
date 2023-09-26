@@ -26,9 +26,9 @@
 
 package com.google.common.flogger.parser.given
 
-import com.google.common.flogger.backend.FormatChar
-import com.google.common.flogger.backend.FormatOptions
-import com.google.common.flogger.backend.TemplateContext
+import io.spine.logging.flogger.backend.FormatChar
+import io.spine.logging.flogger.backend.FormatOptions
+import io.spine.logging.flogger.backend.TemplateContext
 import com.google.common.flogger.parameter.DateTimeFormat
 import com.google.common.flogger.parameter.Parameter
 import com.google.common.flogger.parameter.ParameterVisitor

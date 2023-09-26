@@ -27,7 +27,7 @@
 package io.spine.logging.backend.system.given
 
 import com.google.auto.service.AutoService
-import com.google.common.flogger.backend.LoggerBackend
+import io.spine.logging.flogger.backend.LoggerBackend
 import io.spine.logging.backend.system.BackendFactory
 import io.spine.logging.backend.system.Clock
 import com.google.common.flogger.context.ContextDataProvider

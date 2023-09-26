@@ -26,7 +26,7 @@
 
 package io.spine.logging
 
-import com.google.common.flogger.backend.Platform
+import io.spine.logging.flogger.backend.Platform
 import kotlin.reflect.KClass
 import io.spine.logging.flogger.LogSite as FloggerLogSite
 import io.spine.logging.flogger.LogSites as FloggerLogSites

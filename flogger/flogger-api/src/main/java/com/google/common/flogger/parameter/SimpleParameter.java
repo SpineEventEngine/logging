@@ -18,8 +18,8 @@ package com.google.common.flogger.parameter;
 
 import static com.google.common.flogger.util.Checks.checkNotNull;
 
-import com.google.common.flogger.backend.FormatChar;
-import com.google.common.flogger.backend.FormatOptions;
+import io.spine.logging.flogger.backend.FormatChar;
+import io.spine.logging.flogger.backend.FormatOptions;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;

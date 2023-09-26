@@ -28,7 +28,7 @@ package io.spine.logging.flogger
 
 import io.spine.logging.flogger.MetadataKey.repeated
 import io.spine.logging.flogger.MetadataKey.single
-import com.google.common.flogger.backend.Platform
+import io.spine.logging.flogger.backend.Platform
 import com.google.common.flogger.given.MemoizingKvHandler
 import com.google.common.flogger.given.iterate
 import com.google.common.flogger.util.RecursionDepth

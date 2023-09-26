@@ -16,7 +16,7 @@
 
 package com.google.common.flogger.parameter;
 
-import com.google.common.flogger.backend.FormatOptions;
+import io.spine.logging.flogger.backend.FormatOptions;
 
 /**
  * An abstract representation of a parameter for a message template.

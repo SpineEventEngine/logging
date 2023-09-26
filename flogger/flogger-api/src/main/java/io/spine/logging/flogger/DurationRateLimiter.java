@@ -21,8 +21,8 @@ import static com.google.common.flogger.util.Checks.checkArgument;
 import static com.google.common.flogger.util.Checks.checkNotNull;
 import static java.lang.Math.max;
 
-import com.google.common.flogger.backend.LogData;
-import com.google.common.flogger.backend.Metadata;
+import io.spine.logging.flogger.backend.LogData;
+import io.spine.logging.flogger.backend.Metadata;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import org.checkerframework.checker.nullness.qual.Nullable;

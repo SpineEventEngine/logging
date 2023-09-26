@@ -26,10 +26,10 @@
 
 package com.google.common.flogger.parser
 
-import com.google.common.flogger.backend.FormatChar
-import com.google.common.flogger.backend.FormatOptions
-import com.google.common.flogger.backend.FormatOptions.FLAG_SHOW_GROUPING
-import com.google.common.flogger.backend.FormatOptions.UNSET
+import io.spine.logging.flogger.backend.FormatChar
+import io.spine.logging.flogger.backend.FormatOptions
+import io.spine.logging.flogger.backend.FormatOptions.FLAG_SHOW_GROUPING
+import io.spine.logging.flogger.backend.FormatOptions.UNSET
 import com.google.common.flogger.parser.given.MemoizingMessageBuilder
 import com.google.common.flogger.parser.given.MemoizingParameterVisitor
 import io.kotest.matchers.shouldBe

@@ -26,7 +26,7 @@
 
 package com.google.common.flogger.parser
 
-import com.google.common.flogger.backend.FormatChar
+import io.spine.logging.flogger.backend.FormatChar
 import com.google.common.flogger.parser.given.MemoizingMessageBuilder
 import com.google.common.flogger.parser.given.MemoizingParameterVisitor
 import io.kotest.matchers.shouldBe

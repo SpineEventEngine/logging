@@ -18,7 +18,7 @@ package io.spine.logging.flogger;
 
 import static com.google.common.flogger.util.Checks.checkNotNull;
 
-import com.google.common.flogger.backend.Metadata;
+import io.spine.logging.flogger.backend.Metadata;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
 import java.util.Queue;

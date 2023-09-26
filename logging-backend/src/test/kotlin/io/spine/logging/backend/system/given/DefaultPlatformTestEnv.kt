@@ -28,8 +28,8 @@ package io.spine.logging.backend.system.given
 
 import io.spine.logging.flogger.AbstractLogger
 import io.spine.logging.flogger.LogSite
-import com.google.common.flogger.backend.LoggerBackend
-import com.google.common.flogger.backend.Platform
+import io.spine.logging.flogger.backend.LoggerBackend
+import io.spine.logging.flogger.backend.Platform
 import io.spine.logging.backend.system.BackendFactory
 import io.spine.logging.backend.system.Clock
 import com.google.common.flogger.testing.FakeLoggerBackend

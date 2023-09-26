@@ -29,7 +29,7 @@ package io.spine.logging.flogger
 import io.spine.logging.flogger.LogContext.Key
 import io.spine.logging.flogger.RateLimitStatus.DISALLOW
 import io.spine.logging.flogger.RateLimitStatus.checkStatus
-import com.google.common.flogger.backend.Metadata
+import io.spine.logging.flogger.backend.Metadata
 import com.google.common.flogger.testing.FakeLogSite
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.matchers.ints.shouldBeGreaterThan

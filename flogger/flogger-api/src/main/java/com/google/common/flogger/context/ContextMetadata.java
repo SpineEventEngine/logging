@@ -20,7 +20,7 @@ import static com.google.common.flogger.util.Checks.checkArgument;
 import static com.google.common.flogger.util.Checks.checkNotNull;
 
 import io.spine.logging.flogger.MetadataKey;
-import com.google.common.flogger.backend.Metadata;
+import io.spine.logging.flogger.backend.Metadata;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -100,7 +100,7 @@ public abstract class ContextMetadata extends Metadata {
    *
    * <p>Whether this is achieved via copying or chaining of instances is an implementation detail.
    *
-   * <p>Use {@link com.google.common.flogger.backend.MetadataProcessor MetadataProcessor} to process
+   * <p>Use {@link io.spine.logging.flogger.backend.MetadataProcessor MetadataProcessor} to process
    * metadata consistently with respect to single valued and repeated keys, and use {@link
    * Metadata#findValue(MetadataKey)} to lookup the "most recent" value for a single valued key.
    */

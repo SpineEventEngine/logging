@@ -18,7 +18,7 @@ package io.spine.logging.flogger;
 
 import static io.spine.logging.flogger.LogContext.Key.LOG_EVERY_N;
 
-import com.google.common.flogger.backend.Metadata;
+import io.spine.logging.flogger.backend.Metadata;
 import java.util.concurrent.atomic.AtomicLong;
 import org.checkerframework.checker.nullness.qual.Nullable;
 

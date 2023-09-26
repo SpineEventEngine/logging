@@ -16,8 +16,8 @@
 
 package io.spine.logging.flogger;
 
-import com.google.common.flogger.backend.LoggerBackend;
-import com.google.common.flogger.backend.Platform;
+import io.spine.logging.flogger.backend.LoggerBackend;
+import io.spine.logging.flogger.backend.Platform;
 import com.google.common.flogger.parser.DefaultPrintfMessageParser;
 import com.google.common.flogger.parser.MessageParser;
 import java.util.logging.Level;

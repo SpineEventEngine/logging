@@ -16,7 +16,7 @@
 
 package io.spine.logging.flogger;
 
-import com.google.common.flogger.backend.Metadata;
+import io.spine.logging.flogger.backend.Metadata;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.checkerframework.checker.nullness.qual.Nullable;

@@ -22,9 +22,9 @@ package com.google.common.flogger.parser;
  */
 public abstract class MessageParser {
   /**
-   * The maximum allowed index (this should correspond to the MAX_ALLOWED_WIDTH in
-   * {@link com.google.common.flogger.backend.FormatOptions FormatOptions} because at times it is
-   * ambiguous as to which is being parsed).
+   * The maximum allowed index (this should correspond to the MAX_ALLOWED_WIDTH
+   * in {@link io.spine.logging.flogger.backend.FormatOptions FormatOptions}
+   * because at times it is ambiguous as to which is being parsed).
    */
   public static final int MAX_ARG_COUNT = 1000000;
 

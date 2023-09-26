@@ -16,7 +16,7 @@
 
 package io.spine.logging.flogger;
 
-import com.google.common.flogger.backend.Platform;
+import io.spine.logging.flogger.backend.Platform;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**

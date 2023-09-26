@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.system
 
-import com.google.common.flogger.backend.LoggerBackend
+import io.spine.logging.flogger.backend.LoggerBackend
 
 /**
  * A [BackendFactory] producing [LoggerBackend] which supports publishing

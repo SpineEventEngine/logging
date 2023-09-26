@@ -26,8 +26,8 @@
 
 package com.google.common.flogger.given
 
-import com.google.common.flogger.backend.LogData
-import com.google.common.flogger.backend.LoggerBackend
+import io.spine.logging.flogger.backend.LogData
+import io.spine.logging.flogger.backend.LoggerBackend
 import com.google.common.flogger.testing.FakeLoggerBackend
 import java.util.*
 import java.util.logging.Level

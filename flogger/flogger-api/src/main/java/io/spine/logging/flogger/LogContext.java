@@ -20,10 +20,10 @@ import static com.google.common.flogger.util.CallerFinder.getStackForCallerOf;
 import static com.google.common.flogger.util.Checks.checkNotNull;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
-import com.google.common.flogger.backend.LogData;
-import com.google.common.flogger.backend.Metadata;
-import com.google.common.flogger.backend.Platform;
-import com.google.common.flogger.backend.TemplateContext;
+import io.spine.logging.flogger.backend.LogData;
+import io.spine.logging.flogger.backend.Metadata;
+import io.spine.logging.flogger.backend.Platform;
+import io.spine.logging.flogger.backend.TemplateContext;
 import com.google.common.flogger.context.Tags;
 import com.google.common.flogger.parser.MessageParser;
 import java.util.Arrays;

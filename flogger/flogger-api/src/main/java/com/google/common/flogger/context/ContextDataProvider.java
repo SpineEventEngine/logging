@@ -17,8 +17,8 @@
 package com.google.common.flogger.context;
 
 import io.spine.logging.flogger.LoggingScope;
-import com.google.common.flogger.backend.Metadata;
-import com.google.common.flogger.backend.Platform;
+import io.spine.logging.flogger.backend.Metadata;
+import io.spine.logging.flogger.backend.Platform;
 import java.util.logging.Level;
 import org.checkerframework.checker.nullness.qual.Nullable;
 

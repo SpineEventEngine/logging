@@ -19,10 +19,10 @@ package io.spine.logging.flogger;
 import static com.google.common.flogger.util.Checks.checkNotNull;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
-import com.google.common.flogger.backend.LogData;
-import com.google.common.flogger.backend.LoggerBackend;
-import com.google.common.flogger.backend.LoggingException;
-import com.google.common.flogger.backend.MessageUtils;
+import io.spine.logging.flogger.backend.LogData;
+import io.spine.logging.flogger.backend.LoggerBackend;
+import io.spine.logging.flogger.backend.LoggingException;
+import io.spine.logging.flogger.backend.MessageUtils;
 import com.google.common.flogger.util.RecursionDepth;
 import java.text.SimpleDateFormat;
 import java.util.Date;

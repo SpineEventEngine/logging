@@ -16,9 +16,9 @@
 
 package com.google.common.flogger.parameter;
 
-import com.google.common.flogger.backend.FormatChar;
-import com.google.common.flogger.backend.FormatOptions;
-import com.google.common.flogger.backend.FormatType;
+import io.spine.logging.flogger.backend.FormatChar;
+import io.spine.logging.flogger.backend.FormatOptions;
+import io.spine.logging.flogger.backend.FormatType;
 import java.text.MessageFormat;
 import java.util.Calendar;
 import java.util.Date;

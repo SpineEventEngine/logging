@@ -26,7 +26,7 @@
 
 package com.google.common.flogger.parameter
 
-import com.google.common.flogger.backend.FormatOptions
+import io.spine.logging.flogger.backend.FormatOptions
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import org.junit.jupiter.api.DisplayName

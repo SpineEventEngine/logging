@@ -16,11 +16,11 @@
 
 package com.google.common.flogger.parser;
 
-import static com.google.common.flogger.backend.FormatOptions.FLAG_LEFT_ALIGN;
-import static com.google.common.flogger.backend.FormatOptions.FLAG_UPPER_CASE;
+import static io.spine.logging.flogger.backend.FormatOptions.FLAG_LEFT_ALIGN;
+import static io.spine.logging.flogger.backend.FormatOptions.FLAG_UPPER_CASE;
 
-import com.google.common.flogger.backend.FormatChar;
-import com.google.common.flogger.backend.FormatOptions;
+import io.spine.logging.flogger.backend.FormatChar;
+import io.spine.logging.flogger.backend.FormatOptions;
 import com.google.common.flogger.parameter.DateTimeFormat;
 import com.google.common.flogger.parameter.DateTimeParameter;
 import com.google.common.flogger.parameter.Parameter;

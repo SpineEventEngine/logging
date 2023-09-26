@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.log4j2;
 
-import com.google.common.flogger.backend.LoggerBackend;
+import io.spine.logging.flogger.backend.LoggerBackend;
 import io.spine.logging.backend.system.BackendFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;

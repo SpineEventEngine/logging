@@ -29,7 +29,7 @@ package io.spine.logging.backend.system;
 import io.spine.logging.flogger.AbstractLogger;
 import io.spine.logging.flogger.LogSite;
 import io.spine.logging.flogger.LogSites;
-import com.google.common.flogger.backend.Platform.LogCallerFinder;
+import io.spine.logging.flogger.backend.Platform.LogCallerFinder;
 import com.google.common.flogger.util.CallerFinder;
 
 /**
