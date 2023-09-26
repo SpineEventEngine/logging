@@ -24,7 +24,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * Provides a strategy for "bucketing" a potentially unbounded set of log aggregation keys used by
- * the {@link LoggingApi#per(T, LogPerBucketingStrategy<T>)} method.
+ * the {@code LoggingApi.per(T, LogPerBucketingStrategy<T>)} method.
  *
  * <p>When implementing new strategies not provided by this class, it is important to ensure that
  * the {@code apply()} method returns values from a bounded set of instances wherever possible.
@@ -32,7 +32,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * <p>This is important because the returned values are held persistently for potentially many
  * different log sites. If a different instance is returned each time {@code apply()} is called, a
  * different instance will be held in each log site. This multiplies the amount of memory that is
- * retained indefinitely by any use of {@link LoggingApi#per(T,LogPerBucketingStrategy<T>)}.
+ * retained indefinitely by any use of {@code LoggingApi.per(T, LogPerBucketingStrategy<T>)}.
  * 
  * <p>One way to handle arbitrary key types would be to create a strategy which "interns" instances
  * in some way, to produce singleton identifiers. Unfortunately interning can itself be a cause of
@@ -78,12 +78,11 @@ public abstract class LogPerBucketingStrategy<T> {
    * A strategy to use only if the set of log aggregation keys is known to be a strictly bounded set
    * of instances with singleton semantics.
    *
-   * <p><em>WARNING</em>: When using this strategy, keys passed to {@link
-   * LoggingApi#per(T,LogPerBucketingStrategy<T>)} are used as-is by the log aggregation code, and
-   * held indefinitely by internal static data structures. As such it is vital that key instances
-   * used with this strategy have singleton semantics (i.e. if {@code k1.equals(k2)} then {@code k1
-   * == k2}). Failure to adhere to this requirement is likely to result in hard to detect memory
-   * leaks.
+   * <p><em>WARNING</em>: When using this strategy, keys passed to {@code LoggingApi.per(T, LogPerBucketingStrategy<T>)}
+   * are used as-is by the log aggregation code, and held indefinitely by internal static data structures.
+   * As such it is vital that key instances used with this strategy have singleton semantics
+   * (i.e. if {@code k1.equals(k2)} then {@code k1== k2}). Failure to adhere to this requirement
+   * is likely to result in hard to detect memory leaks.
    *
    * <p>If keys do not have singleton semantics then you should use a different strategy, such as
    * {@link #byHashCode(int)} or {@link #byClass()}.
@@ -122,7 +121,7 @@ public abstract class LogPerBucketingStrategy<T> {
    * A strategy defined for some given set of known keys.
    *
    * <p>Unlike {@link #knownBounded()}, this strategy maps keys a bounded set of identifiers, and
-   * permits the use of non-singleton keys in {@link LoggingApi#per(T,LogPerBucketingStrategy<T>)}.
+   * permits the use of non-singleton keys in {@code LoggingApi.per(T, LogPerBucketingStrategy<T>)}.
    *
    * <p>If keys outside this set are used this strategy returns {@code null}, and log aggregation
    * will not occur. Duplicates in {@code knownKeys} are ignored.
