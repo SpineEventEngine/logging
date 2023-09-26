@@ -40,7 +40,7 @@ import org.junit.jupiter.api.assertThrows
  * Please note, concrete implementations of [ScopedLoggingContext] are tested through
  * inheriting from `AbstractScopedLoggingContextTest`. Take a look on `flogger-testing` module.
  *
- * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/context/ScopedLoggingContextTest.java">
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/context/ScopedLoggingContextTest.java">
  *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`ScopedLoggingContext` should")

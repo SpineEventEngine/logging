@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test
 /**
  * Tests for [CallerFinder].
  *
- * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/util/CallerFinderTest.java">
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/util/CallerFinderTest.java">
  *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`CallerFinder` should")
