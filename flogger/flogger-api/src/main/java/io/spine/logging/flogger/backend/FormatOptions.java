@@ -375,7 +375,7 @@ public final class FormatOptions {
    * <p>
    * Note that there is not requirement for options used internally in custom message parsers to be
    * validated, but any format options passed through the
-   * {@link com.google.common.flogger.parameter.ParameterVisitor ParameterVisitor} interface must
+   * {@link io.spine.logging.flogger.parameter.ParameterVisitor ParameterVisitor} interface must
    * be valid with respect to the associated {@link FormatChar} instance.
    *
    * @param formatChar the formatting rule to check these options against.

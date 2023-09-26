@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.common.flogger.parameter;
+package io.spine.logging.flogger.parameter;
 
 import static com.google.common.flogger.util.Checks.checkNotNull;
 

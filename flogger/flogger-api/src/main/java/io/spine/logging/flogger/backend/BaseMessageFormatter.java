@@ -19,9 +19,9 @@ package io.spine.logging.flogger.backend;
 import static io.spine.logging.flogger.backend.FormatOptions.FLAG_UPPER_CASE;
 import static com.google.common.flogger.util.Checks.checkNotNull;
 
-import com.google.common.flogger.parameter.DateTimeFormat;
-import com.google.common.flogger.parameter.Parameter;
-import com.google.common.flogger.parameter.ParameterVisitor;
+import io.spine.logging.flogger.parameter.DateTimeFormat;
+import io.spine.logging.flogger.parameter.Parameter;
+import io.spine.logging.flogger.parameter.ParameterVisitor;
 import com.google.common.flogger.parser.MessageBuilder;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.util.Calendar;

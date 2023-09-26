@@ -21,11 +21,11 @@ import static io.spine.logging.flogger.backend.FormatOptions.FLAG_UPPER_CASE;
 
 import io.spine.logging.flogger.backend.FormatChar;
 import io.spine.logging.flogger.backend.FormatOptions;
-import com.google.common.flogger.parameter.DateTimeFormat;
-import com.google.common.flogger.parameter.DateTimeParameter;
-import com.google.common.flogger.parameter.Parameter;
-import com.google.common.flogger.parameter.ParameterVisitor;
-import com.google.common.flogger.parameter.SimpleParameter;
+import io.spine.logging.flogger.parameter.DateTimeFormat;
+import io.spine.logging.flogger.parameter.DateTimeParameter;
+import io.spine.logging.flogger.parameter.Parameter;
+import io.spine.logging.flogger.parameter.ParameterVisitor;
+import io.spine.logging.flogger.parameter.SimpleParameter;
 
 /**
  * Default implementation of the printf message parser. This parser supports all the place-holders

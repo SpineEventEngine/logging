@@ -16,7 +16,7 @@
 
 package com.google.common.flogger.parser;
 
-import com.google.common.flogger.parameter.BraceStyleParameter;
+import io.spine.logging.flogger.parameter.BraceStyleParameter;
 
 /**
  * Default implementation of the brace style message parser. Note that while the underlying parsing

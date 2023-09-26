@@ -17,7 +17,7 @@
 package com.google.common.flogger.parser;
 
 import io.spine.logging.flogger.backend.TemplateContext;
-import com.google.common.flogger.parameter.Parameter;
+import io.spine.logging.flogger.parameter.Parameter;
 import com.google.common.flogger.util.Checks;
 
 /**

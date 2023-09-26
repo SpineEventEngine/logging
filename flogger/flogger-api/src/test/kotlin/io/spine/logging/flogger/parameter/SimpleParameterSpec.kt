@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.common.flogger.parameter
+package io.spine.logging.flogger.parameter
 
 import io.spine.logging.flogger.backend.FormatChar
 import io.spine.logging.flogger.backend.FormatOptions
@@ -34,7 +34,7 @@ import io.spine.logging.flogger.backend.FormatChar.DECIMAL
 import io.spine.logging.flogger.backend.FormatChar.FLOAT
 import io.spine.logging.flogger.backend.FormatChar.HEX
 import io.spine.logging.flogger.backend.FormatChar.STRING
-import com.google.common.flogger.parameter.SimpleParameter.buildFormatString
+import io.spine.logging.flogger.parameter.SimpleParameter.buildFormatString
 import com.google.common.flogger.parser.ParseException
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs

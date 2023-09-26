@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.common.flogger.parameter
+package io.spine.logging.flogger.parameter
 
 import io.spine.logging.flogger.backend.FormatOptions
 import io.kotest.matchers.shouldBe

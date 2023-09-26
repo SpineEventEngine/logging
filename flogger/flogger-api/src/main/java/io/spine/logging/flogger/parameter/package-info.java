@@ -21,6 +21,6 @@
  * <a href="https://google.github.io/flogger">Flogger library</a>.
  */
 @CheckReturnValue
-package com.google.common.flogger.parameter;
+package io.spine.logging.flogger.parameter;
 
 import com.google.errorprone.annotations.CheckReturnValue;
