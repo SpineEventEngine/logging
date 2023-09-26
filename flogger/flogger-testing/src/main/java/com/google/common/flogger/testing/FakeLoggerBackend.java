@@ -16,7 +16,7 @@
 
 package com.google.common.flogger.testing;
 
-import static com.google.common.flogger.util.Checks.checkNotNull;
+import static io.spine.logging.flogger.util.Checks.checkNotNull;
 import static java.util.Collections.unmodifiableList;
 
 import io.spine.logging.flogger.backend.LogData;

@@ -16,14 +16,14 @@
 
 package io.spine.logging.flogger;
 
-import static com.google.common.flogger.util.Checks.checkNotNull;
+import static io.spine.logging.flogger.util.Checks.checkNotNull;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 import io.spine.logging.flogger.backend.LogData;
 import io.spine.logging.flogger.backend.LoggerBackend;
 import io.spine.logging.flogger.backend.LoggingException;
 import io.spine.logging.flogger.backend.MessageUtils;
-import com.google.common.flogger.util.RecursionDepth;
+import io.spine.logging.flogger.util.RecursionDepth;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;

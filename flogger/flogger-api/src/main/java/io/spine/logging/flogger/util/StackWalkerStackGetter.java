@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.common.flogger.util;
+package io.spine.logging.flogger.util;
 
-import static com.google.common.flogger.util.Checks.checkArgument;
+import static io.spine.logging.flogger.util.Checks.checkArgument;
 
 import java.lang.StackWalker.StackFrame;
 import java.util.function.Predicate;

@@ -24,15 +24,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.common.flogger.util
+package io.spine.logging.flogger.util
 
 import org.junit.jupiter.api.DisplayName
 
 /**
- * Tests for [StackWalkerStackGetter].
+ * Tests for [ThrowableStackGetter].
  *
- * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/util/StackWalkerStackGetterTest.java">
+ * @see <a href="https://github.com/google/flogger/blob/master/api/src/test/java/com/google/common/flogger/util/ThrowableStackGetterTest.java">
  *     Original Java code of Google Flogger</a>
  */
-@DisplayName("`StackWalkerStackGetter` should")
-internal class StackWalkerStackGetterSpec : AbstractStackGetterSpec(StackWalkerStackGetter())
+@DisplayName("`ThrowableStackGetter` should")
+internal class ThrowableStackGetterSpec : AbstractStackGetterSpec(ThrowableStackGetter())

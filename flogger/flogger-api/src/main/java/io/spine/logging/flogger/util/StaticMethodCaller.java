@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.common.flogger.util;
+package io.spine.logging.flogger.util;
 
 import java.lang.reflect.Method;
 import org.checkerframework.checker.nullness.qual.Nullable;

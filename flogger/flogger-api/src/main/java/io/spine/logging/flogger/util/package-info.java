@@ -15,6 +15,6 @@
  */
 
 @CheckReturnValue
-package com.google.common.flogger.util;
+package io.spine.logging.flogger.util;
 
 import com.google.errorprone.annotations.CheckReturnValue;

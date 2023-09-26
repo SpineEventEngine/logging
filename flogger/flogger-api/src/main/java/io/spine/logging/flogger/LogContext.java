@@ -16,8 +16,8 @@
 
 package io.spine.logging.flogger;
 
-import static com.google.common.flogger.util.CallerFinder.getStackForCallerOf;
-import static com.google.common.flogger.util.Checks.checkNotNull;
+import static io.spine.logging.flogger.util.CallerFinder.getStackForCallerOf;
+import static io.spine.logging.flogger.util.Checks.checkNotNull;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 import io.spine.logging.flogger.backend.LogData;

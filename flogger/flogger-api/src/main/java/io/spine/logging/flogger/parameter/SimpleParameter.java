@@ -16,7 +16,7 @@
 
 package io.spine.logging.flogger.parameter;
 
-import static com.google.common.flogger.util.Checks.checkNotNull;
+import static io.spine.logging.flogger.util.Checks.checkNotNull;
 
 import io.spine.logging.flogger.backend.FormatChar;
 import io.spine.logging.flogger.backend.FormatOptions;

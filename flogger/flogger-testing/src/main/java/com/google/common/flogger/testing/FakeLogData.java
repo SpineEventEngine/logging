@@ -16,7 +16,7 @@
 
 package com.google.common.flogger.testing;
 
-import static com.google.common.flogger.util.Checks.checkState;
+import static io.spine.logging.flogger.util.Checks.checkState;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 import io.spine.logging.flogger.LogContext;

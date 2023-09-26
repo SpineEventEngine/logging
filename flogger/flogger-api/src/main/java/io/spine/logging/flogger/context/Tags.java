@@ -16,9 +16,9 @@
 
 package io.spine.logging.flogger.context;
 
-import static com.google.common.flogger.util.Checks.checkArgument;
-import static com.google.common.flogger.util.Checks.checkMetadataIdentifier;
-import static com.google.common.flogger.util.Checks.checkNotNull;
+import static io.spine.logging.flogger.util.Checks.checkArgument;
+import static io.spine.logging.flogger.util.Checks.checkMetadataIdentifier;
+import static io.spine.logging.flogger.util.Checks.checkNotNull;
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.util.AbstractMap;

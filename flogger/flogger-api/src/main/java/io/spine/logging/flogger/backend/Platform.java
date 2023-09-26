@@ -22,7 +22,7 @@ import io.spine.logging.flogger.AbstractLogger;
 import io.spine.logging.flogger.LogSite;
 import io.spine.logging.flogger.context.ContextDataProvider;
 import io.spine.logging.flogger.context.Tags;
-import com.google.common.flogger.util.RecursionDepth;
+import io.spine.logging.flogger.util.RecursionDepth;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 

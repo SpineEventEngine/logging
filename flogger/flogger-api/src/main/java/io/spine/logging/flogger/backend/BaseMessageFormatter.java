@@ -17,7 +17,7 @@
 package io.spine.logging.flogger.backend;
 
 import static io.spine.logging.flogger.backend.FormatOptions.FLAG_UPPER_CASE;
-import static com.google.common.flogger.util.Checks.checkNotNull;
+import static io.spine.logging.flogger.util.Checks.checkNotNull;
 
 import io.spine.logging.flogger.parameter.DateTimeFormat;
 import io.spine.logging.flogger.parameter.Parameter;

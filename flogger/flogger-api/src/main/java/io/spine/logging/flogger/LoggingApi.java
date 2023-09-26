@@ -18,7 +18,7 @@ package io.spine.logging.flogger;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import static com.google.common.flogger.util.Checks.checkNotNull;
+import static io.spine.logging.flogger.util.Checks.checkNotNull;
 
 import java.util.concurrent.TimeUnit;
 

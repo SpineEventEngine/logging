@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.common.flogger.util;
+package io.spine.logging.flogger.util;
 
 import java.io.Closeable;
 

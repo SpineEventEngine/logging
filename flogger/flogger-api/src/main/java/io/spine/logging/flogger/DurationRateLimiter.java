@@ -17,8 +17,8 @@
 package io.spine.logging.flogger;
 
 import static io.spine.logging.flogger.LogContext.Key.LOG_AT_MOST_EVERY;
-import static com.google.common.flogger.util.Checks.checkArgument;
-import static com.google.common.flogger.util.Checks.checkNotNull;
+import static io.spine.logging.flogger.util.Checks.checkArgument;
+import static io.spine.logging.flogger.util.Checks.checkNotNull;
 import static java.lang.Math.max;
 
 import io.spine.logging.flogger.backend.LogData;

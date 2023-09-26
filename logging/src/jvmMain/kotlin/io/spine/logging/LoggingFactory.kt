@@ -28,7 +28,7 @@ package io.spine.logging
 
 import io.spine.logging.flogger.FluentLogger2
 import io.spine.logging.flogger.backend.Platform
-import com.google.common.flogger.util.CallerFinder
+import io.spine.logging.flogger.util.CallerFinder
 import kotlin.reflect.KClass
 
 /**

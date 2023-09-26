@@ -28,7 +28,7 @@ package io.spine.logging.flogger.parser;
 
 import io.spine.logging.flogger.backend.TemplateContext;
 import io.spine.logging.flogger.parameter.Parameter;
-import com.google.common.flogger.util.Checks;
+import io.spine.logging.flogger.util.Checks;
 
 /**
  * A builder which is used during message parsing to create a message object which encapsulates

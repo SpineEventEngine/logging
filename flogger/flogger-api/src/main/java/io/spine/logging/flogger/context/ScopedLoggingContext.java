@@ -16,8 +16,8 @@
 
 package io.spine.logging.flogger.context;
 
-import static com.google.common.flogger.util.Checks.checkNotNull;
-import static com.google.common.flogger.util.Checks.checkState;
+import static io.spine.logging.flogger.util.Checks.checkNotNull;
+import static io.spine.logging.flogger.util.Checks.checkState;
 
 import io.spine.logging.flogger.LoggingScope;
 import io.spine.logging.flogger.MetadataKey;

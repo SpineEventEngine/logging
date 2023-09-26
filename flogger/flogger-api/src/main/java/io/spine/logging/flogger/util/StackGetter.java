@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.common.flogger.util;
+package io.spine.logging.flogger.util;
 
 /** Interface for finding call site information. */
 interface StackGetter {

@@ -16,9 +16,9 @@
 
 package io.spine.logging.flogger;
 
-import static com.google.common.flogger.util.Checks.checkMetadataIdentifier;
-import static com.google.common.flogger.util.Checks.checkNotNull;
-import static com.google.common.flogger.util.Checks.checkState;
+import static io.spine.logging.flogger.util.Checks.checkMetadataIdentifier;
+import static io.spine.logging.flogger.util.Checks.checkNotNull;
+import static io.spine.logging.flogger.util.Checks.checkState;
 
 import io.spine.logging.flogger.backend.Platform;
 import java.util.Iterator;
