@@ -62,12 +62,13 @@ internal class SimpleLogRecordSpec {
     companion object {
         private val INT_KEY = singleKey<Int>("int")
         private val STR_KEY = singleKey<String>("str")
-        private val PATH_KEY = object : FloggerMetadataKey<String>("path", String::class.java, true) {
-            override fun emitRepeated(values: Iterator<String>, out: KeyValueHandler) {
-                val joined = values.asSequence().joinToString("/")
-                out.handle(label, joined)
+        private val PATH_KEY =
+            object : FloggerMetadataKey<String>("path", String::class.java, true) {
+                override fun emitRepeated(values: Iterator<String>, out: KeyValueHandler) {
+                    val joined = values.asSequence().joinToString("/")
+                    out.handle(label, joined)
+                }
             }
-        }
         private const val LITERAL = "literal message"
     }
 

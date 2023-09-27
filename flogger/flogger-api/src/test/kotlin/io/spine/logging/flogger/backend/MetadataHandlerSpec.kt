@@ -201,7 +201,11 @@ private fun appendUnknownValue(key: FloggerMetadataKey<*>, value: Any, out: Stri
  *
  * @see MetadataHandler.builder
  */
-private fun appendUnknownValues(key: FloggerMetadataKey<*>, values: Iterator<*>, out: StringBuilder) {
+private fun appendUnknownValues(
+    key: FloggerMetadataKey<*>,
+    values: Iterator<*>,
+    out: StringBuilder
+) {
     val joinedValues = Joiner.on(", ").join(values)
     appendUnknownValue(key, joinedValues, out)
 }

@@ -62,7 +62,8 @@ public class StdContextDataProvider: ContextDataProvider() {
 
     override fun getMetadata(): Metadata = StdContextData.metadata()
 
-    override fun getScope(type: ScopeType): FloggerLoggingScope? = StdContextData.lookupScopeFor(type)
+    override fun getScope(type: ScopeType): FloggerLoggingScope? =
+        StdContextData.lookupScopeFor(type)
 
     /**
      * Sets the flag to enable checking for a log level map after one

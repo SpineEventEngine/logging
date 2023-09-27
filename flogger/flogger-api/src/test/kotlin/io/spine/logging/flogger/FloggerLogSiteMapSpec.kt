@@ -121,16 +121,20 @@ internal class FloggerLogSiteMapSpec {
     }
 }
 
-private fun createMap(): FloggerLogSiteMap<AtomicInteger> = object : FloggerLogSiteMap<AtomicInteger>() {
-    override fun initialValue(): AtomicInteger = AtomicInteger(0)
-}
+private fun createMap(): FloggerLogSiteMap<AtomicInteger> =
+    object : FloggerLogSiteMap<AtomicInteger>() {
+        override fun initialValue(): AtomicInteger = AtomicInteger(0)
+    }
 
 private fun <T> recurseAndCall(n: Int, action: Callable<T>): T {
     val i = n - 1
     return if (i <= 0) action.call() else recurseAndCall(i, action)
 }
 
-private fun useAndReturnScopedKey(map: FloggerLogSiteMap<AtomicInteger>, label: String): FloggerLogSiteKey {
+private fun useAndReturnScopedKey(
+    map: FloggerLogSiteMap<AtomicInteger>,
+    label: String
+): FloggerLogSiteKey {
     val scope = FloggerLoggingScope.create(label)
     val metadata = FakeMetadata().add(FloggerLogContext.Key.LOG_SITE_GROUPING_KEY, scope)
     val logSite = create("com.example", label, 42, "<unused>")

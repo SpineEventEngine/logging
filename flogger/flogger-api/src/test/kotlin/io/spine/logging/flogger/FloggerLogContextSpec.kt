@@ -92,7 +92,12 @@ internal class FloggerLogContextSpec {
 
         // In normal use, the logger would never need to be passed in,
         // and you'd use `logVarargs()`.
-        private fun logHelper(logger: FluentLogger2, logSite: FloggerLogSite, n: Int, message: String) {
+        private fun logHelper(
+            logger: FluentLogger2,
+            logSite: FloggerLogSite,
+            n: Int,
+            message: String
+        ) {
             logger.atInfo()
                 .withInjectedLogSite(logSite)
                 .every(n)
