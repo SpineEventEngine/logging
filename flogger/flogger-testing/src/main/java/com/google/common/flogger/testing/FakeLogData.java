@@ -19,7 +19,7 @@ package com.google.common.flogger.testing;
 import static io.spine.logging.flogger.util.Checks.checkState;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
-import io.spine.logging.flogger.LogContext;
+import io.spine.logging.flogger.FloggerLogContext;
 import io.spine.logging.flogger.LogSite;
 import io.spine.logging.flogger.MetadataKey;
 import io.spine.logging.flogger.backend.LogData;
@@ -139,7 +139,7 @@ public final class FakeLogData implements LogData {
   @Override
   public boolean wasForced() {
     // Check explicit TRUE here because findValue() can return null (which would fail unboxing).
-    return Boolean.TRUE.equals(metadata.findValue(LogContext.Key.WAS_FORCED));
+    return Boolean.TRUE.equals(metadata.findValue(FloggerLogContext.Key.WAS_FORCED));
   }
 
   @Override

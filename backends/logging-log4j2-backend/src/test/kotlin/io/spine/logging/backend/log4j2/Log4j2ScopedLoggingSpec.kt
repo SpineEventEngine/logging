@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.log4j2
 
-import io.spine.logging.flogger.LogContext.Key
+import io.spine.logging.flogger.FloggerLogContext.Key
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
 import io.spine.logging.flogger.context.ContextDataProvider
 import io.spine.logging.flogger.context.Tags

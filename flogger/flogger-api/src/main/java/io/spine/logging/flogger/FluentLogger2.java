@@ -37,7 +37,7 @@ import java.util.logging.Level;
  * and uses the default parser and system configured backend.
  * <p>
  * Note that when extending the logging API or specifying a new parser, you will need to create a
- * new logger class (rather than extending this one). Unlike the {@link LogContext} class,
+ * new logger class (rather than extending this one). Unlike the {@link FloggerLogContext} class,
  * which must be extended in order to modify the logging API, this class is not generified and thus
  * cannot be modified to produce a different logging API.
  * <p>
@@ -103,7 +103,7 @@ public final class FluentLogger2 extends FloggerAbstractLogger<FluentLogger2.Api
 
   /** Logging context implementing the fully specified API for this logger. */
   // VisibleForTesting
-  final class Context extends LogContext<FluentLogger2, Api> implements Api {
+  final class Context extends FloggerLogContext<FluentLogger2, Api> implements Api {
     private Context(Level level, boolean isForced) {
       super(level, isForced);
     }

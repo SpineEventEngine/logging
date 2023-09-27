@@ -26,7 +26,7 @@
 
 package io.spine.logging.flogger;
 
-import static io.spine.logging.flogger.LogContext.Key.LOG_EVERY_N;
+import static io.spine.logging.flogger.FloggerLogContext.Key.LOG_EVERY_N;
 
 import io.spine.logging.flogger.backend.Metadata;
 import java.util.concurrent.atomic.AtomicLong;

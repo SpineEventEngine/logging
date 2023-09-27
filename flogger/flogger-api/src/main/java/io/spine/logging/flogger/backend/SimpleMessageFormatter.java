@@ -26,7 +26,7 @@
 
 package io.spine.logging.flogger.backend;
 
-import io.spine.logging.flogger.LogContext;
+import io.spine.logging.flogger.FloggerLogContext;
 import io.spine.logging.flogger.MetadataKey;
 import io.spine.logging.flogger.MetadataKey.KeyValueHandler;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
@@ -67,7 +67,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 public final class SimpleMessageFormatter {
   @SuppressWarnings("ConstantCaseForConstants")
   private static final Set<MetadataKey<?>> DEFAULT_KEYS_TO_IGNORE =
-      Collections.<MetadataKey<?>>singleton(LogContext.Key.LOG_CAUSE);
+      Collections.<MetadataKey<?>>singleton(FloggerLogContext.Key.LOG_CAUSE);
 
   private static final LogMessageFormatter DEFAULT_FORMATTER = newFormatter(DEFAULT_KEYS_TO_IGNORE);
 
@@ -229,7 +229,7 @@ public final class SimpleMessageFormatter {
     receiver.handleFormattedLogMessage(
         logData.getLevel(),
         getDefaultFormatter().format(logData, metadata),
-        metadata.getSingleValue(LogContext.Key.LOG_CAUSE));
+        metadata.getSingleValue(FloggerLogContext.Key.LOG_CAUSE));
   }
 
   /** @deprecated Use a {@link LogMessageFormatter} and obtain the level and cause separately. */

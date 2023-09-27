@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.system;
 
-import io.spine.logging.flogger.LogContext;
+import io.spine.logging.flogger.FloggerLogContext;
 import io.spine.logging.flogger.backend.LogData;
 import io.spine.logging.flogger.backend.Metadata;
 
@@ -64,7 +64,7 @@ public final class SimpleLogRecord extends AbstractLogRecord {
 
   private SimpleLogRecord(LogData data, Metadata scope) {
     super(data, scope);
-    setThrown(getMetadataProcessor().getSingleValue(LogContext.Key.LOG_CAUSE));
+    setThrown(getMetadataProcessor().getSingleValue(FloggerLogContext.Key.LOG_CAUSE));
 
     // Calling getMessage() formats and caches the formatted message in the AbstractLogRecord.
     //

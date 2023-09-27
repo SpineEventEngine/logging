@@ -31,7 +31,7 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.logging.Level.WARNING;
 
-import io.spine.logging.flogger.LogContext;
+import io.spine.logging.flogger.FloggerLogContext;
 import io.spine.logging.flogger.LogSite;
 import io.spine.logging.flogger.MetadataKey;
 import io.spine.logging.flogger.backend.BaseMessageFormatter;
@@ -93,7 +93,7 @@ final class Log4j2LogEventUtil {
           BaseMessageFormatter.appendFormattedMessage(logData, new StringBuilder()).toString();
     }
 
-    Throwable thrown = metadata.getSingleValue(LogContext.Key.LOG_CAUSE);
+    Throwable thrown = metadata.getSingleValue(FloggerLogContext.Key.LOG_CAUSE);
     return toLog4jLogEvent(loggerName, logData, message, toLog4jLevel(logData.getLevel()), thrown);
   }
 
@@ -210,7 +210,7 @@ final class Log4j2LogEventUtil {
 
   private static void handleMetadata(
       MetadataKey<Object> key, Object value, MetadataKey.KeyValueHandler kvh) {
-    if (key.getClass().equals(LogContext.Key.TAGS.getClass())) {
+    if (key.getClass().equals(FloggerLogContext.Key.TAGS.getClass())) {
       processTags(key, value, kvh);
     } else {
       // In theory a user can define a custom tag and use it as a MetadataKey. Those

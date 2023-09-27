@@ -65,7 +65,7 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogContext.java">
  *     Original Java code of Google Flogger</a>
  */
-public abstract class LogContext<LOGGER extends FloggerAbstractLogger<API>, API extends LoggingApi<API>>
+public abstract class FloggerLogContext<LOGGER extends FloggerAbstractLogger<API>, API extends LoggingApi<API>>
     implements LoggingApi<API>, LogData {
 
   /**
@@ -361,7 +361,7 @@ public abstract class LogContext<LOGGER extends FloggerAbstractLogger<API>, API 
    * @param level the log level for this log statement.
    * @param isForced whether to force this log statement (see {@link #wasForced()} for details).
    */
-  protected LogContext(Level level, boolean isForced) {
+  protected FloggerLogContext(Level level, boolean isForced) {
     this(level, isForced, Platform.getCurrentTimeNanos());
   }
 
@@ -376,7 +376,7 @@ public abstract class LogContext<LOGGER extends FloggerAbstractLogger<API>, API 
    * @param isForced whether to force this log statement (see {@link #wasForced()} for details).
    * @param timestampNanos the nanosecond timestamp for this log statement.
    */
-  protected LogContext(Level level, boolean isForced, long timestampNanos) {
+  protected FloggerLogContext(Level level, boolean isForced, long timestampNanos) {
     this.level = checkNotNull(level, "level");
     this.timestampNanos = timestampNanos;
     if (isForced) {
@@ -629,7 +629,7 @@ public abstract class LogContext<LOGGER extends FloggerAbstractLogger<API>, API 
             new LogSiteStackTrace(
                 getMetadata().findValue(Key.LOG_CAUSE),
                 stackSize,
-                getStackForCallerOf(LogContext.class, stackSize.getMaxDepth(), 1));
+                getStackForCallerOf(FloggerLogContext.class, stackSize.getMaxDepth(), 1));
         // The "cause" is a unique metadata key, we must replace any existing value.
         addMetadata(Key.LOG_CAUSE, context);
       }
@@ -679,7 +679,7 @@ public abstract class LogContext<LOGGER extends FloggerAbstractLogger<API>, API 
       // shouldLog() method itself) when looking up the stack to find the log() method.
       logSite =
           checkNotNull(
-              Platform.getCallerFinder().findLogSite(LogContext.class, 1),
+              Platform.getCallerFinder().findLogSite(FloggerLogContext.class, 1),
               "logger backend must not return a null LogSite");
     }
     LogSiteKey logSiteKey = null;

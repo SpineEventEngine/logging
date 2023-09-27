@@ -29,7 +29,7 @@ package io.spine.logging.flogger;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
- * Provides a scope to a log statement via the {@link LogContext#per(LoggingScopeProvider)} method.
+ * Provides a scope to a log statement via the {@link FloggerLogContext#per(LoggingScopeProvider)} method.
  *
  * <p>This interface exists to avoid needing to pass specific instances of {@link LoggingScope}
  * around in user code. The scope provider can lookup the correct scope instance for the current

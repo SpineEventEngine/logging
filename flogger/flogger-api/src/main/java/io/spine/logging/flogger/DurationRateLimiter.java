@@ -26,7 +26,7 @@
 
 package io.spine.logging.flogger;
 
-import static io.spine.logging.flogger.LogContext.Key.LOG_AT_MOST_EVERY;
+import static io.spine.logging.flogger.FloggerLogContext.Key.LOG_AT_MOST_EVERY;
 import static io.spine.logging.flogger.util.Checks.checkArgument;
 import static io.spine.logging.flogger.util.Checks.checkNotNull;
 import static java.lang.Math.max;
@@ -60,7 +60,7 @@ final class DurationRateLimiter extends RateLimitStatus {
 
   /**
    * Creates a period for rate limiting for the specified duration. This is invoked by the {@link
-   * LogContext#atMostEvery(int, TimeUnit)} method to create a metadata value.
+   * FloggerLogContext#atMostEvery(int, TimeUnit)} method to create a metadata value.
    */
   static RateLimitPeriod newRateLimitPeriod(int n, TimeUnit unit) {
     // We could cache commonly used values here if we wanted.

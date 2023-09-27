@@ -16,7 +16,7 @@
 
 package com.google.common.flogger.testing;
 
-import io.spine.logging.flogger.LogContext;
+import io.spine.logging.flogger.FloggerLogContext;
 import io.spine.logging.flogger.backend.LogData;
 import io.spine.logging.flogger.backend.Metadata;
 import io.spine.logging.backend.system.AbstractLogRecord;
@@ -40,6 +40,6 @@ public final class FakeLogRecord extends AbstractLogRecord {
 
   private FakeLogRecord(LogData logData) {
     super(logData, Metadata.empty());
-    setThrown(getMetadataProcessor().getSingleValue(LogContext.Key.LOG_CAUSE));
+    setThrown(getMetadataProcessor().getSingleValue(FloggerLogContext.Key.LOG_CAUSE));
   }
 }

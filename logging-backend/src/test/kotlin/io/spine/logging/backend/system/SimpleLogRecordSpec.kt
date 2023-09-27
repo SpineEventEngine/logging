@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.system
 
-import io.spine.logging.flogger.LogContext.Key
+import io.spine.logging.flogger.FloggerLogContext.Key
 import io.spine.logging.flogger.MetadataKey
 import io.spine.logging.flogger.backend.Metadata
 import io.spine.logging.flogger.context.Tags

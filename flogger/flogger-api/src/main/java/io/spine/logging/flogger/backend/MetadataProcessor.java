@@ -29,6 +29,7 @@ package io.spine.logging.flogger.backend;
 import static io.spine.logging.flogger.util.Checks.checkArgument;
 import static io.spine.logging.flogger.util.Checks.checkNotNull;
 
+import io.spine.logging.flogger.FloggerLogContext;
 import io.spine.logging.flogger.MetadataKey;
 import java.util.AbstractSet;
 import java.util.ArrayList;
@@ -143,7 +144,7 @@ public abstract class MetadataProcessor {
    * minimal, canonical representation.
    *
    * <p>Furthermore, scope-supplied tags will be a single value in the scope metadata, keyed with
-   * the {@link io.spine.logging.flogger.LogContext.Key#TAGS TAGS} key.
+   * the {@link FloggerLogContext.Key#TAGS TAGS} key.
    *
    * @param handler the metadata handler to be called back
    * @param context arbitrary context instance to be passed into each callback.
