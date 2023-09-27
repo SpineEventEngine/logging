@@ -16,7 +16,7 @@
 
 package com.google.common.flogger.testing;
 
-import io.spine.logging.flogger.AbstractLogger;
+import io.spine.logging.flogger.FloggerAbstractLogger;
 import io.spine.logging.flogger.LogContext;
 import io.spine.logging.flogger.LoggingApi;
 import io.spine.logging.flogger.backend.LoggerBackend;
@@ -32,7 +32,7 @@ import java.util.logging.Level;
  *
  * <p>This class is mutable and not thread safe.
  */
-public final class ConfigurableLogger extends AbstractLogger<ConfigurableLogger.Api> {
+public final class ConfigurableLogger extends FloggerAbstractLogger<ConfigurableLogger.Api> {
   // Midnight Jan 1st, 2000 (GMT)
   private static final long DEFAULT_TIMESTAMP_NANOS = 946684800000000000L;
 

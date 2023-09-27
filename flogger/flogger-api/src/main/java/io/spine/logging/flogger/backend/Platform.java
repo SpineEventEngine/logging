@@ -28,7 +28,7 @@ package io.spine.logging.flogger.backend;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
-import io.spine.logging.flogger.AbstractLogger;
+import io.spine.logging.flogger.FloggerAbstractLogger;
 import io.spine.logging.flogger.LogSite;
 import io.spine.logging.flogger.context.ContextDataProvider;
 import io.spine.logging.flogger.context.Tags;
@@ -180,7 +180,7 @@ public abstract class Platform {
      * @throws IllegalStateException if there was no caller of the specified logged passed on the
      *     stack (which may occur if the logger class was invoked directly by JNI).
      */
-    public abstract String findLoggingClass(Class<? extends AbstractLogger<?>> loggerClass);
+    public abstract String findLoggingClass(Class<? extends FloggerAbstractLogger<?>> loggerClass);
 
     /**
      * Returns a LogSite found from the current stack trace for the caller of the log() method on

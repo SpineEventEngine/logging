@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.system;
 
-import io.spine.logging.flogger.AbstractLogger;
+import io.spine.logging.flogger.FloggerAbstractLogger;
 import io.spine.logging.flogger.LogSite;
 import io.spine.logging.flogger.LogSites;
 import io.spine.logging.flogger.backend.Platform.LogCallerFinder;
@@ -49,7 +49,7 @@ public final class StackBasedCallerFinder extends LogCallerFinder {
   }
 
   @Override
-  public String findLoggingClass(Class<? extends AbstractLogger<?>> loggerClass) {
+  public String findLoggingClass(Class<? extends FloggerAbstractLogger<?>> loggerClass) {
     // We can skip at most only 1 method from the analysis, the inferLoggingClass() method itself.
     StackTraceElement caller = CallerFinder.findCallerOf(loggerClass, 1);
     if (caller != null) {

@@ -52,7 +52,7 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS;
  * <p>This class is an implementation of the base {@link LoggingApi} interface and acts as a holder
  * for any state applied to the log statement during the fluent call sequence. The lifecycle of a
  * logging context is very short; it is created by a logger, usually in response to a call to the
- * {@link AbstractLogger#at(Level)} method, and normally lasts only as long as the log statement.
+ * {@link FloggerAbstractLogger#at(Level)} method, and normally lasts only as long as the log statement.
  *
  * <p>This class should not be visible to normal users of the logging API and it is only needed when
  * extending the API to add more functionality. In order to extend the logging API and add methods
@@ -65,7 +65,7 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogContext.java">
  *     Original Java code of Google Flogger</a>
  */
-public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends LoggingApi<API>>
+public abstract class LogContext<LOGGER extends FloggerAbstractLogger<API>, API extends LoggingApi<API>>
     implements LoggingApi<API>, LogData {
 
   /**

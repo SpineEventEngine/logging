@@ -43,7 +43,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for [AbstractLogger].
+ * Tests for [FloggerAbstractLogger].
  *
  * An abstract logger is a factory for instances of fluent logging APIs,
  * used to build log statements via method chaining.
@@ -54,7 +54,7 @@ import org.junit.jupiter.api.Test
  *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`AbstractLogger` should")
-internal class AbstractLoggerSpec {
+internal class FloggerAbstractLoggerSpec {
 
     private val backend = MemoizingBackend()
     private val logger = ConfigurableLogger.create(backend)
@@ -62,7 +62,7 @@ internal class AbstractLoggerSpec {
     companion object {
 
         /**
-         * The same as in [AbstractLogger.reportError] method.
+         * The same as in [FloggerAbstractLogger.reportError] method.
          */
         private const val LOGGING_ERROR = "logging error"
 
