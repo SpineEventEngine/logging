@@ -30,7 +30,7 @@ import static io.spine.logging.flogger.util.Checks.checkNotNull;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 import io.spine.logging.flogger.backend.FloggerLogData;
-import io.spine.logging.flogger.backend.FloggerBackend;
+import io.spine.logging.flogger.backend.LoggerBackend;
 import io.spine.logging.flogger.backend.LoggingException;
 import io.spine.logging.flogger.backend.MessageUtils;
 import io.spine.logging.flogger.util.RecursionDepth;
@@ -56,14 +56,14 @@ public abstract class FloggerAbstractLogger<API extends FloggerLoggingApi<API>> 
    */
   private static final int MAX_ALLOWED_RECURSION_DEPTH = 100;
 
-  private final FloggerBackend backend;
+  private final LoggerBackend backend;
 
   /**
    * Constructs a new logger for the specified backend.
    *
    * @param backend the logger backend which ultimately writes the log statements out.
    */
-  protected FloggerAbstractLogger(FloggerBackend backend) {
+  protected FloggerAbstractLogger(LoggerBackend backend) {
     this.backend = checkNotNull(backend, "backend");
   }
 
@@ -153,7 +153,7 @@ public abstract class FloggerAbstractLogger<API extends FloggerLoggingApi<API>> 
    * Returns the logging backend (not visible to logger subclasses to discourage tightly coupled
    * implementations).
    */
-  final FloggerBackend getBackend() {
+  final LoggerBackend getBackend() {
     return backend;
   }
 

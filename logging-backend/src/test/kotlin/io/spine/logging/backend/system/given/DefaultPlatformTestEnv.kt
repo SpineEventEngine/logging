@@ -28,7 +28,7 @@ package io.spine.logging.backend.system.given
 
 import io.spine.logging.flogger.FloggerAbstractLogger
 import io.spine.logging.flogger.FloggerLogSite
-import io.spine.logging.flogger.backend.FloggerBackend
+import io.spine.logging.flogger.backend.LoggerBackend
 import io.spine.logging.flogger.backend.Platform
 import io.spine.logging.backend.system.BackendFactory
 import io.spine.logging.backend.system.Clock
@@ -39,7 +39,7 @@ import com.google.common.flogger.testing.FakeLoggerBackend
  */
 internal class FakeBackendFactory : BackendFactory() {
 
-    override fun create(loggingClassName: String?): FloggerBackend =
+    override fun create(loggingClassName: String?): LoggerBackend =
         FakeLoggerBackend(loggingClassName)
 
     override fun toString(): String = javaClass.name

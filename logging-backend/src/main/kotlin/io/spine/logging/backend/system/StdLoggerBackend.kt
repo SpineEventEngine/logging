@@ -27,7 +27,7 @@
 package io.spine.logging.backend.system
 
 import io.spine.logging.flogger.backend.FloggerLogData
-import io.spine.logging.flogger.backend.FloggerBackend
+import io.spine.logging.flogger.backend.LoggerBackend
 import io.spine.logging.flogger.backend.Platform
 import java.util.logging.Handler
 import java.util.logging.Level
@@ -35,16 +35,16 @@ import java.util.logging.LogRecord
 import java.util.logging.Logger
 
 /**
- * A [FloggerBackend] which allows forced publishing of logging records.
+ * A [LoggerBackend] which allows forced publishing of logging records.
  *
  * @param loggingClass
  *          a name of the logger created for this backend. A better name for the parameter
  *          would be `loggerName`, but we keep the naming consistent with the API
  *          we extend. Please also see the constructor of `AbstractBackend` which accepts
  *          `String` for the operation with the given class name.
- * @see AbstractFloggerBackend
+ * @see AbstractLoggerBackend
  */
-internal class StdFloggerBackend(loggingClass: String): AbstractFloggerBackend(loggingClass) {
+internal class StdLoggerBackend(loggingClass: String): AbstractLoggerBackend(loggingClass) {
 
     private val logger: Logger by lazy {
         Logger.getLogger(loggerName)
@@ -68,7 +68,7 @@ internal class StdFloggerBackend(loggingClass: String): AbstractFloggerBackend(l
      *
      * ## Implementation Note
      *
-     * This method is a replacement of [AbstractFloggerBackend.log], which fails to
+     * This method is a replacement of [AbstractLoggerBackend.log], which fails to
      * handle the forcing in cases when [parent handlers][Logger.getUseParentHandlers]
      * are involved.
      *

@@ -27,7 +27,7 @@
 package io.spine.logging.dynamic.backend
 
 import com.google.auto.service.AutoService
-import io.spine.logging.flogger.backend.FloggerBackend
+import io.spine.logging.flogger.backend.LoggerBackend
 import io.spine.logging.backend.system.BackendFactory
 
 /**
@@ -55,7 +55,7 @@ public class DynamicBackendFactoryService : BackendFactory() {
     /**
      * Delegates actual backend creation to [DynamicBackendFactory] object.
      */
-    override fun create(loggingClassName: String): FloggerBackend =
+    override fun create(loggingClassName: String): LoggerBackend =
         DynamicBackendFactory.create(loggingClassName)
 
     /**

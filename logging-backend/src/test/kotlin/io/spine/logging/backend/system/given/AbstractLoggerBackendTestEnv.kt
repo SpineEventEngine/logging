@@ -27,27 +27,27 @@
 package io.spine.logging.backend.system.given
 
 import io.spine.logging.flogger.backend.FloggerLogData
-import io.spine.logging.backend.system.AbstractFloggerBackend
+import io.spine.logging.backend.system.AbstractLoggerBackend
 import java.util.logging.Handler
 import java.util.logging.Level
 import java.util.logging.LogRecord
 import java.util.logging.Logger
 
 /**
- * An instantiatable [AbstractFloggerBackend] that remembers the fact
+ * An instantiatable [AbstractLoggerBackend] that remembers the fact
  * of usage of [ForcingLogger].
  */
-internal class MemoizingBackend(logger: Logger) : AbstractFloggerBackend(logger) {
+internal class MemoizingBackend(logger: Logger) : AbstractLoggerBackend(logger) {
 
     /**
-     * Tells whether the last call to [AbstractFloggerBackend.log]
+     * Tells whether the last call to [AbstractLoggerBackend.log]
      * used a forcing logger.
      */
     internal var wasForcingLoggerUsed = false
         private set
 
     /**
-     * This method is not used by [AbstractFloggerBackend].
+     * This method is not used by [AbstractLoggerBackend].
      *
      * [FloggerLogData] tests are in `SimpleBackendLoggerSpec`.
      */

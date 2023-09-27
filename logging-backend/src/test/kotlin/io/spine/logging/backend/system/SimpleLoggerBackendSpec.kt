@@ -42,17 +42,17 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 /**
- * Tests [SimpleFloggerBackend].
+ * Tests [SimpleLoggerBackend].
  *
  * @see <a href="https://github.com/google/flogger/blob/70c5aea863952ee61b3d33afb41f2841b6d63455/api/src/test/java/com/google/common/flogger/backend/system/SimpleBackendLoggerTest.java">
  *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`SimpleFloggerBackend` should")
-internal class SimpleFloggerBackendSpec {
+internal class SimpleLoggerBackendSpec {
 
     private val logger = AssertingLogger()
     private val backend =
-        SimpleFloggerBackend(logger)
+        SimpleLoggerBackend(logger)
 
     @Test
     fun `log literals`() {

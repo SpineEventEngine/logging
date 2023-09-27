@@ -26,7 +26,7 @@
 
 package io.spine.logging.dynamic.backend
 
-import io.spine.logging.flogger.backend.FloggerBackend
+import io.spine.logging.flogger.backend.LoggerBackend
 
 /**
  * A typed [BackendFactory][com.google.common.flogger.backend.system.BackendFactory].
@@ -42,7 +42,7 @@ import io.spine.logging.flogger.backend.FloggerBackend
  *
  * @param T type of the returned backends
  */
-public fun interface TypedBackendFactory<out T : FloggerBackend> {
+public fun interface TypedBackendFactory<out T : LoggerBackend> {
 
     /**
      * Creates a logger backend for the given class name.

@@ -39,13 +39,13 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for [AbstractFloggerBackend].
+ * Tests for [AbstractLoggerBackend].
  *
  * @see <a href="https://github.com/google/flogger/blob/70c5aea863952ee61b3d33afb41f2841b6d63455/api/src/test/java/com/google/common/flogger/backend/system/AbstractBackendTest.java">
  *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`AbstractFloggerBackend` should")
-internal class AbstractFloggerBackendSpec {
+internal class AbstractLoggerBackendSpec {
 
     private val logger = MemoizingLogger("unused", Level.INFO)
     private val backend = MemoizingBackend(logger)

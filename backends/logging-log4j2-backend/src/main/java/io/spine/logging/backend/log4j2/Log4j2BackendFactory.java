@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.log4j2;
 
-import io.spine.logging.flogger.backend.FloggerBackend;
+import io.spine.logging.flogger.backend.LoggerBackend;
 import io.spine.logging.backend.system.BackendFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
@@ -49,7 +49,7 @@ public final class Log4j2BackendFactory extends BackendFactory {
   public Log4j2BackendFactory() {}
 
   @Override
-  public FloggerBackend create(String loggingClassName) {
+  public LoggerBackend create(String loggingClassName) {
 
     // Compute the logger name the same way as in `SimpleBackendFactory`.
     var name = loggingClassName.replace('$', '.');
@@ -59,7 +59,7 @@ public final class Log4j2BackendFactory extends BackendFactory {
     // So, we have to cast an interface back to its implementation.
     var logger = (Logger) LogManager.getLogger(name);
 
-    return new Log4J2FloggerBackend(logger);
+    return new Log4j2LoggerBackend(logger);
   }
 
   /**

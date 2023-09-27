@@ -27,7 +27,7 @@
 package io.spine.logging.backend.log4j2;
 
 import io.spine.logging.flogger.backend.FloggerLogData;
-import io.spine.logging.flogger.backend.FloggerBackend;
+import io.spine.logging.flogger.backend.LoggerBackend;
 import org.apache.logging.log4j.core.Logger;
 
 import static io.spine.logging.backend.log4j2.Log4j2LogEventUtil.toLog4jLevel;
@@ -36,11 +36,11 @@ import static io.spine.logging.backend.log4j2.Log4j2LogEventUtil.toLog4jLogEvent
 /**
  * A logging backend that uses Log4j2 to output log statements.
  */
-final class Log4J2FloggerBackend extends FloggerBackend {
+final class Log4j2LoggerBackend extends LoggerBackend {
   private final Logger logger;
 
   // VisibleForTesting
-  Log4J2FloggerBackend(Logger logger) {
+  Log4j2LoggerBackend(Logger logger) {
     this.logger = logger;
   }
 

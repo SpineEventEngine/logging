@@ -49,7 +49,7 @@ import org.junit.jupiter.api.Test
 
 /**
  * Tests for interaction between [ScopedLoggingContext][com.google.common.flogger.context.ScopedLoggingContext]
- * and [Log4J2FloggerBackend].
+ * and [Log4j2LoggerBackend].
  *
  * [ScopedLoggingContext][com.google.common.flogger.context.ScopedLoggingContext]
  * is abstract. To test it with Log4j backend, a concrete implementation
@@ -469,7 +469,8 @@ private fun createLogger(appender: Appender): ConfigurableLogger {
         appenders.forEach { removeAppender(it.value) }
         addAppender(appender)
     }
-    val backend = Log4J2FloggerBackend(log4jLogger)
+    val backend =
+        Log4j2LoggerBackend(log4jLogger)
     val logger = ConfigurableLogger.create(backend)
     return logger
 }
