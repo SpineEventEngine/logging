@@ -121,10 +121,9 @@ internal class LogSiteMapSpec {
     }
 }
 
-private fun createMap(): LogSiteMap<AtomicInteger> =
-    object : LogSiteMap<AtomicInteger>() {
-        override fun initialValue(): AtomicInteger = AtomicInteger(0)
-    }
+private fun createMap(): LogSiteMap<AtomicInteger> = object : LogSiteMap<AtomicInteger>() {
+    override fun initialValue(): AtomicInteger = AtomicInteger(0)
+}
 
 private fun <T> recurseAndCall(n: Int, action: Callable<T>): T {
     val i = n - 1
