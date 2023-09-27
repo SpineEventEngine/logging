@@ -27,7 +27,7 @@
 package io.spine.logging
 
 import io.spine.logging.flogger.FluentLogger2
-import io.spine.logging.flogger.LogSites.callerOf
+import io.spine.logging.flogger.FloggerLogSites.callerOf
 import com.google.errorprone.annotations.CheckReturnValue
 import kotlin.reflect.KClass
 import kotlin.time.DurationUnit

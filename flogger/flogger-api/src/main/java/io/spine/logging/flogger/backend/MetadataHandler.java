@@ -29,7 +29,7 @@ package io.spine.logging.flogger.backend;
 import static io.spine.logging.flogger.util.Checks.checkArgument;
 import static io.spine.logging.flogger.util.Checks.checkNotNull;
 
-import io.spine.logging.flogger.MetadataKey;
+import io.spine.logging.flogger.FloggerMetadataKey;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -61,7 +61,7 @@ public abstract class MetadataHandler<C> {
    * @param context an arbitrary context object supplied to the process method.
    * @param <T> the key/value type.
    */
-  protected abstract <T> void handle(MetadataKey<T> key, T value, C context);
+  protected abstract <T> void handle(FloggerMetadataKey<T> key, T value, C context);
 
   /**
    * Handles values for a repeatable metadata key. The method is called for all repeatable keys
@@ -74,7 +74,7 @@ public abstract class MetadataHandler<C> {
    * @param context an arbitrary context object supplied to the process method.
    * @param <T> the key/value type.
    */
-  protected <T> void handleRepeated(MetadataKey<T> key, Iterator<T> values, C context) {
+  protected <T> void handleRepeated(FloggerMetadataKey<T> key, Iterator<T> values, C context) {
     while (values.hasNext()) {
       handle(key, values.next(), context);
     }
@@ -115,7 +115,7 @@ public abstract class MetadataHandler<C> {
      * @param value associated metadata value.
      * @param context an arbitrary context object supplied to the process method.
      */
-    void handle(MetadataKey<T> key, T value, C context);
+    void handle(FloggerMetadataKey<T> key, T value, C context);
   }
 
   /**
@@ -134,7 +134,7 @@ public abstract class MetadataHandler<C> {
      *     instance is read-only and must not be held beyond the scope of this callback.
      * @param context an arbitrary context object supplied to the process method.
      */
-    void handle(MetadataKey<T> key, Iterator<T> values, C context);
+    void handle(FloggerMetadataKey<T> key, Iterator<T> values, C context);
   }
 
   /**
@@ -148,20 +148,20 @@ public abstract class MetadataHandler<C> {
     private static final ValueHandler<Object, Object> IGNORE_VALUE =
         new ValueHandler<Object, Object>() {
           @Override
-          public void handle(MetadataKey<Object> key, Object value, Object context) {}
+          public void handle(FloggerMetadataKey<Object> key, Object value, Object context) {}
         };
 
     // Since the context is ignored, this can safely be cast to RepeatedValueHandler<Object, C>
     private static final RepeatedValueHandler<Object, Object> IGNORE_REPEATED_VALUE =
         new RepeatedValueHandler<Object, Object>() {
           @Override
-          public void handle(MetadataKey<Object> key, Iterator<Object> value, Object context) {}
+          public void handle(FloggerMetadataKey<Object> key, Iterator<Object> value, Object context) {}
         };
 
-    private final Map<MetadataKey<?>, ValueHandler<?, ? super C>> singleValueHandlers =
-        new HashMap<MetadataKey<?>, ValueHandler<?, ? super C>>();
-    private final Map<MetadataKey<?>, RepeatedValueHandler<?, ? super C>> repeatedValueHandlers =
-        new HashMap<MetadataKey<?>, RepeatedValueHandler<?, ? super C>>();
+    private final Map<FloggerMetadataKey<?>, ValueHandler<?, ? super C>> singleValueHandlers =
+        new HashMap<FloggerMetadataKey<?>, ValueHandler<?, ? super C>>();
+    private final Map<FloggerMetadataKey<?>, RepeatedValueHandler<?, ? super C>> repeatedValueHandlers =
+        new HashMap<FloggerMetadataKey<?>, RepeatedValueHandler<?, ? super C>>();
     private final ValueHandler<Object, ? super C> defaultHandler;
     private RepeatedValueHandler<Object, ? super C> defaultRepeatedHandler = null;
 
@@ -172,10 +172,10 @@ public abstract class MetadataHandler<C> {
     /**
      * Sets a handler for any unknown repeated keys which allows values to be processed via a
      * generic {@link Iterator}. To handle repeated values against a known key with their expected
-     * type, register a handler via {@link #addRepeatedHandler(MetadataKey,RepeatedValueHandler)}.
+     * type, register a handler via {@link #addRepeatedHandler(FloggerMetadataKey,RepeatedValueHandler)}.
      *
      * <p>Note that if a repeated key is associated with an individual value handler (i.e. via
-     * {@link #addHandler(MetadataKey,ValueHandler)}), then that will be used in preference to the
+     * {@link #addHandler(FloggerMetadataKey,ValueHandler)}), then that will be used in preference to the
      * default handler set here.
      *
      * @param defaultHandler the default handler for unknown repeated keys/values.
@@ -198,7 +198,7 @@ public abstract class MetadataHandler<C> {
      */
     @CanIgnoreReturnValue
     public <T> Builder<C> addHandler(
-        MetadataKey<T> key, ValueHandler<? super T, ? super C> handler) {
+            FloggerMetadataKey<T> key, ValueHandler<? super T, ? super C> handler) {
       checkNotNull(key, "key");
       checkNotNull(handler, "handler");
       repeatedValueHandlers.remove(key);
@@ -217,7 +217,7 @@ public abstract class MetadataHandler<C> {
      */
     @CanIgnoreReturnValue
     public <T> Builder<C> addRepeatedHandler(
-        MetadataKey<? extends T> key, RepeatedValueHandler<T, ? super C> handler) {
+            FloggerMetadataKey<? extends T> key, RepeatedValueHandler<T, ? super C> handler) {
       checkNotNull(key, "key");
       checkNotNull(handler, "handler");
       checkArgument(key.canRepeat(), "key must be repeating");
@@ -234,9 +234,9 @@ public abstract class MetadataHandler<C> {
      * @return the builder instance for chaining.
      */
     @CanIgnoreReturnValue
-    public Builder<C> ignoring(MetadataKey<?> key, MetadataKey<?>... rest) {
+    public Builder<C> ignoring(FloggerMetadataKey<?> key, FloggerMetadataKey<?>... rest) {
       checkAndIgnore(key);
-      for (MetadataKey<?> k : rest) {
+      for (FloggerMetadataKey<?> k : rest) {
         checkAndIgnore(k);
       }
       return this;
@@ -249,14 +249,14 @@ public abstract class MetadataHandler<C> {
      * @return the builder instance for chaining.
      */
     @CanIgnoreReturnValue
-    public Builder<C> ignoring(Iterable<MetadataKey<?>> keys) {
-      for (MetadataKey<?> k : keys) {
+    public Builder<C> ignoring(Iterable<FloggerMetadataKey<?>> keys) {
+      for (FloggerMetadataKey<?> k : keys) {
         checkAndIgnore(k);
       }
       return this;
     }
 
-    <T> void checkAndIgnore(MetadataKey<T> key) {
+    <T> void checkAndIgnore(FloggerMetadataKey<T> key) {
       checkNotNull(key, "key");
       // It is more efficient to ignore a repeated key explicitly.
       if (key.canRepeat()) {
@@ -276,15 +276,15 @@ public abstract class MetadataHandler<C> {
      * @return the builder instance for chaining.
      */
     @CanIgnoreReturnValue
-    public Builder<C> removeHandlers(MetadataKey<?> key, MetadataKey<?>... rest) {
+    public Builder<C> removeHandlers(FloggerMetadataKey<?> key, FloggerMetadataKey<?>... rest) {
       checkAndRemove(key);
-      for (MetadataKey<?> k : rest) {
+      for (FloggerMetadataKey<?> k : rest) {
         checkAndRemove(k);
       }
       return this;
     }
 
-    void checkAndRemove(MetadataKey<?> key) {
+    void checkAndRemove(FloggerMetadataKey<?> key) {
       checkNotNull(key, "key");
       singleValueHandlers.remove(key);
       repeatedValueHandlers.remove(key);
@@ -297,10 +297,10 @@ public abstract class MetadataHandler<C> {
   }
 
   private static final class MapBasedhandler<C> extends MetadataHandler<C> {
-    private final Map<MetadataKey<?>, ValueHandler<?, ? super C>> singleValueHandlers =
-        new HashMap<MetadataKey<?>, ValueHandler<?, ? super C>>();
-    private final Map<MetadataKey<?>, RepeatedValueHandler<?, ? super C>> repeatedValueHandlers =
-        new HashMap<MetadataKey<?>, RepeatedValueHandler<?, ? super C>>();
+    private final Map<FloggerMetadataKey<?>, ValueHandler<?, ? super C>> singleValueHandlers =
+        new HashMap<FloggerMetadataKey<?>, ValueHandler<?, ? super C>>();
+    private final Map<FloggerMetadataKey<?>, RepeatedValueHandler<?, ? super C>> repeatedValueHandlers =
+        new HashMap<FloggerMetadataKey<?>, RepeatedValueHandler<?, ? super C>>();
     private final ValueHandler<Object, ? super C> defaultHandler;
     private final RepeatedValueHandler<Object, ? super C> defaultRepeatedHandler;
 
@@ -313,7 +313,7 @@ public abstract class MetadataHandler<C> {
 
     @SuppressWarnings("unchecked") // See comments for why casting is safe.
     @Override
-    protected <T> void handle(MetadataKey<T> key, T value, C context) {
+    protected <T> void handle(FloggerMetadataKey<T> key, T value, C context) {
       // Safe cast because of how our private map is managed.
       ValueHandler<T, ? super C> handler =
           (ValueHandler<T, ? super C>) singleValueHandlers.get(key);
@@ -321,13 +321,13 @@ public abstract class MetadataHandler<C> {
         handler.handle(key, value, context);
       } else {
         // Casting MetadataKey<T> to "<? super T>" is safe since it only produces elements of 'T'.
-        defaultHandler.handle((MetadataKey<Object>) key, value, context);
+        defaultHandler.handle((FloggerMetadataKey<Object>) key, value, context);
       }
     }
 
     @SuppressWarnings("unchecked") // See comments for why casting is safe.
     @Override
-    protected <T> void handleRepeated(MetadataKey<T> key, Iterator<T> values, C context) {
+    protected <T> void handleRepeated(FloggerMetadataKey<T> key, Iterator<T> values, C context) {
       // Safe cast because of how our private map is managed.
       RepeatedValueHandler<T, ? super C> handler =
           (RepeatedValueHandler<T, ? super C>) repeatedValueHandlers.get(key);
@@ -337,7 +337,7 @@ public abstract class MetadataHandler<C> {
         // Casting MetadataKey<T> to "<? super T>" is safe since it only produces elements of 'T'.
         // Casting the iterator is safe since it also only produces elements of 'T'.
         defaultRepeatedHandler.handle(
-            (MetadataKey<Object>) key, (Iterator<Object>) values, context);
+                (FloggerMetadataKey<Object>) key, (Iterator<Object>) values, context);
       } else {
         // Dispatches keys individually.
         super.handleRepeated(key, values, context);

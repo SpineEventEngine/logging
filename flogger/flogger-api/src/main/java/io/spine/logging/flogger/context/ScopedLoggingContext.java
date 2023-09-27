@@ -31,7 +31,7 @@ import static io.spine.logging.flogger.util.Checks.checkState;
 
 import io.spine.logging.flogger.FloggerLoggingApi;
 import io.spine.logging.flogger.FloggerLoggingScope;
-import io.spine.logging.flogger.MetadataKey;
+import io.spine.logging.flogger.FloggerMetadataKey;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.MustBeClosed;
 import java.io.Closeable;
@@ -170,7 +170,7 @@ public abstract class ScopedLoggingContext {
      * times on a builder.
      */
     @CanIgnoreReturnValue
-    public final <T> Builder withMetadata(MetadataKey<T> key, T value) {
+    public final <T> Builder withMetadata(FloggerMetadataKey<T> key, T value) {
       if (metadata == null) {
         metadata = ContextMetadata.builder();
       }
@@ -417,7 +417,7 @@ public abstract class ScopedLoggingContext {
    * new context, rather than adding it to context visible to multiple threads.
    */
   @CanIgnoreReturnValue
-  public <T> boolean addMetadata(MetadataKey<T> key, T value) {
+  public <T> boolean addMetadata(FloggerMetadataKey<T> key, T value) {
     checkNotNull(key, "key");
     checkNotNull(value, "value");
     return false;

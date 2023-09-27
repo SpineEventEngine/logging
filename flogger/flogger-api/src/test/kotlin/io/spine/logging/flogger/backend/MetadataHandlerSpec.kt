@@ -30,7 +30,7 @@ import com.google.common.base.Joiner
 import com.google.common.collect.Iterators
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.matchers.shouldBe
-import io.spine.logging.flogger.MetadataKey
+import io.spine.logging.flogger.FloggerMetadataKey
 import io.spine.logging.flogger.repeatedKey
 import io.spine.logging.flogger.singleKey
 import org.junit.jupiter.api.DisplayName
@@ -192,7 +192,7 @@ private fun process(
  *
  * @see MetadataHandler.builder
  */
-private fun appendUnknownValue(key: MetadataKey<*>, value: Any, out: StringBuilder) {
+private fun appendUnknownValue(key: FloggerMetadataKey<*>, value: Any, out: StringBuilder) {
     out.append("${key.label}=<<$value>> ")
 }
 
@@ -201,21 +201,21 @@ private fun appendUnknownValue(key: MetadataKey<*>, value: Any, out: StringBuild
  *
  * @see MetadataHandler.builder
  */
-private fun appendUnknownValues(key: MetadataKey<*>, values: Iterator<*>, out: StringBuilder) {
+private fun appendUnknownValues(key: FloggerMetadataKey<*>, values: Iterator<*>, out: StringBuilder) {
     val joinedValues = Joiner.on(", ").join(values)
     appendUnknownValue(key, joinedValues, out)
 }
 
-private fun appendValue(key: MetadataKey<*>, value: Any, out: StringBuilder) {
+private fun appendValue(key: FloggerMetadataKey<*>, value: Any, out: StringBuilder) {
     out.append("${key.label}=$value ")
 }
 
-private fun appendValues(key: MetadataKey<*>, values: Iterator<*>, out: StringBuilder) {
+private fun appendValues(key: FloggerMetadataKey<*>, values: Iterator<*>, out: StringBuilder) {
     val joinedValues = Iterators.toString(values)
     appendValue(key, joinedValues, out)
 }
 
-private fun appendSum(key: MetadataKey<Int>, values: Iterator<Int>, out: StringBuilder) {
+private fun appendSum(key: FloggerMetadataKey<Int>, values: Iterator<Int>, out: StringBuilder) {
     var sum = 0
     values.forEach { sum += it }
     out.append("sum(${key.label})=$sum ")

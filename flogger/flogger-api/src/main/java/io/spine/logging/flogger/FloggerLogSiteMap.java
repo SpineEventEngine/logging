@@ -44,7 +44,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * potentially harmful thread contention bottlenecks during logging.
  *
  * <p>This class is intended only for use by fluent logging APIs (subclasses of {@link FloggerLogContext}
- * and only used in the {@link FloggerLogContext#postProcess(LogSiteKey)} method, which supplies the key
+ * and only used in the {@link FloggerLogContext#postProcess(FloggerLogSiteKey)} method, which supplies the key
  * appropriate for the current log statement.
  *
  * @param <V> The value type in the map.
@@ -52,11 +52,11 @@ import java.util.concurrent.ConcurrentHashMap;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSiteMap.java">
  *     Original Java code of Google Flogger</a>
  */
-public abstract class LogSiteMap<V> {
-  private final ConcurrentHashMap<LogSiteKey, V> concurrentMap =
-      new ConcurrentHashMap<LogSiteKey, V>();
+public abstract class FloggerLogSiteMap<V> {
+  private final ConcurrentHashMap<FloggerLogSiteKey, V> concurrentMap =
+      new ConcurrentHashMap<FloggerLogSiteKey, V>();
 
-  protected LogSiteMap() {}
+  protected FloggerLogSiteMap() {}
 
   /**
    * Implemented by subclasses to provide a new value for a newly added keys. This value is mapped
@@ -67,19 +67,19 @@ public abstract class LogSiteMap<V> {
   protected abstract V initialValue();
 
   // This method exists only for testing. Do not make this public.
-  boolean contains(LogSiteKey key) {
+  boolean contains(FloggerLogSiteKey key) {
     return concurrentMap.containsKey(key);
   }
 
   /**
    * Returns the mutable, thread safe, log site state for the given key to be read or updated during
-   * the {@link FloggerLogContext#postProcess(LogSiteKey)} method.
+   * the {@link FloggerLogContext#postProcess(FloggerLogSiteKey)} method.
    *
    * <p>Note that due to the possibility of log site key specialization, there may be more than one
    * value in the map for any given log site. This is intended and allows for things like per scope
    * rate limiting.
    */
-  public final V get(LogSiteKey key, Metadata metadata) {
+  public final V get(FloggerLogSiteKey key, Metadata metadata) {
     V value = concurrentMap.get(key);
     if (value != null) {
       return value;
@@ -95,7 +95,7 @@ public abstract class LogSiteMap<V> {
     return value;
   }
 
-  private void addRemovalHook(final LogSiteKey key, Metadata metadata) {
+  private void addRemovalHook(final FloggerLogSiteKey key, Metadata metadata) {
     Runnable removalHook = null;
     for (int i = 0, count = metadata.size(); i < count; i++) {
       if (!FloggerLogContext.Key.LOG_SITE_GROUPING_KEY.equals(metadata.getKey(i))) {

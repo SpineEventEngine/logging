@@ -28,7 +28,7 @@ package io.spine.logging.backend.system;
 
 import io.spine.logging.flogger.FloggerAbstractLogger;
 import io.spine.logging.flogger.FloggerLogSite;
-import io.spine.logging.flogger.LogSites;
+import io.spine.logging.flogger.FloggerLogSites;
 import io.spine.logging.flogger.backend.Platform.LogCallerFinder;
 import io.spine.logging.flogger.util.CallerFinder;
 
@@ -66,7 +66,7 @@ public final class StackBasedCallerFinder extends LogCallerFinder {
     // to avoid even constructing the Throwable instance).
     StackTraceElement caller = CallerFinder.findCallerOf(loggerApi, stackFramesToSkip + 1);
     // Returns INVALID if "caller" is null (no caller found for given API class).
-    return LogSites.logSiteFrom(caller);
+    return FloggerLogSites.logSiteFrom(caller);
   }
 
   @Override

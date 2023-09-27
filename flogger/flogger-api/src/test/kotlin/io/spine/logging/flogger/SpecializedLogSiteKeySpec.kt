@@ -33,7 +33,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for [SpecializedLogSiteKey].
+ * Tests for [SpecializedFloggerLogSiteKey].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/SpecializedLogSiteKeyTest.java">
  *     Original Java code of Google Flogger</a>
@@ -44,18 +44,18 @@ internal class SpecializedLogSiteKeySpec {
     @Test
     fun `provide equality check`() {
         val logSite = create("com.google.foo.Foo", "doFoo", 42, "<unused>")
-        val fooKey = SpecializedLogSiteKey.of(logSite, "foo")
+        val fooKey = SpecializedFloggerLogSiteKey.of(logSite, "foo")
 
-        val anotherFooKey = SpecializedLogSiteKey.of(logSite, "foo")
+        val anotherFooKey = SpecializedFloggerLogSiteKey.of(logSite, "foo")
         anotherFooKey shouldBe fooKey
         anotherFooKey.hashCode() shouldBe fooKey.hashCode()
 
-        val barKey = SpecializedLogSiteKey.of(logSite, "bar")
+        val barKey = SpecializedFloggerLogSiteKey.of(logSite, "bar")
         barKey shouldNotBe fooKey
         barKey.hashCode() shouldNotBe fooKey.hashCode()
 
         val anotherLogSite = create("com.google.foo.Bar", "doOther", 23, "<unused>")
-        val oneMoreFooKey = SpecializedLogSiteKey.of(anotherLogSite, "foo")
+        val oneMoreFooKey = SpecializedFloggerLogSiteKey.of(anotherLogSite, "foo")
         oneMoreFooKey shouldNotBe fooKey
         oneMoreFooKey.hashCode() shouldNotBe fooKey.hashCode()
     }
@@ -75,11 +75,11 @@ internal class SpecializedLogSiteKeySpec {
     fun `provide equality check with respect to delegation order`() {
         val logSite = create("com.google.foo.Foo", "doFoo", 42, "<unused>")
 
-        val fooKey = SpecializedLogSiteKey.of(logSite, "foo")
-        val barKey = SpecializedLogSiteKey.of(logSite, "bar")
+        val fooKey = SpecializedFloggerLogSiteKey.of(logSite, "foo")
+        val barKey = SpecializedFloggerLogSiteKey.of(logSite, "bar")
 
-        val fooBarKey = SpecializedLogSiteKey.of(fooKey, "bar")
-        val barFooKey = SpecializedLogSiteKey.of(barKey, "foo")
+        val fooBarKey = SpecializedFloggerLogSiteKey.of(fooKey, "bar")
+        val barFooKey = SpecializedFloggerLogSiteKey.of(barKey, "foo")
 
         fooBarKey shouldNotBe barFooKey
     }

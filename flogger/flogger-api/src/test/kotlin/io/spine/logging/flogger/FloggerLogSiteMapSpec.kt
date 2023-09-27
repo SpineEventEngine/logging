@@ -42,13 +42,13 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for [LogSiteMap].
+ * Tests for [FloggerLogSiteMap].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/LogSiteMapTest.java">
  *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`LogSiteMap` should")
-internal class LogSiteMapSpec {
+internal class FloggerLogSiteMapSpec {
 
     @Test
     fun `get value for the given key`() {
@@ -121,7 +121,7 @@ internal class LogSiteMapSpec {
     }
 }
 
-private fun createMap(): LogSiteMap<AtomicInteger> = object : LogSiteMap<AtomicInteger>() {
+private fun createMap(): FloggerLogSiteMap<AtomicInteger> = object : FloggerLogSiteMap<AtomicInteger>() {
     override fun initialValue(): AtomicInteger = AtomicInteger(0)
 }
 
@@ -130,7 +130,7 @@ private fun <T> recurseAndCall(n: Int, action: Callable<T>): T {
     return if (i <= 0) action.call() else recurseAndCall(i, action)
 }
 
-private fun useAndReturnScopedKey(map: LogSiteMap<AtomicInteger>, label: String): LogSiteKey {
+private fun useAndReturnScopedKey(map: FloggerLogSiteMap<AtomicInteger>, label: String): FloggerLogSiteKey {
     val scope = FloggerLoggingScope.create(label)
     val metadata = FakeMetadata().add(FloggerLogContext.Key.LOG_SITE_GROUPING_KEY, scope)
     val logSite = create("com.example", label, 42, "<unused>")

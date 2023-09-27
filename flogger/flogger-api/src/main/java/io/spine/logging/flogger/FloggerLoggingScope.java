@@ -42,8 +42,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * the current {@link io.spine.logging.flogger.context.ScopedLoggingContext ScopedLoggingContexts}.
  *
  * <p>Stateful fluent logging APIs which need to look up per log site information (e.g. rate limit
- * state) should do so via a {@link LogSiteMap} using the {@link LogSiteKey} passed into the {@link
- * FloggerLogContext#postProcess(LogSiteKey)} method. If scopes are present in the log site {@link
+ * state) should do so via a {@link FloggerLogSiteMap} using the {@link FloggerLogSiteKey} passed into the {@link
+ * FloggerLogContext#postProcess(FloggerLogSiteKey)} method. If scopes are present in the log site {@link
  * Metadata} then the log site key provided to the {@code postProcess()} method will already be
  * specialized to take account of any scopes present.
  *
@@ -56,7 +56,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public abstract class FloggerLoggingScope {
   /**
-   * Creates a scope which automatically removes any associated keys from {@link LogSiteMap}s when
+   * Creates a scope which automatically removes any associated keys from {@link FloggerLogSiteMap}s when
    * it's garbage collected. The given label is used only for debugging purposes and may appear in
    * log statements, it should not contain any user data or other runtime information.
    */
@@ -69,7 +69,7 @@ public abstract class FloggerLoggingScope {
 
   /**
    * Creates a basic scope with the specified label. Custom subclasses of {@code LoggingScope} must
-   * manage their own lifecycles to avoid leaking memory and polluting {@link LogSiteMap}s with
+   * manage their own lifecycles to avoid leaking memory and polluting {@link FloggerLogSiteMap}s with
    * unused keys.
    */
   protected FloggerLoggingScope(String label) {
@@ -90,11 +90,11 @@ public abstract class FloggerLoggingScope {
    *   <li>Should be efficient and lightweight.
    * </ul>
    *
-   * As such it is recommended that the {@link SpecializedLogSiteKey#of(LogSiteKey, Object)} method
+   * As such it is recommended that the {@link SpecializedFloggerLogSiteKey#of(FloggerLogSiteKey, Object)} method
    * is used in implementations, passing in a suitable qualifier (which need not be the scope
    * itself, but must be unique per scope).
    */
-  protected abstract LogSiteKey specialize(LogSiteKey key);
+  protected abstract FloggerLogSiteKey specialize(FloggerLogSiteKey key);
 
   /**
    * Registers "hooks" which should be called when this scope is "closed". The hooks are intended to
@@ -131,8 +131,8 @@ public abstract class FloggerLoggingScope {
     }
 
     @Override
-    protected LogSiteKey specialize(LogSiteKey key) {
-      return SpecializedLogSiteKey.of(key, keyPart);
+    protected FloggerLogSiteKey specialize(FloggerLogSiteKey key) {
+      return SpecializedFloggerLogSiteKey.of(key, keyPart);
     }
 
     @Override

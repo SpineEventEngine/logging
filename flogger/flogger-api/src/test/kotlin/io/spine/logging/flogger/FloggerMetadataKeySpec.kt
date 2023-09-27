@@ -26,8 +26,8 @@
 
 package io.spine.logging.flogger
 
-import io.spine.logging.flogger.MetadataKey.repeated
-import io.spine.logging.flogger.MetadataKey.single
+import io.spine.logging.flogger.FloggerMetadataKey.repeated
+import io.spine.logging.flogger.FloggerMetadataKey.single
 import io.spine.logging.flogger.backend.Platform
 import io.spine.logging.flogger.given.MemoizingKvHandler
 import io.spine.logging.flogger.given.iterate
@@ -41,13 +41,13 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for [MetadataKey].
+ * Tests for [FloggerMetadataKey].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/MetadataKeyTest.java">
  *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`MetadataKey` should")
-internal class MetadataKeySpec {
+internal class FloggerMetadataKeySpec {
 
     @Test
     fun `create a key for a single piece of metadata`() {
@@ -63,7 +63,11 @@ internal class MetadataKeySpec {
         val badLabels = mutableListOf("", "foo bar", "_FOO")
         badLabels.forEach { label ->
             shouldThrow<IllegalArgumentException> {
-                MetadataKey(label, String::class.java, false)
+                FloggerMetadataKey(
+                    label,
+                    String::class.java,
+                    false
+                )
             }
         }
     }
@@ -154,8 +158,20 @@ internal class MetadataKeySpec {
     @Test
     fun `throw on 'null's`() {
         val badInstantiations = listOf(
-            { MetadataKey(null, String::class.java, false) },
-            { MetadataKey<Any>("label", null, false) },
+            {
+                FloggerMetadataKey(
+                    null,
+                    String::class.java,
+                    false
+                )
+            },
+            {
+                FloggerMetadataKey<Any>(
+                    "label",
+                    null,
+                    false
+                )
+            },
             { single(null, String::class.java) },
             { single("label", null) },
             { repeated(null, String::class.java) },
@@ -175,7 +191,7 @@ internal class MetadataKeySpec {
  * include that key, even in code, which has no explicit knowledge of it.
  */
 private class ReenteringKey(label: String) :
-    MetadataKey<Any>(label, Any::class.java, true) {
+    FloggerMetadataKey<Any>(label, Any::class.java, true) {
 
     override fun emit(value: Any, kvh: KeyValueHandler) {
         val currentDepth = Platform.getCurrentRecursionDepth()

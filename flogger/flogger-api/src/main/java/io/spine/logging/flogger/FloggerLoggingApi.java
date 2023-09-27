@@ -327,7 +327,7 @@ public interface FloggerLoggingApi<API extends FloggerLoggingApi<API>> {
    *   <li>Key value pairs which are explicitly extracted from logs by tools.
    * </ul>
    *
-   * <p>Metadata keys can support repeated values (see {@link MetadataKey#canRepeat()}), and if a
+   * <p>Metadata keys can support repeated values (see {@link FloggerMetadataKey#canRepeat()}), and if a
    * repeatable key is used multiple times in the same log statement, the effect is to collect all
    * the given values in order. If a non-repeatable key is passed multiple times, only the last
    * value is retained (though callers should not rely on this behavior and should simply avoid
@@ -340,9 +340,9 @@ public interface FloggerLoggingApi<API extends FloggerLoggingApi<API>> {
    * @param value a value to be associated with the key in this log statement. Null values are
    *        allowed, but the effect is always a no-op
    * @throws NullPointerException if the given key is null
-   * @see MetadataKey
+   * @see FloggerMetadataKey
    */
-  <T> API with(MetadataKey<T> key, @Nullable T value);
+  <T> API with(FloggerMetadataKey<T> key, @Nullable T value);
 
   /**
    * Sets a boolean metadata key constant to {@code true} for this log statement in a structured way
@@ -361,9 +361,9 @@ public interface FloggerLoggingApi<API extends FloggerLoggingApi<API>> {
    *
    * @param key the boolean metadata key (expected to be a static constant)
    * @throws NullPointerException if the given key is null
-   * @see MetadataKey
+   * @see FloggerMetadataKey
    */
-  API with(MetadataKey<Boolean> key);
+  API with(FloggerMetadataKey<Boolean> key);
 
   /**
    * Sets the log site for the current log statement. Explicit log site injection is very rarely
@@ -843,14 +843,14 @@ public interface FloggerLoggingApi<API extends FloggerLoggingApi<API>> {
     }
 
     @Override
-    public final <T> API with(MetadataKey<T> key, @Nullable T value) {
+    public final <T> API with(FloggerMetadataKey<T> key, @Nullable T value) {
       // Identical to the check in LogContext for consistency.
       checkNotNull(key, "metadata key");
       return noOp();
     }
 
     @Override
-    public final API with(MetadataKey<Boolean> key) {
+    public final API with(FloggerMetadataKey<Boolean> key) {
       // Do this inline rather than calling with(key, true) to keep no-op minimal.
       checkNotNull(key, "metadata key");
       return noOp();

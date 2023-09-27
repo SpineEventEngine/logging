@@ -30,7 +30,7 @@ import static io.spine.logging.flogger.util.Checks.checkArgument;
 import static io.spine.logging.flogger.util.Checks.checkNotNull;
 
 import io.spine.logging.flogger.FloggerLogContext;
-import io.spine.logging.flogger.MetadataKey;
+import io.spine.logging.flogger.FloggerMetadataKey;
 import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,10 +72,10 @@ public abstract class MetadataProcessor {
     public <C> void process(MetadataHandler<C> handler, C context) {}
 
     @Override
-    public <C> void handle(MetadataKey<?> key, MetadataHandler<C> handler, C context) {}
+    public <C> void handle(FloggerMetadataKey<?> key, MetadataHandler<C> handler, C context) {}
 
     @Override
-    public <T> T getSingleValue(MetadataKey<T> key) {
+    public <T> T getSingleValue(FloggerMetadataKey<T> key) {
       return null;
     }
 
@@ -85,7 +85,7 @@ public abstract class MetadataProcessor {
     }
 
     @Override
-    public Set<MetadataKey<?>> keySet() {
+    public Set<FloggerMetadataKey<?>> keySet() {
       return Collections.emptySet();
     }
   };
@@ -156,14 +156,14 @@ public abstract class MetadataProcessor {
    * handler method invoked depends on whether the key is single valued or repeated. If no metadata
    * is present for the given key, the handler is not invoked.
    */
-  public abstract <C> void handle(MetadataKey<?> key, MetadataHandler<C> handler, C context);
+  public abstract <C> void handle(FloggerMetadataKey<?> key, MetadataHandler<C> handler, C context);
 
   /**
    * Returns the unique value for a single valued key, or {@code null} if not present.
    *
    * @throws IllegalArgumentException if passed a repeatable key (even if that key has one value).
    */
-  public abstract <T> T getSingleValue(MetadataKey<T> key);
+  public abstract <T> T getSingleValue(FloggerMetadataKey<T> key);
 
   /**
    * Returns the number of unique keys represented by this processor. This is the same as the size
@@ -173,11 +173,11 @@ public abstract class MetadataProcessor {
   public abstract int keyCount();
 
   /**
-   * Returns the set of {@link MetadataKey}s known to this processor, in the order in which they
+   * Returns the set of {@link FloggerMetadataKey}s known to this processor, in the order in which they
    * will be processed. Note that this implementation is lightweight, but not necessarily performant
    * for things like containment testing.
    */
-  public abstract Set<MetadataKey<?>> keySet();
+  public abstract Set<FloggerMetadataKey<?>> keySet();
 
   /*
    * The values in the keyMap array are structured as:
@@ -226,7 +226,7 @@ public abstract class MetadataProcessor {
     }
 
     @Override
-    public <C> void handle(MetadataKey<?> key, MetadataHandler<C> handler, C context) {
+    public <C> void handle(FloggerMetadataKey<?> key, MetadataHandler<C> handler, C context) {
       int index = indexOf(key, keyMap, keyCount);
       if (index >= 0) {
         dispatch(key, keyMap[index], handler, context);
@@ -234,7 +234,7 @@ public abstract class MetadataProcessor {
     }
 
     @Override
-    public <T> T getSingleValue(MetadataKey<T> key) {
+    public <T> T getSingleValue(FloggerMetadataKey<T> key) {
       checkArgument(!key.canRepeat(), "key must be single valued");
       int index = indexOf(key, keyMap, keyCount);
       // For single keys, the keyMap values are just the value index.
@@ -247,18 +247,18 @@ public abstract class MetadataProcessor {
     }
 
     @Override
-    public Set<MetadataKey<?>> keySet() {
+    public Set<FloggerMetadataKey<?>> keySet() {
       // We may want to cache this, since it's effectively immutable, but it's also a small and
       // likely short lived instance, so quite possibly not worth it for the cost of another field.
-      return new AbstractSet<MetadataKey<?>>() {
+      return new AbstractSet<FloggerMetadataKey<?>>() {
         @Override
         public int size() {
           return keyCount;
         }
 
         @Override
-        public Iterator<MetadataKey<?>> iterator() {
-          return new Iterator<MetadataKey<?>>() {
+        public Iterator<FloggerMetadataKey<?>> iterator() {
+          return new Iterator<FloggerMetadataKey<?>>() {
             private int i = 0;
 
             @Override
@@ -267,7 +267,7 @@ public abstract class MetadataProcessor {
             }
 
             @Override
-            public MetadataKey<?> next() {
+            public FloggerMetadataKey<?> next() {
               return getKey(keyMap[i++] & 0x1F);
             }
 
@@ -281,7 +281,7 @@ public abstract class MetadataProcessor {
     }
 
     // Separate method to re-capture the value type.
-    private <T, C> void dispatch(MetadataKey<T> key, int n, MetadataHandler<C> handler, C context) {
+    private <T, C> void dispatch(FloggerMetadataKey<T> key, int n, MetadataHandler<C> handler, C context) {
       if (!key.canRepeat()) {
         // For single keys, the keyMap values are just the value index.
         handler.handle(key, key.cast(getValue(n)), context);
@@ -294,13 +294,13 @@ public abstract class MetadataProcessor {
     // same a little on allocations. However this is a fixed size instance and repeated keys are
     // a fairly unusual use case.
     private final class ValueIterator<T> implements Iterator<T> {
-      private final MetadataKey<T> key;
+      private final FloggerMetadataKey<T> key;
       private int nextIndex;
       // For repeated keys, the bits 5-32 contain a mask of additional indices (where bit 5
       // implies index 1, since index 0 cannot apply to an additional repeated value).
       private int mask;
 
-      private ValueIterator(MetadataKey<T> key, int valueIndices) {
+      private ValueIterator(FloggerMetadataKey<T> key, int valueIndices) {
         this.key = key;
         // Get the first element index (lowest 5 bits, 0-27).
         this.nextIndex = valueIndices & 0x1F;
@@ -341,7 +341,7 @@ public abstract class MetadataProcessor {
       long bloomFilterMask = 0L;
       int count = 0;
       for (int n = 0; n < keyMap.length; n++) {
-        MetadataKey<?> key = getKey(n);
+        FloggerMetadataKey<?> key = getKey(n);
         // Use the bloom filter mask to get a quick true-negative test for whether we've seen this
         // key before. Most keys are distinct and this test is very reliable up to 10-15 keys, so
         // it saves building a HashSet or similar to track the set of unique keys.
@@ -377,7 +377,7 @@ public abstract class MetadataProcessor {
     }
 
     // Returns the (unique) index into the keyMap array for the given key.
-    private int indexOf(MetadataKey<?> key, int[] keyMap, int count) {
+    private int indexOf(FloggerMetadataKey<?> key, int[] keyMap, int count) {
       for (int i = 0; i < count; i++) {
         // Low 5 bits of keyMap values are *always* an index to a valid metadata key.
         if (key.equals(getKey(keyMap[i] & 0x1F))) {
@@ -387,7 +387,7 @@ public abstract class MetadataProcessor {
       return -1;
     }
 
-    private MetadataKey<?> getKey(int n) {
+    private FloggerMetadataKey<?> getKey(int n) {
       int scopeSize = scope.size();
       return n >= scopeSize ? logged.getKey(n - scopeSize) : scope.getKey(n);
     }
@@ -405,14 +405,14 @@ public abstract class MetadataProcessor {
    * during processing.
    */
   private static final class SimpleProcessor extends MetadataProcessor {
-    private final Map<MetadataKey<?>, Object> map;
+    private final Map<FloggerMetadataKey<?>, Object> map;
 
     private SimpleProcessor(Metadata scope, Metadata logged) {
-      LinkedHashMap<MetadataKey<?>, Object> map = new LinkedHashMap<MetadataKey<?>, Object>();
+      LinkedHashMap<FloggerMetadataKey<?>, Object> map = new LinkedHashMap<FloggerMetadataKey<?>, Object>();
       addTo(map, scope);
       addTo(map, logged);
       // Wrap any repeated value lists to make them unmodifiable (required for correctness).
-      for (Map.Entry<MetadataKey<?>, Object> e : map.entrySet()) {
+      for (Map.Entry<FloggerMetadataKey<?>, Object> e : map.entrySet()) {
         if (e.getKey().canRepeat()) {
           e.setValue(Collections.unmodifiableList((List<?>) e.getValue()));
         }
@@ -422,9 +422,9 @@ public abstract class MetadataProcessor {
 
     // Unlike the LightweightProcessor, we copy references from the Metadata eagerly, so can "cast"
     // values to their key-types early, ensuring safe casting when dispatching.
-    private static void addTo(Map<MetadataKey<?>, Object> map, Metadata metadata) {
+    private static void addTo(Map<FloggerMetadataKey<?>, Object> map, Metadata metadata) {
       for (int i = 0; i < metadata.size(); i++) {
-        MetadataKey<?> key = metadata.getKey(i);
+        FloggerMetadataKey<?> key = metadata.getKey(i);
         Object value = map.get(key);
         if (key.canRepeat()) {
           @SuppressWarnings("unchecked")
@@ -444,13 +444,13 @@ public abstract class MetadataProcessor {
 
     @Override
     public <C> void process(MetadataHandler<C> handler, C context) {
-      for (Map.Entry<MetadataKey<?>, Object> e : map.entrySet()) {
+      for (Map.Entry<FloggerMetadataKey<?>, Object> e : map.entrySet()) {
         dispatch(e.getKey(), e.getValue(), handler, context);
       }
     }
 
     @Override
-    public <C> void handle(MetadataKey<?> key, MetadataHandler<C> handler, C context) {
+    public <C> void handle(FloggerMetadataKey<?> key, MetadataHandler<C> handler, C context) {
       Object value = map.get(key);
       if (value != null) {
         dispatch(key, value, handler, context);
@@ -460,7 +460,7 @@ public abstract class MetadataProcessor {
     // It's safe to ignore warnings since single keys are only ever 'T' when added to the map.
     @Override
     @SuppressWarnings("unchecked")
-    public <T> T getSingleValue(MetadataKey<T> key) {
+    public <T> T getSingleValue(FloggerMetadataKey<T> key) {
       checkArgument(!key.canRepeat(), "key must be single valued");
       Object value = map.get(key);
       return (value != null) ? (T) value : null;
@@ -472,7 +472,7 @@ public abstract class MetadataProcessor {
     }
 
     @Override
-    public Set<MetadataKey<?>> keySet() {
+    public Set<FloggerMetadataKey<?>> keySet() {
       return map.keySet();
     }
 
@@ -480,7 +480,7 @@ public abstract class MetadataProcessor {
     // and single keys are only ever 'T' when added to the map.
     @SuppressWarnings("unchecked")
     private static <T, C> void dispatch(
-        MetadataKey<T> key, Object value, MetadataHandler<C> handler, C context) {
+            FloggerMetadataKey<T> key, Object value, MetadataHandler<C> handler, C context) {
       if (key.canRepeat()) {
         handler.handleRepeated(key, ((List<T>) value).iterator(), context);
       } else {

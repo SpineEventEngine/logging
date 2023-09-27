@@ -27,8 +27,8 @@
 package io.spine.logging.flogger.backend;
 
 import io.spine.logging.flogger.FloggerLogContext;
-import io.spine.logging.flogger.MetadataKey;
-import io.spine.logging.flogger.MetadataKey.KeyValueHandler;
+import io.spine.logging.flogger.FloggerMetadataKey;
+import io.spine.logging.flogger.FloggerMetadataKey.KeyValueHandler;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.util.Collections;
 import java.util.HashSet;
@@ -58,7 +58,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * }</pre>
  *
  * <p>If additional metadata keys, other than the {@code cause} are to be omitted, then {@link
- * #getSimpleFormatterIgnoring(MetadataKey...)} can be used to obtain a static formatter, instead of
+ * #getSimpleFormatterIgnoring(FloggerMetadataKey...)} can be used to obtain a static formatter, instead of
  * using the default.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/SimpleMessageFormatter.java">
@@ -66,8 +66,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  */
 public final class SimpleMessageFormatter {
   @SuppressWarnings("ConstantCaseForConstants")
-  private static final Set<MetadataKey<?>> DEFAULT_KEYS_TO_IGNORE =
-      Collections.<MetadataKey<?>>singleton(FloggerLogContext.Key.LOG_CAUSE);
+  private static final Set<FloggerMetadataKey<?>> DEFAULT_KEYS_TO_IGNORE =
+      Collections.<FloggerMetadataKey<?>>singleton(FloggerLogContext.Key.LOG_CAUSE);
 
   private static final LogMessageFormatter DEFAULT_FORMATTER = newFormatter(DEFAULT_KEYS_TO_IGNORE);
 
@@ -107,11 +107,11 @@ public final class SimpleMessageFormatter {
    * almost never expected to be part of the formatted message. Other internal metadata keys may
    * also be suppressed.
    */
-  public static LogMessageFormatter getSimpleFormatterIgnoring(MetadataKey<?>... extraIgnoredKeys) {
+  public static LogMessageFormatter getSimpleFormatterIgnoring(FloggerMetadataKey<?>... extraIgnoredKeys) {
     if (extraIgnoredKeys.length == 0) {
       return getDefaultFormatter();
     }
-    Set<MetadataKey<?>> ignored = new HashSet<MetadataKey<?>>(DEFAULT_KEYS_TO_IGNORE);
+    Set<FloggerMetadataKey<?>> ignored = new HashSet<FloggerMetadataKey<?>>(DEFAULT_KEYS_TO_IGNORE);
     Collections.addAll(ignored, extraIgnoredKeys);
     return newFormatter(ignored);
   }
@@ -182,7 +182,7 @@ public final class SimpleMessageFormatter {
    *     message.
    */
   public static boolean mustBeFormatted(
-      LogData logData, MetadataProcessor metadata, Set<MetadataKey<?>> keysToIgnore) {
+      LogData logData, MetadataProcessor metadata, Set<FloggerMetadataKey<?>> keysToIgnore) {
     // If there are logged arguments or more metadata keys than can be ignored, we fail immediately
     // which avoids the cost of creating the metadata key set (so don't remove the size check).
     return logData.getTemplateContext() != null
@@ -194,7 +194,7 @@ public final class SimpleMessageFormatter {
    * Returns a new "simple" formatter which ignores the given set of metadata keys. The caller must
    * ensure that the given set is effectively immutable.
    */
-  private static LogMessageFormatter newFormatter(final Set<MetadataKey<?>> keysToIgnore) {
+  private static LogMessageFormatter newFormatter(final Set<FloggerMetadataKey<?>> keysToIgnore) {
     return new LogMessageFormatter() {
       private final MetadataHandler<KeyValueHandler> handler =
           MetadataKeyValueHandlers.getDefaultHandler(keysToIgnore);

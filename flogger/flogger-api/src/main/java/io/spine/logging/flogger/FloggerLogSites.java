@@ -38,7 +38,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSites.java">
  *     Original Java code of Google Flogger</a>
  */
-public final class LogSites {
+public final class FloggerLogSites {
   /**
    * Returns a {@code LogSite} for the caller of the specified class. This can be used in
    * conjunction with the {@link FloggerLoggingApi#withInjectedLogSite(FloggerLogSite)} method to implement
@@ -130,7 +130,7 @@ public final class LogSites {
    */
   public static FloggerLogSite logSite() {
     // Don't call "callerOf()" to avoid making another stack entry.
-    return Platform.getCallerFinder().findLogSite(LogSites.class, 0);
+    return Platform.getCallerFinder().findLogSite(FloggerLogSites.class, 0);
   }
 
   /**
@@ -144,5 +144,5 @@ public final class LogSites {
     return e != null ? new StackBasedFloggerLogSite(e) : FloggerLogSite.INVALID;
   }
 
-  private LogSites() {}
+  private FloggerLogSites() {}
 }

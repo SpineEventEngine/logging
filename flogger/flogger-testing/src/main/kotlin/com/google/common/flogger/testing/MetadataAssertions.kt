@@ -26,7 +26,7 @@
 
 package com.google.common.flogger.testing
 
-import io.spine.logging.flogger.MetadataKey
+import io.spine.logging.flogger.FloggerMetadataKey
 import io.spine.logging.flogger.backend.Metadata
 import io.kotest.matchers.collections.shouldContainInOrder
 import io.kotest.matchers.ints.shouldBeExactly
@@ -58,7 +58,7 @@ public infix fun Metadata.shouldHaveSize(number: Int) {
 /**
  * Asserts that this [Metadata] has a [key] with the mapped [values].
  */
-public fun <T> Metadata.shouldContainInOrder(key: MetadataKey<T>, vararg values: T) {
+public fun <T> Metadata.shouldContainInOrder(key: FloggerMetadataKey<T>, vararg values: T) {
     valuesOf(key) shouldContainInOrder values.asList()
 }
 
@@ -67,34 +67,34 @@ public fun <T> Metadata.shouldContainInOrder(key: MetadataKey<T>, vararg values:
  *
  * The given [value] should be the first one, which was mapped to the [key].
  */
-public fun <T> Metadata.shouldHaveFirstValue(key: MetadataKey<T>, value: T) {
+public fun <T> Metadata.shouldHaveFirstValue(key: FloggerMetadataKey<T>, value: T) {
     findValue(key) shouldBe value
 }
 
 /**
  * Asserts that this [Metadata] does NOT HAVE a value for the given [key].
  */
-public infix fun <T> Metadata.shouldNotContain(key: MetadataKey<T>) {
+public infix fun <T> Metadata.shouldNotContain(key: FloggerMetadataKey<T>) {
     findValue(key).shouldBeNull()
 }
 
 /**
  * Asserts that this [Metadata] has one or more values for the given [key]
  */
-public infix fun <T> Metadata.shouldContain(key: MetadataKey<T>) {
+public infix fun <T> Metadata.shouldContain(key: FloggerMetadataKey<T>) {
     findValue(key).shouldNotBeNull()
 }
 
 /**
  * Asserts that this [Metadata] has a [key] to which only a single [value] is mapped.
  */
-public fun <T> Metadata.shouldUniquelyContain(key: MetadataKey<T>, value: T) {
+public fun <T> Metadata.shouldUniquelyContain(key: FloggerMetadataKey<T>, value: T) {
     findValue(key) shouldBe value
     val allKeys = (0..<size()).map { i -> getKey(i) }.toList()
     allKeys.indexOf(key) shouldBe allKeys.lastIndexOf(key)
 }
 
-private fun <T> Metadata.valuesOf(key: MetadataKey<T>): List<T> {
+private fun <T> Metadata.valuesOf(key: FloggerMetadataKey<T>): List<T> {
     val values: MutableList<T> = ArrayList()
     for (n in 0..<size()) {
         if (getKey(n) == key) {

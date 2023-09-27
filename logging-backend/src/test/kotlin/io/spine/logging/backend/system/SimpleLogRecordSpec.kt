@@ -27,7 +27,7 @@
 package io.spine.logging.backend.system
 
 import io.spine.logging.flogger.FloggerLogContext.Key
-import io.spine.logging.flogger.MetadataKey
+import io.spine.logging.flogger.FloggerMetadataKey
 import io.spine.logging.flogger.backend.Metadata
 import io.spine.logging.flogger.context.Tags
 import io.spine.logging.flogger.parser.ParseException
@@ -62,7 +62,7 @@ internal class SimpleLogRecordSpec {
     companion object {
         private val INT_KEY = singleKey<Int>("int")
         private val STR_KEY = singleKey<String>("str")
-        private val PATH_KEY = object : MetadataKey<String>("path", String::class.java, true) {
+        private val PATH_KEY = object : FloggerMetadataKey<String>("path", String::class.java, true) {
             override fun emitRepeated(values: Iterator<String>, out: KeyValueHandler) {
                 val joined = values.asSequence().joinToString("/")
                 out.handle(label, joined)

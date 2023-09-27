@@ -21,7 +21,7 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 import io.spine.logging.flogger.FloggerLogContext;
 import io.spine.logging.flogger.FloggerLogSite;
-import io.spine.logging.flogger.MetadataKey;
+import io.spine.logging.flogger.FloggerMetadataKey;
 import io.spine.logging.flogger.backend.LogData;
 import io.spine.logging.flogger.backend.Metadata;
 import io.spine.logging.flogger.backend.TemplateContext;
@@ -100,7 +100,7 @@ public final class FakeLogData implements LogData {
   }
 
   @CanIgnoreReturnValue
-  public <T> FakeLogData addMetadata(MetadataKey<T> key, Object value) {
+  public <T> FakeLogData addMetadata(FloggerMetadataKey<T> key, Object value) {
     metadata.add(key, key.cast(value));
     return this;
   }

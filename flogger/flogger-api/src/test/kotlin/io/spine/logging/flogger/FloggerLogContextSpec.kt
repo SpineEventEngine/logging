@@ -868,9 +868,9 @@ internal class FloggerLogContextSpec {
         // We don't expect this to ever happen in real code though.
         for (i in 0..6) {
             // Log every 2nd (0, 2, 4, 6)
-            logHelper(logger, LogSites.logSite(), 2, "Foo: $i")
+            logHelper(logger, FloggerLogSites.logSite(), 2, "Foo: $i")
             // Log every 3rd (0, 3, 6)
-            logHelper(logger, LogSites.logSite(), 3, "Bar: $i")
+            logHelper(logger, FloggerLogSites.logSite(), 3, "Bar: $i")
         }
         backend.loggedCount shouldBe 7
         backend.firstLogged.shouldHaveArguments("Foo: 0")
@@ -937,7 +937,7 @@ internal class FloggerLogContextSpec {
         }
 
         /**
-         * This is unfortunate but hard to work around unless [SpecializedLogSiteKey]
+         * This is unfortunate but hard to work around unless [SpecializedFloggerLogSiteKey]
          * can be made invariant to the order of specialization (but this class must be
          * very efficient, so that would be hard).
          *

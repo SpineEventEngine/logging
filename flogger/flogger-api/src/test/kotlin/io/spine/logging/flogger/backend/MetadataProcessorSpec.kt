@@ -34,7 +34,7 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.ints.shouldBeLessThanOrEqual
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
-import io.spine.logging.flogger.MetadataKey
+import io.spine.logging.flogger.FloggerMetadataKey
 import io.spine.logging.flogger.repeatedKey
 import io.spine.logging.flogger.singleKey
 import org.junit.jupiter.api.Nested
@@ -185,8 +185,8 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
             .add(REP_1, "two")
         val metadata = factory.processorFor(scope, Metadata.empty())
         val handler: MetadataHandler<Void> = object : MetadataHandler<Void>() {
-            override fun <T> handle(key: MetadataKey<T>, value: T, context: Void) = Unit
-            override fun <T> handleRepeated(key: MetadataKey<T>,
+            override fun <T> handle(key: FloggerMetadataKey<T>, value: T, context: Void) = Unit
+            override fun <T> handleRepeated(key: FloggerMetadataKey<T>,
                                             values: MutableIterator<T>,
                                             context: Void?) {
                 values.hasNext().shouldBeTrue()
@@ -221,7 +221,7 @@ private fun entries(metadata: MetadataProcessor): List<String> {
  * Processes the given [metadata] for a single metadata [key],
  * returning the formatted entry.
  */
-private fun handleEntry(metadata: MetadataProcessor, key: MetadataKey<*>): String? {
+private fun handleEntry(metadata: MetadataProcessor, key: FloggerMetadataKey<*>): String? {
     val entries = arrayListOf<String>()
     metadata.handle(key, COLLECTING_HANDLER, entries)
     entries.size shouldBeLessThanOrEqual 1
@@ -230,12 +230,12 @@ private fun handleEntry(metadata: MetadataProcessor, key: MetadataKey<*>): Strin
 
 private object COLLECTING_HANDLER : MetadataHandler<MutableList<String>>() {
 
-    override fun <T : Any?> handle(key: MetadataKey<T>, value: T, out: MutableList<String>) {
+    override fun <T : Any?> handle(key: FloggerMetadataKey<T>, value: T, out: MutableList<String>) {
         val stringified = "%s=%s".format(key.label, value)
         out.add(stringified)
     }
 
-    override fun <T : Any?> handleRepeated(key: MetadataKey<T>,
+    override fun <T : Any?> handleRepeated(key: FloggerMetadataKey<T>,
                                            values: MutableIterator<T>,
                                            out: MutableList<String>) {
         val stringified = "%s=%s".format(key.label, Iterators.toString(values))

@@ -18,7 +18,7 @@ package com.google.common.flogger.testing;
 
 import static io.spine.logging.flogger.util.Checks.checkNotNull;
 
-import io.spine.logging.flogger.MetadataKey;
+import io.spine.logging.flogger.FloggerMetadataKey;
 import io.spine.logging.flogger.backend.Metadata;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.util.ArrayList;
@@ -32,9 +32,9 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 public final class FakeMetadata extends Metadata {
 
   private static final class KeyValuePair<T> {
-    private final MetadataKey<T> key;
+    private final FloggerMetadataKey<T> key;
     private final T value;
-    private KeyValuePair(MetadataKey<T> key, T value) {
+    private KeyValuePair(FloggerMetadataKey<T> key, T value) {
       this.key = checkNotNull(key, "key");
       this.value = checkNotNull(value, "value");
     }
@@ -43,7 +43,7 @@ public final class FakeMetadata extends Metadata {
   private final List<KeyValuePair<?>> entries = new ArrayList<>();
 
   @CanIgnoreReturnValue
-  public <T> FakeMetadata add(MetadataKey<T> key, T value) {
+  public <T> FakeMetadata add(FloggerMetadataKey<T> key, T value) {
     entries.add(new KeyValuePair<T>(key, value));
     return this;
   }
@@ -52,7 +52,7 @@ public final class FakeMetadata extends Metadata {
     return entries.size();
   }
 
-  @Override public MetadataKey<?> getKey(int n) {
+  @Override public FloggerMetadataKey<?> getKey(int n) {
     return entries.get(n).key;
   }
   @Override public Object getValue(int n) {
@@ -61,7 +61,7 @@ public final class FakeMetadata extends Metadata {
 
   @Override
   @Nullable
-  public <T> T findValue(MetadataKey<T> key) {
+  public <T> T findValue(FloggerMetadataKey<T> key) {
     for (KeyValuePair<?> e : entries) {
       if (e.key.equals(key)) {
         return key.cast(e.value);

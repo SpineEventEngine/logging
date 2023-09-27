@@ -35,7 +35,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 /**
  * Rate limiter to support {@code every(N)} functionality.
  *
- * <p>Instances of this class are created for each unique {@link LogSiteKey} for which rate limiting
+ * <p>Instances of this class are created for each unique {@link FloggerLogSiteKey} for which rate limiting
  * via the {@code LOG_EVERY_N} metadata key is required. This class implements {@code
  * RateLimitStatus} as a mechanism for resetting the rate limiter state.
  *
@@ -45,8 +45,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  *     Original Java code of Google Flogger</a>
  */
 final class CountingRateLimiter extends RateLimitStatus {
-  private static final LogSiteMap<CountingRateLimiter> map =
-      new LogSiteMap<CountingRateLimiter>() {
+  private static final FloggerLogSiteMap<CountingRateLimiter> map =
+      new FloggerLogSiteMap<CountingRateLimiter>() {
         @Override
         protected CountingRateLimiter initialValue() {
           return new CountingRateLimiter();
@@ -62,7 +62,7 @@ final class CountingRateLimiter extends RateLimitStatus {
    * reset.
    */
   @Nullable
-  static RateLimitStatus check(Metadata metadata, LogSiteKey logSiteKey) {
+  static RateLimitStatus check(Metadata metadata, FloggerLogSiteKey logSiteKey) {
     Integer rateLimitCount = metadata.findValue(LOG_EVERY_N);
     if (rateLimitCount == null) {
       // Without rate limiter specific metadata, this limiter has no effect.

@@ -29,7 +29,7 @@ package io.spine.logging.flogger.context;
 import static java.util.concurrent.TimeUnit.MINUTES;
 
 import io.spine.logging.flogger.FluentLogger2;
-import io.spine.logging.flogger.MetadataKey;
+import io.spine.logging.flogger.FloggerMetadataKey;
 import io.spine.logging.flogger.StackSize;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 
@@ -130,7 +130,7 @@ public final class ScopedLoggingContexts {
    * new context, rather than adding it to context visible to multiple threads.
    */
   @CanIgnoreReturnValue
-  public static <T> boolean addMetadata(MetadataKey<T> key, T value) {
+  public static <T> boolean addMetadata(FloggerMetadataKey<T> key, T value) {
     return warnOnFailure(ScopedLoggingContext.getInstance().addMetadata(key, value));
   }
 

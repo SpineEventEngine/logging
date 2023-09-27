@@ -45,7 +45,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  *
  * <p>This class should not be used directly outside the core Flogger libraries. If you need to
  * generate a {@link FloggerLogSite} from a {@link StackTraceElement}, use {@link
- * LogSites#logSiteFrom(StackTraceElement) LogSites.logSiteFrom(myStackTaceElement)}.
+ * FloggerLogSites#logSiteFrom(StackTraceElement) LogSites.logSiteFrom(myStackTaceElement)}.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/StackBasedLogSite.java">
  *     Original Java code of Google Flogger</a>
