@@ -16,7 +16,7 @@
 
 package com.google.common.flogger.grpc;
 
-import io.spine.logging.flogger.FloggerLoggingScope;
+import io.spine.logging.flogger.LoggingScope;
 import io.spine.logging.flogger.context.ContextMetadata;
 import io.spine.logging.flogger.context.LogLevelMap;
 import io.spine.logging.flogger.context.ScopeType;
@@ -61,7 +61,7 @@ final class GrpcContextData {
   }
 
   @Nullable
-  static FloggerLoggingScope lookupScopeFor(@Nullable GrpcContextData contextData, ScopeType type) {
+  static LoggingScope lookupScopeFor(@Nullable GrpcContextData contextData, ScopeType type) {
     return contextData != null ? ScopeList.lookup(contextData.scopes, type) : null;
   }
 

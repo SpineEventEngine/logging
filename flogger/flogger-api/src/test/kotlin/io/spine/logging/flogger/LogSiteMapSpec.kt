@@ -67,9 +67,9 @@ internal class LogSiteMapSpec {
     @Test
     fun `remove entries when a scope is manually closed`() {
         val map = createMap()
-        val foo = FloggerLoggingScope.WeakScope("foo")
+        val foo = LoggingScope.WeakScope("foo")
         val fooMetadata = FakeMetadata().add(FloggerLogContext.Key.LOG_SITE_GROUPING_KEY, foo)
-        val bar = FloggerLoggingScope.WeakScope("bar")
+        val bar = LoggingScope.WeakScope("bar")
         val barMetadata = FakeMetadata().add(FloggerLogContext.Key.LOG_SITE_GROUPING_KEY, bar)
         val logSite = create("com.google.foo.Foo", "doFoo", 42, "<unused>")
         val fooKey = FloggerLogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
@@ -135,7 +135,7 @@ private fun useAndReturnScopedKey(
     map: LogSiteMap<AtomicInteger>,
     label: String
 ): LogSiteKey {
-    val scope = FloggerLoggingScope.create(label)
+    val scope = LoggingScope.create(label)
     val metadata = FakeMetadata().add(FloggerLogContext.Key.LOG_SITE_GROUPING_KEY, scope)
     val logSite = create("com.example", label, 42, "<unused>")
     val key = FloggerLogContext.specializeLogSiteKeyFromMetadata(logSite, metadata)

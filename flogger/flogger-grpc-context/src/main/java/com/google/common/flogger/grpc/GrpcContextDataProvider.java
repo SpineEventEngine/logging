@@ -16,7 +16,7 @@
 
 package com.google.common.flogger.grpc;
 
-import io.spine.logging.flogger.FloggerLoggingScope;
+import io.spine.logging.flogger.LoggingScope;
 import io.spine.logging.flogger.context.ContextDataProvider;
 import io.spine.logging.flogger.context.ContextMetadata;
 import io.spine.logging.flogger.context.ScopeType;
@@ -99,7 +99,7 @@ public final class GrpcContextDataProvider extends ContextDataProvider {
 
   @Nullable
   @Override
-  public FloggerLoggingScope getScope(ScopeType type) {
+  public LoggingScope getScope(ScopeType type) {
     return GrpcContextData.lookupScopeFor(currentContext(), type);
   }
 

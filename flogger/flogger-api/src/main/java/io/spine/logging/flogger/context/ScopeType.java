@@ -28,8 +28,8 @@ package io.spine.logging.flogger.context;
 
 import static io.spine.logging.flogger.util.Checks.checkNotNull;
 
-import io.spine.logging.flogger.FloggerLoggingScope;
-import io.spine.logging.flogger.FloggerLoggingScopeProvider;
+import io.spine.logging.flogger.LoggingScope;
+import io.spine.logging.flogger.LoggingScopeProvider;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
@@ -44,7 +44,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/ScopeType.java">
  *     Original Java code of Google Flogger</a>
  */
-public final class ScopeType implements FloggerLoggingScopeProvider {
+public final class ScopeType implements LoggingScopeProvider {
   /**
    * The built in "request" scope. This can be bound to a scoped context in order to provide a
    * distinct request scope for each context, allowing stateful logging operations (e.g. rate
@@ -89,13 +89,13 @@ public final class ScopeType implements FloggerLoggingScopeProvider {
 
 
   // Called by ScopedLoggingContext to make a new scope instance when a context is installed.
-  FloggerLoggingScope newScope() {
-    return FloggerLoggingScope.create(name);
+  LoggingScope newScope() {
+    return LoggingScope.create(name);
   }
 
   @Nullable
   @Override
-  public FloggerLoggingScope getCurrentScope() {
+  public LoggingScope getCurrentScope() {
     return ContextDataProvider.getInstance().getScope(this);
   }
 }

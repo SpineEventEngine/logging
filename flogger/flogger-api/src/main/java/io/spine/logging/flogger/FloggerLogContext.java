@@ -724,8 +724,8 @@ public abstract class FloggerLogContext<LOGGER extends FloggerAbstractLogger<API
       if (Key.LOG_SITE_GROUPING_KEY.equals(metadata.getKey(n))) {
         Object groupByQualifier = metadata.getValue(n);
         // Logging scopes need special treatment to handle tidying up when closed.
-        if (groupByQualifier instanceof FloggerLoggingScope) {
-          logSiteKey = ((FloggerLoggingScope) groupByQualifier).specialize(logSiteKey);
+        if (groupByQualifier instanceof LoggingScope) {
+          logSiteKey = ((LoggingScope) groupByQualifier).specialize(logSiteKey);
         } else {
           logSiteKey = SpecializedLogSiteKey.of(logSiteKey, groupByQualifier);
         }
@@ -837,7 +837,7 @@ public abstract class FloggerLogContext<LOGGER extends FloggerAbstractLogger<API
   }
 
   @Override
-  public API per(FloggerLoggingScopeProvider scopeProvider) {
+  public API per(LoggingScopeProvider scopeProvider) {
     return with(Key.LOG_SITE_GROUPING_KEY, scopeProvider.getCurrentScope());
   }
 

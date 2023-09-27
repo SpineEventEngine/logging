@@ -30,7 +30,7 @@ import static io.spine.logging.flogger.util.Checks.checkNotNull;
 import static io.spine.logging.flogger.util.Checks.checkState;
 
 import io.spine.logging.flogger.FloggerLoggingApi;
-import io.spine.logging.flogger.FloggerLoggingScope;
+import io.spine.logging.flogger.LoggingScope;
 import io.spine.logging.flogger.FloggerMetadataKey;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.MustBeClosed;
@@ -118,7 +118,7 @@ public abstract class ScopedLoggingContext {
     }
 
     /** Finds a scope instance for the given type in a possibly null scope list. */
-    @Nullable public static FloggerLoggingScope lookup(@Nullable ScopeList list, ScopeType type) {
+    @Nullable public static LoggingScope lookup(@Nullable ScopeList list, ScopeType type) {
       while (list != null) {
         if (type.equals(list.key)) {
           return list.scope;
@@ -129,10 +129,10 @@ public abstract class ScopedLoggingContext {
     }
 
     private final ScopeType key;
-    private final FloggerLoggingScope scope;
+    private final LoggingScope scope;
     @Nullable private final ScopeList next;
 
-    public ScopeList(ScopeType key, FloggerLoggingScope scope, @Nullable ScopeList next) {
+    public ScopeList(ScopeType key, LoggingScope scope, @Nullable ScopeList next) {
       this.key = checkNotNull(key, "scope type");
       this.scope = checkNotNull(scope, "scope");
       this.next = next;

@@ -26,7 +26,7 @@
 
 package io.spine.logging.context.system
 
-import io.spine.logging.flogger.FloggerLoggingScope
+import io.spine.logging.flogger.LoggingScope
 import io.spine.logging.flogger.backend.Metadata
 import io.spine.logging.flogger.context.ContextDataProvider
 import io.spine.logging.flogger.context.ScopeType
@@ -62,7 +62,7 @@ public class StdContextDataProvider: ContextDataProvider() {
 
     override fun getMetadata(): Metadata = StdContextData.metadata()
 
-    override fun getScope(type: ScopeType): FloggerLoggingScope? =
+    override fun getScope(type: ScopeType): LoggingScope? =
         StdContextData.lookupScopeFor(type)
 
     /**

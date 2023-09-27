@@ -300,7 +300,7 @@ public interface FloggerLoggingApi<API extends FloggerLoggingApi<API>> {
    * @param scopeProvider a constant used to defined the type of the scope in which logging is
    *     aggregated.
    */
-  API per(FloggerLoggingScopeProvider scopeProvider);
+  API per(LoggingScopeProvider scopeProvider);
 
   /**
    * Creates a synthetic exception and attaches it as the "cause" of the log statement as a way to
@@ -867,7 +867,7 @@ public interface FloggerLoggingApi<API extends FloggerLoggingApi<API>> {
     }
 
     @Override
-    public API per(FloggerLoggingScopeProvider scopeProvider) {
+    public API per(LoggingScopeProvider scopeProvider) {
       return noOp();
     }
 

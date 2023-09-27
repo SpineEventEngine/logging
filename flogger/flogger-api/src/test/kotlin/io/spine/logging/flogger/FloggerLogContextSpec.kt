@@ -480,12 +480,12 @@ internal class FloggerLogContextSpec {
             // Only tests should ever create “immediate providers” like this
             // as it doesn't make sense otherwise.
             var nowNanos = currentTimeNanos()
-            val fooScope = FloggerLoggingScope.create("foo")
-            val barScope = FloggerLoggingScope.create("bar")
+            val fooScope = LoggingScope.create("foo")
+            val barScope = LoggingScope.create("bar")
             val foo =
-                FloggerLoggingScopeProvider { fooScope }
+                LoggingScopeProvider { fooScope }
             val bar =
-                FloggerLoggingScopeProvider { barScope }
+                LoggingScopeProvider { barScope }
 
             // Logs for both scopes should appear.
             // Even though the 2nd log is within the rate limit period.

@@ -26,7 +26,7 @@
 
 package io.spine.logging.flogger.context;
 
-import io.spine.logging.flogger.FloggerLoggingScope;
+import io.spine.logging.flogger.LoggingScope;
 import io.spine.logging.flogger.backend.Metadata;
 import io.spine.logging.flogger.backend.Platform;
 import java.util.logging.Level;
@@ -156,7 +156,7 @@ public abstract class ContextDataProvider {
    * achieved by using the default method.
    */
   @Nullable
-  public FloggerLoggingScope getScope(ScopeType type) {
+  public LoggingScope getScope(ScopeType type) {
     return null;
   }
 }

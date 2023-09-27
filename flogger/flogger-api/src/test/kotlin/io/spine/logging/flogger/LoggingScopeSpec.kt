@@ -27,18 +27,18 @@
 package io.spine.logging.flogger
 
 import io.kotest.matchers.shouldNotBe
-import io.spine.logging.flogger.FloggerLoggingScope.create
+import io.spine.logging.flogger.LoggingScope.create
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for [FloggerLoggingScope].
+ * Tests for [LoggingScope].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/LoggingScopeTest.java">
  *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`LoggingScope` should")
-internal class FloggerLoggingScopeSpec {
+internal class LoggingScopeSpec {
 
     @Test
     fun `create distinct scopes for the same label`() {

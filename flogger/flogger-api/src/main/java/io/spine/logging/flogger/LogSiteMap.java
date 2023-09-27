@@ -102,7 +102,7 @@ public abstract class LogSiteMap<V> {
         continue;
       }
       Object groupByKey = metadata.getValue(i);
-      if (!(groupByKey instanceof FloggerLoggingScope)) {
+      if (!(groupByKey instanceof LoggingScope)) {
         continue;
       }
       if (removalHook == null) {
@@ -114,7 +114,7 @@ public abstract class LogSiteMap<V> {
           }
         };
       }
-      ((FloggerLoggingScope) groupByKey).onClose(removalHook);
+      ((LoggingScope) groupByKey).onClose(removalHook);
     }
   }
 }
