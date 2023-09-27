@@ -71,18 +71,6 @@ public abstract class AbstractLoggingSmokeTest {
     private val message = "some logging text"
 
     @Test
-    public fun `log by implementing 'Logging' interface`() {
-        val loggingInstance = LoggingClass()
-        val output = tapJavaLogging {
-            loggingInstance.logSomething(message)
-        }
-
-        output shouldContain LoggingClass::class.qualifiedName!!
-        output shouldContain Level.INFO.name
-        output shouldContain message
-    }
-
-    @Test
     public fun `log by implementing 'WithLogging' interface`() {
         val loggingInstance = WithLoggingClass()
         val output = tapJavaLogging {
@@ -108,13 +96,6 @@ public abstract class AbstractLoggingSmokeTest {
         output shouldContain loggingClass.qualifiedName!!
         output shouldContain Level.INFO.name
         output shouldContain message
-    }
-}
-
-@Suppress("removal", "DEPRECATION")
-private class LoggingClass : Logging {
-    fun logSomething(msg: String) {
-        _info().log(msg)
     }
 }
 
