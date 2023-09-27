@@ -85,9 +85,7 @@ final class ValueQueue implements Iterable<Object> {
     }
   }
 
-  static void appendValues(String label,
-                           Object valueOrQueue,
-                           KeyValueHandler kvh) {
+  static void appendValues(String label, Object valueOrQueue, KeyValueHandler kvh) {
     if (valueOrQueue instanceof ValueQueue) {
       for (Object value : (ValueQueue) valueOrQueue) {
         emit(label, value, kvh);
