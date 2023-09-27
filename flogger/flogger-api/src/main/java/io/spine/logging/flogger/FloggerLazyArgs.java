@@ -43,7 +43,7 @@ import static io.spine.logging.flogger.util.Checks.checkNotNull;
  *     Original Java code of Google Flogger</a>
  */
 // TODO: Add other generally useful methods here, especially things which help non-lambda users.
-public final class LazyArgs {
+public final class FloggerLazyArgs {
   /**
    * Coerces a lambda expression or method reference to return a lazily evaluated logging argument.
    * Pass in a compatible, no-argument, lambda expression or method reference to have it evaluated
@@ -67,5 +67,5 @@ public final class LazyArgs {
     return checkNotNull(lambdaOrMethodReference, "lazy arg");
   }
 
-  private LazyArgs() {}
+  private FloggerLazyArgs() {}
 }
