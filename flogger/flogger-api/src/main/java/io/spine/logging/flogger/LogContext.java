@@ -49,7 +49,7 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS;
 /**
  * The base context for a logging statement, which implements the base logging API.
  *
- * <p>This class is an implementation of the base {@link FloggerLoggingApi} interface and acts as a holder
+ * <p>This class is an implementation of the base {@link FloggerApi} interface and acts as a holder
  * for any state applied to the log statement during the fluent call sequence. The lifecycle of a
  * logging context is very short; it is created by a logger, usually in response to a call to the
  * {@link AbstractLogger#at(Level)} method, and normally lasts only as long as the log statement.
@@ -65,8 +65,8 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogContext.java">
  *     Original Java code of Google Flogger</a>
  */
-public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends FloggerLoggingApi<API>>
-        implements FloggerLoggingApi<API>, LogData {
+public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends FloggerApi<API>>
+        implements FloggerApi<API>, LogData {
 
   /**
    * The predefined metadata keys used by the default logging API. Backend implementations can use
@@ -77,28 +77,28 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
     private Key() {}
     /**
      * The key associated with a {@link Throwable} cause to be associated with the log message. This
-     * value is set by {@link FloggerLoggingApi#withCause(Throwable)}.
+     * value is set by {@link FloggerApi#withCause(Throwable)}.
      */
     public static final FloggerMetadataKey<Throwable> LOG_CAUSE =
         FloggerMetadataKey.single("cause", Throwable.class);
 
     /**
      * The key associated with a rate limiting counter for "1-in-N" rate limiting. The value is set
-     * by {@link FloggerLoggingApi#every(int)}.
+     * by {@link FloggerApi#every(int)}.
      */
     public static final FloggerMetadataKey<Integer> LOG_EVERY_N =
         FloggerMetadataKey.single("ratelimit_count", Integer.class);
 
     /**
      * The key associated with a rate limiting counter for "1-in-N" randomly sampled rate limiting.
-     * The value is set by {@link FloggerLoggingApi#onAverageEvery(int)}.
+     * The value is set by {@link FloggerApi#onAverageEvery(int)}.
      */
     public static final FloggerMetadataKey<Integer> LOG_SAMPLE_EVERY_N =
         FloggerMetadataKey.single("sampling_count", Integer.class);
 
     /**
      * The key associated with a rate limiting period for "at most once every N" rate limiting. The
-     * value is set by {@link FloggerLoggingApi#atMostEvery(int, TimeUnit)}.
+     * value is set by {@link FloggerApi#atMostEvery(int, TimeUnit)}.
      */
     public static final FloggerMetadataKey<RateLimitPeriod> LOG_AT_MOST_EVERY =
         FloggerMetadataKey.single("ratelimit_period", RateLimitPeriod.class);

@@ -73,18 +73,18 @@ internal class FluentLogger2Spec {
         backend.setLevel(Level.INFO)
 
         // Down to and including the configured log level are not no-op instances.
-        logger.atSevere().shouldNotBeInstanceOf<FloggerLoggingApi.NoOp<*>>()
-        logger.atWarning().shouldNotBeInstanceOf<FloggerLoggingApi.NoOp<*>>()
-        logger.atInfo().shouldNotBeInstanceOf<FloggerLoggingApi.NoOp<*>>()
+        logger.atSevere().shouldNotBeInstanceOf<FloggerApi.NoOp<*>>()
+        logger.atWarning().shouldNotBeInstanceOf<FloggerApi.NoOp<*>>()
+        logger.atInfo().shouldNotBeInstanceOf<FloggerApi.NoOp<*>>()
 
         logger.atSevere().shouldBeInstanceOf<FluentLogger2.Context>()
         logger.atWarning().shouldBeInstanceOf<FluentLogger2.Context>()
         logger.atInfo().shouldBeInstanceOf<FluentLogger2.Context>()
 
         // Below the configured log level you only get no-op instances.
-        logger.atFine().shouldBeInstanceOf<FloggerLoggingApi.NoOp<*>>()
-        logger.atFiner().shouldBeInstanceOf<FloggerLoggingApi.NoOp<*>>()
-        logger.atFinest().shouldBeInstanceOf<FloggerLoggingApi.NoOp<*>>()
+        logger.atFine().shouldBeInstanceOf<FloggerApi.NoOp<*>>()
+        logger.atFiner().shouldBeInstanceOf<FloggerApi.NoOp<*>>()
+        logger.atFinest().shouldBeInstanceOf<FloggerApi.NoOp<*>>()
 
         // Just verify that logs below the current log level are discarded.
         logger.atFine().log("DISCARDED")
@@ -96,8 +96,8 @@ internal class FluentLogger2Spec {
         logger.atInfo().log("LOGGED")
         backend.loggedCount shouldBe 1
         backend.setLevel(Level.OFF)
-        logger.atSevere().shouldBeInstanceOf<FloggerLoggingApi.NoOp<*>>()
+        logger.atSevere().shouldBeInstanceOf<FloggerApi.NoOp<*>>()
         backend.setLevel(Level.ALL)
-        logger.atFinest().shouldNotBeInstanceOf<FloggerLoggingApi.NoOp<*>>()
+        logger.atFinest().shouldNotBeInstanceOf<FloggerApi.NoOp<*>>()
     }
 }

@@ -47,7 +47,7 @@ import java.util.logging.Level;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/AbstractLogger.java">
  *     Original Java code of Google Flogger</a>
  */
-public abstract class AbstractLogger<API extends FloggerLoggingApi<API>> {
+public abstract class AbstractLogger<API extends FloggerApi<API>> {
   /**
    * An upper bound on the depth of reentrant logging allowed by Flogger. Logger backends may choose
    * to react to reentrant logging sooner than this, but once this value is reached, a warning is

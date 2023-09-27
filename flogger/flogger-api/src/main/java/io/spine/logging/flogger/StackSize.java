@@ -27,7 +27,7 @@
 package io.spine.logging.flogger;
 
 /**
- * Enum values to be passed into {@link FloggerLoggingApi#withStackTrace} to control
+ * Enum values to be passed into {@link FloggerApi#withStackTrace} to control
  * the maximum number of stack trace elements created.
  *
  * <p>Note that the precise value returned by {@link #getMaxDepth()} may change over time, but it
@@ -46,8 +46,8 @@ public enum StackSize {
    * <p>
    * Requesting a small stack trace for log statements which occur under normal circumstances is
    * acceptable, but may affect performance. Consider using
-   * {@link FloggerLoggingApi#withStackTrace(StackSize)} in conjunction with rate limiting methods,
-   * such as {@link FloggerLoggingApi#atMostEvery(int, java.util.concurrent.TimeUnit)}, to mitigate performance issues.
+   * {@link FloggerApi#withStackTrace(StackSize)} in conjunction with rate limiting methods,
+   * such as {@link FloggerApi#atMostEvery(int, java.util.concurrent.TimeUnit)}, to mitigate performance issues.
    * <p>
    * The current maximum size of a {@code SMALL} stack trace is 10 elements, but this may change.
    */

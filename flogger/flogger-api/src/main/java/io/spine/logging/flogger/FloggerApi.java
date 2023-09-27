@@ -56,7 +56,7 @@ import java.util.concurrent.TimeUnit;
  *     Original Java code of Google Flogger</a>
  */
 // NOTE: new methods to this interface should be coordinated with google-java-format
-public interface FloggerLoggingApi<API extends FloggerLoggingApi<API>> {
+public interface FloggerApi<API extends FloggerApi<API>> {
   /**
    * Associates a {@link Throwable} instance with the current log statement, to be interpreted as
    * the cause of this statement. Typically this method will be used from within catch blocks to log
@@ -812,12 +812,12 @@ public interface FloggerLoggingApi<API extends FloggerLoggingApi<API>> {
   void log(String msg, double p1, double p2);
 
   /**
-   * An implementation of {@link FloggerLoggingApi} which does nothing and discards all parameters.
+   * An implementation of {@link FloggerApi} which does nothing and discards all parameters.
    * <p>
    * This class (or a subclass in the case of an extended API) should be returned whenever logging
    * is definitely disabled (e.g. when the log level is too low).
    */
-  public static class NoOp<API extends FloggerLoggingApi<API>> implements FloggerLoggingApi<API> {
+  public static class NoOp<API extends FloggerApi<API>> implements FloggerApi<API> {
     @SuppressWarnings("unchecked")
     protected final API noOp() {
       return (API) this;

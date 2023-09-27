@@ -57,7 +57,7 @@ public abstract class FloggerLogSite implements LogSiteKey {
   /**
    * An singleton LogSite instance used to indicate that valid log site information cannot be
    * determined. This can be used to indicate that log site information is not available by
-   * injecting it via {@link FloggerLoggingApi#withInjectedLogSite} which will suppress any further
+   * injecting it via {@link FloggerApi#withInjectedLogSite} which will suppress any further
    * log site analysis for that log statement. This is also returned if stack trace analysis
    * fails for any reason.
    * <p>

@@ -29,7 +29,7 @@ package io.spine.logging.flogger.context;
 import static io.spine.logging.flogger.util.Checks.checkNotNull;
 import static io.spine.logging.flogger.util.Checks.checkState;
 
-import io.spine.logging.flogger.FloggerLoggingApi;
+import io.spine.logging.flogger.FloggerApi;
 import io.spine.logging.flogger.LoggingScope;
 import io.spine.logging.flogger.FloggerMetadataKey;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
@@ -368,7 +368,7 @@ public abstract class ScopedLoggingContext {
    * <p>This method is the same as {@link #newContext()} except it additionally binds a new {@link
    * ScopeType} instance to the newly created context. This allows log statements to control
    * stateful logging operations (e.g. rate limiting) using
-   * {@link FloggerLoggingApi#per(ScopeType) per(ScopeType)} method.
+   * {@link FloggerApi#per(ScopeType) per(ScopeType)} method.
    *
    * <p>Note for users: if you don't need an instance of {@code ScopedLoggingContext} for some
    * reason such as testability (injecting it, for example), consider using the static methods in

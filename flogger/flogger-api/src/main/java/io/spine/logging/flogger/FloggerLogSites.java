@@ -41,7 +41,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 public final class FloggerLogSites {
   /**
    * Returns a {@code LogSite} for the caller of the specified class. This can be used in
-   * conjunction with the {@link FloggerLoggingApi#withInjectedLogSite(FloggerLogSite)} method to implement
+   * conjunction with the {@link FloggerApi#withInjectedLogSite(FloggerLogSite)} method to implement
    * logging helper methods. In some platforms, log site determination may be unsupported, and in
    * those cases this method will always return the {@link FloggerLogSite#INVALID} instance.
    * <p>
@@ -91,7 +91,7 @@ public final class FloggerLogSites {
 
   /**
    * Returns a {@code LogSite} for the current line of code. This can be used in conjunction with
-   * the {@link FloggerLoggingApi#withInjectedLogSite(FloggerLogSite)} method to implement logging helper
+   * the {@link FloggerApi#withInjectedLogSite(FloggerLogSite)} method to implement logging helper
    * methods. In some platforms, log site determination may be unsupported, and in those cases this
    * method will always return the {@link FloggerLogSite#INVALID} instance.
    * <p>
