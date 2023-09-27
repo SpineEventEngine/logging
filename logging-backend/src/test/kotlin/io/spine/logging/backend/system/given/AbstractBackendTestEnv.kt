@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.system.given
 
-import com.google.common.flogger.backend.LogData
+import io.spine.logging.flogger.backend.LogData
 import io.spine.logging.backend.system.AbstractBackend
 import java.util.logging.Handler
 import java.util.logging.Level

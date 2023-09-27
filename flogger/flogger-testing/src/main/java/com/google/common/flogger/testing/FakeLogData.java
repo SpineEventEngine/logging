@@ -16,18 +16,18 @@
 
 package com.google.common.flogger.testing;
 
-import static com.google.common.flogger.util.Checks.checkState;
+import static io.spine.logging.flogger.util.Checks.checkState;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
-import com.google.common.flogger.LogContext;
-import com.google.common.flogger.LogSite;
-import com.google.common.flogger.MetadataKey;
-import com.google.common.flogger.backend.LogData;
-import com.google.common.flogger.backend.Metadata;
-import com.google.common.flogger.backend.TemplateContext;
-import com.google.common.flogger.parser.DefaultBraceStyleMessageParser;
-import com.google.common.flogger.parser.DefaultPrintfMessageParser;
-import com.google.common.flogger.parser.MessageParser;
+import io.spine.logging.flogger.LogContext;
+import io.spine.logging.flogger.LogSite;
+import io.spine.logging.flogger.MetadataKey;
+import io.spine.logging.flogger.backend.LogData;
+import io.spine.logging.flogger.backend.Metadata;
+import io.spine.logging.flogger.backend.TemplateContext;
+import io.spine.logging.flogger.parser.DefaultBraceStyleMessageParser;
+import io.spine.logging.flogger.parser.DefaultPrintfMessageParser;
+import io.spine.logging.flogger.parser.MessageParser;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.util.logging.Level;
 

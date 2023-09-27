@@ -26,12 +26,12 @@
 
 package io.spine.logging;
 
-import com.google.common.flogger.FluentLogger2;
+import io.spine.logging.flogger.FluentLogger2;
 
 import java.util.logging.Level;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.flogger.LogSites.callerOf;
+import static io.spine.logging.flogger.LogSites.callerOf;
 
 /**
  * Utility interface for objects that require logging output.

@@ -26,7 +26,7 @@
 
 package io.spine.logging.context
 
-import com.google.common.flogger.context.ContextDataProvider
+import io.spine.logging.flogger.context.ContextDataProvider
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.spine.logging.context.system.StdContextDataProvider

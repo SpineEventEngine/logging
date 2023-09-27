@@ -26,9 +26,9 @@
 
 package io.spine.logging
 
-import com.google.common.flogger.FluentLogger2
-import com.google.common.flogger.LogContext
-import com.google.common.flogger.backend.LogData
+import io.spine.logging.flogger.FluentLogger2
+import io.spine.logging.flogger.LogContext
+import io.spine.logging.flogger.backend.LogData
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.instanceOf

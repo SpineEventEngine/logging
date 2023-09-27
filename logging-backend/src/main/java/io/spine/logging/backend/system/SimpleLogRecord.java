@@ -26,9 +26,9 @@
 
 package io.spine.logging.backend.system;
 
-import com.google.common.flogger.LogContext;
-import com.google.common.flogger.backend.LogData;
-import com.google.common.flogger.backend.Metadata;
+import io.spine.logging.flogger.LogContext;
+import io.spine.logging.flogger.backend.LogData;
+import io.spine.logging.flogger.backend.Metadata;
 
 import java.util.logging.LogRecord;
 

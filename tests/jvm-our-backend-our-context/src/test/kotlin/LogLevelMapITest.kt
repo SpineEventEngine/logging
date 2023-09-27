@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import com.google.common.flogger.backend.Platform
+import io.spine.logging.flogger.backend.Platform
 import io.kotest.matchers.shouldBe
 import io.spine.logging.backend.system.StdBackendFactory
 import io.spine.logging.context.JulLogLevelMapTest

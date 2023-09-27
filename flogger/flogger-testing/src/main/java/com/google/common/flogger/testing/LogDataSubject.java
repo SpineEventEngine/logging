@@ -20,7 +20,7 @@ import static com.google.common.truth.Fact.simpleFact;
 import static com.google.common.truth.Truth.assertAbout;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.flogger.backend.LogData;
+import io.spine.logging.flogger.backend.LogData;
 import com.google.common.truth.FailureMetadata;
 import com.google.common.truth.LongSubject;
 import com.google.common.truth.Subject;

@@ -26,16 +26,16 @@
 
 package io.spine.logging.backend.system;
 
-import com.google.common.flogger.backend.LoggerBackend;
-import com.google.common.flogger.backend.Platform;
-import com.google.common.flogger.context.ContextDataProvider;
+import io.spine.logging.flogger.backend.LoggerBackend;
+import io.spine.logging.flogger.backend.Platform;
+import io.spine.logging.flogger.context.ContextDataProvider;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
 
-import static com.google.common.flogger.util.StaticMethodCaller.getInstanceFromSystemProperty;
+import static io.spine.logging.flogger.util.StaticMethodCaller.getInstanceFromSystemProperty;
 
 /**
  * The default fluent logger platform for a server-side Java environment.

@@ -16,14 +16,14 @@
 
 package com.google.common.flogger.grpc;
 
-import static com.google.common.flogger.util.Checks.checkNotNull;
+import static io.spine.logging.flogger.util.Checks.checkNotNull;
 
-import com.google.common.flogger.MetadataKey;
-import com.google.common.flogger.context.ContextMetadata;
-import com.google.common.flogger.context.LogLevelMap;
-import com.google.common.flogger.context.ScopeType;
-import com.google.common.flogger.context.ScopedLoggingContext;
-import com.google.common.flogger.context.Tags;
+import io.spine.logging.flogger.MetadataKey;
+import io.spine.logging.flogger.context.ContextMetadata;
+import io.spine.logging.flogger.context.LogLevelMap;
+import io.spine.logging.flogger.context.ScopeType;
+import io.spine.logging.flogger.context.ScopedLoggingContext;
+import io.spine.logging.flogger.context.Tags;
 import io.grpc.Context;
 import org.checkerframework.checker.nullness.qual.Nullable;
 

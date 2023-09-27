@@ -26,12 +26,12 @@
 
 package io.spine.logging.backend.log4j2
 
-import com.google.common.flogger.LogContext.Key
-import com.google.common.flogger.LogSite
+import io.spine.logging.flogger.LogContext.Key
+import io.spine.logging.flogger.LogSite
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
-import com.google.common.flogger.parser.ParseException
-import com.google.common.flogger.repeatedKey
-import com.google.common.flogger.singleKey
+import io.spine.logging.flogger.parser.ParseException
+import io.spine.logging.flogger.repeatedKey
+import io.spine.logging.flogger.singleKey
 import com.google.common.flogger.testing.FakeLogData
 import com.google.common.flogger.testing.FakeLogSite
 import io.kotest.assertions.throwables.shouldThrow
