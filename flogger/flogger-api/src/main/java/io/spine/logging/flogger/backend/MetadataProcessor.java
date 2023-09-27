@@ -95,9 +95,8 @@ public abstract class MetadataProcessor {
    * instance may read directly from the supplied metadata during processing, so the supplied
    * metadata must not be modified while the processor instance is being used.
    *
-   * @param scopeMetadata Metadata for the current scope (i.e. from {@code ScopedLoggingContext})
-   * @param logMetadata Metadata extracted from the current log statement (i.e. from {@code
-   *     LogData})
+   * @param scopeMetadata Metadata for the current scope (i.e., from {@code ScopedLoggingContext})
+   * @param logMetadata Metadata extracted from the current log statement (i.e., from {@code LogData})
    * @return a processor to handle a unified view of the data
    */
   public static MetadataProcessor forScopeAndLogSite(Metadata scopeMetadata, Metadata logMetadata) {
@@ -152,9 +151,9 @@ public abstract class MetadataProcessor {
   public abstract <C> void process(MetadataHandler<C> handler, C context);
 
   /**
-   * Invokes the given handler for the combined scope and log-site metadata for a specified key. The
-   * handler method invoked depends on whether the key is single valued or repeated. If no metadata
-   * is present for the given key, the handler is not invoked.
+   * Invokes the given handler for the combined scope and log-site metadata for a specified key.
+   * The handler method invoked depends on whether the key is single valued or repeated.
+   * If no metadata is present for the given key, the handler is not invoked.
    */
   public abstract <C> void handle(FloggerMetadataKey<?> key, MetadataHandler<C> handler, C context);
 
@@ -173,9 +172,9 @@ public abstract class MetadataProcessor {
   public abstract int keyCount();
 
   /**
-   * Returns the set of {@link FloggerMetadataKey}s known to this processor, in the order in which they
-   * will be processed. Note that this implementation is lightweight, but not necessarily performant
-   * for things like containment testing.
+   * Returns the set of {@link FloggerMetadataKey}s known to this processor, in the order in which
+   * they will be processed. Note that this implementation is lightweight, but not necessarily
+   * performant for things like containment testing.
    */
   public abstract Set<FloggerMetadataKey<?>> keySet();
 
@@ -281,7 +280,8 @@ public abstract class MetadataProcessor {
     }
 
     // Separate method to re-capture the value type.
-    private <T, C> void dispatch(FloggerMetadataKey<T> key, int n, MetadataHandler<C> handler, C context) {
+    private <T, C> void dispatch(FloggerMetadataKey<T> key, int n,
+                                 MetadataHandler<C> handler, C context) {
       if (!key.canRepeat()) {
         // For single keys, the keyMap values are just the value index.
         handler.handle(key, key.cast(getValue(n)), context);

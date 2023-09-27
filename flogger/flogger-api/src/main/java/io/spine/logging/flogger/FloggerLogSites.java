@@ -81,8 +81,8 @@ public final class FloggerLogSites {
    *
    * @param loggingApi the logging API to be identified as the source of log statements (this must
    *        appear somewhere on the stack above the point at which this method is called).
-   * @return the log site of the caller of the specified logging API, or {@link FloggerLogSite#INVALID} if
-   *         the logging API was not found.
+   * @return the log site of the caller of the specified logging API,
+   *        or {@link FloggerLogSite#INVALID} if the logging API was not found.
    */
   public static FloggerLogSite callerOf(Class<?> loggingApi) {
     // Can't skip anything here since someone could pass in LogSite.class.
@@ -137,8 +137,8 @@ public final class FloggerLogSites {
    * Returns a new {@code LogSite} which reflects the information in the given {@link
    * StackTraceElement}, or {@link FloggerLogSite#INVALID} if given {@code null}.
    *
-   * <p>This method is useful when log site information is only available via an external API which
-   * returns {@link StackTraceElement}.
+   * <p>This method is useful when log site information is only available via an external API,
+   * which returns {@link StackTraceElement}.
    */
   public static FloggerLogSite logSiteFrom(@Nullable StackTraceElement e) {
     return e != null ? new StackBasedLogSite(e) : FloggerLogSite.INVALID;

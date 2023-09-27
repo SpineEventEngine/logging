@@ -131,10 +131,7 @@ private fun <T> recurseAndCall(n: Int, action: Callable<T>): T {
     return if (i <= 0) action.call() else recurseAndCall(i, action)
 }
 
-private fun useAndReturnScopedKey(
-    map: LogSiteMap<AtomicInteger>,
-    label: String
-): LogSiteKey {
+private fun useAndReturnScopedKey(map: LogSiteMap<AtomicInteger>, label: String): LogSiteKey {
     val scope = LoggingScope.create(label)
     val metadata = FakeMetadata().add(LogContext.Key.LOG_SITE_GROUPING_KEY, scope)
     val logSite = create("com.example", label, 42, "<unused>")

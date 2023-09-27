@@ -189,8 +189,8 @@ public abstract class Platform {
      * @param loggerApi the class containing the log() methods whose caller we need to find.
      * @param stackFramesToSkip the number of method calls which exist on the stack between the
      *     {@code log()} method and the point at which this method is invoked.
-     * @return A log site inferred from the stack, or {@link FloggerLogSite#INVALID} if no log site can be
-     *     determined.
+     * @return A log site inferred from the stack, or {@link FloggerLogSite#INVALID} if no log site
+     *    can be determined.
      */
     public abstract FloggerLogSite findLogSite(Class<?> loggerApi, int stackFramesToSkip);
   }

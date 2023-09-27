@@ -107,15 +107,16 @@ public abstract class ContextMetadata extends Metadata {
   private ContextMetadata() {}
 
   /**
-   * Concatenates the given context metadata <em>after</em> this instance. Key value pairs are simply
-   * concatenated (rather than being merged) which may result in multiple single valued keys
+   * Concatenates the given context metadata <em>after</em> this instance. Key value pairs are
+   * simply concatenated (rather than being merged) which may result in multiple single valued keys
    * existing in the resulting sequence.
    *
    * <p>Whether this is achieved via copying or chaining of instances is an implementation detail.
    *
    * <p>Use {@link io.spine.logging.flogger.backend.MetadataProcessor MetadataProcessor} to process
    * metadata consistently with respect to single valued and repeated keys, and use {@link
-   * Metadata#findValue(FloggerMetadataKey)} to lookup the "most recent" value for a single valued key.
+   * Metadata#findValue(FloggerMetadataKey)} to look up the “most recent” value for a single
+   * valued key.
    */
   public abstract ContextMetadata concatenate(ContextMetadata metadata);
 

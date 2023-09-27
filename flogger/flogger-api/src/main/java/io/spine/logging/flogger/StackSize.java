@@ -30,8 +30,8 @@ package io.spine.logging.flogger;
  * Enum values to be passed into {@link FloggerApi#withStackTrace} to control
  * the maximum number of stack trace elements created.
  *
- * <p>Note that the precise value returned by {@link #getMaxDepth()} may change over time, but it
- * can be assumed that {@code SMALL <= MEDIUM <= LARGE <= FULL}.
+ * <p>Note that the precise value returned by {@link #getMaxDepth()} may change over time,
+ * but it can be assumed that {@code SMALL <= MEDIUM <= LARGE <= FULL}.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/StackSize.java">
  *     Original Java code of Google Flogger</a>
@@ -47,7 +47,8 @@ public enum StackSize {
    * Requesting a small stack trace for log statements which occur under normal circumstances is
    * acceptable, but may affect performance. Consider using
    * {@link FloggerApi#withStackTrace(StackSize)} in conjunction with rate limiting methods,
-   * such as {@link FloggerApi#atMostEvery(int, java.util.concurrent.TimeUnit)}, to mitigate performance issues.
+   * such as {@link FloggerApi#atMostEvery(int, java.util.concurrent.TimeUnit)}, to mitigate
+   * performance issues.
    * <p>
    * The current maximum size of a {@code SMALL} stack trace is 10 elements, but this may change.
    */
@@ -87,8 +88,8 @@ public enum StackSize {
   FULL(-1),
 
   /**
-   * Provides no stack trace, making the {@code withStackTrace()} method an effective no-op. This is
-   * useful when your stack size is conditional. For example:
+   * Provides no stack trace, making the {@code withStackTrace()} method an effective no-op.
+   * This is useful when your stack size is conditional. For example:
    * <pre> {@code
    *   logger.atWarning()
    *       .withStackTrace(showTrace ? StackSize.MEDIUM : StackSize.NONE)

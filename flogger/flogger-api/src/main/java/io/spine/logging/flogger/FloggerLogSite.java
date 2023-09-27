@@ -154,11 +154,14 @@ public abstract class FloggerLogSite implements LogSiteKey {
    */
   @Deprecated
   public static FloggerLogSite injectedLogSite(
-      String internalClassName,
-      String methodName,
-      int encodedLineNumber,
-      @Nullable String sourceFileName) {
-    return new InjectedFloggerLogSite(internalClassName, methodName, encodedLineNumber, sourceFileName);
+          String internalClassName,
+          String methodName,
+          int encodedLineNumber,
+          @Nullable String sourceFileName) {
+    return new InjectedFloggerLogSite(internalClassName,
+                                      methodName,
+                                      encodedLineNumber,
+                                      sourceFileName);
   }
 
   private static final class InjectedFloggerLogSite extends FloggerLogSite {

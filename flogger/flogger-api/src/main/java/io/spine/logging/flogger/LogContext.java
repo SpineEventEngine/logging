@@ -42,6 +42,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
+import static io.spine.logging.flogger.FloggerLogSite.injectedLogSite;
 import static io.spine.logging.flogger.util.CallerFinder.getStackForCallerOf;
 import static io.spine.logging.flogger.util.Checks.checkNotNull;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
@@ -541,9 +542,9 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
    * {@link LogSiteMap}. This will correctly handle "specialized" log-site keys and remove the risk
    * of memory leaks due to retaining unused log site data indefinitely.
    *
-   * <p>Note that the given {@code logSiteKey} can be more specific than the {@link FloggerLogSite} of a
-   * log statement (i.e. a single log statement can have multiple distinct versions of its state).
-   * See {@link #per(Enum)} for more information.
+   * <p>Note that the given {@code logSiteKey} can be more specific than the {@link FloggerLogSite}
+   * of a log statement (i.e. a single log statement can have multiple distinct versions of
+   * its state). See {@link #per(Enum)} for more information.
    *
    * <p>If a log statement cannot be identified uniquely, then {@code logSiteKey} will be {@code
    * null}, and this method must behave exactly as if the corresponding fluent method had not been
@@ -564,7 +565,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
    * <p>If {@code postProcess()} returns {@code false} without updating the rate limit status, the
    * log statement may not be counted as skipped. In some situations this is desired, but either way
    * the extended logging API should make it clear to the user (via documentation) what will happen.
-   * However in most cases {@code postProcess()} is only expected to return {@code false} due to
+   * However, in most cases {@code postProcess()} is only expected to return {@code false} due to
    * rate limiting.
    *
    * <p>If rate limiters are used there are still situations in which {@code postProcess()} can
@@ -791,8 +792,8 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
       String methodName,
       int encodedLineNumber,
       @Nullable String sourceFileName) {
-    return withInjectedLogSite(
-            FloggerLogSite.injectedLogSite(internalClassName, methodName, encodedLineNumber, sourceFileName));
+    var logSite = injectedLogSite(internalClassName, methodName, encodedLineNumber, sourceFileName);
+    return withInjectedLogSite(logSite);
   }
 
   // ---- Public logging API ----

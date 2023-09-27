@@ -63,11 +63,7 @@ internal class FloggerMetadataKeySpec {
         val badLabels = mutableListOf("", "foo bar", "_FOO")
         badLabels.forEach { label ->
             shouldThrow<IllegalArgumentException> {
-                FloggerMetadataKey(
-                    label,
-                    String::class.java,
-                    false
-                )
+                FloggerMetadataKey(label, String::class.java, false)
             }
         }
     }
@@ -158,20 +154,8 @@ internal class FloggerMetadataKeySpec {
     @Test
     fun `throw on 'null's`() {
         val badInstantiations = listOf(
-            {
-                FloggerMetadataKey(
-                    null,
-                    String::class.java,
-                    false
-                )
-            },
-            {
-                FloggerMetadataKey<Any>(
-                    "label",
-                    null,
-                    false
-                )
-            },
+            { FloggerMetadataKey(null, String::class.java, false) },
+            { FloggerMetadataKey<Any>("label", null, false) },
             { single(null, String::class.java) },
             { single("label", null) },
             { repeated(null, String::class.java) },

@@ -151,17 +151,14 @@ public abstract class MetadataHandler<C> {
           public void handle(FloggerMetadataKey<Object> key, Object value, Object context) {}
         };
 
-    // Since the context is ignored, this can safely be cast to RepeatedValueHandler<Object, C>
+    // Since the context is ignored, this can safely be cast to RepeatedValueHandler<Object, C>.
     private static final RepeatedValueHandler<Object, Object> IGNORE_REPEATED_VALUE =
-        new RepeatedValueHandler<Object, Object>() {
-          @Override
-          public void handle(FloggerMetadataKey<Object> key, Iterator<Object> value, Object context) {}
-        };
+            (key, value, context) -> { /* No op. */ };
 
     private final Map<FloggerMetadataKey<?>, ValueHandler<?, ? super C>> singleValueHandlers =
-        new HashMap<FloggerMetadataKey<?>, ValueHandler<?, ? super C>>();
+            new HashMap<>();
     private final Map<FloggerMetadataKey<?>, RepeatedValueHandler<?, ? super C>> repeatedValueHandlers =
-        new HashMap<FloggerMetadataKey<?>, RepeatedValueHandler<?, ? super C>>();
+            new HashMap<>();
     private final ValueHandler<Object, ? super C> defaultHandler;
     private RepeatedValueHandler<Object, ? super C> defaultRepeatedHandler = null;
 
@@ -175,8 +172,8 @@ public abstract class MetadataHandler<C> {
      * type, register a handler via {@link #addRepeatedHandler(FloggerMetadataKey,RepeatedValueHandler)}.
      *
      * <p>Note that if a repeated key is associated with an individual value handler (i.e. via
-     * {@link #addHandler(FloggerMetadataKey,ValueHandler)}), then that will be used in preference to the
-     * default handler set here.
+     * {@link #addHandler(FloggerMetadataKey,ValueHandler)}), then that will be used in preference
+     * to the default handler set here.
      *
      * @param defaultHandler the default handler for unknown repeated keys/values.
      * @return the builder instance for chaining.
@@ -207,8 +204,8 @@ public abstract class MetadataHandler<C> {
     }
 
     /**
-     * Registers a repeated value handler for the specified key, replacing any previously registered
-     * value.
+     * Registers a repeated value handler for the specified key, replacing any previously
+     * registered value.
      *
      * @param key the repeated key for which the handler should be invoked.
      * @param handler the repeated value handler to be invoked once for all associated values.
@@ -298,9 +295,9 @@ public abstract class MetadataHandler<C> {
 
   private static final class MapBasedhandler<C> extends MetadataHandler<C> {
     private final Map<FloggerMetadataKey<?>, ValueHandler<?, ? super C>> singleValueHandlers =
-        new HashMap<FloggerMetadataKey<?>, ValueHandler<?, ? super C>>();
+            new HashMap<>();
     private final Map<FloggerMetadataKey<?>, RepeatedValueHandler<?, ? super C>> repeatedValueHandlers =
-        new HashMap<FloggerMetadataKey<?>, RepeatedValueHandler<?, ? super C>>();
+            new HashMap<>();
     private final ValueHandler<Object, ? super C> defaultHandler;
     private final RepeatedValueHandler<Object, ? super C> defaultRepeatedHandler;
 

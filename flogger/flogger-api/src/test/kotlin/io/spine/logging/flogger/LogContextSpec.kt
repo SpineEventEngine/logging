@@ -482,10 +482,8 @@ internal class LogContextSpec {
             var nowNanos = currentTimeNanos()
             val fooScope = LoggingScope.create("foo")
             val barScope = LoggingScope.create("bar")
-            val foo =
-                LoggingScopeProvider { fooScope }
-            val bar =
-                LoggingScopeProvider { barScope }
+            val foo = LoggingScopeProvider { fooScope }
+            val bar = LoggingScopeProvider { barScope }
 
             // Logs for both scopes should appear.
             // Even though the 2nd log is within the rate limit period.
