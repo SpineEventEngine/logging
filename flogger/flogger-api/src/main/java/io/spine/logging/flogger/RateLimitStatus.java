@@ -196,7 +196,7 @@ public abstract class RateLimitStatus {
    *   <li>Otherwise a combined status is returned from the two non-null "allow" statuses.
    * </ul>
    *
-   * <p>In {@link FloggerLogContext} the {@code rateLimitStatus} field is set to the combined value of all
+   * <p>In {@link LogContext} the {@code rateLimitStatus} field is set to the combined value of all
    * rate limiter statuses.
    *
    * <p>This ensures that after rate limit processing:

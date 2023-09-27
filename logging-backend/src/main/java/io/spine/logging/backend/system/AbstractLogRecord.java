@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.system;
 
-import io.spine.logging.flogger.backend.FloggerLogData;
+import io.spine.logging.flogger.backend.LogData;
 import io.spine.logging.flogger.backend.LogMessageFormatter;
 import io.spine.logging.flogger.backend.MessageUtils;
 import io.spine.logging.flogger.backend.Metadata;
@@ -73,7 +73,7 @@ import static java.util.logging.Level.WARNING;
  * This state is only reached if a user calls both {@link #setMessage(String)} and {@link
  * #setParameters(Object[])}. In this state the message is treated as is it were a brace-format log
  * message, and no formatting is attempted. Any relationship between this value and the log message
- * implied by the contained {@link FloggerLogData} and {@link Metadata} is lost.
+ * implied by the contained {@link LogData} and {@link Metadata} is lost.
  *
  * <p>For many reasons it is never a good idea for users to modify unknown {@link LogRecord}
  * instances, but this does happen occasionally, so this class supports that in a best effort way,
@@ -118,7 +118,7 @@ public abstract class AbstractLogRecord extends LogRecord {
 
   private static final Object[] NO_PARAMETERS = new Object[0];
 
-  private final FloggerLogData data;
+  private final LogData data;
   private final MetadataProcessor metadata;
 
   /**
@@ -126,7 +126,7 @@ public abstract class AbstractLogRecord extends LogRecord {
    * Subclasses calling this constructor are expected to additionally call {@link #setThrown} and
    * perhaps {@link #setMessage} (depending on whether eager message caching is desired).
    */
-  protected AbstractLogRecord(FloggerLogData data, Metadata scope) {
+  protected AbstractLogRecord(LogData data, Metadata scope) {
     super(data.getLevel(), null);
     this.data = data;
     this.metadata = MetadataProcessor.forScopeAndLogSite(scope, data.getMetadata());
@@ -151,7 +151,7 @@ public abstract class AbstractLogRecord extends LogRecord {
    * synthetic error message is generated from the original log data and the given exception is set
    * as the cause. The level of this record is the maximum of WARNING or the original level.
    */
-  protected AbstractLogRecord(RuntimeException error, FloggerLogData data, Metadata scope) {
+  protected AbstractLogRecord(RuntimeException error, LogData data, Metadata scope) {
     this(data, scope);
     // Re-target this log message as a warning (or above) since it indicates a real bug.
     setLevel(data.getLevel().intValue() < WARNING.intValue() ? WARNING : data.getLevel());
@@ -163,7 +163,7 @@ public abstract class AbstractLogRecord extends LogRecord {
   }
 
   /**
-   * Returns the formatter used when formatting {@link FloggerLogData}. This is not used if the log message
+   * Returns the formatter used when formatting {@link LogData}. This is not used if the log message
    * was set explicitly, and can be overridden to supply a different formatter without necessarily
    * requiring a new field in this class (to cut down on instance size).
    */
@@ -288,19 +288,19 @@ public abstract class AbstractLogRecord extends LogRecord {
   }
 
   /**
-   * Returns the {@link FloggerLogData} instance encapsulating the current fluent log statement.
+   * Returns the {@link LogData} instance encapsulating the current fluent log statement.
    *
    * <p>The LogData instance is effectively owned by this log record but must still be considered
    * immutable by anyone using it (as it may be processed by multiple log handlers).
    */
-  public final FloggerLogData getLogData() {
+  public final LogData getLogData() {
     return data;
   }
 
   /**
    * Returns the immutable {@link MetadataProcessor} which provides a unified view of scope and log
    * site metadata. This should be used in preference to {@link Metadata} available from {@link
-   * FloggerLogData} which represents only the log site.
+   * LogData} which represents only the log site.
    */
   public final MetadataProcessor getMetadataProcessor() {
     return metadata;
@@ -321,7 +321,7 @@ public abstract class AbstractLogRecord extends LogRecord {
     return out.toString();
   }
 
-  private static void safeAppend(FloggerLogData data, StringBuilder out) {
+  private static void safeAppend(LogData data, StringBuilder out) {
     out.append("  original message: ");
     if (data.getTemplateContext() == null) {
       out.append(MessageUtils.safeToString(data.getLiteralArgument()));

@@ -27,8 +27,8 @@
 package io.spine.logging
 
 import io.spine.logging.flogger.FluentLogger2
-import io.spine.logging.flogger.FloggerLogContext
-import io.spine.logging.flogger.backend.FloggerLogData
+import io.spine.logging.flogger.LogContext
+import io.spine.logging.flogger.backend.LogData
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.instanceOf
@@ -106,8 +106,8 @@ internal class LoggingSpec {
         private fun assertApi(method: Supplier<FluentLogger2.Api>, expectedLevel: Level) {
             julLogger.level = expectedLevel
             val api = method.get()
-            api shouldBe instanceOf(FloggerLogContext::class)
-            (api as FloggerLogData).level shouldBe expectedLevel
+            api shouldBe instanceOf(LogContext::class)
+            (api as LogData).level shouldBe expectedLevel
         }
     }
 }

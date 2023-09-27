@@ -43,7 +43,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  *
  * <p>Stateful fluent logging APIs which need to look up per log site information (e.g. rate limit
  * state) should do so via a {@link LogSiteMap} using the {@link LogSiteKey} passed into the {@link
- * FloggerLogContext#postProcess(LogSiteKey)} method. If scopes are present in the log site {@link
+ * LogContext#postProcess(LogSiteKey)} method. If scopes are present in the log site {@link
  * Metadata} then the log site key provided to the {@code postProcess()} method will already be
  * specialized to take account of any scopes present.
  *

@@ -26,7 +26,7 @@
 
 package io.spine.logging.flogger
 
-import io.spine.logging.flogger.FloggerLogContext.Key
+import io.spine.logging.flogger.LogContext.Key
 import io.spine.logging.flogger.RateLimitStatus.DISALLOW
 import io.spine.logging.flogger.RateLimitStatus.checkStatus
 import io.spine.logging.flogger.backend.Metadata

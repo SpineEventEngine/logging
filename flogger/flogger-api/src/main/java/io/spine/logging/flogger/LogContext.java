@@ -27,7 +27,7 @@
 package io.spine.logging.flogger;
 
 import io.spine.logging.flogger.DurationRateLimiter.RateLimitPeriod;
-import io.spine.logging.flogger.backend.FloggerLogData;
+import io.spine.logging.flogger.backend.LogData;
 import io.spine.logging.flogger.backend.Metadata;
 import io.spine.logging.flogger.backend.Platform;
 import io.spine.logging.flogger.backend.TemplateContext;
@@ -65,8 +65,8 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogContext.java">
  *     Original Java code of Google Flogger</a>
  */
-public abstract class FloggerLogContext<LOGGER extends AbstractLogger<API>, API extends FloggerLoggingApi<API>>
-        implements FloggerLoggingApi<API>, FloggerLogData {
+public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends FloggerLoggingApi<API>>
+        implements FloggerLoggingApi<API>, LogData {
 
   /**
    * The predefined metadata keys used by the default logging API. Backend implementations can use
@@ -361,7 +361,7 @@ public abstract class FloggerLogContext<LOGGER extends AbstractLogger<API>, API 
    * @param level the log level for this log statement.
    * @param isForced whether to force this log statement (see {@link #wasForced()} for details).
    */
-  protected FloggerLogContext(Level level, boolean isForced) {
+  protected LogContext(Level level, boolean isForced) {
     this(level, isForced, Platform.getCurrentTimeNanos());
   }
 
@@ -376,7 +376,7 @@ public abstract class FloggerLogContext<LOGGER extends AbstractLogger<API>, API 
    * @param isForced whether to force this log statement (see {@link #wasForced()} for details).
    * @param timestampNanos the nanosecond timestamp for this log statement.
    */
-  protected FloggerLogContext(Level level, boolean isForced, long timestampNanos) {
+  protected LogContext(Level level, boolean isForced, long timestampNanos) {
     this.level = checkNotNull(level, "level");
     this.timestampNanos = timestampNanos;
     if (isForced) {
@@ -486,7 +486,7 @@ public abstract class FloggerLogContext<LOGGER extends AbstractLogger<API>, API 
    * is already a value for the key in the metadata, then the existing value is replaced, otherwise
    * the value is added at the end of the metadata.
    *
-   * @param key the metadata key (see {@link FloggerLogData}).
+   * @param key the metadata key (see {@link LogData}).
    * @param value the metadata value.
    */
   protected final <T> void addMetadata(FloggerMetadataKey<T> key, T value) {
@@ -500,7 +500,7 @@ public abstract class FloggerLogContext<LOGGER extends AbstractLogger<API>, API 
    * Removes all key/value pairs with the specified key. Note that this method does not resize any
    * underlying backing arrays or other storage as logging contexts are expected to be short lived.
    *
-   * @param key the metadata key (see {@link FloggerLogData}).
+   * @param key the metadata key (see {@link LogData}).
    */
   protected final void removeMetadata(FloggerMetadataKey<?> key) {
     if (metadata != null) {
@@ -629,7 +629,7 @@ public abstract class FloggerLogContext<LOGGER extends AbstractLogger<API>, API 
             new LogSiteStackTrace(
                 getMetadata().findValue(Key.LOG_CAUSE),
                 stackSize,
-                getStackForCallerOf(FloggerLogContext.class, stackSize.getMaxDepth(), 1));
+                getStackForCallerOf(LogContext.class, stackSize.getMaxDepth(), 1));
         // The "cause" is a unique metadata key, we must replace any existing value.
         addMetadata(Key.LOG_CAUSE, context);
       }
@@ -679,7 +679,7 @@ public abstract class FloggerLogContext<LOGGER extends AbstractLogger<API>, API 
       // shouldLog() method itself) when looking up the stack to find the log() method.
       logSite =
           checkNotNull(
-              Platform.getCallerFinder().findLogSite(FloggerLogContext.class, 1),
+              Platform.getCallerFinder().findLogSite(LogContext.class, 1),
               "logger backend must not return a null LogSite");
     }
     LogSiteKey logSiteKey = null;

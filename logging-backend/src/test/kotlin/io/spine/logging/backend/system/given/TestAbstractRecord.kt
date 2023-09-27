@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.system.given
 
-import io.spine.logging.flogger.backend.FloggerLogData
+import io.spine.logging.flogger.backend.LogData
 import io.spine.logging.flogger.backend.LogMessageFormatter
 import io.spine.logging.flogger.backend.Metadata
 import io.spine.logging.flogger.backend.MetadataProcessor
@@ -54,7 +54,7 @@ private class TestLogMessageFormatter : LogMessageFormatter() {
     private val defaultFormatter = SimpleMessageFormatter.getDefaultFormatter()
 
     override fun append(
-        logData: FloggerLogData,
+        logData: LogData,
         metadata: MetadataProcessor,
         out: StringBuilder
     ): StringBuilder {
@@ -63,6 +63,6 @@ private class TestLogMessageFormatter : LogMessageFormatter() {
         return out
     }
 
-    override fun format(logData: FloggerLogData, metadata: MetadataProcessor): String =
+    override fun format(logData: LogData, metadata: MetadataProcessor): String =
         "Copied: " + defaultFormatter.format(logData, metadata)
 }

@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.log4j2;
 
-import io.spine.logging.flogger.backend.FloggerLogData;
+import io.spine.logging.flogger.backend.LogData;
 import io.spine.logging.flogger.backend.LoggerBackend;
 import org.apache.logging.log4j.core.Logger;
 
@@ -55,7 +55,7 @@ final class Log4j2LoggerBackend extends LoggerBackend {
   }
 
   @Override
-  public void log(FloggerLogData logData) {
+  public void log(LogData logData) {
     // The caller is responsible to call `isLoggable()` before calling
     // this method to ensure that only messages above the given
     // threshold are logged.
@@ -63,7 +63,7 @@ final class Log4j2LoggerBackend extends LoggerBackend {
   }
 
   @Override
-  public void handleError(RuntimeException error, FloggerLogData badData) {
+  public void handleError(RuntimeException error, LogData badData) {
     logger.get().log(toLog4jLogEvent(logger.getName(), error, badData));
   }
 }

@@ -36,7 +36,7 @@ import io.spine.logging.flogger.parser.MessageParser;
  * are interchangeable.
  * <p>
  * Template contexts are created by the frontend and passed through to backend implementations via
- * the {@link FloggerLogData} interface.
+ * the {@link LogData} interface.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/TemplateContext.java">
  *     Original Java code of Google Flogger</a>

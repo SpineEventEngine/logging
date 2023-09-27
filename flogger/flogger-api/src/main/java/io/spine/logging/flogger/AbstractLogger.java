@@ -29,7 +29,7 @@ package io.spine.logging.flogger;
 import static io.spine.logging.flogger.util.Checks.checkNotNull;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
-import io.spine.logging.flogger.backend.FloggerLogData;
+import io.spine.logging.flogger.backend.LogData;
 import io.spine.logging.flogger.backend.LoggerBackend;
 import io.spine.logging.flogger.backend.LoggingException;
 import io.spine.logging.flogger.backend.MessageUtils;
@@ -165,7 +165,7 @@ public abstract class AbstractLogger<API extends FloggerLoggingApi<API>> {
    * <p>This method also guards against unbounded reentrant logging, and will suppress further
    * logging if it detects significant recursion has occurred.
    */
-  final void write(FloggerLogData data) {
+  final void write(LogData data) {
     checkNotNull(data, "data");
     // Note: Recursion checking should not be in the LoggerBackend. There are many backends and they
     // can call into other backends. We only want the counter incremented per log statement.
@@ -181,7 +181,7 @@ public abstract class AbstractLogger<API extends FloggerLoggingApi<API>> {
   }
 
   /** Only allow LoggingException and Errors to escape this method. */
-  private void handleErrorRobustly(RuntimeException logError, FloggerLogData data) {
+  private void handleErrorRobustly(RuntimeException logError, LogData data) {
     try {
       backend.handleError(logError, data);
     } catch (LoggingException allowed) {
@@ -201,7 +201,7 @@ public abstract class AbstractLogger<API extends FloggerLoggingApi<API>> {
 
   // It is important that this code never risk calling back to a user supplied value (e.g. logged
   // arguments or metadata) since that could trigger a recursive error state.
-  private static void reportError(String message, FloggerLogData data) {
+  private static void reportError(String message, LogData data) {
     StringBuilder out = new StringBuilder();
     out.append(formatTimestampIso8601(data)).append(": logging error [");
     MessageUtils.appendLogSite(data.getLogSite(), out);
@@ -212,7 +212,7 @@ public abstract class AbstractLogger<API extends FloggerLoggingApi<API>> {
   }
 
   @SuppressWarnings({"GoodTime", "JavaUtilDate", "SimpleDateFormat"})  // JDK7, no Joda-Time.
-  private static String formatTimestampIso8601(FloggerLogData data) {
+  private static String formatTimestampIso8601(LogData data) {
     // Sadly in JDK7, we don't have access to java.time and can't depend on things like Joda-Time.
     Date timestamp = new Date(NANOSECONDS.toMillis(data.getTimestampNanos()));
     // Use the system timezone here since we don't know how logger backends want to format dates.

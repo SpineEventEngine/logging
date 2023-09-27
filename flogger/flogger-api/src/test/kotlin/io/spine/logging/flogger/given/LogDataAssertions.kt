@@ -26,7 +26,7 @@
 
 package io.spine.logging.flogger.given
 
-import io.spine.logging.flogger.backend.FloggerLogData
+import io.spine.logging.flogger.backend.LogData
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 
@@ -35,13 +35,13 @@ import io.kotest.matchers.shouldBe
  */
 
 /**
- * Asserts that this [FloggerLogData] has a given [value] as a literal
+ * Asserts that this [LogData] has a given [value] as a literal
  * or template message.
  *
  * The message is literal when it is passed to the logger without
- * any formatting arguments, otherwise it is part of [FloggerLogData.getTemplateContext].
+ * any formatting arguments, otherwise it is part of [LogData.getTemplateContext].
  */
-internal infix fun FloggerLogData.shouldHaveMessage(value: String?) {
+internal infix fun LogData.shouldHaveMessage(value: String?) {
     if (templateContext != null) {
         templateContext.message shouldBe value
     } else {
@@ -50,13 +50,13 @@ internal infix fun FloggerLogData.shouldHaveMessage(value: String?) {
 }
 
 /**
- * Asserts that this [FloggerLogData] has given [args], which were passed
+ * Asserts that this [LogData] has given [args], which were passed
  * for message formatting.
  *
  * This method will NOT fail if the passed [args] is empty as long as
- * this [FloggerLogData] doesn't have any arguments too.
+ * this [LogData] doesn't have any arguments too.
  */
-internal fun FloggerLogData.shouldHaveArguments(vararg args: Any?) {
+internal fun LogData.shouldHaveArguments(vararg args: Any?) {
     if (templateContext == null && args.isEmpty()) {
         return
     } else {

@@ -20,7 +20,7 @@ import static com.google.common.truth.Fact.simpleFact;
 import static com.google.common.truth.Truth.assertAbout;
 
 import com.google.common.collect.ImmutableList;
-import io.spine.logging.flogger.backend.FloggerLogData;
+import io.spine.logging.flogger.backend.LogData;
 import com.google.common.truth.FailureMetadata;
 import com.google.common.truth.LongSubject;
 import com.google.common.truth.Subject;
@@ -28,22 +28,22 @@ import java.util.Arrays;
 import java.util.List;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-/** A <a href="https://github.com/google/truth">Truth</a> subject for {@link FloggerLogData}. */
+/** A <a href="https://github.com/google/truth">Truth</a> subject for {@link LogData}. */
 public final class LogDataSubject extends Subject {
-  private static final Subject.Factory<LogDataSubject, FloggerLogData> LOG_DATA_SUBJECT_FACTORY =
+  private static final Subject.Factory<LogDataSubject, LogData> LOG_DATA_SUBJECT_FACTORY =
       LogDataSubject::new;
 
-  public static Subject.Factory<LogDataSubject, FloggerLogData> logData() {
+  public static Subject.Factory<LogDataSubject, LogData> logData() {
     return LOG_DATA_SUBJECT_FACTORY;
   }
 
-  public static LogDataSubject assertThat(@Nullable FloggerLogData logData) {
+  public static LogDataSubject assertThat(@Nullable LogData logData) {
     return assertAbout(logData()).that(logData);
   }
 
-  private final FloggerLogData actual;
+  private final LogData actual;
 
-  private LogDataSubject(FailureMetadata failureMetadata, @Nullable FloggerLogData subject) {
+  private LogDataSubject(FailureMetadata failureMetadata, @Nullable LogData subject) {
     super(failureMetadata, subject);
     this.actual = subject;
   }

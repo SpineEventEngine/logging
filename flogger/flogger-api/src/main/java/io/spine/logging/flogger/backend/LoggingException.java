@@ -36,7 +36,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * test code or other debugging environments. In production code, the backend should be configured
  * to emit a modified log statement which includes the error information.
  * <p>
- * See also {@link LoggerBackend#handleError(RuntimeException, FloggerLogData)}.
+ * See also {@link LoggerBackend#handleError(RuntimeException, LogData)}.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/LoggingException.java">
  *     Original Java code of Google Flogger</a>

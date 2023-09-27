@@ -26,12 +26,12 @@
 
 package io.spine.logging.flogger;
 
-import static io.spine.logging.flogger.FloggerLogContext.Key.LOG_AT_MOST_EVERY;
+import static io.spine.logging.flogger.LogContext.Key.LOG_AT_MOST_EVERY;
 import static io.spine.logging.flogger.util.Checks.checkArgument;
 import static io.spine.logging.flogger.util.Checks.checkNotNull;
 import static java.lang.Math.max;
 
-import io.spine.logging.flogger.backend.FloggerLogData;
+import io.spine.logging.flogger.backend.LogData;
 import io.spine.logging.flogger.backend.Metadata;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
@@ -60,7 +60,7 @@ final class DurationRateLimiter extends RateLimitStatus {
 
   /**
    * Creates a period for rate limiting for the specified duration. This is invoked by the {@link
-   * FloggerLogContext#atMostEvery(int, TimeUnit)} method to create a metadata value.
+   * LogContext#atMostEvery(int, TimeUnit)} method to create a metadata value.
    */
   static RateLimitPeriod newRateLimitPeriod(int n, TimeUnit unit) {
     // We could cache commonly used values here if we wanted.
@@ -83,7 +83,7 @@ final class DurationRateLimiter extends RateLimitStatus {
 
   /**
    * Immutable metadata for rate limiting based on a fixed count. This corresponds to the
-   * LOG_AT_MOST_EVERY metadata key in {@link FloggerLogData}. Unlike the metadata for {@code every(N)}, we
+   * LOG_AT_MOST_EVERY metadata key in {@link LogData}. Unlike the metadata for {@code every(N)}, we
    * need to use a wrapper class here to preserve the time unit information.
    */
   static final class RateLimitPeriod {

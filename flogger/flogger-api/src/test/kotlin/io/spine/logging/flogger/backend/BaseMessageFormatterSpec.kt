@@ -171,7 +171,7 @@ private fun formatLiteral(value: Any): String {
 }
 
 private fun formatPrintf(msg: String, vararg args: Any?): String {
-    val logData: FloggerLogData = FakeLogData.withPrintfStyle(msg, *args)
+    val logData: LogData = FakeLogData.withPrintfStyle(msg, *args)
     val out = StringBuilder()
     BaseMessageFormatter.appendFormattedMessage(logData, out)
     return "$out"

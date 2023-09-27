@@ -19,7 +19,7 @@ package com.google.common.flogger.testing;
 import static io.spine.logging.flogger.util.Checks.checkNotNull;
 import static java.util.Collections.unmodifiableList;
 
-import io.spine.logging.flogger.backend.FloggerLogData;
+import io.spine.logging.flogger.backend.LogData;
 import io.spine.logging.flogger.backend.LoggerBackend;
 
 import java.util.ArrayList;
@@ -34,8 +34,8 @@ import java.util.logging.Level;
 public final class FakeLoggerBackend extends LoggerBackend {
   private final String name;
   private Level minLevel = Level.INFO;
-  private final List<FloggerLogData> logged = new ArrayList<>();
-  private final List<FloggerLogData> unmodifiableLogged = unmodifiableList(logged);
+  private final List<LogData> logged = new ArrayList<>();
+  private final List<LogData> unmodifiableLogged = unmodifiableList(logged);
 
   /**
    * Returns a fake backend with a fixed name.
@@ -66,25 +66,25 @@ public final class FakeLoggerBackend extends LoggerBackend {
   }
 
   /**
-   *  Returns the number of {@link FloggerLogData} entries captured by this backend.
+   *  Returns the number of {@link LogData} entries captured by this backend.
    */
   public int getLoggedCount() {
     return logged.size();
   }
 
   /**
-   * Returns all captured {@link FloggerLogData}s.
+   * Returns all captured {@link LogData}s.
    */
-  public List<FloggerLogData> getLogged() {
+  public List<LogData> getLogged() {
     return unmodifiableLogged;
   }
 
   /**
-   * Returns the last {@link FloggerLogData} entry captured by this backend.
+   * Returns the last {@link LogData} entry captured by this backend.
    *
    * @throws IllegalStateException when the backend hasn't captured any log entry
    */
-  public FloggerLogData getLastLogged() {
+  public LogData getLastLogged() {
     if (logged.isEmpty()) {
       throwNoEntries();
     }
@@ -93,11 +93,11 @@ public final class FakeLoggerBackend extends LoggerBackend {
   }
 
   /**
-   * Returns the first {@link FloggerLogData} entry captured by this backend.
+   * Returns the first {@link LogData} entry captured by this backend.
    *
    * @throws IllegalStateException when the backend hasn't captured any log entry
    */
-  public FloggerLogData getFirstLogged() {
+  public LogData getFirstLogged() {
     if (logged.isEmpty()) {
       throwNoEntries();
     }
@@ -123,11 +123,11 @@ public final class FakeLoggerBackend extends LoggerBackend {
     return loggedLevel.intValue() >= minLevel.intValue();
   }
 
-  @Override public void log(FloggerLogData data) {
+  @Override public void log(LogData data) {
     logged.add(data);
   }
 
-  @Override public void handleError(RuntimeException error, FloggerLogData badData) {
+  @Override public void handleError(RuntimeException error, LogData badData) {
     throw error;
   }
 }

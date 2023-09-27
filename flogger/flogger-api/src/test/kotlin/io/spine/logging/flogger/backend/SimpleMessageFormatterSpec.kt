@@ -31,7 +31,7 @@ import com.google.common.flogger.testing.FakeLogData
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
-import io.spine.logging.flogger.FloggerLogContext.Key
+import io.spine.logging.flogger.LogContext.Key
 import io.spine.logging.flogger.repeatedKey
 import io.spine.logging.flogger.singleKey
 import org.junit.jupiter.api.DisplayName
@@ -170,12 +170,12 @@ internal class SimpleMessageFormatterSpec {
     }
 }
 
-private fun format(logData: FloggerLogData, scope: Metadata): String {
+private fun format(logData: LogData, scope: Metadata): String {
     val metadata = MetadataProcessor.forScopeAndLogSite(scope, logData.getMetadata())
     return SimpleMessageFormatter.getDefaultFormatter().format(logData, metadata)
 }
 
-private fun appendFormatted(logData: FloggerLogData, scope: Metadata): String {
+private fun appendFormatted(logData: LogData, scope: Metadata): String {
     val metadata = MetadataProcessor.forScopeAndLogSite(scope, logData.getMetadata())
     return SimpleMessageFormatter.getDefaultFormatter()
         .append(logData, metadata, StringBuilder())

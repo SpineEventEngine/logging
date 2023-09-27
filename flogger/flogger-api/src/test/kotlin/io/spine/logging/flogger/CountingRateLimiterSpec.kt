@@ -33,7 +33,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.flogger.CountingRateLimiter.check
-import io.spine.logging.flogger.FloggerLogContext.Key
+import io.spine.logging.flogger.LogContext.Key
 import io.spine.logging.flogger.RateLimitStatus.DISALLOW
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

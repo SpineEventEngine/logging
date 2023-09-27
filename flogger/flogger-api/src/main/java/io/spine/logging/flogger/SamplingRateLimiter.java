@@ -32,7 +32,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static io.spine.logging.flogger.FloggerLogContext.Key.LOG_SAMPLE_EVERY_N;
+import static io.spine.logging.flogger.LogContext.Key.LOG_SAMPLE_EVERY_N;
 
 /**
  * Rate limiter to support {@code onAverageEvery(N)} functionality.

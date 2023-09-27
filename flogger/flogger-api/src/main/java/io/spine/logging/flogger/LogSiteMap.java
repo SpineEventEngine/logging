@@ -43,8 +43,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * locking (e.g. "synchronized" data structres) due to the risk of causing not trivial and
  * potentially harmful thread contention bottlenecks during logging.
  *
- * <p>This class is intended only for use by fluent logging APIs (subclasses of {@link FloggerLogContext}
- * and only used in the {@link FloggerLogContext#postProcess(LogSiteKey)} method, which supplies the key
+ * <p>This class is intended only for use by fluent logging APIs (subclasses of {@link LogContext}
+ * and only used in the {@link LogContext#postProcess(LogSiteKey)} method, which supplies the key
  * appropriate for the current log statement.
  *
  * @param <V> The value type in the map.
@@ -73,7 +73,7 @@ public abstract class LogSiteMap<V> {
 
   /**
    * Returns the mutable, thread safe, log site state for the given key to be read or updated during
-   * the {@link FloggerLogContext#postProcess(LogSiteKey)} method.
+   * the {@link LogContext#postProcess(LogSiteKey)} method.
    *
    * <p>Note that due to the possibility of log site key specialization, there may be more than one
    * value in the map for any given log site. This is intended and allows for things like per scope
@@ -98,7 +98,7 @@ public abstract class LogSiteMap<V> {
   private void addRemovalHook(final LogSiteKey key, Metadata metadata) {
     Runnable removalHook = null;
     for (int i = 0, count = metadata.size(); i < count; i++) {
-      if (!FloggerLogContext.Key.LOG_SITE_GROUPING_KEY.equals(metadata.getKey(i))) {
+      if (!LogContext.Key.LOG_SITE_GROUPING_KEY.equals(metadata.getKey(i))) {
         continue;
       }
       Object groupByKey = metadata.getValue(i);

@@ -19,10 +19,10 @@ package com.google.common.flogger.testing;
 import static io.spine.logging.flogger.util.Checks.checkState;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
-import io.spine.logging.flogger.FloggerLogContext;
+import io.spine.logging.flogger.LogContext;
 import io.spine.logging.flogger.FloggerLogSite;
 import io.spine.logging.flogger.FloggerMetadataKey;
-import io.spine.logging.flogger.backend.FloggerLogData;
+import io.spine.logging.flogger.backend.LogData;
 import io.spine.logging.flogger.backend.Metadata;
 import io.spine.logging.flogger.backend.TemplateContext;
 import io.spine.logging.flogger.parser.DefaultBraceStyleMessageParser;
@@ -32,10 +32,10 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.util.logging.Level;
 
 /**
- * A mutable fake {@link FloggerLogData} implementation to help test logging backends and other log
+ * A mutable fake {@link LogData} implementation to help test logging backends and other log
  * handling code.
  */
-public final class FakeLogData implements FloggerLogData {
+public final class FakeLogData implements LogData {
   public static final String FAKE_LOGGER_NAME = "com.google.LoggerName";
 
   public static final String FAKE_LOGGING_CLASS = "com.google.FakeClass";
@@ -139,7 +139,7 @@ public final class FakeLogData implements FloggerLogData {
   @Override
   public boolean wasForced() {
     // Check explicit TRUE here because findValue() can return null (which would fail unboxing).
-    return Boolean.TRUE.equals(metadata.findValue(FloggerLogContext.Key.WAS_FORCED));
+    return Boolean.TRUE.equals(metadata.findValue(LogContext.Key.WAS_FORCED));
   }
 
   @Override

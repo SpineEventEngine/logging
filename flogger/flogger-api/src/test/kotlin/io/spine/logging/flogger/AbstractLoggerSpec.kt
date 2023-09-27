@@ -26,7 +26,7 @@
 
 package io.spine.logging.flogger
 
-import io.spine.logging.flogger.backend.FloggerLogData
+import io.spine.logging.flogger.backend.LogData
 import io.spine.logging.flogger.backend.LoggingException
 import io.spine.logging.flogger.given.MemoizingBackend
 import com.google.common.flogger.testing.ConfigurableLogger
@@ -48,7 +48,7 @@ import org.junit.jupiter.api.Test
  * An abstract logger is a factory for instances of fluent logging APIs,
  * used to build log statements via method chaining.
  *
- * See [FloggerLogContextSpec] for the most tests related to base logging behavior.
+ * See [LogContextSpec] for the most tests related to base logging behavior.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/AbstractLoggerTest.java">
  *     Original Java code of Google Flogger</a>
@@ -146,7 +146,7 @@ internal class AbstractLoggerSpec {
     @Test
     fun `allow logging exceptions thrown by a backend`() {
         val backend = object : MemoizingBackend() {
-            override fun log(data: FloggerLogData) = throw LoggingException("allowed")
+            override fun log(data: LogData) = throw LoggingException("allowed")
         }
         val logger = ConfigurableLogger.create(backend)
 
@@ -164,7 +164,7 @@ internal class AbstractLoggerSpec {
     @Suppress("TooGenericExceptionThrown") // Plain `Error` is OK for tests.
     fun `allow logging errors thrown by a backend`() {
         val backend: MemoizingBackend = object : MemoizingBackend() {
-            override fun log(data: FloggerLogData) = throw Error("allowed")
+            override fun log(data: LogData) = throw Error("allowed")
         }
         val logger = ConfigurableLogger.create(backend)
 

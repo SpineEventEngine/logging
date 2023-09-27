@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.system
 
-import io.spine.logging.flogger.backend.FloggerLogData
+import io.spine.logging.flogger.backend.LogData
 import io.spine.logging.flogger.backend.LoggerBackend
 import io.spine.logging.flogger.backend.Platform
 import java.util.logging.Handler
@@ -50,12 +50,12 @@ internal class StdLoggerBackend(loggingClass: String): AbstractLoggerBackend(log
         Logger.getLogger(loggerName)
     }
 
-    override fun log(data: FloggerLogData): Unit = doLog(
+    override fun log(data: LogData): Unit = doLog(
         SimpleLogRecord.create(data, Platform.getInjectedMetadata()),
         data.wasForced()
     )
 
-    override fun handleError(error: RuntimeException, badData: FloggerLogData): Unit = doLog(
+    override fun handleError(error: RuntimeException, badData: LogData): Unit = doLog(
         SimpleLogRecord.error(error, badData, Platform.getInjectedMetadata()),
         badData.wasForced()
     )

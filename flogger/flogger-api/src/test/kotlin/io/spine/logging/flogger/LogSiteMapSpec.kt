@@ -68,12 +68,12 @@ internal class LogSiteMapSpec {
     fun `remove entries when a scope is manually closed`() {
         val map = createMap()
         val foo = LoggingScope.WeakScope("foo")
-        val fooMetadata = FakeMetadata().add(FloggerLogContext.Key.LOG_SITE_GROUPING_KEY, foo)
+        val fooMetadata = FakeMetadata().add(LogContext.Key.LOG_SITE_GROUPING_KEY, foo)
         val bar = LoggingScope.WeakScope("bar")
-        val barMetadata = FakeMetadata().add(FloggerLogContext.Key.LOG_SITE_GROUPING_KEY, bar)
+        val barMetadata = FakeMetadata().add(LogContext.Key.LOG_SITE_GROUPING_KEY, bar)
         val logSite = create("com.google.foo.Foo", "doFoo", 42, "<unused>")
-        val fooKey = FloggerLogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
-        val barKey = FloggerLogContext.specializeLogSiteKeyFromMetadata(logSite, barMetadata)
+        val fooKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
+        val barKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, barMetadata)
 
         // First increment.
         map[fooKey, fooMetadata].incrementAndGet() shouldBe 1
@@ -136,9 +136,9 @@ private fun useAndReturnScopedKey(
     label: String
 ): LogSiteKey {
     val scope = LoggingScope.create(label)
-    val metadata = FakeMetadata().add(FloggerLogContext.Key.LOG_SITE_GROUPING_KEY, scope)
+    val metadata = FakeMetadata().add(LogContext.Key.LOG_SITE_GROUPING_KEY, scope)
     val logSite = create("com.example", label, 42, "<unused>")
-    val key = FloggerLogContext.specializeLogSiteKeyFromMetadata(logSite, metadata)
+    val key = LogContext.specializeLogSiteKeyFromMetadata(logSite, metadata)
     map[key, metadata].incrementAndGet()
     map.contains(key).shouldBeTrue()
     return key

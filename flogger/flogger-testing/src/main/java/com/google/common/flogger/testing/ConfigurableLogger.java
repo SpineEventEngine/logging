@@ -17,7 +17,7 @@
 package com.google.common.flogger.testing;
 
 import io.spine.logging.flogger.AbstractLogger;
-import io.spine.logging.flogger.FloggerLogContext;
+import io.spine.logging.flogger.LogContext;
 import io.spine.logging.flogger.FloggerLoggingApi;
 import io.spine.logging.flogger.backend.LoggerBackend;
 import io.spine.logging.flogger.parser.DefaultPrintfMessageParser;
@@ -71,7 +71,7 @@ public final class ConfigurableLogger extends AbstractLogger<ConfigurableLogger.
   }
 
   /** Logging context implementing the basic logging API. */
-  private final class TestContext extends FloggerLogContext<ConfigurableLogger, Api> implements Api {
+  private final class TestContext extends LogContext<ConfigurableLogger, Api> implements Api {
     private TestContext(Level level, boolean isForced, long timestampNanos) {
       super(level, isForced, timestampNanos);
     }

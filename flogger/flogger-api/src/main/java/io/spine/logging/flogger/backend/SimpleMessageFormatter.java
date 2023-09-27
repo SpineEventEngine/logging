@@ -26,7 +26,7 @@
 
 package io.spine.logging.flogger.backend;
 
-import io.spine.logging.flogger.FloggerLogContext;
+import io.spine.logging.flogger.LogContext;
 import io.spine.logging.flogger.FloggerMetadataKey;
 import io.spine.logging.flogger.FloggerMetadataKey.KeyValueHandler;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
@@ -67,7 +67,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 public final class SimpleMessageFormatter {
   @SuppressWarnings("ConstantCaseForConstants")
   private static final Set<FloggerMetadataKey<?>> DEFAULT_KEYS_TO_IGNORE =
-      Collections.<FloggerMetadataKey<?>>singleton(FloggerLogContext.Key.LOG_CAUSE);
+      Collections.<FloggerMetadataKey<?>>singleton(LogContext.Key.LOG_CAUSE);
 
   private static final LogMessageFormatter DEFAULT_FORMATTER = newFormatter(DEFAULT_KEYS_TO_IGNORE);
 
@@ -148,7 +148,7 @@ public final class SimpleMessageFormatter {
    * has arguments to be formatted.
    *
    * <p>This method is designed to be paired with {@link
-   * #mustBeFormatted(FloggerLogData,MetadataProcessor,Set)} and can always be safely called if that method
+   * #mustBeFormatted(LogData,MetadataProcessor,Set)} and can always be safely called if that method
    * returned {@code false} for the same log data.
    *
    * @param logData the log statement data.
@@ -156,7 +156,7 @@ public final class SimpleMessageFormatter {
    * @throws IllegalStateException if the log data had arguments to be formatted (i.e. there was a
    *     template context).
    */
-  public static String getLiteralLogMessage(FloggerLogData logData) {
+  public static String getLiteralLogMessage(LogData logData) {
     return MessageUtils.safeToString(logData.getLiteralArgument());
   }
 
@@ -170,7 +170,7 @@ public final class SimpleMessageFormatter {
    * literal log message being used, with no additional formatting.
    *
    * <p>If this method returns {@code false} then the literal log message can be obtained via {@link
-   * #getLiteralLogMessage(FloggerLogData)}, otherwise it must be formatted manually.
+   * #getLiteralLogMessage(LogData)}, otherwise it must be formatted manually.
    *
    * <p>By calling this class it is possible to more easily detect cases where using buffers to
    * format the log message is not required. Obviously a logger backend my have its own reasons for
@@ -182,7 +182,7 @@ public final class SimpleMessageFormatter {
    *     message.
    */
   public static boolean mustBeFormatted(
-          FloggerLogData logData, MetadataProcessor metadata, Set<FloggerMetadataKey<?>> keysToIgnore) {
+          LogData logData, MetadataProcessor metadata, Set<FloggerMetadataKey<?>> keysToIgnore) {
     // If there are logged arguments or more metadata keys than can be ignored, we fail immediately
     // which avoids the cost of creating the metadata key set (so don't remove the size check).
     return logData.getTemplateContext() != null
@@ -201,13 +201,13 @@ public final class SimpleMessageFormatter {
 
       @Override
       public StringBuilder append(
-              FloggerLogData logData, MetadataProcessor metadata, StringBuilder buffer) {
+              LogData logData, MetadataProcessor metadata, StringBuilder buffer) {
         BaseMessageFormatter.appendFormattedMessage(logData, buffer);
         return appendContext(metadata, handler, buffer);
       }
 
       @Override
-      public String format(FloggerLogData logData, MetadataProcessor metadata) {
+      public String format(LogData logData, MetadataProcessor metadata) {
         if (mustBeFormatted(logData, metadata, keysToIgnore)) {
           return append(logData, metadata, new StringBuilder()).toString();
         } else {
@@ -221,7 +221,7 @@ public final class SimpleMessageFormatter {
 
   /** @deprecated Use a {@link LogMessageFormatter} and obtain the level and cause separately. */
   @Deprecated
-  public static void format(FloggerLogData logData, SimpleLogHandler receiver) {
+  public static void format(LogData logData, SimpleLogHandler receiver) {
     // Deliberately don't support ScopedLoggingContext here (no injected metadata). This is as a
     // forcing function to make users of this API migrate away from it if they need scoped metadata.
     MetadataProcessor metadata =
@@ -229,7 +229,7 @@ public final class SimpleMessageFormatter {
     receiver.handleFormattedLogMessage(
         logData.getLevel(),
         getDefaultFormatter().format(logData, metadata),
-        metadata.getSingleValue(FloggerLogContext.Key.LOG_CAUSE));
+        metadata.getSingleValue(LogContext.Key.LOG_CAUSE));
   }
 
   /** @deprecated Use a {@link LogMessageFormatter} and obtain the level and cause separately. */

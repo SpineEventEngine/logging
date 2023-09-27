@@ -55,7 +55,7 @@ public abstract class LogMessageFormatter {
    * safely detect when no formatting is required). See also the helper methods in {@link
    * SimpleMessageFormatter}.
    */
-  public String format(FloggerLogData logData, MetadataProcessor metadata) {
+  public String format(LogData logData, MetadataProcessor metadata) {
     return append(logData, metadata, new StringBuilder()).toString();
   }
 
@@ -68,5 +68,5 @@ public abstract class LogMessageFormatter {
    */
   @CanIgnoreReturnValue
   public abstract StringBuilder append(
-          FloggerLogData logData, MetadataProcessor metadata, StringBuilder buffer);
+          LogData logData, MetadataProcessor metadata, StringBuilder buffer);
 }
