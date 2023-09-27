@@ -43,7 +43,7 @@ public final class FakeLogData implements FloggerLogData {
   public static final String FAKE_SOURCE_PATH = "src/com/google/FakeClass.java";
 
   public static final FloggerLogSite FAKE_LOG_SITE =
-      FakeFloggerLogSite.create(FAKE_LOGGING_CLASS, FAKE_LOGGING_METHOD, 123, FAKE_SOURCE_PATH);
+      FakeLogSite.create(FAKE_LOGGING_CLASS, FAKE_LOGGING_METHOD, 123, FAKE_SOURCE_PATH);
 
   /**
    * Creates a fake {@code LogData} instance representing a log statement with a single, literal

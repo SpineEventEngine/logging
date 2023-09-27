@@ -26,7 +26,7 @@
 
 package io.spine.logging.flogger
 
-import com.google.common.flogger.testing.FakeFloggerLogSite.create
+import com.google.common.flogger.testing.FakeLogSite.create
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.DisplayName

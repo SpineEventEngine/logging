@@ -26,7 +26,7 @@
 
 package io.spine.logging.flogger
 
-import com.google.common.flogger.testing.FakeFloggerLogSite
+import com.google.common.flogger.testing.FakeLogSite
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
@@ -55,14 +55,14 @@ internal class CountingRateLimiterSpec {
     fun `return 'null' if the corresponding metadata key is not present`() {
         // Not supplying `LOG_EVERY_N` metadata key ignores rate limiting by returning null.
         val metadata = FakeMetadata()
-        val logSite = FakeFloggerLogSite.unique()
+        val logSite = FakeLogSite.unique()
         check(metadata, logSite).shouldBeNull()
     }
 
     @Test
     fun `rate limit`() {
         val metadata = FakeMetadata().add(Key.LOG_EVERY_N, RATE_LIMIT)
-        val logSite = FakeFloggerLogSite.unique()
+        val logSite = FakeLogSite.unique()
         repeat(100) { i ->
             val status = check(metadata, logSite)
             val skipCount = RateLimitStatus.checkStatus(status, logSite, metadata)
@@ -74,8 +74,8 @@ internal class CountingRateLimiterSpec {
     @Test
     fun `distinct different log sites`() {
         val metadata = FakeMetadata().add(Key.LOG_EVERY_N, RATE_LIMIT)
-        val fooLog = FakeFloggerLogSite.unique()
-        val barLog = FakeFloggerLogSite.unique()
+        val fooLog = FakeLogSite.unique()
+        val barLog = FakeLogSite.unique()
         val allowFoo = check(metadata, fooLog)
         val allowBar = check(metadata, barLog)
 

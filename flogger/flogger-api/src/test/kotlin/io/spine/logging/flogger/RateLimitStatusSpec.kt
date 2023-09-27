@@ -30,7 +30,7 @@ import io.spine.logging.flogger.RateLimitStatus.ALLOW
 import io.spine.logging.flogger.RateLimitStatus.DISALLOW
 import io.spine.logging.flogger.RateLimitStatus.checkStatus
 import io.spine.logging.flogger.RateLimitStatus.combine
-import com.google.common.flogger.testing.FakeFloggerLogSite
+import com.google.common.flogger.testing.FakeLogSite
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeFalse
@@ -114,11 +114,11 @@ internal class RateLimitStatusSpec {
 
         // We wouldn't expect ALLOW to become the final status due to
         // how `combine()` works, but we can still test it.
-        checkStatus(ALLOW, FakeFloggerLogSite.unique(), metadata) shouldBe 0
+        checkStatus(ALLOW, FakeLogSite.unique(), metadata) shouldBe 0
 
         // Any (status != DISALLOW) will be reset as part of this call.
         val fooStatus = TestStatus()
-        checkStatus(fooStatus, FakeFloggerLogSite.unique(), metadata) shouldBe 0
+        checkStatus(fooStatus, FakeLogSite.unique(), metadata) shouldBe 0
         fooStatus.wasReset.shouldBeTrue()
     }
 
@@ -126,13 +126,13 @@ internal class RateLimitStatusSpec {
     fun `check disallowed status`() {
         val metadata = FakeMetadata()
         // Having DISALLOW is the most common case for rate-limited log statements.
-        checkStatus(DISALLOW, FakeFloggerLogSite.unique(), metadata) shouldBe -1
+        checkStatus(DISALLOW, FakeLogSite.unique(), metadata) shouldBe -1
     }
 
     @Test
     fun `increment number of skipped invocations`() {
         val metadata = FakeMetadata()
-        val logSite = FakeFloggerLogSite.unique()
+        val logSite = FakeLogSite.unique()
         checkStatus(ALLOW, logSite, metadata) shouldBe 0
         checkStatus(DISALLOW, logSite, metadata) shouldBe -1
         checkStatus(DISALLOW, logSite, metadata) shouldBe -1

@@ -21,13 +21,13 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /** A simplified LogSite implementation used for testing. */
-public final class FakeFloggerLogSite extends FloggerLogSite {
+public final class FakeLogSite extends FloggerLogSite {
   private static final AtomicInteger uid = new AtomicInteger();
 
   /** Creates a fake log site (with plausible behavior) from the given parameters. */
   public static FloggerLogSite create(
       String className, String methodName, int lineNumber, String sourcePath) {
-    return new FakeFloggerLogSite(className, methodName, lineNumber, sourcePath);
+    return new FakeLogSite(className, methodName, lineNumber, sourcePath);
   }
 
   /** Creates a unique fake log site for use as a key when testing shared static maps. */
@@ -40,7 +40,7 @@ public final class FakeFloggerLogSite extends FloggerLogSite {
   private final int lineNumber;
   private final String sourcePath;
 
-  private FakeFloggerLogSite(String className, String methodName, int lineNumber, String sourcePath) {
+  private FakeLogSite(String className, String methodName, int lineNumber, String sourcePath) {
     this.className = className;
     this.methodName = methodName;
     this.lineNumber = lineNumber;
@@ -69,10 +69,10 @@ public final class FakeFloggerLogSite extends FloggerLogSite {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof FakeFloggerLogSite)) {
+    if (!(obj instanceof FakeLogSite)) {
       return false;
     }
-    FakeFloggerLogSite other = (FakeFloggerLogSite) obj;
+    FakeLogSite other = (FakeLogSite) obj;
     return Objects.equals(className, other.className)
         && Objects.equals(methodName, other.methodName)
         && lineNumber == other.lineNumber

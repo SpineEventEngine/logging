@@ -35,7 +35,7 @@ import io.spine.logging.flogger.backend.MessageUtils.appendLogSite
 import io.spine.logging.flogger.backend.MessageUtils.safeFormatTo
 import io.spine.logging.flogger.backend.MessageUtils.safeToString
 import io.spine.logging.backend.given.BadToString
-import com.google.common.flogger.testing.FakeFloggerLogSite.create
+import com.google.common.flogger.testing.FakeLogSite.create
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe

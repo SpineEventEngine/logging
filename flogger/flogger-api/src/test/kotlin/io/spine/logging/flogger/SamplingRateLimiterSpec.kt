@@ -30,7 +30,7 @@ import io.spine.logging.flogger.FloggerLogContext.Key
 import io.spine.logging.flogger.RateLimitStatus.DISALLOW
 import io.spine.logging.flogger.RateLimitStatus.checkStatus
 import io.spine.logging.flogger.backend.Metadata
-import com.google.common.flogger.testing.FakeFloggerLogSite
+import com.google.common.flogger.testing.FakeLogSite
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.ints.shouldBeInRange
@@ -53,7 +53,7 @@ internal class SamplingRateLimiterSpec {
     @Test
     fun `ignore an invalid rate limiter`() {
         val metadata: Metadata = FakeMetadata().add(Key.LOG_SAMPLE_EVERY_N, 0)
-        check(metadata, FakeFloggerLogSite.unique()).shouldBeNull()
+        check(metadata, FakeLogSite.unique()).shouldBeNull()
     }
 
     @Test
@@ -92,7 +92,7 @@ internal class SamplingRateLimiterSpec {
 
 @Suppress("SameParameterValue") // For better readability.
 private fun countNSamples(n: Int, metadata: Metadata): Int {
-    val logSite = FakeFloggerLogSite.unique()
+    val logSite = FakeLogSite.unique()
     var sampled = 0
 
     repeat(n) {
