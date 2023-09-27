@@ -42,8 +42,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * the current {@link io.spine.logging.flogger.context.ScopedLoggingContext ScopedLoggingContexts}.
  *
  * <p>Stateful fluent logging APIs which need to look up per log site information (e.g. rate limit
- * state) should do so via a {@link FloggerLogSiteMap} using the {@link FloggerLogSiteKey} passed into the {@link
- * FloggerLogContext#postProcess(FloggerLogSiteKey)} method. If scopes are present in the log site {@link
+ * state) should do so via a {@link FloggerLogSiteMap} using the {@link LogSiteKey} passed into the {@link
+ * FloggerLogContext#postProcess(LogSiteKey)} method. If scopes are present in the log site {@link
  * Metadata} then the log site key provided to the {@code postProcess()} method will already be
  * specialized to take account of any scopes present.
  *
@@ -90,11 +90,11 @@ public abstract class FloggerLoggingScope {
    *   <li>Should be efficient and lightweight.
    * </ul>
    *
-   * As such it is recommended that the {@link SpecializedFloggerLogSiteKey#of(FloggerLogSiteKey, Object)} method
+   * As such it is recommended that the {@link SpecializedLogSiteKey#of(LogSiteKey, Object)} method
    * is used in implementations, passing in a suitable qualifier (which need not be the scope
    * itself, but must be unique per scope).
    */
-  protected abstract FloggerLogSiteKey specialize(FloggerLogSiteKey key);
+  protected abstract LogSiteKey specialize(LogSiteKey key);
 
   /**
    * Registers "hooks" which should be called when this scope is "closed". The hooks are intended to
@@ -131,8 +131,8 @@ public abstract class FloggerLoggingScope {
     }
 
     @Override
-    protected FloggerLogSiteKey specialize(FloggerLogSiteKey key) {
-      return SpecializedFloggerLogSiteKey.of(key, keyPart);
+    protected LogSiteKey specialize(LogSiteKey key) {
+      return SpecializedLogSiteKey.of(key, keyPart);
     }
 
     @Override

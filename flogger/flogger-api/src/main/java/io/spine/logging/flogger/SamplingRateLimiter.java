@@ -37,7 +37,7 @@ import static io.spine.logging.flogger.FloggerLogContext.Key.LOG_SAMPLE_EVERY_N;
 /**
  * Rate limiter to support {@code onAverageEvery(N)} functionality.
  *
- * <p>Instances of this class are created for each unique {@link FloggerLogSiteKey} for which rate limiting
+ * <p>Instances of this class are created for each unique {@link LogSiteKey} for which rate limiting
  * via the {@code LOG_SAMPLE_EVERY_N} metadata key is required. This class implements {@code
  * RateLimitStatus} as a mechanism for resetting its own state.
  *
@@ -56,7 +56,7 @@ final class SamplingRateLimiter extends RateLimitStatus {
       };
 
   @Nullable
-  static RateLimitStatus check(Metadata metadata, FloggerLogSiteKey logSiteKey) {
+  static RateLimitStatus check(Metadata metadata, LogSiteKey logSiteKey) {
     Integer rateLimitCount = metadata.findValue(LOG_SAMPLE_EVERY_N);
     if (rateLimitCount == null || rateLimitCount <= 0) {
       // Without valid rate limiter specific metadata, this limiter has no effect.

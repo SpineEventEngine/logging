@@ -50,7 +50,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSite.java">
  *     Original Java code of Google Flogger</a>
  */
-public abstract class FloggerLogSite implements FloggerLogSiteKey {
+public abstract class FloggerLogSite implements LogSiteKey {
   /** A value used for line numbers when the true information is not available. */
   public static final int UNKNOWN_LINE = 0;
 

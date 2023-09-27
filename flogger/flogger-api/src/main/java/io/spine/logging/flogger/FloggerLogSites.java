@@ -141,7 +141,7 @@ public final class FloggerLogSites {
    * returns {@link StackTraceElement}.
    */
   public static FloggerLogSite logSiteFrom(@Nullable StackTraceElement e) {
-    return e != null ? new StackBasedFloggerLogSite(e) : FloggerLogSite.INVALID;
+    return e != null ? new StackBasedLogSite(e) : FloggerLogSite.INVALID;
   }
 
   private FloggerLogSites() {}

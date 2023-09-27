@@ -35,7 +35,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for [StackBasedFloggerLogSite].
+ * Tests for [StackBasedLogSite].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/StackBasedLogSiteTest.java">
  *     Original Java code of Google Flogger</a>
@@ -53,7 +53,7 @@ internal class StackBasedLogSiteSpec {
     @Test
     fun `expose the given log site parameters`() {
         val element = StackTraceElement(CLASS_NAME, METHOD_NAME, FILE_NAME, LINE_NUMBER)
-        val logSite = StackBasedFloggerLogSite(element)
+        val logSite = StackBasedLogSite(element)
         logSite.className shouldBe CLASS_NAME
         logSite.methodName shouldBe METHOD_NAME
         logSite.lineNumber shouldBe LINE_NUMBER
@@ -67,7 +67,7 @@ internal class StackBasedLogSiteSpec {
     @Test
     fun `throw when the given stack trace element is 'null'`() {
         shouldThrow<NullPointerException> {
-            StackBasedFloggerLogSite(null)
+            StackBasedLogSite(null)
         }
     }
 
@@ -105,8 +105,8 @@ internal class StackBasedLogSiteSpec {
 private fun stackBasedLogSite(className: String,
                               methodName: String,
                               fileName: String?,
-                              lineNumber: Int): StackBasedFloggerLogSite {
+                              lineNumber: Int): StackBasedLogSite {
     val element = StackTraceElement(className, methodName, fileName, lineNumber)
-    val logSite = StackBasedFloggerLogSite(element)
+    val logSite = StackBasedLogSite(element)
     return logSite
 }

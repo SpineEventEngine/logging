@@ -38,15 +38,15 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/SpecializedLogSiteKey.java">
  *     Original Java code of Google Flogger</a>
  */
-final class SpecializedFloggerLogSiteKey implements FloggerLogSiteKey {
-  static FloggerLogSiteKey of(FloggerLogSiteKey key, Object qualifier) {
-    return new SpecializedFloggerLogSiteKey(key, qualifier);
+final class SpecializedLogSiteKey implements LogSiteKey {
+  static LogSiteKey of(LogSiteKey key, Object qualifier) {
+    return new SpecializedLogSiteKey(key, qualifier);
   }
 
-  private final FloggerLogSiteKey delegate;
+  private final LogSiteKey delegate;
   private final Object qualifier;
 
-  private SpecializedFloggerLogSiteKey(FloggerLogSiteKey key, Object qualifier) {
+  private SpecializedLogSiteKey(LogSiteKey key, Object qualifier) {
     this.delegate = checkNotNull(key, "log site key");
     this.qualifier = checkNotNull(qualifier, "log site qualifier");
   }
@@ -55,10 +55,10 @@ final class SpecializedFloggerLogSiteKey implements FloggerLogSiteKey {
   // needn't be.
   @Override
   public boolean equals(@Nullable Object obj) {
-    if (!(obj instanceof SpecializedFloggerLogSiteKey)) {
+    if (!(obj instanceof SpecializedLogSiteKey)) {
       return false;
     }
-    SpecializedFloggerLogSiteKey other = (SpecializedFloggerLogSiteKey) obj;
+    SpecializedLogSiteKey other = (SpecializedLogSiteKey) obj;
     return delegate.equals(other.delegate) && qualifier.equals(other.qualifier);
   }
 

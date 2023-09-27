@@ -134,7 +134,7 @@ private fun <T> recurseAndCall(n: Int, action: Callable<T>): T {
 private fun useAndReturnScopedKey(
     map: FloggerLogSiteMap<AtomicInteger>,
     label: String
-): FloggerLogSiteKey {
+): LogSiteKey {
     val scope = FloggerLoggingScope.create(label)
     val metadata = FakeMetadata().add(FloggerLogContext.Key.LOG_SITE_GROUPING_KEY, scope)
     val logSite = create("com.example", label, 42, "<unused>")

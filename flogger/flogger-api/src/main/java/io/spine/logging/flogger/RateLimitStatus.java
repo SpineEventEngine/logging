@@ -163,7 +163,7 @@ public abstract class RateLimitStatus {
         };
 
     static int checkAndGetSkippedCount(
-            RateLimitStatus status, FloggerLogSiteKey logSiteKey, Metadata metadata) {
+            RateLimitStatus status, LogSiteKey logSiteKey, Metadata metadata) {
       LogGuard guard = guardMap.get(logSiteKey, metadata);
       // Pre-increment pendingCount to include this log statement, so (pendingCount > 0).
       int pendingCount = guard.pendingLogCount.incrementAndGet();
@@ -252,7 +252,7 @@ public abstract class RateLimitStatus {
    * {@code logSiteKey} (indicating that this log statement should be emitted) or {@code -1} if it
    * should be skipped.
    */
-  static int checkStatus(RateLimitStatus status, FloggerLogSiteKey logSiteKey, Metadata metadata) {
+  static int checkStatus(RateLimitStatus status, LogSiteKey logSiteKey, Metadata metadata) {
     return LogGuard.checkAndGetSkippedCount(status, logSiteKey, metadata);
   }
 

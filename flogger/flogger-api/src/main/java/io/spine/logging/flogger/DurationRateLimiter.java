@@ -40,7 +40,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 /**
  * Rate limiter to support {@code atMostEvery(N, units)} functionality.
  *
- * <p>Instances of this class are created for each unique {@link FloggerLogSiteKey} for which rate limiting
+ * <p>Instances of this class are created for each unique {@link LogSiteKey} for which rate limiting
  * via the {@code LOG_AT_MOST_EVERY} metadata key is required. This class implements {@code
  * RateLimitStatus} as a mechanism for resetting the rate limiter state.
  *
@@ -72,7 +72,7 @@ final class DurationRateLimiter extends RateLimitStatus {
    * metadata value and the current log site timestamp.
    */
   @Nullable
-  static RateLimitStatus check(Metadata metadata, FloggerLogSiteKey logSiteKey, long timestampNanos) {
+  static RateLimitStatus check(Metadata metadata, LogSiteKey logSiteKey, long timestampNanos) {
     RateLimitPeriod rateLimitPeriod = metadata.findValue(LOG_AT_MOST_EVERY);
     if (rateLimitPeriod == null) {
       // Without rate limiter specific metadata, this limiter has no effect.

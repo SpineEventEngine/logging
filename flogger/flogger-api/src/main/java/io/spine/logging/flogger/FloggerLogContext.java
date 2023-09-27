@@ -588,7 +588,7 @@ public abstract class FloggerLogContext<LOGGER extends FloggerAbstractLogger<API
    * @param logSiteKey used to lookup persistent, per log statement, state.
    * @return true if logging should be attempted (usually based on rate limiter state).
    */
-  protected boolean postProcess(@Nullable FloggerLogSiteKey logSiteKey) {
+  protected boolean postProcess(@Nullable LogSiteKey logSiteKey) {
     // Without metadata there's nothing to post-process.
     if (metadata != null) {
       // Without a log site we ignore any log-site specific behaviour.
@@ -682,7 +682,7 @@ public abstract class FloggerLogContext<LOGGER extends FloggerAbstractLogger<API
               Platform.getCallerFinder().findLogSite(FloggerLogContext.class, 1),
               "logger backend must not return a null LogSite");
     }
-    FloggerLogSiteKey logSiteKey = null;
+    LogSiteKey logSiteKey = null;
     if (logSite != FloggerLogSite.INVALID) {
       logSiteKey = logSite;
       // Log site keys are only modified when we have metadata in the log statement.
@@ -718,7 +718,7 @@ public abstract class FloggerLogContext<LOGGER extends FloggerAbstractLogger<API
   // TODO: Make a proper iterator on Metadata or use MetadataProcessor.
   //
   // Visible for testing
-  static FloggerLogSiteKey specializeLogSiteKeyFromMetadata(FloggerLogSiteKey logSiteKey, Metadata metadata) {
+  static LogSiteKey specializeLogSiteKeyFromMetadata(LogSiteKey logSiteKey, Metadata metadata) {
     checkNotNull(logSiteKey, "logSiteKey"); // For package null checker only.
     for (int n = 0, size = metadata.size(); n < size; n++) {
       if (Key.LOG_SITE_GROUPING_KEY.equals(metadata.getKey(n))) {
@@ -727,7 +727,7 @@ public abstract class FloggerLogContext<LOGGER extends FloggerAbstractLogger<API
         if (groupByQualifier instanceof FloggerLoggingScope) {
           logSiteKey = ((FloggerLoggingScope) groupByQualifier).specialize(logSiteKey);
         } else {
-          logSiteKey = SpecializedFloggerLogSiteKey.of(logSiteKey, groupByQualifier);
+          logSiteKey = SpecializedLogSiteKey.of(logSiteKey, groupByQualifier);
         }
       }
     }

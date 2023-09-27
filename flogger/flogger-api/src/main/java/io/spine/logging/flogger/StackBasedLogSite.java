@@ -50,11 +50,11 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/StackBasedLogSite.java">
  *     Original Java code of Google Flogger</a>
  */
-final class StackBasedFloggerLogSite extends FloggerLogSite {
+final class StackBasedLogSite extends FloggerLogSite {
   // StackTraceElement is unmodifiable once created.
   private final StackTraceElement stackElement;
 
-  public StackBasedFloggerLogSite(StackTraceElement stackElement) {
+  public StackBasedLogSite(StackTraceElement stackElement) {
     this.stackElement = checkNotNull(stackElement, "stack element");
   }
 
@@ -81,8 +81,8 @@ final class StackBasedFloggerLogSite extends FloggerLogSite {
 
   @Override
   public boolean equals(@Nullable Object obj) {
-    return (obj instanceof StackBasedFloggerLogSite)
-        && stackElement.equals(((StackBasedFloggerLogSite) obj).stackElement);
+    return (obj instanceof StackBasedLogSite)
+        && stackElement.equals(((StackBasedLogSite) obj).stackElement);
   }
 
   @Override
