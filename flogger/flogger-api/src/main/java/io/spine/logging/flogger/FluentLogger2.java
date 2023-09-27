@@ -33,7 +33,7 @@ import io.spine.logging.flogger.parser.MessageParser;
 import java.util.logging.Level;
 
 /**
- * The default implementation of {@link FloggerAbstractLogger} which returns the basic {@link LoggingApi}
+ * The default implementation of {@link FloggerAbstractLogger} which returns the basic {@link FloggerLoggingApi}
  * and uses the default parser and system configured backend.
  * <p>
  * Note that when extending the logging API or specifying a new parser, you will need to create a
@@ -56,13 +56,13 @@ public final class FluentLogger2 extends FloggerAbstractLogger<FluentLogger2.Api
    * a separate top-level API and LogContext is created, allowing it to be shared by other
    * implementations.
    */
-  public interface Api extends LoggingApi<Api> {}
+  public interface Api extends FloggerLoggingApi<Api> {}
 
   /**
    * The non-wildcard, fully specified, no-op API implementation. This is required to provide a
    * no-op implementation whose type is compatible with this logger's API.
    */
-  private static final class NoOp extends LoggingApi.NoOp<Api> implements Api {}
+  private static final class NoOp extends FloggerLoggingApi.NoOp<Api> implements Api {}
 
   // Singleton instance of the no-op API. This variable is purposefully declared as an instance of
   // the NoOp type instead of the Api type. This helps ProGuard optimization recognize the type of

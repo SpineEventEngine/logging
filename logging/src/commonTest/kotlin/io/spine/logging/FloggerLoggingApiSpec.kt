@@ -32,7 +32,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 @DisplayName("`LoggingApi` should")
-internal class LoggingApiSpec {
+internal class FloggerLoggingApiSpec {
 
     @Test
     fun `provide no-op implementation class`() {
