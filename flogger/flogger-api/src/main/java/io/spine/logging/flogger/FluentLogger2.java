@@ -26,7 +26,7 @@
 
 package io.spine.logging.flogger;
 
-import io.spine.logging.flogger.backend.LoggerBackend;
+import io.spine.logging.flogger.backend.FloggerBackend;
 import io.spine.logging.flogger.backend.Platform;
 import io.spine.logging.flogger.parser.DefaultPrintfMessageParser;
 import io.spine.logging.flogger.parser.MessageParser;
@@ -90,7 +90,7 @@ public final class FluentLogger2 extends FloggerAbstractLogger<FluentLogger2.Api
    *         {@code io.spine.logging.JvmLoggerFactoryKt}. Now, as we aggregate the Flogger code,
    *         we open the constructor for simplicity.
    */
-  public FluentLogger2(LoggerBackend backend) {
+  public FluentLogger2(FloggerBackend backend) {
     super(backend);
   }
 

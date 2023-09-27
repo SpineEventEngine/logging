@@ -213,11 +213,11 @@ public abstract class Platform {
    * @param className the fully-qualified name of the Java class to which the logger is associated.
    *     The logger name is derived from this string in a platform specific way.
    */
-  public static LoggerBackend getBackend(String className) {
+  public static FloggerBackend getBackend(String className) {
     return LazyHolder.INSTANCE.getBackendImpl(className);
   }
 
-  protected abstract LoggerBackend getBackendImpl(String className);
+  protected abstract FloggerBackend getBackendImpl(String className);
 
   /**
    * Returns the singleton ContextDataProvider from which a ScopedLoggingContext can be obtained.

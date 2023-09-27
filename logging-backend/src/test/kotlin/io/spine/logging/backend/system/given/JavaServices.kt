@@ -27,7 +27,7 @@
 package io.spine.logging.backend.system.given
 
 import com.google.auto.service.AutoService
-import io.spine.logging.flogger.backend.LoggerBackend
+import io.spine.logging.flogger.backend.FloggerBackend
 import io.spine.logging.backend.system.BackendFactory
 import io.spine.logging.backend.system.Clock
 import io.spine.logging.flogger.context.ContextDataProvider
@@ -45,7 +45,7 @@ import io.spine.logging.flogger.context.ScopedLoggingContext
 @AutoService(BackendFactory::class)
 internal class StubBackendFactoryService : BackendFactory() {
 
-    override fun create(loggingClassName: String): LoggerBackend =
+    override fun create(loggingClassName: String): FloggerBackend =
         throw UnsupportedOperationException()
 
     override fun toString(): String = this::class.qualifiedName!!

@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.system;
 
-import io.spine.logging.flogger.backend.LoggerBackend;
+import io.spine.logging.flogger.backend.FloggerBackend;
 
 import java.util.logging.Filter;
 import java.util.logging.Handler;
@@ -41,7 +41,7 @@ import java.util.logging.Logger;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/AbstractBackend.java">
  *     Original Java code of Google Flogger</a>
  */
-public abstract class AbstractBackend extends LoggerBackend {
+public abstract class AbstractBackend extends FloggerBackend {
   // Set if any attempt at logging via the "forcing" logger fails due to an inability to set the
   // log level in the forcing logger. This result is cached so we don't repeatedly trigger
   // security exceptions every time something is logged. This field is only ever read or written

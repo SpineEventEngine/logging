@@ -27,7 +27,7 @@
 package io.spine.logging.backend.system
 
 import io.spine.logging.flogger.backend.FloggerLogData
-import io.spine.logging.flogger.backend.LoggerBackend
+import io.spine.logging.flogger.backend.FloggerBackend
 import io.spine.logging.flogger.backend.Platform
 import java.util.logging.Handler
 import java.util.logging.Level
@@ -35,7 +35,7 @@ import java.util.logging.LogRecord
 import java.util.logging.Logger
 
 /**
- * A [LoggerBackend] which allows forced publishing of logging records.
+ * A [FloggerBackend] which allows forced publishing of logging records.
  *
  * @param loggingClass
  *          a name of the logger created for this backend. A better name for the parameter
@@ -44,7 +44,7 @@ import java.util.logging.Logger
  *          `String` for the operation with the given class name.
  * @see AbstractBackend
  */
-internal class StdLoggerBackend(loggingClass: String): AbstractBackend(loggingClass) {
+internal class StdFloggerBackend(loggingClass: String): AbstractBackend(loggingClass) {
 
     private val logger: Logger by lazy {
         Logger.getLogger(loggerName)

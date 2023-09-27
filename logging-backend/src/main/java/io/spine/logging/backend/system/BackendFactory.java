@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.system;
 
-import io.spine.logging.flogger.backend.LoggerBackend;
+import io.spine.logging.flogger.backend.FloggerBackend;
 
 /**
  * An API to create logger backends for a given class name. This is implemented as an abstract class
@@ -80,5 +80,5 @@ public abstract class BackendFactory {
    * @param loggingClassName the fully-qualified name of the Java class to which the logger is
    *     associated. The logger name is derived from this string in a backend specific way.
    */
-  public abstract LoggerBackend create(String loggingClassName);
+  public abstract FloggerBackend create(String loggingClassName);
 }

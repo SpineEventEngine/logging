@@ -20,7 +20,7 @@ import static io.spine.logging.flogger.util.Checks.checkNotNull;
 import static java.util.Collections.unmodifiableList;
 
 import io.spine.logging.flogger.backend.FloggerLogData;
-import io.spine.logging.flogger.backend.LoggerBackend;
+import io.spine.logging.flogger.backend.FloggerBackend;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ import java.util.logging.Level;
  *
  * <p>This class is mutable and not thread safe.
  */
-public final class FakeLoggerBackend extends LoggerBackend {
+public final class FakeLoggerBackend extends FloggerBackend {
   private final String name;
   private Level minLevel = Level.INFO;
   private final List<FloggerLogData> logged = new ArrayList<>();

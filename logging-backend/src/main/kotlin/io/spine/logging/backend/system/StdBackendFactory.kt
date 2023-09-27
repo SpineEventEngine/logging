@@ -26,16 +26,16 @@
 
 package io.spine.logging.backend.system
 
-import io.spine.logging.flogger.backend.LoggerBackend
+import io.spine.logging.flogger.backend.FloggerBackend
 
 /**
- * A [BackendFactory] producing [LoggerBackend] which supports publishing
+ * A [BackendFactory] producing [FloggerBackend] which supports publishing
  * of logging records according to configured [LogLevelMap][io.spine.logging.context.LogLevelMap].
  */
 public class StdBackendFactory: BackendFactory() {
 
-    public override fun create(loggingClass: String): LoggerBackend =
-        StdLoggerBackend(loggingClass)
+    public override fun create(loggingClass: String): FloggerBackend =
+        StdFloggerBackend(loggingClass)
 
     /**
      * Returns a fully-qualified name of this class.

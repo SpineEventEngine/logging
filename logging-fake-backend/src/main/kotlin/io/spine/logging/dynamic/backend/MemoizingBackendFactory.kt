@@ -26,7 +26,7 @@
 
 package io.spine.logging.dynamic.backend
 
-import io.spine.logging.flogger.backend.LoggerBackend
+import io.spine.logging.flogger.backend.FloggerBackend
 
 /**
  * A backend factory that remembers the created backends.
@@ -35,7 +35,7 @@ import io.spine.logging.flogger.backend.LoggerBackend
  *
  * The type is public because it is used in a public inline method.
  */
-public class MemoizingBackendFactory<out T : LoggerBackend>(
+public class MemoizingBackendFactory<out T : FloggerBackend>(
     private val delegate: TypedBackendFactory<T>
 ) : TypedBackendFactory<T> {
 

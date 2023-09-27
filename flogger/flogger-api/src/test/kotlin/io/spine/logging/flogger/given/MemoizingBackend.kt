@@ -27,7 +27,7 @@
 package io.spine.logging.flogger.given
 
 import io.spine.logging.flogger.backend.FloggerLogData
-import io.spine.logging.flogger.backend.LoggerBackend
+import io.spine.logging.flogger.backend.FloggerBackend
 import com.google.common.flogger.testing.FakeLoggerBackend
 import java.util.*
 import java.util.logging.Level
@@ -38,7 +38,7 @@ import java.util.logging.Level
  * Differs from [FakeLoggerBackend] in that it actually formats the given
  * [FloggerLogData] using built-in Java formatting. See [log] method for details.
  */
-internal open class MemoizingBackend : LoggerBackend() {
+internal open class MemoizingBackend : FloggerBackend() {
 
     val logged: MutableList<String?> = ArrayList()
 

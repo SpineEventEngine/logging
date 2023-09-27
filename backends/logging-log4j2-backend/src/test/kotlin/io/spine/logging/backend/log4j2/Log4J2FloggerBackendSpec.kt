@@ -55,15 +55,15 @@ private typealias JulLevel = java.util.logging.Level
 private typealias Log4jLevel = org.apache.logging.log4j.Level
 
 /**
- * Tests for [Log4j2LoggerBackend].
+ * Tests for [Log4J2FloggerBackend].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/log4j2/src/test/java/com/google/common/flogger/backend/log4j2/Log4j2Test.java">
  *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`Log4j2LoggerBackendSpec` should")
-internal class Log4j2LoggerBackendSpec {
+internal class Log4J2FloggerBackendSpec {
 
-    private lateinit var backend: Log4j2LoggerBackend
+    private lateinit var backend: Log4J2FloggerBackend
     private lateinit var logged: List<LogEvent>
     private val lastLogged get() = logged.last()
 
@@ -77,7 +77,7 @@ internal class Log4j2LoggerBackendSpec {
     fun setUp() {
         val memoizingAppender = MemoizingAppender()
         val logger = createLogger(memoizingAppender)
-        backend = Log4j2LoggerBackend(logger)
+        backend = Log4J2FloggerBackend(logger)
         logged = memoizingAppender.events
     }
 
@@ -213,7 +213,7 @@ private val serialNumbers = AtomicInteger()
  * allowing tests to be run in parallel.
  */
 private fun createLogger(appender: Appender): Logger {
-    val suiteName = Log4j2LoggerBackendSpec::class.simpleName!!
+    val suiteName = Log4J2FloggerBackendSpec::class.simpleName!!
     val testSerial = serialNumbers.incrementAndGet()
     val loggerName = "%s_%02d".format(suiteName, testSerial)
     val logger = LogManager.getLogger(loggerName) as Logger

@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.system;
 
-import io.spine.logging.flogger.backend.LoggerBackend;
+import io.spine.logging.flogger.backend.FloggerBackend;
 
 import java.util.logging.Logger;
 
@@ -49,10 +49,10 @@ public final class SimpleBackendFactory extends BackendFactory {
   private SimpleBackendFactory() {}
 
   @Override
-  public LoggerBackend create(String loggingClass) {
+  public FloggerBackend create(String loggingClass) {
     // TODO(b/27920233): Strip inner/nested classes when deriving logger name.
     Logger logger = Logger.getLogger(loggingClass.replace('$', '.'));
-    return new SimpleLoggerBackend(logger);
+    return new SimpleFloggerBackend(logger);
   }
 
   /**

@@ -26,7 +26,7 @@
 
 package io.spine.logging.dynamic.backend
 
-import io.spine.logging.flogger.backend.LoggerBackend
+import io.spine.logging.flogger.backend.FloggerBackend
 import io.spine.logging.backend.system.BackendFactory
 import io.spine.logging.backend.system.SimpleBackendFactory
 
@@ -72,7 +72,7 @@ public object DynamicBackendFactory : BackendFactory() {
      *
      * Otherwise, uses [SimpleBackendFactory] to create a backend.
      */
-    override fun create(loggingClassName: String): LoggerBackend =
+    override fun create(loggingClassName: String): FloggerBackend =
         delegate?.create(loggingClassName) ?: simpleBackends.create(loggingClassName)
 
     /**
