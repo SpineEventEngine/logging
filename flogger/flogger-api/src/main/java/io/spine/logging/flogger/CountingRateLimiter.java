@@ -45,8 +45,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  *     Original Java code of Google Flogger</a>
  */
 final class CountingRateLimiter extends RateLimitStatus {
-  private static final FloggerLogSiteMap<CountingRateLimiter> map =
-      new FloggerLogSiteMap<CountingRateLimiter>() {
+  private static final LogSiteMap<CountingRateLimiter> map =
+      new LogSiteMap<CountingRateLimiter>() {
         @Override
         protected CountingRateLimiter initialValue() {
           return new CountingRateLimiter();

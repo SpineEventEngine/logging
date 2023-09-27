@@ -52,11 +52,11 @@ import java.util.concurrent.ConcurrentHashMap;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSiteMap.java">
  *     Original Java code of Google Flogger</a>
  */
-public abstract class FloggerLogSiteMap<V> {
+public abstract class LogSiteMap<V> {
   private final ConcurrentHashMap<LogSiteKey, V> concurrentMap =
       new ConcurrentHashMap<LogSiteKey, V>();
 
-  protected FloggerLogSiteMap() {}
+  protected LogSiteMap() {}
 
   /**
    * Implemented by subclasses to provide a new value for a newly added keys. This value is mapped

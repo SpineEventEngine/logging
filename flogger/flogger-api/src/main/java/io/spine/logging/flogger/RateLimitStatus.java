@@ -154,8 +154,8 @@ public abstract class RateLimitStatus {
    * obvious what the skipped count refers to at first glance.
    */
   private static final class LogGuard {
-    private static final FloggerLogSiteMap<LogGuard> guardMap =
-        new FloggerLogSiteMap<LogGuard>() {
+    private static final LogSiteMap<LogGuard> guardMap =
+        new LogSiteMap<LogGuard>() {
           @Override
           public LogGuard initialValue() {
             return new LogGuard();

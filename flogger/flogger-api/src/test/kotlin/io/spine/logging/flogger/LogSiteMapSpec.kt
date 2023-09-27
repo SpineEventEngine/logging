@@ -42,13 +42,13 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for [FloggerLogSiteMap].
+ * Tests for [LogSiteMap].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/LogSiteMapTest.java">
  *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`LogSiteMap` should")
-internal class FloggerLogSiteMapSpec {
+internal class LogSiteMapSpec {
 
     @Test
     fun `get value for the given key`() {
@@ -121,8 +121,8 @@ internal class FloggerLogSiteMapSpec {
     }
 }
 
-private fun createMap(): FloggerLogSiteMap<AtomicInteger> =
-    object : FloggerLogSiteMap<AtomicInteger>() {
+private fun createMap(): LogSiteMap<AtomicInteger> =
+    object : LogSiteMap<AtomicInteger>() {
         override fun initialValue(): AtomicInteger = AtomicInteger(0)
     }
 
@@ -132,7 +132,7 @@ private fun <T> recurseAndCall(n: Int, action: Callable<T>): T {
 }
 
 private fun useAndReturnScopedKey(
-    map: FloggerLogSiteMap<AtomicInteger>,
+    map: LogSiteMap<AtomicInteger>,
     label: String
 ): LogSiteKey {
     val scope = FloggerLoggingScope.create(label)

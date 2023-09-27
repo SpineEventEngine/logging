@@ -538,7 +538,7 @@ public abstract class FloggerLogContext<LOGGER extends FloggerAbstractLogger<API
    * <h2>Log Site Keys</h2>
    *
    * <p>If per log-site information is needed during post-processing, it should be stored using a
-   * {@link FloggerLogSiteMap}. This will correctly handle "specialized" log-site keys and remove the risk
+   * {@link LogSiteMap}. This will correctly handle "specialized" log-site keys and remove the risk
    * of memory leaks due to retaining unused log site data indefinitely.
    *
    * <p>Note that the given {@code logSiteKey} can be more specific than the {@link FloggerLogSite} of a

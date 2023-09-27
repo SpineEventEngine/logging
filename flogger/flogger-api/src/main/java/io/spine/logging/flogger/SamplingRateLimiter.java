@@ -47,8 +47,8 @@ import static io.spine.logging.flogger.FloggerLogContext.Key.LOG_SAMPLE_EVERY_N;
  *     Original Java code of Google Flogger</a>
  */
 final class SamplingRateLimiter extends RateLimitStatus {
-  private static final FloggerLogSiteMap<SamplingRateLimiter> map =
-      new FloggerLogSiteMap<SamplingRateLimiter>() {
+  private static final LogSiteMap<SamplingRateLimiter> map =
+      new LogSiteMap<SamplingRateLimiter>() {
         @Override
         protected SamplingRateLimiter initialValue() {
           return new SamplingRateLimiter();

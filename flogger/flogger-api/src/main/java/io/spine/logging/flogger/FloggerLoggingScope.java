@@ -42,7 +42,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * the current {@link io.spine.logging.flogger.context.ScopedLoggingContext ScopedLoggingContexts}.
  *
  * <p>Stateful fluent logging APIs which need to look up per log site information (e.g. rate limit
- * state) should do so via a {@link FloggerLogSiteMap} using the {@link LogSiteKey} passed into the {@link
+ * state) should do so via a {@link LogSiteMap} using the {@link LogSiteKey} passed into the {@link
  * FloggerLogContext#postProcess(LogSiteKey)} method. If scopes are present in the log site {@link
  * Metadata} then the log site key provided to the {@code postProcess()} method will already be
  * specialized to take account of any scopes present.
@@ -56,7 +56,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public abstract class FloggerLoggingScope {
   /**
-   * Creates a scope which automatically removes any associated keys from {@link FloggerLogSiteMap}s when
+   * Creates a scope which automatically removes any associated keys from {@link LogSiteMap}s when
    * it's garbage collected. The given label is used only for debugging purposes and may appear in
    * log statements, it should not contain any user data or other runtime information.
    */
@@ -69,7 +69,7 @@ public abstract class FloggerLoggingScope {
 
   /**
    * Creates a basic scope with the specified label. Custom subclasses of {@code LoggingScope} must
-   * manage their own lifecycles to avoid leaking memory and polluting {@link FloggerLogSiteMap}s with
+   * manage their own lifecycles to avoid leaking memory and polluting {@link LogSiteMap}s with
    * unused keys.
    */
   protected FloggerLoggingScope(String label) {
