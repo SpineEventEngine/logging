@@ -170,12 +170,12 @@ internal class SimpleMessageFormatterSpec {
     }
 }
 
-private fun format(logData: LogData, scope: Metadata): String {
+private fun format(logData: FloggerLogData, scope: Metadata): String {
     val metadata = MetadataProcessor.forScopeAndLogSite(scope, logData.getMetadata())
     return SimpleMessageFormatter.getDefaultFormatter().format(logData, metadata)
 }
 
-private fun appendFormatted(logData: LogData, scope: Metadata): String {
+private fun appendFormatted(logData: FloggerLogData, scope: Metadata): String {
     val metadata = MetadataProcessor.forScopeAndLogSite(scope, logData.getMetadata())
     return SimpleMessageFormatter.getDefaultFormatter()
         .append(logData, metadata, StringBuilder())

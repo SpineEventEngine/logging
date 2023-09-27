@@ -26,7 +26,7 @@
 
 package io.spine.logging.flogger.given
 
-import io.spine.logging.flogger.backend.LogData
+import io.spine.logging.flogger.backend.FloggerLogData
 import io.spine.logging.flogger.backend.LoggerBackend
 import com.google.common.flogger.testing.FakeLoggerBackend
 import java.util.*
@@ -36,7 +36,7 @@ import java.util.logging.Level
  * A simple logging backend for tests.
  *
  * Differs from [FakeLoggerBackend] in that it actually formats the given
- * [LogData] using built-in Java formatting. See [log] method for details.
+ * [FloggerLogData] using built-in Java formatting. See [log] method for details.
  */
 internal open class MemoizingBackend : LoggerBackend() {
 
@@ -53,7 +53,7 @@ internal open class MemoizingBackend : LoggerBackend() {
      * The core utility classes handle this properly. But custom backends
      * are not obligated to use them.
      */
-    override fun log(data: LogData) {
+    override fun log(data: FloggerLogData) {
         val templateContext = data.templateContext
         if (templateContext == null) {
             logged.add("${data.getLiteralArgument()}")
@@ -63,5 +63,5 @@ internal open class MemoizingBackend : LoggerBackend() {
     }
 
     // Don't handle any errors in the backend, so we can test “last resort” error handling.
-    override fun handleError(error: RuntimeException, badData: LogData) = throw error
+    override fun handleError(error: RuntimeException, badData: FloggerLogData) = throw error
 }

@@ -35,7 +35,7 @@ import io.spine.logging.flogger.FloggerLogContext;
 import io.spine.logging.flogger.FloggerLogSite;
 import io.spine.logging.flogger.FloggerMetadataKey;
 import io.spine.logging.flogger.backend.BaseMessageFormatter;
-import io.spine.logging.flogger.backend.LogData;
+import io.spine.logging.flogger.backend.FloggerLogData;
 import io.spine.logging.flogger.backend.MessageUtils;
 import io.spine.logging.flogger.backend.Metadata;
 import io.spine.logging.flogger.backend.MetadataHandler;
@@ -59,13 +59,13 @@ import org.apache.logging.log4j.message.SimpleMessage;
 import org.apache.logging.log4j.util.StringMap;
 
 /**
- * Helper to format {@link LogData}.
+ * Helper to format {@link FloggerLogData}.
  */
 final class Log4j2LogEventUtil {
 
   private Log4j2LogEventUtil() {}
 
-  static LogEvent toLog4jLogEvent(String loggerName, LogData logData) {
+  static LogEvent toLog4jLogEvent(String loggerName, FloggerLogData logData) {
     var metadata = forScopeAndLogSite(Platform.getInjectedMetadata(), logData.getMetadata());
 
     /*
@@ -97,7 +97,7 @@ final class Log4j2LogEventUtil {
     return toLog4jLogEvent(loggerName, logData, message, toLog4jLevel(logData.getLevel()), thrown);
   }
 
-  static LogEvent toLog4jLogEvent(String loggerName, RuntimeException error, LogData badData) {
+  static LogEvent toLog4jLogEvent(String loggerName, RuntimeException error, FloggerLogData badData) {
     String message = formatBadLogData(error, badData);
     // Re-target this log message as a warning (or above) since it indicates a real bug.
     Level level = badData.getLevel().intValue() < WARNING.intValue() ? WARNING : badData.getLevel();
@@ -106,7 +106,7 @@ final class Log4j2LogEventUtil {
 
   private static LogEvent toLog4jLogEvent(
       String loggerName,
-      LogData logData,
+      FloggerLogData logData,
       String message,
       org.apache.logging.log4j.Level level,
       Throwable thrown) {
@@ -163,7 +163,7 @@ final class Log4j2LogEventUtil {
    * synthetic error message is generated from the original log data and the given exception is set
    * as the cause. The level of this record is the maximum of WARNING or the original level.
    */
-  private static String formatBadLogData(RuntimeException error, LogData badLogData) {
+  private static String formatBadLogData(RuntimeException error, FloggerLogData badLogData) {
     StringBuilder errorMsg =
         new StringBuilder("LOGGING ERROR: ").append(error.getMessage()).append('\n');
     int length = errorMsg.length();
@@ -177,8 +177,8 @@ final class Log4j2LogEventUtil {
     return errorMsg.toString();
   }
 
-  /** Appends the given {@link LogData} to the given {@link StringBuilder}. */
-  private static void appendLogData(LogData data, StringBuilder out) {
+  /** Appends the given {@link FloggerLogData} to the given {@link StringBuilder}. */
+  private static void appendLogData(FloggerLogData data, StringBuilder out) {
     out.append("  original message: ");
     if (data.getTemplateContext() == null) {
       out.append(data.getLiteralArgument());
@@ -247,7 +247,7 @@ final class Log4j2LogEventUtil {
    * logs which are written from current thread. This context data will be added to the log4j2
    * event.
    */
-  private static StringMap createContextMap(LogData logData) {
+  private static StringMap createContextMap(FloggerLogData logData) {
     var metadataProcessor = forScopeAndLogSite(Platform.getInjectedMetadata(),
                                                logData.getMetadata());
 

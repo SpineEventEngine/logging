@@ -26,7 +26,7 @@
 
 package io.spine.logging.flogger
 
-import io.spine.logging.flogger.backend.LogData
+import io.spine.logging.flogger.backend.FloggerLogData
 import io.spine.logging.flogger.backend.LoggingException
 import io.spine.logging.flogger.given.MemoizingBackend
 import com.google.common.flogger.testing.ConfigurableLogger
@@ -146,7 +146,7 @@ internal class FloggerAbstractLoggerSpec {
     @Test
     fun `allow logging exceptions thrown by a backend`() {
         val backend = object : MemoizingBackend() {
-            override fun log(data: LogData) = throw LoggingException("allowed")
+            override fun log(data: FloggerLogData) = throw LoggingException("allowed")
         }
         val logger = ConfigurableLogger.create(backend)
 
@@ -164,7 +164,7 @@ internal class FloggerAbstractLoggerSpec {
     @Suppress("TooGenericExceptionThrown") // Plain `Error` is OK for tests.
     fun `allow logging errors thrown by a backend`() {
         val backend: MemoizingBackend = object : MemoizingBackend() {
-            override fun log(data: LogData) = throw Error("allowed")
+            override fun log(data: FloggerLogData) = throw Error("allowed")
         }
         val logger = ConfigurableLogger.create(backend)
 

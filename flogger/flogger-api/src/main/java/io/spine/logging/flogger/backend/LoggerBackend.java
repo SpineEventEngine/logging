@@ -51,7 +51,7 @@ import java.util.logging.Level;
  * <p>This means that <em>ALL</em> formatting or serialization of log statement arguments or
  * metadata values <em>MUST</em> be completed inside the log method itself. If the backend needs to
  * perform asynchronous I/O operations it can do so by constructing a serialized form of the {@link
- * LogData} instance and enqueing that for processing.
+ * FloggerLogData} instance and enqueing that for processing.
  *
  * <p>Note also that this restriction is <em>NOT</em> purely about mutable arguments (which could
  * change before formatting occurs and produce incorrect output), but also stops log statements from
@@ -75,12 +75,12 @@ public abstract class LoggerBackend {
   public abstract boolean isLoggable(Level lvl);
 
   /**
-   * Outputs the log statement represented by the given {@link LogData} instance.
+   * Outputs the log statement represented by the given {@link FloggerLogData} instance.
    *
    * @param data user and logger supplied data to be rendered in a backend specific way. References
    *     to {@code data} must not be held after the {@link log} invocation returns.
    */
-  public abstract void log(LogData data);
+  public abstract void log(FloggerLogData data);
 
   /**
    * Handles an error in a log statement. Errors passed into this method are expected to have only
@@ -113,5 +113,5 @@ public abstract class LoggerBackend {
    *     not be held after the {@link handleError} invocation returns.
    * @throws LoggingException to indicate an error which should be propagated into user code.
    */
-  public abstract void handleError(RuntimeException error, LogData badData);
+  public abstract void handleError(RuntimeException error, FloggerLogData badData);
 }

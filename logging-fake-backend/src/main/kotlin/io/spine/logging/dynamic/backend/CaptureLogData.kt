@@ -26,7 +26,7 @@
 
 package io.spine.logging.dynamic.backend
 
-import io.spine.logging.flogger.backend.LogData
+import io.spine.logging.flogger.backend.FloggerLogData
 
 /**
  * Runs the given [action], capturing all log data that are passed
@@ -62,7 +62,7 @@ import io.spine.logging.flogger.backend.LogData
  *
  * The method is inlined to preserve the original log site.
  */
-public inline fun captureLogData(action: () -> Unit): List<LogData> {
+public inline fun captureLogData(action: () -> Unit): List<FloggerLogData> {
     val fakeBackends = FakeLoggerBackendFactory()
     val memoizingFactory = MemoizingBackendFactory(fakeBackends)
 

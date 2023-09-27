@@ -28,7 +28,7 @@ package io.spine.logging
 
 import io.spine.logging.flogger.FluentLogger2
 import io.spine.logging.flogger.FloggerLogContext
-import io.spine.logging.flogger.backend.LogData
+import io.spine.logging.flogger.backend.FloggerLogData
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.instanceOf
@@ -107,7 +107,7 @@ internal class LoggingSpec {
             julLogger.level = expectedLevel
             val api = method.get()
             api shouldBe instanceOf(FloggerLogContext::class)
-            (api as LogData).level shouldBe expectedLevel
+            (api as FloggerLogData).level shouldBe expectedLevel
         }
     }
 }

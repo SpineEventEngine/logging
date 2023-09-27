@@ -27,7 +27,7 @@
 package io.spine.logging.backend.system;
 
 import io.spine.logging.flogger.FloggerLogContext;
-import io.spine.logging.flogger.backend.LogData;
+import io.spine.logging.flogger.backend.FloggerLogData;
 import io.spine.logging.flogger.backend.Metadata;
 
 import java.util.logging.LogRecord;
@@ -41,28 +41,28 @@ import java.util.logging.LogRecord;
  */
 public final class SimpleLogRecord extends AbstractLogRecord {
   /** Creates a {@link SimpleLogRecord} for a normal log statement from the given data. */
-  public static SimpleLogRecord create(LogData data, Metadata scope) {
+  public static SimpleLogRecord create(FloggerLogData data, Metadata scope) {
     return new SimpleLogRecord(data, scope);
   }
 
   /** @deprecated Use create(LogData data, Metadata scope) and pass scoped metadata in. */
   @Deprecated
-  public static SimpleLogRecord create(LogData data) {
+  public static SimpleLogRecord create(FloggerLogData data) {
     return create(data, Metadata.empty());
   }
 
   /** Creates a {@link SimpleLogRecord} in the case of an error during logging. */
-  public static SimpleLogRecord error(RuntimeException error, LogData data, Metadata scope) {
+  public static SimpleLogRecord error(RuntimeException error, FloggerLogData data, Metadata scope) {
     return new SimpleLogRecord(error, data, scope);
   }
 
   /** @deprecated Use error(LogData data, Metadata scope) and pass scoped metadata in. */
   @Deprecated
-  public static SimpleLogRecord error(RuntimeException error, LogData data) {
+  public static SimpleLogRecord error(RuntimeException error, FloggerLogData data) {
     return error(error, data, Metadata.empty());
   }
 
-  private SimpleLogRecord(LogData data, Metadata scope) {
+  private SimpleLogRecord(FloggerLogData data, Metadata scope) {
     super(data, scope);
     setThrown(getMetadataProcessor().getSingleValue(FloggerLogContext.Key.LOG_CAUSE));
 
@@ -84,7 +84,7 @@ public final class SimpleLogRecord extends AbstractLogRecord {
     String unused = getMessage();
   }
 
-  private SimpleLogRecord(RuntimeException error, LogData data, Metadata scope) {
+  private SimpleLogRecord(RuntimeException error, FloggerLogData data, Metadata scope) {
     // In the case of an error, the base class handles everything as there's no specific formatting.
     super(error, data, scope);
   }

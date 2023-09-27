@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.system.given
 
-import io.spine.logging.flogger.backend.LogData
+import io.spine.logging.flogger.backend.FloggerLogData
 import io.spine.logging.backend.system.AbstractBackend
 import java.util.logging.Handler
 import java.util.logging.Level
@@ -49,9 +49,9 @@ internal class MemoizingBackend(logger: Logger) : AbstractBackend(logger) {
     /**
      * This method is not used by [AbstractBackend].
      *
-     * [LogData] tests are in `SimpleBackendLoggerSpec`.
+     * [FloggerLogData] tests are in `SimpleBackendLoggerSpec`.
      */
-    override fun log(data: LogData) {
+    override fun log(data: FloggerLogData) {
         // no-op
     }
 
@@ -59,7 +59,7 @@ internal class MemoizingBackend(logger: Logger) : AbstractBackend(logger) {
      * This class never tries to format anything in [MemoizingLogger.log],
      * so this method is not expected to be ever called.
      */
-    override fun handleError(error: RuntimeException, badData: LogData) {
+    override fun handleError(error: RuntimeException, badData: FloggerLogData) {
         throw UnsupportedOperationException()
     }
 

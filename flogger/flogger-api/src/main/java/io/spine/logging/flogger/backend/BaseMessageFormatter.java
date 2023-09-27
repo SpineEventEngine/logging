@@ -43,7 +43,7 @@ import java.util.Formattable;
  *
  * <p>This formatter can be overridden to modify the behaviour of the {@link ParameterVisitor}
  * methods, but this is not expected to be common. Most logger backends will only ever need to use
- * {@link #appendFormattedMessage(LogData, StringBuilder)}.
+ * {@link #appendFormattedMessage(FloggerLogData, StringBuilder)}.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/BaseMessageFormatter.java">
  *     Original Java code of Google Flogger</a>
@@ -60,7 +60,7 @@ public class BaseMessageFormatter extends MessageBuilder<StringBuilder>
   /**
    * Appends the formatted log message of the given log data to the given buffer.
    *
-   * <p>Note that the {@link LogData} need not have a template context or arguments, it might just
+   * <p>Note that the {@link FloggerLogData} need not have a template context or arguments, it might just
    * have a literal argument, which will be appended without additional formatting.
    *
    * @param data the log data with the message to be appended.
@@ -68,7 +68,7 @@ public class BaseMessageFormatter extends MessageBuilder<StringBuilder>
    * @return the given buffer (for method chaining).
    */
   @CanIgnoreReturnValue
-  public static StringBuilder appendFormattedMessage(LogData data, StringBuilder out) {
+  public static StringBuilder appendFormattedMessage(FloggerLogData data, StringBuilder out) {
     if (data.getTemplateContext() != null) {
       BaseMessageFormatter formatter =
           new BaseMessageFormatter(data.getTemplateContext(), data.getArguments(), out);

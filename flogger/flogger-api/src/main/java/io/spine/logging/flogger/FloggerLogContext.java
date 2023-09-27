@@ -27,7 +27,7 @@
 package io.spine.logging.flogger;
 
 import io.spine.logging.flogger.DurationRateLimiter.RateLimitPeriod;
-import io.spine.logging.flogger.backend.LogData;
+import io.spine.logging.flogger.backend.FloggerLogData;
 import io.spine.logging.flogger.backend.Metadata;
 import io.spine.logging.flogger.backend.Platform;
 import io.spine.logging.flogger.backend.TemplateContext;
@@ -66,7 +66,7 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS;
  *     Original Java code of Google Flogger</a>
  */
 public abstract class FloggerLogContext<LOGGER extends FloggerAbstractLogger<API>, API extends FloggerLoggingApi<API>>
-        implements FloggerLoggingApi<API>, LogData {
+        implements FloggerLoggingApi<API>, FloggerLogData {
 
   /**
    * The predefined metadata keys used by the default logging API. Backend implementations can use
@@ -486,7 +486,7 @@ public abstract class FloggerLogContext<LOGGER extends FloggerAbstractLogger<API
    * is already a value for the key in the metadata, then the existing value is replaced, otherwise
    * the value is added at the end of the metadata.
    *
-   * @param key the metadata key (see {@link LogData}).
+   * @param key the metadata key (see {@link FloggerLogData}).
    * @param value the metadata value.
    */
   protected final <T> void addMetadata(FloggerMetadataKey<T> key, T value) {
@@ -500,7 +500,7 @@ public abstract class FloggerLogContext<LOGGER extends FloggerAbstractLogger<API
    * Removes all key/value pairs with the specified key. Note that this method does not resize any
    * underlying backing arrays or other storage as logging contexts are expected to be short lived.
    *
-   * @param key the metadata key (see {@link LogData}).
+   * @param key the metadata key (see {@link FloggerLogData}).
    */
   protected final void removeMetadata(FloggerMetadataKey<?> key) {
     if (metadata != null) {

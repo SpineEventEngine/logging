@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.system;
 
-import io.spine.logging.flogger.backend.LogData;
+import io.spine.logging.flogger.backend.FloggerLogData;
 import io.spine.logging.flogger.backend.Platform;
 
 import java.util.logging.Logger;
@@ -44,12 +44,12 @@ public class SimpleLoggerBackend extends AbstractBackend {
   }
 
   @Override
-  public void log(LogData data) {
+  public void log(FloggerLogData data) {
     log(SimpleLogRecord.create(data, Platform.getInjectedMetadata()), data.wasForced());
   }
 
   @Override
-  public void handleError(RuntimeException error, LogData badData) {
+  public void handleError(RuntimeException error, FloggerLogData badData) {
     log(SimpleLogRecord.error(error, badData, Platform.getInjectedMetadata()), badData.wasForced());
   }
 }

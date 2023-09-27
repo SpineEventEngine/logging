@@ -17,7 +17,7 @@
 package com.google.common.flogger.testing;
 
 import io.spine.logging.flogger.FloggerLogContext;
-import io.spine.logging.flogger.backend.LogData;
+import io.spine.logging.flogger.backend.FloggerLogData;
 import io.spine.logging.flogger.backend.Metadata;
 import io.spine.logging.backend.system.AbstractLogRecord;
 
@@ -34,11 +34,11 @@ public final class FakeLogRecord extends AbstractLogRecord {
    * just add all necessary metadata to a {@code FakeLogData} instance and pass that in. Tests for
    * {@code LogRecord} behavior should never need to differentiate log site vs contextual metadata.
    */
-  public static FakeLogRecord of(LogData logData) {
+  public static FakeLogRecord of(FloggerLogData logData) {
     return new FakeLogRecord(logData);
   }
 
-  private FakeLogRecord(LogData logData) {
+  private FakeLogRecord(FloggerLogData logData) {
     super(logData, Metadata.empty());
     setThrown(getMetadataProcessor().getSingleValue(FloggerLogContext.Key.LOG_CAUSE));
   }

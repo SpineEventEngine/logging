@@ -148,7 +148,7 @@ public final class SimpleMessageFormatter {
    * has arguments to be formatted.
    *
    * <p>This method is designed to be paired with {@link
-   * #mustBeFormatted(LogData,MetadataProcessor,Set)} and can always be safely called if that method
+   * #mustBeFormatted(FloggerLogData,MetadataProcessor,Set)} and can always be safely called if that method
    * returned {@code false} for the same log data.
    *
    * @param logData the log statement data.
@@ -156,7 +156,7 @@ public final class SimpleMessageFormatter {
    * @throws IllegalStateException if the log data had arguments to be formatted (i.e. there was a
    *     template context).
    */
-  public static String getLiteralLogMessage(LogData logData) {
+  public static String getLiteralLogMessage(FloggerLogData logData) {
     return MessageUtils.safeToString(logData.getLiteralArgument());
   }
 
@@ -170,7 +170,7 @@ public final class SimpleMessageFormatter {
    * literal log message being used, with no additional formatting.
    *
    * <p>If this method returns {@code false} then the literal log message can be obtained via {@link
-   * #getLiteralLogMessage(LogData)}, otherwise it must be formatted manually.
+   * #getLiteralLogMessage(FloggerLogData)}, otherwise it must be formatted manually.
    *
    * <p>By calling this class it is possible to more easily detect cases where using buffers to
    * format the log message is not required. Obviously a logger backend my have its own reasons for
@@ -182,7 +182,7 @@ public final class SimpleMessageFormatter {
    *     message.
    */
   public static boolean mustBeFormatted(
-      LogData logData, MetadataProcessor metadata, Set<FloggerMetadataKey<?>> keysToIgnore) {
+          FloggerLogData logData, MetadataProcessor metadata, Set<FloggerMetadataKey<?>> keysToIgnore) {
     // If there are logged arguments or more metadata keys than can be ignored, we fail immediately
     // which avoids the cost of creating the metadata key set (so don't remove the size check).
     return logData.getTemplateContext() != null
@@ -201,13 +201,13 @@ public final class SimpleMessageFormatter {
 
       @Override
       public StringBuilder append(
-          LogData logData, MetadataProcessor metadata, StringBuilder buffer) {
+              FloggerLogData logData, MetadataProcessor metadata, StringBuilder buffer) {
         BaseMessageFormatter.appendFormattedMessage(logData, buffer);
         return appendContext(metadata, handler, buffer);
       }
 
       @Override
-      public String format(LogData logData, MetadataProcessor metadata) {
+      public String format(FloggerLogData logData, MetadataProcessor metadata) {
         if (mustBeFormatted(logData, metadata, keysToIgnore)) {
           return append(logData, metadata, new StringBuilder()).toString();
         } else {
@@ -221,7 +221,7 @@ public final class SimpleMessageFormatter {
 
   /** @deprecated Use a {@link LogMessageFormatter} and obtain the level and cause separately. */
   @Deprecated
-  public static void format(LogData logData, SimpleLogHandler receiver) {
+  public static void format(FloggerLogData logData, SimpleLogHandler receiver) {
     // Deliberately don't support ScopedLoggingContext here (no injected metadata). This is as a
     // forcing function to make users of this API migrate away from it if they need scoped metadata.
     MetadataProcessor metadata =
