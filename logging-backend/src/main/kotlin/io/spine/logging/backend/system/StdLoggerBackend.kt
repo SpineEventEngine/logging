@@ -42,9 +42,9 @@ import java.util.logging.Logger
  *          would be `loggerName`, but we keep the naming consistent with the API
  *          we extend. Please also see the constructor of `AbstractBackend` which accepts
  *          `String` for the operation with the given class name.
- * @see AbstractLoggerBackend
+ * @see AbstractBackend
  */
-internal class StdLoggerBackend(loggingClass: String): AbstractLoggerBackend(loggingClass) {
+internal class StdLoggerBackend(loggingClass: String): AbstractBackend(loggingClass) {
 
     private val logger: Logger by lazy {
         Logger.getLogger(loggerName)
@@ -68,7 +68,7 @@ internal class StdLoggerBackend(loggingClass: String): AbstractLoggerBackend(log
      *
      * ## Implementation Note
      *
-     * This method is a replacement of [AbstractLoggerBackend.log], which fails to
+     * This method is a replacement of [AbstractBackend.log], which fails to
      * handle the forcing in cases when [parent handlers][Logger.getUseParentHandlers]
      * are involved.
      *

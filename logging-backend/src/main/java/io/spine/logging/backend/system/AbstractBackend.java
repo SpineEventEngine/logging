@@ -41,7 +41,7 @@ import java.util.logging.Logger;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/AbstractBackend.java">
  *     Original Java code of Google Flogger</a>
  */
-public abstract class AbstractLoggerBackend extends LoggerBackend {
+public abstract class AbstractBackend extends LoggerBackend {
   // Set if any attempt at logging via the "forcing" logger fails due to an inability to set the
   // log level in the forcing logger. This result is cached so we don't repeatedly trigger
   // security exceptions every time something is logged. This field is only ever read or written
@@ -54,7 +54,7 @@ public abstract class AbstractLoggerBackend extends LoggerBackend {
   // class name. This needs work to handle anonymous loggers however (if that's ever supported).
   // TODO:2023-09-14:yevhenii.nadtochii: Should become `internal` when migrated to Kotlin.
   // See issue: https://github.com/SpineEventEngine/logging/issues/47
-  protected AbstractLoggerBackend(Logger logger) {
+  protected AbstractBackend(Logger logger) {
     this.logger = logger;
   }
 
@@ -67,7 +67,7 @@ public abstract class AbstractLoggerBackend extends LoggerBackend {
    * the outer class name. There is no benefit to having loggers named after an inner/nested
    * classes, and this distinction is expected to go away.
    */
-  protected AbstractLoggerBackend(String loggingClass) {
+  protected AbstractBackend(String loggingClass) {
     // TODO(b/27920233): Strip inner/nested classes when deriving logger name.
     this(Logger.getLogger(loggingClass.replace('$', '.')));
   }
