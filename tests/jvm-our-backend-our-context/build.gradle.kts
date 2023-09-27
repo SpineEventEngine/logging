@@ -31,6 +31,7 @@ plugins {
 dependencies {
     testImplementation(project(":logging"))
     testImplementation(project(":fixtures"))
+    testImplementation(project(":flogger-api"))
 
     /**
      * Adds the default backend and context to the classpath.

@@ -31,4 +31,5 @@ plugins {
 
 dependencies {
     implementation(project(":logging"))
+    implementation(project(":flogger-api"))
 }
