@@ -346,7 +346,7 @@ public abstract class FloggerLogContext<LOGGER extends FloggerAbstractLogger<API
   /** Additional metadata for this log statement (added via fluent API methods). */
   private MutableMetadata metadata = null;
   /** The log site information for this log statement (set immediately prior to post-processing). */
-  private LogSite logSite = null;
+  private FloggerLogSite logSite = null;
   /** Rate limit status (only set if rate limiting occurs). */
   private RateLimitStatus rateLimitStatus = null;
   /** The template context if formatting is required (set only after post-processing). */
@@ -432,7 +432,7 @@ public abstract class FloggerLogContext<LOGGER extends FloggerAbstractLogger<API
   }
 
   @Override
-  public final LogSite getLogSite() {
+  public final FloggerLogSite getLogSite() {
     if (logSite == null) {
       throw new IllegalStateException("cannot request log site information prior to postProcess()");
     }
@@ -541,7 +541,7 @@ public abstract class FloggerLogContext<LOGGER extends FloggerAbstractLogger<API
    * {@link LogSiteMap}. This will correctly handle "specialized" log-site keys and remove the risk
    * of memory leaks due to retaining unused log site data indefinitely.
    *
-   * <p>Note that the given {@code logSiteKey} can be more specific than the {@link LogSite} of a
+   * <p>Note that the given {@code logSiteKey} can be more specific than the {@link FloggerLogSite} of a
    * log statement (i.e. a single log statement can have multiple distinct versions of its state).
    * See {@link #per(Enum)} for more information.
    *
@@ -683,7 +683,7 @@ public abstract class FloggerLogContext<LOGGER extends FloggerAbstractLogger<API
               "logger backend must not return a null LogSite");
     }
     LogSiteKey logSiteKey = null;
-    if (logSite != LogSite.INVALID) {
+    if (logSite != FloggerLogSite.INVALID) {
       logSiteKey = logSite;
       // Log site keys are only modified when we have metadata in the log statement.
       if (metadata != null && metadata.size() > 0) {
@@ -724,8 +724,8 @@ public abstract class FloggerLogContext<LOGGER extends FloggerAbstractLogger<API
       if (Key.LOG_SITE_GROUPING_KEY.equals(metadata.getKey(n))) {
         Object groupByQualifier = metadata.getValue(n);
         // Logging scopes need special treatment to handle tidying up when closed.
-        if (groupByQualifier instanceof LoggingScope) {
-          logSiteKey = ((LoggingScope) groupByQualifier).specialize(logSiteKey);
+        if (groupByQualifier instanceof FloggerLoggingScope) {
+          logSiteKey = ((FloggerLoggingScope) groupByQualifier).specialize(logSiteKey);
         } else {
           logSiteKey = SpecializedLogSiteKey.of(logSiteKey, groupByQualifier);
         }
@@ -773,7 +773,7 @@ public abstract class FloggerLogContext<LOGGER extends FloggerAbstractLogger<API
   // ---- Log site injection (used by pre-processors and special cases) ----
 
   @Override
-  public final API withInjectedLogSite(LogSite logSite) {
+  public final API withInjectedLogSite(FloggerLogSite logSite) {
     // First call wins (since auto-injection will typically target the log() method at the end of
     // the chain and might not check for previous explicit injection). In particular it MUST be
     // allowed for a caller to specify the "INVALID" log site, and have that set the field here to
@@ -792,7 +792,7 @@ public abstract class FloggerLogContext<LOGGER extends FloggerAbstractLogger<API
       int encodedLineNumber,
       @Nullable String sourceFileName) {
     return withInjectedLogSite(
-        LogSite.injectedLogSite(internalClassName, methodName, encodedLineNumber, sourceFileName));
+            FloggerLogSite.injectedLogSite(internalClassName, methodName, encodedLineNumber, sourceFileName));
   }
 
   // ---- Public logging API ----
@@ -837,7 +837,7 @@ public abstract class FloggerLogContext<LOGGER extends FloggerAbstractLogger<API
   }
 
   @Override
-  public API per(LoggingScopeProvider scopeProvider) {
+  public API per(FloggerLoggingScopeProvider scopeProvider) {
     return with(Key.LOG_SITE_GROUPING_KEY, scopeProvider.getCurrentScope());
   }
 

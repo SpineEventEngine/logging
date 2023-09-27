@@ -59,7 +59,7 @@ internal class LogSitesSpec {
 
     @Test
     fun `return 'INVALID' log site if the caller not found`() {
-        callerOf(String::class.java) shouldBe LogSite.INVALID
+        callerOf(String::class.java) shouldBe FloggerLogSite.INVALID
     }
 
     @Test
@@ -74,8 +74,8 @@ internal class LogSitesSpec {
 }
 
 private object MyLogUtil {
-    val callerLogSite: LogSite
+    val callerLogSite: FloggerLogSite
         get() = callerOf(MyLogUtil::class.java)
-    val callerLogSiteWrapped: LogSite
+    val callerLogSiteWrapped: FloggerLogSite
         get() = callerLogSite
 }

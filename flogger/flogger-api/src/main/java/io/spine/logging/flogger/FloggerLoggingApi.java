@@ -300,7 +300,7 @@ public interface FloggerLoggingApi<API extends FloggerLoggingApi<API>> {
    * @param scopeProvider a constant used to defined the type of the scope in which logging is
    *     aggregated.
    */
-  API per(LoggingScopeProvider scopeProvider);
+  API per(FloggerLoggingScopeProvider scopeProvider);
 
   /**
    * Creates a synthetic exception and attaches it as the "cause" of the log statement as a way to
@@ -416,7 +416,7 @@ public interface FloggerLoggingApi<API extends FloggerLoggingApi<API>> {
    *
    * @param logSite Log site which uniquely identifies any per-log statement resources.
    */
-  API withInjectedLogSite(@Nullable LogSite logSite);
+  API withInjectedLogSite(@Nullable FloggerLogSite logSite);
 
   /**
    * Internal method not for public use. This method is only intended for use by the logger
@@ -824,7 +824,7 @@ public interface FloggerLoggingApi<API extends FloggerLoggingApi<API>> {
     }
 
     @Override
-    public API withInjectedLogSite(LogSite logSite) {
+    public API withInjectedLogSite(FloggerLogSite logSite) {
       return noOp();
     }
 
@@ -867,7 +867,7 @@ public interface FloggerLoggingApi<API extends FloggerLoggingApi<API>> {
     }
 
     @Override
-    public API per(LoggingScopeProvider scopeProvider) {
+    public API per(FloggerLoggingScopeProvider scopeProvider) {
       return noOp();
     }
 

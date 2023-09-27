@@ -29,9 +29,9 @@ package io.spine.logging.flogger;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
- * Provides a scope to a log statement via the {@link FloggerLogContext#per(LoggingScopeProvider)} method.
+ * Provides a scope to a log statement via the {@link FloggerLogContext#per(FloggerLoggingScopeProvider)} method.
  *
- * <p>This interface exists to avoid needing to pass specific instances of {@link LoggingScope}
+ * <p>This interface exists to avoid needing to pass specific instances of {@link FloggerLoggingScope}
  * around in user code. The scope provider can lookup the correct scope instance for the current
  * thread, and different providers can provide different types of scope (e.g. you can have a
  * provider for "request" scopes and a provider for "sub-task" scopes)
@@ -39,11 +39,11 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LoggingScopeProvider.java">
  *     Original Java code of Google Flogger</a>
  */
-public interface LoggingScopeProvider {
+public interface FloggerLoggingScopeProvider {
   /**
    * Returns the current scope (most likely via global or thread local state) or {@code null} if
    * there is no current scope.
    */
   @Nullable
-  LoggingScope getCurrentScope();
+  FloggerLoggingScope getCurrentScope();
 }

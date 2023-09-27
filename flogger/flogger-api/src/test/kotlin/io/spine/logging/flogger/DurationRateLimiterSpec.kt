@@ -26,7 +26,7 @@
 
 package io.spine.logging.flogger
 
-import com.google.common.flogger.testing.FakeLogSite
+import com.google.common.flogger.testing.FakeFloggerLogSite
 import com.google.common.flogger.testing.FakeMetadata
 import io.spine.logging.flogger.DurationRateLimiter.newRateLimitPeriod
 import io.spine.logging.flogger.FloggerLogContext.Key
@@ -58,14 +58,14 @@ internal class DurationRateLimiterSpec {
     @Test
     fun `return 'null' if the corresponding metadata key is not present`() {
         // Not supplying the metadata key ignores rate limiting by returning null.
-        check(FakeMetadata(), FakeLogSite.unique(), FAKE_TIMESTAMP).shouldBeNull()
+        check(FakeMetadata(), FakeFloggerLogSite.unique(), FAKE_TIMESTAMP).shouldBeNull()
     }
 
     @Test
     fun `rate limit`() {
         val oncePerSecond = newRateLimitPeriod(1, TimeUnit.SECONDS)
         val metadata = FakeMetadata().add(Key.LOG_AT_MOST_EVERY, oncePerSecond)
-        val logSite = FakeLogSite.unique()
+        val logSite = FakeFloggerLogSite.unique()
         repeat(100) { i ->
             // Increment by 1/10 of a second per log. We should then log once per 10 logs.
             val timestamp = FAKE_TIMESTAMP + i * MILLISECONDS.toNanos(100)
@@ -80,8 +80,8 @@ internal class DurationRateLimiterSpec {
     fun `distinct different log sites`() {
         val oncePerSecond = newRateLimitPeriod(1, TimeUnit.SECONDS)
         val metadata = FakeMetadata().add(Key.LOG_AT_MOST_EVERY, oncePerSecond)
-        val fooLog = FakeLogSite.unique()
-        val barLog = FakeLogSite.unique()
+        val fooLog = FakeFloggerLogSite.unique()
+        val barLog = FakeFloggerLogSite.unique()
 
         var timestamp = FAKE_TIMESTAMP
         val allowFoo = check(metadata, fooLog, timestamp)

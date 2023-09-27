@@ -27,13 +27,13 @@
 package io.spine.logging.backend.log4j2
 
 import io.spine.logging.flogger.FloggerLogContext.Key
-import io.spine.logging.flogger.LogSite
+import io.spine.logging.flogger.FloggerLogSite
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
 import io.spine.logging.flogger.parser.ParseException
 import io.spine.logging.flogger.repeatedKey
 import io.spine.logging.flogger.singleKey
 import com.google.common.flogger.testing.FakeLogData
-import com.google.common.flogger.testing.FakeLogSite
+import com.google.common.flogger.testing.FakeFloggerLogSite
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldHaveSize
@@ -159,23 +159,23 @@ internal class Log4j2LoggerBackendSpec {
 
         @Test
         fun `with full information`() {
-            val logSite = FakeLogSite.create("<class>", "<method>", 42, "<file>")
+            val logSite = FakeFloggerLogSite.create("<class>", "<method>", 42, "<file>")
             testLogSite(logSite)
         }
 
         @Test
         fun `without source file`() {
-            val logSite = FakeLogSite.create("<class>", "<method>", 42, null)
+            val logSite = FakeFloggerLogSite.create("<class>", "<method>", 42, null)
             testLogSite(logSite)
         }
 
         @Test
         fun `without line number and source file`() {
-            val logSite = FakeLogSite.create("<class>", "<method>", -1, null)
+            val logSite = FakeFloggerLogSite.create("<class>", "<method>", -1, null)
             testLogSite(logSite)
         }
 
-        private fun testLogSite(logSite: LogSite) {
+        private fun testLogSite(logSite: FloggerLogSite) {
             val data = FakeLogData.of("")
                 .setLogSite(logSite)
             backend.log(data)

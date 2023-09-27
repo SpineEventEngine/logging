@@ -38,7 +38,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * An opaque scope marker which can be attached to log sites to provide "per scope" behaviour for
  * stateful logging operations (e.g. rate limiting).
  *
- * <p>Scopes are provided via the {@link LoggingScopeProvider} interface and found by looking for
+ * <p>Scopes are provided via the {@link FloggerLoggingScopeProvider} interface and found by looking for
  * the current {@link io.spine.logging.flogger.context.ScopedLoggingContext ScopedLoggingContexts}.
  *
  * <p>Stateful fluent logging APIs which need to look up per log site information (e.g. rate limit
@@ -54,14 +54,14 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LoggingScope.java">
  *     Original Java code of Google Flogger</a>
  */
-public abstract class LoggingScope {
+public abstract class FloggerLoggingScope {
   /**
    * Creates a scope which automatically removes any associated keys from {@link LogSiteMap}s when
    * it's garbage collected. The given label is used only for debugging purposes and may appear in
    * log statements, it should not contain any user data or other runtime information.
    */
   // TODO: Strongly consider making the label a compile time constant.
-  public static LoggingScope create(String label) {
+  public static FloggerLoggingScope create(String label) {
     return new WeakScope(checkNotNull(label, "label"));
   }
 
@@ -72,7 +72,7 @@ public abstract class LoggingScope {
    * manage their own lifecycles to avoid leaking memory and polluting {@link LogSiteMap}s with
    * unused keys.
    */
-  protected LoggingScope(String label) {
+  protected FloggerLoggingScope(String label) {
     this.label = label;
   }
 
@@ -113,7 +113,7 @@ public abstract class LoggingScope {
   }
 
   // VisibleForTesting
-  static final class WeakScope extends LoggingScope {
+  static final class WeakScope extends FloggerLoggingScope {
     // Do NOT reference the Scope directly from a specialized key, use the "key part"
     // to avoid the key from keeping the Scope instance alive. When the scope becomes
     // unreachable, the key part weak reference is enqueued which triggers tidyup at
@@ -153,12 +153,12 @@ public abstract class LoggingScope {
     // Class is only loaded once we've seen scopes in action (Android doesn't like
     // eager class loading and many Android apps won't use scopes).
     // This forms part of each log site key, some must have singleton semantics.
-    private static class KeyPart extends WeakReference<LoggingScope> {
-      private static final ReferenceQueue<LoggingScope> queue = new ReferenceQueue<LoggingScope>();
+    private static class KeyPart extends WeakReference<FloggerLoggingScope> {
+      private static final ReferenceQueue<FloggerLoggingScope> queue = new ReferenceQueue<FloggerLoggingScope>();
 
       private final Queue<Runnable> onCloseHooks = new ConcurrentLinkedQueue<Runnable>();
 
-      KeyPart(LoggingScope scope) {
+      KeyPart(FloggerLoggingScope scope) {
         super(scope, queue);
       }
 

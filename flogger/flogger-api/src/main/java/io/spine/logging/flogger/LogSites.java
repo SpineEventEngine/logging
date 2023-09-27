@@ -31,7 +31,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * Helper class to generate log sites for the current line of code. This class is deliberately
- * isolated (rather than having the method in {@link LogSite} itself) because manual log site
+ * isolated (rather than having the method in {@link FloggerLogSite} itself) because manual log site
  * injection is rare and by isolating it into a separate class may help encourage users to think
  * carefully about the issue.
  *
@@ -41,9 +41,9 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 public final class LogSites {
   /**
    * Returns a {@code LogSite} for the caller of the specified class. This can be used in
-   * conjunction with the {@link FloggerLoggingApi#withInjectedLogSite(LogSite)} method to implement
+   * conjunction with the {@link FloggerLoggingApi#withInjectedLogSite(FloggerLogSite)} method to implement
    * logging helper methods. In some platforms, log site determination may be unsupported, and in
-   * those cases this method will always return the {@link LogSite#INVALID} instance.
+   * those cases this method will always return the {@link FloggerLogSite#INVALID} instance.
    * <p>
    * For example (in {@code MyLoggingHelper}):
    * <pre>{@code
@@ -81,19 +81,19 @@ public final class LogSites {
    *
    * @param loggingApi the logging API to be identified as the source of log statements (this must
    *        appear somewhere on the stack above the point at which this method is called).
-   * @return the log site of the caller of the specified logging API, or {@link LogSite#INVALID} if
+   * @return the log site of the caller of the specified logging API, or {@link FloggerLogSite#INVALID} if
    *         the logging API was not found.
    */
-  public static LogSite callerOf(Class<?> loggingApi) {
+  public static FloggerLogSite callerOf(Class<?> loggingApi) {
     // Can't skip anything here since someone could pass in LogSite.class.
     return Platform.getCallerFinder().findLogSite(loggingApi, 0);
   }
 
   /**
    * Returns a {@code LogSite} for the current line of code. This can be used in conjunction with
-   * the {@link FloggerLoggingApi#withInjectedLogSite(LogSite)} method to implement logging helper
+   * the {@link FloggerLoggingApi#withInjectedLogSite(FloggerLogSite)} method to implement logging helper
    * methods. In some platforms, log site determination may be unsupported, and in those cases this
-   * method will always return the {@link LogSite#INVALID} instance.
+   * method will always return the {@link FloggerLogSite#INVALID} instance.
    * <p>
    * For example (in {@code MyLoggingHelper}):
    * <pre>{@code
@@ -128,20 +128,20 @@ public final class LogSites {
    *
    * @return the log site of the caller of this method.
    */
-  public static LogSite logSite() {
+  public static FloggerLogSite logSite() {
     // Don't call "callerOf()" to avoid making another stack entry.
     return Platform.getCallerFinder().findLogSite(LogSites.class, 0);
   }
 
   /**
    * Returns a new {@code LogSite} which reflects the information in the given {@link
-   * StackTraceElement}, or {@link LogSite#INVALID} if given {@code null}.
+   * StackTraceElement}, or {@link FloggerLogSite#INVALID} if given {@code null}.
    *
    * <p>This method is useful when log site information is only available via an external API which
    * returns {@link StackTraceElement}.
    */
-  public static LogSite logSiteFrom(@Nullable StackTraceElement e) {
-    return e != null ? new StackBasedLogSite(e) : LogSite.INVALID;
+  public static FloggerLogSite logSiteFrom(@Nullable StackTraceElement e) {
+    return e != null ? new StackBasedFloggerLogSite(e) : FloggerLogSite.INVALID;
   }
 
   private LogSites() {}

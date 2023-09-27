@@ -32,7 +32,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.logging.Level.WARNING;
 
 import io.spine.logging.flogger.FloggerLogContext;
-import io.spine.logging.flogger.LogSite;
+import io.spine.logging.flogger.FloggerLogSite;
 import io.spine.logging.flogger.MetadataKey;
 import io.spine.logging.flogger.backend.BaseMessageFormatter;
 import io.spine.logging.flogger.backend.LogData;
@@ -111,7 +111,7 @@ final class Log4j2LogEventUtil {
       org.apache.logging.log4j.Level level,
       Throwable thrown) {
 
-    LogSite logSite = logData.getLogSite();
+    FloggerLogSite logSite = logData.getLogSite();
     StackTraceElement locationInfo =
         new StackTraceElement(
             logSite.getClassName(),

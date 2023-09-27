@@ -26,7 +26,7 @@
 
 package io.spine.logging.context.system
 
-import io.spine.logging.flogger.LoggingScope
+import io.spine.logging.flogger.FloggerLoggingScope
 import io.spine.logging.flogger.context.ContextMetadata
 import io.spine.logging.flogger.context.ScopeType
 import io.spine.logging.flogger.context.ScopedLoggingContext.ScopeList
@@ -181,13 +181,13 @@ internal class StdContextData(
         }
 
         /**
-         * Obtains a [LoggingScope] for the given type.
+         * Obtains a [FloggerLoggingScope] for the given type.
          *
          * @return the scope instance or `null` if there is no current context, or
          *         the current context data does not have scopes, or there is no
          *         logging scope with the requested type.
          */
-        fun lookupScopeFor(type: ScopeType): LoggingScope? =
+        fun lookupScopeFor(type: ScopeType): FloggerLoggingScope? =
             current?.let { ScopeList.lookup(it.scopes, type) }
     }
 }

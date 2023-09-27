@@ -26,7 +26,7 @@
 
 package io.spine.logging.flogger.backend;
 
-import io.spine.logging.flogger.LogSite;
+import io.spine.logging.flogger.FloggerLogSite;
 import java.util.logging.Level;
 
 /**
@@ -66,7 +66,7 @@ public interface LogData {
    *
    * @throws IllegalStateException if called prior to the postProcess() method being called.
    */
-  LogSite getLogSite();
+  FloggerLogSite getLogSite();
 
   /**
    * Returns any additional metadata for this log statement. If no additional metadata is present,

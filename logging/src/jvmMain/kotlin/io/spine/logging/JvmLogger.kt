@@ -33,7 +33,7 @@ import kotlin.reflect.KClass
 import kotlin.time.DurationUnit
 import kotlin.time.toTimeUnit
 import java.util.logging.Level as JLevel
-import io.spine.logging.flogger.LogSite as FloggerLogSite
+import io.spine.logging.flogger.FloggerLogSite as FloggerLogSite
 
 /**
  * Implements [Logger] using [FluentLogger2] as the underlying implementation.

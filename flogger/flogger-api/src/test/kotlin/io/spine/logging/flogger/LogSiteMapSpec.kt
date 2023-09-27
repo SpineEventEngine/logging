@@ -27,7 +27,7 @@
 package io.spine.logging.flogger
 
 import io.spine.logging.flogger.backend.Metadata
-import com.google.common.flogger.testing.FakeLogSite.create
+import com.google.common.flogger.testing.FakeFloggerLogSite.create
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
@@ -67,9 +67,9 @@ internal class LogSiteMapSpec {
     @Test
     fun `remove entries when a scope is manually closed`() {
         val map = createMap()
-        val foo = LoggingScope.WeakScope("foo")
+        val foo = FloggerLoggingScope.WeakScope("foo")
         val fooMetadata = FakeMetadata().add(FloggerLogContext.Key.LOG_SITE_GROUPING_KEY, foo)
-        val bar = LoggingScope.WeakScope("bar")
+        val bar = FloggerLoggingScope.WeakScope("bar")
         val barMetadata = FakeMetadata().add(FloggerLogContext.Key.LOG_SITE_GROUPING_KEY, bar)
         val logSite = create("com.google.foo.Foo", "doFoo", 42, "<unused>")
         val fooKey = FloggerLogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
@@ -131,7 +131,7 @@ private fun <T> recurseAndCall(n: Int, action: Callable<T>): T {
 }
 
 private fun useAndReturnScopedKey(map: LogSiteMap<AtomicInteger>, label: String): LogSiteKey {
-    val scope = LoggingScope.create(label)
+    val scope = FloggerLoggingScope.create(label)
     val metadata = FakeMetadata().add(FloggerLogContext.Key.LOG_SITE_GROUPING_KEY, scope)
     val logSite = create("com.example", label, 42, "<unused>")
     val key = FloggerLogContext.specializeLogSiteKeyFromMetadata(logSite, metadata)

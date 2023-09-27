@@ -38,7 +38,7 @@ import io.spine.logging.flogger.given.shouldHaveMessage
 import com.google.common.flogger.testing.shouldHaveSize
 import com.google.common.flogger.testing.shouldNotContain
 import com.google.common.flogger.testing.shouldUniquelyContain
-import com.google.common.flogger.testing.FakeLogSite
+import com.google.common.flogger.testing.FakeFloggerLogSite
 import com.google.common.flogger.testing.FakeLoggerBackend
 import com.google.common.flogger.testing.FakeMetadata
 import com.google.common.flogger.testing.ConfigurableLogger
@@ -92,7 +92,7 @@ internal class FloggerLogContextSpec {
 
         // In normal use, the logger would never need to be passed in,
         // and you'd use `logVarargs()`.
-        private fun logHelper(logger: FluentLogger2, logSite: LogSite, n: Int, message: String) {
+        private fun logHelper(logger: FluentLogger2, logSite: FloggerLogSite, n: Int, message: String) {
             logger.atInfo()
                 .withInjectedLogSite(logSite)
                 .every(n)
@@ -475,10 +475,12 @@ internal class FloggerLogContextSpec {
             // Only tests should ever create “immediate providers” like this
             // as it doesn't make sense otherwise.
             var nowNanos = currentTimeNanos()
-            val fooScope = LoggingScope.create("foo")
-            val barScope = LoggingScope.create("bar")
-            val foo = LoggingScopeProvider { fooScope }
-            val bar = LoggingScopeProvider { barScope }
+            val fooScope = FloggerLoggingScope.create("foo")
+            val barScope = FloggerLoggingScope.create("bar")
+            val foo =
+                FloggerLoggingScopeProvider { fooScope }
+            val bar =
+                FloggerLoggingScopeProvider { barScope }
 
             // Logs for both scopes should appear.
             // Even though the 2nd log is within the rate limit period.
@@ -524,7 +526,7 @@ internal class FloggerLogContextSpec {
         fun `with 'every(n)' limiter`() {
             val backend = FakeLoggerBackend()
             val logger = ConfigurableLogger.create(backend)
-            val logSite = FakeLogSite.create("com.example.MyClass", "everyN", 123, null)
+            val logSite = FakeFloggerLogSite.create("com.example.MyClass", "everyN", 123, null)
 
             logger.atInfo()
                 .every(3)
@@ -561,7 +563,7 @@ internal class FloggerLogContextSpec {
         fun `with 'atMostEvery(n)' limiter`() {
             val backend = FakeLoggerBackend()
             val logger = ConfigurableLogger.create(backend)
-            val logSite = FakeLogSite.create("com.example.MyClass", "atMostEvery", 123, null)
+            val logSite = FakeFloggerLogSite.create("com.example.MyClass", "atMostEvery", 123, null)
 
             var nowNanos = currentTimeNanos()
             logger.at(INFO, nowNanos)
@@ -887,17 +889,17 @@ internal class FloggerLogContextSpec {
     @Test
     fun `suppress an invalid log site analysis`() {
         logger.atInfo()
-            .withInjectedLogSite(LogSite.INVALID)
+            .withInjectedLogSite(FloggerLogSite.INVALID)
             .log("No log site here")
         logger.atInfo()
             .withInjectedLogSite(null)
             .log("No-op injection")
 
         backend.loggedCount shouldBe 2
-        backend.firstLogged.logSite shouldBe LogSite.INVALID
+        backend.firstLogged.logSite shouldBe FloggerLogSite.INVALID
 
         backend.logged[1].logSite.shouldNotBeNull()
-        backend.logged[1].logSite shouldNotBe LogSite.INVALID
+        backend.logged[1].logSite shouldNotBe FloggerLogSite.INVALID
     }
 
     @Nested inner class
@@ -906,7 +908,7 @@ internal class FloggerLogContextSpec {
         @Test
         fun `log site key from a singleton key`() {
             val fooMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo")
-            val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
+            val logSite = FakeFloggerLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
             val fooKey = specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
             val singletonKey = specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
             fooKey shouldBe singletonKey
@@ -918,7 +920,7 @@ internal class FloggerLogContextSpec {
             val repeatedMetadata = FakeMetadata()
                 .add(Key.LOG_SITE_GROUPING_KEY, "foo")
                 .add(Key.LOG_SITE_GROUPING_KEY, "foo")
-            val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
+            val logSite = FakeFloggerLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
             val fooKey = specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
             val repeatedKey = specializeLogSiteKeyFromMetadata(logSite, repeatedMetadata)
             fooKey shouldNotBe repeatedKey
@@ -928,7 +930,7 @@ internal class FloggerLogContextSpec {
         fun `distinct log site keys from distinct metadata instances`() {
             val fooMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo")
             val barMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "bar")
-            val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
+            val logSite = FakeFloggerLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
             val fooKey = specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
             val barKey = specializeLogSiteKeyFromMetadata(logSite, barMetadata)
             fooKey shouldNotBe barKey
@@ -950,7 +952,7 @@ internal class FloggerLogContextSpec {
             val barFooMetadata = FakeMetadata()
                 .add(Key.LOG_SITE_GROUPING_KEY, "bar")
                 .add(Key.LOG_SITE_GROUPING_KEY, "foo")
-            val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
+            val logSite = FakeFloggerLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
             val fooBarKey = specializeLogSiteKeyFromMetadata(logSite, fooBarMetadata)
             val barFooKey = specializeLogSiteKeyFromMetadata(logSite, barFooMetadata)
             fooBarKey shouldNotBe barFooKey

@@ -35,7 +35,7 @@ import io.spine.logging.flogger.backend.MessageUtils.appendLogSite
 import io.spine.logging.flogger.backend.MessageUtils.safeFormatTo
 import io.spine.logging.flogger.backend.MessageUtils.safeToString
 import io.spine.logging.backend.given.BadToString
-import com.google.common.flogger.testing.FakeLogSite.create
+import com.google.common.flogger.testing.FakeFloggerLogSite.create
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
@@ -43,7 +43,7 @@ import io.kotest.matchers.string.shouldBeEmpty
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldNotContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
-import io.spine.logging.flogger.LogSite
+import io.spine.logging.flogger.FloggerLogSite
 import java.util.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -141,7 +141,7 @@ internal class MessageUtilsSpec {
         "$out" shouldBe "<class>.<method>:32"
 
         out.setLength(0)
-        appendLogSite(LogSite.INVALID, out).shouldBeFalse()
+        appendLogSite(FloggerLogSite.INVALID, out).shouldBeFalse()
         "$out".shouldBeEmpty()
     }
 

@@ -50,7 +50,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSite.java">
  *     Original Java code of Google Flogger</a>
  */
-public abstract class LogSite implements LogSiteKey {
+public abstract class FloggerLogSite implements LogSiteKey {
   /** A value used for line numbers when the true information is not available. */
   public static final int UNKNOWN_LINE = 0;
 
@@ -65,8 +65,8 @@ public abstract class LogSite implements LogSiteKey {
    * methods which rely on being able to look up site specific metadata will be disabled and
    * essentially become "no ops".
    */
-  public static final LogSite INVALID =
-      new LogSite() {
+  public static final FloggerLogSite INVALID =
+      new FloggerLogSite() {
         @Override
         public String getClassName() {
           return "<unknown class>";
@@ -153,15 +153,15 @@ public abstract class LogSite implements LogSiteKey {
    * directly.
    */
   @Deprecated
-  public static LogSite injectedLogSite(
+  public static FloggerLogSite injectedLogSite(
       String internalClassName,
       String methodName,
       int encodedLineNumber,
       @Nullable String sourceFileName) {
-    return new InjectedLogSite(internalClassName, methodName, encodedLineNumber, sourceFileName);
+    return new InjectedFloggerLogSite(internalClassName, methodName, encodedLineNumber, sourceFileName);
   }
 
-  private static final class InjectedLogSite extends LogSite {
+  private static final class InjectedFloggerLogSite extends FloggerLogSite {
 
     /** Internal (slash-separated) fully qualified class name (eg, "com/example/Foo$Bar"). */
     private final String internalClassName;
@@ -172,7 +172,7 @@ public abstract class LogSite implements LogSiteKey {
     @Nullable private final String sourceFileName;
     private int hashcode = 0;
 
-    private InjectedLogSite(
+    private InjectedFloggerLogSite(
         String internalClassName,
         String methodName,
         int encodedLineNumber,
@@ -211,8 +211,8 @@ public abstract class LogSite implements LogSiteKey {
 
     @Override
     public boolean equals(Object obj) {
-      if (obj instanceof InjectedLogSite) {
-        InjectedLogSite other = (InjectedLogSite) obj;
+      if (obj instanceof InjectedFloggerLogSite) {
+        InjectedFloggerLogSite other = (InjectedFloggerLogSite) obj;
         // Probably not worth optimizing for "this == obj" because all strings should be interned.
         return methodName.equals(other.methodName)
             && encodedLineNumber == other.encodedLineNumber
