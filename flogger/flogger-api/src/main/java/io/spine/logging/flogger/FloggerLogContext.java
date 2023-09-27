@@ -745,8 +745,8 @@ public abstract class FloggerLogContext<LOGGER extends FloggerAbstractLogger<API
     // it seems reasonable to propagate them in this case (they would have been thrown if the
     // argument was evaluated at the call site anyway).
     for (int n = 0; n < args.length; n++) {
-      if (args[n] instanceof FloggerLazyArg) {
-        args[n] = ((FloggerLazyArg<?>) args[n]).evaluate();
+      if (args[n] instanceof LazyArg) {
+        args[n] = ((LazyArg<?>) args[n]).evaluate();
       }
     }
     // Using "!=" is fast and sufficient here because the only real case this should be skipping

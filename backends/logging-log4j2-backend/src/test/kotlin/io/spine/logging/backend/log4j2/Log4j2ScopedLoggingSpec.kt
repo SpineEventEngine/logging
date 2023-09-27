@@ -469,8 +469,7 @@ private fun createLogger(appender: Appender): ConfigurableLogger {
         appenders.forEach { removeAppender(it.value) }
         addAppender(appender)
     }
-    val backend =
-        Log4J2FloggerBackend(log4jLogger)
+    val backend = Log4J2FloggerBackend(log4jLogger)
     val logger = ConfigurableLogger.create(backend)
     return logger
 }

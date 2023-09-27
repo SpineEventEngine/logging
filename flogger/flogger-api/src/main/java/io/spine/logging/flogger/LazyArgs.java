@@ -29,8 +29,8 @@ package io.spine.logging.flogger;
 import static io.spine.logging.flogger.util.Checks.checkNotNull;
 
 /**
- * Static utility methods for lazy argument evaluation in Flogger. The {@link #lazy(FloggerLazyArg)}
- * method allows lambda expressions to be "cast" to the {@link FloggerLazyArg} interface.
+ * Static utility methods for lazy argument evaluation in Flogger. The {@link #lazy(LazyArg)}
+ * method allows lambda expressions to be "cast" to the {@link LazyArg} interface.
  *
  * <p>In cases where the log statement is strongly expected to always be enabled (e.g. unconditional
  * logging at warning or above) it may not be worth using lazy evaluation because any work required
@@ -43,7 +43,7 @@ import static io.spine.logging.flogger.util.Checks.checkNotNull;
  *     Original Java code of Google Flogger</a>
  */
 // TODO: Add other generally useful methods here, especially things which help non-lambda users.
-public final class FloggerLazyArgs {
+public final class LazyArgs {
   /**
    * Coerces a lambda expression or method reference to return a lazily evaluated logging argument.
    * Pass in a compatible, no-argument, lambda expression or method reference to have it evaluated
@@ -61,11 +61,11 @@ public final class FloggerLazyArgs {
    * this mechanism and, in general, explicitly calling {@code toString()} on arguments which are
    * being logged is an error as it precludes the ability to log an argument structurally.
    */
-  public static <T> FloggerLazyArg<T> lazy(FloggerLazyArg<T> lambdaOrMethodReference) {
+  public static <T> LazyArg<T> lazy(LazyArg<T> lambdaOrMethodReference) {
     // This method is essentially a coercing cast for the functional interface to give the compiler
     // a target type to convert a lambda expression or method reference into.
     return checkNotNull(lambdaOrMethodReference, "lazy arg");
   }
 
-  private FloggerLazyArgs() {}
+  private LazyArgs() {}
 }
