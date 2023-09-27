@@ -29,11 +29,11 @@ package io.spine.logging
 import io.spine.logging.flogger.FluentLogger2
 import io.spine.logging.flogger.FloggerLogSites.callerOf
 import com.google.errorprone.annotations.CheckReturnValue
+import io.spine.logging.flogger.FloggerLogSite
 import kotlin.reflect.KClass
 import kotlin.time.DurationUnit
 import kotlin.time.toTimeUnit
 import java.util.logging.Level as JLevel
-import io.spine.logging.flogger.FloggerLogSite as FloggerLogSite
 
 /**
  * Implements [Logger] using [FluentLogger2] as the underlying implementation.
