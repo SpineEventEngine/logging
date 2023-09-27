@@ -68,5 +68,5 @@ public abstract class LogMessageFormatter {
    */
   @CanIgnoreReturnValue
   public abstract StringBuilder append(
-          LogData logData, MetadataProcessor metadata, StringBuilder buffer);
+      LogData logData, MetadataProcessor metadata, StringBuilder buffer);
 }

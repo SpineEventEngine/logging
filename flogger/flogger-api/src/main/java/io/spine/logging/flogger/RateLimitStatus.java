@@ -163,7 +163,7 @@ public abstract class RateLimitStatus {
         };
 
     static int checkAndGetSkippedCount(
-            RateLimitStatus status, LogSiteKey logSiteKey, Metadata metadata) {
+        RateLimitStatus status, LogSiteKey logSiteKey, Metadata metadata) {
       LogGuard guard = guardMap.get(logSiteKey, metadata);
       // Pre-increment pendingCount to include this log statement, so (pendingCount > 0).
       int pendingCount = guard.pendingLogCount.incrementAndGet();
