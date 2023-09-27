@@ -33,7 +33,7 @@ import io.spine.logging.flogger.parser.MessageParser;
 import java.util.logging.Level;
 
 /**
- * The default implementation of {@link FloggerAbstractLogger} which returns the basic {@link FloggerLoggingApi}
+ * The default implementation of {@link AbstractLogger} which returns the basic {@link FloggerLoggingApi}
  * and uses the default parser and system configured backend.
  * <p>
  * Note that when extending the logging API or specifying a new parser, you will need to create a
@@ -47,7 +47,7 @@ import java.util.logging.Level;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/FluentLogger.java">
  *     Original Java code of Google Flogger</a>
  */
-public final class FluentLogger2 extends FloggerAbstractLogger<FluentLogger2.Api> {
+public final class FluentLogger2 extends AbstractLogger<FluentLogger2.Api> {
   /**
    * The non-wildcard, fully specified, logging API for this logger. Fluent logger implementations
    * should specify a non-wildcard API like this with which to generify the abstract logger.

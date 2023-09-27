@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.system.given
 
-import io.spine.logging.flogger.FloggerAbstractLogger
+import io.spine.logging.flogger.AbstractLogger
 import io.spine.logging.flogger.FloggerLogSite
 import io.spine.logging.flogger.backend.LoggerBackend
 import io.spine.logging.flogger.backend.Platform
@@ -66,7 +66,7 @@ internal class NoOpCallerFinder : Platform.LogCallerFinder() {
     /**
      * Throws [IllegalStateException].
      */
-    override fun findLoggingClass(loggerClass: Class<out FloggerAbstractLogger<*>>?): String =
+    override fun findLoggingClass(loggerClass: Class<out AbstractLogger<*>>?): String =
         throw UnsupportedOperationException()
 
     /**

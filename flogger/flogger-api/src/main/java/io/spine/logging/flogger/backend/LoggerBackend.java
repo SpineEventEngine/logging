@@ -26,7 +26,7 @@
 
 package io.spine.logging.flogger.backend;
 
-import io.spine.logging.flogger.FloggerAbstractLogger;
+import io.spine.logging.flogger.AbstractLogger;
 import io.spine.logging.flogger.parser.ParseException;
 
 import java.util.logging.Level;
@@ -38,7 +38,7 @@ import java.util.logging.Level;
  *
  * <h2>Implementation Notes:</h2>
  *
- * Often each {@link FloggerAbstractLogger AbstractLogger}
+ * Often each {@link AbstractLogger AbstractLogger}
  * instance will be instantiated with a new logger backend to permit per-class
  * logging behavior. Because of this, it is important that logger backends have
  * as little per-instance state as possible.
