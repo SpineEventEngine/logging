@@ -31,8 +31,8 @@ import io.kotest.matchers.types.shouldBeSameInstanceAs
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-@DisplayName("`FloggerApi` should")
-internal class FloggerApiSpec {
+@DisplayName("`LoggingApi` should")
+internal class LoggingApiSpec {
 
     @Test
     fun `provide no-op implementation class`() {
