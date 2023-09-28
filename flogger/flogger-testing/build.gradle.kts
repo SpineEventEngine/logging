@@ -26,7 +26,6 @@
 
 import io.spine.internal.dependency.JUnit
 import io.spine.internal.dependency.Kotest
-import io.spine.internal.dependency.Truth
 
 plugins {
     `jvm-module`
@@ -34,10 +33,8 @@ plugins {
 
 dependencies {
     implementation(project(":flogger-api"))
-    implementation(project(":logging-backend"))
     implementation(Kotest.assertions)
     JUnit.api.forEach { implementation(it) }
-    Truth.libs.forEach { implementation(it) }
 }
 
 java {
