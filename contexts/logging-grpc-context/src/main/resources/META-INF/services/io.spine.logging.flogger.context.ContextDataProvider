@@ -1,1 +1,1 @@
-com.google.common.flogger.grpc.GrpcContextDataProvider
+io.spine.logging.context.grpc.GrpcContextDataProvider

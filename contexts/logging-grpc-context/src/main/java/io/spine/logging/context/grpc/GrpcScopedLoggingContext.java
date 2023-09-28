@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.common.flogger.grpc;
+package io.spine.logging.context.grpc;
 
 import static io.spine.logging.flogger.util.Checks.checkNotNull;
 

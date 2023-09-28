@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.common.flogger.grpc;
+package io.spine.logging.context.grpc;
 
 import io.spine.logging.flogger.LoggingScope;
 import io.spine.logging.flogger.context.ContextMetadata;

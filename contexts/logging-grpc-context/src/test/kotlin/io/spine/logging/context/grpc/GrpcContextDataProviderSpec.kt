@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.common.flogger.grpc
+package io.spine.logging.context.grpc
 
 import io.spine.logging.flogger.context.ContextDataProvider
 import com.google.common.flogger.testing.AbstractContextDataProviderSpec

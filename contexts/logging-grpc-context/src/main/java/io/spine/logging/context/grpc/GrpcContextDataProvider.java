@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.common.flogger.grpc;
+package io.spine.logging.context.grpc;
 
 import io.spine.logging.flogger.LoggingScope;
 import io.spine.logging.flogger.context.ContextDataProvider;
@@ -37,7 +37,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  *
  * <ul>
  *   <li>{@code
- *       flogger.logging_context=com.google.common.flogger.grpc.GrpcContextDataProvider}
+ *       flogger.logging_context=io.spine.logging.context.grpc.GrpcContextDataProvider}
  * </ul>
  */
 public final class GrpcContextDataProvider extends ContextDataProvider {
