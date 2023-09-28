@@ -136,7 +136,7 @@ final class DurationRateLimiter extends RateLimitStatus {
   /**
    * Checks whether the current time stamp is after the rate limiting period and if so, updates the
    * time stamp and returns true. This is invoked during post-processing if a rate limiting duration
-   * was set via {@link LoggingApi#atMostEvery(int, TimeUnit)}.
+   * was set via {@link FloggerApi#atMostEvery(int, TimeUnit)}.
    */
   // Visible for testing.
   RateLimitStatus checkLastTimestamp(long timestampNanos, RateLimitPeriod period) {

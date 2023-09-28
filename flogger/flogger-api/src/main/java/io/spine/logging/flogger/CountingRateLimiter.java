@@ -83,7 +83,7 @@ final class CountingRateLimiter extends RateLimitStatus {
   /**
    * Increments the invocation count and returns true if it reached the specified rate limit count.
    * This is invoked during post-processing if a rate limiting count was set via {@link
-   * LoggingApi#every(int)}.
+   * FloggerApi#every(int)}.
    */
   // Visible for testing.
   RateLimitStatus incrementAndCheckLogCount(int rateLimitCount) {

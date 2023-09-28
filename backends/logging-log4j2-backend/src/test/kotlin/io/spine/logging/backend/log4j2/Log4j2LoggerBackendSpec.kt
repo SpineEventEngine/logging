@@ -27,7 +27,7 @@
 package io.spine.logging.backend.log4j2
 
 import io.spine.logging.flogger.LogContext.Key
-import io.spine.logging.flogger.LogSite
+import io.spine.logging.flogger.FloggerLogSite
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
 import io.spine.logging.flogger.parser.ParseException
 import io.spine.logging.flogger.repeatedKey
@@ -175,7 +175,7 @@ internal class Log4j2LoggerBackendSpec {
             testLogSite(logSite)
         }
 
-        private fun testLogSite(logSite: LogSite) {
+        private fun testLogSite(logSite: FloggerLogSite) {
             val data = FakeLogData.of("")
                 .setLogSite(logSite)
             backend.log(data)

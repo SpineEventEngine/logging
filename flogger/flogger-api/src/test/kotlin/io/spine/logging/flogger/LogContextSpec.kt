@@ -92,7 +92,12 @@ internal class LogContextSpec {
 
         // In normal use, the logger would never need to be passed in,
         // and you'd use `logVarargs()`.
-        private fun logHelper(logger: FluentLogger2, logSite: LogSite, n: Int, message: String) {
+        private fun logHelper(
+            logger: FluentLogger2,
+            logSite: FloggerLogSite,
+            n: Int,
+            message: String
+        ) {
             logger.atInfo()
                 .withInjectedLogSite(logSite)
                 .every(n)
@@ -866,9 +871,9 @@ internal class LogContextSpec {
         // We don't expect this to ever happen in real code though.
         for (i in 0..6) {
             // Log every 2nd (0, 2, 4, 6)
-            logHelper(logger, LogSites.logSite(), 2, "Foo: $i")
+            logHelper(logger, FloggerLogSites.logSite(), 2, "Foo: $i")
             // Log every 3rd (0, 3, 6)
-            logHelper(logger, LogSites.logSite(), 3, "Bar: $i")
+            logHelper(logger, FloggerLogSites.logSite(), 3, "Bar: $i")
         }
         backend.loggedCount shouldBe 7
         backend.firstLogged.shouldHaveArguments("Foo: 0")
@@ -887,17 +892,17 @@ internal class LogContextSpec {
     @Test
     fun `suppress an invalid log site analysis`() {
         logger.atInfo()
-            .withInjectedLogSite(LogSite.INVALID)
+            .withInjectedLogSite(FloggerLogSite.INVALID)
             .log("No log site here")
         logger.atInfo()
             .withInjectedLogSite(null)
             .log("No-op injection")
 
         backend.loggedCount shouldBe 2
-        backend.firstLogged.logSite shouldBe LogSite.INVALID
+        backend.firstLogged.logSite shouldBe FloggerLogSite.INVALID
 
         backend.logged[1].logSite.shouldNotBeNull()
-        backend.logged[1].logSite shouldNotBe LogSite.INVALID
+        backend.logged[1].logSite shouldNotBe FloggerLogSite.INVALID
     }
 
     @Nested inner class

@@ -26,12 +26,12 @@
 
 package io.spine.logging.flogger.given
 
-import io.spine.logging.flogger.MetadataKey
+import io.spine.logging.flogger.FloggerMetadataKey
 
 /**
  * Remembers all handled key/value pairs.
  */
-internal class MemoizingKvHandler : MetadataKey.KeyValueHandler {
+internal class MemoizingKvHandler : FloggerMetadataKey.KeyValueHandler {
 
     val entries = ArrayList<String?>()
 

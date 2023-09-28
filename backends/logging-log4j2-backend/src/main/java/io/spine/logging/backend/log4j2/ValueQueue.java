@@ -28,7 +28,7 @@ package io.spine.logging.backend.log4j2;
 
 import static io.spine.logging.flogger.util.Checks.checkNotNull;
 
-import io.spine.logging.flogger.MetadataKey;
+import io.spine.logging.flogger.FloggerMetadataKey.KeyValueHandler;
 import io.spine.logging.flogger.context.Tags;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -85,7 +85,7 @@ final class ValueQueue implements Iterable<Object> {
     }
   }
 
-  static void appendValues(String label, Object valueOrQueue, MetadataKey.KeyValueHandler kvh) {
+  static void appendValues(String label, Object valueOrQueue, KeyValueHandler kvh) {
     if (valueOrQueue instanceof ValueQueue) {
       for (Object value : (ValueQueue) valueOrQueue) {
         emit(label, value, kvh);
@@ -130,7 +130,7 @@ final class ValueQueue implements Iterable<Object> {
    * <p>Reusing the label 'tags' is intentional as this allows us to store the flatten tags in
    * Log4j2's ContextMap.
    */
-  static void emit(String label, Object value, MetadataKey.KeyValueHandler kvh) {
+  static void emit(String label, Object value, KeyValueHandler kvh) {
     if (value instanceof Tags) {
       // Flatten tags to treat them as keys or key/value pairs, e.g. tags=[baz=bar, baz=bar2, foo]
       ((Tags) value)
@@ -176,7 +176,8 @@ final class ValueQueue implements Iterable<Object> {
    */
   @Override
   public String toString() {
-    // This case shouldn't actually happen unless you use the value queue for storing emitted values
+    // This case shouldn't actually happen unless you use the value queue
+    // for storing emitted values.
     if (values.isEmpty()) {
       return "";
     }

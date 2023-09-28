@@ -44,13 +44,13 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * </ul>
  *
  * <p>This class should not be used directly outside the core Flogger libraries. If you need to
- * generate a {@link LogSite} from a {@link StackTraceElement}, use {@link
- * LogSites#logSiteFrom(StackTraceElement) LogSites.logSiteFrom(myStackTaceElement)}.
+ * generate a {@link FloggerLogSite} from a {@link StackTraceElement}, use {@link
+ * FloggerLogSites#logSiteFrom(StackTraceElement) LogSites.logSiteFrom(myStackTaceElement)}.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/StackBasedLogSite.java">
  *     Original Java code of Google Flogger</a>
  */
-final class StackBasedLogSite extends LogSite {
+final class StackBasedLogSite extends FloggerLogSite {
   // StackTraceElement is unmodifiable once created.
   private final StackTraceElement stackElement;
 
@@ -71,7 +71,7 @@ final class StackBasedLogSite extends LogSite {
   @Override
   public int getLineNumber() {
     // Prohibit negative numbers (which can appear in stack trace elements) from being returned.
-    return max(stackElement.getLineNumber(), LogSite.UNKNOWN_LINE);
+    return max(stackElement.getLineNumber(), FloggerLogSite.UNKNOWN_LINE);
   }
 
   @Override

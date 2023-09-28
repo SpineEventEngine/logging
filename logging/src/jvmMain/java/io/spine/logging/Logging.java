@@ -31,7 +31,7 @@ import io.spine.logging.flogger.FluentLogger2;
 import java.util.logging.Level;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static io.spine.logging.flogger.LogSites.callerOf;
+import static io.spine.logging.flogger.FloggerLogSites.callerOf;
 
 /**
  * Utility interface for objects that require logging output.

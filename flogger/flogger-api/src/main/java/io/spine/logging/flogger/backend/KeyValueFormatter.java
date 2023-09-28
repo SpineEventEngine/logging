@@ -26,7 +26,7 @@
 
 package io.spine.logging.flogger.backend;
 
-import io.spine.logging.flogger.MetadataKey.KeyValueHandler;
+import io.spine.logging.flogger.FloggerMetadataKey.KeyValueHandler;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;

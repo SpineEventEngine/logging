@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.truth.Truth.assertAbout;
 
-import io.spine.logging.flogger.MetadataKey;
+import io.spine.logging.flogger.FloggerMetadataKey;
 import io.spine.logging.flogger.backend.Metadata;
 import com.google.common.truth.FailureMetadata;
 import com.google.common.truth.IterableSubject;
@@ -49,9 +49,9 @@ public final class MetadataSubject extends Subject {
     this.actual = subject;
   }
 
-  private List<MetadataKey<?>> keyList() {
+  private List<FloggerMetadataKey<?>> keyList() {
     Metadata metadata = actual;
-    List<MetadataKey<?>> keys = new ArrayList<>();
+    List<FloggerMetadataKey<?>> keys = new ArrayList<>();
     for (int n = 0; n < metadata.size(); n++) {
       keys.add(metadata.getKey(n));
     }
@@ -67,7 +67,7 @@ public final class MetadataSubject extends Subject {
     return values;
   }
 
-  private <T> List<T> valuesOf(MetadataKey<T> key) {
+  private <T> List<T> valuesOf(FloggerMetadataKey<T> key) {
     Metadata metadata = actual;
     List<T> values = new ArrayList<>();
     for (int n = 0; n < metadata.size(); n++) {
@@ -83,7 +83,7 @@ public final class MetadataSubject extends Subject {
     check("size()").that(actual.size()).isEqualTo(expectedSize);
   }
 
-  public <T> void containsUniqueEntry(MetadataKey<T> key, T value) {
+  public <T> void containsUniqueEntry(FloggerMetadataKey<T> key, T value) {
     checkNotNull(key, "key must not be null");
     checkNotNull(value, "value must not be null");
     T actual = this.actual.findValue(key);
@@ -92,7 +92,7 @@ public final class MetadataSubject extends Subject {
     } else {
       check("findValue(%s)", key).that(actual).isEqualTo(value);
       // The key must exist, so neither method will return -1.
-      List<MetadataKey<?>> keys = keyList();
+      List<FloggerMetadataKey<?>> keys = keyList();
       if (keys.indexOf(key) != keys.lastIndexOf(key)) {
         failWithActual("expected to have unique key", key);
       }

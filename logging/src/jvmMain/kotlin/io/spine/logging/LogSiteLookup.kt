@@ -28,8 +28,8 @@ package io.spine.logging
 
 import io.spine.logging.flogger.backend.Platform
 import kotlin.reflect.KClass
-import io.spine.logging.flogger.LogSite as FloggerLogSite
-import io.spine.logging.flogger.LogSites as FloggerLogSites
+import io.spine.logging.flogger.FloggerLogSite
+import io.spine.logging.flogger.FloggerLogSites
 
 /**
  * Determines log sites for the current line of code using Flogger utils.

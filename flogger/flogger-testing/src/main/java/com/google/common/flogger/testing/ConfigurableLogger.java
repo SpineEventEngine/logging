@@ -18,7 +18,7 @@ package com.google.common.flogger.testing;
 
 import io.spine.logging.flogger.AbstractLogger;
 import io.spine.logging.flogger.LogContext;
-import io.spine.logging.flogger.LoggingApi;
+import io.spine.logging.flogger.FloggerApi;
 import io.spine.logging.flogger.backend.LoggerBackend;
 import io.spine.logging.flogger.parser.DefaultPrintfMessageParser;
 import io.spine.logging.flogger.parser.MessageParser;
@@ -36,7 +36,7 @@ public final class ConfigurableLogger extends AbstractLogger<ConfigurableLogger.
   // Midnight Jan 1st, 2000 (GMT)
   private static final long DEFAULT_TIMESTAMP_NANOS = 946684800000000000L;
 
-  public interface Api extends LoggingApi<Api> { }
+  public interface Api extends FloggerApi<Api> { }
 
   /** Returns a test logger for the default logging API. */
   public static ConfigurableLogger create(LoggerBackend backend) {

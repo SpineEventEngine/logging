@@ -42,6 +42,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
+import static io.spine.logging.flogger.FloggerLogSite.injectedLogSite;
 import static io.spine.logging.flogger.util.CallerFinder.getStackForCallerOf;
 import static io.spine.logging.flogger.util.Checks.checkNotNull;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
@@ -49,7 +50,7 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS;
 /**
  * The base context for a logging statement, which implements the base logging API.
  *
- * <p>This class is an implementation of the base {@link LoggingApi} interface and acts as a holder
+ * <p>This class is an implementation of the base {@link FloggerApi} interface and acts as a holder
  * for any state applied to the log statement during the fluent call sequence. The lifecycle of a
  * logging context is very short; it is created by a logger, usually in response to a call to the
  * {@link AbstractLogger#at(Level)} method, and normally lasts only as long as the log statement.
@@ -65,8 +66,8 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogContext.java">
  *     Original Java code of Google Flogger</a>
  */
-public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends LoggingApi<API>>
-    implements LoggingApi<API>, LogData {
+public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends FloggerApi<API>>
+        implements FloggerApi<API>, LogData {
 
   /**
    * The predefined metadata keys used by the default logging API. Backend implementations can use
@@ -77,38 +78,38 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
     private Key() {}
     /**
      * The key associated with a {@link Throwable} cause to be associated with the log message. This
-     * value is set by {@link LoggingApi#withCause(Throwable)}.
+     * value is set by {@link FloggerApi#withCause(Throwable)}.
      */
-    public static final MetadataKey<Throwable> LOG_CAUSE =
-        MetadataKey.single("cause", Throwable.class);
+    public static final FloggerMetadataKey<Throwable> LOG_CAUSE =
+        FloggerMetadataKey.single("cause", Throwable.class);
 
     /**
      * The key associated with a rate limiting counter for "1-in-N" rate limiting. The value is set
-     * by {@link LoggingApi#every(int)}.
+     * by {@link FloggerApi#every(int)}.
      */
-    public static final MetadataKey<Integer> LOG_EVERY_N =
-        MetadataKey.single("ratelimit_count", Integer.class);
+    public static final FloggerMetadataKey<Integer> LOG_EVERY_N =
+        FloggerMetadataKey.single("ratelimit_count", Integer.class);
 
     /**
      * The key associated with a rate limiting counter for "1-in-N" randomly sampled rate limiting.
-     * The value is set by {@link LoggingApi#onAverageEvery(int)}.
+     * The value is set by {@link FloggerApi#onAverageEvery(int)}.
      */
-    public static final MetadataKey<Integer> LOG_SAMPLE_EVERY_N =
-        MetadataKey.single("sampling_count", Integer.class);
+    public static final FloggerMetadataKey<Integer> LOG_SAMPLE_EVERY_N =
+        FloggerMetadataKey.single("sampling_count", Integer.class);
 
     /**
      * The key associated with a rate limiting period for "at most once every N" rate limiting. The
-     * value is set by {@link LoggingApi#atMostEvery(int, TimeUnit)}.
+     * value is set by {@link FloggerApi#atMostEvery(int, TimeUnit)}.
      */
-    public static final MetadataKey<RateLimitPeriod> LOG_AT_MOST_EVERY =
-        MetadataKey.single("ratelimit_period", RateLimitPeriod.class);
+    public static final FloggerMetadataKey<RateLimitPeriod> LOG_AT_MOST_EVERY =
+        FloggerMetadataKey.single("ratelimit_period", RateLimitPeriod.class);
 
     /**
      * The key associated with a count of rate limited logs. This is only public so backends can
      * reference the key to control formatting.
      */
-    public static final MetadataKey<Integer> SKIPPED_LOG_COUNT =
-        MetadataKey.single("skipped", Integer.class);
+    public static final FloggerMetadataKey<Integer> SKIPPED_LOG_COUNT =
+        FloggerMetadataKey.single("skipped", Integer.class);
 
     /**
      * The key associated with a sequence of log site "grouping keys". These serve to specialize the
@@ -116,8 +117,8 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      * by the {@code per()} methods and is only public so backends can reference the key to control
      * formatting.
      */
-    public static final MetadataKey<Object> LOG_SITE_GROUPING_KEY =
-        new MetadataKey<Object>("group_by", Object.class, true) {
+    public static final FloggerMetadataKey<Object> LOG_SITE_GROUPING_KEY =
+        new FloggerMetadataKey<Object>("group_by", Object.class, true) {
           @Override
           public void emitRepeated(Iterator<Object> keys, KeyValueHandler out) {
             if (keys.hasNext()) {
@@ -170,8 +171,8 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      * Thus it makes no sense to provide a public method to set this value programmatically for a
      * log statement.
      */
-    public static final MetadataKey<Boolean> WAS_FORCED =
-        MetadataKey.single("forced", Boolean.class);
+    public static final FloggerMetadataKey<Boolean> WAS_FORCED =
+        FloggerMetadataKey.single("forced", Boolean.class);
 
     /**
      * The key associated with any injected {@link Tags}.
@@ -185,8 +186,8 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      * normal log message arguments is always the preferred way to indicate unstrctured log data.
      * Users should never build new {@link Tags} instances just to pass them into a log statement.
      */
-    public static final MetadataKey<Tags> TAGS =
-        new MetadataKey<Tags>("tags", Tags.class, false) {
+    public static final FloggerMetadataKey<Tags> TAGS =
+        new FloggerMetadataKey<Tags>("tags", Tags.class, false) {
           @Override
           public void emit(Tags tags, KeyValueHandler out) {
             for (Map.Entry<String, ? extends Set<Object>> e : tags.asMap().entrySet()) {
@@ -206,8 +207,8 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      * Key associated with the metadata for specifying additional stack information with a log
      * statement.
      */
-    public static final MetadataKey<StackSize> CONTEXT_STACK_SIZE =
-        MetadataKey.single("stack_size", StackSize.class);
+    public static final FloggerMetadataKey<StackSize> CONTEXT_STACK_SIZE =
+        FloggerMetadataKey.single("stack_size", StackSize.class);
   }
 
   static final class MutableMetadata extends Metadata {
@@ -239,11 +240,11 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
     }
 
     @Override
-    public MetadataKey<?> getKey(int n) {
+    public FloggerMetadataKey<?> getKey(int n) {
       if (n >= keyValueCount) {
         throw new IndexOutOfBoundsException();
       }
-      return (MetadataKey<?>) keyValuePairs[2 * n];
+      return (FloggerMetadataKey<?>) keyValuePairs[2 * n];
     }
 
     @Override
@@ -254,7 +255,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
       return keyValuePairs[(2 * n) + 1];
     }
 
-    private int indexOf(MetadataKey<?> key) {
+    private int indexOf(FloggerMetadataKey<?> key) {
       for (int index = 0; index < keyValueCount; index++) {
         if (keyValuePairs[2 * index].equals(key)) {
           return index;
@@ -265,7 +266,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
 
     @Override
     @Nullable
-    public <T> T findValue(MetadataKey<T> key) {
+    public <T> T findValue(FloggerMetadataKey<T> key) {
       int index = indexOf(key);
       return index != -1 ? key.cast(keyValuePairs[(2 * index) + 1]) : null;
     }
@@ -275,7 +276,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      * cannot be repeated, and there is already a value for the key in the metadata, then the
      * existing value is replaced, otherwise the value is added at the end of the metadata.
      */
-    <T> void addValue(MetadataKey<T> key, T value) {
+    <T> void addValue(FloggerMetadataKey<T> key, T value) {
       if (!key.canRepeat()) {
         int index = indexOf(key);
         if (index != -1) {
@@ -296,7 +297,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
     }
 
     /** Removes all key/value pairs for a given key. */
-    void removeAllValues(MetadataKey<?> key) {
+    void removeAllValues(FloggerMetadataKey<?> key) {
       int index = indexOf(key);
       if (index >= 0) {
         int dest = 2 * index;
@@ -346,7 +347,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
   /** Additional metadata for this log statement (added via fluent API methods). */
   private MutableMetadata metadata = null;
   /** The log site information for this log statement (set immediately prior to post-processing). */
-  private LogSite logSite = null;
+  private FloggerLogSite logSite = null;
   /** Rate limit status (only set if rate limiting occurs). */
   private RateLimitStatus rateLimitStatus = null;
   /** The template context if formatting is required (set only after post-processing). */
@@ -432,7 +433,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
   }
 
   @Override
-  public final LogSite getLogSite() {
+  public final FloggerLogSite getLogSite() {
     if (logSite == null) {
       throw new IllegalStateException("cannot request log site information prior to postProcess()");
     }
@@ -489,7 +490,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
    * @param key the metadata key (see {@link LogData}).
    * @param value the metadata value.
    */
-  protected final <T> void addMetadata(MetadataKey<T> key, T value) {
+  protected final <T> void addMetadata(FloggerMetadataKey<T> key, T value) {
     if (metadata == null) {
       metadata = new MutableMetadata();
     }
@@ -502,7 +503,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
    *
    * @param key the metadata key (see {@link LogData}).
    */
-  protected final void removeMetadata(MetadataKey<?> key) {
+  protected final void removeMetadata(FloggerMetadataKey<?> key) {
     if (metadata != null) {
       metadata.removeAllValues(key);
     }
@@ -541,9 +542,9 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
    * {@link LogSiteMap}. This will correctly handle "specialized" log-site keys and remove the risk
    * of memory leaks due to retaining unused log site data indefinitely.
    *
-   * <p>Note that the given {@code logSiteKey} can be more specific than the {@link LogSite} of a
-   * log statement (i.e. a single log statement can have multiple distinct versions of its state).
-   * See {@link #per(Enum)} for more information.
+   * <p>Note that the given {@code logSiteKey} can be more specific than the {@link FloggerLogSite}
+   * of a log statement (i.e. a single log statement can have multiple distinct versions of
+   * its state). See {@link #per(Enum)} for more information.
    *
    * <p>If a log statement cannot be identified uniquely, then {@code logSiteKey} will be {@code
    * null}, and this method must behave exactly as if the corresponding fluent method had not been
@@ -564,7 +565,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
    * <p>If {@code postProcess()} returns {@code false} without updating the rate limit status, the
    * log statement may not be counted as skipped. In some situations this is desired, but either way
    * the extended logging API should make it clear to the user (via documentation) what will happen.
-   * However in most cases {@code postProcess()} is only expected to return {@code false} due to
+   * However, in most cases {@code postProcess()} is only expected to return {@code false} due to
    * rate limiting.
    *
    * <p>If rate limiters are used there are still situations in which {@code postProcess()} can
@@ -683,7 +684,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
               "logger backend must not return a null LogSite");
     }
     LogSiteKey logSiteKey = null;
-    if (logSite != LogSite.INVALID) {
+    if (logSite != FloggerLogSite.INVALID) {
       logSiteKey = logSite;
       // Log site keys are only modified when we have metadata in the log statement.
       if (metadata != null && metadata.size() > 0) {
@@ -773,7 +774,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
   // ---- Log site injection (used by pre-processors and special cases) ----
 
   @Override
-  public final API withInjectedLogSite(LogSite logSite) {
+  public final API withInjectedLogSite(FloggerLogSite logSite) {
     // First call wins (since auto-injection will typically target the log() method at the end of
     // the chain and might not check for previous explicit injection). In particular it MUST be
     // allowed for a caller to specify the "INVALID" log site, and have that set the field here to
@@ -791,8 +792,8 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
       String methodName,
       int encodedLineNumber,
       @Nullable String sourceFileName) {
-    return withInjectedLogSite(
-        LogSite.injectedLogSite(internalClassName, methodName, encodedLineNumber, sourceFileName));
+    var logSite = injectedLogSite(internalClassName, methodName, encodedLineNumber, sourceFileName);
+    return withInjectedLogSite(logSite);
   }
 
   // ---- Public logging API ----
@@ -807,7 +808,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
   }
 
   @Override
-  public final <T> API with(MetadataKey<T> key, @Nullable T value) {
+  public final <T> API with(FloggerMetadataKey<T> key, @Nullable T value) {
     // Null keys are always bad (even if the value is also null). This is one of the few places
     // where the logger API will throw a runtime exception (and as such it's important to ensure
     // the NoOp implementation also does the check). The reasoning for this is that the metadata
@@ -821,7 +822,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
   }
 
   @Override
-  public final API with(MetadataKey<Boolean> key) {
+  public final API with(FloggerMetadataKey<Boolean> key) {
     return with(key, Boolean.TRUE);
   }
 
@@ -865,7 +866,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
     return everyImpl(Key.LOG_SAMPLE_EVERY_N, n, "sampling");
   }
 
-  private API everyImpl(MetadataKey<Integer> key, int n, String label) {
+  private API everyImpl(FloggerMetadataKey<Integer> key, int n, String label) {
     // See wasForced() for discussion as to why this occurs before argument checking.
     if (wasForced()) {
       return api();

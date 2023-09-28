@@ -30,7 +30,7 @@ import static io.spine.logging.flogger.backend.FormatOptions.FLAG_LEFT_ALIGN;
 import static io.spine.logging.flogger.backend.FormatOptions.FLAG_SHOW_ALT_FORM;
 import static io.spine.logging.flogger.backend.FormatOptions.FLAG_UPPER_CASE;
 
-import io.spine.logging.flogger.LogSite;
+import io.spine.logging.flogger.FloggerLogSite;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -62,13 +62,13 @@ public final class MessageUtils {
   /**
    * Appends log-site information in the default format, including a trailing space.
    *
-   * @param logSite the log site to be appended (ingored if {@link LogSite#INVALID}).
+   * @param logSite the log site to be appended (ingored if {@link FloggerLogSite#INVALID}).
    * @param out the destination buffer.
    * @return whether the log-site was appended.
    */
   @CanIgnoreReturnValue
-  public static boolean appendLogSite(LogSite logSite, StringBuilder out) {
-    if (logSite == LogSite.INVALID) {
+  public static boolean appendLogSite(FloggerLogSite logSite, StringBuilder out) {
+    if (logSite == FloggerLogSite.INVALID) {
       return false;
     }
     out.append(logSite.getClassName())

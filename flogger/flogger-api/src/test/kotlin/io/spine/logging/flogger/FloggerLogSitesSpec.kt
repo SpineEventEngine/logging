@@ -26,9 +26,9 @@
 
 package io.spine.logging.flogger
 
-import io.spine.logging.flogger.LogSites.callerOf
-import io.spine.logging.flogger.LogSites.logSite
-import io.spine.logging.flogger.LogSites.logSiteFrom
+import io.spine.logging.flogger.FloggerLogSites.callerOf
+import io.spine.logging.flogger.FloggerLogSites.logSite
+import io.spine.logging.flogger.FloggerLogSites.logSiteFrom
 import io.spine.logging.flogger.MyLogUtil.callerLogSite
 import io.spine.logging.flogger.MyLogUtil.callerLogSiteWrapped
 import io.kotest.matchers.shouldBe
@@ -36,13 +36,13 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for [LogSites].
+ * Tests for [FloggerLogSites].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/LogSitesTest.java">
  *     Original Java code of Google Flogger</a>
  */
-@DisplayName("`LogSites` should")
-internal class LogSitesSpec {
+@DisplayName("`FloggerLogSites` should")
+internal class FloggerLogSitesSpec {
 
     @Test
     fun `return log site for the current line of code`() {
@@ -59,7 +59,7 @@ internal class LogSitesSpec {
 
     @Test
     fun `return 'INVALID' log site if the caller not found`() {
-        callerOf(String::class.java) shouldBe LogSite.INVALID
+        callerOf(String::class.java) shouldBe FloggerLogSite.INVALID
     }
 
     @Test
@@ -74,8 +74,8 @@ internal class LogSitesSpec {
 }
 
 private object MyLogUtil {
-    val callerLogSite: LogSite
+    val callerLogSite: FloggerLogSite
         get() = callerOf(MyLogUtil::class.java)
-    val callerLogSiteWrapped: LogSite
+    val callerLogSiteWrapped: FloggerLogSite
         get() = callerLogSite
 }

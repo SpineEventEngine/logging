@@ -32,8 +32,8 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.logging.Level.WARNING;
 
 import io.spine.logging.flogger.LogContext;
-import io.spine.logging.flogger.LogSite;
-import io.spine.logging.flogger.MetadataKey;
+import io.spine.logging.flogger.FloggerLogSite;
+import io.spine.logging.flogger.FloggerMetadataKey;
 import io.spine.logging.flogger.backend.BaseMessageFormatter;
 import io.spine.logging.flogger.backend.LogData;
 import io.spine.logging.flogger.backend.MessageUtils;
@@ -111,7 +111,7 @@ final class Log4j2LogEventUtil {
       org.apache.logging.log4j.Level level,
       Throwable thrown) {
 
-    LogSite logSite = logData.getLogSite();
+    FloggerLogSite logSite = logData.getLogSite();
     StackTraceElement locationInfo =
         new StackTraceElement(
             logSite.getClassName(),
@@ -205,11 +205,11 @@ final class Log4j2LogEventUtil {
     out.append("\n  line number: ").append(data.getLogSite().getLineNumber());
   }
 
-  private static final MetadataHandler<MetadataKey.KeyValueHandler> HANDLER =
+  private static final MetadataHandler<FloggerMetadataKey.KeyValueHandler> HANDLER =
       MetadataHandler.builder(Log4j2LogEventUtil::handleMetadata).build();
 
   private static void handleMetadata(
-      MetadataKey<Object> key, Object value, MetadataKey.KeyValueHandler kvh) {
+          FloggerMetadataKey<Object> key, Object value, FloggerMetadataKey.KeyValueHandler kvh) {
     if (key.getClass().equals(LogContext.Key.TAGS.getClass())) {
       processTags(key, value, kvh);
     } else {
@@ -225,7 +225,7 @@ final class Log4j2LogEventUtil {
   }
 
   private static void processTags(
-      MetadataKey<Object> key, Object value, MetadataKey.KeyValueHandler kvh) {
+          FloggerMetadataKey<Object> key, Object value, FloggerMetadataKey.KeyValueHandler kvh) {
     ValueQueue valueQueue = ValueQueue.appendValueToNewQueue(value);
     // Unlike single metadata (which is usually formatted as a single value), tags are always
     // formatted as a list.

@@ -29,7 +29,7 @@ package io.spine.logging.flogger.context;
 import static io.spine.logging.flogger.util.Checks.checkArgument;
 import static io.spine.logging.flogger.util.Checks.checkNotNull;
 
-import io.spine.logging.flogger.MetadataKey;
+import io.spine.logging.flogger.FloggerMetadataKey;
 import io.spine.logging.flogger.backend.Metadata;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.util.ArrayList;
@@ -48,10 +48,10 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  */
 public abstract class ContextMetadata extends Metadata {
   private static final class Entry<T> {
-    final MetadataKey<T> key;
+    final FloggerMetadataKey<T> key;
     final T value;
 
-    Entry(MetadataKey<T> key, T value) {
+    Entry(FloggerMetadataKey<T> key, T value) {
       this.key = checkNotNull(key, "key");
       this.value = checkNotNull(value, "value");
     }
@@ -74,7 +74,7 @@ public abstract class ContextMetadata extends Metadata {
 
     /** Add a single metadata key/value pair to the builder. */
     @CanIgnoreReturnValue
-    public <T> Builder add(MetadataKey<T> key, T value) {
+    public <T> Builder add(FloggerMetadataKey<T> key, T value) {
       // Entries are immutable and get moved into the metadata when it's built, so these get shared
       // and reduce the size of the metadata storage compared to storing adjacent key/value pairs.
       entries.add(new Entry<T>(key, value));
@@ -94,7 +94,7 @@ public abstract class ContextMetadata extends Metadata {
   }
 
   /** Returns a space efficient {@code ScopeMetadata} containing a single value. */
-  public static <T> ContextMetadata singleton(MetadataKey<T> key, T value) {
+  public static <T> ContextMetadata singleton(FloggerMetadataKey<T> key, T value) {
     return new SingletonMetadata(key, value);
   }
 
@@ -107,15 +107,16 @@ public abstract class ContextMetadata extends Metadata {
   private ContextMetadata() {}
 
   /**
-   * Concatenates the given context metadata <em>after</em> this instance. Key value pairs are simply
-   * concatenated (rather than being merged) which may result in multiple single valued keys
+   * Concatenates the given context metadata <em>after</em> this instance. Key value pairs are
+   * simply concatenated (rather than being merged) which may result in multiple single valued keys
    * existing in the resulting sequence.
    *
    * <p>Whether this is achieved via copying or chaining of instances is an implementation detail.
    *
    * <p>Use {@link io.spine.logging.flogger.backend.MetadataProcessor MetadataProcessor} to process
    * metadata consistently with respect to single valued and repeated keys, and use {@link
-   * Metadata#findValue(MetadataKey)} to lookup the "most recent" value for a single valued key.
+   * Metadata#findValue(FloggerMetadataKey)} to look up the “most recent” value for a single
+   * valued key.
    */
   public abstract ContextMetadata concatenate(ContextMetadata metadata);
 
@@ -123,7 +124,7 @@ public abstract class ContextMetadata extends Metadata {
   abstract Entry<?> get(int n);
 
   @Override
-  public MetadataKey<?> getKey(int n) {
+  public FloggerMetadataKey<?> getKey(int n) {
     return get(n).key;
   }
 
@@ -152,7 +153,7 @@ public abstract class ContextMetadata extends Metadata {
     @Override
     @Nullable
     @SuppressWarnings("unchecked")
-    public <T> T findValue(MetadataKey<T> key) {
+    public <T> T findValue(FloggerMetadataKey<T> key) {
       checkArgument(!key.canRepeat(), "metadata key must be single valued");
       for (int n = entries.length - 1; n >= 0; n--) {
         Entry<?> e = entries[n];
@@ -183,7 +184,7 @@ public abstract class ContextMetadata extends Metadata {
   private static final class SingletonMetadata extends ContextMetadata {
     private final Entry<?> entry;
 
-    <T> SingletonMetadata(MetadataKey<T> key, T value) {
+    <T> SingletonMetadata(FloggerMetadataKey<T> key, T value) {
       this.entry = new Entry<T>(key, value);
     }
 
@@ -203,7 +204,7 @@ public abstract class ContextMetadata extends Metadata {
     @Override
     @Nullable
     @SuppressWarnings("unchecked")
-    public <R> R findValue(MetadataKey<R> key) {
+    public <R> R findValue(FloggerMetadataKey<R> key) {
       checkArgument(!key.canRepeat(), "metadata key must be single valued");
       return entry.key.equals(key) ? (R) entry.value : null;
     }
@@ -243,7 +244,7 @@ public abstract class ContextMetadata extends Metadata {
 
     @Override
     @Nullable
-    public <T> T findValue(MetadataKey<T> key) {
+    public <T> T findValue(FloggerMetadataKey<T> key) {
       // For consistency, do the same checks as for non-empty instances.
       checkArgument(!key.canRepeat(), "metadata key must be single valued");
       return null;

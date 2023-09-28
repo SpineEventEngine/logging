@@ -26,9 +26,9 @@
 
 package io.spine.logging
 
+import io.spine.logging.flogger.FloggerMetadataKey
 import kotlin.reflect.KClass
 import kotlin.reflect.cast
-import io.spine.logging.flogger.MetadataKey as FMetadataKey
 
 /**
  * Flogger-based implementation of [MetadataKey].
@@ -39,7 +39,7 @@ internal class JvmMetadataKey<T: Any>(
     override val canRepeat: Boolean
 ) :  MetadataKey<T> {
 
-    internal val adapter: FMetadataKey<T> = FMetadataKeyAdapter(label, clazz.java, canRepeat)
+    internal val adapter: FloggerMetadataKey<T> = FMetadataKeyAdapter(label, clazz.java, canRepeat)
 
     companion object {
 
@@ -65,4 +65,4 @@ internal class JvmMetadataKey<T: Any>(
  * Adapts `JvmMetadataKey` to the cases when `FMetadataKey` instances should be used.
  */
 private class FMetadataKeyAdapter<T: Any>(label: String, clazz: Class<T>, canRepeat: Boolean) :
-    FMetadataKey<T>(label, clazz, canRepeat)
+    FloggerMetadataKey<T>(label, clazz, canRepeat)

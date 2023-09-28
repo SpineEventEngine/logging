@@ -27,7 +27,7 @@
 package io.spine.logging.flogger.context;
 
 import io.spine.logging.flogger.FluentLogger2;
-import io.spine.logging.flogger.MetadataKey;
+import io.spine.logging.flogger.FloggerMetadataKey;
 import io.spine.logging.flogger.StackSize;
 import io.spine.logging.flogger.context.ScopedLoggingContext.LoggingContextCloseable;
 
@@ -104,7 +104,7 @@ final class NoOpContextDataProvider extends ContextDataProvider {
     }
 
     @Override
-    public <T> boolean addMetadata(MetadataKey<T> key, T value) {
+    public <T> boolean addMetadata(FloggerMetadataKey<T> key, T value) {
       logWarningOnceOnly();
       return super.addMetadata(key, value);
     }

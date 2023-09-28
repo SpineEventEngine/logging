@@ -18,7 +18,7 @@ package com.google.common.flogger.grpc;
 
 import static io.spine.logging.flogger.util.Checks.checkNotNull;
 
-import io.spine.logging.flogger.MetadataKey;
+import io.spine.logging.flogger.FloggerMetadataKey;
 import io.spine.logging.flogger.context.ContextMetadata;
 import io.spine.logging.flogger.context.LogLevelMap;
 import io.spine.logging.flogger.context.ScopeType;
@@ -88,7 +88,7 @@ final class GrpcScopedLoggingContext extends ScopedLoggingContext {
   }
 
   @Override
-  public <T> boolean addMetadata(MetadataKey<T> key, T value) {
+  public <T> boolean addMetadata(FloggerMetadataKey<T> key, T value) {
     // Serves as the null pointer check, and we don't care much about the extra allocation in the
     // case where there's no context, because that should be very rare (and the singleton is small).
     ContextMetadata metadata = ContextMetadata.singleton(key, value);

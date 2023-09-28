@@ -26,8 +26,8 @@
 
 package io.spine.logging.flogger.backend;
 
-import io.spine.logging.flogger.MetadataKey;
-import io.spine.logging.flogger.MetadataKey.KeyValueHandler;
+import io.spine.logging.flogger.FloggerMetadataKey;
+import io.spine.logging.flogger.FloggerMetadataKey.KeyValueHandler;
 import io.spine.logging.flogger.backend.MetadataHandler.RepeatedValueHandler;
 import io.spine.logging.flogger.backend.MetadataHandler.ValueHandler;
 import java.util.Iterator;
@@ -45,7 +45,7 @@ public final class MetadataKeyValueHandlers {
   private static final ValueHandler<Object, KeyValueHandler> EMIT_METADATA =
       new ValueHandler<Object, KeyValueHandler>() {
         @Override
-        public void handle(MetadataKey<Object> key, Object value, KeyValueHandler kvf) {
+        public void handle(FloggerMetadataKey<Object> key, Object value, KeyValueHandler kvf) {
           key.safeEmit(value, kvf);
         }
       };
@@ -53,7 +53,7 @@ public final class MetadataKeyValueHandlers {
   private static final RepeatedValueHandler<Object, KeyValueHandler> EMIT_REPEATED_METADATA =
       new RepeatedValueHandler<Object, KeyValueHandler>() {
         @Override
-        public void handle(MetadataKey<Object> key, Iterator<Object> value, KeyValueHandler kvf) {
+        public void handle(FloggerMetadataKey<Object> key, Iterator<Object> value, KeyValueHandler kvf) {
           key.safeEmitRepeated(value, kvf);
         }
       };
@@ -79,7 +79,7 @@ public final class MetadataKeyValueHandlers {
    * @return a builder configured with the default key/value handlers and ignored keys.
    */
   public static MetadataHandler.Builder<KeyValueHandler> getDefaultBuilder(
-      Set<MetadataKey<?>> ignored) {
+      Set<FloggerMetadataKey<?>> ignored) {
     return MetadataHandler.builder(getDefaultValueHandler())
         .setDefaultRepeatedHandler(getDefaultRepeatedValueHandler())
         .ignoring(ignored);
@@ -92,7 +92,7 @@ public final class MetadataKeyValueHandlers {
    *
    * @return a handler configured with the default key/value handlers and ignored keys.
    */
-  public static MetadataHandler<KeyValueHandler> getDefaultHandler(Set<MetadataKey<?>> ignored) {
+  public static MetadataHandler<KeyValueHandler> getDefaultHandler(Set<FloggerMetadataKey<?>> ignored) {
     return getDefaultBuilder(ignored).build();
   }
 

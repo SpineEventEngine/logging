@@ -56,7 +56,7 @@ import java.util.concurrent.TimeUnit;
  *     Original Java code of Google Flogger</a>
  */
 // NOTE: new methods to this interface should be coordinated with google-java-format
-public interface LoggingApi<API extends LoggingApi<API>> {
+public interface FloggerApi<API extends FloggerApi<API>> {
   /**
    * Associates a {@link Throwable} instance with the current log statement, to be interpreted as
    * the cause of this statement. Typically this method will be used from within catch blocks to log
@@ -327,7 +327,7 @@ public interface LoggingApi<API extends LoggingApi<API>> {
    *   <li>Key value pairs which are explicitly extracted from logs by tools.
    * </ul>
    *
-   * <p>Metadata keys can support repeated values (see {@link MetadataKey#canRepeat()}), and if a
+   * <p>Metadata keys can support repeated values (see {@link FloggerMetadataKey#canRepeat()}), and if a
    * repeatable key is used multiple times in the same log statement, the effect is to collect all
    * the given values in order. If a non-repeatable key is passed multiple times, only the last
    * value is retained (though callers should not rely on this behavior and should simply avoid
@@ -340,9 +340,9 @@ public interface LoggingApi<API extends LoggingApi<API>> {
    * @param value a value to be associated with the key in this log statement. Null values are
    *        allowed, but the effect is always a no-op
    * @throws NullPointerException if the given key is null
-   * @see MetadataKey
+   * @see FloggerMetadataKey
    */
-  <T> API with(MetadataKey<T> key, @Nullable T value);
+  <T> API with(FloggerMetadataKey<T> key, @Nullable T value);
 
   /**
    * Sets a boolean metadata key constant to {@code true} for this log statement in a structured way
@@ -361,9 +361,9 @@ public interface LoggingApi<API extends LoggingApi<API>> {
    *
    * @param key the boolean metadata key (expected to be a static constant)
    * @throws NullPointerException if the given key is null
-   * @see MetadataKey
+   * @see FloggerMetadataKey
    */
-  API with(MetadataKey<Boolean> key);
+  API with(FloggerMetadataKey<Boolean> key);
 
   /**
    * Sets the log site for the current log statement. Explicit log site injection is very rarely
@@ -416,7 +416,7 @@ public interface LoggingApi<API extends LoggingApi<API>> {
    *
    * @param logSite Log site which uniquely identifies any per-log statement resources.
    */
-  API withInjectedLogSite(@Nullable LogSite logSite);
+  API withInjectedLogSite(@Nullable FloggerLogSite logSite);
 
   /**
    * Internal method not for public use. This method is only intended for use by the logger
@@ -812,19 +812,19 @@ public interface LoggingApi<API extends LoggingApi<API>> {
   void log(String msg, double p1, double p2);
 
   /**
-   * An implementation of {@link LoggingApi} which does nothing and discards all parameters.
+   * An implementation of {@link FloggerApi} which does nothing and discards all parameters.
    * <p>
    * This class (or a subclass in the case of an extended API) should be returned whenever logging
    * is definitely disabled (e.g. when the log level is too low).
    */
-  public static class NoOp<API extends LoggingApi<API>> implements LoggingApi<API> {
+  public static class NoOp<API extends FloggerApi<API>> implements FloggerApi<API> {
     @SuppressWarnings("unchecked")
     protected final API noOp() {
       return (API) this;
     }
 
     @Override
-    public API withInjectedLogSite(LogSite logSite) {
+    public API withInjectedLogSite(FloggerLogSite logSite) {
       return noOp();
     }
 
@@ -843,14 +843,14 @@ public interface LoggingApi<API extends LoggingApi<API>> {
     }
 
     @Override
-    public final <T> API with(MetadataKey<T> key, @Nullable T value) {
+    public final <T> API with(FloggerMetadataKey<T> key, @Nullable T value) {
       // Identical to the check in LogContext for consistency.
       checkNotNull(key, "metadata key");
       return noOp();
     }
 
     @Override
-    public final API with(MetadataKey<Boolean> key) {
+    public final API with(FloggerMetadataKey<Boolean> key) {
       // Do this inline rather than calling with(key, true) to keep no-op minimal.
       checkNotNull(key, "metadata key");
       return noOp();

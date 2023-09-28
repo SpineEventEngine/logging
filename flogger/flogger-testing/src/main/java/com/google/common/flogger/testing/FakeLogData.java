@@ -20,8 +20,8 @@ import static io.spine.logging.flogger.util.Checks.checkState;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 import io.spine.logging.flogger.LogContext;
-import io.spine.logging.flogger.LogSite;
-import io.spine.logging.flogger.MetadataKey;
+import io.spine.logging.flogger.FloggerLogSite;
+import io.spine.logging.flogger.FloggerMetadataKey;
 import io.spine.logging.flogger.backend.LogData;
 import io.spine.logging.flogger.backend.Metadata;
 import io.spine.logging.flogger.backend.TemplateContext;
@@ -42,7 +42,7 @@ public final class FakeLogData implements LogData {
   public static final String FAKE_LOGGING_METHOD = "fakeMethod";
   public static final String FAKE_SOURCE_PATH = "src/com/google/FakeClass.java";
 
-  public static final LogSite FAKE_LOG_SITE =
+  public static final FloggerLogSite FAKE_LOG_SITE =
       FakeLogSite.create(FAKE_LOGGING_CLASS, FAKE_LOGGING_METHOD, 123, FAKE_SOURCE_PATH);
 
   /**
@@ -69,7 +69,7 @@ public final class FakeLogData implements LogData {
   private Object literalArgument = null;
   private long timestampNanos = 0L;
   private FakeMetadata metadata = new FakeMetadata();
-  private LogSite logSite = FAKE_LOG_SITE;
+  private FloggerLogSite logSite = FAKE_LOG_SITE;
 
   private FakeLogData(Object literalArgument) {
     this.literalArgument = literalArgument;
@@ -94,13 +94,13 @@ public final class FakeLogData implements LogData {
   }
 
   @CanIgnoreReturnValue
-  public FakeLogData setLogSite(LogSite logSite) {
+  public FakeLogData setLogSite(FloggerLogSite logSite) {
     this.logSite = logSite;
     return this;
   }
 
   @CanIgnoreReturnValue
-  public <T> FakeLogData addMetadata(MetadataKey<T> key, Object value) {
+  public <T> FakeLogData addMetadata(FloggerMetadataKey<T> key, Object value) {
     metadata.add(key, key.cast(value));
     return this;
   }
@@ -127,7 +127,7 @@ public final class FakeLogData implements LogData {
   }
 
   @Override
-  public LogSite getLogSite() {
+  public FloggerLogSite getLogSite() {
     return logSite;
   }
 
