@@ -32,5 +32,5 @@ dependencies {
     testImplementation(project(":logging"))
     testImplementation(project(":fixtures"))
     testRuntimeOnly(project(":logging-backend"))
-    testRuntimeOnly(project(":flogger-grpc-context"))
+    testRuntimeOnly(project(":logging-grpc-context"))
 }

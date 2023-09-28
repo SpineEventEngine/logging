@@ -49,11 +49,11 @@ spinePublishing {
         "logging-backend",
         "logging-log4j2-backend",
         "logging-context",
+        "logging-grpc-context",
         "logging-smoke-test",
         "testutil-logging",
         "flogger-api",
         "flogger-platform-generator",
-        "flogger-grpc-context",
     )
     modulesWithCustomPublishing = setOf("logging")
     destinations = with(PublishingRepos) {
