@@ -31,6 +31,7 @@ plugins {
 dependencies {
     testImplementation(project(":logging"))
     testImplementation(project(":fixtures"))
+    testImplementation(project(":flogger-api"))
 
     /**
      * Adds `log4j2` backend and the default context to the classpath.
