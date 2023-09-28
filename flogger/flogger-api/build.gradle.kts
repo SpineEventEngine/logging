@@ -39,6 +39,7 @@ dependencies {
     )
     testImplementation(project(":flogger-testing"))
     testImplementation(project(":testutil-logging"))
+    testRuntimeOnly(project(":logging-backend"))
 }
 
 java {
