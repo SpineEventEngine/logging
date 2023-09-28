@@ -20,7 +20,9 @@ import io.spine.logging.flogger.FloggerLogSite;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/** A simplified LogSite implementation used for testing. */
+/**
+ * A simplified LogSite implementation used for testing.
+ */
 public final class FakeLogSite extends FloggerLogSite {
   private static final AtomicInteger uid = new AtomicInteger();
 
@@ -72,7 +74,7 @@ public final class FakeLogSite extends FloggerLogSite {
     if (!(obj instanceof FakeLogSite)) {
       return false;
     }
-    FakeLogSite other = (FakeLogSite) obj;
+    var other = (FakeLogSite) obj;
     return Objects.equals(className, other.className)
         && Objects.equals(methodName, other.methodName)
         && lineNumber == other.lineNumber

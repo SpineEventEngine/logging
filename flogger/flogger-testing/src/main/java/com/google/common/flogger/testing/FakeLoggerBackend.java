@@ -61,6 +61,7 @@ public final class FakeLoggerBackend extends LoggerBackend {
   /**
    * Sets the current level of this backend.
    */
+  @SuppressWarnings("DuplicateStringLiteralInspection")
   public void setLevel(Level level) {
     this.minLevel = checkNotNull(level, "level");
   }
@@ -106,13 +107,6 @@ public final class FakeLoggerBackend extends LoggerBackend {
 
   private static void throwNoEntries() {
     throw new IllegalStateException("Fake backend has not captured any log data.");
-  }
-
-  /**
-   * Asserts about the {@code Nth} logged entry.
-   */
-  LogDataSubject assertLogged(int n) {
-    return LogDataSubject.assertThat(logged.get(n));
   }
 
   @Override public String getLoggerName() {
