@@ -37,17 +37,19 @@ import java.util.logging.Level;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
- * A gRPC context based implementation of Flogger's {@link ContextDataProvider}.
+ * A {@link io.grpc.Context gRPC}-based implementation of {@link ContextDataProvider}.
  *
- * <p>When using Flogger's {@code com.google.common.flogger.backend.system.DefaultPlatform}, this
- * factory will automatically be used if it is included on the classpath and no other implementation
- * of {@code ContextDataProvider} (other than the default implementation) is. To specify it more
- * explicitly or to work around an issue where multiple {@code ContextDataProvider} implementations
- * are on the classpath, you can set the {@code flogger.logging_context} system property:
+ * <p>When using {@code DefaultPlatform}, this factory will automatically
+ * be used if it is included on the classpath, and no other implementation
+ * of {@code ContextDataProvider} other than the default implementation is.
+ *
+ * <p>To specify it more explicitly or to work around an issue where multiple
+ * {@code ContextDataProvider} implementations are on the classpath, one can set
+ * the {@code flogger.logging_context} system property to the fully-qualified name
+ * of this class:
  *
  * <ul>
- *   <li>{@code
- *       flogger.logging_context=io.spine.logging.context.grpc.GrpcContextDataProvider}
+ *   <li>{@code flogger.logging_context=io.spine.logging.context.grpc.GrpcContextDataProvider}
  * </ul>
  *
  * @see <a href="https://rb.gy/0cy88">Original Java code of Google Flogger</a>

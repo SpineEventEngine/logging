@@ -38,12 +38,11 @@ import io.grpc.Context;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
- * A gRPC context based implementation of Flogger's scoped logging context API. This is a lazily
- * loaded singleton instance returned from {@link GrpcContextDataProvider#getContextApiSingleton()}
- * which provides application code with a mechanism for controlling logging contexts.
+ * A {@link io.grpc.Context gRPC}-based implementation of {@link ScopedLoggingContext}.
  *
- * <p>It is vital that this class is lazily loaded (rather than being loaded when the logging
- * platform is configured) since other classes it uses may well use fluent loggers.
+ * <p>This is a lazily loaded singleton instance returned from
+ * {@link GrpcContextDataProvider#getContextApiSingleton()}, which provides
+ * application code with a mechanism for controlling logging contexts.
  *
  * @see <a href="https://rb.gy/w1wyu">Original Java code of Google Flogger</a>
  */
