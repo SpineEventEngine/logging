@@ -44,6 +44,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  *
  * <p>It is vital that this class is lazily loaded (rather than being loaded when the logging
  * platform is configured) since other classes it uses may well use fluent loggers.
+ *
+ * @see <a href="https://rb.gy/w1wyu">Original Java code of Google Flogger</a>
  */
 final class GrpcScopedLoggingContext extends ScopedLoggingContext {
 

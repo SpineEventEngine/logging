@@ -36,7 +36,11 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-/** A mutable thread-safe holder for context scoped logging information. */
+/**
+ * A mutable thread-safe holder for context scoped logging information.
+ *
+ * @see <a href="https://rb.gy/nfnwv">Original Java code of Google Flogger</a>
+ */
 final class GrpcContextData {
 
   static Tags getTagsFor(@Nullable GrpcContextData context) {

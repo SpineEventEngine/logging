@@ -49,6 +49,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  *   <li>{@code
  *       flogger.logging_context=io.spine.logging.context.grpc.GrpcContextDataProvider}
  * </ul>
+ *
+ * @see <a href="https://rb.gy/0cy88">Original Java code of Google Flogger</a>
  */
 public final class GrpcContextDataProvider extends ContextDataProvider {
 

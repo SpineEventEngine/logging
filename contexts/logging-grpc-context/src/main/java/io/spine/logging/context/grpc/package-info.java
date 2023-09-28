@@ -24,6 +24,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/**
+ * Contains {@link io.grpc.Context gRPC}-based implementation of
+ * {@link io.spine.logging.flogger.context.ScopedLoggingContext ScopedLoggingContext}.
+ *
+ * @see <a href="https://rb.gy/zghcm">Original Java code of Google Flogger</a>
+ */
 @CheckReturnValue
 package io.spine.logging.context.grpc;
 
