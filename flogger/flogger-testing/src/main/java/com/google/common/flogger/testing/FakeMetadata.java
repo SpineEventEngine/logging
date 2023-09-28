@@ -26,8 +26,8 @@ import java.util.List;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
- * A mutable fake {@link Metadata} implementation to help test logging backends and other log
- * handling code.
+ * A mutable fake {@link Metadata} implementation to help test logging backends,
+ * and other log handling code.
  */
 public final class FakeMetadata extends Metadata {
 
