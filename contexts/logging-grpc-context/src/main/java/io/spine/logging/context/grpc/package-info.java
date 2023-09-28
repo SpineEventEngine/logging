@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,13 +24,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-plugins {
-    `jvm-module`
-}
+/**
+ * Contains {@link io.grpc.Context gRPC}-based implementation of
+ * {@link io.spine.logging.flogger.context.ScopedLoggingContext ScopedLoggingContext}.
+ *
+ * @see <a href="https://rb.gy/zghcm">Original Java code of Google Flogger</a>
+ */
+@CheckReturnValue
+package io.spine.logging.context.grpc;
 
-dependencies {
-    testImplementation(project(":logging"))
-    testImplementation(project(":fixtures"))
-    testRuntimeOnly(project(":logging-backend"))
-    testRuntimeOnly(project(":logging-grpc-context"))
-}
+import com.google.errorprone.annotations.CheckReturnValue;

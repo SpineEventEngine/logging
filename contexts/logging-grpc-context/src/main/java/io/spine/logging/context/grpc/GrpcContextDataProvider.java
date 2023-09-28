@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The Flogger Authors.
+ * Copyright 2019, The Flogger Authors; 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -7,14 +7,24 @@
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Redistribution and use in source and/or binary forms, with or without
+ * modification, must retain the above copyright notice and the following
+ * disclaimer.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.common.flogger.grpc;
+package io.spine.logging.context.grpc;
 
 import io.spine.logging.flogger.LoggingScope;
 import io.spine.logging.flogger.context.ContextDataProvider;
@@ -27,18 +37,22 @@ import java.util.logging.Level;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
- * A gRPC context based implementation of Flogger's {@link ContextDataProvider}.
+ * A {@link io.grpc.Context gRPC}-based implementation of {@link ContextDataProvider}.
  *
- * <p>When using Flogger's {@code com.google.common.flogger.backend.system.DefaultPlatform}, this
- * factory will automatically be used if it is included on the classpath and no other implementation
- * of {@code ContextDataProvider} (other than the default implementation) is. To specify it more
- * explicitly or to work around an issue where multiple {@code ContextDataProvider} implementations
- * are on the classpath, you can set the {@code flogger.logging_context} system property:
+ * <p>When using {@code DefaultPlatform}, this factory will automatically
+ * be used if it is included on the classpath, and no other implementation
+ * of {@code ContextDataProvider} other than the default implementation is.
+ *
+ * <p>To specify it more explicitly or to work around an issue where multiple
+ * {@code ContextDataProvider} implementations are on the classpath, one can set
+ * the {@code flogger.logging_context} system property to the fully-qualified name
+ * of this class:
  *
  * <ul>
- *   <li>{@code
- *       flogger.logging_context=com.google.common.flogger.grpc.GrpcContextDataProvider}
+ *   <li>{@code flogger.logging_context=io.spine.logging.context.grpc.GrpcContextDataProvider}
  * </ul>
+ *
+ * @see <a href="https://rb.gy/0cy88">Original Java code of Google Flogger</a>
  */
 public final class GrpcContextDataProvider extends ContextDataProvider {
 

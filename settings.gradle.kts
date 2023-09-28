@@ -38,11 +38,15 @@ include(
     "logging-backend",
     "logging-context",
     "logging-fake-backend",
-    "testutil-logging"
+    "testutil-logging",
 )
 
 includeBackend(
-    "logging-log4j2-backend"
+    "logging-log4j2-backend",
+)
+
+includeContext(
+    "logging-grpc-context",
 )
 
 includeTest(
@@ -59,20 +63,17 @@ includeFlogger(
     "flogger-api",
     "flogger-testing",
     "flogger-platform-generator",
-    "flogger-grpc-context",
 )
 
-fun includeBackend(vararg names: String) = names.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("backends/$name")
-}
+fun includeBackend(vararg modules: String) = includeTo("backends", modules)
 
-fun includeTest(vararg names: String) = names.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("tests/$name")
-}
+fun includeContext(vararg modules: String) = includeTo("contexts", modules)
 
-fun includeFlogger(vararg names: String) = names.forEach { name ->
+fun includeTest(vararg modules: String) = includeTo("tests", modules)
+
+fun includeFlogger(vararg modules: String) = includeTo("flogger", modules)
+
+fun includeTo(directory: String, modules: Array<out String>) = modules.forEach { name ->
     include(name)
-    project(":$name").projectDir = file("flogger/$name")
+    project(":$name").projectDir = file("$directory/$name")
 }

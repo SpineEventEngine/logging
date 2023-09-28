@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.common.flogger.grpc
+package io.spine.logging.context.grpc
 
 import io.spine.logging.flogger.context.ContextDataProvider
 import com.google.common.flogger.testing.AbstractContextDataProviderSpec
@@ -38,8 +38,7 @@ import org.junit.jupiter.api.Test
 /**
  * Tests for [GrpcContextDataProvider].
  *
- * @see <a href="https://github.com/google/flogger/blob/70c5aea863952ee61b3d33afb41f2841b6d63455/grpc/src/test/java/com/google/common/flogger/grpc/GrpcContextDataProviderTest.java">
- *     Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/hccpy">Original Java code of Google Flogger</a>
  */
 @DisplayName("`GrpcContextDataProvider` should")
 internal class GrpcContextDataProviderSpec : AbstractContextDataProviderSpec() {

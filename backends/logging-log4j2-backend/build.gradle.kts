@@ -36,7 +36,7 @@ dependencies {
     api(project(":logging-backend"))
     implementation(project(":flogger-api"))
     testImplementation(project(":flogger-testing"))
-    testRuntimeOnly(project(":flogger-grpc-context"))
+    testRuntimeOnly(project(":logging-grpc-context"))
 }
 
 java {
