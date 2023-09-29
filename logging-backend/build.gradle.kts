@@ -37,7 +37,6 @@ dependencies {
     implementation(project(":flogger-api"))
     testImplementation(project(":testutil-logging"))
     testImplementation(project(path = ":flogger-api", configuration = "testArtifacts"))
-    testImplementation(project(":flogger-testing"))
     testImplementation(AutoService.annotations)
     kaptTest(AutoService.processor)
 }
