@@ -32,7 +32,6 @@ import io.spine.logging.flogger.backend.Metadata
 import io.spine.logging.flogger.context.Tags
 import io.spine.logging.flogger.parser.ParseException
 import io.spine.logging.flogger.singleKey
-import com.google.common.flogger.testing.FakeLogData
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
@@ -43,6 +42,7 @@ import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldEndWith
 import io.kotest.matchers.string.shouldNotContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.logging.flogger.backend.given.FakeLogData
 import java.time.Instant.ofEpochMilli
 import java.util.concurrent.TimeUnit.NANOSECONDS
 import java.util.logging.Level
@@ -78,14 +78,14 @@ internal class SimpleLogRecordSpec {
         @Test
         fun `log level`() {
             val level = Level.FINER
-            val data = FakeLogData.of("") .setLevel(level)
+            val data = FakeLogData("") .setLevel(level)
             val record = SimpleLogRecord.create(data, Metadata.empty())
             record.level shouldBe level
         }
 
         @Test
         fun `literal message`() {
-            val data = FakeLogData.of(LITERAL)
+            val data = FakeLogData(LITERAL)
             val record = SimpleLogRecord.create(data, Metadata.empty())
             record.message shouldBe LITERAL
             record.parameters.shouldBeEmpty()
@@ -93,7 +93,7 @@ internal class SimpleLogRecordSpec {
 
         @Test
         fun `logger name and log site info`() {
-            val data = FakeLogData.of("")
+            val data = FakeLogData("")
             val record = SimpleLogRecord.create(data, Metadata.empty())
             record.loggerName shouldBe data.loggerName
             record.sourceClassName shouldBe data.logSite.className
@@ -103,7 +103,7 @@ internal class SimpleLogRecordSpec {
         @Test
         fun `'Throwable' cause`() {
             val cause = Throwable("Goodbye World")
-            val data = FakeLogData.of("").addMetadata(Key.LOG_CAUSE, cause)
+            val data = FakeLogData("").addMetadata(Key.LOG_CAUSE, cause)
             val record = SimpleLogRecord.create(data, Metadata.empty())
             record.thrown shouldBeSameInstanceAs cause
         }
@@ -118,7 +118,7 @@ internal class SimpleLogRecordSpec {
             val intValue = 23
             val strValue = "test value"
 
-            val data = FakeLogData.of(LITERAL)
+            val data = FakeLogData(LITERAL)
                 .setTimestampNanos(timestampNanos)
                 .addMetadata(INT_KEY, intValue)
                 .addMetadata(STR_KEY, strValue)
@@ -140,7 +140,7 @@ internal class SimpleLogRecordSpec {
                 .add(PATH_KEY, pathTree[0])
                 .add(INT_KEY, intValue)
                 .add(PATH_KEY, pathTree[1])
-            val data = FakeLogData.of(LITERAL)
+            val data = FakeLogData(LITERAL)
                 .addMetadata(STR_KEY, strValue)
                 .addMetadata(PATH_KEY, pathTree[2])
             val record = SimpleLogRecord.create(data, scope)
@@ -161,7 +161,7 @@ internal class SimpleLogRecordSpec {
                 .addTag(bar, barValue)
                 .addTag(baz)
                 .build()
-            val data = FakeLogData.of(LITERAL).addMetadata(Key.TAGS, tags)
+            val data = FakeLogData(LITERAL).addMetadata(Key.TAGS, tags)
             val record = SimpleLogRecord.create(data, Metadata.empty())
 
             // Tags are returned in alphabetical order.
@@ -172,7 +172,7 @@ internal class SimpleLogRecordSpec {
 
     @Test
     fun `handle a nullable literal message`() {
-        val data = FakeLogData.of(null).setLevel(Level.WARNING)
+        val data = FakeLogData(null).setLevel(Level.WARNING)
         val record = SimpleLogRecord.create(data, Metadata.empty())
         record.message shouldBe "null"
         record.parameters.shouldBeEmpty()
@@ -199,7 +199,7 @@ internal class SimpleLogRecordSpec {
     @Test
     fun `handle runtime errors happening during the logging`() {
         val passedCause = Throwable("Original Cause")
-        val data = FakeLogData.of(LITERAL).addMetadata(Key.LOG_CAUSE, passedCause)
+        val data = FakeLogData(LITERAL).addMetadata(Key.LOG_CAUSE, passedCause)
         val error = RuntimeException()
         val record = SimpleLogRecord.error(error, data, Metadata.empty())
         record.thrown shouldBe error
@@ -282,7 +282,7 @@ internal class SimpleLogRecordSpec {
         stringifiedRecord shouldContain "  arguments: []"
         stringifiedRecord shouldContain "  original message: Answer=%d"
 
-        data = FakeLogData.of(LITERAL)
+        data = FakeLogData(LITERAL)
         record = SimpleLogRecord.create(data, Metadata.empty())
         stringifiedRecord = record.toString()
 

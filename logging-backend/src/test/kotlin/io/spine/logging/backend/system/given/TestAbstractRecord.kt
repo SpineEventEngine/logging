@@ -32,7 +32,7 @@ import io.spine.logging.flogger.backend.Metadata
 import io.spine.logging.flogger.backend.MetadataProcessor
 import io.spine.logging.flogger.backend.SimpleMessageFormatter
 import io.spine.logging.backend.system.AbstractLogRecord
-import com.google.common.flogger.testing.FakeLogData
+import io.spine.logging.flogger.backend.given.FakeLogData
 
 /**
  * An instantiatable [AbstractLogRecord].
