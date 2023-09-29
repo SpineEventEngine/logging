@@ -26,15 +26,15 @@
 
 package io.spine.logging.dynamic.backend
 
-import io.spine.logging.flogger.backend.given.FakeLoggerBackend
+import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
 
 /**
- * A factory of [FakeLoggerBackend].
+ * A factory of [MemoizingLoggerBackend].
  *
  *  The type is public because it is used in a public inline method.
  */
-public class FakeLoggerBackendFactory : TypedBackendFactory<io.spine.logging.flogger.backend.given.FakeLoggerBackend> {
+public class MemoizingLoggerBackendFactory : TypedBackendFactory<MemoizingLoggerBackend> {
 
-    override fun create(loggingClassName: String): io.spine.logging.flogger.backend.given.FakeLoggerBackend =
-        io.spine.logging.flogger.backend.given.FakeLoggerBackend(loggingClassName)
+    override fun create(loggingClassName: String): MemoizingLoggerBackend =
+        MemoizingLoggerBackend(loggingClassName)
 }

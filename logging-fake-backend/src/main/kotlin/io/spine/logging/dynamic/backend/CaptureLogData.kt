@@ -53,7 +53,7 @@ import io.spine.logging.flogger.backend.LogData
  * And until [captureLogData] is called, this factory delegates backend creation
  * to `SimpleBackendFactory`. Thus, making no difference with the system backend.
  *
- * [captureLogData] substitutes simple backend factory with [FakeLoggerBackendFactory]
+ * [captureLogData] substitutes simple backend factory with [MemoizingLoggerBackendFactory]
  * (which memoizes log data), executes the given [action], switches back to simple
  * backend factory, and returns the captured log data. Out of this comes a restriction
  * on logger creation within the [action]. If a logger is created outside the [action],
@@ -63,7 +63,7 @@ import io.spine.logging.flogger.backend.LogData
  * The method is inlined to preserve the original log site.
  */
 public inline fun captureLogData(action: () -> Unit): List<LogData> {
-    val fakeBackends = FakeLoggerBackendFactory()
+    val fakeBackends = MemoizingLoggerBackendFactory()
     val memoizingFactory = MemoizingBackendFactory(fakeBackends)
 
     // Runs the given action with a substituted backend factory.
