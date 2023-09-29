@@ -31,7 +31,9 @@ import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
 /**
  * A factory of [MemoizingLoggerBackend].
  *
- *  The type is public because it is used in a public inline method.
+ * The produced backends just remember the logged data.
+ *
+ * The type is public because it is used in a public inline method.
  */
 public class MemoizingLoggerBackendFactory : TypedBackendFactory<MemoizingLoggerBackend> {
 
