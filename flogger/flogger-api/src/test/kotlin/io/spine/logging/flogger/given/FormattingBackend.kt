@@ -51,8 +51,8 @@ internal open class FormattingBackend : LoggerBackend() {
     override fun isLoggable(lvl: Level): Boolean = true
 
     /**
-     * Formats the given [LogData] without using core utils, so we can test
-     * what happens if arguments cause errors.
+     * Formats the given [LogData] without using core logging utils,
+     * so it is possible to test what happens if arguments cause errors.
      *
      * The core utility classes handle this properly. But custom backends
      * are not obligated to use them.
@@ -68,6 +68,7 @@ internal open class FormattingBackend : LoggerBackend() {
         }
     }
 
-    // Don't handle any errors in the backend, so we can test “last resort” error handling.
+    // Don't handle any errors in the backend, so we can test
+    // “last resort” error handling.
     override fun handleError(error: RuntimeException, badData: LogData) = throw error
 }

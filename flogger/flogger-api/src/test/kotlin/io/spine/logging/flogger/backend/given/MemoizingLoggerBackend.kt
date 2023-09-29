@@ -54,14 +54,14 @@ class MemoizingLoggerBackend(val name: String = "com.example.MyClass") : LoggerB
     val loggedCount: Int get() = mutableLogged.size
 
     /**
-     * The last [LogData] entry captured by this backend.
+     * The last [LogData] captured by this backend.
      *
      * @throws NoSuchElementException if there are no entries
      */
     val lastLogged: LogData get() = mutableLogged.last()
 
     /**
-     * The first [LogData] entry captured by this backend.
+     * The first [LogData] captured by this backend.
      *
      * @throws NoSuchElementException if there are no entries
      */

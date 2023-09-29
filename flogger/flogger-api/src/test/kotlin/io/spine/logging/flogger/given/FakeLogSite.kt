@@ -51,7 +51,8 @@ class FakeLogSite(
         private val uniqueMethod = { "doAct" + uid.incrementAndGet() }
 
         /**
-         * Creates a unique fake log site for use as a key when testing shared static maps.
+         * Creates a unique instance to be used as a key
+         * when testing shared static maps.
          */
         fun unique() = FakeLogSite(LOGGING_CLASS, uniqueMethod(), LINE_NUMBER, SOURCE_FILE)
     }
