@@ -26,15 +26,15 @@
 
 package io.spine.logging.backend.log4j2
 
-import io.spine.logging.flogger.LogContext.Key
-import io.spine.logging.backend.log4j2.given.MemoizingAppender
-import io.spine.logging.flogger.context.ContextDataProvider
-import io.spine.logging.flogger.context.Tags
-import io.spine.logging.flogger.repeatedKey
-import io.spine.logging.flogger.singleKey
-import com.google.common.flogger.testing.ConfigurableLogger
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import io.spine.logging.backend.log4j2.given.MemoizingAppender
+import io.spine.logging.flogger.LogContext.Key
+import io.spine.logging.flogger.context.ContextDataProvider
+import io.spine.logging.flogger.context.Tags
+import io.spine.logging.flogger.given.ConfigurableLogger
+import io.spine.logging.flogger.repeatedKey
+import io.spine.logging.flogger.singleKey
 import java.util.concurrent.atomic.AtomicInteger
 import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.LogManager

@@ -26,22 +26,9 @@
 
 package io.spine.logging.flogger
 
-import io.spine.logging.flogger.DurationRateLimiter.newRateLimitPeriod
-import io.spine.logging.flogger.LogContext.Key
-import io.spine.logging.flogger.LogContext.specializeLogSiteKeyFromMetadata
-import io.spine.logging.flogger.context.Tags
-import io.spine.logging.flogger.given.iterate
-import io.spine.logging.flogger.backend.given.shouldContainInOrder
-import io.spine.logging.flogger.backend.given.shouldContain
-import io.spine.logging.flogger.given.shouldHaveArguments
-import io.spine.logging.flogger.given.shouldHaveMessage
-import io.spine.logging.flogger.backend.given.shouldHaveSize
-import io.spine.logging.flogger.backend.given.shouldNotContain
-import io.spine.logging.flogger.backend.given.shouldUniquelyContain
 import com.google.common.flogger.testing.FakeLogSite
 import com.google.common.flogger.testing.FakeLoggerBackend
 import com.google.common.flogger.testing.FakeMetadata
-import com.google.common.flogger.testing.ConfigurableLogger
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
@@ -52,7 +39,20 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
+import io.spine.logging.flogger.DurationRateLimiter.newRateLimitPeriod
 import io.spine.logging.flogger.LazyArgs.lazy
+import io.spine.logging.flogger.LogContext.Key
+import io.spine.logging.flogger.LogContext.specializeLogSiteKeyFromMetadata
+import io.spine.logging.flogger.backend.given.shouldContain
+import io.spine.logging.flogger.backend.given.shouldContainInOrder
+import io.spine.logging.flogger.backend.given.shouldHaveSize
+import io.spine.logging.flogger.backend.given.shouldNotContain
+import io.spine.logging.flogger.backend.given.shouldUniquelyContain
+import io.spine.logging.flogger.context.Tags
+import io.spine.logging.flogger.given.ConfigurableLogger
+import io.spine.logging.flogger.given.iterate
+import io.spine.logging.flogger.given.shouldHaveArguments
+import io.spine.logging.flogger.given.shouldHaveMessage
 import java.lang.System.currentTimeMillis
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import java.util.concurrent.TimeUnit.SECONDS

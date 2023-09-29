@@ -26,10 +26,6 @@
 
 package io.spine.logging.flogger
 
-import io.spine.logging.flogger.backend.LogData
-import io.spine.logging.flogger.backend.LoggingException
-import io.spine.logging.flogger.given.MemoizingBackend
-import com.google.common.flogger.testing.ConfigurableLogger
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldHaveSize
@@ -37,6 +33,10 @@ import io.kotest.matchers.string.shouldBeEmpty
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldMatch
 import io.kotest.matchers.string.shouldNotContain
+import io.spine.logging.flogger.backend.LogData
+import io.spine.logging.flogger.backend.LoggingException
+import io.spine.logging.flogger.given.ConfigurableLogger
+import io.spine.logging.flogger.given.MemoizingBackend
 import io.spine.logging.testing.tapConsole
 import kotlin.text.RegexOption.DOT_MATCHES_ALL
 import org.junit.jupiter.api.DisplayName

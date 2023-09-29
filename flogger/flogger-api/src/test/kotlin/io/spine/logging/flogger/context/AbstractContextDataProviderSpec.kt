@@ -26,16 +26,7 @@
 
 package io.spine.logging.flogger.context
 
-import com.google.common.flogger.testing.ConfigurableLogger
 import com.google.common.flogger.testing.FakeLoggerBackend
-import io.spine.logging.flogger.backend.given.shouldBeEmpty
-import io.spine.logging.flogger.backend.given.shouldContainInOrder
-import io.spine.logging.flogger.backend.given.shouldHaveSize
-import io.spine.logging.flogger.backend.given.shouldUniquelyContain
-import io.spine.logging.flogger.LogContext.Key
-import io.spine.logging.flogger.backend.Metadata
-import io.spine.logging.flogger.repeatedKey
-import io.spine.logging.flogger.singleKey
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldHaveSize
@@ -44,6 +35,15 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.logging.flogger.LogContext.Key
+import io.spine.logging.flogger.backend.Metadata
+import io.spine.logging.flogger.backend.given.shouldBeEmpty
+import io.spine.logging.flogger.backend.given.shouldContainInOrder
+import io.spine.logging.flogger.backend.given.shouldHaveSize
+import io.spine.logging.flogger.backend.given.shouldUniquelyContain
+import io.spine.logging.flogger.given.ConfigurableLogger
+import io.spine.logging.flogger.repeatedKey
+import io.spine.logging.flogger.singleKey
 import java.util.logging.Level
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
