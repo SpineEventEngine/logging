@@ -24,6 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import io.spine.internal.gradle.testing.exposeTestConfiguration
 import net.ltgt.gradle.errorprone.errorprone
 
 plugins {
@@ -57,4 +58,6 @@ java {
         named("pmdMain") { enabled = false }
         compileJava { options.errorprone.isEnabled.set(false) }
     }
+
+    exposeTestConfiguration()
 }
