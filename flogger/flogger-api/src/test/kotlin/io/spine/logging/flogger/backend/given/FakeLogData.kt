@@ -26,7 +26,6 @@
 
 package io.spine.logging.flogger.backend.given
 
-import com.google.common.flogger.testing.FakeLogSite.create
 import com.google.common.flogger.testing.FakeMetadata
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.logging.flogger.FloggerLogSite
@@ -35,6 +34,7 @@ import io.spine.logging.flogger.LogContext
 import io.spine.logging.flogger.backend.LogData
 import io.spine.logging.flogger.backend.Metadata
 import io.spine.logging.flogger.backend.TemplateContext
+import io.spine.logging.flogger.given.FakeLogSite
 import io.spine.logging.flogger.parser.DefaultBraceStyleMessageParser
 import io.spine.logging.flogger.parser.DefaultPrintfMessageParser
 import io.spine.logging.flogger.parser.MessageParser
@@ -55,13 +55,15 @@ class FakeLogData : LogData {
     private var literalArgument: Any? = null
     private var timestampNanos = 0L
     private val metadata = FakeMetadata()
-    private var logSite = create(FAKE_LOGGING_CLASS, FAKE_LOGGING_METHOD, 123, FAKE_SOURCE_PATH)
+    private var logSite: FloggerLogSite = LOG_SITE
 
     companion object {
-        private const val FAKE_LOGGER_NAME = "io.spine.LoggerName"
-        private const val FAKE_LOGGING_CLASS = "io.spine.FakeClass"
-        private const val FAKE_LOGGING_METHOD = "fakeMethod"
-        private const val FAKE_SOURCE_PATH = "src/io/spine/FakeClass.java"
+        private const val LOGGER_NAME = "io.spine.LoggerName"
+        private const val LOGGING_CLASS = "io.spine.FakeClass"
+        private const val LOGGING_METHOD = "doAct"
+        private const val LINE_NUMBER = 123
+        private const val SOURCE_FILE = "src/io/spine/FakeClass.java"
+        private val LOG_SITE = FakeLogSite(LOGGING_CLASS, LOGGING_METHOD, LINE_NUMBER, SOURCE_FILE)
 
         /**
          * Creates an instance for a log statement with printf style formatting.
@@ -131,7 +133,7 @@ class FakeLogData : LogData {
     }
 
     override fun getLoggerName(): String {
-        return FAKE_LOGGER_NAME
+        return LOGGER_NAME
     }
 
     override fun getLogSite(): FloggerLogSite {

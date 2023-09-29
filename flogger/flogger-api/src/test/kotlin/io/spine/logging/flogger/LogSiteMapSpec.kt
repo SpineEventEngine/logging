@@ -27,7 +27,6 @@
 package io.spine.logging.flogger
 
 import io.spine.logging.flogger.backend.Metadata
-import com.google.common.flogger.testing.FakeLogSite.create
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
@@ -35,6 +34,7 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
+import io.spine.logging.flogger.given.FakeLogSite
 import java.lang.Thread.sleep
 import java.util.concurrent.Callable
 import java.util.concurrent.atomic.AtomicInteger
@@ -53,8 +53,8 @@ internal class LogSiteMapSpec {
     @Test
     fun `get value for the given key`() {
         val map = createMap()
-        val logSite1 = create("class1", "method1", 1, "path1")
-        val logSite2 = create("class2", "method2", 2, "path2")
+        val logSite1 = FakeLogSite("class1", "method1", 1, "path1")
+        val logSite2 = FakeLogSite("class2", "method2", 2, "path2")
         val stats1 = map[logSite1, Metadata.empty()]
         val stats2 = map[logSite2, Metadata.empty()]
         stats1.shouldNotBeNull()
@@ -71,7 +71,7 @@ internal class LogSiteMapSpec {
         val fooMetadata = FakeMetadata().add(LogContext.Key.LOG_SITE_GROUPING_KEY, foo)
         val bar = LoggingScope.WeakScope("bar")
         val barMetadata = FakeMetadata().add(LogContext.Key.LOG_SITE_GROUPING_KEY, bar)
-        val logSite = create("com.google.foo.Foo", "doFoo", 42, "<unused>")
+        val logSite = FakeLogSite("com.google.foo.Foo", "doFoo", 42, "<unused>")
         val fooKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
         val barKey = LogContext.specializeLogSiteKeyFromMetadata(logSite, barMetadata)
 
@@ -133,7 +133,7 @@ private fun <T> recurseAndCall(n: Int, action: Callable<T>): T {
 private fun useAndReturnScopedKey(map: LogSiteMap<AtomicInteger>, label: String): LogSiteKey {
     val scope = LoggingScope.create(label)
     val metadata = FakeMetadata().add(LogContext.Key.LOG_SITE_GROUPING_KEY, scope)
-    val logSite = create("com.example", label, 42, "<unused>")
+    val logSite = FakeLogSite("com.example", label, 42, "<unused>")
     val key = LogContext.specializeLogSiteKeyFromMetadata(logSite, metadata)
     map[key, metadata].incrementAndGet()
     map.contains(key).shouldBeTrue()

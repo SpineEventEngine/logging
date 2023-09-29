@@ -26,7 +26,7 @@
 
 package io.spine.logging.flogger
 
-import com.google.common.flogger.testing.FakeLogSite
+import io.spine.logging.flogger.given.FakeLogSite
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe

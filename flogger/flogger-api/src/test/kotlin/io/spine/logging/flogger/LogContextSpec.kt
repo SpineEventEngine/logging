@@ -26,7 +26,7 @@
 
 package io.spine.logging.flogger
 
-import com.google.common.flogger.testing.FakeLogSite
+import io.spine.logging.flogger.given.FakeLogSite
 import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.assertions.throwables.shouldThrow
@@ -529,7 +529,7 @@ internal class LogContextSpec {
         fun `with 'every(n)' limiter`() {
             val backend = MemoizingLoggerBackend()
             val logger = ConfigurableLogger(backend)
-            val logSite = FakeLogSite.create("com.example.MyClass", "everyN", 123, null)
+            val logSite = FakeLogSite("com.example.MyClass", "everyN", 123, null)
 
             logger.atInfo()
                 .every(3)
@@ -566,7 +566,7 @@ internal class LogContextSpec {
         fun `with 'atMostEvery(n)' limiter`() {
             val backend = MemoizingLoggerBackend()
             val logger = ConfigurableLogger(backend)
-            val logSite = FakeLogSite.create("com.example.MyClass", "atMostEvery", 123, null)
+            val logSite = FakeLogSite("com.example.MyClass", "atMostEvery", 123, null)
 
             var nowNanos = currentTimeNanos()
             logger.at(INFO, nowNanos)
@@ -911,7 +911,7 @@ internal class LogContextSpec {
         @Test
         fun `log site key from a singleton key`() {
             val fooMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo")
-            val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
+            val logSite = FakeLogSite("com.google.foo.Foo", "doFoo", 42, "<unused>")
             val fooKey = specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
             val singletonKey = specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
             fooKey shouldBe singletonKey
@@ -923,7 +923,7 @@ internal class LogContextSpec {
             val repeatedMetadata = FakeMetadata()
                 .add(Key.LOG_SITE_GROUPING_KEY, "foo")
                 .add(Key.LOG_SITE_GROUPING_KEY, "foo")
-            val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
+            val logSite = FakeLogSite("com.google.foo.Foo", "doFoo", 42, "<unused>")
             val fooKey = specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
             val repeatedKey = specializeLogSiteKeyFromMetadata(logSite, repeatedMetadata)
             fooKey shouldNotBe repeatedKey
@@ -933,7 +933,7 @@ internal class LogContextSpec {
         fun `distinct log site keys from distinct metadata instances`() {
             val fooMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo")
             val barMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "bar")
-            val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
+            val logSite = FakeLogSite("com.google.foo.Foo", "doFoo", 42, "<unused>")
             val fooKey = specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
             val barKey = specializeLogSiteKeyFromMetadata(logSite, barMetadata)
             fooKey shouldNotBe barKey
@@ -955,7 +955,7 @@ internal class LogContextSpec {
             val barFooMetadata = FakeMetadata()
                 .add(Key.LOG_SITE_GROUPING_KEY, "bar")
                 .add(Key.LOG_SITE_GROUPING_KEY, "foo")
-            val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
+            val logSite = FakeLogSite("com.google.foo.Foo", "doFoo", 42, "<unused>")
             val fooBarKey = specializeLogSiteKeyFromMetadata(logSite, fooBarMetadata)
             val barFooKey = specializeLogSiteKeyFromMetadata(logSite, barFooMetadata)
             fooBarKey shouldNotBe barFooKey

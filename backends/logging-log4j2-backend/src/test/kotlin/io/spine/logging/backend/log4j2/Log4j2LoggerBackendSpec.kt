@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.log4j2
 
-import com.google.common.flogger.testing.FakeLogSite
+import io.spine.logging.flogger.given.FakeLogSite
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldHaveSize
@@ -159,19 +159,19 @@ internal class Log4j2LoggerBackendSpec {
 
         @Test
         fun `with full information`() {
-            val logSite = FakeLogSite.create("<class>", "<method>", 42, "<file>")
+            val logSite = FakeLogSite("<class>", "<method>", 42, "<file>")
             testLogSite(logSite)
         }
 
         @Test
         fun `without source file`() {
-            val logSite = FakeLogSite.create("<class>", "<method>", 42, null)
+            val logSite = FakeLogSite("<class>", "<method>", 42, null)
             testLogSite(logSite)
         }
 
         @Test
         fun `without line number and source file`() {
-            val logSite = FakeLogSite.create("<class>", "<method>", -1, null)
+            val logSite = FakeLogSite("<class>", "<method>", -1, null)
             testLogSite(logSite)
         }
 

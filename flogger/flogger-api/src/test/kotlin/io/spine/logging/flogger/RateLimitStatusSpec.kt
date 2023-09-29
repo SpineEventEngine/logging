@@ -30,7 +30,7 @@ import io.spine.logging.flogger.RateLimitStatus.ALLOW
 import io.spine.logging.flogger.RateLimitStatus.DISALLOW
 import io.spine.logging.flogger.RateLimitStatus.checkStatus
 import io.spine.logging.flogger.RateLimitStatus.combine
-import com.google.common.flogger.testing.FakeLogSite
+import io.spine.logging.flogger.given.FakeLogSite
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeFalse

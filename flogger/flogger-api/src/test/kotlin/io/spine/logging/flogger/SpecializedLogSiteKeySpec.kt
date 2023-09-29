@@ -26,9 +26,9 @@
 
 package io.spine.logging.flogger
 
-import com.google.common.flogger.testing.FakeLogSite.create
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import io.spine.logging.flogger.given.FakeLogSite
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -43,7 +43,7 @@ internal class SpecializedLogSiteKeySpec {
 
     @Test
     fun `provide equality check`() {
-        val logSite = create("com.google.foo.Foo", "doFoo", 42, "<unused>")
+        val logSite = FakeLogSite("com.google.foo.Foo", "doFoo", 42, "<unused>")
         val fooKey = SpecializedLogSiteKey.of(logSite, "foo")
 
         val anotherFooKey = SpecializedLogSiteKey.of(logSite, "foo")
@@ -54,7 +54,7 @@ internal class SpecializedLogSiteKeySpec {
         barKey shouldNotBe fooKey
         barKey.hashCode() shouldNotBe fooKey.hashCode()
 
-        val anotherLogSite = create("com.google.foo.Bar", "doOther", 23, "<unused>")
+        val anotherLogSite = FakeLogSite("com.google.foo.Bar", "doOther", 23, "<unused>")
         val oneMoreFooKey = SpecializedLogSiteKey.of(anotherLogSite, "foo")
         oneMoreFooKey shouldNotBe fooKey
         oneMoreFooKey.hashCode() shouldNotBe fooKey.hashCode()
@@ -73,7 +73,7 @@ internal class SpecializedLogSiteKeySpec {
      */
     @Test
     fun `provide equality check with respect to delegation order`() {
-        val logSite = create("com.google.foo.Foo", "doFoo", 42, "<unused>")
+        val logSite = FakeLogSite("com.google.foo.Foo", "doFoo", 42, "<unused>")
 
         val fooKey = SpecializedLogSiteKey.of(logSite, "foo")
         val barKey = SpecializedLogSiteKey.of(logSite, "bar")
