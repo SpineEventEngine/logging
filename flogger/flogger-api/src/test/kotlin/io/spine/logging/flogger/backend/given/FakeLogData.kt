@@ -65,7 +65,7 @@ class FakeLogData : LogData {
         private val LOG_SITE = FakeLogSite(LOGGING_CLASS, LOGGING_METHOD, LINE_NUMBER, SOURCE_FILE)
 
         /**
-         * Creates an instance for a log statement with printf style formatting.
+         * Creates an instance with a printf-formatted message.
          */
         fun withPrintfStyle(message: String, vararg arguments: Any?): FakeLogData {
             val printfParser = DefaultPrintfMessageParser.getInstance()
@@ -73,7 +73,7 @@ class FakeLogData : LogData {
         }
 
         /**
-         * Creates an instance for a log statement with brace style formatting.
+         * Creates an instance with a brace-formatted message.
          */
         fun withBraceStyle(message: String, vararg arguments: Any?): FakeLogData {
             val braceParser = DefaultBraceStyleMessageParser.getInstance()
@@ -82,8 +82,7 @@ class FakeLogData : LogData {
     }
 
     /**
-     * Creates a fake `LogData` instance representing a log statement with a single, literal
-     * argument.
+     * Creates an instance with a single literal argument.
      */
     constructor(literalArgument: Any?) {
         this.literalArgument = literalArgument
