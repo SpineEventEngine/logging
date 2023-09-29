@@ -26,12 +26,6 @@
 
 package io.spine.logging.backend.log4j2
 
-import io.spine.logging.flogger.LogContext.Key
-import io.spine.logging.flogger.FloggerLogSite
-import io.spine.logging.backend.log4j2.given.MemoizingAppender
-import io.spine.logging.flogger.parser.ParseException
-import io.spine.logging.flogger.repeatedKey
-import io.spine.logging.flogger.singleKey
 import com.google.common.flogger.testing.FakeLogSite
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldBeEmpty
@@ -39,16 +33,22 @@ import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.logging.backend.log4j2.given.MemoizingAppender
+import io.spine.logging.flogger.FloggerLogSite
+import io.spine.logging.flogger.LogContext.Key
 import io.spine.logging.flogger.backend.given.FakeLogData
+import io.spine.logging.flogger.parser.ParseException
+import io.spine.logging.flogger.repeatedKey
+import io.spine.logging.flogger.singleKey
 import java.util.concurrent.atomic.AtomicInteger
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.core.Appender
 import org.apache.logging.log4j.core.LogEvent
 import org.apache.logging.log4j.core.Logger
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
 
 // These aliases help to distinguish different levels without FQN.
 private typealias JulLevel = java.util.logging.Level

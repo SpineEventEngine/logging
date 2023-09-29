@@ -26,16 +26,13 @@
 
 package io.spine.logging.flogger.backend
 
-import io.spine.logging.flogger.parser.ParseException
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.spine.logging.flogger.backend.given.FakeLogData
-
+import io.spine.logging.flogger.parser.ParseException
 import java.math.BigDecimal
 import java.math.BigInteger
-import java.util.FormatFlagsConversionMismatchException
-import java.util.Formattable
-import java.util.Locale
+import java.util.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 

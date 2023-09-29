@@ -26,12 +26,12 @@
 
 package io.spine.logging.backend.system.given
 
+import io.spine.logging.backend.system.AbstractLogRecord
 import io.spine.logging.flogger.backend.LogData
 import io.spine.logging.flogger.backend.LogMessageFormatter
 import io.spine.logging.flogger.backend.Metadata
 import io.spine.logging.flogger.backend.MetadataProcessor
 import io.spine.logging.flogger.backend.SimpleMessageFormatter
-import io.spine.logging.backend.system.AbstractLogRecord
 import io.spine.logging.flogger.backend.given.FakeLogData
 
 /**
