@@ -26,8 +26,8 @@ import java.util.List;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
- * A mutable fake {@link Metadata} implementation to help test logging backends and other log
- * handling code.
+ * A mutable fake {@link Metadata} implementation to help test logging backends,
+ * and other log handling code.
  */
 public final class FakeMetadata extends Metadata {
 
@@ -44,7 +44,7 @@ public final class FakeMetadata extends Metadata {
 
   @CanIgnoreReturnValue
   public <T> FakeMetadata add(FloggerMetadataKey<T> key, T value) {
-    entries.add(new KeyValuePair<T>(key, value));
+    entries.add(new KeyValuePair<>(key, value));
     return this;
   }
 
@@ -62,9 +62,9 @@ public final class FakeMetadata extends Metadata {
   @Override
   @Nullable
   public <T> T findValue(FloggerMetadataKey<T> key) {
-    for (KeyValuePair<?> e : entries) {
-      if (e.key.equals(key)) {
-        return key.cast(e.value);
+    for (var entry : entries) {
+      if (entry.key.equals(key)) {
+        return key.cast(entry.value);
       }
     }
     return null;

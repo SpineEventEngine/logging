@@ -40,6 +40,8 @@ import io.kotest.matchers.shouldBe
  * They are needed because [Metadata] doesn't extend [Collection] itself,
  * or any of its inheritors.
  */
+@Suppress("unused") // It is used for file-level docs.
+private val about = ""
 
 /**
  * Asserts that this [Metadata] doesn't have any key/value pairs.

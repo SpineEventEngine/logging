@@ -26,17 +26,17 @@
 
 package io.spine.logging.backend.system
 
-import io.spine.logging.flogger.parser.ParseException
-import com.google.common.flogger.testing.AssertingLogger
 import com.google.common.flogger.testing.FakeLogData
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.matchers.collections.shouldBeEmpty
-import io.kotest.matchers.collections.shouldHaveSize
-import io.kotest.matchers.shouldBe
+import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.string.shouldBeEmpty
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldMatch
+import io.spine.logging.flogger.parser.ParseException
+import io.spine.logging.testing.tapConsole
 import java.util.*
 import java.util.TimeZone.getTimeZone
+import java.util.logging.Logger.getAnonymousLogger
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -50,15 +50,14 @@ import org.junit.jupiter.api.Test
 @DisplayName("`SimpleLoggerBackend` should")
 internal class SimpleLoggerBackendSpec {
 
-    private val logger = AssertingLogger()
-    private val backend = SimpleLoggerBackend(logger)
+    private val backend = SimpleLoggerBackend(getAnonymousLogger())
 
     @Test
     fun `log literals`() {
         val literal = "Literal"
         val data = FakeLogData.of(literal)
-        backend.log(data)
-        logger.lastLogged shouldBe literal
+        val logged = tapConsole { backend.log(data) }
+        logged shouldContain literal
     }
 
     @Nested
@@ -71,8 +70,8 @@ internal class SimpleLoggerBackendSpec {
             val argument = "Printf"
             val expected = pattern.format(argument)
             val data = FakeLogData.withPrintfStyle(pattern, argument)
-            backend.log(data)
-            logger.lastLogged shouldBe expected
+            val logged = tapConsole { backend.log(data) }
+            logged shouldContain expected
         }
 
         @Test
@@ -81,8 +80,8 @@ internal class SimpleLoggerBackendSpec {
             val arguments = arrayOf("Foo", 12345678, 1234.5678)
             val expected = pattern.format(*arguments)
             val data = FakeLogData.withPrintfStyle(pattern, *arguments)
-            backend.log(data)
-            logger.lastLogged shouldBe expected
+            val logged = tapConsole { backend.log(data) }
+            logged shouldContain expected
         }
 
         @Test
@@ -93,8 +92,8 @@ internal class SimpleLoggerBackendSpec {
             val pattern = "date=%1\$tD %1\$tr"
             val expected = pattern.format(calendar)
             val data = FakeLogData.withPrintfStyle(pattern, calendar)
-            backend.log(data)
-            logger.lastLogged shouldBe expected
+            val logged = tapConsole { backend.log(data) }
+            logged shouldContain expected
         }
 
         @Test
@@ -103,8 +102,8 @@ internal class SimpleLoggerBackendSpec {
             val arguments = arrayOf(0xcafe, 1234, -12.0)
             val expected = pattern.format(*arguments)
             val data = FakeLogData.withPrintfStyle(pattern, *arguments)
-            backend.log(data)
-            logger.lastLogged shouldBe expected
+            val logged = tapConsole { backend.log(data) }
+            logged shouldContain expected
         }
 
         @Test
@@ -119,8 +118,8 @@ internal class SimpleLoggerBackendSpec {
             )
             cases.forEach { (pattern, expected) ->
                 val data = FakeLogData.withPrintfStyle(pattern, formattable)
-                backend.log(data)
-                logger.lastLogged shouldBe expected
+                val logged = tapConsole { backend.log(data) }
+                logged shouldContain expected
             }
         }
 
@@ -135,8 +134,8 @@ internal class SimpleLoggerBackendSpec {
             cases.forEach { pattern ->
                 val data = FakeLogData.withPrintfStyle(pattern, any)
                 val expected = pattern.format(any)
-                backend.log(data)
-                logger.lastLogged shouldBe expected
+                val logged = tapConsole { backend.log(data) }
+                logged shouldContain expected
             }
         }
 
@@ -157,8 +156,8 @@ internal class SimpleLoggerBackendSpec {
             cases.forEachIndexed { index, pattern ->
                 val data = FakeLogData.withPrintfStyle(pattern, nullArgument)
                 val expected = "[null] #${index + 1}"
-                backend.log(data)
-                logger.lastLogged shouldBe expected
+                val logged = tapConsole { backend.log(data) }
+                logged shouldContain expected
             }
         }
 
@@ -170,23 +169,29 @@ internal class SimpleLoggerBackendSpec {
             val pattern = "Hello %n World"
             val expected = pattern.format()
             val data = FakeLogData.withPrintfStyle(pattern)
-            backend.log(data)
-            logger.lastLogged shouldBe expected
-            logger.lastLogged shouldContain lineSeparator
+            val logged = tapConsole { backend.log(data) }
+            logged shouldContain expected
+            logged shouldContain lineSeparator
         }
 
         @Test
         fun `handling incorrect pattern`() {
             val pattern = "Hello %?X World"
             val data = FakeLogData.withPrintfStyle(pattern)
-            val parseException = shouldThrow<ParseException> {
-                backend.log(data)
+            var parseException: ParseException? = null
+
+            val thrownLogged = tapConsole {
+                parseException = shouldThrow<ParseException> {
+                    backend.log(data)
+                }
             }
-            logger.logged.shouldBeEmpty()
-            backend.handleError(parseException, data)
-            logger.logged shouldHaveSize 1
-            logger.lastLogged shouldContain parseException.message!!
-            logger.lastLogged shouldContain pattern
+
+            thrownLogged.shouldBeEmpty()
+            parseException.shouldNotBeNull()
+
+            val logged = tapConsole { backend.handleError(parseException, data) }
+            logged shouldContain parseException!!.message!!
+            logged shouldContain pattern
         }
 
         @Test
@@ -195,8 +200,8 @@ internal class SimpleLoggerBackendSpec {
             val arguments = arrayOf(1, 2, 3)
             val expected = pattern.format(*arguments)
             val data = FakeLogData.withPrintfStyle(pattern, *arguments)
-            backend.log(data)
-            logger.lastLogged shouldBe expected
+            val logged = tapConsole { backend.log(data) }
+            logged shouldContain expected
         }
 
         @Test
@@ -205,8 +210,8 @@ internal class SimpleLoggerBackendSpec {
             val arguments = arrayOf(1, 2)
             val expected = pattern.format(*arguments)
             val data = FakeLogData.withPrintfStyle(pattern, *arguments)
-            backend.log(data)
-            logger.lastLogged shouldBe expected
+            val logged = tapConsole { backend.log(data) }
+            logged shouldContain expected
         }
 
         @Test
@@ -215,8 +220,8 @@ internal class SimpleLoggerBackendSpec {
             val arguments = arrayOf(1, 2)
             val expected = pattern.format(*arguments)
             val data = FakeLogData.withPrintfStyle(pattern, *arguments)
-            backend.log(data)
-            logger.lastLogged shouldBe expected
+            val logged = tapConsole { backend.log(data) }
+            logged shouldContain expected
         }
     }
 
@@ -230,8 +235,8 @@ internal class SimpleLoggerBackendSpec {
             val argument = "Brace"
             val expected = "Hello Brace World"
             val data = FakeLogData.withBraceStyle(pattern, argument)
-            backend.log(data)
-            logger.lastLogged shouldBe expected
+            val logged = tapConsole { backend.log(data) }
+            logged shouldContain expected
         }
 
         @Test
@@ -240,8 +245,8 @@ internal class SimpleLoggerBackendSpec {
             val arguments = arrayOf("Foo", 12345678, 1234.5678)
             val expected = "Foo 12,345,678 1,234.567800"
             val data = FakeLogData.withBraceStyle(pattern, *arguments)
-            backend.log(data)
-            logger.lastLogged shouldBe expected
+            val logged = tapConsole { backend.log(data) }
+            logged shouldContain expected
         }
 
         @Test
@@ -251,8 +256,8 @@ internal class SimpleLoggerBackendSpec {
             val pattern = "date={0}"
             val expected = "date=Sat Jul 13 05:20:03 GMT 1985"
             val data = FakeLogData.withBraceStyle(pattern, calendar)
-            backend.log(data)
-            logger.lastLogged shouldBe expected
+            val logged = tapConsole { backend.log(data) }
+            logged shouldContain expected
         }
 
         @Test
@@ -263,8 +268,8 @@ internal class SimpleLoggerBackendSpec {
             val pattern = "[{0}]"
             val expected = "[null]"
             val data = FakeLogData.withBraceStyle(pattern, nullArgument)
-            backend.log(data)
-            logger.lastLogged shouldBe expected
+            val logged = tapConsole { backend.log(data) }
+            logged shouldContain expected
         }
 
         @Test
@@ -273,8 +278,8 @@ internal class SimpleLoggerBackendSpec {
             val arguments = arrayOf(1, 2, 3)
             val expected = "3 2 1"
             val data = FakeLogData.withBraceStyle(pattern, *arguments)
-            backend.log(data)
-            logger.lastLogged shouldBe expected
+            val logged = tapConsole { backend.log(data) }
+            logged shouldContain expected
         }
 
         @Test
@@ -283,8 +288,8 @@ internal class SimpleLoggerBackendSpec {
             val arguments = arrayOf(1, 2)
             val expected = "1 1 2"
             val data = FakeLogData.withBraceStyle(pattern, *arguments)
-            backend.log(data)
-            logger.lastLogged shouldBe expected
+            val logged = tapConsole { backend.log(data) }
+            logged shouldContain expected
         }
     }
 }

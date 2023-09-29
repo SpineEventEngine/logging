@@ -32,18 +32,16 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.util.logging.Level;
 
 /**
- * A mutable fake {@link LogData} implementation to help test logging backends and other log
- * handling code.
+ * A mutable fake {@link LogData} implementation to help test logging backends,
+ * and other log handling code.
  */
 public final class FakeLogData implements LogData {
-  public static final String FAKE_LOGGER_NAME = "com.google.LoggerName";
-
-  public static final String FAKE_LOGGING_CLASS = "com.google.FakeClass";
-  public static final String FAKE_LOGGING_METHOD = "fakeMethod";
-  public static final String FAKE_SOURCE_PATH = "src/com/google/FakeClass.java";
-
-  public static final FloggerLogSite FAKE_LOG_SITE =
-      FakeLogSite.create(FAKE_LOGGING_CLASS, FAKE_LOGGING_METHOD, 123, FAKE_SOURCE_PATH);
+  private static final String FAKE_LOGGER_NAME = "com.google.LoggerName";
+  private static final String FAKE_LOGGING_CLASS = "com.google.FakeClass";
+  private static final String FAKE_LOGGING_METHOD = "fakeMethod";
+  private static final String FAKE_SOURCE_PATH = "src/com/google/FakeClass.java";
+  private static final FloggerLogSite FAKE_LOG_SITE =
+          FakeLogSite.create(FAKE_LOGGING_CLASS, FAKE_LOGGING_METHOD, 123, FAKE_SOURCE_PATH);
 
   /**
    * Creates a fake {@code LogData} instance representing a log statement with a single, literal
@@ -68,7 +66,7 @@ public final class FakeLogData implements LogData {
   private Object[] arguments = null;
   private Object literalArgument = null;
   private long timestampNanos = 0L;
-  private FakeMetadata metadata = new FakeMetadata();
+  private final FakeMetadata metadata = new FakeMetadata();
   private FloggerLogSite logSite = FAKE_LOG_SITE;
 
   private FakeLogData(Object literalArgument) {
@@ -80,7 +78,7 @@ public final class FakeLogData implements LogData {
     this.arguments = arguments;
   }
 
-  @SuppressWarnings("GoodTime") // should accept a java.time.Instant
+  @SuppressWarnings("GoodTime") // should accept a `java.time.Instant`.
   @CanIgnoreReturnValue
   public FakeLogData setTimestampNanos(long timestampNanos) {
     this.timestampNanos = timestampNanos;
@@ -138,7 +136,8 @@ public final class FakeLogData implements LogData {
 
   @Override
   public boolean wasForced() {
-    // Check explicit TRUE here because findValue() can return null (which would fail unboxing).
+    // Check explicit `TRUE` here because `findValue()` can return `null`.
+    // That would fail unboxing.
     return Boolean.TRUE.equals(metadata.findValue(LogContext.Key.WAS_FORCED));
   }
 
@@ -150,7 +149,7 @@ public final class FakeLogData implements LogData {
   @Override
   public Object[] getArguments() {
     checkState(context != null, "cannot get arguments without a context");
-    return arguments;
+    return arguments.clone();
   }
 
   @Override
