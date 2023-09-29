@@ -26,7 +26,6 @@
 
 package io.spine.logging.backend.system
 
-import io.spine.logging.flogger.backend.given.FakeMetadata
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldBeEmpty
@@ -40,6 +39,7 @@ import io.spine.logging.flogger.FloggerMetadataKey
 import io.spine.logging.flogger.LogContext.Key
 import io.spine.logging.flogger.backend.Metadata
 import io.spine.logging.flogger.backend.given.FakeLogData
+import io.spine.logging.flogger.backend.given.FakeMetadata
 import io.spine.logging.flogger.context.Tags
 import io.spine.logging.flogger.parser.ParseException
 import io.spine.logging.flogger.singleKey

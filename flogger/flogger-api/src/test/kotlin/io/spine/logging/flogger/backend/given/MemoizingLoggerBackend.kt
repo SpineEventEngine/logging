@@ -28,7 +28,6 @@ package io.spine.logging.flogger.backend.given
 
 import io.spine.logging.flogger.backend.LogData
 import io.spine.logging.flogger.backend.LoggerBackend
-import java.util.*
 import java.util.logging.Level
 
 /**
