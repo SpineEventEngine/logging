@@ -55,8 +55,7 @@ private typealias LoggerName = String
 /**
  * Set of common tests for [ContextDataProvider]s.
  *
- * @see <a href="https://github.com/google/flogger/blob/70c5aea863952ee61b3d33afb41f2841b6d63455/api/src/test/java/com/google/common/flogger/testing/AbstractScopedLoggingContextTest.java">
- *     Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/luq6y">Original Java code of Google Flogger</a>
  */
 @DisplayName("`ContextDataProvider` should") // This name is to be overridden by inheritors.
 abstract class AbstractContextDataProviderSpec {
