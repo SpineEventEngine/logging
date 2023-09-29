@@ -38,7 +38,7 @@ import java.util.logging.Level
  *
  * @see <a href="http://rb.gy/r6jjw">Original Java code of Google Flogger</a>
  */
-class FakeLoggerBackend(val name: String = "com.example.MyClass") : LoggerBackend() {
+class MemoizingLoggerBackend(val name: String = "com.example.MyClass") : LoggerBackend() {
 
     private var minLevel = Level.INFO
     private val mutableLogged: MutableList<LogData> = ArrayList()
@@ -61,7 +61,7 @@ class FakeLoggerBackend(val name: String = "com.example.MyClass") : LoggerBacken
     val lastLogged: LogData get() = mutableLogged.last()
 
     /**
-     * Returns the first [LogData] entry captured by this backend.
+     * The first [LogData] entry captured by this backend.
      *
      * @throws NoSuchElementException if there are no entries
      */

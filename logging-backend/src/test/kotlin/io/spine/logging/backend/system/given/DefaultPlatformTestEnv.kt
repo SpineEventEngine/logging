@@ -32,15 +32,15 @@ import io.spine.logging.flogger.backend.LoggerBackend
 import io.spine.logging.flogger.backend.Platform
 import io.spine.logging.backend.system.BackendFactory
 import io.spine.logging.backend.system.Clock
-import io.spine.logging.flogger.backend.given.FakeLoggerBackend
+import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
 
 /**
- * A primitive factory of [FakeLoggerBackend].
+ * A primitive factory of [MemoizingLoggerBackend].
  */
 internal class FakeBackendFactory : BackendFactory() {
 
     override fun create(loggingClassName: String): LoggerBackend =
-        FakeLoggerBackend(loggingClassName)
+        MemoizingLoggerBackend(loggingClassName)
 
     override fun toString(): String = javaClass.name
 }

@@ -26,7 +26,7 @@
 
 package io.spine.logging.flogger.context
 
-import io.spine.logging.flogger.backend.given.FakeLoggerBackend
+import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldHaveSize
@@ -330,7 +330,7 @@ abstract class AbstractContextDataProviderSpec {
      */
     @Test
     fun `merge scope and log site tags`() {
-        val backend = FakeLoggerBackend()
+        val backend = MemoizingLoggerBackend()
         val logger = ConfigurableLogger(backend)
         val logSiteTags = Tags.of("foo", "bar")
         val scopeTags = Tags.of("foo", "baz")

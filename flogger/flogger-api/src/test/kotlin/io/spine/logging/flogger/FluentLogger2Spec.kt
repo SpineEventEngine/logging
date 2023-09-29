@@ -27,7 +27,7 @@
 package io.spine.logging.flogger
 
 import io.spine.logging.flogger.FluentLogger2.forEnclosingClass
-import io.spine.logging.flogger.backend.given.FakeLoggerBackend
+import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldNotBeInstanceOf
@@ -68,7 +68,7 @@ internal class FluentLogger2Spec {
 
     @Test
     fun `provide a no-op API for disabled levels`() {
-        val backend = FakeLoggerBackend()
+        val backend = MemoizingLoggerBackend()
         val logger = FluentLogger2(backend)
         backend.setLevel(Level.INFO)
 
