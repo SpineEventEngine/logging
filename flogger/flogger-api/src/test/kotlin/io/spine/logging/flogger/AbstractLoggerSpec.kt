@@ -57,7 +57,7 @@ import org.junit.jupiter.api.Test
 internal class AbstractLoggerSpec {
 
     private val backend = MemoizingBackend()
-    private val logger = ConfigurableLogger.create(backend)
+    private val logger = ConfigurableLogger(backend)
 
     companion object {
 
@@ -148,7 +148,7 @@ internal class AbstractLoggerSpec {
         val backend = object : MemoizingBackend() {
             override fun log(data: LogData) = throw LoggingException("allowed")
         }
-        val logger = ConfigurableLogger.create(backend)
+        val logger = ConfigurableLogger(backend)
 
         val output = tapConsole {
             shouldThrow<LoggingException> {
@@ -166,7 +166,7 @@ internal class AbstractLoggerSpec {
         val backend: MemoizingBackend = object : MemoizingBackend() {
             override fun log(data: LogData) = throw Error("allowed")
         }
-        val logger = ConfigurableLogger.create(backend)
+        val logger = ConfigurableLogger(backend)
 
         val output = tapConsole {
             shouldThrow<Error> {

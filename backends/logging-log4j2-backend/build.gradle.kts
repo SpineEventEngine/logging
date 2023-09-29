@@ -36,6 +36,7 @@ dependencies {
     api(project(":logging-backend"))
     implementation(project(":flogger-api"))
     testImplementation(project(":flogger-testing"))
+    testImplementation(project(path = ":flogger-api", configuration = "testArtifacts"))
     testRuntimeOnly(project(":logging-grpc-context"))
 }
 
