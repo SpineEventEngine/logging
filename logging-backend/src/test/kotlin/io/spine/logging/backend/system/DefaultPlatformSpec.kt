@@ -54,7 +54,7 @@ import org.junit.jupiter.api.Test
 @DisplayName("`DefaultPlatform` should")
 internal class DefaultPlatformSpec {
 
-    private val factory = FakeBackendFactory()
+    private val factory = MemoizingLoggerBackendFactory()
     private val context = ContextDataProvider.getNoOpProvider()
     private val clock = FixedTime()
     private val caller = NoOpCallerFinder()

@@ -37,7 +37,7 @@ import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
 /**
  * A primitive factory of [MemoizingLoggerBackend].
  */
-internal class FakeBackendFactory : BackendFactory() {
+internal class MemoizingLoggerBackendFactory : BackendFactory() {
 
     override fun create(loggingClassName: String): LoggerBackend =
         MemoizingLoggerBackend(loggingClassName)
