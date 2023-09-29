@@ -58,5 +58,9 @@ java {
         compileJava { options.errorprone.isEnabled.set(false) }
     }
 
+    /**
+     * Abstract tests and their `given` classes can be re-used to test
+     * different backend and context implementations.
+     */
     exposeTestConfiguration()
 }
