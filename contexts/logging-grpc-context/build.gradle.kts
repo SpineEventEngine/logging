@@ -33,7 +33,7 @@ plugins {
 dependencies {
     implementation(project(":flogger-api"))
     implementation(Grpc.api)
-    testImplementation(project(path = ":flogger-api", configuration = "testArtifacts"))
+    testImplementation(project(":flogger-api", configuration = "testArtifacts"))
     testRuntimeOnly(project(":logging-backend"))
 }
 
