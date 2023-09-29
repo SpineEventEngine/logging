@@ -21,7 +21,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * A simplified LogSite implementation used for testing.
+ * A simplified implementation of {@link FloggerLogSite} for testing.
  */
 public final class FakeLogSite extends FloggerLogSite {
   private static final AtomicInteger uid = new AtomicInteger();
