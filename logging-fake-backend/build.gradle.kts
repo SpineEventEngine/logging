@@ -32,8 +32,8 @@ plugins {
 }
 
 dependencies {
-    implementation(project(path = ":flogger-api", configuration = "testArtifacts"))
     implementation(project(":flogger-api"))
+    implementation(project(":flogger-api", configuration = "testArtifacts"))
     implementation(project(":logging-backend"))
     implementation(AutoService.annotations)
     kapt(AutoService.processor)
