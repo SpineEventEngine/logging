@@ -31,7 +31,7 @@ import io.spine.logging.flogger.FloggerMetadataKey
 import io.spine.logging.flogger.backend.Metadata
 
 /**
- * A mutable [Metadata] implementation for testing logging backends,
+ * A mutable [Metadata] implementation for testing logging backends
  * and other log handling code.
  *
  * @see <a href="http://rb.gy/h75mb">Original Java code of Google Flogger</a>
@@ -42,6 +42,9 @@ class FakeMetadata : Metadata() {
 
     private val entries = mutableListOf<KeyValuePair<*>>()
 
+    /**
+     * Adds a key/value pair to this [Metadata].
+     */
     @CanIgnoreReturnValue
     fun <T> add(key: FloggerMetadataKey<T>, value: T): FakeMetadata {
         entries.add(KeyValuePair(key, value))
