@@ -28,10 +28,10 @@ package io.spine.logging.flogger.context
 
 import com.google.common.flogger.testing.ConfigurableLogger
 import com.google.common.flogger.testing.FakeLoggerBackend
-import com.google.common.flogger.testing.shouldBeEmpty
-import com.google.common.flogger.testing.shouldContainInOrder
-import com.google.common.flogger.testing.shouldHaveSize
-import com.google.common.flogger.testing.shouldUniquelyContain
+import io.spine.logging.flogger.backend.given.shouldBeEmpty
+import io.spine.logging.flogger.backend.given.shouldContainInOrder
+import io.spine.logging.flogger.backend.given.shouldHaveSize
+import io.spine.logging.flogger.backend.given.shouldUniquelyContain
 import io.spine.logging.flogger.LogContext.Key
 import io.spine.logging.flogger.backend.Metadata
 import io.spine.logging.flogger.repeatedKey
