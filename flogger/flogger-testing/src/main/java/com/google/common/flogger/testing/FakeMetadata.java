@@ -28,6 +28,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 /**
  * A mutable fake {@link Metadata} implementation to help test logging backends,
  * and other log handling code.
+ *
+ * @see <a href="http://rb.gy/h75mb">Original Java code of Google Flogger</a>
  */
 public final class FakeMetadata extends Metadata {
 

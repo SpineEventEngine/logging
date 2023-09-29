@@ -34,6 +34,8 @@ import java.util.logging.Level;
 /**
  * A mutable fake {@link LogData} implementation to help test logging backends,
  * and other log handling code.
+ *
+ * @see <a href="http://rb.gy/z2i0q">Original Java code of Google Flogger</a>
  */
 public final class FakeLogData implements LogData {
   private static final String FAKE_LOGGER_NAME = "com.google.LoggerName";

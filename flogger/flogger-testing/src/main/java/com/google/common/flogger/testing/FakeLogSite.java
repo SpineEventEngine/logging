@@ -22,6 +22,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * A simplified implementation of {@link FloggerLogSite} for testing.
+ *
+ * @see <a href="http://rb.gy/wal1a">Original Java code of Google Flogger</a>
  */
 public final class FakeLogSite extends FloggerLogSite {
   private static final AtomicInteger uid = new AtomicInteger();

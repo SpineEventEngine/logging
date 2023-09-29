@@ -31,6 +31,8 @@ import java.util.logging.Level;
  * It has specific methods for injecting timestamps and forcing log statements.
  *
  * <p>This class is mutable and not thread safe.
+ *
+ * @see <a href="https://rb.gy/smalv">Original Java code of Google Flogger</a>
  */
 public final class ConfigurableLogger extends AbstractLogger<ConfigurableLogger.Api> {
   // Midnight Jan 1st, 2000 (GMT)

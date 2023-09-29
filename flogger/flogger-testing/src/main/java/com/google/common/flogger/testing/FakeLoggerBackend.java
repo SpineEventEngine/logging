@@ -30,6 +30,8 @@ import java.util.logging.Level;
  * A logger backend, which captures all {@code LogData} instances logged to it.
  *
  * <p>This class is mutable and not thread safe.
+ *
+ * @see <a href="http://rb.gy/r6jjw">Original Java code of Google Flogger</a>
  */
 public final class FakeLoggerBackend extends LoggerBackend {
   private final String name;
