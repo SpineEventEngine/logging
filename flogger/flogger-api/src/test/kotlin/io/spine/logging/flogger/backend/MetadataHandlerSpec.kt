@@ -28,9 +28,9 @@ package io.spine.logging.flogger.backend
 
 import com.google.common.base.Joiner
 import com.google.common.collect.Iterators
-import io.spine.logging.flogger.backend.given.FakeMetadata
 import io.kotest.matchers.shouldBe
 import io.spine.logging.flogger.FloggerMetadataKey
+import io.spine.logging.flogger.backend.given.FakeMetadata
 import io.spine.logging.flogger.repeatedKey
 import io.spine.logging.flogger.singleKey
 import org.junit.jupiter.api.DisplayName

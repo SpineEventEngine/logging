@@ -26,18 +26,18 @@
 
 package io.spine.logging.flogger
 
-import io.spine.logging.flogger.RateLimitStatus.ALLOW
-import io.spine.logging.flogger.RateLimitStatus.DISALLOW
-import io.spine.logging.flogger.RateLimitStatus.checkStatus
-import io.spine.logging.flogger.RateLimitStatus.combine
-import io.spine.logging.flogger.given.FakeLogSite
-import io.spine.logging.flogger.backend.given.FakeMetadata
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.logging.flogger.RateLimitStatus.ALLOW
+import io.spine.logging.flogger.RateLimitStatus.DISALLOW
+import io.spine.logging.flogger.RateLimitStatus.checkStatus
+import io.spine.logging.flogger.RateLimitStatus.combine
+import io.spine.logging.flogger.backend.given.FakeMetadata
+import io.spine.logging.flogger.given.FakeLogSite
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 

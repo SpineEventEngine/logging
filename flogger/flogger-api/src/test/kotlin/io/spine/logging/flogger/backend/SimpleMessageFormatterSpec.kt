@@ -26,11 +26,11 @@
 
 package io.spine.logging.flogger.backend
 
-import io.spine.logging.flogger.backend.given.FakeMetadata
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.flogger.LogContext.Key
 import io.spine.logging.flogger.backend.given.FakeLogData
+import io.spine.logging.flogger.backend.given.FakeMetadata
 import io.spine.logging.flogger.context.Tags
 import io.spine.logging.flogger.repeatedKey
 import io.spine.logging.flogger.singleKey

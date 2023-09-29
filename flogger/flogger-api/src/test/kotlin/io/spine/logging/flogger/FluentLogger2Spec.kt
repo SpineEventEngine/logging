@@ -26,11 +26,11 @@
 
 package io.spine.logging.flogger
 
-import io.spine.logging.flogger.FluentLogger2.forEnclosingClass
-import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldNotBeInstanceOf
+import io.spine.logging.flogger.FluentLogger2.forEnclosingClass
+import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
 import java.util.logging.Level
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

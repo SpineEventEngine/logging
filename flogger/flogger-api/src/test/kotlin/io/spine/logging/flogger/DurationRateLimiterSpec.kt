@@ -26,17 +26,17 @@
 
 package io.spine.logging.flogger
 
-import io.spine.logging.flogger.given.FakeLogSite
-import io.spine.logging.flogger.backend.given.FakeMetadata
-import io.spine.logging.flogger.DurationRateLimiter.newRateLimitPeriod
-import io.spine.logging.flogger.LogContext.Key
-import io.spine.logging.flogger.RateLimitStatus.DISALLOW
-import io.spine.logging.flogger.RateLimitStatus.checkStatus
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.flogger.DurationRateLimiter.check
+import io.spine.logging.flogger.DurationRateLimiter.newRateLimitPeriod
+import io.spine.logging.flogger.LogContext.Key
+import io.spine.logging.flogger.RateLimitStatus.DISALLOW
+import io.spine.logging.flogger.RateLimitStatus.checkStatus
+import io.spine.logging.flogger.backend.given.FakeMetadata
+import io.spine.logging.flogger.given.FakeLogSite
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import org.junit.jupiter.api.DisplayName

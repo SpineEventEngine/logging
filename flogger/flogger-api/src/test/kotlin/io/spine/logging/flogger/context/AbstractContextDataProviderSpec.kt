@@ -26,7 +26,6 @@
 
 package io.spine.logging.flogger.context
 
-import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldHaveSize
@@ -37,6 +36,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.flogger.LogContext.Key
 import io.spine.logging.flogger.backend.Metadata
+import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
 import io.spine.logging.flogger.backend.given.shouldBeEmpty
 import io.spine.logging.flogger.backend.given.shouldContainInOrder
 import io.spine.logging.flogger.backend.given.shouldHaveSize

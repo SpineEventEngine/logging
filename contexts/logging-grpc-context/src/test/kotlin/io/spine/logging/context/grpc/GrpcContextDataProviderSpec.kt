@@ -26,11 +26,11 @@
 
 package io.spine.logging.context.grpc
 
-import io.spine.logging.flogger.context.ContextDataProvider
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.optional.shouldBePresent
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.spine.logging.flogger.context.AbstractContextDataProviderSpec
+import io.spine.logging.flogger.context.ContextDataProvider
 import java.util.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

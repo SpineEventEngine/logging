@@ -26,12 +26,12 @@
 
 package io.spine.logging.flogger.context
 
+import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.flogger.backend.given.shouldBeEmpty
 import io.spine.logging.flogger.backend.given.shouldContainInOrder
 import io.spine.logging.flogger.backend.given.shouldHaveFirstValue
 import io.spine.logging.flogger.backend.given.shouldHaveSize
 import io.spine.logging.flogger.backend.given.shouldNotContain
-import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.flogger.repeatedKey
 import io.spine.logging.flogger.singleKey
 import org.junit.jupiter.api.DisplayName

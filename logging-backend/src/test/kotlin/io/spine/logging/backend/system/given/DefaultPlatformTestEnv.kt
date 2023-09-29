@@ -26,12 +26,12 @@
 
 package io.spine.logging.backend.system.given
 
+import io.spine.logging.backend.system.BackendFactory
+import io.spine.logging.backend.system.Clock
 import io.spine.logging.flogger.AbstractLogger
 import io.spine.logging.flogger.FloggerLogSite
 import io.spine.logging.flogger.backend.LoggerBackend
 import io.spine.logging.flogger.backend.Platform
-import io.spine.logging.backend.system.BackendFactory
-import io.spine.logging.backend.system.Clock
 import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
 
 /**

@@ -26,9 +26,6 @@
 
 package io.spine.logging.flogger
 
-import io.spine.logging.flogger.given.FakeLogSite
-import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
-import io.spine.logging.flogger.backend.given.FakeMetadata
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
@@ -43,6 +40,8 @@ import io.spine.logging.flogger.DurationRateLimiter.newRateLimitPeriod
 import io.spine.logging.flogger.LazyArgs.lazy
 import io.spine.logging.flogger.LogContext.Key
 import io.spine.logging.flogger.LogContext.specializeLogSiteKeyFromMetadata
+import io.spine.logging.flogger.backend.given.FakeMetadata
+import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
 import io.spine.logging.flogger.backend.given.shouldContain
 import io.spine.logging.flogger.backend.given.shouldContainInOrder
 import io.spine.logging.flogger.backend.given.shouldHaveSize
@@ -50,6 +49,7 @@ import io.spine.logging.flogger.backend.given.shouldNotContain
 import io.spine.logging.flogger.backend.given.shouldUniquelyContain
 import io.spine.logging.flogger.context.Tags
 import io.spine.logging.flogger.given.ConfigurableLogger
+import io.spine.logging.flogger.given.FakeLogSite
 import io.spine.logging.flogger.given.iterate
 import io.spine.logging.flogger.given.shouldHaveArguments
 import io.spine.logging.flogger.given.shouldHaveMessage

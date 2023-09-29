@@ -26,7 +26,6 @@
 
 package io.spine.logging.backend.log4j2
 
-import io.spine.logging.flogger.given.FakeLogSite
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldHaveSize
@@ -37,6 +36,7 @@ import io.spine.logging.backend.log4j2.given.MemoizingAppender
 import io.spine.logging.flogger.FloggerLogSite
 import io.spine.logging.flogger.LogContext.Key
 import io.spine.logging.flogger.backend.given.FakeLogData
+import io.spine.logging.flogger.given.FakeLogSite
 import io.spine.logging.flogger.parser.ParseException
 import io.spine.logging.flogger.repeatedKey
 import io.spine.logging.flogger.singleKey
