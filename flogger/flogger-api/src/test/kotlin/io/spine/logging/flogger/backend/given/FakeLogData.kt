@@ -26,7 +26,6 @@
 
 package io.spine.logging.flogger.backend.given
 
-import com.google.common.flogger.testing.FakeMetadata
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.logging.flogger.FloggerLogSite
 import io.spine.logging.flogger.FloggerMetadataKey

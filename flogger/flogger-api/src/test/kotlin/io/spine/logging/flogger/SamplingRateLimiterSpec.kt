@@ -31,7 +31,7 @@ import io.spine.logging.flogger.RateLimitStatus.DISALLOW
 import io.spine.logging.flogger.RateLimitStatus.checkStatus
 import io.spine.logging.flogger.backend.Metadata
 import io.spine.logging.flogger.given.FakeLogSite
-import com.google.common.flogger.testing.FakeMetadata
+import io.spine.logging.flogger.backend.given.FakeMetadata
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.ints.shouldBeInRange
 import io.kotest.matchers.nulls.shouldBeNull

@@ -28,7 +28,7 @@ package io.spine.logging.flogger.backend
 
 import com.google.common.base.Joiner
 import com.google.common.collect.Iterators
-import com.google.common.flogger.testing.FakeMetadata
+import io.spine.logging.flogger.backend.given.FakeMetadata
 import io.kotest.matchers.shouldBe
 import io.spine.logging.flogger.FloggerMetadataKey
 import io.spine.logging.flogger.repeatedKey

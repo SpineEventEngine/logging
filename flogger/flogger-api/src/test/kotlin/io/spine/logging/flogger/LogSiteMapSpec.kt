@@ -26,14 +26,14 @@
 
 package io.spine.logging.flogger
 
-import io.spine.logging.flogger.backend.Metadata
-import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
+import io.spine.logging.flogger.backend.Metadata
+import io.spine.logging.flogger.backend.given.FakeMetadata
 import io.spine.logging.flogger.given.FakeLogSite
 import java.lang.Thread.sleep
 import java.util.concurrent.Callable
@@ -78,7 +78,7 @@ internal class LogSiteMapSpec {
         // First increment.
         map[fooKey, fooMetadata].incrementAndGet() shouldBe 1
         // Same metadata, non-specialized key (scope is also not in the metadata).
-        map[logSite, FakeMetadata.empty()].incrementAndGet() shouldBe 1
+        map[logSite, Metadata.empty()].incrementAndGet() shouldBe 1
         // Same metadata, specialized key (2nd time).
         map[fooKey, fooMetadata].incrementAndGet() shouldBe 2
         // Different metadata, new specialized key.
