@@ -27,7 +27,7 @@
 package io.spine.logging.flogger
 
 import io.spine.logging.flogger.FluentLogger2.forEnclosingClass
-import com.google.common.flogger.testing.FakeLoggerBackend
+import io.spine.logging.flogger.backend.given.FakeLoggerBackend
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldNotBeInstanceOf

@@ -27,7 +27,7 @@
 package io.spine.logging.flogger
 
 import com.google.common.flogger.testing.FakeLogSite
-import com.google.common.flogger.testing.FakeLoggerBackend
+import io.spine.logging.flogger.backend.given.FakeLoggerBackend
 import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeFalse
@@ -71,7 +71,8 @@ import org.junit.jupiter.api.Test
 @DisplayName("`LogContext` should")
 internal class LogContextSpec {
 
-    private val backend = FakeLoggerBackend()
+    private val backend =
+        FakeLoggerBackend()
     private val logger = FluentLogger2(backend)
 
     companion object {
@@ -333,7 +334,8 @@ internal class LogContextSpec {
 
         @Test
         fun `log with a higher invocation rate`() {
-            val backend = FakeLoggerBackend()
+            val backend =
+                FakeLoggerBackend()
             val logger = ConfigurableLogger(backend)
             val startNanos = currentTimeNanos()
 
@@ -358,7 +360,8 @@ internal class LogContextSpec {
 
         @Test
         fun `log with a lower invocation rate`() {
-            val backend = FakeLoggerBackend()
+            val backend =
+                FakeLoggerBackend()
             val logger = ConfigurableLogger(backend)
             val startNanos = currentTimeNanos()
 
@@ -389,7 +392,8 @@ internal class LogContextSpec {
 
         @Test
         fun `bucketing strategy`() {
-            val backend = FakeLoggerBackend()
+            val backend =
+                FakeLoggerBackend()
             val logger = ConfigurableLogger(backend)
 
             // Logs for both types should appear.
@@ -434,7 +438,8 @@ internal class LogContextSpec {
 
         @Test
         fun `enum constant`() {
-            val backend = FakeLoggerBackend()
+            val backend =
+                FakeLoggerBackend()
             val logger = ConfigurableLogger(backend)
 
             // Logs for both types should appear.
@@ -472,7 +477,8 @@ internal class LogContextSpec {
 
         @Test
         fun `scope provider`() {
-            val backend = FakeLoggerBackend()
+            val backend =
+                FakeLoggerBackend()
             val logger = ConfigurableLogger(backend)
 
             // We can't test a specific implementation of `ScopedLoggingContext` here,
@@ -514,7 +520,8 @@ internal class LogContextSpec {
 
         @Test
         fun `without any rate limiting`() {
-            val backend = FakeLoggerBackend()
+            val backend =
+                FakeLoggerBackend()
             backend.setLevel(WARNING)
             val logger = ConfigurableLogger(backend)
             logger.forceAt(INFO).log("LOGGED")
@@ -527,7 +534,8 @@ internal class LogContextSpec {
 
         @Test
         fun `with 'every(n)' limiter`() {
-            val backend = FakeLoggerBackend()
+            val backend =
+                FakeLoggerBackend()
             val logger = ConfigurableLogger(backend)
             val logSite = FakeLogSite.create("com.example.MyClass", "everyN", 123, null)
 
@@ -564,7 +572,8 @@ internal class LogContextSpec {
 
         @Test
         fun `with 'atMostEvery(n)' limiter`() {
-            val backend = FakeLoggerBackend()
+            val backend =
+                FakeLoggerBackend()
             val logger = ConfigurableLogger(backend)
             val logSite = FakeLogSite.create("com.example.MyClass", "atMostEvery", 123, null)
 

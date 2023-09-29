@@ -46,6 +46,7 @@ import java.util.logging.Level
  *
  * @see <a href="http://rb.gy/z2i0q">Original Java code of Google Flogger</a>
  */
+@Suppress("TooManyFunctions") // Many getters and setters.
 class FakeLogData : LogData {
 
     private var level = Level.INFO

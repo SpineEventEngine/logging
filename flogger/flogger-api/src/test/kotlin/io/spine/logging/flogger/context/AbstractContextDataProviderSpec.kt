@@ -26,7 +26,7 @@
 
 package io.spine.logging.flogger.context
 
-import com.google.common.flogger.testing.FakeLoggerBackend
+import io.spine.logging.flogger.backend.given.FakeLoggerBackend
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldHaveSize
