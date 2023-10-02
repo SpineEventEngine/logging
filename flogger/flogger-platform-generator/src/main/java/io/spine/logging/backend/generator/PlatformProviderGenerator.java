@@ -76,6 +76,8 @@ import static org.objectweb.asm.Opcodes.V1_6;
  * <p>The advantage of this approach is that tools that operate on bytecode
  * (e.g., proguard) observe the dependency correctly, which is not the case
  * when reflection is used to look up classes.
+ *
+ * @see <a href="http://rb.gy/mjs13">Original Java code of Google Flogger</a>
  */
 @SuppressWarnings("DuplicateStringLiteralInspection") // Uses literals with FQN.
 public final class PlatformProviderGenerator {
