@@ -59,7 +59,7 @@ package io.spine.logging.backend.system;
  * the jar file containing the implementation. When creating an implementation of this class, you
  * can provide serivce metadata (and thereby allow users to get your implementation just by
  * including your jar file) by either manually including a {@code
- * META-INF/services/com.google.common.flogger.backend.system.Clock} file containing the name of
+ * META-INF/services/io.spine.logging.backend.system.Clock} file containing the name of
  * your implementation class or by annotating your implementation class using <a
  * href="https://github.com/google/auto/tree/master/service">{@code @AutoService(Clock.class)}</a>.
  * See the documentation of both {@link java.util.ServiceLoader} and {@link DefaultPlatform} for

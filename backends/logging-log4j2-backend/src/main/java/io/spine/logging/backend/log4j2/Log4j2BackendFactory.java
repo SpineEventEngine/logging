@@ -41,7 +41,7 @@ import org.apache.logging.log4j.core.Logger;
  *
  * <p>To specify it more explicitly or to work around an issue where multiple
  * backend implementations are on the classpath, you can set {@code flogger.backend_factory}
- * system property to {@code com.google.common.flogger.backend.log4j2.Log4j2BackendFactory}.
+ * system property to {@code io.spine.logging.backend.log4j2.Log4j2BackendFactory}.
  */
 public final class Log4j2BackendFactory extends BackendFactory {
 

@@ -24,50 +24,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.dependency.Asm
+/**
+ * Contains a Java program that generates {@code PlatformProvider} class.
+ */
+@CheckReturnValue
+package io.spine.logging.backend.generator;
 
-plugins {
-    `jvm-module`
-    application
-}
-
-dependencies {
-    implementation(Asm.lib)
-}
-
-java {
-
-    /**
-     * Disables CheckStyle linter until main sources are migrated to Kotlin.
-     *
-     * As for now, they produce a lot of errors/warnings to original
-     * Flogger code, failing the build.
-     */
-    // TODO:2023-10-02:yevhenii.nadtochii: Remove this piece of configuration.
-    // See issue: https://github.com/SpineEventEngine/logging/issues/56
-    tasks {
-        named("checkstyleMain") { enabled = false }
-    }
-}
-
-tasks {
-    register<JavaExec>("generatePlatformProvider") {
-        mainClass.set("io.spine.logging.backend.generator.PlatformProviderGenerator")
-
-        val outputJar = "build/provider/platform-provider.jar"
-        args(listOf(outputJar))
-        outputs.file(outputJar)
-        doFirst { file(outputJar).deleteRecursively() }
-
-        val inputClasspath = sourceSets.main.get().runtimeClasspath
-        classpath(inputClasspath)
-        inputs.files(inputClasspath)
-    }
-}
-
-configurations {
-    register("generatedPlatformProvider") {
-        val genTask = tasks.named("generatePlatformProvider")
-        outgoing.artifact(genTask)
-    }
-}
+import com.google.errorprone.annotations.CheckReturnValue;
