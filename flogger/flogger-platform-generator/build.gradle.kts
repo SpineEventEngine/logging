@@ -24,26 +24,20 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import BuildSettings.javaVersion
-import io.spine.internal.gradle.report.license.LicenseReporter
+import io.spine.internal.dependency.Asm
 
 plugins {
+    `jvm-module`
     application
 }
 
-LicenseReporter.generateReportIn(project)
-
 dependencies {
-    implementation("org.ow2.asm:asm:9.2")
-}
-
-java {
-    toolchain.languageVersion.set(javaVersion)
+    implementation(Asm.lib)
 }
 
 tasks {
     register<JavaExec>("generatePlatformProvider") {
-        mainClass.set("com.google.common.flogger.backend.PlatformProviderGenerator")
+        mainClass.set("io.spine.logging.backend.generator.PlatformProviderGenerator")
 
         val outputJar = "build/provider/platform-provider.jar"
         args(listOf(outputJar))
