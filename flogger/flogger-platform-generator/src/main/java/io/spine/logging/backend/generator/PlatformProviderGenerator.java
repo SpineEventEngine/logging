@@ -199,8 +199,6 @@ public final class PlatformProviderGenerator {
                 startLabel, endLabel, handlerLabel, "java/lang/NoSuchMethodException");
         methodVisitor.visitLabel(startLabel);
 
-
-
         /*
         Generate the actual reflective constructor call inside the try block:
 
