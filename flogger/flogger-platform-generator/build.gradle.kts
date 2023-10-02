@@ -43,7 +43,7 @@ java {
      * As for now, they produce a lot of errors/warnings to original
      * Flogger code, failing the build.
      */
-    // TODO:2023-09-22:yevhenii.nadtochii: Remove this piece of configuration.
+    // TODO:2023-10-02:yevhenii.nadtochii: Remove this piece of configuration.
     // See issue: https://github.com/SpineEventEngine/logging/issues/56
     tasks {
         named("checkstyleMain") { enabled = false }
