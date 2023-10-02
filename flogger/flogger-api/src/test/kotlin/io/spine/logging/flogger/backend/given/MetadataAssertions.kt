@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.common.flogger.testing
+package io.spine.logging.flogger.backend.given
 
 import io.spine.logging.flogger.FloggerMetadataKey
 import io.spine.logging.flogger.backend.Metadata
@@ -46,21 +46,21 @@ private val about = ""
 /**
  * Asserts that this [Metadata] doesn't have any key/value pairs.
  */
-public fun Metadata.shouldBeEmpty() {
+internal fun Metadata.shouldBeEmpty() {
     size() shouldBeExactly 0
 }
 
 /**
  * Asserts that this [Metadata] has the given [number] of key/value pairs.
  */
-public infix fun Metadata.shouldHaveSize(number: Int) {
+internal infix fun Metadata.shouldHaveSize(number: Int) {
     size() shouldBeExactly number
 }
 
 /**
  * Asserts that this [Metadata] has a [key] with the mapped [values].
  */
-public fun <T> Metadata.shouldContainInOrder(key: FloggerMetadataKey<T>, vararg values: T) {
+internal fun <T> Metadata.shouldContainInOrder(key: FloggerMetadataKey<T>, vararg values: T) {
     valuesOf(key) shouldContainInOrder values.asList()
 }
 
@@ -69,28 +69,28 @@ public fun <T> Metadata.shouldContainInOrder(key: FloggerMetadataKey<T>, vararg 
  *
  * The given [value] should be the first one, which was mapped to the [key].
  */
-public fun <T> Metadata.shouldHaveFirstValue(key: FloggerMetadataKey<T>, value: T) {
+internal fun <T> Metadata.shouldHaveFirstValue(key: FloggerMetadataKey<T>, value: T) {
     findValue(key) shouldBe value
 }
 
 /**
  * Asserts that this [Metadata] does NOT HAVE a value for the given [key].
  */
-public infix fun <T> Metadata.shouldNotContain(key: FloggerMetadataKey<T>) {
+internal infix fun <T> Metadata.shouldNotContain(key: FloggerMetadataKey<T>) {
     findValue(key).shouldBeNull()
 }
 
 /**
  * Asserts that this [Metadata] has one or more values for the given [key]
  */
-public infix fun <T> Metadata.shouldContain(key: FloggerMetadataKey<T>) {
+internal infix fun <T> Metadata.shouldContain(key: FloggerMetadataKey<T>) {
     findValue(key).shouldNotBeNull()
 }
 
 /**
  * Asserts that this [Metadata] has a [key] to which only a single [value] is mapped.
  */
-public fun <T> Metadata.shouldUniquelyContain(key: FloggerMetadataKey<T>, value: T) {
+internal fun <T> Metadata.shouldUniquelyContain(key: FloggerMetadataKey<T>, value: T) {
     findValue(key) shouldBe value
     val allKeys = (0..<size()).map { i -> getKey(i) }.toList()
     allKeys.indexOf(key) shouldBe allKeys.lastIndexOf(key)

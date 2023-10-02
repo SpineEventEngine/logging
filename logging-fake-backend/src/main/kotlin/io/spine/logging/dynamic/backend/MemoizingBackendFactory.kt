@@ -29,7 +29,7 @@ package io.spine.logging.dynamic.backend
 import io.spine.logging.flogger.backend.LoggerBackend
 
 /**
- * A backend factory that remembers the created backends.
+ * A backend factory that stores the created instances of [LoggerBackend].
  *
  * Actual backend creation is performed by the given [delegate].
  *
@@ -42,11 +42,9 @@ public class MemoizingBackendFactory<out T : LoggerBackend>(
     private val _createdBackends = mutableListOf<T>()
 
     /**
-     * Returns all backend instances that were created
-     * by the [underlying factory][delegate].
+     * Returns backend instances that were created by this factory.
      */
-    public val createdBackends: List<T>
-        get() = _createdBackends
+    public val createdBackends: List<T> get() = _createdBackends
 
     override fun create(loggingClassName: String): T =
         delegate.create(loggingClassName).also { _createdBackends.add(it) }

@@ -24,44 +24,63 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.flogger.given
+package io.spine.logging.flogger.backend.given
 
 import io.spine.logging.flogger.backend.LogData
 import io.spine.logging.flogger.backend.LoggerBackend
-import com.google.common.flogger.testing.FakeLoggerBackend
-import java.util.*
 import java.util.logging.Level
 
 /**
- * A simple logging backend for tests.
+ * A logger backend that captures all [LogData] instances.
  *
- * Differs from [FakeLoggerBackend] in that it actually formats the given
- * [LogData] using built-in Java formatting. See [log] method for details.
+ * This class is mutable and not thread safe.
+ *
+ * @see <a href="http://rb.gy/r6jjw">Original Java code of Google Flogger</a>
  */
-internal open class MemoizingBackend : LoggerBackend() {
+class MemoizingLoggerBackend(val name: String = "com.example.MyClass") : LoggerBackend() {
 
-    val logged: MutableList<String?> = ArrayList()
-
-    override fun getLoggerName(): String = "<unused>"
-
-    override fun isLoggable(lvl: Level): Boolean = true
+    private var minLevel = Level.INFO
+    private val mutableLogged: MutableList<LogData> = ArrayList()
 
     /**
-     * Format without using Flogger util classes, so we can test what happens
-     * if arguments cause errors.
-     *
-     * The core utility classes handle this properly. But custom backends
-     * are not obligated to use them.
+     * [LogData] entries captured by this backend.
      */
-    override fun log(data: LogData) {
-        val templateContext = data.templateContext
-        if (templateContext == null) {
-            logged.add("${data.getLiteralArgument()}")
-        }
-        val formatted = templateContext.message.format(Locale.ENGLISH, *data.arguments)
-        logged.add(formatted)
+    val logged: List<LogData> get() = mutableLogged
+
+    /**
+     * Number of [LogData] entries captured by this backend.
+     */
+    val loggedCount: Int get() = mutableLogged.size
+
+    /**
+     * The last [LogData] captured by this backend.
+     *
+     * @throws NoSuchElementException if there are no entries
+     */
+    val lastLogged: LogData get() = mutableLogged.last()
+
+    /**
+     * The first [LogData] captured by this backend.
+     *
+     * @throws NoSuchElementException if there are no entries
+     */
+    val firstLogged: LogData get() = mutableLogged.first()
+
+    /**
+     * Sets the current level of this backend.
+     */
+    fun setLevel(level: Level) {
+        minLevel = level
     }
 
-    // Don't handle any errors in the backend, so we can test “last resort” error handling.
+    override fun getLoggerName() = name
+
+    override fun isLoggable(loggedLevel: Level) = loggedLevel.intValue() >= minLevel.intValue()
+
+    override fun log(data: LogData) {
+        mutableLogged.add(data)
+    }
+
     override fun handleError(error: RuntimeException, badData: LogData) = throw error
 }
+

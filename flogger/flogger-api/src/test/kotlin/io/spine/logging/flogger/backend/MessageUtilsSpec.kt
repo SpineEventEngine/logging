@@ -26,6 +26,15 @@
 
 package io.spine.logging.flogger.backend
 
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldBeEmpty
+import io.kotest.matchers.string.shouldContain
+import io.kotest.matchers.string.shouldNotContain
+import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.logging.backend.given.BadToString
+import io.spine.logging.flogger.FloggerLogSite
 import io.spine.logging.flogger.backend.FormatOptions.FLAG_SHOW_ALT_FORM
 import io.spine.logging.flogger.backend.FormatOptions.FLAG_SHOW_LEADING_ZEROS
 import io.spine.logging.flogger.backend.FormatOptions.FLAG_UPPER_CASE
@@ -34,16 +43,7 @@ import io.spine.logging.flogger.backend.MessageUtils.appendHex
 import io.spine.logging.flogger.backend.MessageUtils.appendLogSite
 import io.spine.logging.flogger.backend.MessageUtils.safeFormatTo
 import io.spine.logging.flogger.backend.MessageUtils.safeToString
-import io.spine.logging.backend.given.BadToString
-import com.google.common.flogger.testing.FakeLogSite.create
-import io.kotest.matchers.booleans.shouldBeFalse
-import io.kotest.matchers.booleans.shouldBeTrue
-import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldBeEmpty
-import io.kotest.matchers.string.shouldContain
-import io.kotest.matchers.string.shouldNotContain
-import io.kotest.matchers.types.shouldBeSameInstanceAs
-import io.spine.logging.flogger.FloggerLogSite
+import io.spine.logging.flogger.given.FakeLogSite
 import java.util.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -135,7 +135,7 @@ internal class MessageUtilsSpec {
     @Test
     fun `append log site`() {
         val out = StringBuilder()
-        val logSite = create("<class>", "<method>", 32, "Ignored.java")
+        val logSite = FakeLogSite("<class>", "<method>", 32, "Ignored.java")
 
         appendLogSite(logSite, out).shouldBeTrue()
         "$out" shouldBe "<class>.<method>:32"

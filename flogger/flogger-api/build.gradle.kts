@@ -24,6 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import io.spine.internal.gradle.testing.exposeTestConfiguration
 import net.ltgt.gradle.errorprone.errorprone
 
 plugins {
@@ -37,7 +38,6 @@ dependencies {
             configuration = "generatedPlatformProvider"
         )
     )
-    testImplementation(project(":flogger-testing"))
     testImplementation(project(":testutil-logging"))
     testRuntimeOnly(project(":logging-backend"))
 }
@@ -57,4 +57,10 @@ java {
         named("pmdMain") { enabled = false }
         compileJava { options.errorprone.isEnabled.set(false) }
     }
+
+    /**
+     * Abstract tests and their `given` classes can be re-used to test
+     * different backend and context implementations.
+     */
+    exposeTestConfiguration()
 }

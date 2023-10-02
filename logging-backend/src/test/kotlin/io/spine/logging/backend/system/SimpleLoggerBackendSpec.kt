@@ -26,12 +26,12 @@
 
 package io.spine.logging.backend.system
 
-import com.google.common.flogger.testing.FakeLogData
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.string.shouldBeEmpty
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldMatch
+import io.spine.logging.flogger.backend.given.FakeLogData
 import io.spine.logging.flogger.parser.ParseException
 import io.spine.logging.testing.tapConsole
 import java.util.*
@@ -55,7 +55,7 @@ internal class SimpleLoggerBackendSpec {
     @Test
     fun `log literals`() {
         val literal = "Literal"
-        val data = FakeLogData.of(literal)
+        val data = FakeLogData(literal)
         val logged = tapConsole { backend.log(data) }
         logged shouldContain literal
     }

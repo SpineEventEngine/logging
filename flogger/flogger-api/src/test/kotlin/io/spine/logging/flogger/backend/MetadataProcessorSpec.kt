@@ -27,7 +27,6 @@
 package io.spine.logging.flogger.backend
 
 import com.google.common.collect.Iterators
-import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldContainExactly
@@ -35,6 +34,7 @@ import io.kotest.matchers.ints.shouldBeLessThanOrEqual
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.spine.logging.flogger.FloggerMetadataKey
+import io.spine.logging.flogger.backend.given.FakeMetadata
 import io.spine.logging.flogger.repeatedKey
 import io.spine.logging.flogger.singleKey
 import org.junit.jupiter.api.Nested

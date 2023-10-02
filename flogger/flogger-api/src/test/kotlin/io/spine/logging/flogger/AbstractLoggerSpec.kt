@@ -26,10 +26,6 @@
 
 package io.spine.logging.flogger
 
-import io.spine.logging.flogger.backend.LogData
-import io.spine.logging.flogger.backend.LoggingException
-import io.spine.logging.flogger.given.MemoizingBackend
-import com.google.common.flogger.testing.ConfigurableLogger
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldHaveSize
@@ -37,6 +33,10 @@ import io.kotest.matchers.string.shouldBeEmpty
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldMatch
 import io.kotest.matchers.string.shouldNotContain
+import io.spine.logging.flogger.backend.LogData
+import io.spine.logging.flogger.backend.LoggingException
+import io.spine.logging.flogger.given.ConfigurableLogger
+import io.spine.logging.flogger.given.FormattingBackend
 import io.spine.logging.testing.tapConsole
 import kotlin.text.RegexOption.DOT_MATCHES_ALL
 import org.junit.jupiter.api.DisplayName
@@ -56,8 +56,8 @@ import org.junit.jupiter.api.Test
 @DisplayName("`AbstractLogger` should")
 internal class AbstractLoggerSpec {
 
-    private val backend = MemoizingBackend()
-    private val logger = ConfigurableLogger.create(backend)
+    private val backend = FormattingBackend()
+    private val logger = ConfigurableLogger(backend)
 
     companion object {
 
@@ -145,10 +145,10 @@ internal class AbstractLoggerSpec {
 
     @Test
     fun `allow logging exceptions thrown by a backend`() {
-        val backend = object : MemoizingBackend() {
+        val backend = object : FormattingBackend() {
             override fun log(data: LogData) = throw LoggingException("allowed")
         }
-        val logger = ConfigurableLogger.create(backend)
+        val logger = ConfigurableLogger(backend)
 
         val output = tapConsole {
             shouldThrow<LoggingException> {
@@ -163,10 +163,10 @@ internal class AbstractLoggerSpec {
     @Test
     @Suppress("TooGenericExceptionThrown") // Plain `Error` is OK for tests.
     fun `allow logging errors thrown by a backend`() {
-        val backend: MemoizingBackend = object : MemoizingBackend() {
+        val backend = object : FormattingBackend() {
             override fun log(data: LogData) = throw Error("allowed")
         }
-        val logger = ConfigurableLogger.create(backend)
+        val logger = ConfigurableLogger(backend)
 
         val output = tapConsole {
             shouldThrow<Error> {

@@ -26,8 +26,6 @@
 
 package io.spine.logging.flogger
 
-import com.google.common.flogger.testing.FakeLogSite
-import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -35,6 +33,8 @@ import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.flogger.CountingRateLimiter.check
 import io.spine.logging.flogger.LogContext.Key
 import io.spine.logging.flogger.RateLimitStatus.DISALLOW
+import io.spine.logging.flogger.backend.given.FakeMetadata
+import io.spine.logging.flogger.given.FakeLogSite
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 

@@ -24,18 +24,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.common.flogger.testing
+package io.spine.logging.flogger.context
 
-import io.spine.logging.flogger.LogContext.Key
-import io.spine.logging.flogger.backend.Metadata
-import io.spine.logging.flogger.context.ContextDataProvider
-import io.spine.logging.flogger.context.LogLevelMap
-import io.spine.logging.flogger.context.ScopeType
-import io.spine.logging.flogger.context.ScopedLoggingContext
-import io.spine.logging.flogger.context.ScopedLoggingContexts
-import io.spine.logging.flogger.context.Tags
-import io.spine.logging.flogger.repeatedKey
-import io.spine.logging.flogger.singleKey
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldHaveSize
@@ -44,6 +34,16 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.logging.flogger.LogContext.Key
+import io.spine.logging.flogger.backend.Metadata
+import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
+import io.spine.logging.flogger.backend.given.shouldBeEmpty
+import io.spine.logging.flogger.backend.given.shouldContainInOrder
+import io.spine.logging.flogger.backend.given.shouldHaveSize
+import io.spine.logging.flogger.backend.given.shouldUniquelyContain
+import io.spine.logging.flogger.given.ConfigurableLogger
+import io.spine.logging.flogger.repeatedKey
+import io.spine.logging.flogger.singleKey
 import java.util.logging.Level
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -55,12 +55,10 @@ private typealias LoggerName = String
 /**
  * Set of common tests for [ContextDataProvider]s.
  *
- * @see <a href="https://github.com/google/flogger/blob/70c5aea863952ee61b3d33afb41f2841b6d63455/api/src/test/java/com/google/common/flogger/testing/AbstractScopedLoggingContextTest.java">
- *     Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/luq6y">Original Java code of Google Flogger</a>
  */
-@Suppress("FunctionName", "ClassName") // Tests aren't recognized in `main` sources.
 @DisplayName("`ContextDataProvider` should") // This name is to be overridden by inheritors.
-public abstract class AbstractContextDataProviderSpec {
+abstract class AbstractContextDataProviderSpec {
 
     private lateinit var contextData: ContextDataProvider
     private lateinit var context: ScopedLoggingContext
@@ -95,7 +93,7 @@ public abstract class AbstractContextDataProviderSpec {
      * Such is reported as a compiler warning.
      */
     @BeforeEach
-    public fun setImplementation() {
+    fun setImplementation() {
         contextData = implementationUnderTest
         context = contextData.getContextApiSingleton()
     }
@@ -121,11 +119,11 @@ public abstract class AbstractContextDataProviderSpec {
     }
 
     @Nested
-    public inner class
+    inner class
     `create a new context` {
 
         @Test
-        public fun `with tags`() {
+        fun `with tags`() {
             val tags = Tags.of("foo", "bar")
             contextTags.shouldBeEmpty()
             context.newContext()
@@ -139,7 +137,7 @@ public abstract class AbstractContextDataProviderSpec {
         }
 
         @Test
-        public fun `with metadata`() {
+        fun `with metadata`() {
             val (key, value) = FOO to "foo"
             contextMetadata.shouldBeEmpty()
             context.newContext()
@@ -154,7 +152,7 @@ public abstract class AbstractContextDataProviderSpec {
         }
 
         @Test
-        public fun `with a log level map`() {
+        fun `with a log level map`() {
             val defaultLevel = Level.FINE
             val mapping = "foo.bar" to defaultLevel
             val levelMap = LogLevelMap.create(mapOf(mapping), defaultLevel)
@@ -171,7 +169,7 @@ public abstract class AbstractContextDataProviderSpec {
         }
 
         @Test
-        public fun `with merged tags`() {
+        fun `with merged tags`() {
             val (name, value1, value2) = listOf("foo", "bar", "baz")
             val outerTags = Tags.of(name, value1)
             contextTags.shouldBeEmpty()
@@ -206,7 +204,7 @@ public abstract class AbstractContextDataProviderSpec {
          */
         @Test
         @Suppress("MagicNumber") // The assertion is readable without a constant.
-        public fun `with concatenated metadata`() {
+        fun `with concatenated metadata`() {
             val outerFoo = "outer-foo"
             val outerBar = "outer-bar"
 
@@ -247,7 +245,7 @@ public abstract class AbstractContextDataProviderSpec {
         }
 
         @Test
-        public fun `with merged level maps`() {
+        fun `with merged level maps`() {
             // Although, a logger name can be any `string`,
             // it is usually the name of a package or a class.
             val (other, fooBar, fooBarBaz) = listOf("other.package", "foo.bar", "foo.bar.Baz")
@@ -287,7 +285,7 @@ public abstract class AbstractContextDataProviderSpec {
         }
 
         @Test
-        public fun `with bound scope types`() {
+        fun `with bound scope types`() {
             contextData.getScope(SUB_TASK).shouldBeNull()
             contextData.getScope(BATCH_JOB).shouldBeNull()
 
@@ -331,9 +329,9 @@ public abstract class AbstractContextDataProviderSpec {
      * returned by [implementationUnderTest].
      */
     @Test
-    public fun `merge scope and log site tags`() {
-        val backend = FakeLoggerBackend()
-        val logger = ConfigurableLogger.create(backend)
+    fun `merge scope and log site tags`() {
+        val backend = MemoizingLoggerBackend()
+        val logger = ConfigurableLogger(backend)
         val logSiteTags = Tags.of("foo", "bar")
         val scopeTags = Tags.of("foo", "baz")
 
@@ -355,7 +353,7 @@ public abstract class AbstractContextDataProviderSpec {
     }
 
     @Test
-    public fun `not create a new scope instance if the same type is bound twice`() {
+    fun `not create a new scope instance if the same type is bound twice`() {
         contextData.getScope(SUB_TASK).shouldBeNull()
         context.newContext(SUB_TASK)
             .run {

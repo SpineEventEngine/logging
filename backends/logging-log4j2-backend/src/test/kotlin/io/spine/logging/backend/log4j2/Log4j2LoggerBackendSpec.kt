@@ -26,29 +26,29 @@
 
 package io.spine.logging.backend.log4j2
 
-import io.spine.logging.flogger.LogContext.Key
-import io.spine.logging.flogger.FloggerLogSite
-import io.spine.logging.backend.log4j2.given.MemoizingAppender
-import io.spine.logging.flogger.parser.ParseException
-import io.spine.logging.flogger.repeatedKey
-import io.spine.logging.flogger.singleKey
-import com.google.common.flogger.testing.FakeLogData
-import com.google.common.flogger.testing.FakeLogSite
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.logging.backend.log4j2.given.MemoizingAppender
+import io.spine.logging.flogger.FloggerLogSite
+import io.spine.logging.flogger.LogContext.Key
+import io.spine.logging.flogger.backend.given.FakeLogData
+import io.spine.logging.flogger.given.FakeLogSite
+import io.spine.logging.flogger.parser.ParseException
+import io.spine.logging.flogger.repeatedKey
+import io.spine.logging.flogger.singleKey
 import java.util.concurrent.atomic.AtomicInteger
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.core.Appender
 import org.apache.logging.log4j.core.LogEvent
 import org.apache.logging.log4j.core.Logger
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
 
 // These aliases help to distinguish different levels without FQN.
 private typealias JulLevel = java.util.logging.Level
@@ -83,7 +83,7 @@ internal class Log4j2LoggerBackendSpec {
 
     @Test
     fun `log a literal message`() {
-        val literalData = FakeLogData.of(LITERAL)
+        val literalData = FakeLogData(LITERAL)
         backend.log(literalData)
         lastLogged.formatted shouldBe LITERAL
     }
@@ -99,7 +99,7 @@ internal class Log4j2LoggerBackendSpec {
     @Test
     fun `use the default level`() {
         val defaultLevel = Log4jLevel.INFO // By default Log4j settings.
-        val data = FakeLogData.of(LITERAL)
+        val data = FakeLogData(LITERAL)
         backend.log(data)
         lastLogged.level shouldBe defaultLevel
     }
@@ -125,7 +125,7 @@ internal class Log4j2LoggerBackendSpec {
         @Test
         fun `with log cause`() {
             val cause = Throwable("Original Cause")
-            val data = FakeLogData.of(LITERAL)
+            val data = FakeLogData(LITERAL)
                 .addMetadata(Key.LOG_CAUSE, cause)
             backend.log(data)
             lastLogged.thrown shouldBeSameInstanceAs cause
@@ -145,7 +145,7 @@ internal class Log4j2LoggerBackendSpec {
         )
         expectedMatches.forEach { (julLevel, expectedLog4jLevel) ->
             val message = julLevel.name
-            val data = FakeLogData.of(message)
+            val data = FakeLogData(message)
                 .setLevel(julLevel)
             backend.log(data)
             lastLogged.level shouldBe expectedLog4jLevel
@@ -159,24 +159,24 @@ internal class Log4j2LoggerBackendSpec {
 
         @Test
         fun `with full information`() {
-            val logSite = FakeLogSite.create("<class>", "<method>", 42, "<file>")
+            val logSite = FakeLogSite("<class>", "<method>", 42, "<file>")
             testLogSite(logSite)
         }
 
         @Test
         fun `without source file`() {
-            val logSite = FakeLogSite.create("<class>", "<method>", 42, null)
+            val logSite = FakeLogSite("<class>", "<method>", 42, null)
             testLogSite(logSite)
         }
 
         @Test
         fun `without line number and source file`() {
-            val logSite = FakeLogSite.create("<class>", "<method>", -1, null)
+            val logSite = FakeLogSite("<class>", "<method>", -1, null)
             testLogSite(logSite)
         }
 
         private fun testLogSite(logSite: FloggerLogSite) {
-            val data = FakeLogData.of("")
+            val data = FakeLogData("")
                 .setLogSite(logSite)
             backend.log(data)
             val actual = lastLogged.source

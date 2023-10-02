@@ -26,22 +26,6 @@
 
 package io.spine.logging.flogger
 
-import io.spine.logging.flogger.DurationRateLimiter.newRateLimitPeriod
-import io.spine.logging.flogger.LogContext.Key
-import io.spine.logging.flogger.LogContext.specializeLogSiteKeyFromMetadata
-import io.spine.logging.flogger.context.Tags
-import io.spine.logging.flogger.given.iterate
-import com.google.common.flogger.testing.shouldContainInOrder
-import com.google.common.flogger.testing.shouldContain
-import io.spine.logging.flogger.given.shouldHaveArguments
-import io.spine.logging.flogger.given.shouldHaveMessage
-import com.google.common.flogger.testing.shouldHaveSize
-import com.google.common.flogger.testing.shouldNotContain
-import com.google.common.flogger.testing.shouldUniquelyContain
-import com.google.common.flogger.testing.FakeLogSite
-import com.google.common.flogger.testing.FakeLoggerBackend
-import com.google.common.flogger.testing.FakeMetadata
-import com.google.common.flogger.testing.ConfigurableLogger
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
@@ -52,7 +36,23 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
+import io.spine.logging.flogger.DurationRateLimiter.newRateLimitPeriod
 import io.spine.logging.flogger.LazyArgs.lazy
+import io.spine.logging.flogger.LogContext.Key
+import io.spine.logging.flogger.LogContext.specializeLogSiteKeyFromMetadata
+import io.spine.logging.flogger.backend.given.FakeMetadata
+import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
+import io.spine.logging.flogger.backend.given.shouldContain
+import io.spine.logging.flogger.backend.given.shouldContainInOrder
+import io.spine.logging.flogger.backend.given.shouldHaveSize
+import io.spine.logging.flogger.backend.given.shouldNotContain
+import io.spine.logging.flogger.backend.given.shouldUniquelyContain
+import io.spine.logging.flogger.context.Tags
+import io.spine.logging.flogger.given.ConfigurableLogger
+import io.spine.logging.flogger.given.FakeLogSite
+import io.spine.logging.flogger.given.iterate
+import io.spine.logging.flogger.given.shouldHaveArguments
+import io.spine.logging.flogger.given.shouldHaveMessage
 import java.lang.System.currentTimeMillis
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import java.util.concurrent.TimeUnit.SECONDS
@@ -71,7 +71,7 @@ import org.junit.jupiter.api.Test
 @DisplayName("`LogContext` should")
 internal class LogContextSpec {
 
-    private val backend = FakeLoggerBackend()
+    private val backend = MemoizingLoggerBackend()
     private val logger = FluentLogger2(backend)
 
     companion object {
@@ -211,7 +211,7 @@ internal class LogContextSpec {
 
     /**
      * For testing log-site tags are correctly merged with metadata,
-     * see [AbstractContextDataProviderSpec][com.google.common.flogger.testing.AbstractContextDataProviderSpec].
+     * see [AbstractContextDataProviderSpec][io.spine.logging.flogger.context.AbstractContextDataProviderSpec].
      */
     @Test
     fun `accept tags`() {
@@ -225,8 +225,8 @@ internal class LogContextSpec {
 
     @Test
     fun `log once per the given number of invocations`() {
-        val backend = FakeLoggerBackend()
-        val logger = ConfigurableLogger.create(backend)
+        val backend = MemoizingLoggerBackend()
+        val logger = ConfigurableLogger(backend)
         val startNanos = currentTimeNanos()
 
         // Logging occurs for counts: 0, 5, 10 (timestamp is not important).
@@ -254,8 +254,8 @@ internal class LogContextSpec {
 
     @Test
     fun `log with likelihood 1 in 'n'`() {
-        val backend = FakeLoggerBackend()
-        val logger = ConfigurableLogger.create(backend)
+        val backend = MemoizingLoggerBackend()
+        val logger = ConfigurableLogger(backend)
         val startNanos = currentTimeNanos()
 
         // Logging occurs randomly 1-in-5 times over 1000 log statements.
@@ -294,8 +294,8 @@ internal class LogContextSpec {
 
     @Test
     fun `log at most once per the specified time period`() {
-        val backend = FakeLoggerBackend()
-        val logger = ConfigurableLogger.create(backend)
+        val backend = MemoizingLoggerBackend()
+        val logger = ConfigurableLogger(backend)
         val startNanos = currentTimeNanos()
 
         // Logging occurs at: +0ms, +2400ms, +4800ms.
@@ -333,8 +333,8 @@ internal class LogContextSpec {
 
         @Test
         fun `log with a higher invocation rate`() {
-            val backend = FakeLoggerBackend()
-            val logger = ConfigurableLogger.create(backend)
+            val backend = MemoizingLoggerBackend()
+            val logger = ConfigurableLogger(backend)
             val startNanos = currentTimeNanos()
 
             // 10 logs per second over 6 seconds.
@@ -358,8 +358,8 @@ internal class LogContextSpec {
 
         @Test
         fun `log with a lower invocation rate`() {
-            val backend = FakeLoggerBackend()
-            val logger = ConfigurableLogger.create(backend)
+            val backend = MemoizingLoggerBackend()
+            val logger = ConfigurableLogger(backend)
             val startNanos = currentTimeNanos()
 
             // 10 logs per second over 6 seconds.
@@ -389,8 +389,8 @@ internal class LogContextSpec {
 
         @Test
         fun `bucketing strategy`() {
-            val backend = FakeLoggerBackend()
-            val logger = ConfigurableLogger.create(backend)
+            val backend = MemoizingLoggerBackend()
+            val logger = ConfigurableLogger(backend)
 
             // Logs for both types should appear.
             // Even though the 2nd log is within the rate limit period.
@@ -434,8 +434,8 @@ internal class LogContextSpec {
 
         @Test
         fun `enum constant`() {
-            val backend = FakeLoggerBackend()
-            val logger = ConfigurableLogger.create(backend)
+            val backend = MemoizingLoggerBackend()
+            val logger = ConfigurableLogger(backend)
 
             // Logs for both types should appear.
             // Even though the 2nd log is within the rate limit period.
@@ -472,8 +472,8 @@ internal class LogContextSpec {
 
         @Test
         fun `scope provider`() {
-            val backend = FakeLoggerBackend()
-            val logger = ConfigurableLogger.create(backend)
+            val backend = MemoizingLoggerBackend()
+            val logger = ConfigurableLogger(backend)
 
             // We can't test a specific implementation of `ScopedLoggingContext` here,
             // so we fake it. The `ScopedLoggingContext` behavior is well tested elsewhere.
@@ -514,9 +514,9 @@ internal class LogContextSpec {
 
         @Test
         fun `without any rate limiting`() {
-            val backend = FakeLoggerBackend()
+            val backend = MemoizingLoggerBackend()
             backend.setLevel(WARNING)
-            val logger = ConfigurableLogger.create(backend)
+            val logger = ConfigurableLogger(backend)
             logger.forceAt(INFO).log("LOGGED")
             backend.loggedCount shouldBe 1
             backend.logged[0].shouldHaveMessage("LOGGED")
@@ -527,9 +527,9 @@ internal class LogContextSpec {
 
         @Test
         fun `with 'every(n)' limiter`() {
-            val backend = FakeLoggerBackend()
-            val logger = ConfigurableLogger.create(backend)
-            val logSite = FakeLogSite.create("com.example.MyClass", "everyN", 123, null)
+            val backend = MemoizingLoggerBackend()
+            val logger = ConfigurableLogger(backend)
+            val logSite = FakeLogSite("com.example.MyClass", "everyN", 123, null)
 
             logger.atInfo()
                 .every(3)
@@ -564,9 +564,9 @@ internal class LogContextSpec {
 
         @Test
         fun `with 'atMostEvery(n)' limiter`() {
-            val backend = FakeLoggerBackend()
-            val logger = ConfigurableLogger.create(backend)
-            val logSite = FakeLogSite.create("com.example.MyClass", "atMostEvery", 123, null)
+            val backend = MemoizingLoggerBackend()
+            val logger = ConfigurableLogger(backend)
+            val logSite = FakeLogSite("com.example.MyClass", "atMostEvery", 123, null)
 
             var nowNanos = currentTimeNanos()
             logger.at(INFO, nowNanos)
@@ -911,7 +911,7 @@ internal class LogContextSpec {
         @Test
         fun `log site key from a singleton key`() {
             val fooMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo")
-            val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
+            val logSite = FakeLogSite("com.google.foo.Foo", "doFoo", 42, "<unused>")
             val fooKey = specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
             val singletonKey = specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
             fooKey shouldBe singletonKey
@@ -923,7 +923,7 @@ internal class LogContextSpec {
             val repeatedMetadata = FakeMetadata()
                 .add(Key.LOG_SITE_GROUPING_KEY, "foo")
                 .add(Key.LOG_SITE_GROUPING_KEY, "foo")
-            val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
+            val logSite = FakeLogSite("com.google.foo.Foo", "doFoo", 42, "<unused>")
             val fooKey = specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
             val repeatedKey = specializeLogSiteKeyFromMetadata(logSite, repeatedMetadata)
             fooKey shouldNotBe repeatedKey
@@ -933,7 +933,7 @@ internal class LogContextSpec {
         fun `distinct log site keys from distinct metadata instances`() {
             val fooMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "foo")
             val barMetadata = FakeMetadata().add(Key.LOG_SITE_GROUPING_KEY, "bar")
-            val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
+            val logSite = FakeLogSite("com.google.foo.Foo", "doFoo", 42, "<unused>")
             val fooKey = specializeLogSiteKeyFromMetadata(logSite, fooMetadata)
             val barKey = specializeLogSiteKeyFromMetadata(logSite, barMetadata)
             fooKey shouldNotBe barKey
@@ -955,7 +955,7 @@ internal class LogContextSpec {
             val barFooMetadata = FakeMetadata()
                 .add(Key.LOG_SITE_GROUPING_KEY, "bar")
                 .add(Key.LOG_SITE_GROUPING_KEY, "foo")
-            val logSite = FakeLogSite.create("com.google.foo.Foo", "doFoo", 42, "<unused>")
+            val logSite = FakeLogSite("com.google.foo.Foo", "doFoo", 42, "<unused>")
             val fooBarKey = specializeLogSiteKeyFromMetadata(logSite, fooBarMetadata)
             val barFooKey = specializeLogSiteKeyFromMetadata(logSite, barFooMetadata)
             fooBarKey shouldNotBe barFooKey

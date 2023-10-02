@@ -26,12 +26,12 @@
 
 package io.spine.logging.flogger.backend
 
-import io.spine.logging.flogger.context.Tags
-import com.google.common.flogger.testing.FakeLogData
-import com.google.common.flogger.testing.FakeMetadata
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.flogger.LogContext.Key
+import io.spine.logging.flogger.backend.given.FakeLogData
+import io.spine.logging.flogger.backend.given.FakeMetadata
+import io.spine.logging.flogger.context.Tags
 import io.spine.logging.flogger.repeatedKey
 import io.spine.logging.flogger.singleKey
 import org.junit.jupiter.api.DisplayName
@@ -61,13 +61,13 @@ internal class SimpleMessageFormatterSpec {
 
         @Test
         fun `without metadata`() {
-            val logged = FakeLogData.of(LITERAL)
+            val logged = FakeLogData(LITERAL)
             format(logged, EMPTY_SCOPE) shouldBeSameInstanceAs LITERAL
         }
 
         @Test
         fun `with metadata`() {
-            val logged = FakeLogData.of(LITERAL).addMetadata(BOOL_KEY, true)
+            val logged = FakeLogData(LITERAL).addMetadata(BOOL_KEY, true)
             format(logged, EMPTY_SCOPE) shouldBe "$LITERAL [CONTEXT bool=true ]"
         }
 
@@ -75,13 +75,13 @@ internal class SimpleMessageFormatterSpec {
         fun `with a cause`() {
             // Having a cause is a special case and never formatted.
             val cause: Throwable = IllegalArgumentException("Badness")
-            val logged = FakeLogData.of(LITERAL).addMetadata(Key.LOG_CAUSE, cause)
+            val logged = FakeLogData(LITERAL).addMetadata(Key.LOG_CAUSE, cause)
             format(logged, EMPTY_SCOPE) shouldBeSameInstanceAs LITERAL
         }
 
         @Test
         fun `with scope metadata`() {
-            val logged = FakeLogData.of(LITERAL)
+            val logged = FakeLogData(LITERAL)
             val scopeData = FakeMetadata().add(INT_KEY, 42)
             format(logged, scopeData) shouldBe "$LITERAL [CONTEXT int=42 ]"
         }
@@ -132,7 +132,7 @@ internal class SimpleMessageFormatterSpec {
                 .addTag("two", "bar")
                 .addTag("one", "foo")
                 .build()
-            val logged = FakeLogData.of("message").addMetadata(Key.TAGS, tags)
+            val logged = FakeLogData("message").addMetadata(Key.TAGS, tags)
             val scope = FakeMetadata().add(STRING_KEY, "Hi")
 
             val formatter = SimpleMessageFormatter.getDefaultFormatter()
@@ -152,7 +152,7 @@ internal class SimpleMessageFormatterSpec {
                 .addTag("two", "bar")
                 .addTag("one", "foo")
                 .build()
-            val logged = FakeLogData.of("msg").addMetadata(Key.TAGS, tags)
+            val logged = FakeLogData("msg").addMetadata(Key.TAGS, tags)
             val scope = FakeMetadata().add(STRING_KEY, "Hi")
             val formatter = SimpleMessageFormatter.getSimpleFormatterIgnoring(STRING_KEY)
 

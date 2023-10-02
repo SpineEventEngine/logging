@@ -26,15 +26,15 @@
 
 package io.spine.logging.backend.log4j2
 
-import io.spine.logging.flogger.LogContext.Key
-import io.spine.logging.backend.log4j2.given.MemoizingAppender
-import io.spine.logging.flogger.context.ContextDataProvider
-import io.spine.logging.flogger.context.Tags
-import io.spine.logging.flogger.repeatedKey
-import io.spine.logging.flogger.singleKey
-import com.google.common.flogger.testing.ConfigurableLogger
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import io.spine.logging.backend.log4j2.given.MemoizingAppender
+import io.spine.logging.flogger.LogContext.Key
+import io.spine.logging.flogger.context.ContextDataProvider
+import io.spine.logging.flogger.context.Tags
+import io.spine.logging.flogger.given.ConfigurableLogger
+import io.spine.logging.flogger.repeatedKey
+import io.spine.logging.flogger.singleKey
 import java.util.concurrent.atomic.AtomicInteger
 import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.LogManager
@@ -48,12 +48,11 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for interaction between [ScopedLoggingContext][com.google.common.flogger.context.ScopedLoggingContext]
+ * Tests for interaction between [ScopedLoggingContext][io.spine.logging.flogger.context.ScopedLoggingContext]
  * and [Log4j2LoggerBackend].
  *
- * [ScopedLoggingContext][com.google.common.flogger.context.ScopedLoggingContext]
- * is abstract. To test it with Log4j backend, a concrete implementation
- * is needed. This test suite uses [GrpcScopedLoggingContext][com.google.common.flogger.grpc.GrpcScopedLoggingContext].
+ * `ScopedLoggingContext` is abstract. To test it with Log4j backend,
+ * a concrete implementation is needed. This test suite uses [GrpcScopedLoggingContext][io.spine.logging.context.grpc.GrpcScopedLoggingContext].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/log4j2/src/test/java/com/google/common/flogger/backend/log4j2/Log4j2ScopedLoggingTest.java">
  *     Original Java code of Google Flogger</a>
@@ -470,7 +469,7 @@ private fun createLogger(appender: Appender): ConfigurableLogger {
         addAppender(appender)
     }
     val backend = Log4j2LoggerBackend(log4jLogger)
-    val logger = ConfigurableLogger.create(backend)
+    val logger = ConfigurableLogger(backend)
     return logger
 }
 

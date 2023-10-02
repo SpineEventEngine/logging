@@ -26,11 +26,11 @@
 
 package io.spine.logging.flogger
 
-import io.spine.logging.flogger.FluentLogger2.forEnclosingClass
-import com.google.common.flogger.testing.FakeLoggerBackend
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldNotBeInstanceOf
+import io.spine.logging.flogger.FluentLogger2.forEnclosingClass
+import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
 import java.util.logging.Level
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -68,7 +68,7 @@ internal class FluentLogger2Spec {
 
     @Test
     fun `provide a no-op API for disabled levels`() {
-        val backend = FakeLoggerBackend()
+        val backend = MemoizingLoggerBackend()
         val logger = FluentLogger2(backend)
         backend.setLevel(Level.INFO)
 

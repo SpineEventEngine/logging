@@ -26,21 +26,21 @@
 
 package io.spine.logging.backend.system.given
 
+import io.spine.logging.backend.system.BackendFactory
+import io.spine.logging.backend.system.Clock
 import io.spine.logging.flogger.AbstractLogger
 import io.spine.logging.flogger.FloggerLogSite
 import io.spine.logging.flogger.backend.LoggerBackend
 import io.spine.logging.flogger.backend.Platform
-import io.spine.logging.backend.system.BackendFactory
-import io.spine.logging.backend.system.Clock
-import com.google.common.flogger.testing.FakeLoggerBackend
+import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
 
 /**
- * A primitive factory of [FakeLoggerBackend].
+ * A primitive factory of [MemoizingLoggerBackend].
  */
-internal class FakeBackendFactory : BackendFactory() {
+internal class MemoizingLoggerBackendFactory : BackendFactory() {
 
-    override fun create(loggingClassName: String?): LoggerBackend =
-        FakeLoggerBackend(loggingClassName)
+    override fun create(loggingClassName: String): LoggerBackend =
+        MemoizingLoggerBackend(loggingClassName)
 
     override fun toString(): String = javaClass.name
 }

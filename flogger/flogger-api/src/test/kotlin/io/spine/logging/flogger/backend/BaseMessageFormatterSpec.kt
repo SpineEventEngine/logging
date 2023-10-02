@@ -26,16 +26,13 @@
 
 package io.spine.logging.flogger.backend
 
-import io.spine.logging.flogger.parser.ParseException
-import com.google.common.flogger.testing.FakeLogData
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
-
+import io.spine.logging.flogger.backend.given.FakeLogData
+import io.spine.logging.flogger.parser.ParseException
 import java.math.BigDecimal
 import java.math.BigInteger
-import java.util.FormatFlagsConversionMismatchException
-import java.util.Formattable
-import java.util.Locale
+import java.util.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -164,7 +161,7 @@ internal class BaseMessageFormatterSpec {
 
 @Suppress("SameParameterValue") // Extracted for readability.
 private fun formatLiteral(value: Any): String {
-    val logData = FakeLogData.of(value)
+    val logData = FakeLogData(value)
     val out = StringBuilder()
     BaseMessageFormatter.appendFormattedMessage(logData, out)
     return "$out"
