@@ -21,7 +21,7 @@ and hence, its API may undergo significant changes. As such, we advise using
 this library cautiously in your projects until it has reached a stable 
 release stage.
 
-## Simple examples
+## Simple example
 
 To start logging, at least the following dependencies are needed:
 
@@ -75,14 +75,17 @@ class App {
 
 ## Logging backends
 
-Please note, as for now, all backend implementations are for JVM.
+A logging backend handles an actual output of the logged statement. 
+`LogRecord` may be printed to the console, be written to a file or sent by 
+the network to some log-aggregating service. It all is up to a chosen backend 
+and its configuration.
 
 The following backends are available:
 
-* `io.spine:spine-logging-backend` (the default JUL-based backend).
-* `io.spine:spine-logging-log4j2-backend`.
+* `io.spine:spine-logging-backend` – the default JUL-based backend.
+* `io.spine:spine-logging-log4j2-backend` – Log4j2 backend.
 
-Put a needed backend to `runtimeOnly` configuration, and the logging library
+Put a chosen backend to `runtimeOnly` configuration, and the logging library
 will discover it in the runtime.
 
 An example usage of Log4j2 backend:

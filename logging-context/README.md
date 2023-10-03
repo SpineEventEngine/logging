@@ -12,5 +12,5 @@ dependencies {
 ```
 
 Please note, this context is **not** used by default when no other contexts
-are found on the classpath. `DefaultPlatform` uses `no-op` implementation when
+are found on the classpath. `DefaultPlatform` uses a no-op implementation when
 the context is not passed explicitly.
