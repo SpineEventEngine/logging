@@ -5,33 +5,25 @@
 
 # Spine Logging
 
-Spine Logging is a versatile library designed for Kotlin and Java projects, with a potential
-for multi-platform use. At present, we only provide a JVM implementation for Kotlin,
-with a JavaScript implementation being our priority for future development.
+Spine Logging is a versatile library designed for Kotlin and Java projects, 
+with a potential for multi-platform use. 
 
-This library draws inspiration from the logging API of [Google Flogger][flogger], and
-the introduction of a fluent logging API in [SLF4J v2.0.0][fluent-slf4j].
+As for now, only JVM target is supported, with a JavaScript implementation 
+being our priority for future development.
+
+API and implementation are largely inspired by [Google Flogger][flogger],
+and the introduction of fluent logging API in [SLF4J in v2.0.0][fluent-slf4j].
 
 ## Current status: Experimental
 
-Please note that this library is still in the experimental phase of development and hence,
-its API may undergo significant changes. As such, we advise using this library cautiously in
-your projects until it has reached a stable release stage.
+Please note that this library is still in the experimental phase of development, 
+and hence, its API may undergo significant changes. As such, we advise using 
+this library cautiously in your projects until it has reached a stable 
+release stage.
 
-## Logging backends
+## Simple examples
 
-Our JVM implementation currently employs Google Flogger.
-Since Flogger is a logging facade, it requires a backend to perform the actual logging operations.
-At the time of writing, the following Flogger backends are available:
-
-* `com.google.flogger:flogger-system-backend:$floggerVersion` — utilizing `java.util.logging`.
-* `com.google.flogger:flogger-log4j-backend:$floggerVersion` — utilizing Log4j.
-* `com.google.flogger:flogger-log4j2-backend:$floggerVersion` — utilizing Log4j2.
-* `com.google.flogger:flogger-slf4j-backend:$floggerVersion` — utilizing SLF4J (which is a facade itself!).
-
-### How to Use `java.util.logging` as a backend
-
-To use `java.util.logging` in your project, add the following dependency:
+To start logging, at least the following dependencies are needed:
 
 ```kotlin
 dependencies {
@@ -39,45 +31,87 @@ dependencies {
     runtimeOnly("io.spine:spine-logging-backend:$version")
 }
 ```
-The second dependency replaces the default Flogger backend with a backend that resolves issues
-with using LogLevelMap in the project.
 
-### Utilizing other backends
+The default logging backend outputs all logged statements to the console.
 
-If you prefer a backend other than java.util.logging, add dependencies that include a `runtimeOnly`
-dependency for your chosen logging backend. For instance:
+All logging operations are done with an instance of `io.spine.logging.Logger`.
+To get a logger, one can use the following:
+
+1. Make a logging class implement `WithLogging` interface.
+2. Get a logger from `LoggingFactory`.
+
+The interface provides a default method `logger()` that returns a logger
+for the implementing class or object:
+
+```kotlin
+import io.spine.logging.WithLogging
+
+class Example : WithLogging {
+    fun doSomething() {
+        logger() // Call to the default method of `WithLogging`.
+            .atWarning()
+            .log { "..." }
+    }
+}
+```
+
+`LoggingFactory` has two methods that return a logger for the enclosing class
+and for the given `KClass`:
+
+```kotlin
+import io.spine.logging.LoggingFactory
+
+class App {
+    private val logger1 = LoggingFactory.forEnclosingClass()
+    private val logger2 = LoggingFactory.loggerFor(this::class)
+
+    fun doSomething() {
+        check(logger1 === logger2) // There is always one logger per class.
+        logger1.atWarning()
+            .log { "..." }
+    }
+}
+```
+
+## Logging backends
+
+Please note, as for now, all backend implementations are for JVM.
+
+The following backends are available:
+
+* `io.spine:spine-logging-backend` (the default JUL-based backend).
+* `io.spine:spine-logging-log4j2-backend`.
+
+Put a needed backend to `runtimeOnly` configuration, and the logging library
+will discover it in the runtime.
+
+An example usage of Log4j2 backend:
 
 ```kotlin
 dependencies {
     implementation("io.spine:spine-logging:$version")
-    runtimeOnly("com.google.flogger:flogger-log4j2-backend:$floggerVersion")
+    runtimeOnly("io.spine:spine-logging-log4j2-backend:$version")
 }
 ```
 
-For SLF4J as a backend, your dependencies should also include a backend for SLF4J. For example:
+Please note, only one backend implementation should be present in the runtime.
+Two or more backends will cause an exception because the logging framework 
+will not be able to understand, which one should be used.
 
-```kotlin
-dependencies {
-    implementation("io.spine:spine-logging:$version")
-    runtimeOnly("com.google.flogger:flogger-slf4j-backend:$floggerVersion")
-    runtimeOnly("org.slf4j:slf4j-reload4j:$slf4jVersion")
-}
-```
+## Logging contexts
 
-## Logging context
+A logging context refers to a set of attributes that are attached to all log 
+records while a context is installed. For instance, you can attach a user ID 
+to all log records for the current request.
 
-A logging context refers to a set of attributes that are attached to all log records while
-a context is installed. For instance, you can attach a user ID to all log records for
-the current request.
-
-The default implementation provides a no-op context. To use a logging context, a `runtimeOnly`
-dependency for a context implementation should be added along with the above dependencies.
+The default implementation provides a no-op context. To use a logging context, 
+a `runtimeOnly` dependency for a context implementation should be added along 
+with the mentioned above dependencies.
 
 If your project does not use gRPC, use the following dependency:
 
 ```kotlin
 dependencies {
-    //...
     rutimeOnly("io.spine:spine-logging-context:$version")
 }
 ```
@@ -86,8 +120,7 @@ If your project does use gRPC, add the following dependency:
 
 ```kotlin
 dependencies {
-    //...
-    rutimeOnly("com.google.flogger:flogger-grpc-context:$floggerVersion")
+    rutimeOnly("io.spine:spine-logging-grpc-context:$version")
 }
 ```
 
