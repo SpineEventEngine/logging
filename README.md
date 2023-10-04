@@ -104,17 +104,92 @@ will not be able to understand, which one should be used.
 ## Logging contexts
 
 A logging context refers to a set of attributes that are attached to all log 
-records while a context is installed. For instance, you can attach a user ID 
-to all log records for the current request.
+records while a context is installed. For example, rate limit counters are 
+always attached to the context.
 
-The default implementation provides a no-op context. To use a logging context, 
-a `runtimeOnly` dependency for a context implementation should be added along 
-with the mentioned above dependencies.
+Here is an example of rate limiters context metadata:
+
+```kotlin
+import io.spine.logging.WithLogging
+
+class Example : WithLogging {
+    fun action() = repeat(12) {
+        logger.atInfo()
+            .every(7) // Should be emitted once per N calls.
+            .log { "Call #$it" }
+    }
+}
+
+// Produces the following output (without timestamps):
+// INFO: Call #0 [CONTEXT ratelimit_count=7 ]
+// INFO: Call #7 [CONTEXT ratelimit_count=7 skipped=6 ]
+```
+
+Also, a user can attach its own metadata. For instance, you can attach 
+a user ID to all log records for the current request.
+
+Here is an example of how to attach a custom context metadata:
+
+```kotlin
+import io.spine.logging.LoggingFactory.singleMetadataKey
+import io.spine.logging.WithLogging
+import io.spine.logging.context.ScopedLoggingContext
+
+typealias Action = String
+typealias User = String
+
+data class Request(
+    val action: Action,
+    val user: User,
+)
+
+class RequestHandler : WithLogging {
+
+    companion object {
+        // Metadata is represented with key-value entries.
+        private val USER_KEY = singleMetadataKey("user", User::class)
+    }
+
+    fun handle(request: Request) = withinUserContext(request.user) {
+        logger.atInfo().log { "Handling `${request.action}` request." }
+        // Do handle the request ...
+    }
+
+    private fun withinUserContext(user: User, action: () -> Unit) = ScopedLoggingContext.newContext()
+        .withMetadata(USER_KEY, user)
+        .execute(action)
+}
+```
+
+Let's send several requests to the created handler:
+
+```kotlin
+val handler = RequestHandler()
+with(handler) {
+    handle(Request(action = "create", user = "Maks"))
+    handle(Request(action = "update", user = "Maks"))
+    handle(Request(action = "remove", user = "Bill"))
+}
+
+// Produces the following output (without timestamps):
+// INFO: Handling `create` request. [CONTEXT user="Maks" ]
+// INFO: Handling `update` request. [CONTEXT user="Maks" ]
+// INFO: Handling `remove` request. [CONTEXT user="Bill" ]
+```
+
+### Gradle configuration
+
+The default implementation provides a no-op context. Any context metadata is
+ignored in this case.
+
+To use a logging context, a `runtimeOnly` dependency for a context 
+implementation should be added.
 
 If your project does not use gRPC, use the following dependency:
 
 ```kotlin
 dependencies {
+    implementation("io.spine:spine-logging:$version")
     runtimeOnly("io.spine:spine-logging-context:$version")
 }
 ```
@@ -123,6 +198,7 @@ If your project does use gRPC, add the following dependency:
 
 ```kotlin
 dependencies {
+    implementation("io.spine:spine-logging:$version")
     runtimeOnly("io.spine:spine-logging-grpc-context:$version")
 }
 ```
