@@ -115,7 +115,7 @@ If your project does not use gRPC, use the following dependency:
 
 ```kotlin
 dependencies {
-    rutimeOnly("io.spine:spine-logging-context:$version")
+    runtimeOnly("io.spine:spine-logging-context:$version")
 }
 ```
 
@@ -123,7 +123,7 @@ If your project does use gRPC, add the following dependency:
 
 ```kotlin
 dependencies {
-    rutimeOnly("io.spine:spine-logging-grpc-context:$version")
+    runtimeOnly("io.spine:spine-logging-grpc-context:$version")
 }
 ```
 
