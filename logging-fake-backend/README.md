@@ -1,4 +1,4 @@
-## Spine Fake Backend
+## Spine Fake Backend for JVM
 
 **Note:** This is a specific backend implementation that is designed to be used in tests.
 
@@ -26,4 +26,40 @@ val logged = captureLogData {
 check(logged[0].literalArgument == message)
 ```
 
-To use it, add this backend to `implementation` configuration instead of `runtimeOnly`.
+### Gradle configuration
+
+Please note, this module is **not published**. It can be used only within 
+`spine-logging` itself as a project dependency **for JVM**.
+
+Unlike other backends that are put to the runtime classpath, this one should be
+available during compilation. It is because `DynamicBackendFactory` (which is 
+a Kotlin object) and/or `captureLogData { ... }` are meant to be used in code.
+
+An example usage of `logging-fake-backend` in a JVM module:
+
+```kotlin
+dependencies {
+    implementation(project(":logging"))
+    testImplementation(project(":logging-fake-backend"))
+}
+```
+
+In KMP modules there's no `testImplementation` configuration anymore.
+Dependencies are split on the level of source sets.
+
+An example usage of `logging-fake-backend` in a KMP module:
+
+```kotlin
+sourceSets {
+    val commonMain by getting {
+        dependencies {
+            implementation(project(":logging"))
+        }
+    }
+    val jvmTest by getting {
+        dependencies {
+            implementation(project(":logging-fake-backend"))
+        }
+    }
+}
+```
