@@ -12,11 +12,11 @@ a log site.
 
 The following services may be injected:
 
-| Service               | Default |
-|-----------------------|---|
-| `BackendFactory`      | `StdBackendFactory` |
+| Service               | Default                   |
+|-----------------------|---------------------------|
+| `BackendFactory`      | `StdBackendFactory`       |
 | `ContextDataProvider` | `NoOpContextDataProvider` |
-| `Clock`               | `SystemClock` |
+| `Clock`               | `SystemClock`             |
 
 ### Logger Backend and Factory
 
