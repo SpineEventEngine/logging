@@ -49,7 +49,7 @@ import io.spine.logging.backend.system.StdBackendFactory
  */
 public object DynamicBackendFactory : BackendFactory() {
 
-    private val simpleBackends = StdBackendFactory()
+    private val stdBackends = StdBackendFactory()
     private var delegate: TypedBackendFactory<*>? = null
 
     /**
@@ -73,7 +73,7 @@ public object DynamicBackendFactory : BackendFactory() {
      * Otherwise, uses [StdBackendFactory] to create a backend.
      */
     override fun create(loggingClassName: String): LoggerBackend =
-        delegate?.create(loggingClassName) ?: simpleBackends.create(loggingClassName)
+        delegate?.create(loggingClassName) ?: stdBackends.create(loggingClassName)
 
     /**
      * Returns a fully-qualified name of this class.
