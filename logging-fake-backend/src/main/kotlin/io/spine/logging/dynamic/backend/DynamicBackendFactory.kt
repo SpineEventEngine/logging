@@ -27,7 +27,7 @@
 package io.spine.logging.dynamic.backend
 
 import io.spine.logging.flogger.backend.LoggerBackend
-import io.spine.logging.backend.system.BackendFactory
+import io.spine.logging.backend.BackendFactory
 import io.spine.logging.backend.system.StdBackendFactory
 
 /**

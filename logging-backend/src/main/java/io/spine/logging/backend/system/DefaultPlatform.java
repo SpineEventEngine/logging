@@ -1,5 +1,5 @@
 /*
- * Copyright 2016, The Flogger Authors; 2023, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,8 @@
 
 package io.spine.logging.backend.system;
 
+import io.spine.logging.backend.BackendFactory;
+import io.spine.logging.backend.Clock;
 import io.spine.logging.flogger.backend.LoggerBackend;
 import io.spine.logging.flogger.backend.Platform;
 import io.spine.logging.flogger.context.ContextDataProvider;
@@ -118,9 +120,9 @@ public class DefaultPlatform extends Platform {
         contextDataProvider != null ? contextDataProvider : ContextDataProvider.getNoOpProvider();
 
     Clock clock = loadService(Clock.class, CLOCK);
-    this.clock = clock != null ? clock : SystemClock.getInstance();
+    this.clock = clock != null ? clock : io.spine.logging.backend.system.SystemClock.getInstance();
 
-    this.callerFinder = StackBasedCallerFinder.getInstance();
+    this.callerFinder = io.spine.logging.backend.system.StackBasedCallerFinder.getInstance();
   }
 
   /**

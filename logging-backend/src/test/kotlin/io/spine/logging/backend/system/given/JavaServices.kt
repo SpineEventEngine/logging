@@ -28,8 +28,8 @@ package io.spine.logging.backend.system.given
 
 import com.google.auto.service.AutoService
 import io.spine.logging.flogger.backend.LoggerBackend
-import io.spine.logging.backend.system.BackendFactory
-import io.spine.logging.backend.system.Clock
+import io.spine.logging.backend.BackendFactory
+import io.spine.logging.backend.Clock
 import io.spine.logging.flogger.context.ContextDataProvider
 import io.spine.logging.flogger.context.ScopedLoggingContext
 

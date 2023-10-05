@@ -26,6 +26,8 @@
 
 package io.spine.logging.backend.system;
 
+import io.spine.logging.backend.Clock;
+
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 /**

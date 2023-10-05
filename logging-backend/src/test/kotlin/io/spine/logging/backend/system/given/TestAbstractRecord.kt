@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.system.given
 
-import io.spine.logging.backend.system.AbstractLogRecord
+import io.spine.logging.backend.jul.AbstractJulLogRecord
 import io.spine.logging.flogger.backend.LogData
 import io.spine.logging.flogger.backend.LogMessageFormatter
 import io.spine.logging.flogger.backend.Metadata
@@ -35,14 +35,14 @@ import io.spine.logging.flogger.backend.SimpleMessageFormatter
 import io.spine.logging.flogger.backend.given.FakeLogData
 
 /**
- * An instantiatable [AbstractLogRecord].
+ * An instantiatable [AbstractJulLogRecord].
  *
  * It uses its own formatter to make sure the abstract methods
  * are indeed called when expected.
  */
 @Suppress("serial") // Serial number is not needed.
 internal class TestAbstractRecord(message: String, vararg args: Any?) :
-    AbstractLogRecord(FakeLogData.withPrintfStyle(message, *args), Metadata.empty()) {
+    io.spine.logging.backend.jul.AbstractJulLogRecord(FakeLogData.withPrintfStyle(message, *args), Metadata.empty()) {
 
     private val formatter = TestLogMessageFormatter()
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014, The Flogger Authors; 2023, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.system;
+package io.spine.logging.backend.jul;
 
 import io.spine.logging.flogger.LogContext;
 import io.spine.logging.flogger.backend.LogData;
@@ -39,30 +39,30 @@ import java.util.logging.LogRecord;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/SimpleLogRecord.java">
  *     Original Java code of Google Flogger</a>
  */
-public final class SimpleLogRecord extends AbstractLogRecord {
-  /** Creates a {@link SimpleLogRecord} for a normal log statement from the given data. */
-  public static SimpleLogRecord create(LogData data, Metadata scope) {
-    return new SimpleLogRecord(data, scope);
+public final class JulLogRecord extends AbstractJulLogRecord {
+  /** Creates a {@link JulLogRecord} for a normal log statement from the given data. */
+  public static JulLogRecord create(LogData data, Metadata scope) {
+    return new JulLogRecord(data, scope);
   }
 
   /** @deprecated Use create(LogData data, Metadata scope) and pass scoped metadata in. */
   @Deprecated
-  public static SimpleLogRecord create(LogData data) {
+  public static JulLogRecord create(LogData data) {
     return create(data, Metadata.empty());
   }
 
-  /** Creates a {@link SimpleLogRecord} in the case of an error during logging. */
-  public static SimpleLogRecord error(RuntimeException error, LogData data, Metadata scope) {
-    return new SimpleLogRecord(error, data, scope);
+  /** Creates a {@link JulLogRecord} in the case of an error during logging. */
+  public static JulLogRecord error(RuntimeException error, LogData data, Metadata scope) {
+    return new JulLogRecord(error, data, scope);
   }
 
   /** @deprecated Use error(LogData data, Metadata scope) and pass scoped metadata in. */
   @Deprecated
-  public static SimpleLogRecord error(RuntimeException error, LogData data) {
+  public static JulLogRecord error(RuntimeException error, LogData data) {
     return error(error, data, Metadata.empty());
   }
 
-  private SimpleLogRecord(LogData data, Metadata scope) {
+  private JulLogRecord(LogData data, Metadata scope) {
     super(data, scope);
     setThrown(getMetadataProcessor().getSingleValue(LogContext.Key.LOG_CAUSE));
 
@@ -84,7 +84,7 @@ public final class SimpleLogRecord extends AbstractLogRecord {
     String unused = getMessage();
   }
 
-  private SimpleLogRecord(RuntimeException error, LogData data, Metadata scope) {
+  private JulLogRecord(RuntimeException error, LogData data, Metadata scope) {
     // In the case of an error, the base class handles everything as there's no specific formatting.
     super(error, data, scope);
   }

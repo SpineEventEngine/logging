@@ -58,7 +58,7 @@ internal class DefaultPlatformSpec {
     private val context = ContextDataProvider.getNoOpProvider()
     private val clock = FixedTime()
     private val caller = NoOpCallerFinder()
-    private var platform = object : DefaultPlatform(factory, context, clock, caller) { }
+    private var platform = object : io.spine.logging.backend.system.DefaultPlatform(factory, context, clock, caller) { }
 
     @Test
     fun `use the given factory to create backend instances`() {
@@ -103,7 +103,7 @@ internal class DefaultPlatformSpec {
 
     @Test
     fun `load services from the classpath`() {
-        val platform = DefaultPlatform()
+        val platform = io.spine.logging.backend.system.DefaultPlatform()
         val configInfo = platform.configInfoImpl.trimEnd()
         val expectedServices = setOf(
             "BackendFactory: ${StubBackendFactoryService::class.java.name}",

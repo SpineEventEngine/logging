@@ -26,7 +26,6 @@
 
 package io.spine.logging.backend.jul
 
-import io.spine.logging.backend.system.SimpleLogRecord
 import io.spine.logging.flogger.backend.LogData
 import io.spine.logging.flogger.backend.LoggerBackend
 import io.spine.logging.flogger.backend.Platform
@@ -58,12 +57,12 @@ internal class JulLoggerBackend(loggingClass: String): AbstractJulBackend(loggin
     }
 
     override fun log(data: LogData): Unit = doLog(
-        SimpleLogRecord.create(data, Platform.getInjectedMetadata()),
+        JulLogRecord.create(data, Platform.getInjectedMetadata()),
         data.wasForced()
     )
 
     override fun handleError(error: RuntimeException, badData: LogData): Unit = doLog(
-        SimpleLogRecord.error(error, badData, Platform.getInjectedMetadata()),
+        JulLogRecord.error(error, badData, Platform.getInjectedMetadata()),
         badData.wasForced()
     )
 

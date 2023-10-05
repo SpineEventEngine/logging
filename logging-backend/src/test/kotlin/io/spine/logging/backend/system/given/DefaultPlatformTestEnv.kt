@@ -26,8 +26,8 @@
 
 package io.spine.logging.backend.system.given
 
-import io.spine.logging.backend.system.BackendFactory
-import io.spine.logging.backend.system.Clock
+import io.spine.logging.backend.BackendFactory
+import io.spine.logging.backend.Clock
 import io.spine.logging.flogger.AbstractLogger
 import io.spine.logging.flogger.FloggerLogSite
 import io.spine.logging.flogger.backend.LoggerBackend
