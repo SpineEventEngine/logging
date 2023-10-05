@@ -1,0 +1,65 @@
+## Spine Fake Backend for JVM
+
+**Note:** This is a specific backend implementation that is designed to be used in tests.
+
+Fake backend provides a backend factory that can switch the currently used backend 
+implementation in runtime. The logging facade doesn't provide such functionality. 
+Take a look on `DynamicBackendFactory` for details.
+
+This feature is quite helpful in tests. For example, to test a sole backend instance
+or intercept the logged statements.
+
+### Logging interception
+
+For log statements interception, this module exposes `captureLogData { ... }` function. 
+This function uses `DynamicBackendFactory` to catch all `LogData` emitted during the execution
+of the passed `action`.
+
+Usage example:
+
+```kotlin
+val message = "logged text"
+val logged = captureLogData {
+    val logger = LoggingFactory.forEnclosingClass()
+    logger.atInfo().log { message }
+}
+check(logged[0].literalArgument == message)
+```
+
+### Gradle configuration
+
+Please note, this module is **not published**. It can be used only within 
+`spine-logging` itself as a project dependency **for JVM**.
+
+Unlike other backends that are put to the runtime classpath, this one should be
+available during compilation. It is because `DynamicBackendFactory` (which is 
+a Kotlin object) and/or `captureLogData { ... }` are meant to be used in code.
+
+An example usage of `logging-fake-backend` in a JVM module:
+
+```kotlin
+dependencies {
+    implementation(project(":logging"))
+    testImplementation(project(":logging-fake-backend"))
+}
+```
+
+In KMP modules there's no `testImplementation` configuration anymore.
+Dependencies are split on the level of source sets.
+
+An example usage of `logging-fake-backend` in a KMP module:
+
+```kotlin
+sourceSets {
+    val commonMain by getting {
+        dependencies {
+            implementation(project(":logging"))
+        }
+    }
+    val jvmTest by getting {
+        dependencies {
+            implementation(project(":logging-fake-backend"))
+        }
+    }
+}
+```
