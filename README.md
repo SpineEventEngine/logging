@@ -166,14 +166,14 @@ Let's send several requests to the created handler:
 ```kotlin
 val handler = RequestHandler()
 with(handler) {
-    handle(Request(action = "create", user = "Maks"))
-    handle(Request(action = "update", user = "Maks"))
+    handle(Request(action = "create", user = "Jack"))
+    handle(Request(action = "update", user = "Jack"))
     handle(Request(action = "remove", user = "Bill"))
 }
 
 // Produces the following output (without timestamps):
-// INFO: Handling `create` request. [CONTEXT user="Maks" ]
-// INFO: Handling `update` request. [CONTEXT user="Maks" ]
+// INFO: Handling `create` request. [CONTEXT user="Jack" ]
+// INFO: Handling `update` request. [CONTEXT user="Jack" ]
 // INFO: Handling `remove` request. [CONTEXT user="Bill" ]
 ```
 
