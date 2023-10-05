@@ -1,5 +1,5 @@
 /*
- * Copyright 2018, The Flogger Authors; 2023, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,37 +24,33 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.system;
+import io.spine.internal.dependency.AutoService
 
-import io.spine.logging.backend.Clock;
+plugins {
+    `jvm-module`
+    `kotlin-kapt`
+}
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
+dependencies {
+    implementation(project(":flogger-api"))
+    implementation(project(":logging-jul-backend"))
+    testImplementation(project(":flogger-api", configuration = "testArtifacts"))
+    testImplementation(AutoService.annotations)
+    kaptTest(AutoService.processor)
+}
 
-/**
- * Default millisecond precision clock.
- *
- * <p>See class documentation in {@link Clock} for important implementation restrictions.
- *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/SystemClock.java">
- *     Original Java code of Google Flogger</a>
- */
-public final class SystemClock extends Clock {
-  private static final SystemClock INSTANCE = new SystemClock();
+java {
 
-  // Called during logging platform initialization; MUST NOT call any code that might log.
-  public static SystemClock getInstance() {
-    return INSTANCE;
-  }
-
-  private SystemClock() { }
-
-  @Override
-  public long getCurrentTimeNanos() {
-    return MILLISECONDS.toNanos(System.currentTimeMillis());
-  }
-
-  @Override
-  public String toString() {
-    return "Default millisecond precision clock";
-  }
+    /**
+     * Disables Java linters until Java sources are migrated to Kotlin.
+     *
+     * As for now, they produce a lot of errors/warnings to original
+     * Flogger code, failing the build.
+     */
+    // TODO:2023-09-22:yevhenii.nadtochii: Remove this piece of configuration.
+    // See issue: https://github.com/SpineEventEngine/logging/issues/56
+    tasks {
+        named("checkstyleMain") { enabled = false }
+        named("pmdMain") { enabled = false }
+    }
 }

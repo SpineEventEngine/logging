@@ -35,7 +35,6 @@ rootProject.name = "spine-logging"
 
 include(
     "logging",
-    "logging-backend",
     "logging-context",
     "logging-fake-backend",
     "testutil-logging",
@@ -48,6 +47,10 @@ includeBackend(
 
 includeContext(
     "logging-grpc-context",
+)
+
+includePlatform(
+    "jvm-default-platform"
 )
 
 includeTest(
@@ -68,6 +71,8 @@ includeFlogger(
 fun includeBackend(vararg modules: String) = includeTo("backends", modules)
 
 fun includeContext(vararg modules: String) = includeTo("contexts", modules)
+
+fun includePlatform(vararg modules: String) = includeTo("platforms", modules)
 
 fun includeTest(vararg modules: String) = includeTo("tests", modules)
 

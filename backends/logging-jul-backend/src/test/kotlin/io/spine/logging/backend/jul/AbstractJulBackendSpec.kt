@@ -26,8 +26,8 @@
 
 package io.spine.logging.backend.jul
 
-import io.spine.logging.backend.system.given.MemoizingJulBackend
-import io.spine.logging.backend.system.given.MemoizingLogger
+import io.spine.logging.backend.jul.given.MemoizingJulBackend
+import io.spine.logging.backend.jul.given.MemoizingLogger
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.nulls.shouldBeNull

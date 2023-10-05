@@ -35,7 +35,7 @@ internal class JulBackendFactorySpec {
 
     @Test
     fun ` return its class name from 'toString'`() {
-        val factory = StdBackendFactory()
+        val factory = JulBackendFactory()
         factory.toString() shouldBe factory.javaClass.name
     }
 }

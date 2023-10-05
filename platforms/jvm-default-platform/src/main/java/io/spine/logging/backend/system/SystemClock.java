@@ -24,12 +24,37 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+package io.spine.logging.backend.system;
+
+import io.spine.logging.flogger.backend.Clock;
+
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+
 /**
- * Contains implementation of the default backend, which uses
- * {@code java.util.logging} (JUL) to output log statements.
+ * Default millisecond precision clock.
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/package-info.java">
+ * <p>See class documentation in {@link Clock} for important implementation restrictions.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/SystemClock.java">
  *     Original Java code of Google Flogger</a>
  */
+public final class SystemClock extends Clock {
+  private static final SystemClock INSTANCE = new SystemClock();
 
-import com.google.errorprone.annotations.CheckReturnValue;
+  // Called during logging platform initialization; MUST NOT call any code that might log.
+  public static SystemClock getInstance() {
+    return INSTANCE;
+  }
+
+  private SystemClock() { }
+
+  @Override
+  public long getCurrentTimeNanos() {
+    return MILLISECONDS.toNanos(System.currentTimeMillis());
+  }
+
+  @Override
+  public String toString() {
+    return "Default millisecond precision clock";
+  }
+}

@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.system.given
+package io.spine.logging.backend.jul.given
 
 import io.spine.logging.flogger.backend.LogData
 import io.spine.logging.backend.jul.AbstractJulBackend
@@ -37,7 +37,7 @@ import java.util.logging.Logger
  * An instantiatable [AbstractJulBackend] that remembers the fact
  * of usage of [ForcingLogger].
  */
-internal class MemoizingJulBackend(logger: Logger) : io.spine.logging.backend.jul.AbstractJulBackend(logger) {
+internal class MemoizingJulBackend(logger: Logger) : AbstractJulBackend(logger) {
 
     /**
      * Tells whether the last call to [AbstractJulBackend.log]

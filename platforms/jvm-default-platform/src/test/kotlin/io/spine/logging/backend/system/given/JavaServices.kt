@@ -26,52 +26,53 @@
 
 package io.spine.logging.backend.system.given
 
-import io.spine.logging.backend.BackendFactory
-import io.spine.logging.backend.Clock
-import io.spine.logging.flogger.AbstractLogger
-import io.spine.logging.flogger.FloggerLogSite
+import com.google.auto.service.AutoService
 import io.spine.logging.flogger.backend.LoggerBackend
-import io.spine.logging.flogger.backend.Platform
-import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
+import io.spine.logging.flogger.backend.BackendFactory
+import io.spine.logging.flogger.backend.Clock
+import io.spine.logging.flogger.context.ContextDataProvider
+import io.spine.logging.flogger.context.ScopedLoggingContext
 
 /**
- * A primitive factory of [MemoizingLoggerBackend].
+ * This file contains Java services that are used to test how
+ * the default platform picks up the services in the runtime.
  */
-internal class MemoizingLoggerBackendFactory : BackendFactory() {
+
+/**
+ * A stub service for [BackendFactory] that can be loaded
+ * by Java's [ServiceLoader][java.util.ServiceLoader].
+ */
+@AutoService(BackendFactory::class)
+internal class StubBackendFactoryService : BackendFactory() {
 
     override fun create(loggingClassName: String): LoggerBackend =
-        MemoizingLoggerBackend(loggingClassName)
+        throw UnsupportedOperationException()
 
-    override fun toString(): String = javaClass.name
+    override fun toString(): String = this::class.qualifiedName!!
 }
 
 /**
- * A clock that always returns the configured [returnedTimestamp].
+ * A stub service for [ContextDataProvider] that can be loaded
+ * by Java's [ServiceLoader][java.util.ServiceLoader].
  */
-internal class FixedTime : Clock() {
+@AutoService(ContextDataProvider::class)
+internal class StubContextDataProviderService : ContextDataProvider() {
 
-    /**
-     * A timestamp that this clock always returns.
-     */
-    var returnedTimestamp = 0L
+    override fun getContextApiSingleton(): ScopedLoggingContext =
+        throw UnsupportedOperationException()
 
-    override fun getCurrentTimeNanos(): Long = returnedTimestamp
+    override fun toString(): String = this::class.qualifiedName!!
 }
 
 /**
- * No-op implementation of [Platform.LogCallerFinder].
+ * A stub service for [Clock] that can be loaded
+ * by Java's [ServiceLoader][java.util.ServiceLoader].
  */
-internal class NoOpCallerFinder : Platform.LogCallerFinder() {
+@AutoService(Clock::class)
+internal class StubClockService : Clock() {
 
-    /**
-     * Throws [IllegalStateException].
-     */
-    override fun findLoggingClass(loggerClass: Class<out AbstractLogger<*>>?): String =
+    override fun getCurrentTimeNanos(): Long =
         throw UnsupportedOperationException()
 
-    /**
-     * Throws [IllegalStateException].
-     */
-    override fun findLogSite(loggerApi: Class<*>?, stackFramesToSkip: Int): FloggerLogSite =
-        throw UnsupportedOperationException()
+    override fun toString(): String = this::class.qualifiedName!!
 }

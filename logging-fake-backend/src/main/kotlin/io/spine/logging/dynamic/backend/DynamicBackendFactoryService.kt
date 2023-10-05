@@ -28,7 +28,7 @@ package io.spine.logging.dynamic.backend
 
 import com.google.auto.service.AutoService
 import io.spine.logging.flogger.backend.LoggerBackend
-import io.spine.logging.backend.BackendFactory
+import io.spine.logging.flogger.backend.BackendFactory
 
 /**
  * Adapts [DynamicBackendFactory] to be used with Java's

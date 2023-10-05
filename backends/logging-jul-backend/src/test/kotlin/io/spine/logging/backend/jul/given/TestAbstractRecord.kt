@@ -24,9 +24,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.system.given
+package io.spine.logging.backend.jul.given
 
-import io.spine.logging.backend.jul.AbstractJulLogRecord
+import io.spine.logging.backend.jul.AbstractJulRecord
 import io.spine.logging.flogger.backend.LogData
 import io.spine.logging.flogger.backend.LogMessageFormatter
 import io.spine.logging.flogger.backend.Metadata
@@ -42,7 +42,7 @@ import io.spine.logging.flogger.backend.given.FakeLogData
  */
 @Suppress("serial") // Serial number is not needed.
 internal class TestAbstractRecord(message: String, vararg args: Any?) :
-    io.spine.logging.backend.jul.AbstractJulLogRecord(FakeLogData.withPrintfStyle(message, *args), Metadata.empty()) {
+    AbstractJulRecord(FakeLogData.withPrintfStyle(message, *args), Metadata.empty()) {
 
     private val formatter = TestLogMessageFormatter()
 

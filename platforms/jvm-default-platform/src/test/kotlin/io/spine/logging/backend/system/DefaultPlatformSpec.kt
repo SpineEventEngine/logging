@@ -51,14 +51,14 @@ import org.junit.jupiter.api.Test
  * @see <a href="https://github.com/google/flogger/blob/70c5aea863952ee61b3d33afb41f2841b6d63455/api/src/test/java/com/google/common/flogger/backend/system/DefaultPlatformTest.java">
  *     Original Java code of Google Flogger</a>
  */
-@DisplayName("`DefaultPlatform` should")
+@DisplayName("`io.spine.logging.backend.system.DefaultPlatform` should")
 internal class DefaultPlatformSpec {
 
     private val factory = MemoizingLoggerBackendFactory()
     private val context = ContextDataProvider.getNoOpProvider()
     private val clock = FixedTime()
     private val caller = NoOpCallerFinder()
-    private var platform = object : io.spine.logging.backend.system.DefaultPlatform(factory, context, clock, caller) { }
+    private var platform = object : DefaultPlatform(factory, context, clock, caller) { }
 
     @Test
     fun `use the given factory to create backend instances`() {
@@ -103,7 +103,7 @@ internal class DefaultPlatformSpec {
 
     @Test
     fun `load services from the classpath`() {
-        val platform = io.spine.logging.backend.system.DefaultPlatform()
+        val platform = DefaultPlatform()
         val configInfo = platform.configInfoImpl.trimEnd()
         val expectedServices = setOf(
             "BackendFactory: ${StubBackendFactoryService::class.java.name}",

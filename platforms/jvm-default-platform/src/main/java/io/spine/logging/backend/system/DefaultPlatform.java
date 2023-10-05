@@ -26,8 +26,9 @@
 
 package io.spine.logging.backend.system;
 
-import io.spine.logging.backend.BackendFactory;
-import io.spine.logging.backend.Clock;
+import io.spine.logging.backend.jul.JulBackendFactory;
+import io.spine.logging.flogger.backend.BackendFactory;
+import io.spine.logging.flogger.backend.Clock;
 import io.spine.logging.flogger.backend.LoggerBackend;
 import io.spine.logging.flogger.backend.Platform;
 import io.spine.logging.flogger.context.ContextDataProvider;
@@ -111,8 +112,7 @@ public class DefaultPlatform extends Platform {
     // be required, we return null from the loadService() method rather than accepting a default
     // instance. This avoids a bunch of potentially unnecessary static initialization.
     BackendFactory backendFactory = loadService(BackendFactory.class, BACKEND_FACTORY);
-    this.backendFactory =
-            backendFactory != null ? backendFactory : new StdBackendFactory();
+    this.backendFactory = backendFactory != null ? backendFactory : new JulBackendFactory();
 
     ContextDataProvider contextDataProvider =
         loadService(ContextDataProvider.class, CONTEXT_DATA_PROVIDER);
@@ -120,9 +120,9 @@ public class DefaultPlatform extends Platform {
         contextDataProvider != null ? contextDataProvider : ContextDataProvider.getNoOpProvider();
 
     Clock clock = loadService(Clock.class, CLOCK);
-    this.clock = clock != null ? clock : io.spine.logging.backend.system.SystemClock.getInstance();
+    this.clock = clock != null ? clock : SystemClock.getInstance();
 
-    this.callerFinder = io.spine.logging.backend.system.StackBasedCallerFinder.getInstance();
+    this.callerFinder = StackBasedCallerFinder.getInstance();
   }
 
   /**

@@ -26,7 +26,7 @@
 
 import io.spine.logging.flogger.backend.Platform
 import io.kotest.matchers.shouldBe
-import io.spine.logging.backend.system.StdBackendFactory
+import io.spine.logging.backend.jul.JulBackendFactory
 import io.spine.logging.context.JulLogLevelMapTest
 import io.spine.logging.context.system.StdContextDataProvider
 import org.junit.jupiter.api.Test
@@ -43,7 +43,7 @@ internal class LogLevelMapITest : JulLogLevelMapTest() {
     fun `should use 'StdLoggerBackend`() {
         val loggerName = this::class.qualifiedName!!
         val platformProvided = Platform.getBackend(loggerName)
-        val factoryProvided = StdBackendFactory().create(loggerName)
+        val factoryProvided = JulBackendFactory().create(loggerName)
         platformProvided::class shouldBe factoryProvided::class
     }
 

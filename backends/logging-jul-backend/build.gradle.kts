@@ -24,32 +24,30 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-//import net.ltgt.gradle.errorprone.errorprone
+import net.ltgt.gradle.errorprone.errorprone
 
 plugins {
     `jvm-module`
 }
 
 dependencies {
-    implementation(project(":logging-backend"))
-//    implementation(project(":flogger-api"))
-//    testImplementation(project(":flogger-api", configuration = "testArtifacts"))
-//    testRuntimeOnly(project(":logging-grpc-context"))
+    implementation(project(":flogger-api"))
+    testImplementation(project(":flogger-api", configuration = "testArtifacts"))
 }
 
 java {
 
     /**
-     * Disables Java linters until main sources are migrated to Kotlin.
+     * Disables Java linters until the main sources are migrated to Kotlin.
      *
      * As for now, they produce a lot of errors/warnings to original
      * Flogger code, failing the build.
      */
     // TODO:2023-09-22:yevhenii.nadtochii: Remove this piece of configuration.
     // See issue: https://github.com/SpineEventEngine/logging/issues/56
-//    tasks {
-//        named("checkstyleMain") { enabled = false }
-//        named("pmdMain") { enabled = false }
-//        compileJava { options.errorprone.isEnabled.set(false) }
-//    }
+    tasks {
+        named("checkstyleMain") { enabled = false }
+        named("pmdMain") { enabled = false }
+        compileJava { options.errorprone.isEnabled.set(false) }
+    }
 }
