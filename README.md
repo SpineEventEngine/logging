@@ -40,7 +40,7 @@ To get a logger, one can use the following:
 1. Make a logging class implement `WithLogging` interface.
 2. Get a logger from `LoggingFactory`.
 
-The interface provides a default method `logger()` that returns a logger
+The interface provides a default property `logger` that returns a logger 
 for the implementing class or object:
 
 ```kotlin
@@ -48,8 +48,7 @@ import io.spine.logging.WithLogging
 
 class Example : WithLogging {
     fun doSomething() {
-        logger() // Call to the default method of `WithLogging`.
-            .atWarning()
+        logger.atWarning() // Call to the default property of `WithLogging`.
             .log { "..." }
     }
 }
@@ -107,7 +106,7 @@ A logging context refers to a set of attributes that are attached to all log
 records while a context is installed. For example, rate limit counters are 
 always attached to the context.
 
-Here is an example of rate limiters context metadata:
+Here is an example of rate limiter context metadata:
 
 ```kotlin
 import io.spine.logging.WithLogging
@@ -116,7 +115,7 @@ class Example : WithLogging {
     fun action() = repeat(12) {
         logger.atInfo()
             .every(7) // Should be emitted once per N calls.
-            .log { "Call #$it" }
+            .log { "Call #$it" } // Rate limiter metadata will be included here.
     }
 }
 
@@ -126,9 +125,10 @@ class Example : WithLogging {
 ```
 
 Also, a user can attach its own metadata. For instance, you can attach 
-a user ID to all log records for the current request.
+a user ID to all log records for the current request, or force logging 
+level if the requested URL contains a debug parameter.
 
-Here is an example of how to attach a custom context metadata:
+Here is an example of how to attach a user ID:
 
 ```kotlin
 import io.spine.logging.LoggingFactory.singleMetadataKey
@@ -152,7 +152,7 @@ class RequestHandler : WithLogging {
 
     fun handle(request: Request) = withinUserContext(request.user) {
         logger.atInfo().log { "Handling `${request.action}` request." }
-        // Do handle the request ...
+        // All log statements within this block will include `user` info.
     }
 
     private fun withinUserContext(user: User, action: () -> Unit) = ScopedLoggingContext.newContext()
@@ -179,7 +179,7 @@ with(handler) {
 
 ### Gradle configuration
 
-The default implementation provides a no-op context. Any context metadata is
+The default implementation provides a no-op context. Context metadata is
 ignored in this case.
 
 To use a logging context, a `runtimeOnly` dependency for a context 
