@@ -54,6 +54,7 @@ spinePublishing {
         "testutil-logging",
         "flogger-api",
         "flogger-platform-generator",
+        "jvm-default-platform",
     )
     modulesWithCustomPublishing = setOf("logging")
     destinations = with(PublishingRepos) {
