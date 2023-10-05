@@ -26,7 +26,6 @@
 
 package io.spine.logging.backend.jul
 
-import io.spine.logging.backend.system.AbstractBackend
 import io.spine.logging.backend.system.SimpleLogRecord
 import io.spine.logging.flogger.backend.LogData
 import io.spine.logging.flogger.backend.LoggerBackend
@@ -50,9 +49,9 @@ import java.util.logging.Logger
  *          consistent with the API we extend. Please also see the constructor
  *          of `AbstractBackend` which accepts `String` for the operation with
  *          the given class name.
- * @see AbstractBackend
+ * @see AbstractJulBackend
  */
-internal class JulLoggerBackend(loggingClass: String): AbstractBackend(loggingClass) {
+internal class JulLoggerBackend(loggingClass: String): AbstractJulBackend(loggingClass) {
 
     private val logger: Logger by lazy {
         Logger.getLogger(loggerName)
@@ -76,7 +75,7 @@ internal class JulLoggerBackend(loggingClass: String): AbstractBackend(loggingCl
      *
      * ## Implementation Note
      *
-     * This method is a replacement of [AbstractBackend.log], which fails to
+     * This method is a replacement of [AbstractJulBackend.log], which fails to
      * handle the forcing in cases when [parent handlers][Logger.getUseParentHandlers]
      * are involved.
      *

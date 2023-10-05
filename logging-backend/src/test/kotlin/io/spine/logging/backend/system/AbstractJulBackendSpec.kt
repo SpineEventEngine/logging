@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.system
 
-import io.spine.logging.backend.system.given.MemoizingBackend
+import io.spine.logging.backend.system.given.MemoizingJulBackend
 import io.spine.logging.backend.system.given.MemoizingLogger
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
@@ -39,16 +39,16 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for [AbstractBackend].
+ * Tests for [AbstractJulBackend].
  *
  * @see <a href="https://github.com/google/flogger/blob/70c5aea863952ee61b3d33afb41f2841b6d63455/api/src/test/java/com/google/common/flogger/backend/system/AbstractBackendTest.java">
  *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`AbstractBackend` should")
-internal class AbstractBackendSpec {
+internal class AbstractJulBackendSpec {
 
     private val logger = MemoizingLogger("unused", Level.INFO)
-    private val backend = MemoizingBackend(logger)
+    private val backend = MemoizingJulBackend(logger)
 
     @Test
     fun `say whether logging is enabled for the given level`() {
