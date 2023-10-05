@@ -50,15 +50,16 @@ import io.spine.logging.flogger.backend.LogData
  * ### Implementation details
  *
  * `logging-fake-backend` configures [DynamicBackendFactory] for the API.
- * And until [captureLogData] is called, this factory delegates backend creation
- * to `SimpleBackendFactory`. Thus, making no difference with the system backend.
+ * And until [captureLogData] is called, this factory delegates backend
+ * creation to the default backend factory.
  *
- * [captureLogData] substitutes simple backend factory with [MemoizingLoggerBackendFactory]
- * (which memoizes log data), executes the given [action], switches back to simple
- * backend factory, and returns the captured log data. Out of this comes a restriction
- * on logger creation within the [action]. If a logger is created outside the [action],
- * its log data will be passed to simple backend because the factory has not been
- * substituted in the moment of a logger creation.
+ * When called, [captureLogData] substitutes the default backend factory
+ * with [MemoizingLoggerBackendFactory] (that memoizes log data),
+ * executes the given [action], switches back to the default backend factory,
+ * and returns the captured log data. Out of this comes a restriction
+ * on logger creation within the [action]. If a logger is created outside
+ * the [action], its log data will be passed to the default backend because
+ * the factory has not been substituted in the moment of a logger creation.
  *
  * The method is inlined to preserve the original log site.
  */
@@ -84,7 +85,7 @@ public inline fun captureLogData(action: () -> Unit): List<LogData> {
 /**
  * Sets the given backend [factory], and runs the given [action].
  *
- * After [action] is performed, simple backend factory is restored.
+ * After [action] is performed, the default backend factory is restored.
  *
  * This method is public because it is inlined.
  */
