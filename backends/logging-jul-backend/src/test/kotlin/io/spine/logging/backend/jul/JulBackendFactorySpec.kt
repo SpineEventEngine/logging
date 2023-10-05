@@ -24,14 +24,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.system
+package io.spine.logging.backend.jul
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 @DisplayName("`StdBackendFactory` should")
-internal class StdBackendFactorySpec {
+internal class JulBackendFactorySpec {
 
     @Test
     fun ` return its class name from 'toString'`() {

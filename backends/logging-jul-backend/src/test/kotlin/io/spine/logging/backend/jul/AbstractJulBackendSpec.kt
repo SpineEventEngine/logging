@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.system
+package io.spine.logging.backend.jul
 
 import io.spine.logging.backend.system.given.MemoizingJulBackend
 import io.spine.logging.backend.system.given.MemoizingLogger

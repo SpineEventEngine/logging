@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.system
+package io.spine.logging.backend.jul
 
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
@@ -51,13 +51,13 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 /**
- * Tests [JulLogRecord].
+ * Tests [JulRecord].
  *
  * @see <a href="https://github.com/google/flogger/blob/70c5aea863952ee61b3d33afb41f2841b6d63455/api/src/test/java/com/google/common/flogger/backend/system/SimpleLogRecordTest.java">
  *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`SimpleLogRecord` should")
-internal class JulLogRecordSpec {
+internal class JulRecordSpec {
 
     companion object {
         private val INT_KEY = singleKey<Int>("int")
@@ -79,14 +79,14 @@ internal class JulLogRecordSpec {
         fun `log level`() {
             val level = Level.FINER
             val data = FakeLogData("") .setLevel(level)
-            val record = io.spine.logging.backend.jul.JulLogRecord.create(data, Metadata.empty())
+            val record = JulRecord.create(data, Metadata.empty())
             record.level shouldBe level
         }
 
         @Test
         fun `literal message`() {
             val data = FakeLogData(LITERAL)
-            val record = io.spine.logging.backend.jul.JulLogRecord.create(data, Metadata.empty())
+            val record = JulRecord.create(data, Metadata.empty())
             record.message shouldBe LITERAL
             record.parameters.shouldBeEmpty()
         }
@@ -94,7 +94,7 @@ internal class JulLogRecordSpec {
         @Test
         fun `logger name and log site info`() {
             val data = FakeLogData("")
-            val record = io.spine.logging.backend.jul.JulLogRecord.create(data, Metadata.empty())
+            val record = JulRecord.create(data, Metadata.empty())
             record.loggerName shouldBe data.loggerName
             record.sourceClassName shouldBe data.logSite.className
             record.sourceMethodName shouldBe data.logSite.methodName
@@ -104,7 +104,7 @@ internal class JulLogRecordSpec {
         fun `'Throwable' cause`() {
             val cause = Throwable("Goodbye World")
             val data = FakeLogData("").addMetadata(Key.LOG_CAUSE, cause)
-            val record = io.spine.logging.backend.jul.JulLogRecord.create(data, Metadata.empty())
+            val record = JulRecord.create(data, Metadata.empty())
             record.thrown shouldBeSameInstanceAs cause
         }
     }
@@ -122,7 +122,7 @@ internal class JulLogRecordSpec {
                 .setTimestampNanos(timestampNanos)
                 .addMetadata(INT_KEY, intValue)
                 .addMetadata(STR_KEY, strValue)
-            val record = io.spine.logging.backend.jul.JulLogRecord.create(data, Metadata.empty())
+            val record = JulRecord.create(data, Metadata.empty())
 
             val expectedMetadata = "int=$intValue str=\"$strValue\""
             record.message shouldBe "$LITERAL [CONTEXT $expectedMetadata ]"
@@ -143,7 +143,7 @@ internal class JulLogRecordSpec {
             val data = FakeLogData(LITERAL)
                 .addMetadata(STR_KEY, strValue)
                 .addMetadata(PATH_KEY, pathTree[2])
-            val record = io.spine.logging.backend.jul.JulLogRecord.create(data, scope)
+            val record = JulRecord.create(data, scope)
 
             val expectedPath = pathTree.joinToString("/")
             val expectedMetadata = "path=\"$expectedPath\" int=$intValue str=\"$strValue\""
@@ -162,7 +162,7 @@ internal class JulLogRecordSpec {
                 .addTag(baz)
                 .build()
             val data = FakeLogData(LITERAL).addMetadata(Key.TAGS, tags)
-            val record = io.spine.logging.backend.jul.JulLogRecord.create(data, Metadata.empty())
+            val record = JulRecord.create(data, Metadata.empty())
 
             // Tags are returned in alphabetical order.
             val expectedTags = "$bar=\"$barValue\" $baz=true $foo=\"$fooValue\""
@@ -173,7 +173,7 @@ internal class JulLogRecordSpec {
     @Test
     fun `handle a nullable literal message`() {
         val data = FakeLogData(null).setLevel(Level.WARNING)
-        val record = io.spine.logging.backend.jul.JulLogRecord.create(data, Metadata.empty())
+        val record = JulRecord.create(data, Metadata.empty())
         record.message shouldBe "null"
         record.parameters.shouldBeEmpty()
     }
@@ -181,7 +181,7 @@ internal class JulLogRecordSpec {
     @Test
     fun `format brace pattern`() {
         val data = FakeLogData.withBraceStyle("Answer={0}", 42)
-        val record = io.spine.logging.backend.jul.JulLogRecord.create(data, Metadata.empty())
+        val record = JulRecord.create(data, Metadata.empty())
         record.message shouldBe "Answer=42"
         record.parameters.shouldBeEmpty()
     }
@@ -191,7 +191,7 @@ internal class JulLogRecordSpec {
         val pattern = "Hex=%#08x, Int=%1\$d"
         val argument = 0xC0DE
         val data = FakeLogData.withPrintfStyle(pattern, argument)
-        val record = io.spine.logging.backend.jul.JulLogRecord.create(data, Metadata.empty())
+        val record = JulRecord.create(data, Metadata.empty())
         record.message shouldBe pattern.format(argument)
         record.parameters.shouldBeEmpty()
     }
@@ -201,7 +201,7 @@ internal class JulLogRecordSpec {
         val passedCause = Throwable("Original Cause")
         val data = FakeLogData(LITERAL).addMetadata(Key.LOG_CAUSE, passedCause)
         val error = RuntimeException()
-        val record = io.spine.logging.backend.jul.JulLogRecord.error(error, data, Metadata.empty())
+        val record = JulRecord.error(error, data, Metadata.empty())
         record.thrown shouldBe error
         record.message shouldNotBe LITERAL
         record.message shouldContain "message: $LITERAL"
@@ -211,7 +211,7 @@ internal class JulLogRecordSpec {
     @Test
     fun `handle nullable arguments`() {
         val data = FakeLogData.withPrintfStyle("value=%s", null)
-        val record = io.spine.logging.backend.jul.JulLogRecord.create(data, Metadata.empty())
+        val record = JulRecord.create(data, Metadata.empty())
         record.message shouldBe "value=null"
     }
 
@@ -220,7 +220,7 @@ internal class JulLogRecordSpec {
         val pattern = "foo=%s, bar=%s"
         val argument = "FOO"
         val data = FakeLogData.withPrintfStyle(pattern, argument)
-        val record = io.spine.logging.backend.jul.JulLogRecord.create(data, Metadata.empty())
+        val record = JulRecord.create(data, Metadata.empty())
         record.message shouldEndWith "[ERROR: MISSING LOG ARGUMENT]"
     }
 
@@ -229,7 +229,7 @@ internal class JulLogRecordSpec {
         val pattern = "%2\$s %s %<s %s"
         val args = arrayOf("a", "b")
         val data = FakeLogData.withPrintfStyle(pattern, *(args + "c"))
-        val record = io.spine.logging.backend.jul.JulLogRecord.create(data, Metadata.empty())
+        val record = JulRecord.create(data, Metadata.empty())
         record.message shouldBe "${pattern.format(*args)} [ERROR: UNUSED LOG ARGUMENTS]"
     }
 
@@ -240,7 +240,7 @@ internal class JulLogRecordSpec {
         val args = arrayOf("a", "b", "c") // "b" is unused.
         val data = FakeLogData.withPrintfStyle(pattern, *args)
         val parseException = shouldThrow<ParseException> {
-            io.spine.logging.backend.jul.JulLogRecord.create(data, Metadata.empty())
+            JulRecord.create(data, Metadata.empty())
         }
 
         // In `printf` pattern, indexes start from one.
@@ -255,7 +255,7 @@ internal class JulLogRecordSpec {
         var arguments = arrayOfNulls<Any>(33)
         var data = FakeLogData.withPrintfStyle(pattern, arguments)
         val parseException = shouldThrow<ParseException> {
-            io.spine.logging.backend.jul.JulLogRecord.create(data, Metadata.empty())
+            JulRecord.create(data, Metadata.empty())
         }
         parseException.message shouldContain "unreferenced arguments [first missing index=31]"
 
@@ -264,7 +264,7 @@ internal class JulLogRecordSpec {
         arguments = arrayOfNulls(34)
         data = FakeLogData.withPrintfStyle(pattern, arguments)
         shouldNotThrow<ParseException> {
-            val record = io.spine.logging.backend.jul.JulLogRecord.create(data, Metadata.empty())
+            val record = JulRecord.create(data, Metadata.empty())
             record.message shouldNotContain "UNUSED"
         }
     }
@@ -273,7 +273,7 @@ internal class JulLogRecordSpec {
     fun `have string representation`() {
         // LogData may behave differently with and without arguments.
         var data = FakeLogData.withPrintfStyle("Answer=%d", 42)
-        var record = io.spine.logging.backend.jul.JulLogRecord.create(data, Metadata.empty())
+        var record = JulRecord.create(data, Metadata.empty())
         var stringifiedRecord = record.toString()
 
         // From the `SimpleLogRecord`'s point of view,
@@ -283,7 +283,7 @@ internal class JulLogRecordSpec {
         stringifiedRecord shouldContain "  original message: Answer=%d"
 
         data = FakeLogData(LITERAL)
-        record = io.spine.logging.backend.jul.JulLogRecord.create(data, Metadata.empty())
+        record = JulRecord.create(data, Metadata.empty())
         stringifiedRecord = record.toString()
 
         stringifiedRecord shouldContain "  message: $LITERAL"

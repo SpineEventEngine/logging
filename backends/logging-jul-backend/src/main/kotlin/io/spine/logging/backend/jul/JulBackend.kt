@@ -50,19 +50,19 @@ import java.util.logging.Logger
  *          the given class name.
  * @see AbstractJulBackend
  */
-internal class JulLoggerBackend(loggingClass: String): AbstractJulBackend(loggingClass) {
+internal class JulBackend(loggingClass: String): AbstractJulBackend(loggingClass) {
 
     private val logger: Logger by lazy {
         Logger.getLogger(loggerName)
     }
 
     override fun log(data: LogData): Unit = doLog(
-        JulLogRecord.create(data, Platform.getInjectedMetadata()),
+        JulRecord.create(data, Platform.getInjectedMetadata()),
         data.wasForced()
     )
 
     override fun handleError(error: RuntimeException, badData: LogData): Unit = doLog(
-        JulLogRecord.error(error, badData, Platform.getInjectedMetadata()),
+        JulRecord.error(error, badData, Platform.getInjectedMetadata()),
         badData.wasForced()
     )
 

@@ -39,30 +39,30 @@ import java.util.logging.LogRecord;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/SimpleLogRecord.java">
  *     Original Java code of Google Flogger</a>
  */
-public final class JulLogRecord extends AbstractJulLogRecord {
-  /** Creates a {@link JulLogRecord} for a normal log statement from the given data. */
-  public static JulLogRecord create(LogData data, Metadata scope) {
-    return new JulLogRecord(data, scope);
+public final class JulRecord extends AbstractJulRecord {
+  /** Creates a {@link JulRecord} for a normal log statement from the given data. */
+  public static JulRecord create(LogData data, Metadata scope) {
+    return new JulRecord(data, scope);
   }
 
   /** @deprecated Use create(LogData data, Metadata scope) and pass scoped metadata in. */
   @Deprecated
-  public static JulLogRecord create(LogData data) {
+  public static JulRecord create(LogData data) {
     return create(data, Metadata.empty());
   }
 
-  /** Creates a {@link JulLogRecord} in the case of an error during logging. */
-  public static JulLogRecord error(RuntimeException error, LogData data, Metadata scope) {
-    return new JulLogRecord(error, data, scope);
+  /** Creates a {@link JulRecord} in the case of an error during logging. */
+  public static JulRecord error(RuntimeException error, LogData data, Metadata scope) {
+    return new JulRecord(error, data, scope);
   }
 
   /** @deprecated Use error(LogData data, Metadata scope) and pass scoped metadata in. */
   @Deprecated
-  public static JulLogRecord error(RuntimeException error, LogData data) {
+  public static JulRecord error(RuntimeException error, LogData data) {
     return error(error, data, Metadata.empty());
   }
 
-  private JulLogRecord(LogData data, Metadata scope) {
+  private JulRecord(LogData data, Metadata scope) {
     super(data, scope);
     setThrown(getMetadataProcessor().getSingleValue(LogContext.Key.LOG_CAUSE));
 
@@ -84,7 +84,7 @@ public final class JulLogRecord extends AbstractJulLogRecord {
     String unused = getMessage();
   }
 
-  private JulLogRecord(RuntimeException error, LogData data, Metadata scope) {
+  private JulRecord(RuntimeException error, LogData data, Metadata scope) {
     // In the case of an error, the base class handles everything as there's no specific formatting.
     super(error, data, scope);
   }

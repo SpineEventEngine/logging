@@ -103,7 +103,7 @@ import static java.util.logging.Level.WARNING;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/AbstractLogRecord.java">
  *     Original Java code of Google Flogger</a>
  */
-public abstract class AbstractJulLogRecord extends LogRecord {
+public abstract class AbstractJulRecord extends LogRecord {
   // Note that Formatter instances are mutable and protect state via synchronization. We never
   // modify the instance however, and only call the synchronized formatMessage() helper method, so
   // we can use it safely without additional locking.
@@ -126,7 +126,7 @@ public abstract class AbstractJulLogRecord extends LogRecord {
    * Subclasses calling this constructor are expected to additionally call {@link #setThrown} and
    * perhaps {@link #setMessage} (depending on whether eager message caching is desired).
    */
-  protected AbstractJulLogRecord(LogData data, Metadata scope) {
+  protected AbstractJulRecord(LogData data, Metadata scope) {
     super(data.getLevel(), null);
     this.data = data;
     this.metadata = MetadataProcessor.forScopeAndLogSite(scope, data.getMetadata());
@@ -151,7 +151,7 @@ public abstract class AbstractJulLogRecord extends LogRecord {
    * synthetic error message is generated from the original log data and the given exception is set
    * as the cause. The level of this record is the maximum of WARNING or the original level.
    */
-  protected AbstractJulLogRecord(RuntimeException error, LogData data, Metadata scope) {
+  protected AbstractJulRecord(RuntimeException error, LogData data, Metadata scope) {
     this(data, scope);
     // Re-target this log message as a warning (or above) since it indicates a real bug.
     setLevel(data.getLevel().intValue() < WARNING.intValue() ? WARNING : data.getLevel());
