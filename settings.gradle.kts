@@ -43,6 +43,7 @@ include(
 
 includeBackend(
     "logging-log4j2-backend",
+    "logging-jul-backend",
 )
 
 includeContext(
