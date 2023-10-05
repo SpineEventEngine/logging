@@ -24,18 +24,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.system
+package io.spine.logging.backend.jul
 
+import io.spine.logging.backend.system.BackendFactory
 import io.spine.logging.flogger.backend.LoggerBackend
 
 /**
  * A [BackendFactory] producing [LoggerBackend] which supports publishing
  * of logging records according to configured [LogLevelMap][io.spine.logging.context.LogLevelMap].
  */
-public class StdBackendFactory: BackendFactory() {
+public class JulBackendFactory: BackendFactory() {
 
     public override fun create(loggingClass: String): LoggerBackend =
-        StdLoggerBackend(loggingClass)
+        JulLoggerBackend(loggingClass)
 
     /**
      * Returns a fully-qualified name of this class.

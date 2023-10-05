@@ -24,8 +24,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.system
+package io.spine.logging.backend.jul
 
+import io.spine.logging.backend.system.AbstractBackend
+import io.spine.logging.backend.system.SimpleLogRecord
 import io.spine.logging.flogger.backend.LogData
 import io.spine.logging.flogger.backend.LoggerBackend
 import io.spine.logging.flogger.backend.Platform
@@ -35,16 +37,22 @@ import java.util.logging.LogRecord
 import java.util.logging.Logger
 
 /**
- * A [LoggerBackend] which allows forced publishing of logging records.
+ * A [LoggerBackend] that uses `java.util.logging` (JUL) to output
+ * logging records.
+ *
+ * This backend is default for JVM.
+ *
+ * It allows forced publishing of logging records.
  *
  * @param loggingClass
- *          a name of the logger created for this backend. A better name for the parameter
- *          would be `loggerName`, but we keep the naming consistent with the API
- *          we extend. Please also see the constructor of `AbstractBackend` which accepts
- *          `String` for the operation with the given class name.
+ *          a name of the logger created for this backend. A better name for
+ *          the parameter would be `loggerName`, but we keep the naming
+ *          consistent with the API we extend. Please also see the constructor
+ *          of `AbstractBackend` which accepts `String` for the operation with
+ *          the given class name.
  * @see AbstractBackend
  */
-internal class StdLoggerBackend(loggingClass: String): AbstractBackend(loggingClass) {
+internal class JulLoggerBackend(loggingClass: String): AbstractBackend(loggingClass) {
 
     private val logger: Logger by lazy {
         Logger.getLogger(loggerName)
