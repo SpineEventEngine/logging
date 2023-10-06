@@ -23,16 +23,16 @@ release stage.
 
 ## Simple example
 
-To start logging, at least the following dependencies are needed:
+To start logging, only a dependency on `spine-logging` is needed:
 
 ```kotlin
 dependencies {
     implementation("io.spine:spine-logging:$version")
-    runtimeOnly("io.spine:spine-logging-backend:$version")
 }
 ```
 
-The default logging backend outputs all logged statements to the console.
+In this case, the default logging backend will be used. It outputs log records
+to the console using `java.util.logging` (JUL) framework.
 
 All logging operations are done with an instance of `io.spine.logging.Logger`.
 To get a logger, one can use the following:
@@ -81,11 +81,15 @@ and its configuration.
 
 The following backends are available:
 
-* `io.spine:spine-logging-backend` – the default JUL-based backend.
+* `io.spine:spine-logging-jul-backend` – the default JUL-based backend.
 * `io.spine:spine-logging-log4j2-backend` – Log4j2 backend.
 
-Put a chosen backend to `runtimeOnly` configuration, and the logging library
-will discover it in the runtime.
+The default backend is supplied along the logging library itself. To use it,
+one just needs to not supply any other backend. Then JUL backend will be 
+used automatically.
+
+For other backends, put a chosen one to `runtimeOnly` configuration, 
+and the logging library will discover it in the runtime.
 
 An example usage of Log4j2 backend:
 
@@ -98,7 +102,8 @@ dependencies {
 
 Please note, only one backend implementation should be present in the runtime.
 Two or more backends will cause an exception because the logging framework 
-will not be able to understand, which one should be used.
+will not be able to understand, which one should be used. The default backend
+doesn't count here.
 
 ## Logging contexts
 
