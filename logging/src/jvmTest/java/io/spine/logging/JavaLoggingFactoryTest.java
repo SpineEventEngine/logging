@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test;
 import java.util.function.Supplier;
 
 import static com.google.common.truth.Truth.assertThat;
-import static io.spine.logging.dynamic.backend.CaptureLogDataKt.captureLogData;
+import static io.spine.logging.backend.probe.CaptureLogDataKt.captureLogData;
 
 @DisplayName("In Java, `LoggingFactory` should")
 class JavaLoggingFactoryTest {

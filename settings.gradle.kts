@@ -36,7 +36,7 @@ rootProject.name = "spine-logging"
 include(
     "logging",
     "logging-context",
-    "logging-fake-backend",
+    "logging-probe-backend",
     "testutil-logging",
 )
 
