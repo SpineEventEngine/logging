@@ -11,16 +11,4 @@ implementation is passed. It means that an end user never needs to put this
 backend to `runtimeOnly` configuration to use it. It is always supplied along
 with the logging facade itself.
 
-To use this backend, one just needs to not supply any other backend. 
-Then JUL backend will be used automatically. 
-
-Hence, this backend is **not** exposed as a Java service. Only explicit usage 
-of `JulBackendFactory` is possible. And this is how `DefaultPlatform` uses it.
-
-For example:
-
-```kotlin
-dependencies {
-    implementation("io.spine:spine-logging-jul-backend:$version")
-}
-```
+Hence, this backend is **not** exposed as a Java service.
