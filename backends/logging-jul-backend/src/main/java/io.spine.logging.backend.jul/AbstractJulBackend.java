@@ -35,13 +35,12 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 /**
- * Common backend to handle everything except formatting of a log message
+ * An abstract implementation of {@code java.util.logging} (JUL) based backend.
+ *
+ * <p>This class handles everything except formatting of a log message
  * and metadata.
  *
- * This is an unstable implementation and should not be used outside of the Flogger core library.
- *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/AbstractBackend.java">
- *     Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/jzz7x">Original Java code of Google Flogger</a>
  */
 public abstract class AbstractJulBackend extends LoggerBackend {
   // Set if any attempt at logging via the "forcing" logger fails due to an inability to set the

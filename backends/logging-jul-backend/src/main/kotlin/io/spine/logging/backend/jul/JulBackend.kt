@@ -35,8 +35,7 @@ import java.util.logging.LogRecord
 import java.util.logging.Logger
 
 /**
- * A [LoggerBackend] that uses `java.util.logging` (JUL) to output
- * logging records.
+ * A [LoggerBackend] that uses `java.util.logging` (JUL) to output log records.
  *
  * This backend is default for JVM.
  *

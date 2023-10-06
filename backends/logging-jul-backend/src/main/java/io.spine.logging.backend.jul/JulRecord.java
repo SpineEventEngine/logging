@@ -33,11 +33,10 @@ import io.spine.logging.flogger.backend.Metadata;
 import java.util.logging.LogRecord;
 
 /**
- * An eagerly evaluating {@link LogRecord} which is created by the Fluent Logger frontend and can be
- * passed to a normal log {@link java.util.logging.Handler} instance for output.
+ * An eagerly evaluating {@link LogRecord} that can be passed to a normal
+ * log {@link java.util.logging.Handler Handler} instance for output.
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/SimpleLogRecord.java">
- *     Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/ed3eh">Original Java code of Google Flogger</a>
  */
 public final class JulRecord extends AbstractJulRecord {
   /** Creates a {@link JulRecord} for a normal log statement from the given data. */

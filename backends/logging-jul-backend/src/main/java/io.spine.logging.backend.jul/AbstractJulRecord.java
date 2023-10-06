@@ -44,9 +44,11 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static java.util.logging.Level.WARNING;
 
 /**
- * Abstract base class for {@code java.util.logging} compatible log records produced by Flogger
- * backends. This class behaves externally like {@link LogRecord} but supports more memory efficient
- * message formatting via the {@link #appendFormattedMessageTo(StringBuilder)} method.
+ * Abstract base class for {@code java.util.logging} (JUL) log records.
+ *
+ * <p>This class behaves externally like {@link LogRecord} but supports more
+ * memory efficient message formatting. Take a look on {@link #appendFormattedMessageTo(StringBuilder)}
+ * method for details.
  *
  * <p>This class supports three distinct modes of operation, depending on the state of the message
  * and/or parameters:
@@ -100,8 +102,7 @@ import static java.util.logging.Level.WARNING;
  *       set them is ignored.
  * </ul>
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/AbstractLogRecord.java">
- *     Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/yrrs4">Original Java code of Google Flogger</a>
  */
 public abstract class AbstractJulRecord extends LogRecord {
   // Note that Formatter instances are mutable and protect state via synchronization. We never
