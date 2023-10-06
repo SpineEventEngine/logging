@@ -33,14 +33,20 @@ import org.gradle.kotlin.dsl.invoke
 import org.gradle.kotlin.dsl.named
 
 /**
- * Disables Java linters until the main sources are migrated to Kotlin.
+ * Disables Java linters in this [Project].
+ *
+ * In particular, the following linters will be disabled:
+ *
+ * 1. CheckStyle.
+ * 2. PMD.
+ * 3. ErrorProne.
  *
  * Apply this configuration for modules that have original Flogger sources,
  * which have not been migrated to Kotlin yet. They produce a lot of
  * errors/warnings failing the build.
  *
- * Our own sources are mostly in Kotlin (in `spine-logging` repo),
- * so it is quite safe.
+ * Our own sources are mostly in Kotlin (as for `spine-logging` repo),
+ * so this action seems quite safe.
  */
 // TODO:2023-09-22:yevhenii.nadtochii: Remove this piece of configuration.
 // See issue: https://github.com/SpineEventEngine/logging/issues/56
