@@ -24,29 +24,32 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.gradle.java.disableLinters
-import io.spine.internal.gradle.testing.exposeTestConfiguration
+package io.spine.internal.gradle.java
 
-plugins {
-    `jvm-module`
-}
+import net.ltgt.gradle.errorprone.errorprone
+import org.gradle.api.Project
+import org.gradle.api.tasks.compile.JavaCompile
+import org.gradle.kotlin.dsl.invoke
+import org.gradle.kotlin.dsl.named
 
-dependencies {
-    implementation(
-        project(
-            ":flogger-platform-generator",
-            configuration = "generatedPlatformProvider"
-        )
-    )
-    runtimeOnly(project(":jvm-default-platform"))
-    testImplementation(project(":testutil-logging"))
-}
-
-java {
-    /**
-     * Abstract tests and their `given` classes can be re-used to test
-     * different backend and context implementations.
-     */
-    exposeTestConfiguration()
-    disableLinters() // Due to non-migrated Flogger sources.
+/**
+ * Disables Java linters until the main sources are migrated to Kotlin.
+ *
+ * Apply this configuration for modules that have original Flogger sources,
+ * which have not been migrated to Kotlin yet. They produce a lot of
+ * errors/warnings failing the build.
+ *
+ * Our own sources are mostly in Kotlin (in `spine-logging` repo),
+ * so it is quite safe.
+ */
+// TODO:2023-09-22:yevhenii.nadtochii: Remove this piece of configuration.
+// See issue: https://github.com/SpineEventEngine/logging/issues/56
+fun Project.disableLinters() {
+    tasks {
+        named("checkstyleMain") { enabled = false }
+        named("pmdMain") { enabled = false }
+        named<JavaCompile>("compileJava") {
+            options.errorprone.isEnabled.set(false)
+        }
+    }
 }
