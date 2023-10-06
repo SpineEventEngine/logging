@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2018, The Flogger Authors; 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.system;import io.spine.logging.flogger.AbstractLogger;
+package io.spine.logging.backend.system;
+
+import io.spine.logging.flogger.AbstractLogger;
 import io.spine.logging.flogger.FloggerLogSite;
 import io.spine.logging.flogger.FloggerLogSites;
 import io.spine.logging.flogger.backend.Platform.LogCallerFinder;
