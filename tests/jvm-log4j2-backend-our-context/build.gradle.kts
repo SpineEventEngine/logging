@@ -1,3 +1,5 @@
+import io.spine.internal.dependency.Log4j2
+
 /*
  * Copyright 2023, TeamDev. All rights reserved.
  *
@@ -29,6 +31,7 @@ plugins {
 }
 
 dependencies {
+    testImplementation(Log4j2.core)
     testImplementation(project(":logging"))
     testImplementation(project(":fixtures"))
     testImplementation(project(":flogger-api"))

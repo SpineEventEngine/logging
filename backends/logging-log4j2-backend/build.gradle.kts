@@ -33,7 +33,7 @@ plugins {
 }
 
 dependencies {
-    api(Log4j2.core)
+    implementation(Log4j2.core)
     implementation(project(":flogger-api"))
     testImplementation(project(":flogger-api", configuration = "testArtifacts"))
     testRuntimeOnly(project(":logging-grpc-context"))
