@@ -37,8 +37,7 @@ import org.junit.jupiter.api.Test
 /**
  * Tests for [AbstractJulRecord].
  *
- * @see <a href="https://github.com/google/flogger/blob/70c5aea863952ee61b3d33afb41f2841b6d63455/api/src/test/java/com/google/common/flogger/backend/system/AbstractLogRecordTest.java">
- *     Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/ifbj5">Original Java code of Google Flogger</a>
  */
 @DisplayName("`AbstractLogRecord` should")
 internal class AbstractJulRecordSpec {
