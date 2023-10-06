@@ -36,13 +36,13 @@ rootProject.name = "spine-logging"
 include(
     "logging",
     "logging-context",
-    "logging-probe-backend",
     "testutil-logging",
 )
 
 includeBackend(
     "logging-log4j2-backend",
     "logging-jul-backend",
+    "logging-probe-backend",
 )
 
 includeContext(
