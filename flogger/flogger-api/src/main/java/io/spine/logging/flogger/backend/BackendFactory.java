@@ -26,8 +26,6 @@
 
 package io.spine.logging.flogger.backend;
 
-import io.spine.logging.flogger.backend.LoggerBackend;
-
 /**
  * An API to create logger backends for a given class name. This is implemented as an abstract class
  * (rather than an interface) to reduce to risk of breaking existing implementations if the API
