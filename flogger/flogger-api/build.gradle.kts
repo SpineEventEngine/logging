@@ -38,8 +38,8 @@ dependencies {
             configuration = "generatedPlatformProvider"
         )
     )
-    runtimeOnly(project(":jvm-default-platform"))
     testImplementation(project(":testutil-logging"))
+    testRuntimeOnly(project(":jvm-default-platform"))
 }
 
 java {

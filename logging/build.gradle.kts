@@ -80,6 +80,7 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation(project(":flogger-api"))
+                runtimeOnly(project(":jvm-default-platform"))
                 implementation(Guava.lib)
             }
         }
