@@ -44,7 +44,7 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static java.util.logging.Level.WARNING;
 
 /**
- * Abstract base class for {@code java.util.logging} (JUL) log records.
+ * Abstract base for {@code java.util.logging} (JUL) log records.
  *
  * <p>This class behaves externally like {@link LogRecord} but supports more
  * memory efficient message formatting. Take a look on {@link #appendFormattedMessageTo(StringBuilder)}

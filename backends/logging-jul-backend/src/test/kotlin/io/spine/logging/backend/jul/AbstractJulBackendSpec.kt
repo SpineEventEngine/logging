@@ -43,7 +43,7 @@ import org.junit.jupiter.api.Test
  *
  * @see <a href="https://rb.gy/tuo9x">Original Java code of Google Flogger</a>
  */
-@DisplayName("`AbstractBackend` should")
+@DisplayName("`AbstractJulBackend` should")
 internal class AbstractJulBackendSpec {
 
     private val logger = MemoizingLogger("unused", Level.INFO)

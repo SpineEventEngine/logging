@@ -39,7 +39,7 @@ import org.junit.jupiter.api.Test
  *
  * @see <a href="https://rb.gy/ifbj5">Original Java code of Google Flogger</a>
  */
-@DisplayName("`AbstractLogRecord` should")
+@DisplayName("`AbstractJulRecord` should")
 internal class AbstractJulRecordSpec {
 
     private val literal = "Hello %s"

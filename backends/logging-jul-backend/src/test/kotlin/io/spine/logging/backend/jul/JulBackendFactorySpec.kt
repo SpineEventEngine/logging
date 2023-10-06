@@ -30,11 +30,11 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-@DisplayName("`StdBackendFactory` should")
+@DisplayName("`JulBackendFactory` should")
 internal class JulBackendFactorySpec {
 
     @Test
-    fun ` return its class name from 'toString'`() {
+    fun `return its class name from 'toString'`() {
         val factory = JulBackendFactory()
         factory.toString() shouldBe factory.javaClass.name
     }

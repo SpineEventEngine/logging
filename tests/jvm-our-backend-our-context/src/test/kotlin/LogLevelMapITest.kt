@@ -40,7 +40,7 @@ import org.junit.jupiter.api.Test
 internal class LogLevelMapITest : JulLogLevelMapTest() {
 
     @Test
-    fun `should use 'StdLoggerBackend`() {
+    fun `should use 'JulBackendFactory`() {
         val loggerName = this::class.qualifiedName!!
         val platformProvided = Platform.getBackend(loggerName)
         val factoryProvided = JulBackendFactory().create(loggerName)

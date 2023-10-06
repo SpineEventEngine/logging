@@ -50,7 +50,7 @@ import org.junit.jupiter.api.Test
  *
  * @see <a href="https://rb.gy/550xu">Original Java code of Google Flogger</a>
  */
-@DisplayName("`io.spine.logging.backend.system.DefaultPlatform` should")
+@DisplayName("`DefaultPlatform` should")
 internal class DefaultPlatformSpec {
 
     private val factory = MemoizingLoggerBackendFactory()

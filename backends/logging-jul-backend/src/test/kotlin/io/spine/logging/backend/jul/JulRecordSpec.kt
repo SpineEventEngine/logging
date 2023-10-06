@@ -55,7 +55,7 @@ import org.junit.jupiter.api.Test
  *
  * @see <a href="https://rb.gy/4cncp">Original Java code of Google Flogger</a>
  */
-@DisplayName("`SimpleLogRecord` should")
+@DisplayName("`JulRecord` should")
 internal class JulRecordSpec {
 
     companion object {
