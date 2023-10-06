@@ -41,7 +41,7 @@ import io.spine.logging.flogger.backend.given.FakeLogData
  * are indeed called when expected.
  */
 @Suppress("serial") // Serial number is not needed.
-internal class FakeAbstractJulRecord(message: String, vararg args: Any?) :
+internal class FakeJulRecord(message: String, vararg args: Any?) :
     AbstractJulRecord(FakeLogData.withPrintfStyle(message, *args), Metadata.empty()) {
 
     private val formatter = FakeLogMessageFormatter()
