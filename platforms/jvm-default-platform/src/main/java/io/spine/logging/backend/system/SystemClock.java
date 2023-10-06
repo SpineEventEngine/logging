@@ -33,10 +33,10 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 /**
  * Default millisecond precision clock.
  *
- * <p>See class documentation in {@link Clock} for important implementation restrictions.
+ * <p>See class documentation in {@link Clock} for important
+ * implementation restrictions.
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/SystemClock.java">
- *     Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/veqvb">Original Java code of Google Flogger</a>
  */
 public final class SystemClock extends Clock {
   private static final SystemClock INSTANCE = new SystemClock();

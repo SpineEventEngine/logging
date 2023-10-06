@@ -37,6 +37,8 @@ import io.spine.logging.flogger.context.ScopedLoggingContext
  * This file contains Java services that are used to test how
  * the default platform picks up the services in the runtime.
  */
+@Suppress("unused") // Makes file-level doc renderable.
+private val about = ""
 
 /**
  * A stub service for [BackendFactory] that can be loaded

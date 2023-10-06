@@ -33,12 +33,12 @@ import io.spine.logging.flogger.backend.Platform.LogCallerFinder;
 import io.spine.logging.flogger.util.CallerFinder;
 
 /**
- * Default caller finder implementation which should work on all recent Java releases.
+ * The default caller finder implementation for Java 9+.
  *
- * <p>See class documentation in {@link LogCallerFinder} for important implementation restrictions.
+ * <p>See class documentation in {@link LogCallerFinder} for important
+ * implementation restrictions.
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/StackBasedCallerFinder.java">
- *     Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/qozq3">Original Java code of Google Flogger</a>
  */
 public final class StackBasedCallerFinder extends LogCallerFinder {
   private static final LogCallerFinder INSTANCE = new StackBasedCallerFinder();

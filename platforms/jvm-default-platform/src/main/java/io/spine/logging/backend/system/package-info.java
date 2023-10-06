@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,13 +25,16 @@
  */
 
 /**
- * Contains implementation of the default backend, which uses
- * {@code java.util.logging} (JUL) to output log statements.
+ * Contains the default logger platform implementation for a server-side
+ * Java environment.
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/package-info.java">
- *     Original Java code of Google Flogger</a>
+ * <p>Although, {@code system} is not the best name for this package.
+ * The better option is {@code default}, but it is reserved by Java
+ * and cannot be used here.
+ *
+ * @see <a href="https://rb.gy/39mdu">Original Java code of Google Flogger</a>
  */
-
+@CheckReturnValue
 package io.spine.logging.backend.system;
 
 import com.google.errorprone.annotations.CheckReturnValue;

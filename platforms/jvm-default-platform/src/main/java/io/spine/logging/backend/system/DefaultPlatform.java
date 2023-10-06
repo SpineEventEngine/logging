@@ -41,7 +41,7 @@ import java.util.ServiceLoader;
 import static io.spine.logging.flogger.util.StaticMethodCaller.getInstanceFromSystemProperty;
 
 /**
- * The default fluent logger platform for a server-side Java environment.
+ * The default logger platform for a server-side Java environment.
  *
  * <p>This class allows configuration via a number of service types. A single instance of each
  * service type may be provided, either via the classpath using <i>service providers</i> (see {@link
@@ -78,7 +78,7 @@ import static io.spine.logging.flogger.util.StaticMethodCaller.getInstanceFromSy
  * <tr>
  * <td>{@link BackendFactory}</td>
  * <td>{@code flogger.backend_factory}</td>
- * <td>{@link SimpleBackendFactory}, a {@code java.util.logging} backend</td>
+ * <td>{@link JulBackendFactory}</td>
  * </tr>
  * <tr>
  * <td>{@link ContextDataProvider}</td>
@@ -92,8 +92,7 @@ import static io.spine.logging.flogger.util.StaticMethodCaller.getInstanceFromSy
  * </tr>
  * </table>
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/DefaultPlatform.java">
- *     Original Java code of Google Flogger</a>
+ * @see <a href="http://rb.gy/nnjac">Original Java code of Google Flogger</a>
  */
 // Non-final for testing.
 public class DefaultPlatform extends Platform {
