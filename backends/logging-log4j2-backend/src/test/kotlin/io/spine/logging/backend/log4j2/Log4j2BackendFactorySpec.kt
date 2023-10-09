@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.log4j2
 
-import io.spine.logging.backend.system.BackendFactory
+import io.spine.logging.flogger.backend.BackendFactory
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.types.shouldBeInstanceOf

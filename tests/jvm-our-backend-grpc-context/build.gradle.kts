@@ -31,6 +31,6 @@ plugins {
 dependencies {
     testImplementation(project(":logging"))
     testImplementation(project(":fixtures"))
-    testRuntimeOnly(project(":logging-backend"))
+    testRuntimeOnly(project(":logging-jul-backend"))
     testRuntimeOnly(project(":logging-grpc-context"))
 }

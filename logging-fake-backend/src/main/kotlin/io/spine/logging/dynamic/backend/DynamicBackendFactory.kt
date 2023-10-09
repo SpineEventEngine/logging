@@ -27,8 +27,8 @@
 package io.spine.logging.dynamic.backend
 
 import io.spine.logging.flogger.backend.LoggerBackend
-import io.spine.logging.backend.system.BackendFactory
-import io.spine.logging.backend.system.StdBackendFactory
+import io.spine.logging.flogger.backend.BackendFactory
+import io.spine.logging.backend.jul.JulBackendFactory
 
 /**
  * A factory that delegates backends creation to another factory,
@@ -42,14 +42,14 @@ import io.spine.logging.backend.system.StdBackendFactory
  * More importantly, they need those stubs [typed][TypedBackendFactory] to access
  * their “enriched” API.
  *
- * This factory uses [StdBackendFactory] as a fall-back option,
+ * This factory uses [JulBackendFactory] as a fall-back option,
  * when no custom [delegate] is specified.
  *
  * The type is public because it is used in a public inline method.
  */
 public object DynamicBackendFactory : BackendFactory() {
 
-    private val stdBackends = StdBackendFactory()
+    private val julBackends = JulBackendFactory()
     private var delegate: TypedBackendFactory<*>? = null
 
     /**
@@ -61,7 +61,7 @@ public object DynamicBackendFactory : BackendFactory() {
 
     /**
      * Resets the custom delegate, and makes the factory delegate
-     * backends creation to the default [StdBackendFactory].
+     * backends creation to the default [JulBackendFactory].
      */
     public fun reset() {
         delegate = null
@@ -70,10 +70,10 @@ public object DynamicBackendFactory : BackendFactory() {
     /**
      * Creates a new backend using the configured [delegate], if any.
      *
-     * Otherwise, uses [StdBackendFactory] to create a backend.
+     * Otherwise, uses [JulBackendFactory] to create a backend.
      */
     override fun create(loggingClassName: String): LoggerBackend =
-        delegate?.create(loggingClassName) ?: stdBackends.create(loggingClassName)
+        delegate?.create(loggingClassName) ?: julBackends.create(loggingClassName)
 
     /**
      * Returns a fully-qualified name of this class.
