@@ -43,8 +43,7 @@ import org.junit.jupiter.api.Test
 @DisplayName("`GrpcContextDataProvider` should")
 internal class GrpcContextDataProviderSpec : AbstractContextDataProviderSpec() {
 
-    override val implementationUnderTest: ContextDataProvider =
-        GrpcContextDataProvider.getInstance()
+    override val implementationUnderTest: ContextDataProvider = GrpcContextDataProvider()
 
     @Test
     fun `load as a Java service`() {

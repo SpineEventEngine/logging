@@ -37,7 +37,9 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 @DisplayName("`StdContextDataProvider` should")
-internal class StdContextDataProviderSpec {
+internal class StdContextDataProviderSpec : AbstractContextDataProviderSpec() {
+
+    override val implementationUnderTest: ContextDataProvider = StdContextDataProvider()
 
     @Test
     fun `load as a Java service`() {
