@@ -36,22 +36,18 @@ import io.spine.logging.compareTo
 import io.spine.logging.context.LogLevelMap
 
 /**
- * The data of a scoped logging context with merging capabilities when contexts are nested.
+ * The data of a scoped logging context with merging capabilities when
+ * contexts are nested.
  *
  * @param scopeType
  *        the type of the scope to be created, or `null` if no type is required.
- * @param provider
- *        a reference to the context data provider for setting the flag when
- *        a log level map is used.
  * @constructor
  *        creates an instance taking initial values from the currently installed
  *        context data. If there is no current logging context, it initializes
  *        the instance with `null`s.
  */
-internal class StdContextData(
-    scopeType: ScopeType?,
-    private val provider: StdContextDataProvider
-) {
+internal class StdContextData(scopeType: ScopeType?) {
+
     private val scopes: ScopeList?
     private val tagRef: ScopedReference<Tags>
     private val metadataRef: ScopedReference<ContextMetadata>
@@ -92,14 +88,14 @@ internal class StdContextData(
      */
     fun applyLogLevelMap(map: LogLevelMap?) {
         map?.let {
-            provider.setLogLevelMapFlag()
+            StdContextDataProvider.hasLogLevelMap = true
             logLevelMapRef.mergeFrom(it)
         }
     }
 
     /**
      * Installs this instance as current context data, returning the previously
-     * set instance or `null`, if there was no logging context prior to this call.
+     * set instance or `null`, if there was no logging context before this call.
      *
      * @see [detach]
      */
@@ -121,8 +117,8 @@ internal class StdContextData(
     companion object {
 
         /**
-         * Contains currently installed instance of logging context data or `null`,
-         * if there is no logging context.
+         * Contains a currently installed instance of logging context data
+         * or `null`, if there is no logging context.
          */
         private val holder: ThreadLocal<StdContextData> by lazy {
             ThreadLocal()
@@ -151,8 +147,8 @@ internal class StdContextData(
         }
 
         /**
-         * Obtains metadata of the current context or [ContextMetadata.none] if
-         * no context is installed.
+         * Obtains metadata of the current context or [ContextMetadata.none]
+         * if no context is installed.
          */
         fun metadata(): ContextMetadata {
             current?.let {
@@ -183,9 +179,9 @@ internal class StdContextData(
         /**
          * Obtains a [LoggingScope] for the given type.
          *
-         * @return the scope instance or `null` if there is no current context, or
-         *         the current context data does not have scopes, or there is no
-         *         logging scope with the requested type.
+         * @return the scope instance or `null` if there is no current context,
+         *         or the current context data does not have scopes, or there
+         *         is no logging scope with the requested type.
          */
         fun lookupScopeFor(type: ScopeType): LoggingScope? =
             current?.let { ScopeList.lookup(it.scopes, type) }
