@@ -38,5 +38,5 @@ dependencies {
         exclude(group = "com.google.flogger")
     }
     testRuntimeOnly(Slf4J.jdk14)
-    testRuntimeOnly(project(":logging-context"))
+    testRuntimeOnly(project(":logging-thread-local-context"))
 }
