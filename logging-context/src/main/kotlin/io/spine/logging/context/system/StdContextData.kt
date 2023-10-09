@@ -48,13 +48,13 @@ import io.spine.logging.context.LogLevelMap
  */
 internal class StdContextData(scopeType: ScopeType?) {
 
-    private val scopes: ScopeList?
-    private val tagRef: ScopedReference<Tags>
-    private val metadataRef: ScopedReference<ContextMetadata>
-    private val logLevelMapRef: ScopedReference<LogLevelMap>
+    internal val scopes: ScopeList?
+    internal val tagRef: ScopedReference<Tags>
+    internal val metadataRef: ScopedReference<ContextMetadata>
+    internal val logLevelMapRef: ScopedReference<LogLevelMap>
 
     init {
-        val parent = current
+        val parent = CurrentStdContext.data
         scopes = ScopeList.addScope(parent?.scopes, scopeType)
         tagRef = object : ScopedReference<Tags>(parent?.tagRef?.get()) {
             override fun merge(current: Tags, delta: Tags): Tags =
@@ -92,99 +92,84 @@ internal class StdContextData(scopeType: ScopeType?) {
             logLevelMapRef.mergeFrom(it)
         }
     }
-
-    /**
-     * Installs this instance as current context data, returning the previously
-     * set instance or `null`, if there was no logging context before this call.
-     *
-     * @see [detach]
-     */
-    fun attach(): StdContextData? {
-        val prev = current
-        holder.set(this)
-        return prev
-    }
-
-    /**
-     * Restores the previous state of the logging context data.
-     *
-     * @see [attach]
-     */
-    fun detach(prev: StdContextData?) {
-        holder.set(prev)
-    }
-
-    companion object {
-
-        /**
-         * Contains a currently installed instance of logging context data
-         * or `null`, if there is no logging context.
-         */
-        private val holder: ThreadLocal<StdContextData> by lazy {
-            ThreadLocal()
-        }
-
-        /**
-         * Obtains the currently stored value of the context data.
-         *
-         * *Implementation note:* obtaining the value must be done via
-         * `get() = holder.get()` rather than just `= holder.get()` which means
-         * setting the currently stored value (`null`) during instance construction.
-         */
-        private val current: StdContextData? get() = holder.get()
-
-        /**
-         * Obtains the tags of the current context or [Tags.empty] if no
-         * context is installed.
-         */
-        fun tags(): Tags {
-            current?.let {
-                it.tagRef.get()?.let { tags ->
-                    return tags
-                }
-            }
-            return Tags.empty()
-        }
-
-        /**
-         * Obtains metadata of the current context or [ContextMetadata.none]
-         * if no context is installed.
-         */
-        fun metadata(): ContextMetadata {
-            current?.let {
-                it.metadataRef.get()?.let { metadata ->
-                    return metadata
-                }
-            }
-            return ContextMetadata.none()
-        }
-
-        /**
-         * Tells if the logging should be forced for the logger with
-         * the given name and the level.
-         *
-         * If there is no context is installed always returns `false`.
-         */
-        fun shouldForceLoggingFor(loggerName: String, level: Level): Boolean {
-            current?.let {
-                it.logLevelMapRef.get()?.let { map ->
-                    val levelFromMap = map.levelOf(loggerName)
-                    val result = level >= levelFromMap
-                    return result
-                }
-            }
-            return false
-        }
-
-        /**
-         * Obtains a [LoggingScope] for the given type.
-         *
-         * @return the scope instance or `null` if there is no current context,
-         *         or the current context data does not have scopes, or there
-         *         is no logging scope with the requested type.
-         */
-        fun lookupScopeFor(type: ScopeType): LoggingScope? =
-            current?.let { ScopeList.lookup(it.scopes, type) }
-    }
 }
 
+internal object CurrentStdContext {
+
+    /**
+     * Contains a currently installed instance of logging context data
+     * or `null`, if there is no logging context.
+     */
+    private val holder: ThreadLocal<StdContextData> by lazy {
+        ThreadLocal()
+    }
+
+    /**
+     * Obtains the currently stored value of the context data.
+     *
+     * *Implementation note:* obtaining the value must be done via
+     * `get() = holder.get()` rather than just `= holder.get()` which means
+     * setting the currently stored value (`null`) during instance construction.
+     */
+    internal val data: StdContextData? get() = holder.get()
+
+    /**
+     * Obtains the tags of the current context or [Tags.empty] if no
+     * context is installed.
+     */
+    fun tags(): Tags {
+        data?.let {
+            it.tagRef.get()?.let { tags ->
+                return tags
+            }
+        }
+        return Tags.empty()
+    }
+
+    /**
+     * Obtains metadata of the current context or [ContextMetadata.none]
+     * if no context is installed.
+     */
+    fun metadata(): ContextMetadata {
+        data?.let {
+            it.metadataRef.get()?.let { metadata ->
+                return metadata
+            }
+        }
+        return ContextMetadata.none()
+    }
+
+    /**
+     * Tells if the logging should be forced for the logger with
+     * the given name and the level.
+     *
+     * If there is no context is installed always returns `false`.
+     */
+    fun shouldForceLoggingFor(loggerName: String, level: Level): Boolean {
+        data?.let {
+            it.logLevelMapRef.get()?.let { map ->
+                val levelFromMap = map.levelOf(loggerName)
+                val result = level >= levelFromMap
+                return result
+            }
+        }
+        return false
+    }
+
+    /**
+     * Obtains a [LoggingScope] for the given type.
+     *
+     * @return the scope instance or `null` if there is no current context,
+     *         or the current context data does not have scopes, or there
+     *         is no logging scope with the requested type.
+     */
+    fun lookupScopeFor(type: ScopeType): LoggingScope? =
+        data?.let { ScopeList.lookup(it.scopes, type) }
+
+    /**
+     * Installs the given [StdContextData] as current context data.
+     */
+    fun attach(newData: StdContextData?) {
+        holder.set(newData)
+    }
+}
