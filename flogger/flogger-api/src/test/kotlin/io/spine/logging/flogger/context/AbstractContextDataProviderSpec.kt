@@ -118,8 +118,7 @@ abstract class AbstractContextDataProviderSpec {
         callbackWasExecuted = true
     }
 
-    @Nested
-    inner class
+    @Nested inner class
     `create a new context` {
 
         @Test
