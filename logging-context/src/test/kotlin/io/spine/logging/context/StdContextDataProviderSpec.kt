@@ -26,11 +26,13 @@
 
 package io.spine.logging.context
 
-import io.spine.logging.flogger.context.ContextDataProvider
-import io.kotest.matchers.collections.shouldHaveSize
-import io.kotest.matchers.shouldBe
+import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.optional.shouldBePresent
+import io.kotest.matchers.types.shouldBeInstanceOf
 import io.spine.logging.context.system.StdContextDataProvider
-import java.util.ServiceLoader
+import io.spine.logging.flogger.context.AbstractContextDataProviderSpec
+import io.spine.logging.flogger.context.ContextDataProvider
+import java.util.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -40,7 +42,11 @@ internal class StdContextDataProviderSpec {
     @Test
     fun `load as a Java service`() {
         val services = ServiceLoader.load(ContextDataProvider::class.java)
-        services shouldHaveSize 1
-        (services.toList()[0] is StdContextDataProvider) shouldBe true
+        val optionalContextDataProvider = services.findFirst()
+        optionalContextDataProvider.shouldBePresent()
+
+        val contextDataProvider = optionalContextDataProvider.get()
+        contextDataProvider.shouldNotBeNull()
+        contextDataProvider.shouldBeInstanceOf<StdContextDataProvider>()
     }
 }
