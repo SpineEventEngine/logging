@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.context.system
+package io.spine.logging.context.tls
 
 import io.spine.logging.context.toMap
 import io.spine.logging.flogger.LoggingScope
@@ -38,19 +38,19 @@ import io.spine.logging.toLevel
 import java.util.logging.Level as JLevel
 
 /**
- * A [ContextDataProvider] providing basic support of [ScopedLoggingContext]
- * similar to that provided by gRPC logging context from Flogger.
+ * A [ThreadLocal]-based implementation of [ScopedLoggingContext].
  *
- * Loaded via [ServiceLoader][java.util.ServiceLoader] by Flogger runtime.
+ * Loaded via [ServiceLoader][java.util.ServiceLoader] by the logging facade
+ * in runtime.
  */
-public class StdContextDataProvider: ContextDataProvider() {
+public class TlsContextDataProvider: ContextDataProvider() {
 
     internal companion object {
         @Volatile
         internal var hasLogLevelMap: Boolean = false
     }
 
-    override fun getContextApiSingleton(): ScopedLoggingContext = StdScopedLoggingContext
+    override fun getContextApiSingleton(): ScopedLoggingContext = TlsScopedLoggingContext
 
     override fun shouldForceLogging(
         loggerName: String,
@@ -63,34 +63,34 @@ public class StdContextDataProvider: ContextDataProvider() {
         }
 
         val level = jLevel.toLevel()
-        return CurrentStdContext.shouldForceLoggingFor(loggerName, level)
+        return CurrentTlsContext.shouldForceLoggingFor(loggerName, level)
     }
 
-    override fun getTags(): Tags = CurrentStdContext.tags()
+    override fun getTags(): Tags = CurrentTlsContext.tags()
 
-    override fun getMetadata(): Metadata = CurrentStdContext.metadata()
+    override fun getMetadata(): Metadata = CurrentTlsContext.metadata()
 
-    override fun getScope(type: ScopeType): LoggingScope? = CurrentStdContext.lookupScopeFor(type)
+    override fun getScope(type: ScopeType): LoggingScope? = CurrentTlsContext.lookupScopeFor(type)
 }
 
 /**
  * A [ScopedLoggingContext] singleton, which creates contexts based
- * on [StdContextData].
+ * on [TlsContextData].
  */
-private object StdScopedLoggingContext: ScopedLoggingContext() {
+private object TlsScopedLoggingContext: ScopedLoggingContext() {
 
     override fun newContext(): Builder = BuilderImpl(null)
 
     override fun newContext(scopeType: ScopeType): Builder = BuilderImpl(scopeType)
 
     /**
-     * A [ScopedLoggingContext.Builder] which creates a new [StdContextData]
+     * A [ScopedLoggingContext.Builder] which creates a new [TlsContextData]
      * and installs it.
      */
     class BuilderImpl(private val scopeType: ScopeType?) : Builder() {
 
         override fun install(): LoggingContextCloseable {
-            val newContextData = StdContextData(scopeType)
+            val newContextData = TlsContextData(scopeType)
             newContextData.apply {
                 addTags(tags)
                 addMetadata(metadata)
@@ -99,10 +99,10 @@ private object StdScopedLoggingContext: ScopedLoggingContext() {
             return install(newContextData)
         }
 
-        private fun install(newData: StdContextData): LoggingContextCloseable {
-            val previousData = CurrentStdContext.data
-            CurrentStdContext.attach(newData)
-            return LoggingContextCloseable { CurrentStdContext.attach(previousData) }
+        private fun install(newData: TlsContextData): LoggingContextCloseable {
+            val previousData = CurrentTlsContext.data
+            CurrentTlsContext.attach(newData)
+            return LoggingContextCloseable { CurrentTlsContext.attach(previousData) }
         }
     }
 }

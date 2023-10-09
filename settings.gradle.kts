@@ -46,7 +46,7 @@ includeBackend(
 
 includeContext(
     "logging-grpc-context",
-    "logging-thread-local-context",
+    "logging-tls-context",
 )
 
 includePlatform(

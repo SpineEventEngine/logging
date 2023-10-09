@@ -24,22 +24,21 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.context
+package io.spine.logging.context.tls
 
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.optional.shouldBePresent
 import io.kotest.matchers.types.shouldBeInstanceOf
-import io.spine.logging.context.system.StdContextDataProvider
 import io.spine.logging.flogger.context.AbstractContextDataProviderSpec
 import io.spine.logging.flogger.context.ContextDataProvider
 import java.util.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-@DisplayName("`StdContextDataProvider` should")
-internal class StdContextDataProviderSpec : AbstractContextDataProviderSpec() {
+@DisplayName("`TlsContextDataProvider` should")
+internal class TlsContextDataProviderSpec : AbstractContextDataProviderSpec() {
 
-    override val implementationUnderTest: ContextDataProvider = StdContextDataProvider()
+    override val implementationUnderTest: ContextDataProvider = TlsContextDataProvider()
 
     @Test
     fun `load as a Java service`() {
@@ -49,6 +48,6 @@ internal class StdContextDataProviderSpec : AbstractContextDataProviderSpec() {
 
         val contextDataProvider = optionalContextDataProvider.get()
         contextDataProvider.shouldNotBeNull()
-        contextDataProvider.shouldBeInstanceOf<StdContextDataProvider>()
+        contextDataProvider.shouldBeInstanceOf<TlsContextDataProvider>()
     }
 }

@@ -50,5 +50,5 @@ dependencies {
      * the actually loaded backend and context match the test expectations.
      */
     testImplementation(project(":logging-jul-backend"))
-    testImplementation(project(":logging-thread-local-context"))
+    testImplementation(project(":logging-tls-context"))
 }

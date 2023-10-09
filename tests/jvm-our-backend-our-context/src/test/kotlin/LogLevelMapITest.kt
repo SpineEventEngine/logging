@@ -28,12 +28,12 @@ import io.spine.logging.flogger.backend.Platform
 import io.kotest.matchers.shouldBe
 import io.spine.logging.backend.jul.JulBackendFactory
 import io.spine.logging.context.JulLogLevelMapTest
-import io.spine.logging.context.system.StdContextDataProvider
+import io.spine.logging.context.tls.TlsContextDataProvider
 import org.junit.jupiter.api.Test
 
 /**
  * This is a non-abstract integration test of [LogLevelMap][io.spine.logging.context.LogLevelMap]
- * executed in the project in which logging contexts implemented using `spine-logging-context`.
+ * executed in the project in which logging contexts implemented using `spine-logging-tls-context`.
  *
  * Please see `build.gradle.kts` of this module for the details.
  */
@@ -48,8 +48,8 @@ internal class LogLevelMapITest : JulLogLevelMapTest() {
     }
 
     @Test
-    fun `should use 'StdContextDataProvider'`() {
+    fun `should use 'TlsContextDataProvider'`() {
         val provider = Platform.getContextDataProvider()
-        provider::class shouldBe StdContextDataProvider::class
+        provider::class shouldBe TlsContextDataProvider::class
     }
 }

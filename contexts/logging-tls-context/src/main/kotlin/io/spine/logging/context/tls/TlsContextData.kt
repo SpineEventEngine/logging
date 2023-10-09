@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.context.system
+package io.spine.logging.context.tls
 
 import io.spine.logging.flogger.LoggingScope
 import io.spine.logging.flogger.context.ContextMetadata
@@ -46,7 +46,7 @@ import io.spine.logging.context.LogLevelMap
  *        context data. If there is no current logging context, it initializes
  *        the instance with `null`s.
  */
-internal class StdContextData(scopeType: ScopeType?) {
+internal class TlsContextData(scopeType: ScopeType?) {
 
     internal val scopes: ScopeList?
     internal val tagRef: ScopedReference<Tags>
@@ -54,7 +54,7 @@ internal class StdContextData(scopeType: ScopeType?) {
     internal val logLevelMapRef: ScopedReference<LogLevelMap>
 
     init {
-        val parent = CurrentStdContext.data
+        val parent = CurrentTlsContext.data
         scopes = ScopeList.addScope(parent?.scopes, scopeType)
         tagRef = object : ScopedReference<Tags>(parent?.tagRef?.get()) {
             override fun merge(current: Tags, delta: Tags): Tags =
@@ -88,19 +88,19 @@ internal class StdContextData(scopeType: ScopeType?) {
      */
     fun applyLogLevelMap(map: LogLevelMap?) {
         map?.let {
-            StdContextDataProvider.hasLogLevelMap = true
+            TlsContextDataProvider.hasLogLevelMap = true
             logLevelMapRef.mergeFrom(it)
         }
     }
 }
 
-internal object CurrentStdContext {
+internal object CurrentTlsContext {
 
     /**
      * Contains a currently installed instance of logging context data
      * or `null`, if there is no logging context.
      */
-    private val holder: ThreadLocal<StdContextData> by lazy {
+    private val holder: ThreadLocal<TlsContextData> by lazy {
         ThreadLocal()
     }
 
@@ -111,7 +111,7 @@ internal object CurrentStdContext {
      * `get() = holder.get()` rather than just `= holder.get()` which means
      * setting the currently stored value (`null`) during instance construction.
      */
-    internal val data: StdContextData? get() = holder.get()
+    internal val data: TlsContextData? get() = holder.get()
 
     /**
      * Obtains the tags of the current context or [Tags.empty] if no
@@ -167,9 +167,9 @@ internal object CurrentStdContext {
         data?.let { ScopeList.lookup(it.scopes, type) }
 
     /**
-     * Installs the given [StdContextData] as current context data.
+     * Installs the given [TlsContextData] as current context data.
      */
-    fun attach(newData: StdContextData?) {
+    fun attach(newData: TlsContextData?) {
         holder.set(newData)
     }
 }
