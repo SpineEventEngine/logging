@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.dynamic.backend
+package io.spine.logging.backend.probe
 
 import io.spine.logging.flogger.backend.LoggerBackend
 import io.spine.logging.flogger.backend.BackendFactory

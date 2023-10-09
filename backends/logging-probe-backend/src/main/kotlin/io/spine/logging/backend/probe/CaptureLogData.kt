@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.dynamic.backend
+package io.spine.logging.backend.probe
 
 import io.spine.logging.flogger.backend.LogData
 
@@ -49,7 +49,7 @@ import io.spine.logging.flogger.backend.LogData
  *
  * ### Implementation details
  *
- * `logging-fake-backend` configures [DynamicBackendFactory] for the API.
+ * `logging-probe-backend` configures [DynamicBackendFactory] for the API.
  * And until [captureLogData] is called, this factory delegates backend
  * creation to the default backend factory.
  *
@@ -64,8 +64,8 @@ import io.spine.logging.flogger.backend.LogData
  * The method is inlined to preserve the original log site.
  */
 public inline fun captureLogData(action: () -> Unit): List<LogData> {
-    val fakeBackends = MemoizingLoggerBackendFactory()
-    val memoizingFactory = MemoizingBackendFactory(fakeBackends)
+    val memoizingBackends = MemoizingLoggerBackendFactory()
+    val memoizingFactory = MemoizingBackendFactory(memoizingBackends)
 
     // Runs the given action with a substituted backend factory.
     withBackendFactory(memoizingFactory, action)

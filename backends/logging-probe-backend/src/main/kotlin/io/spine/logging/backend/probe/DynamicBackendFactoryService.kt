@@ -24,28 +24,42 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.dynamic.backend
+package io.spine.logging.backend.probe
 
+import com.google.auto.service.AutoService
 import io.spine.logging.flogger.backend.LoggerBackend
+import io.spine.logging.flogger.backend.BackendFactory
 
 /**
- * A backend factory that stores the created instances of [LoggerBackend].
+ * Adapts [DynamicBackendFactory] to be used with Java's
+ * [ServiceLoader][java.util.ServiceLoader].
  *
- * Actual backend creation is performed by the given [delegate].
+ * Each service should have a public no-args constructor to be used
+ * by the loader. Which is not a case for object declarations, as they
+ * don't have any constructors at all.
  *
- * The type is public because it is used in a public inline method.
+ * Until [KT-25892](https://youtrack.jetbrains.com/issue/KT-25892/Allow-objects-to-be-loaded-via-ServiceLoader-or-similar-API)
+ * is implemented, we need an adapter for object services.
+ *
+ * An explicit delegation can't be applied here because [BackendFactory] is a class.
+ * Thus, the following snippet fails to compile:
+ *
+ * ```
+ * @AutoService(BackendFactory::class)
+ * class DynamicBackendFactoryService : BackendFactory() by DynamicBackendFactory
+ * ```
  */
-public class MemoizingBackendFactory<out T : LoggerBackend>(
-    private val delegate: TypedBackendFactory<T>
-) : TypedBackendFactory<T> {
-
-    private val _createdBackends = mutableListOf<T>()
+@AutoService(BackendFactory::class)
+public class DynamicBackendFactoryService : BackendFactory() {
 
     /**
-     * Returns backend instances that were created by this factory.
+     * Delegates actual backend creation to [DynamicBackendFactory] object.
      */
-    public val createdBackends: List<T> get() = _createdBackends
+    override fun create(loggingClassName: String): LoggerBackend =
+        DynamicBackendFactory.create(loggingClassName)
 
-    override fun create(loggingClassName: String): T =
-        delegate.create(loggingClassName).also { _createdBackends.add(it) }
+    /**
+     * Returns a fully-qualified name of this class.
+     */
+    override fun toString(): String = javaClass.name
 }

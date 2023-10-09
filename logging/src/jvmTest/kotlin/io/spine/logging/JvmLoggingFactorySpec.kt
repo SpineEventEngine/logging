@@ -32,7 +32,7 @@ import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 import io.spine.logging.LoggingFactory.loggingDomainOf
-import io.spine.logging.dynamic.backend.captureLogData
+import io.spine.logging.backend.probe.captureLogData
 import io.spine.logging.given.EnclosingClass
 import io.spine.logging.given.EnclosingClassA
 import io.spine.logging.given.EnclosingClassB

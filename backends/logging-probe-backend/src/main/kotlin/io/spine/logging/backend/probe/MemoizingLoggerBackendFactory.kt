@@ -24,4 +24,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-val versionToPublish: String by extra("2.0.0-SNAPSHOT.229")
+package io.spine.logging.backend.probe
+
+import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
+
+/**
+ * A factory of [MemoizingLoggerBackend].
+ *
+ * The produced backends just remember the logged data.
+ *
+ * The type is public because it is used in a public inline method.
+ */
+public class MemoizingLoggerBackendFactory : TypedBackendFactory<MemoizingLoggerBackend> {
+
+    override fun create(loggingClassName: String): MemoizingLoggerBackend =
+        MemoizingLoggerBackend(loggingClassName)
+}

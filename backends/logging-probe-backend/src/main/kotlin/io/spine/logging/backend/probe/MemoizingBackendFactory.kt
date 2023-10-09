@@ -24,19 +24,28 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.dynamic.backend
+package io.spine.logging.backend.probe
 
-import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
+import io.spine.logging.flogger.backend.LoggerBackend
 
 /**
- * A factory of [MemoizingLoggerBackend].
+ * A backend factory that stores the created instances of [LoggerBackend].
  *
- * The produced backends just remember the logged data.
+ * Actual backend creation is performed by the given [delegate].
  *
  * The type is public because it is used in a public inline method.
  */
-public class MemoizingLoggerBackendFactory : TypedBackendFactory<MemoizingLoggerBackend> {
+public class MemoizingBackendFactory<out T : LoggerBackend>(
+    private val delegate: TypedBackendFactory<T>
+) : TypedBackendFactory<T> {
 
-    override fun create(loggingClassName: String): MemoizingLoggerBackend =
-        MemoizingLoggerBackend(loggingClassName)
+    private val _createdBackends = mutableListOf<T>()
+
+    /**
+     * Returns backend instances that were created by this factory.
+     */
+    public val createdBackends: List<T> get() = _createdBackends
+
+    override fun create(loggingClassName: String): T =
+        delegate.create(loggingClassName).also { _createdBackends.add(it) }
 }
