@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test
 internal class StdContextDataProviderSpec {
 
     @Test
-    fun `load as a service`() {
+    fun `load as a Java service`() {
         val services = ServiceLoader.load(ContextDataProvider::class.java)
         services shouldHaveSize 1
         (services.toList()[0] is StdContextDataProvider) shouldBe true
