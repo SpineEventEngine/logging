@@ -3,7 +3,7 @@
 **Note:** This is a specific backend implementation that is designed 
 to be used in tests.
 
-Fake backend provides a backend factory that can switch the currently 
+Probe backend provides a backend factory that can switch the currently 
 used backend implementation in runtime. The logging facade doesn't provide 
 such functionality. Take a look on `DynamicBackendFactory` for details.
 
@@ -19,11 +19,14 @@ during the execution of the passed `action`.
 Usage example:
 
 ```kotlin
+import io.spine.logging.backend.probe.captureLogData
+
 val message = "logged text"
 val logged = captureLogData {
     val logger = LoggingFactory.forEnclosingClass()
     logger.atInfo().log { message }
 }
+
 check(logged[0].literalArgument == message)
 ```
 
