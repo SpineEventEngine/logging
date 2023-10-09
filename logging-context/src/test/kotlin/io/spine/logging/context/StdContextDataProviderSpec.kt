@@ -43,8 +43,8 @@ internal class StdContextDataProviderSpec : AbstractContextDataProviderSpec() {
 
     @Test
     fun `load as a Java service`() {
-        val services = ServiceLoader.load(ContextDataProvider::class.java)
-        val optionalContextDataProvider = services.findFirst()
+        val contextDataProviderLoader = ServiceLoader.load(ContextDataProvider::class.java)
+        val optionalContextDataProvider = contextDataProviderLoader.findFirst()
         optionalContextDataProvider.shouldBePresent()
 
         val contextDataProvider = optionalContextDataProvider.get()

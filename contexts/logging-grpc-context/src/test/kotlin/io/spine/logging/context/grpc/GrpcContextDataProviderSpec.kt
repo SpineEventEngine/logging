@@ -47,8 +47,8 @@ internal class GrpcContextDataProviderSpec : AbstractContextDataProviderSpec() {
 
     @Test
     fun `load as a Java service`() {
-        val serviceLoader = ServiceLoader.load(ContextDataProvider::class.java)
-        val optionalContextDataProvider = serviceLoader.findFirst()
+        val contextDataProviderLoader = ServiceLoader.load(ContextDataProvider::class.java)
+        val optionalContextDataProvider = contextDataProviderLoader.findFirst()
         optionalContextDataProvider.shouldBePresent()
 
         val contextDataProvider = optionalContextDataProvider.get()
