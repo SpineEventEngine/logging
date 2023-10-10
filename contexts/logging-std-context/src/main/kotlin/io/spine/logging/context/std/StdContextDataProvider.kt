@@ -84,6 +84,11 @@ private object StdScopedLoggingContext: ScopedLoggingContext() {
 
     override fun newContext(scopeType: ScopeType): Builder = BuilderImpl(scopeType)
 
+    override fun addTags(tags: Tags?): Boolean {
+        CurrentStdContext.data?.addTags(tags)
+        return true
+    }
+
     /**
      * A [ScopedLoggingContext.Builder] which creates a new [StdContextData]
      * and installs it.
