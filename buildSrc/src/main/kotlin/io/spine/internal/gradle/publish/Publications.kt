@@ -186,20 +186,18 @@ internal class StandardJavaPublicationHandler(
 }
 
 /**
- * A handler for custom publications, which are declared under the [publications]
- * section of a module.
+ * A handler for custom publications, which are declared under
+ * the [publications] section of a module.
  *
- * Such publications should be treated differently than [StandardJavaPublicationHandler],
- * which is <em>created</em> for a module. Instead, since the publications are already declared,
- * this class only [assigns maven coordinates][assignMavenCoordinates].
- *
- * A module which declares custom publications must be specified in
+ * A module, which declares custom publications must be specified in
  * the [SpinePublishing.modulesWithCustomPublishing] property.
+ * Such a module configures publications on its own.
  *
- * If a module with [publications] declared locally is not specified as one with custom publishing,
- * it may cause a name clash between an artifact produced by the [standard][MavenPublication]
- * publication, and custom ones. In order to have both standard and custom publications,
- * please specify custom artifact IDs or classifiers for each custom publication.
+ * If a module with [publications] declared locally is not specified as one
+ * with custom publishing, it may cause a name clash between an artifact
+ * produced by the [standard][MavenPublication] publication, and custom ones.
+ * To have both standard and custom publications, please specify custom artifact
+ * IDs or classifiers for each custom publication.
  */
 internal class CustomPublicationHandler(project: Project, destinations: Set<Repository>) :
     PublicationHandler(project, destinations) {
