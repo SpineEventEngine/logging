@@ -74,8 +74,8 @@ public class TlsContextDataProvider: ContextDataProvider() {
 }
 
 /**
- * A [ScopedLoggingContext] singleton, which creates contexts based
- * on [TlsContextData].
+ * A [ScopedLoggingContext] singleton, which creates [LoggingContextCloseable]
+ * based on [TlsContextData].
  */
 private object TlsScopedLoggingContext: ScopedLoggingContext() {
 

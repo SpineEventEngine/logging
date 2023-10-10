@@ -72,18 +72,22 @@ internal class TlsContextData(scopeType: ScopeType?) {
 
     /**
      * Adds tags to the current context data.
+     *
      * If `null` is passed, no action is taken.
      */
     fun addTags(tags: Tags?) = tagRef.mergeFrom(tags)
 
     /**
-     * Concatenates given metadata with the one held in this context data instance.
+     * Concatenates given metadata with the one held in this context
+     * data instance.
+     *
      * If `null` is passed, no action is taken.
      */
     fun addMetadata(metadata: ContextMetadata?) = metadataRef.mergeFrom(metadata)
 
     /**
-     * Merges the give map with the one held in this context data instance.
+     * Merges the given map with the one held in this context data instance.
+     *
      * If `null` is passed, no action is taken.
      */
     fun applyLogLevelMap(map: LogLevelMap?) {
@@ -94,11 +98,14 @@ internal class TlsContextData(scopeType: ScopeType?) {
     }
 }
 
+/**
+ * Holds the current context data in [ThreadLocal].
+ */
 internal object CurrentTlsContext {
 
     /**
-     * Contains a currently installed instance of logging context data
-     * or `null`, if there is no logging context.
+     * Contains a currently installed instance of context data or `null`,
+     * if no context is installed.
      */
     private val holder: ThreadLocal<TlsContextData> by lazy {
         ThreadLocal()
@@ -143,7 +150,7 @@ internal object CurrentTlsContext {
      * Tells if the logging should be forced for the logger with
      * the given name and the level.
      *
-     * If there is no context is installed always returns `false`.
+     * Returns `false` if no context is installed.
      */
     fun shouldForceLoggingFor(loggerName: String, level: Level): Boolean {
         data?.let {
@@ -167,7 +174,7 @@ internal object CurrentTlsContext {
         data?.let { ScopeList.lookup(it.scopes, type) }
 
     /**
-     * Installs the given [TlsContextData] as current context data.
+     * Installs the given [newData] as the current context data.
      */
     fun attach(newData: TlsContextData?) {
         holder.set(newData)
