@@ -38,11 +38,11 @@ import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.tasks.TaskContainer
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.api.tasks.bundling.Jar
+import org.gradle.kotlin.dsl.findByType
 import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.register
-import org.gradle.kotlin.dsl.the
 import org.gradle.kotlin.dsl.withType
 
 /**
@@ -58,10 +58,23 @@ internal val Project.publications: PublicationContainer
     get() = publishingExtension.publications
 
 /**
- * Obtains [SpinePublishing] extension from the root project.
+ * Obtains [SpinePublishing] extension from this [Project].
+ *
+ * If this [Project] doesn't have one, it returns [SpinePublishing]
+ * declared in the root project.
  */
 internal val Project.spinePublishing: SpinePublishing
-    get() = this.rootProject.the<SpinePublishing>()
+    get() {
+        val local = this.extensions.findByType<SpinePublishing>()
+        if (local != null) {
+            return local
+        }
+        val fromRoot = this.rootProject.extensions.findByType<SpinePublishing>()
+        if (fromRoot != null) {
+            return fromRoot
+        }
+        throw IllegalStateException("`SpinePublishing` is not found in `${project.name}`.")
+    }
 
 /**
  * Tells if this project has custom publishing.

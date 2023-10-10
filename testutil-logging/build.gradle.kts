@@ -24,8 +24,20 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import io.spine.internal.gradle.publish.SpinePublishing
+import io.spine.internal.gradle.publish.spinePublishing
+
 plugins {
     `jvm-module`
 }
 
 group = "io.spine.tools"
+
+spinePublishing {
+    val rootSpinePublishing = rootProject.extensions.getByType<SpinePublishing>()
+    artifactPrefix = "spine-"
+    destinations = rootSpinePublishing.destinations
+    dokkaJar {
+        java = false
+    }
+}
