@@ -205,8 +205,6 @@ internal class CustomPublicationHandler(project: Project, destinations: Set<Repo
     PublicationHandler(project, destinations) {
 
     override fun handlePublications() {
-        project.publications.forEach {
-            (it as MavenPublication).assignMavenCoordinates()
-        }
+        // No op.
     }
 }

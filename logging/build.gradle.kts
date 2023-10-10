@@ -145,11 +145,13 @@ koverReport {
 }
 
 publishing.publications {
-    named<MavenPublication>("jvm") {
-        artifact(project.javadocJar())
-    }
     named<MavenPublication>("kotlinMultiplatform") {
+        artifactId = "spine-logging"
         artifact(project.dokkaKotlinJar())
+    }
+    named<MavenPublication>("jvm") {
+        artifactId = "spine-logging-jvm"
+        artifact(project.javadocJar())
     }
 }
 
