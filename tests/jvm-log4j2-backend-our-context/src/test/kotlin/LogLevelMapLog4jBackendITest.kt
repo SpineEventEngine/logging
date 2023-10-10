@@ -29,7 +29,7 @@ import io.kotest.matchers.shouldBe
 import io.spine.logging.Level
 import io.spine.logging.backend.log4j2.Log4j2BackendFactory
 import io.spine.logging.context.BaseLogLevelMapTest
-import io.spine.logging.context.tls.TlsContextDataProvider
+import io.spine.logging.context.std.StdContextDataProvider
 import io.spine.testing.logging.Recorder
 import org.junit.jupiter.api.Test
 
@@ -53,8 +53,8 @@ internal class LogLevelMapLog4jBackendITest: BaseLogLevelMapTest() {
     }
 
     @Test
-    fun `should use 'TlsContextDataProvider'`() {
+    fun `should use 'StdContextDataProvider'`() {
         val provider = Platform.getContextDataProvider()
-        provider::class shouldBe TlsContextDataProvider::class
+        provider::class shouldBe StdContextDataProvider::class
     }
 }

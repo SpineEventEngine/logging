@@ -24,30 +24,47 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.context.tls
+package io.spine.logging.context.std
 
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.optional.shouldBePresent
-import io.kotest.matchers.types.shouldBeInstanceOf
-import io.spine.logging.flogger.context.AbstractContextDataProviderSpec
-import io.spine.logging.flogger.context.ContextDataProvider
-import java.util.*
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
+import java.util.concurrent.atomic.AtomicReference
+import java.util.function.BinaryOperator
 
-@DisplayName("`TlsContextDataProvider` should")
-internal class TlsContextDataProviderSpec : AbstractContextDataProviderSpec() {
+/**
+ * A reference to a value kept as [AtomicReference] which provides
+ * a [merging][mergeFrom] operation.
+ */
+internal abstract class ScopedReference<T>(initialValue: T?) {
 
-    override val implementationUnderTest: ContextDataProvider = TlsContextDataProvider()
+    private val value: AtomicReference<T?>
 
-    @Test
-    fun `load as a Java service`() {
-        val contextDataProviderLoader = ServiceLoader.load(ContextDataProvider::class.java)
-        val optionalContextDataProvider = contextDataProviderLoader.findFirst()
-        optionalContextDataProvider.shouldBePresent()
-
-        val contextDataProvider = optionalContextDataProvider.get()
-        contextDataProvider.shouldNotBeNull()
-        contextDataProvider.shouldBeInstanceOf<TlsContextDataProvider>()
+    init {
+        value = AtomicReference(initialValue)
     }
+
+    /**
+     * Obtains the current value.
+     */
+    fun get(): T? = value.get()
+
+    /**
+     * Merges the given [delta] into the referenced value.
+     *
+     * If the current value is `null` the [delta] becomes the new value.
+     * Otherwise, it is [merged][merge] with the current one.
+     */
+    fun mergeFrom(delta: T?) {
+        if (delta != null) {
+            val operator = BinaryOperator<T?> { t, u ->
+                t?.let { merge(it, u) } ?: u
+            }
+            value.accumulateAndGet(delta, operator)
+        }
+    }
+
+    /**
+     * Merges the [current] value with the [delta].
+     *
+     * The implementing functions must have no side effects.
+     */
+    abstract fun merge(current: T, delta: T): T
 }

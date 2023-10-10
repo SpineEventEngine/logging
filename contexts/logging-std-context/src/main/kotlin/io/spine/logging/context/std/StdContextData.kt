@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.context.tls
+package io.spine.logging.context.std
 
 import io.spine.logging.flogger.LoggingScope
 import io.spine.logging.flogger.context.ContextMetadata
@@ -46,7 +46,7 @@ import io.spine.logging.context.LogLevelMap
  *        context data. If there is no current logging context, it initializes
  *        the instance with `null`s.
  */
-internal class TlsContextData(scopeType: ScopeType?) {
+internal class StdContextData(scopeType: ScopeType?) {
 
     internal val scopes: ScopeList?
     internal val tagRef: ScopedReference<Tags>
@@ -54,7 +54,7 @@ internal class TlsContextData(scopeType: ScopeType?) {
     internal val logLevelMapRef: ScopedReference<LogLevelMap>
 
     init {
-        val parent = CurrentTlsContext.data
+        val parent = CurrentStdContext.data
         scopes = ScopeList.addScope(parent?.scopes, scopeType)
         tagRef = object : ScopedReference<Tags>(parent?.tagRef?.get()) {
             override fun merge(current: Tags, delta: Tags): Tags =
@@ -92,7 +92,7 @@ internal class TlsContextData(scopeType: ScopeType?) {
      */
     fun applyLogLevelMap(map: LogLevelMap?) {
         map?.let {
-            TlsContextDataProvider.hasLogLevelMap = true
+            StdContextDataProvider.hasLogLevelMap = true
             logLevelMapRef.mergeFrom(it)
         }
     }
@@ -101,13 +101,13 @@ internal class TlsContextData(scopeType: ScopeType?) {
 /**
  * Holds the current context data in [ThreadLocal].
  */
-internal object CurrentTlsContext {
+internal object CurrentStdContext {
 
     /**
      * Contains a currently installed instance of context data or `null`,
      * if no context is installed.
      */
-    private val holder: ThreadLocal<TlsContextData> by lazy {
+    private val holder: ThreadLocal<StdContextData> by lazy {
         ThreadLocal()
     }
 
@@ -118,7 +118,7 @@ internal object CurrentTlsContext {
      * `get() = holder.get()` rather than just `= holder.get()` which means
      * setting the currently stored value (`null`) during instance construction.
      */
-    internal val data: TlsContextData? get() = holder.get()
+    internal val data: StdContextData? get() = holder.get()
 
     /**
      * Obtains the tags of the current context or [Tags.empty] if no
@@ -176,7 +176,7 @@ internal object CurrentTlsContext {
     /**
      * Installs the given [newData] as the current context data.
      */
-    fun attach(newData: TlsContextData?) {
+    fun attach(newData: StdContextData?) {
         holder.set(newData)
     }
 }
