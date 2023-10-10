@@ -195,7 +195,7 @@ If your project does not use gRPC, use the following dependency:
 ```kotlin
 dependencies {
     implementation("io.spine:spine-logging:$version")
-    runtimeOnly("io.spine:spine-logging-context:$version")
+    runtimeOnly("io.spine:spine-logging-tls-context:$version")
 }
 ```
 
