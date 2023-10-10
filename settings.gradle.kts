@@ -55,11 +55,11 @@ includePlatform(
 
 includeTest(
     "fixtures",
-    "jvm-our-backend-our-context",
-    "jvm-our-backend-grpc-context",
-    "jvm-log4j2-backend-our-context",
-    "jvm-slf4j-jdk14-backend-our-context",
-    "jvm-slf4j-reload4j-backend-our-context",
+    "jvm-jul-backend-std-context",
+    "jvm-jul-backend-grpc-context",
+    "jvm-log4j2-backend-std-context",
+    "jvm-slf4j-jdk14-backend-std-context",
+    "jvm-slf4j-reload4j-backend-std-context",
     "smoke-test",
 )
 
