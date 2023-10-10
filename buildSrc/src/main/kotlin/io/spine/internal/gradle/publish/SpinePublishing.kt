@@ -153,6 +153,21 @@ open class SpinePublishing(private val project: Project) {
     var modules: Set<String> = emptySet()
 
     /**
+     * Controls whether the published module needs standard publications.
+     *
+     * If `true`, the module should configure publications on its own.
+     *
+     * This property is analogue for [modulesWithCustomPublishing] for projects,
+     * for which [spinePublishing] is configured individually.
+     *
+     * Setting of this property and having a non-empty [modules] will lead
+     * to an exception.
+     *
+     * Default value is `false`.
+     */
+    var customPublishing = false
+
+    /**
      * Set of modules that have custom publications and do not need standard ones.
      *
      * Empty by default.
@@ -352,7 +367,7 @@ open class SpinePublishing(private val project: Project) {
      * we configure publishing for it.
      */
     private fun Project.setUpPublishing(jarFlags: JarFlags) {
-        val customPublishing = modulesWithCustomPublishing.contains(name)
+        val customPublishing = modulesWithCustomPublishing.contains(name) || customPublishing
         val handler = if (customPublishing) {
             CustomPublicationHandler(project, destinations)
         } else {
