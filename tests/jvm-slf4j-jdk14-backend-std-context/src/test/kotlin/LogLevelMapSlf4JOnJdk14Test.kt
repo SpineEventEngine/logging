@@ -31,15 +31,18 @@ import io.spine.testing.logging.Recorder
 
 /**
  * This is a non-abstract integration test of [LogLevelMap][io.spine.logging.context.LogLevelMap]
- * executed in the project with Slf4J Flogger backend and `spine-logging-std-context`.
- * Slf4J uses JDK 1.4 logging.
+ * executed in the project with SLF4J backend and `spine-logging-std-context`.
+ * SLF4J uses JDK 1.4 logging (`java.util.logging`, JUL).
  *
  * Please see `build.gradle.kts` of this module for the details.
  */
-@Ignored // Until recording for Slf4J is implemented.
+@Ignored // Until recording for SLF4J is implemented.
+@Suppress("unused") // Until SLF4J backend is added.
 internal class LogLevelMapSlf4JOnJdk14Test: BaseLogLevelMapTest() {
 
+    // TODO:2023-10-10:yevhenii.nadtochii: Make this test work when SLF4J backend is added.
+    //  See issue: https://github.com/SpineEventEngine/logging/issues/77
     override fun createRecorder(loggerName: String, minLevel: Level): Recorder {
-        TODO("Not yet implemented")
+        throw IllegalStateException("Not implemented.")
     }
 }
