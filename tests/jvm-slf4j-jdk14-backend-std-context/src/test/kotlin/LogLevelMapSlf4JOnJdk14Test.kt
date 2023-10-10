@@ -43,6 +43,6 @@ internal class LogLevelMapSlf4JOnJdk14Test: BaseLogLevelMapTest() {
     // TODO:2023-10-10:yevhenii.nadtochii: Make this test work when SLF4J backend is added.
     //  See issue: https://github.com/SpineEventEngine/logging/issues/77
     override fun createRecorder(loggerName: String, minLevel: Level): Recorder {
-        throw IllegalStateException("Not implemented.")
+        error("Not implemented.")
     }
 }

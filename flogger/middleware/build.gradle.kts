@@ -32,12 +32,7 @@ plugins {
 }
 
 dependencies {
-    implementation(
-        project(
-            ":flogger-platform-generator",
-            configuration = "generatedPlatformProvider"
-        )
-    )
+    implementation(project(":platform-generator", configuration = "generatedPlatformProvider"))
     testImplementation(project(":testutil-logging"))
     testRuntimeOnly(project(":jvm-default-platform"))
 }

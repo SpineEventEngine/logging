@@ -11,13 +11,15 @@ However, a user is not meant to use two logging libraries simultaneously.
 Further, Flogger sources should be migrated to Kotlin and merged with
 our own code.
 
-### API
+### Middleware
 
 Contains Flogger Logging API along with classes that handle log statements 
 before they are passed to a backend. 
 
 Handling of a log statement includes controlling of rate limiting, attachment 
 of context and scope metadata, tracking log level restrictions, etc.
+
+From the standpoint of `spine-logging`, this module is middleware for JVM target.
 
 ### Platform Generator
 

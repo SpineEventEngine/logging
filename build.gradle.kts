@@ -52,8 +52,8 @@ spinePublishing {
         "std-context",
         "grpc-context",
         "smoke-test",
-        "flogger-api",
-        "flogger-platform-generator",
+        "middleware",
+        "platform-generator",
         "jvm-default-platform",
     )
     modulesWithCustomPublishing = setOf("logging")

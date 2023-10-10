@@ -64,8 +64,8 @@ includeTest(
 )
 
 includeFlogger(
-    "flogger-api",
-    "flogger-platform-generator",
+    "middleware",
+    "platform-generator",
 )
 
 fun includeBackend(vararg modules: String) = includeTo("backends", modules)
