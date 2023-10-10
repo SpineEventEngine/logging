@@ -56,7 +56,6 @@ spinePublishing {
         "platform-generator",
         "jvm-default-platform",
     )
-    modulesWithCustomPublishing = setOf("logging")
     destinations = with(PublishingRepos) {
         setOf(
             cloudRepo,
