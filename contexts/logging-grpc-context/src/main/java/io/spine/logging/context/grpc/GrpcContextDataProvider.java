@@ -39,7 +39,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 /**
  * A {@link io.grpc.Context gRPC}-based implementation of {@link ContextDataProvider}.
  *
- * <p>When using {@code DefaultPlatform}, this factory will automatically
+ * <p>When using {@code DefaultPlatform}, this provider will automatically
  * be used if it is included on the classpath, and no other implementation
  * of {@code ContextDataProvider} other than the default implementation is.
  *

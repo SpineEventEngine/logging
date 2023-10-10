@@ -38,5 +38,5 @@ dependencies {
         exclude(group = "com.google.flogger")
     }
     testRuntimeOnly(Slf4J.reload4j)
-    testRuntimeOnly(project(":logging-context"))
+    testRuntimeOnly(project(":logging-std-context"))
 }

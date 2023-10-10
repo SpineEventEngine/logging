@@ -35,7 +35,6 @@ rootProject.name = "spine-logging"
 
 include(
     "logging",
-    "logging-context",
     "testutil-logging",
 )
 
@@ -47,6 +46,7 @@ includeBackend(
 
 includeContext(
     "logging-grpc-context",
+    "logging-std-context",
 )
 
 includePlatform(

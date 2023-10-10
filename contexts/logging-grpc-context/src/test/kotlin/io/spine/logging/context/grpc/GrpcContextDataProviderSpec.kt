@@ -43,13 +43,12 @@ import org.junit.jupiter.api.Test
 @DisplayName("`GrpcContextDataProvider` should")
 internal class GrpcContextDataProviderSpec : AbstractContextDataProviderSpec() {
 
-    override val implementationUnderTest: ContextDataProvider =
-        GrpcContextDataProvider.getInstance()
+    override val implementationUnderTest: ContextDataProvider = GrpcContextDataProvider()
 
     @Test
-    fun `be able to be loaded as a Java service`() {
-        val serviceLoader = ServiceLoader.load(ContextDataProvider::class.java)
-        val optionalContextDataProvider = serviceLoader.findFirst()
+    fun `load as a Java service`() {
+        val contextDataProviderLoader = ServiceLoader.load(ContextDataProvider::class.java)
+        val optionalContextDataProvider = contextDataProviderLoader.findFirst()
         optionalContextDataProvider.shouldBePresent()
 
         val contextDataProvider = optionalContextDataProvider.get()

@@ -29,13 +29,13 @@ import io.kotest.matchers.shouldBe
 import io.spine.logging.Level
 import io.spine.logging.backend.log4j2.Log4j2BackendFactory
 import io.spine.logging.context.BaseLogLevelMapTest
-import io.spine.logging.context.system.StdContextDataProvider
+import io.spine.logging.context.std.StdContextDataProvider
 import io.spine.testing.logging.Recorder
 import org.junit.jupiter.api.Test
 
 /**
  * This is a non-abstract integration test of [LogLevelMap][io.spine.logging.context.LogLevelMap]
- * executed in the project in which logging backend is based on Log4J by Flogger.
+ * executed in the project in which logging backend is based on Log4j2.
  *
  * Please see `build.gradle.kts` of this module for the details.
  */

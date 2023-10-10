@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.context.system
+package io.spine.logging.context.std
 
 import java.util.concurrent.atomic.AtomicReference
 import java.util.function.BinaryOperator

@@ -118,8 +118,7 @@ abstract class AbstractContextDataProviderSpec {
         callbackWasExecuted = true
     }
 
-    @Nested
-    inner class
+    @Nested inner class
     `create a new context` {
 
         @Test
@@ -335,19 +334,18 @@ abstract class AbstractContextDataProviderSpec {
         val logSiteTags = Tags.of("foo", "bar")
         val scopeTags = Tags.of("foo", "baz")
 
-        var canAddTags: Boolean
         ScopedLoggingContexts.newContext()
             .install()
             .use {
-                canAddTags = ScopedLoggingContexts.addTags(scopeTags)
+                val canAddTags = ScopedLoggingContexts.addTags(scopeTags)
+                canAddTags shouldBe true
                 logger.atInfo()
                     .with(Key.TAGS, logSiteTags)
                     .log("With tags")
             }
 
         // Merged tag values are ordered alphabetically.
-        val merged = logSiteTags.merge(scopeTags)
-        val expected = if (canAddTags) merged else logSiteTags
+        val expected = logSiteTags.merge(scopeTags)
         backend.logged shouldHaveSize 1
         backend.lastLogged.metadata.shouldUniquelyContain(Key.TAGS, expected)
     }

@@ -24,85 +24,80 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.context.system
+package io.spine.logging.context.std
 
+import io.spine.logging.context.toMap
+import io.spine.logging.flogger.FloggerMetadataKey
 import io.spine.logging.flogger.LoggingScope
 import io.spine.logging.flogger.backend.Metadata
 import io.spine.logging.flogger.context.ContextDataProvider
 import io.spine.logging.flogger.context.ScopeType
 import io.spine.logging.flogger.context.ScopedLoggingContext
+import io.spine.logging.flogger.context.ScopedLoggingContext.LoggingContextCloseable
 import io.spine.logging.flogger.context.Tags
-import io.spine.logging.context.system.StdContextData.Companion.shouldForceLoggingFor
-import io.spine.logging.context.toMap
 import io.spine.logging.toLevel
-import java.util.logging.Level
+import java.util.logging.Level as JLevel
 
 /**
- * A [ContextDataProvider] providing basic support of [ScopedLoggingContext]
- * similar to that provided by gRPC logging context from Flogger.
+ * A basic implementation of [ContextDataProvider].
  *
- * Loaded via [ServiceLoader][java.util.ServiceLoader] by Flogger runtime.
+ * Loaded via [ServiceLoader][java.util.ServiceLoader] by the logging facade
+ * in runtime.
  */
 public class StdContextDataProvider: ContextDataProvider() {
 
-    @Volatile
-    private var hasLogLevelMap: Boolean = false
+    internal companion object {
+        @Volatile
+        internal var hasLogLevelMap: Boolean = false
+    }
 
-    override fun getContextApiSingleton(): ScopedLoggingContext = serving(this)
+    override fun getContextApiSingleton(): ScopedLoggingContext = StdScopedLoggingContext
 
     override fun shouldForceLogging(
         loggerName: String,
-        level: Level,
+        jLevel: JLevel,
         isEnabledByLevel: Boolean
     ): Boolean {
-        return hasLogLevelMap && shouldForceLoggingFor(loggerName, level.toLevel())
-    }
 
-    override fun getTags(): Tags = StdContextData.tags()
-
-    override fun getMetadata(): Metadata = StdContextData.metadata()
-
-    override fun getScope(type: ScopeType): LoggingScope? = StdContextData.lookupScopeFor(type)
-
-    /**
-     * Sets the flag to enable checking for a log level map after one
-     * is set for the first time.
-     */
-    internal fun setLogLevelMapFlag() {
-        hasLogLevelMap = true
-    }
-
-    private companion object {
-        private var context: StdScopedLoggingContext? = null
-
-        fun serving(provider: StdContextDataProvider): ScopedLoggingContext {
-            if (context == null) {
-                context = StdScopedLoggingContext(provider)
-            }
-            return context!!
+        if (!hasLogLevelMap) {
+            return false
         }
+
+        val level = jLevel.toLevel()
+        return CurrentStdContext.shouldForceLoggingFor(loggerName, level)
     }
+
+    override fun getTags(): Tags = CurrentStdContext.tags()
+
+    override fun getMetadata(): Metadata = CurrentStdContext.metadata()
+
+    override fun getScope(type: ScopeType): LoggingScope? = CurrentStdContext.lookupScopeFor(type)
 }
 
 /**
- * A [ScopedLoggingContext] which creates contexts based on [StdContextData].
+ * A [ScopedLoggingContext] singleton, which creates [LoggingContextCloseable]
+ * based on [StdContextData].
  */
-private class StdScopedLoggingContext(
-    private val provider: StdContextDataProvider
-) : ScopedLoggingContext() {
+private object StdScopedLoggingContext: ScopedLoggingContext() {
 
     override fun newContext(): Builder = BuilderImpl(null)
 
     override fun newContext(scopeType: ScopeType): Builder = BuilderImpl(scopeType)
 
+    override fun addTags(tags: Tags?): Boolean {
+        CurrentStdContext.data?.addTags(tags)
+        return true
+    }
+
     /**
-     * A [ScopedLoggingContext.Builder] which creates a new [StdContextData] and
-     * installs it.
+     * A [ScopedLoggingContext.Builder] which creates a new [StdContextData]
+     * and installs it.
      */
-    inner class BuilderImpl(private val scopeType: ScopeType?) : Builder() {
+    class BuilderImpl(private val scopeType: ScopeType?) : Builder() {
 
         override fun install(): LoggingContextCloseable {
-            val newContextData = StdContextData(scopeType, provider).apply {
+            val newContextData = StdContextData(scopeType)
+            newContextData.apply {
                 addTags(tags)
                 addMetadata(metadata)
                 applyLogLevelMap(logLevelMap.toMap())
@@ -111,8 +106,9 @@ private class StdScopedLoggingContext(
         }
 
         private fun install(newData: StdContextData): LoggingContextCloseable {
-            val prev = newData.attach()
-            return LoggingContextCloseable { newData.detach(prev) }
+            val previousData = CurrentStdContext.data
+            CurrentStdContext.attach(newData)
+            return LoggingContextCloseable { CurrentStdContext.attach(previousData) }
         }
     }
 }

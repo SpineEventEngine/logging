@@ -31,7 +31,7 @@ import io.spine.testing.logging.Recorder
 
 /**
  * This is a non-abstract integration test of [LogLevelMap][io.spine.logging.context.LogLevelMap]
- * executed in the project with Slf4J Flogger backend and `spine-logging-context`.
+ * executed in the project with Slf4J Flogger backend and `spine-logging-std-context`.
  * Slf4J uses JDK 1.4 logging.
  *
  * Please see `build.gradle.kts` of this module for the details.

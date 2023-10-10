@@ -86,8 +86,8 @@ public final class ScopedLoggingContexts {
    *   <li>Call or wrap a new context with metadata added to it.
    *   <li>{@link ScopedLoggingContext.Builder#install install()} a new context and close it when
    *       you it exits (e.g. if you are using callbacks to listen to state changes in a task).
-   *       However it is vital that the returned {@link ScopedLoggingContext.LogContextCloseable} is
-   *       always closed.
+   *       However it is vital that the returned {@link ScopedLoggingContext.LoggingContextCloseable}
+   *       is always closed.
    *   <li>Call this method and check that it succeeded (e.g. logging a warning if it fails).
    * </ol>
    *
@@ -118,8 +118,8 @@ public final class ScopedLoggingContexts {
    *   <li>Call or wrap a new context with metadata added to it.
    *   <li>{@link ScopedLoggingContext.Builder#install install()} a new context and close it when
    *       you it exits (e.g. if you are using callbacks to listen to state changes in a task).
-   *       However it is vital that the returned {@link ScopedLoggingContext.LogContextCloseable} is
-   *       always closed.
+   *       However it is vital that the returned {@link ScopedLoggingContext.LoggingContextCloseable}
+   *       is always closed.
    *   <li>Call this method and check that it succeeded (e.g. logging a warning if it fails).
    * </ol>
    *
@@ -144,8 +144,8 @@ public final class ScopedLoggingContexts {
    *   <li>Call or wrap a new context with metadata added to it.
    *   <li>{@link ScopedLoggingContext.Builder#install install()} a new context and close it when
    *       you it exits (e.g. if you are using callbacks to listen to state changes in a task).
-   *       However it is vital that the returned {@link ScopedLoggingContext.LogContextCloseable} is
-   *       always closed.
+   *       However it is vital that the returned {@link ScopedLoggingContext.LoggingContextCloseable}
+   *       is always closed.
    *   <li>Call this method and check that it succeeded (e.g. logging a warning if it fails).
    * </ol>
    *

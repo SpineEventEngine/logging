@@ -53,5 +53,5 @@ dependencies {
      * the actually loaded backend and context match the test expectations.
      */
     testImplementation(project(":logging-log4j2-backend"))
-    testImplementation(project(":logging-context"))
+    testImplementation(project(":logging-std-context"))
 }

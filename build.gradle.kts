@@ -48,7 +48,7 @@ spinePublishing {
     modules = setOf(
         "logging-log4j2-backend",
         "logging-jul-backend",
-        "logging-context",
+        "logging-std-context",
         "logging-grpc-context",
         "logging-smoke-test",
         "testutil-logging",
