@@ -33,10 +33,11 @@ plugins {
 
 group = "io.spine.tools"
 
+// This module configures `spinePublishing` on its own to change a prefix
+// specified by the root project.
 spinePublishing {
-    val rootSpinePublishing = rootProject.extensions.getByType<SpinePublishing>()
     artifactPrefix = "spine-"
-    destinations = rootSpinePublishing.destinations
+    destinations = rootProject.the<SpinePublishing>().destinations
     dokkaJar {
         java = false
     }
