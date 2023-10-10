@@ -39,14 +39,14 @@ include(
 )
 
 includeBackend(
-    "logging-log4j2-backend",
-    "logging-jul-backend",
-    "logging-probe-backend",
+    "log4j2-backend",
+    "jul-backend",
+    "probe-backend",
 )
 
 includeContext(
-    "logging-grpc-context",
-    "logging-std-context",
+    "grpc-context",
+    "std-context",
 )
 
 includePlatform(
@@ -60,7 +60,7 @@ includeTest(
     "jvm-log4j2-backend-our-context",
     "jvm-slf4j-jdk14-backend-our-context",
     "jvm-slf4j-reload4j-backend-our-context",
-    "logging-smoke-test",
+    "smoke-test",
 )
 
 includeFlogger(

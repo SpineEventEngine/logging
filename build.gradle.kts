@@ -45,13 +45,13 @@ plugins {
 apply(from = "$rootDir/version.gradle.kts")
 
 spinePublishing {
+    artifactPrefix = "spine-logging-"
     modules = setOf(
-        "logging-log4j2-backend",
-        "logging-jul-backend",
-        "logging-std-context",
-        "logging-grpc-context",
-        "logging-smoke-test",
-        "testutil-logging",
+        "log4j2-backend",
+        "jul-backend",
+        "std-context",
+        "grpc-context",
+        "smoke-test",
         "flogger-api",
         "flogger-platform-generator",
         "jvm-default-platform",

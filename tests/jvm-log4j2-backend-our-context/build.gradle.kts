@@ -52,6 +52,6 @@ dependencies {
      * So, we use “hard” classes from these dependencies to assert that
      * the actually loaded backend and context match the test expectations.
      */
-    testImplementation(project(":logging-log4j2-backend"))
-    testImplementation(project(":logging-std-context"))
+    testImplementation(project(":log4j2-backend"))
+    testImplementation(project(":std-context"))
 }

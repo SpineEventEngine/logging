@@ -24,21 +24,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.dependency.Log4j2
-import io.spine.internal.gradle.java.disableLinters
-import net.ltgt.gradle.errorprone.errorprone
+import io.spine.internal.dependency.AutoService
 
 plugins {
     `jvm-module`
+    `kotlin-kapt`
 }
 
 dependencies {
-    implementation(Log4j2.core)
     implementation(project(":flogger-api"))
-    testImplementation(project(":flogger-api", configuration = "testArtifacts"))
-    testRuntimeOnly(project(":logging-grpc-context"))
-}
-
-java {
-    disableLinters() // Due to non-migrated Flogger sources.
+    implementation(project(":flogger-api", configuration = "testArtifacts"))
+    implementation(project(":jul-backend"))
+    implementation(AutoService.annotations)
+    kapt(AutoService.processor)
 }
