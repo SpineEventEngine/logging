@@ -7,6 +7,6 @@ To use it, add `spine-logging-thread-local-context` to `runtimeOnly` configurati
 
 ```kotlin
 dependencies {
-    runtimeOnly("io.spine:spine-logging-thread-local-context:$version")
+    runtimeOnly("io.spine:spine-logging-tls-context:$version")
 }
 ```
