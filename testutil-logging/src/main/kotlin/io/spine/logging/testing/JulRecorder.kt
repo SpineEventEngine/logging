@@ -24,14 +24,42 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.testing.logging
+package io.spine.logging.testing
 
 import io.spine.logging.Level
-import io.spine.logging.toJavaLogging
 import io.spine.logging.toLevel
 import java.util.logging.Handler
 import java.util.logging.LogRecord
 import java.util.logging.Logger
+
+/**
+ * Obtains the logger responsible for publishing the logging records
+ * produced by the given [logger].
+ */
+private fun publishingLoggerOf(logger: Logger): Logger {
+    return if (!logger.useParentHandlers || logger.parent == null) {
+        logger
+    } else {
+        publishingLoggerOf(logger.parent)
+    }
+}
+
+/**
+ * Implements [LogData] by wrapping over [LogRecord].
+ */
+private data class JulLogData(private val record: LogRecord): LogData {
+    override val level: Level = record.level.toLevel()
+    override val message: String = record.message
+    override val throwable: Throwable? = record.thrown
+    override fun equals(other: Any?): Boolean {
+        return if (other is JulLogData) {
+            record == other.record
+        } else {
+            false
+        }
+    }
+    override fun hashCode(): Int = record.hashCode()
+}
 
 /**
  * Intercepts logging records of the logger with the given name.
@@ -88,33 +116,4 @@ internal class JulRecorder(loggerName: String, minLevel: Level): Recorder(minLev
         override fun flush() = Unit
         override fun close() = clear()
     }
-}
-
-/**
- * Obtains the logger responsible for publishing the logging records
- * produced by the given [logger].
- */
-private fun publishingLoggerOf(logger: Logger): Logger {
-    return if (!logger.useParentHandlers || logger.parent == null) {
-        logger
-    } else {
-        publishingLoggerOf(logger.parent)
-    }
-}
-
-/**
- * Implements [LogData] by wrapping over [LogRecord].
- */
-private data class JulLogData(private val record: LogRecord): LogData {
-    override val level: Level = record.level.toLevel()
-    override val message: String = record.message
-    override val throwable: Throwable? = record.thrown
-    override fun equals(other: Any?): Boolean {
-        return if (other is JulLogData) {
-            record == other.record
-        } else {
-            false
-        }
-    }
-    override fun hashCode(): Int = record.hashCode()
 }
