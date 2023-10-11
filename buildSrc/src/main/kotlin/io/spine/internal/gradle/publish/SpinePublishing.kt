@@ -156,8 +156,9 @@ open class SpinePublishing(private val project: Project) {
      * Controls whether the published module needs standard publications.
      *
      * If `true`, the module should configure publications on its own.
+     * Otherwise, the extension will configure standard [ones][StandardJavaPublicationHandler].
      *
-     * This property is analogue for [modulesWithCustomPublishing] for projects,
+     * This property is analogue of [modulesWithCustomPublishing] for projects,
      * for which [spinePublishing] is configured individually.
      *
      * Setting of this property and having a non-empty [modules] will lead
