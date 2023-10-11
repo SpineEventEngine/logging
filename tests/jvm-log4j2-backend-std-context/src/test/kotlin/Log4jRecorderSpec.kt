@@ -30,12 +30,14 @@ import io.kotest.matchers.shouldBe
 import io.spine.logging.Level.Companion.INFO
 import io.spine.logging.Level.Companion.WARNING
 import io.spine.logging.compareTo
+import io.spine.logging.testing.toLevel
+import io.spine.logging.testing.toLog4j2
 
 internal class Log4jRecorderSpec: ShouldSpec({
 
-    val anno = ANNOUNCEMENT.toLog4j()
-    val warn = WARNING.toLog4j()
-    val info = INFO.toLog4j()
+    val anno = ANNOUNCEMENT.toLog4j2()
+    val warn = WARNING.toLog4j2()
+    val info = INFO.toLog4j2()
 
     should("use levels converted to Log4j") {
         // In terms of Log4J lesser level means higher barrier for log records.

@@ -25,7 +25,6 @@
  */
 
 import io.spine.internal.dependency.Kotest
-import io.spine.internal.dependency.Spine
 import io.spine.internal.gradle.kotlin.setFreeCompilerArgs
 import io.spine.internal.gradle.report.license.LicenseReporter
 import io.spine.internal.gradle.testing.configureLogging
@@ -53,8 +52,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies{
-                implementation(project(":logging"))
                 implementation(kotlin("test"))
+                implementation(project(":logging"))
+                api(project(":testutil-logging"))
                 api(Kotest.assertions)
                 api(Kotest.frameworkApi)
                 api(Kotest.frameworkEngine)

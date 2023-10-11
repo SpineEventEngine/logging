@@ -31,8 +31,8 @@ import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.core.test.TestCase
 import io.kotest.core.test.TestResult
 import io.spine.logging.Level
-import io.spine.testing.logging.Recorder
-import io.spine.testing.logging.checkLogging
+import io.spine.logging.testing.Recorder
+import io.spine.logging.testing.checkLogging
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 
