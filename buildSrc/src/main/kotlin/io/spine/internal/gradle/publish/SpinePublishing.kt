@@ -315,7 +315,8 @@ open class SpinePublishing(private val project: Project) {
     internal fun configured() {
         ensureProtoJarExclusionsArePublished()
         ensureTestJarInclusionsArePublished()
-        ensuresModulesNotDuplicated()
+        ensureModulesNotDuplicated()
+        ensureCustomPublishingNotMisused()
 
         val projectsToPublish = projectsToPublish()
         projectsToPublish.forEach { project ->
@@ -422,10 +423,10 @@ open class SpinePublishing(private val project: Project) {
     /**
      * Ensures that publishing of a module is configured only from a single place.
      *
-     * We allow configuration of publishing from two places - a root project and module itself.
+     * We allow configuration of publishing from two places – a root project and module itself.
      * Here we verify that publishing of a module is not configured in both places simultaneously.
      */
-    private fun ensuresModulesNotDuplicated() {
+    private fun ensureModulesNotDuplicated() {
         val rootProject = project.rootProject
         if (rootProject == project) {
             return
@@ -439,6 +440,13 @@ open class SpinePublishing(private val project: Project) {
                     "Publishing of `$thisProject` module is already configured in a root project!"
                 )
             }
+        }
+    }
+
+    private fun ensureCustomPublishingNotMisused() {
+        if (modules.isNotEmpty() && customPublishing) {
+            error("`customPublishing` property can be set only if `spinePublishing` extension " +
+                    "is open in an individual module, so `modules` property should be empty.")
         }
     }
 }
