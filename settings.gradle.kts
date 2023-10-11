@@ -39,14 +39,14 @@ include(
 )
 
 includeBackend(
-    "logging-log4j2-backend",
-    "logging-jul-backend",
-    "logging-probe-backend",
+    "log4j2-backend",
+    "jul-backend",
+    "probe-backend",
 )
 
 includeContext(
-    "logging-grpc-context",
-    "logging-std-context",
+    "grpc-context",
+    "std-context",
 )
 
 includePlatform(
@@ -55,17 +55,17 @@ includePlatform(
 
 includeTest(
     "fixtures",
-    "jvm-our-backend-our-context",
-    "jvm-our-backend-grpc-context",
-    "jvm-log4j2-backend-our-context",
-    "jvm-slf4j-jdk14-backend-our-context",
-    "jvm-slf4j-reload4j-backend-our-context",
-    "logging-smoke-test",
+    "jvm-jul-backend-std-context",
+    "jvm-jul-backend-grpc-context",
+    "jvm-log4j2-backend-std-context",
+    "jvm-slf4j-jdk14-backend-std-context",
+    "jvm-slf4j-reload4j-backend-std-context",
+    "smoke-test",
 )
 
 includeFlogger(
-    "flogger-api",
-    "flogger-platform-generator",
+    "middleware",
+    "platform-generator",
 )
 
 fun includeBackend(vararg modules: String) = includeTo("backends", modules)

@@ -24,19 +24,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.dependency.Grpc
 import io.spine.internal.gradle.java.disableLinters
+import io.spine.internal.gradle.testing.exposeTestConfiguration
 
 plugins {
     `jvm-module`
 }
 
 dependencies {
-    implementation(Grpc.api)
-    implementation(project(":flogger-api"))
-    testImplementation(project(":flogger-api", configuration = "testArtifacts"))
+    implementation(project(":platform-generator", configuration = "generatedPlatformProvider"))
+    testImplementation(project(":testutil-logging"))
+    testRuntimeOnly(project(":jvm-default-platform"))
 }
 
 java {
+    /**
+     * Abstract tests and their `given` classes can be re-used to test
+     * different backend and context implementations.
+     */
+    exposeTestConfiguration()
     disableLinters() // Due to non-migrated Flogger sources.
 }

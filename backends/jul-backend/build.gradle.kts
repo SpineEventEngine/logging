@@ -24,13 +24,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import io.spine.internal.gradle.java.disableLinters
+
 plugins {
     `jvm-module`
-    `project-report`
 }
 
 dependencies {
-    implementation(project(":logging"))
-    implementation(project(":flogger-api"))
-    testImplementation(project(":flogger-api", configuration = "testArtifacts"))
+    implementation(project(":middleware"))
+    testImplementation(project(":middleware", configuration = "testArtifacts"))
+}
+
+java {
+    disableLinters() // Due to non-migrated Flogger sources.
 }

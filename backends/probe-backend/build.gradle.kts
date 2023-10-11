@@ -24,22 +24,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.kotest.core.annotation.Ignored
-import io.spine.logging.Level
-import io.spine.logging.context.BaseLogLevelMapTest
-import io.spine.testing.logging.Recorder
+import io.spine.internal.dependency.AutoService
 
-/**
- * This is a non-abstract integration test of [LogLevelMap][io.spine.logging.context.LogLevelMap]
- * executed in the project with Slf4J Flogger backend and `spine-logging-std-context`.
- * Slf4J uses Reload4J logging.
- *
- * Please see `build.gradle.kts` of this module for the details.
- */
-@Ignored // Until recording for Reload4J is implemented.
-internal class LogLevelMapSlf4JOnReload4JTest: BaseLogLevelMapTest() {
+plugins {
+    `jvm-module`
+    `kotlin-kapt`
+}
 
-    override fun createRecorder(loggerName: String, minLevel: Level): Recorder {
-        TODO("Not yet implemented")
-    }
+dependencies {
+    implementation(project(":middleware"))
+    implementation(project(":middleware", configuration = "testArtifacts"))
+    implementation(project(":jul-backend"))
+    implementation(AutoService.annotations)
+    kapt(AutoService.processor)
 }

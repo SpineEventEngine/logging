@@ -1,3 +1,5 @@
+import io.spine.internal.dependency.Log4j2
+
 /*
  * Copyright 2023, TeamDev. All rights reserved.
  *
@@ -24,22 +26,32 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.kotest.core.annotation.Ignored
-import io.spine.logging.Level
-import io.spine.logging.context.BaseLogLevelMapTest
-import io.spine.testing.logging.Recorder
+plugins {
+    `jvm-module`
+}
 
-/**
- * This is a non-abstract integration test of [LogLevelMap][io.spine.logging.context.LogLevelMap]
- * executed in the project with Slf4J Flogger backend and `spine-logging-std-context`.
- * Slf4J uses JDK 1.4 logging.
- *
- * Please see `build.gradle.kts` of this module for the details.
- */
-@Ignored // Until recording for Slf4J is implemented.
-internal class LogLevelMapSlf4JOnJdk14Test: BaseLogLevelMapTest() {
+dependencies {
+    testImplementation(Log4j2.core)
+    testImplementation(project(":logging"))
+    testImplementation(project(":fixtures"))
+    testImplementation(project(":middleware"))
 
-    override fun createRecorder(loggerName: String, minLevel: Level): Recorder {
-        TODO("Not yet implemented")
-    }
+    /**
+     * Adds `log4j2` backend and the default context to the classpath.
+     *
+     * The logging `Platform` discovers backend and context implementations
+     * automatically via Java's `ServiceLoader`. A user doesn't need to
+     * interact with “hard” classes from these dependencies. So, they are
+     * usually added to [runtimeOnly] configuration.
+     *
+     * But for this test, it is important to make sure that the actually
+     * discovered implementations match the test expectations. With a small
+     * chance, but the `Platform` may surprisingly load another backend,
+     * and it will pass all tests.
+     *
+     * So, we use “hard” classes from these dependencies to assert that
+     * the actually loaded backend and context match the test expectations.
+     */
+    testImplementation(project(":log4j2-backend"))
+    testImplementation(project(":std-context"))
 }

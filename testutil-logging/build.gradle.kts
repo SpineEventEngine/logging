@@ -24,8 +24,21 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import io.spine.internal.gradle.publish.SpinePublishing
+import io.spine.internal.gradle.publish.spinePublishing
+
 plugins {
     `jvm-module`
 }
 
 group = "io.spine.tools"
+
+// This module configures `spinePublishing` on its own to change a prefix
+// specified by the root project.
+spinePublishing {
+    artifactPrefix = "spine-"
+    destinations = rootProject.the<SpinePublishing>().destinations
+    dokkaJar {
+        java = false
+    }
+}

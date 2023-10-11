@@ -24,9 +24,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.dependency.Flogger
-import io.spine.internal.dependency.Slf4J
-
 plugins {
     `jvm-module`
 }
@@ -34,9 +31,24 @@ plugins {
 dependencies {
     testImplementation(project(":logging"))
     testImplementation(project(":fixtures"))
-    testRuntimeOnly(Flogger.Runtime.slf4JBackend) {
-        exclude(group = "com.google.flogger")
-    }
-    testRuntimeOnly(Slf4J.jdk14)
-    testRuntimeOnly(project(":logging-std-context"))
+    testImplementation(project(":middleware"))
+
+    /**
+     * Adds the default backend and context to the classpath.
+     *
+     * The logging `Platform` discovers backend and context implementations
+     * automatically via Java's `ServiceLoader`. A user doesn't need to
+     * interact with “hard” classes from these dependencies. So, they are
+     * usually added to [runtimeOnly] configuration.
+     *
+     * But for this test, it is important to make sure that the actually
+     * discovered implementations match the test expectations. With a small
+     * chance, but the `Platform` may surprisingly load another, unexpected
+     * backend, and it will pass all tests.
+     *
+     * So, we use “hard” classes from these dependencies to assert that
+     * the actually loaded backend and context match the test expectations.
+     */
+    testImplementation(project(":jul-backend"))
+    testImplementation(project(":std-context"))
 }

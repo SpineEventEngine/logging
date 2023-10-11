@@ -34,8 +34,10 @@ import io.spine.internal.gradle.publish.IncrementGuard
 import io.spine.internal.gradle.testing.configureLogging
 import io.spine.internal.gradle.testing.registerTestTasks
 import io.spine.internal.gradle.kotlin.setFreeCompilerArgs
+import io.spine.internal.gradle.publish.SpinePublishing
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import io.spine.internal.gradle.publish.javadocJar
+import io.spine.internal.gradle.publish.spinePublishing
 import io.spine.internal.gradle.report.license.LicenseReporter
 
 plugins {
@@ -49,6 +51,16 @@ plugins {
 }
 apply<IncrementGuard>()
 LicenseReporter.generateReportIn(project)
+
+// This module configures `spinePublishing` on its own to change a prefix
+// specified by the root project.
+spinePublishing {
+    destinations = rootProject.the<SpinePublishing>().destinations
+    customPublishing = true
+    dokkaJar {
+        java = false
+    }
+}
 
 kotlin {
     explicitApi()
@@ -79,7 +91,7 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                implementation(project(":flogger-api"))
+                implementation(project(":middleware"))
                 runtimeOnly(project(":jvm-default-platform"))
                 implementation(Guava.lib)
             }
@@ -87,7 +99,7 @@ kotlin {
         val jvmTest by getting {
             dependencies {
                 implementation(project(":testutil-logging"))
-                implementation(project(":logging-probe-backend"))
+                implementation(project(":probe-backend"))
                 implementation(Spine.testlib) {
                     exclude(group = "com.google.flogger")
                 }
@@ -145,11 +157,11 @@ koverReport {
 }
 
 publishing.publications {
-    named<MavenPublication>("jvm") {
-        artifact(project.javadocJar())
-    }
     named<MavenPublication>("kotlinMultiplatform") {
         artifact(project.dokkaKotlinJar())
+    }
+    named<MavenPublication>("jvm") {
+        artifact(project.javadocJar())
     }
 }
 

@@ -24,17 +24,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.dependency.AutoService
+import io.spine.internal.dependency.Grpc
+import io.spine.internal.gradle.java.disableLinters
 
 plugins {
     `jvm-module`
-    `kotlin-kapt`
 }
 
 dependencies {
-    implementation(project(":flogger-api"))
-    implementation(project(":flogger-api", configuration = "testArtifacts"))
-    implementation(project(":logging-jul-backend"))
-    implementation(AutoService.annotations)
-    kapt(AutoService.processor)
+    implementation(Grpc.api)
+    implementation(project(":middleware"))
+    testImplementation(project(":middleware", configuration = "testArtifacts"))
+}
+
+java {
+    disableLinters() // Due to non-migrated Flogger sources.
 }

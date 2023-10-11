@@ -1,5 +1,3 @@
-import io.spine.internal.dependency.Log4j2
-
 /*
  * Copyright 2023, TeamDev. All rights reserved.
  *
@@ -26,32 +24,25 @@ import io.spine.internal.dependency.Log4j2
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-plugins {
-    `jvm-module`
-}
+import io.kotest.core.annotation.Ignored
+import io.spine.logging.Level
+import io.spine.logging.context.BaseLogLevelMapTest
+import io.spine.testing.logging.Recorder
 
-dependencies {
-    testImplementation(Log4j2.core)
-    testImplementation(project(":logging"))
-    testImplementation(project(":fixtures"))
-    testImplementation(project(":flogger-api"))
+/**
+ * This is a non-abstract integration test of [LogLevelMap][io.spine.logging.context.LogLevelMap]
+ * executed in the project with SLF4J backend and `spine-logging-std-context`.
+ * SLF4J uses JDK 1.4 logging (`java.util.logging`, JUL).
+ *
+ * Please see `build.gradle.kts` of this module for the details.
+ */
+@Ignored // Until recording for SLF4J is implemented.
+@Suppress("unused") // Until SLF4J backend is added.
+internal class LogLevelMapSlf4JOnJdk14Test: BaseLogLevelMapTest() {
 
-    /**
-     * Adds `log4j2` backend and the default context to the classpath.
-     *
-     * The logging `Platform` discovers backend and context implementations
-     * automatically via Java's `ServiceLoader`. A user doesn't need to
-     * interact with “hard” classes from these dependencies. So, they are
-     * usually added to [runtimeOnly] configuration.
-     *
-     * But for this test, it is important to make sure that the actually
-     * discovered implementations match the test expectations. With a small
-     * chance, but the `Platform` may surprisingly load another backend,
-     * and it will pass all tests.
-     *
-     * So, we use “hard” classes from these dependencies to assert that
-     * the actually loaded backend and context match the test expectations.
-     */
-    testImplementation(project(":logging-log4j2-backend"))
-    testImplementation(project(":logging-std-context"))
+    // TODO:2023-10-10:yevhenii.nadtochii: Make this test work when SLF4J backend is added.
+    //  See issue: https://github.com/SpineEventEngine/logging/issues/77
+    override fun createRecorder(loggerName: String, minLevel: Level): Recorder {
+        error("Not implemented.")
+    }
 }

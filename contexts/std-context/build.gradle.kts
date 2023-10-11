@@ -26,11 +26,11 @@
 
 plugins {
     `jvm-module`
+    `project-report`
 }
 
 dependencies {
-    testImplementation(project(":logging"))
-    testImplementation(project(":fixtures"))
-    testRuntimeOnly(project(":logging-jul-backend"))
-    testRuntimeOnly(project(":logging-grpc-context"))
+    implementation(project(":logging"))
+    implementation(project(":middleware"))
+    testImplementation(project(":middleware", configuration = "testArtifacts"))
 }
