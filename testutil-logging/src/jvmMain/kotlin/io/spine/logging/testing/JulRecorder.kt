@@ -34,35 +34,6 @@ import java.util.logging.LogRecord
 import java.util.logging.Logger
 
 /**
- * Obtains the logger responsible for publishing the logging records
- * produced by the given [logger].
- */
-private fun publishingLoggerOf(logger: Logger): Logger {
-    return if (!logger.useParentHandlers || logger.parent == null) {
-        logger
-    } else {
-        publishingLoggerOf(logger.parent)
-    }
-}
-
-/**
- * Implements [LogData] by wrapping over [LogRecord].
- */
-private data class JulLogData(private val record: LogRecord): LogData {
-    override val level: Level = record.level.toLevel()
-    override val message: String = record.message
-    override val throwable: Throwable? = record.thrown
-    override fun equals(other: Any?): Boolean {
-        return if (other is JulLogData) {
-            record == other.record
-        } else {
-            false
-        }
-    }
-    override fun hashCode(): Int = record.hashCode()
-}
-
-/**
  * Intercepts logging records of the logger with the given name.
  */
 public class JulRecorder(loggerName: String, minLevel: Level): Recorder(minLevel) {
@@ -73,12 +44,12 @@ public class JulRecorder(loggerName: String, minLevel: Level): Recorder(minLevel
     private val logger: Logger = Logger.getLogger(loggerName)
 
     /**
-     * The handler which remembers log records and performs assertions.
+     * The handler, which remembers log records and performs assertions.
      */
     private var handler: RecordingHandler? = null
 
     /**
-     * The logger which performs actual publishing for the [logger].
+     * The logger, which performs actual publishing for the [logger].
      *
      * Is `null` before the [start] or after [stop].
      */
@@ -117,4 +88,33 @@ public class JulRecorder(loggerName: String, minLevel: Level): Recorder(minLevel
         override fun flush(): Unit = Unit
         override fun close(): Unit = clear()
     }
+}
+
+/**
+ * Obtains the logger responsible for publishing the logging records
+ * produced by the given [logger].
+ */
+private fun publishingLoggerOf(logger: Logger): Logger {
+    return if (!logger.useParentHandlers || logger.parent == null) {
+        logger
+    } else {
+        publishingLoggerOf(logger.parent)
+    }
+}
+
+/**
+ * Implements [LogData] by wrapping over [LogRecord].
+ */
+private data class JulLogData(private val record: LogRecord): LogData {
+    override val level: Level = record.level.toLevel()
+    override val message: String = record.message
+    override val throwable: Throwable? = record.thrown
+    override fun equals(other: Any?): Boolean {
+        return if (other is JulLogData) {
+            record == other.record
+        } else {
+            false
+        }
+    }
+    override fun hashCode(): Int = record.hashCode()
 }
