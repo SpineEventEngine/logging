@@ -27,7 +27,7 @@
 import io.kotest.core.annotation.Ignored
 import io.spine.logging.Level
 import io.spine.logging.context.BaseLogLevelMapTest
-import io.spine.testing.logging.Recorder
+import io.spine.logging.testing.Recorder
 
 /**
  * This is a non-abstract integration test of [LogLevelMap][io.spine.logging.context.LogLevelMap]

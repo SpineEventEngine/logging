@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.testing.logging
+package io.spine.logging.testing
 
 import io.spine.logging.Level
 import io.spine.logging.toJavaLogging
@@ -36,7 +36,7 @@ import java.util.logging.Logger
 /**
  * Intercepts logging records of the logger with the given name.
  */
-internal class JulRecorder(loggerName: String, minLevel: Level): Recorder(minLevel) {
+public class JulRecorder(loggerName: String, minLevel: Level): Recorder(minLevel) {
 
     /**
      * The logger obtained for the given name.
@@ -44,12 +44,12 @@ internal class JulRecorder(loggerName: String, minLevel: Level): Recorder(minLev
     private val logger: Logger = Logger.getLogger(loggerName)
 
     /**
-     * The handler which remembers log records and performs assertions.
+     * The handler, which remembers log records and performs assertions.
      */
     private var handler: RecordingHandler? = null
 
     /**
-     * The logger which performs actual publishing for the [logger].
+     * The logger, which performs actual publishing for the [logger].
      *
      * Is `null` before the [start] or after [stop].
      */
@@ -73,7 +73,7 @@ internal class JulRecorder(loggerName: String, minLevel: Level): Recorder(minLev
     /**
      * Accumulates [records] with the [minLevel] or higher.
      */
-    inner class RecordingHandler: Handler() {
+    private inner class RecordingHandler: Handler() {
 
         init {
             level = minLevel.toJavaLogging()
@@ -85,8 +85,8 @@ internal class JulRecorder(loggerName: String, minLevel: Level): Recorder(minLev
             }
         }
 
-        override fun flush() = Unit
-        override fun close() = clear()
+        override fun flush(): Unit = Unit
+        override fun close(): Unit = clear()
     }
 }
 

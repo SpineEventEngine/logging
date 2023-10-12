@@ -30,7 +30,8 @@ import io.spine.logging.Level
 import io.spine.logging.backend.log4j2.Log4j2BackendFactory
 import io.spine.logging.context.BaseLogLevelMapTest
 import io.spine.logging.context.std.StdContextDataProvider
-import io.spine.testing.logging.Recorder
+import io.spine.logging.testing.Log4j2Recorder
+import io.spine.logging.testing.Recorder
 import org.junit.jupiter.api.Test
 
 /**
@@ -39,10 +40,10 @@ import org.junit.jupiter.api.Test
  *
  * Please see `build.gradle.kts` of this module for the details.
  */
-internal class LogLevelMapLog4jBackendITest: BaseLogLevelMapTest() {
+internal class LogLevelMapLog4j2BackendITest: BaseLogLevelMapTest() {
 
     override fun createRecorder(loggerName: String, minLevel: Level): Recorder =
-        Log4jRecorder(loggerName, minLevel)
+        Log4j2Recorder(loggerName, minLevel)
 
     @Test
     fun `should use 'Log4j2LoggerBackend`() {

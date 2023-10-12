@@ -27,8 +27,8 @@
 package io.spine.logging.context
 
 import io.spine.logging.Level
-import io.spine.testing.logging.JulRecorder
-import io.spine.testing.logging.Recorder
+import io.spine.logging.testing.JulRecorder
+import io.spine.logging.testing.Recorder
 
 /**
  * Abstract base for log level map tests that use Java Logging as a logging backend.
