@@ -127,7 +127,7 @@ private fun IntProgression.size(): Int = (last - first).absoluteValue + 1
 
 private val log4jRange: IntRange = 0.rangeTo(BOUND)
 
-private const val log4jScale: Int = 100
+private const val LOG4J_SCALE: Int = 100
 
 private fun IntRange.size(): Int = (last - first + 1)
 
@@ -165,7 +165,7 @@ private object Log4jLevelConverter: LevelConverter<L4jLevel>(
         fun Int.scaleToLog4j(): Int {
             val normalized =
                 (toDouble() - julProgression.last).absoluteValue / julProgression.size()
-            val converted = normalized * log4jScale
+            val converted = normalized * LOG4J_SCALE
             return converted.toInt()
         }
 
