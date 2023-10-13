@@ -52,7 +52,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies{
-                implementation(kotlin("test"))
+                implementation(kotlin("test")) // https://youtrack.jetbrains.com/issue/KT-58872
                 implementation(project(":logging"))
                 api(project(":testutil-logging"))
                 api(Kotest.assertions)
@@ -64,7 +64,7 @@ kotlin {
 }
 
 detekt {
-    source = files(
+    source.setFrom(
         "src/commonMain",
         "src/jvmMain"
     )
