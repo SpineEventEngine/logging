@@ -41,11 +41,10 @@ import io.spine.internal.gradle.publish.spinePublishing
 import io.spine.internal.gradle.report.license.LicenseReporter
 
 plugins {
+    `kmp-module`
     `maven-publish`
-    kotlin("multiplatform")
     kotest
     `dokka-for-kotlin`
-    `detekt-code-analysis`
     id("org.jetbrains.kotlinx.kover")
     `project-report`
 }
@@ -109,13 +108,6 @@ kotlin {
             }
         }
     }
-}
-
-detekt {
-    source.from(
-        "src/commonMain",
-        "src/jvmMain"
-    )
 }
 
 tasks {

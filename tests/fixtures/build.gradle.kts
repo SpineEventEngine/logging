@@ -32,8 +32,7 @@ import io.spine.internal.gradle.testing.registerTestTasks
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("multiplatform")
-    `detekt-code-analysis`
+    `kmp-module`
     id("org.jetbrains.kotlinx.kover")
     kotest
     `project-report`
@@ -61,13 +60,6 @@ kotlin {
             }
         }
     }
-}
-
-detekt {
-    source.setFrom(
-        "src/commonMain",
-        "src/jvmMain"
-    )
 }
 
 val jvmTest: Task by tasks.getting {
