@@ -43,8 +43,8 @@ import io.spine.internal.gradle.report.license.LicenseReporter
 plugins {
     `kmp-module`
     `maven-publish`
+
     kotest
-    `dokka-for-kotlin`
     id("org.jetbrains.kotlinx.kover")
     `project-report`
 }

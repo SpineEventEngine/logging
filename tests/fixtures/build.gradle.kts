@@ -33,6 +33,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `kmp-module`
+
     id("org.jetbrains.kotlinx.kover")
     kotest
     `project-report`

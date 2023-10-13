@@ -29,6 +29,7 @@ import gradle.kotlin.dsl.accessors._6b1cdd1e881959619ea23cf7941079a9.detekt
 plugins {
     kotlin("multiplatform")
     id("detekt-code-analysis")
+    id("dokka-for-kotlin")
 }
 
 detekt {
