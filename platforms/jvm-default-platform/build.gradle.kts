@@ -43,3 +43,10 @@ dependencies {
 java {
     disableLinters() // Due to non-migrated Flogger sources.
 }
+
+tasks {
+    named("dokkaHtml") {
+        val kapt = named("kaptKotlin")
+        dependsOn(kapt)
+    }
+}
