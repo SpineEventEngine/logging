@@ -27,6 +27,7 @@
 package io.spine.internal.gradle.report.coverage
 
 import io.spine.internal.gradle.applyPlugin
+import io.spine.internal.gradle.buildDirectory
 import io.spine.internal.gradle.findTask
 import io.spine.internal.gradle.report.coverage.TaskName.check
 import io.spine.internal.gradle.report.coverage.TaskName.copyReports
@@ -90,7 +91,7 @@ class JacocoConfig(
         fun applyTo(project: Project) {
             project.applyPlugin(BasePlugin::class.java)
             val javaProjects: Iterable<Project> = eligibleProjects(project)
-            val reportsDir = project.rootProject.buildDir.resolve(reportsDirSuffix)
+            val reportsDir = project.rootProject.buildDirectory.resolve(reportsDirSuffix)
             JacocoConfig(project.rootProject, reportsDir, javaProjects).configure()
         }
 
