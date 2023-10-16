@@ -78,18 +78,6 @@ all modules and does not describe the project structure per-subproject.
     <scope>test</scope>
   </dependency>
   <dependency>
-    <groupId>io.kotest</groupId>
-    <artifactId>kotest-framework-datatest</artifactId>
-    <version>5.6.2</version>
-    <scope>test</scope>
-  </dependency>
-  <dependency>
-    <groupId>io.kotest</groupId>
-    <artifactId>kotest-runner-junit5-jvm</artifactId>
-    <version>5.6.2</version>
-    <scope>test</scope>
-  </dependency>
-  <dependency>
     <groupId>org.apache.logging.log4j</groupId>
     <artifactId>log4j-core</artifactId>
     <version>2.20.0</version>
@@ -115,12 +103,6 @@ all modules and does not describe the project structure per-subproject.
   </dependency>
   <dependency>
     <groupId>org.junit.jupiter</groupId>
-    <artifactId>junit-jupiter-engine</artifactId>
-    <version>5.10.0</version>
-    <scope>test</scope>
-  </dependency>
-  <dependency>
-    <groupId>org.junit.jupiter</groupId>
     <artifactId>junit-jupiter-params</artifactId>
     <version>5.10.0</version>
     <scope>test</scope>
@@ -136,11 +118,6 @@ all modules and does not describe the project structure per-subproject.
     <artifactId>slf4j-reload4j</artifactId>
     <version>2.0.7</version>
     <scope>test</scope>
-  </dependency>
-  <dependency>
-    <groupId>com.github.stefanbirkner</groupId>
-    <artifactId>system-lambda</artifactId>
-    <version>1.2.1</version>
   </dependency>
   <dependency>
     <groupId>com.google.auto.service</groupId>
@@ -191,7 +168,17 @@ all modules and does not describe the project structure per-subproject.
   </dependency>
   <dependency>
     <groupId>io.kotest</groupId>
+    <artifactId>kotest-framework-datatest</artifactId>
+    <version>5.6.2</version>
+  </dependency>
+  <dependency>
+    <groupId>io.kotest</groupId>
     <artifactId>kotest-framework-engine</artifactId>
+    <version>5.6.2</version>
+  </dependency>
+  <dependency>
+    <groupId>io.kotest</groupId>
+    <artifactId>kotest-runner-junit5-jvm</artifactId>
     <version>5.6.2</version>
   </dependency>
   <dependency>
@@ -229,32 +216,32 @@ all modules and does not describe the project structure per-subproject.
   <dependency>
     <groupId>org.jacoco</groupId>
     <artifactId>org.jacoco.agent</artifactId>
-    <version>0.8.9</version>
+    <version>0.8.10</version>
   </dependency>
   <dependency>
     <groupId>org.jacoco</groupId>
     <artifactId>org.jacoco.ant</artifactId>
-    <version>0.8.9</version>
+    <version>0.8.10</version>
   </dependency>
   <dependency>
     <groupId>org.jetbrains.dokka</groupId>
-    <artifactId>dokka-analysis</artifactId>
-    <version>1.8.10</version>
+    <artifactId>analysis-kotlin-descriptors</artifactId>
+    <version>1.9.0</version>
   </dependency>
   <dependency>
     <groupId>org.jetbrains.dokka</groupId>
     <artifactId>dokka-base</artifactId>
-    <version>1.8.10</version>
+    <version>1.9.0</version>
   </dependency>
   <dependency>
     <groupId>org.jetbrains.dokka</groupId>
     <artifactId>dokka-core</artifactId>
-    <version>1.8.10</version>
+    <version>1.9.0</version>
   </dependency>
   <dependency>
     <groupId>org.jetbrains.dokka</groupId>
     <artifactId>kotlin-as-java-plugin</artifactId>
-    <version>1.8.10</version>
+    <version>1.9.0</version>
   </dependency>
   <dependency>
     <groupId>org.jetbrains.kotlin</groupId>
@@ -298,11 +285,6 @@ all modules and does not describe the project structure per-subproject.
   </dependency>
   <dependency>
     <groupId>org.jetbrains.kotlin</groupId>
-    <artifactId>kotlin-test</artifactId>
-    <version>1.9.10</version>
-  </dependency>
-  <dependency>
-    <groupId>org.jetbrains.kotlin</groupId>
     <artifactId>kotlin-test-annotations-common</artifactId>
     <version>1.9.10</version>
   </dependency>
@@ -310,6 +292,11 @@ all modules and does not describe the project structure per-subproject.
     <groupId>org.jetbrains.kotlin</groupId>
     <artifactId>kotlin-test-common</artifactId>
     <version>1.9.10</version>
+  </dependency>
+  <dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter-engine</artifactId>
+    <version>5.10.0</version>
   </dependency>
 </dependencies>
 
