@@ -42,6 +42,7 @@ plugins {
     `gradle-doctor`
     `project-report`
 }
+
 apply(from = "$rootDir/version.gradle.kts")
 
 spinePublishing {
