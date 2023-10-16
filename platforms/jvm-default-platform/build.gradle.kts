@@ -44,9 +44,10 @@ java {
     disableLinters() // Due to non-migrated Flogger sources.
 }
 
-tasks {
-    named("dokkaHtml") {
-        val kapt = named("kaptKotlin")
-        dependsOn(kapt)
+// `kaptKotlin` task is created after the configuration phase.
+afterEvaluate {
+    val kaptKotlin by tasks.existing
+    val dokkaHtml by tasks.existing {
+        dependsOn(kaptKotlin)
     }
 }
