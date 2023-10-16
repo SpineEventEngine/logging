@@ -115,6 +115,11 @@ val detektVersion = "1.23.0"
 val kotestJvmPluginVersion = "0.4.10"
 
 /**
+ * @see [io.spine.internal.dependency.Kotest.MultiplatformGradlePlugin]
+ */
+val kotestMultiplatformPluginVersion = "5.6.2"
+
+/**
  * @see [io.spine.internal.dependency.Kover]
  */
 val koverVersion = "0.7.2"
@@ -168,5 +173,6 @@ dependencies {
     implementation("net.lingala.zip4j:zip4j:2.10.0")
 
     implementation("io.kotest:kotest-gradle-plugin:$kotestJvmPluginVersion")
+    implementation("io.kotest:kotest-framework-multiplatform-plugin-gradle:$kotestMultiplatformPluginVersion")
     implementation("org.jetbrains.kotlinx:kover-gradle-plugin:$koverVersion")
 }
