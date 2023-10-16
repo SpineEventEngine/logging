@@ -25,66 +25,23 @@
  */
 
 import io.spine.internal.dependency.Kotest
-import io.spine.internal.gradle.kotlin.setFreeCompilerArgs
-import io.spine.internal.gradle.report.license.LicenseReporter
-import io.spine.internal.gradle.testing.configureLogging
-import io.spine.internal.gradle.testing.registerTestTasks
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import io.spine.internal.dependency.Spine
 
 plugins {
     `kmp-module`
-
-    id("org.jetbrains.kotlinx.kover")
-    kotest
-    `project-report`
 }
-LicenseReporter.generateReportIn(project)
 
 kotlin {
-    explicitApi()
-    jvm {
-        withJava()
-        compilations.all {
-            kotlinOptions.jvmTarget = BuildSettings.javaVersion.toString()
-        }
-    }
-
     sourceSets {
         val commonMain by getting {
             dependencies{
-                implementation(kotlin("test")) // https://youtrack.jetbrains.com/issue/KT-58872
                 implementation(project(":logging"))
+                implementation(Spine.reflect)
                 api(project(":testutil-logging"))
                 api(Kotest.assertions)
                 api(Kotest.frameworkApi)
                 api(Kotest.frameworkEngine)
             }
-        }
-    }
-}
-
-val jvmTest: Task by tasks.getting {
-    (this as Test).run {
-        useJUnitPlatform()
-        configureLogging()
-    }
-}
-
-tasks {
-    withType<KotlinCompile>().configureEach {
-        setFreeCompilerArgs()
-    }
-    registerTestTasks()
-}
-
-kover {
-    useJacoco()
-}
-
-koverReport {
-    defaults {
-        xml {
-            onCheck = true
         }
     }
 }

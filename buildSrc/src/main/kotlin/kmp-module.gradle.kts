@@ -24,12 +24,72 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import gradle.kotlin.dsl.accessors._6b1cdd1e881959619ea23cf7941079a9.detekt
+import io.spine.internal.dependency.JUnit
+import io.spine.internal.dependency.Kotest
+import io.spine.internal.dependency.Spine
+import io.spine.internal.gradle.checkstyle.CheckStyleConfig
+import io.spine.internal.gradle.javac.configureJavac
+import io.spine.internal.gradle.javadoc.JavadocConfig
+import io.spine.internal.gradle.kotlin.setFreeCompilerArgs
+import io.spine.internal.gradle.report.license.LicenseReporter
+import io.spine.internal.gradle.testing.configureLogging
+import io.spine.internal.gradle.testing.registerTestTasks
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("multiplatform")
     id("detekt-code-analysis")
     id("dokka-for-kotlin")
+    id("io.kotest.multiplatform")
+    id("org.jetbrains.kotlinx.kover")
+    `project-report`
+}
+
+kotlin {
+    explicitApi()
+
+    jvm {
+        withJava() // Allows both Java and Kotlin source files on JVM.
+        val javaVersion = "${BuildSettings.javaVersion}"
+        compilations.configureEach {
+            kotlinOptions.jvmTarget = javaVersion
+        }
+    }
+
+    sourceSets {
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
+                implementation(Kotest.assertions)
+                implementation(Kotest.frameworkEngine)
+                implementation(Kotest.datatest)
+            }
+        }
+        val jvmTest by getting {
+            dependencies {
+                implementation(Spine.testlib)
+                implementation(JUnit.runner)
+                implementation(Kotest.runnerJUnit5Jvm)
+            }
+        }
+    }
+}
+
+tasks {
+    withType<KotlinCompile>().configureEach {
+        setFreeCompilerArgs()
+    }
+    withType<JavaCompile>().configureEach {
+        configureJavac()
+    }
+
+    registerTestTasks()
+
+    named<Test>("jvmTest") {
+        useJUnitPlatform()
+        configureLogging()
+    }
 }
 
 detekt {
@@ -38,3 +98,18 @@ detekt {
         "src/jvmMain"
     )
 }
+
+kover {
+    useJacoco()
+    koverReport {
+        defaults {
+            xml {
+                onCheck = true
+            }
+        }
+    }
+}
+
+LicenseReporter.generateReportIn(project)
+CheckStyleConfig.applyTo(project)
+JavadocConfig.applyTo(project)
