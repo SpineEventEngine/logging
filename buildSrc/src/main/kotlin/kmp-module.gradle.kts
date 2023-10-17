@@ -37,6 +37,36 @@ import io.spine.internal.gradle.testing.configureLogging
 import io.spine.internal.gradle.testing.registerTestTasks
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+/**
+ * Configures this [Project] as a Kotlin Multiplatform module.
+ *
+ * By its nature, this script plugin is similar to `jvm-module`. It performs
+ * the basic module configuration.
+ *
+ * `jvm-module` is based on a mix of Java and Kotlin Gradle plugins. It allows
+ * usage of Kotlin and Java in a single module that is built for JVM.
+ * Whereas `kmp-module` is based on a Kotlin Multiplatform plugin. This plugin
+ * supports different compilation targets within a single module: JVM, IOS,
+ * Desktop, JS, etc. Also, it allows having some common sources in Kotlin
+ * that can be shared with target-specific code. They are located in
+ * `commonMain` and `commonTest` source sets. Each concrete target implicitly
+ * depends on them.
+ *
+ * As for now, this script configures only JVM target, but other targets
+ * will be added further.
+ *
+ * ### JVM target
+ *
+ * Sources for this target are placed in `jvmMain` and `jvmTest` directories.
+ * Java is allowed to be used in `jvm` sources, but Kotlin is a preference.
+ * Use Java only as a fall-back option where Kotlin is insufficient.
+ * Due to this, Java linters are not even configured by `kmp-module`.
+ *
+ * @see <a href="https://kotlinlang.org/docs/multiplatform.html">Kotlin Multiplatform docs</a>
+ */
+@Suppress("unused")
+val about = ""
+
 plugins {
     kotlin("multiplatform")
     id("detekt-code-analysis")
@@ -46,17 +76,28 @@ plugins {
     `project-report`
 }
 
+/**
+ * Configures Kotlin Multiplatform plugin.
+ *
+ * Please note, this extension DOES NOT configure Kotlin for JVM.
+ * It configures KMP, in which Kotlin for JVM is only one of
+ * possible targets.
+ */
 kotlin {
+    // Enables explicit API mode for any Kotlin sources within the module.
     explicitApi()
 
+    // Enables and configures JVM target.
     jvm {
-        withJava() // Allows both Java and Kotlin source files on JVM.
+        withJava()
         val javaVersion = "${BuildSettings.javaVersion}"
         compilations.configureEach {
             kotlinOptions.jvmTarget = javaVersion
         }
     }
 
+    // Dependencies are specified per-target.
+    // Please note, common sources are implicitly available in all targets.
     sourceSets {
         val commonTest by getting {
             dependencies {
@@ -77,24 +118,41 @@ kotlin {
     }
 }
 
+/**
+ * Performs the standard task's configuration.
+ *
+ * Here's no difference with `jvm-module`, which does the same.
+ *
+ * Kotlin here is configured for both common and JVM-specific sources.
+ * Java is for JVM only.
+ *
+ * Also, Kotlin and Java share the same test executor (JUnit), so tests
+ * configuration is for both.
+ */
 tasks {
-    withType<KotlinCompile>().configureEach {
-        setFreeCompilerArgs()
-    }
     withType<JavaCompile>().configureEach {
         configureJavac()
+    }
+    withType<KotlinCompile>().configureEach {
+        setFreeCompilerArgs()
     }
 
     registerTestTasks()
 
-    named<Test>("jvmTest") {
+    withType<Test>().configureEach {
         useJUnitPlatform()
         configureLogging()
     }
 }
 
+/**
+ * Overrides the default location of Kotlin sources.
+ *
+ * The default configuration of Detekt assumes presence of Kotlin sources
+ * in `src/main/kotlin`, which is not the case for KMP.
+ */
 detekt {
-    source.from(
+    source.setFrom(
         "src/commonMain",
         "src/jvmMain"
     )
