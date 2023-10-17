@@ -28,6 +28,7 @@ package io.spine.internal.gradle.protobuf
 
 import com.google.protobuf.gradle.GenerateProtoTask
 import io.spine.internal.gradle.sourceSets
+import io.spine.internal.gradle.buildDirectory
 import java.io.File
 import org.gradle.api.Project
 import org.gradle.api.file.SourceDirectorySet
@@ -117,7 +118,7 @@ private fun GenerateProtoTask.setupDescriptorSetFileCreation() {
     // Tell `protoc` generate descriptor set file.
     val ssn = sourceSet.name
     generateDescriptorSet = true
-    val descriptorsDir = "${project.buildDir}/descriptors/${ssn}"
+    val descriptorsDir = "${project.buildDirectory}/descriptors/${ssn}"
     with(descriptorSetOptions) {
         path = "$descriptorsDir/known_types_${ssn}.desc"
         includeImports = true

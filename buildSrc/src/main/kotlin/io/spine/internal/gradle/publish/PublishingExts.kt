@@ -28,6 +28,7 @@ package io.spine.internal.gradle.publish
 
 import dokkaKotlinJar
 import io.spine.internal.gradle.Repository
+import io.spine.internal.gradle.buildDirectory
 import io.spine.internal.gradle.sourceSets
 import java.util.*
 import org.gradle.api.InvalidUserDataException
@@ -225,7 +226,7 @@ internal fun Project.testJar(): TaskProvider<Jar> = tasks.getOrCreate("testJar")
  */
 fun Project.javadocJar(): TaskProvider<Jar> = tasks.getOrCreate("javadocJar") {
     archiveClassifier.set("javadoc")
-    from(files("$buildDir/docs/javadoc"))
+    from(files("$buildDirectory/docs/javadoc"))
     dependsOn("javadoc")
 }
 

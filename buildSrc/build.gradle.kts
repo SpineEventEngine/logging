@@ -62,7 +62,7 @@ val grGitVersion = "4.1.1"
  * Please check that this value matches one defined in
  *  [io.spine.internal.dependency.Kotlin.version].
  */
-val kotlinVersion = "1.8.22"
+val kotlinVersion = "1.9.10"
 
 /**
  * The version of Guava used in `buildSrc`.
@@ -100,7 +100,7 @@ val protobufPluginVersion = "0.9.4"
  * @see <a href="https://github.com/Kotlin/dokka/releases">
  *     Dokka Releases</a>
  */
-val dokkaVersion = "1.8.10"
+val dokkaVersion = "1.9.0"
 
 /**
  * The version of Detekt Gradle Plugin.
@@ -113,6 +113,11 @@ val detektVersion = "1.23.0"
  * @see [io.spine.internal.dependency.Kotest]
  */
 val kotestJvmPluginVersion = "0.4.10"
+
+/**
+ * @see [io.spine.internal.dependency.Kotest.MultiplatformGradlePlugin]
+ */
+val kotestMultiplatformPluginVersion = "5.6.2"
 
 /**
  * @see [io.spine.internal.dependency.Kover]
@@ -168,5 +173,6 @@ dependencies {
     implementation("net.lingala.zip4j:zip4j:2.10.0")
 
     implementation("io.kotest:kotest-gradle-plugin:$kotestJvmPluginVersion")
+    implementation("io.kotest:kotest-framework-multiplatform-plugin-gradle:$kotestMultiplatformPluginVersion")
     implementation("org.jetbrains.kotlinx:kover-gradle-plugin:$koverVersion")
 }

@@ -24,24 +24,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.dependency.Kotest
-import io.spine.internal.dependency.Spine
+package io.spine.internal.dependency
 
-plugins {
-    `kmp-module`
-}
-
-kotlin {
-    sourceSets {
-        val commonMain by getting {
-            dependencies{
-                implementation(project(":logging"))
-                implementation(Spine.reflect)
-                api(project(":testutil-logging"))
-                api(Kotest.assertions)
-                api(Kotest.frameworkApi)
-                api(Kotest.frameworkEngine)
-            }
-        }
-    }
+/**
+ * Code coverage library for Java.
+ *
+ * @see <a href="https://www.eclemma.org/jacoco/">Releases</a>
+ */
+@Suppress("ConstPropertyName")
+object Jacoco {
+    const val version = "0.8.10"
 }

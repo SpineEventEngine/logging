@@ -26,6 +26,7 @@
 
 import io.spine.internal.dependency.Dokka
 import io.spine.internal.gradle.publish.getOrCreate
+import io.spine.internal.gradle.buildDirectory
 import java.io.File
 import java.time.LocalDate
 import org.gradle.api.Project
@@ -69,7 +70,7 @@ private fun DependencyHandler.dokkaPlugin(dependencyNotation: Any): Dependency? 
     add("dokkaPlugin", dependencyNotation)
 
 private fun Project.dokkaOutput(language: String): File =
-    buildDir.resolve("docs/dokka${language.capitalized()}")
+    buildDirectory.resolve("docs/dokka${language.capitalized()}")
 
 private fun Project.dokkaConfigFile(file: String): File {
     val dokkaConfDir = project.rootDir.resolve("buildSrc/src/main/resources/dokka")

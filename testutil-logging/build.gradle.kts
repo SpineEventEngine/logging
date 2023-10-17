@@ -25,21 +25,12 @@
  */
 
 import io.spine.internal.dependency.Log4j2
-import io.spine.internal.gradle.javadoc.JavadocConfig
 import io.spine.internal.gradle.publish.SpinePublishing
-import io.spine.internal.gradle.publish.javadocJar
 import io.spine.internal.gradle.publish.spinePublishing
-import io.spine.internal.gradle.report.license.LicenseReporter
 
 plugins {
-    `maven-publish`
-    kotlin("multiplatform")
-    `dokka-for-kotlin`
-    `detekt-code-analysis`
-    kotest
-    id("org.jetbrains.kotlinx.kover")
-    `project-report`
-
+    `kmp-module`
+    `kmp-publish`
 }
 
 group = "io.spine.tools"
@@ -56,53 +47,16 @@ spinePublishing {
 }
 
 kotlin {
-    explicitApi()
-    jvm {
-        withJava()
-        compilations.all {
-            kotlinOptions.jvmTarget = "${BuildSettings.javaVersion}"
-        }
-    }
     sourceSets {
-        named("commonMain") {
+        val commonMain by getting {
             dependencies {
                 implementation(project(":logging"))
             }
         }
-        named("jvmMain") {
+        val jvmMain by getting {
             dependencies {
                 implementation(Log4j2.core)
             }
         }
     }
 }
-
-detekt {
-    source.from(
-        "src/commonMain",
-        "src/jvmMain"
-    )
-}
-
-kover {
-    useJacoco()
-    koverReport {
-        defaults {
-            xml {
-                onCheck = true
-            }
-        }
-    }
-}
-
-publishing.publications {
-    named<MavenPublication>("kotlinMultiplatform") {
-        artifact(project.dokkaKotlinJar())
-    }
-    named<MavenPublication>("jvm") {
-        artifact(project.javadocJar())
-    }
-}
-
-LicenseReporter.generateReportIn(project)
-JavadocConfig.applyTo(project)

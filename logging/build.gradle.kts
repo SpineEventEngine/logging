@@ -24,33 +24,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.dependency.Guava
-import io.spine.internal.dependency.JUnit
-import io.spine.internal.dependency.Kotest
 import io.spine.internal.dependency.Spine
-import io.spine.internal.dependency.SystemLambda
-import io.spine.internal.gradle.javadoc.JavadocConfig
 import io.spine.internal.gradle.publish.IncrementGuard
-import io.spine.internal.gradle.testing.configureLogging
-import io.spine.internal.gradle.testing.registerTestTasks
-import io.spine.internal.gradle.kotlin.setFreeCompilerArgs
 import io.spine.internal.gradle.publish.SpinePublishing
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import io.spine.internal.gradle.publish.javadocJar
 import io.spine.internal.gradle.publish.spinePublishing
-import io.spine.internal.gradle.report.license.LicenseReporter
 
 plugins {
-    `maven-publish`
-    kotlin("multiplatform")
-    kotest
-    `dokka-for-kotlin`
-    `detekt-code-analysis`
-    id("org.jetbrains.kotlinx.kover")
-    `project-report`
+    `kmp-module`
+    `kmp-publish`
 }
-apply<IncrementGuard>()
-LicenseReporter.generateReportIn(project)
+
+apply {
+    plugin<IncrementGuard>()
+}
 
 // This module configures `spinePublishing` on its own to change a prefix
 // specified by the root project.
@@ -63,106 +49,41 @@ spinePublishing {
 }
 
 kotlin {
-    explicitApi()
-
-    jvm {
-        withJava()
-        compilations.all {
-            kotlinOptions.jvmTarget = BuildSettings.javaVersion.toString()
-        }
-    }
-
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(Spine.reflect) {
-                    exclude(group = "com.google.flogger")
-                }
-            }
-        }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-                implementation(Kotest.assertions)
-                implementation(Kotest.frameworkEngine)
-                implementation(Kotest.datatest)
+                implementation(Spine.reflect)
             }
         }
         val jvmMain by getting {
             dependencies {
                 implementation(project(":middleware"))
                 runtimeOnly(project(":jvm-default-platform"))
-                implementation(Guava.lib)
             }
         }
         val jvmTest by getting {
             dependencies {
                 implementation(project(":testutil-logging"))
                 implementation(project(":probe-backend"))
-                implementation(Spine.testlib) {
-                    exclude(group = "com.google.flogger")
-                }
-                implementation(JUnit.runner)
-                implementation(Kotest.runnerJUnit5Jvm)
-                implementation(SystemLambda.lib)
             }
         }
     }
 }
 
-detekt {
-    source.from(
-        "src/commonMain",
-        "src/jvmMain"
-    )
-}
-
 tasks {
-    registerTestTasks()
+    /**
+     * Prevents loading any members from “unloaded” package
+     * hierarchy in advance.
+     *
+     * `PackageAnnotationLookupSpec` needs these members to be
+     * unloaded from the beginning. This behavior matches
+     * the production runtime, in which classes (and packages)
+     * are loaded as needed.
+     *
+     * JUnit loads test classes in advance to support its features.
+     * For example, test includes and excludes functionality.
+     */
     named<Test>("jvmTest") {
-
-        /**
-         * Prevents loading any members from “unloaded” package
-         * hierarchy in advance.
-         *
-         * `PackageAnnotationLookupSpec` needs these members to be
-         * unloaded from the beginning. This behavior matches
-         * the production runtime, in which classes (and packages)
-         * are loaded as needed.
-         *
-         * JUnit loads test classes in advance to support their features.
-         * For example, test includes and excludes functionality.
-         */
         filter.excludeTestsMatching("io.spine.reflect.given.unloaded*")
-
-        useJUnitPlatform()
-        configureLogging()
-    }
-    withType<KotlinCompile>().configureEach {
-        setFreeCompilerArgs()
     }
 }
-
-kover {
-    useJacoco()
-}
-
-koverReport {
-    defaults {
-        xml {
-            onCheck = true
-        }
-    }
-}
-
-publishing.publications {
-    named<MavenPublication>("kotlinMultiplatform") {
-        artifact(project.dokkaKotlinJar())
-    }
-    named<MavenPublication>("jvm") {
-        artifact(project.javadocJar())
-    }
-}
-
-JavadocConfig.applyTo(project)

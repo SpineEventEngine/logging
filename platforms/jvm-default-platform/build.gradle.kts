@@ -43,3 +43,23 @@ dependencies {
 java {
     disableLinters() // Due to non-migrated Flogger sources.
 }
+
+
+/**
+ * Specifies explicit dependencies between tasks.
+ *
+ * Since Gradle 8, all task dependencies should be explicit. Gradle fails
+ * the build if it detects a task that uses output from another task without
+ * an explicit dependency on it.
+ *
+ * Plugin authors should adapt to this with time. Until then, we have to specify
+ * the missed dependencies on our own.
+ */
+afterEvaluate {
+    // `kaptKotlin` task is created after the configuration phase,
+    // so we have to use `afterEvaluate` block.
+    val kaptKotlin by tasks.existing
+    val dokkaHtml by tasks.existing {
+        dependsOn(kaptKotlin)
+    }
+}
