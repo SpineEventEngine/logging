@@ -24,10 +24,38 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.gradle.publish.javadocJar
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.kotlin.dsl.`maven-publish`
 import org.gradle.kotlin.dsl.named
+
+/**
+ * Configures publications for `kmp-module`.
+ *
+ * As for now, [spinePublishing][io.spine.internal.gradle.publish.spinePublishing]
+ * doesn't support Kotlin Multiplatform modules. So, their publications are
+ * configured by this script plugin. Other publishing-related configuration
+ * is still performed by the extension.
+ *
+ * To publish a KMP module, one still needs to open and configure
+ * `spinePublishing` extension. Make sure `spinePublishing.customPublishing`
+ * property is set to `true`, and this script plugin is applied.
+ *
+ * For example:
+ *
+ * ```
+ * plugins {
+ *     `kmp-module`
+ *     `kmp-publish`
+ * }
+ *
+ * spinePublishing {
+ *     destinations = setOf(...)
+ *     customPublishing = true
+ * }
+ * ```
+ */
+@Suppress("unused")
+val about = ""
 
 plugins {
     `maven-publish`
@@ -36,9 +64,12 @@ plugins {
 
 publishing.publications {
     named<MavenPublication>("kotlinMultiplatform") {
+        // Although, the “common artifact” can't be used independently
+        // of target artifacts, it is published with documentation.
         artifact(project.dokkaKotlinJar())
     }
     named<MavenPublication>("jvm") {
-        artifact(project.javadocJar())
+        // Includes Kotlin (JVM + common) and Java documentation.
+        artifact(project.dokkaKotlinJar())
     }
 }
