@@ -31,6 +31,7 @@ import org.gradle.kotlin.dsl.named
 
 plugins {
     `maven-publish`
+    id("dokka-for-kotlin")
 }
 
 publishing.publications {
