@@ -147,6 +147,9 @@ fun Module.addDependencies() = dependencies {
     compileOnlyApi(JavaX.annotations)
     ErrorProne.annotations.forEach { compileOnlyApi(it) }
 
+    // This is not required for `Logging` library itself.
+    //implementation(Spine.Logging.lib)
+
     testImplementation(Guava.testLib)
     testImplementation(JUnit.runner)
     testImplementation(JUnit.pioneer)
