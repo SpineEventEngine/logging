@@ -24,6 +24,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+@file:Suppress("DEPRECATION")   // Since we need `Flogger` for tests.
+
 import io.spine.internal.dependency.Flogger
 import io.spine.internal.dependency.Slf4J
 
