@@ -38,6 +38,7 @@ import io.spine.internal.gradle.sourceSets
 import java.io.File
 import java.util.*
 import org.gradle.api.Project
+import org.gradle.api.Task
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.plugins.BasePlugin
 import org.gradle.api.tasks.Copy
@@ -79,7 +80,7 @@ class JacocoConfig(
          *
          * If it does not exist, it will be created.
          */
-        private const val REPORTS_DIR_SUFFIX = "subreports/jacoco/"
+        private const val reportsDirSuffix = "subreports/jacoco/"
 
         /**
          * Applies the JaCoCo plugin to the Gradle project.
@@ -93,7 +94,7 @@ class JacocoConfig(
         fun applyTo(project: Project) {
             project.applyPlugin(BasePlugin::class.java)
             val javaProjects: Iterable<Project> = eligibleProjects(project)
-            val reportsDir = project.rootProject.buildDirectory.resolve(REPORTS_DIR_SUFFIX)
+            val reportsDir = project.rootProject.buildDirectory.resolve(reportsDirSuffix)
             JacocoConfig(project.rootProject, reportsDir, javaProjects).configure()
         }
 
