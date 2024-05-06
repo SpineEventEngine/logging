@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2024, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,15 +24,20 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.flogger.util
-
-import org.junit.jupiter.api.DisplayName
+package io.spine.internal.dependency
 
 /**
- * Tests for [ThrowableStackGetter].
+ * gRPC-Kotlin/JVM.
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/util/ThrowableStackGetterTest.java">
- *     Original Java code of Google Flogger</a>
+ * @see <a href="https://github.com/grpc/grpc-kotlin">GitHub project</a>
  */
-@DisplayName("`ThrowableStackGetter` should")
-internal class ThrowableStackGetterSpec : AbstractStackGetterSpec(ThrowableStackGetter())
+@Suppress("unused")
+object GrpcKotlin {
+    const val version = "1.3.0"
+    const val stub = "io.grpc:grpc-kotlin-stub:$version"
+
+    object ProtocPlugin {
+        const val id = "grpckt"
+        const val artifact = "io.grpc:protoc-gen-grpc-kotlin:$version:jdk8@jar"
+    }
+}

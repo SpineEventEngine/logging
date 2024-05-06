@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2024, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,15 +24,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.flogger.util
-
-import org.junit.jupiter.api.DisplayName
+package io.spine.internal.dependency
 
 /**
- * Tests for [StackWalkerStackGetter].
- *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/util/StackWalkerStackGetterTest.java">
- *     Original Java code of Google Flogger</a>
+ * Kotlin Coroutines.
+ * 
+ * @see <a href="https://github.com/Kotlin/kotlinx.coroutines">GitHub projecet</a>
  */
-@DisplayName("`StackWalkerStackGetter` should")
-internal class StackWalkerStackGetterSpec : AbstractStackGetterSpec(StackWalkerStackGetter())
+@Suppress("unused")
+object Coroutines {
+    const val version = "1.6.4"
+    const val jdk8 = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$version"
+    const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
+    const val bom = "org.jetbrains.kotlinx:kotlinx-coroutines-bom:$version"
+    const val coreJvm = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:$version"
+}

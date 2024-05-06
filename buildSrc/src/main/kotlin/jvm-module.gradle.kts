@@ -33,6 +33,7 @@ import io.spine.internal.dependency.JUnit
 import io.spine.internal.dependency.JavaX
 import io.spine.internal.dependency.Kotest
 import io.spine.internal.dependency.Protobuf
+import io.spine.internal.dependency.Spine
 import io.spine.internal.gradle.checkstyle.CheckStyleConfig
 import io.spine.internal.gradle.github.pages.updateGitHubPages
 import io.spine.internal.gradle.javac.configureErrorProne
@@ -147,11 +148,15 @@ fun Module.addDependencies() = dependencies {
     compileOnlyApi(JavaX.annotations)
     ErrorProne.annotations.forEach { compileOnlyApi(it) }
 
+    // We're in Logging. We should not depend on it.
+    //implementation(Spine.Logging.lib)
+
     testImplementation(Guava.testLib)
     testImplementation(JUnit.runner)
     testImplementation(JUnit.pioneer)
     JUnit.api.forEach { testImplementation(it) }
 
+    testImplementation(Spine.testlib)
     testImplementation(Kotest.frameworkEngine)
     testImplementation(Kotest.datatest)
     testImplementation(Kotest.runnerJUnit5Jvm)
@@ -167,7 +172,8 @@ fun Module.forceConfigurations() {
                 force(
                     JUnit.bom,
                     JUnit.runner,
-                    Dokka.BasePlugin.lib
+                    Dokka.BasePlugin.lib,
+                    Spine.reflect
                 )
             }
         }

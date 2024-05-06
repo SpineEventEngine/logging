@@ -26,9 +26,7 @@
 
 package io.spine.internal.gradle.report.coverage
 
-import io.spine.internal.dependency.Jacoco
 import io.spine.internal.gradle.applyPlugin
-import io.spine.internal.gradle.buildDirectory
 import io.spine.internal.gradle.findTask
 import io.spine.internal.gradle.report.coverage.TaskName.check
 import io.spine.internal.gradle.report.coverage.TaskName.copyReports
@@ -38,6 +36,7 @@ import io.spine.internal.gradle.sourceSets
 import java.io.File
 import java.util.*
 import org.gradle.api.Project
+import org.gradle.api.Task
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.plugins.BasePlugin
 import org.gradle.api.tasks.Copy
@@ -46,9 +45,7 @@ import org.gradle.api.tasks.SourceSetOutput
 import org.gradle.api.tasks.TaskContainer
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.get
-import org.gradle.kotlin.dsl.the
 import org.gradle.testing.jacoco.plugins.JacocoPlugin
-import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
 import org.gradle.testing.jacoco.tasks.JacocoReport
 
 /**
@@ -79,7 +76,7 @@ class JacocoConfig(
          *
          * If it does not exist, it will be created.
          */
-        private const val REPORTS_DIR_SUFFIX = "subreports/jacoco/"
+        private const val reportsDirSuffix = "subreports/jacoco/"
 
         /**
          * Applies the JaCoCo plugin to the Gradle project.
@@ -93,7 +90,8 @@ class JacocoConfig(
         fun applyTo(project: Project) {
             project.applyPlugin(BasePlugin::class.java)
             val javaProjects: Iterable<Project> = eligibleProjects(project)
-            val reportsDir = project.rootProject.buildDirectory.resolve(REPORTS_DIR_SUFFIX)
+            val reportsDir = project.rootProject.layout
+                .buildDirectory.dir(reportsDirSuffix).get().asFile
             JacocoConfig(project.rootProject, reportsDir, javaProjects).configure()
         }
 
@@ -120,22 +118,12 @@ class JacocoConfig(
     }
 
     private fun configure() {
-        configureVersion()
-        configureTask()
-    }
-
-    private fun configureVersion() {
-        val jacoco = rootProject.the<JacocoPluginExtension>()
-        jacoco.toolVersion = Jacoco.version
-    }
-
-    private fun configureTask() {
         val tasks = rootProject.tasks
         val copyReports = registerCopy(tasks)
         val rootReport = registerRootReport(tasks, copyReports)
-        tasks.named(check.name) {
-            dependsOn(rootReport)
-        }
+        rootProject
+            .findTask<Task>(check.name)
+            .dependsOn(rootReport)
     }
 
     private fun registerRootReport(
