@@ -128,14 +128,12 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
               } else {
                 // In the very unlikely case there's more than one aggregation key, emit a list.
                 var buf = new StringBuilder();
-                buf.append('[')
-                   .append(first);
+                buf.append('[').append(first);
                 do {
                   buf.append(',')
                      .append(keys.next());
                 } while (keys.hasNext());
-                out.handle(getLabel(), buf.append(']')
-                                          .toString());
+                out.handle(getLabel(), buf.append(']').toString());
               }
             }
           }
@@ -197,7 +195,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
               var values = e.getValue();
               if (!values.isEmpty()) {
                 for (var v : e.getValue()) {
-                    out.handle(e.getKey(), v);
+                  out.handle(e.getKey(), v);
                 }
               } else {
                 out.handle(e.getKey(), null);
