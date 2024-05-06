@@ -72,12 +72,6 @@ all modules and does not describe the project structure per-subproject.
     <scope>test</scope>
   </dependency>
   <dependency>
-    <groupId>com.google.flogger</groupId>
-    <artifactId>flogger-slf4j-backend</artifactId>
-    <version>0.7.4</version>
-    <scope>test</scope>
-  </dependency>
-  <dependency>
     <groupId>com.google.guava</groupId>
     <artifactId>guava-testlib</artifactId>
     <version>32.1.3-jre</version>

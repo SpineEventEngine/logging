@@ -24,7 +24,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.dependency.Flogger
 import io.spine.internal.dependency.Slf4J
 
 plugins {
@@ -34,9 +33,6 @@ plugins {
 dependencies {
     testImplementation(project(":logging"))
     testImplementation(project(":fixtures"))
-    testRuntimeOnly(Flogger.Runtime.slf4JBackend) {
-        exclude(group = "com.google.flogger")
-    }
     testRuntimeOnly(Slf4J.reload4j)
     testRuntimeOnly(project(":std-context"))
 }
