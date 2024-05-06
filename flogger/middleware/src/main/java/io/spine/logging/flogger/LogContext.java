@@ -118,28 +118,28 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      * formatting.
      */
     public static final FloggerMetadataKey<Object> LOG_SITE_GROUPING_KEY =
-            new FloggerMetadataKey<>("group_by", Object.class, true) {
-                @Override
-                public void emitRepeated(Iterator<Object> keys, KeyValueHandler out) {
-                    if (keys.hasNext()) {
-                        var first = keys.next();
-                        if (!keys.hasNext()) {
-                            out.handle(getLabel(), first);
-                        } else {
-                            // In the very unlikely case there's more than one aggregation key, emit a list.
-                            var buf = new StringBuilder();
-                            buf.append('[')
-                               .append(first);
-                            do {
-                                buf.append(',')
-                                   .append(keys.next());
-                            } while (keys.hasNext());
-                            out.handle(getLabel(), buf.append(']')
-                                                      .toString());
-                        }
-                    }
-                }
-            };
+      new FloggerMetadataKey<>("group_by", Object.class, true) {
+          @Override
+          public void emitRepeated(Iterator<Object> keys, KeyValueHandler out) {
+              if (keys.hasNext()) {
+                  var first = keys.next();
+                  if (!keys.hasNext()) {
+                      out.handle(getLabel(), first);
+                  } else {
+                      // In the very unlikely case there's more than one aggregation key, emit a list.
+                      var buf = new StringBuilder();
+                      buf.append('[')
+                         .append(first);
+                      do {
+                          buf.append(',')
+                             .append(keys.next());
+                      } while (keys.hasNext());
+                      out.handle(getLabel(), buf.append(']')
+                                                .toString());
+                  }
+              }
+          }
+      };
 
     /**
      * The key associated with a {@code Boolean} value used to specify that the log statement must
