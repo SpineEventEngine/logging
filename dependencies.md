@@ -790,7 +790,7 @@
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 14:45:10 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon May 06 14:58:35 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -1581,7 +1581,7 @@ This report was generated on **Mon May 06 14:45:10 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 14:45:10 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon May 06 14:58:36 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -2364,7 +2364,7 @@ This report was generated on **Mon May 06 14:45:10 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 14:45:10 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon May 06 14:58:36 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -3155,7 +3155,7 @@ This report was generated on **Mon May 06 14:45:10 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 14:45:10 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon May 06 14:58:36 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -3209,27 +3209,9 @@ This report was generated on **Mon May 06 14:45:10 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-reflect. **Version** : 1.9.23.
-     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
-     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
-     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
-     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk8. **Version** : 1.9.23.
-     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
-     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.2.
-     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
-     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
-     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
 1.  **Group** : aopalliance. **Name** : aopalliance. **Version** : 1.0.
@@ -3942,7 +3924,7 @@ This report was generated on **Mon May 06 14:45:10 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 14:45:11 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon May 06 14:58:36 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -3996,27 +3978,9 @@ This report was generated on **Mon May 06 14:45:11 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-reflect. **Version** : 1.9.23.
-     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
-     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
-     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
-     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk8. **Version** : 1.9.23.
-     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
-     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.2.
-     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
-     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
-     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
 1.  **Group** : aopalliance. **Name** : aopalliance. **Version** : 1.0.
@@ -4725,7 +4689,7 @@ This report was generated on **Mon May 06 14:45:11 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 14:45:11 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon May 06 14:58:37 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -4779,27 +4743,9 @@ This report was generated on **Mon May 06 14:45:11 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-reflect. **Version** : 1.9.23.
-     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
-     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
-     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
-     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk8. **Version** : 1.9.23.
-     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
-     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.2.
-     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
-     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
-     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
 1.  **Group** : aopalliance. **Name** : aopalliance. **Version** : 1.0.
@@ -5508,7 +5454,7 @@ This report was generated on **Mon May 06 14:45:11 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 14:45:11 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon May 06 14:58:37 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -5562,27 +5508,9 @@ This report was generated on **Mon May 06 14:45:11 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-reflect. **Version** : 1.9.23.
-     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
-     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
-     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
-     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk8. **Version** : 1.9.23.
-     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
-     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.2.
-     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
-     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
-     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
 1.  **Group** : aopalliance. **Name** : aopalliance. **Version** : 1.0.
@@ -6299,7 +6227,7 @@ This report was generated on **Mon May 06 14:45:11 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 14:45:11 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon May 06 14:58:37 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -6353,27 +6281,9 @@ This report was generated on **Mon May 06 14:45:11 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-reflect. **Version** : 1.9.23.
-     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
-     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
-     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
-     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk8. **Version** : 1.9.23.
-     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
-     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.2.
-     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
-     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
-     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
 1.  **Group** : aopalliance. **Name** : aopalliance. **Version** : 1.0.
@@ -7094,7 +7004,7 @@ This report was generated on **Mon May 06 14:45:11 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 14:45:11 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon May 06 14:58:37 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -7889,7 +7799,7 @@ This report was generated on **Mon May 06 14:45:11 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 14:45:12 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon May 06 14:58:38 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -8642,7 +8552,7 @@ This report was generated on **Mon May 06 14:45:12 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 14:45:12 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon May 06 14:58:38 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -9425,7 +9335,7 @@ This report was generated on **Mon May 06 14:45:12 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 14:45:12 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon May 06 14:58:38 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -9479,20 +9389,7 @@ This report was generated on **Mon May 06 14:45:12 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-reflect. **Version** : 1.9.23.
-     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
-     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib. **Version** : 1.9.23.
-     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
-     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
-     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
-     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk8. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -10200,7 +10097,7 @@ This report was generated on **Mon May 06 14:45:12 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 14:45:12 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon May 06 14:58:38 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -11192,7 +11089,7 @@ This report was generated on **Mon May 06 14:45:12 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 14:45:12 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon May 06 14:58:39 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -12033,7 +11930,7 @@ This report was generated on **Mon May 06 14:45:12 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 14:45:13 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon May 06 14:58:39 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -12816,7 +12713,7 @@ This report was generated on **Mon May 06 14:45:13 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 14:45:13 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon May 06 14:58:39 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
@@ -13569,4 +13466,4 @@ This report was generated on **Mon May 06 14:45:13 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 14:45:13 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon May 06 14:58:39 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
