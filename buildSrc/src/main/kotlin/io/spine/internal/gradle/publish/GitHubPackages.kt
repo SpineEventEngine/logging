@@ -91,7 +91,7 @@ private fun Project.readGitHubToken(): String {
  * use such a workaround.
  */
 private fun Project.readTokenFromArchive(): String {
-    val targetDir = "${buildDirectory}/token"
+    val targetDir = "$buildDirectory/token"
     file(targetDir).mkdirs()
     val fileToUnzip = "${rootDir}/buildSrc/aus.weis"
 
