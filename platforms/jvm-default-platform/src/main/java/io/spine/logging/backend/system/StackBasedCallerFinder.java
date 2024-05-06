@@ -30,7 +30,8 @@ import io.spine.logging.flogger.AbstractLogger;
 import io.spine.logging.flogger.FloggerLogSite;
 import io.spine.logging.flogger.FloggerLogSites;
 import io.spine.logging.flogger.backend.Platform.LogCallerFinder;
-import io.spine.reflect.CallerFinder;
+
+import static io.spine.reflect.CallerFinder.findCallerOf;
 
 /**
  * The default caller finder implementation for Java 9+.
@@ -51,7 +52,7 @@ public final class StackBasedCallerFinder extends LogCallerFinder {
   @Override
   public String findLoggingClass(Class<? extends AbstractLogger<?>> loggerClass) {
     // We can skip at most only 1 method from the analysis, the inferLoggingClass() method itself.
-    StackTraceElement caller = CallerFinder.findCallerOf(loggerClass, 1);
+    var caller = findCallerOf(loggerClass, 1);
     if (caller != null) {
       // This might contain '$' for inner/nested classes, but that's okay.
       return caller.getClassName();
@@ -64,7 +65,7 @@ public final class StackBasedCallerFinder extends LogCallerFinder {
     // Skip an additional stack frame because we create the Throwable inside this method, not at
     // the point that this method was invoked (which allows completely alternate implementations
     // to avoid even constructing the Throwable instance).
-    StackTraceElement caller = CallerFinder.findCallerOf(loggerApi, stackFramesToSkip + 1);
+    var caller = findCallerOf(loggerApi, stackFramesToSkip + 1);
     // Returns INVALID if "caller" is null (no caller found for given API class).
     return FloggerLogSites.logSiteFrom(caller);
   }

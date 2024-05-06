@@ -24,7 +24,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.dependency.Dokka
 import io.spine.internal.dependency.JUnit
 import io.spine.internal.dependency.Jacoco
 import io.spine.internal.dependency.Kotest
@@ -98,6 +97,7 @@ fun Project.forceConfigurations() {
  * It configures KMP, in which Kotlin for JVM is only one of
  * possible targets.
  */
+@Suppress("UNUSED_VARIABLE") // Avoid warnings for source set vars.
 kotlin {
     // Enables explicit API mode for any Kotlin sources within the module.
     explicitApi()
@@ -114,7 +114,6 @@ kotlin {
     // Dependencies are specified per-target.
     // Please note, common sources are implicitly available in all targets.
     sourceSets {
-        @Suppress("UNUSED_VARIABLE")
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
@@ -124,7 +123,6 @@ kotlin {
                 implementation(Kotest.datatest)
             }
         }
-        @Suppress("UNUSED_VARIABLE")
         val jvmTest by getting {
             dependencies {
                 implementation(Spine.testlib)

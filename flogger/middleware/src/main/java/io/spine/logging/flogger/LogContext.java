@@ -118,25 +118,28 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      * formatting.
      */
     public static final FloggerMetadataKey<Object> LOG_SITE_GROUPING_KEY =
-        new FloggerMetadataKey<Object>("group_by", Object.class, true) {
-          @Override
-          public void emitRepeated(Iterator<Object> keys, KeyValueHandler out) {
-            if (keys.hasNext()) {
-              Object first = keys.next();
-              if (!keys.hasNext()) {
-                out.handle(getLabel(), first);
-              } else {
-                // In the very unlikely case there's more than one aggregation key, emit a list.
-                StringBuilder buf = new StringBuilder();
-                buf.append('[').append(first);
-                do {
-                  buf.append(',').append(keys.next());
-                } while (keys.hasNext());
-                out.handle(getLabel(), buf.append(']').toString());
-              }
-            }
-          }
-        };
+            new FloggerMetadataKey<>("group_by", Object.class, true) {
+                @Override
+                public void emitRepeated(Iterator<Object> keys, KeyValueHandler out) {
+                    if (keys.hasNext()) {
+                        var first = keys.next();
+                        if (!keys.hasNext()) {
+                            out.handle(getLabel(), first);
+                        } else {
+                            // In the very unlikely case there's more than one aggregation key, emit a list.
+                            var buf = new StringBuilder();
+                            buf.append('[')
+                               .append(first);
+                            do {
+                                buf.append(',')
+                                   .append(keys.next());
+                            } while (keys.hasNext());
+                            out.handle(getLabel(), buf.append(']')
+                                                      .toString());
+                        }
+                    }
+                }
+            };
 
     /**
      * The key associated with a {@code Boolean} value used to specify that the log statement must
@@ -187,21 +190,22 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      * Users should never build new {@link Tags} instances just to pass them into a log statement.
      */
     public static final FloggerMetadataKey<Tags> TAGS =
-        new FloggerMetadataKey<Tags>("tags", Tags.class, false) {
-          @Override
-          public void emit(Tags tags, KeyValueHandler out) {
-            for (Map.Entry<String, ? extends Set<Object>> e : tags.asMap().entrySet()) {
-              Set<Object> values = e.getValue();
-              if (!values.isEmpty()) {
-                for (Object v : e.getValue()) {
-                  out.handle(e.getKey(), v);
+            new FloggerMetadataKey<>("tags", Tags.class, false) {
+                @Override
+                public void emit(Tags tags, KeyValueHandler out) {
+                    for (Map.Entry<String, ? extends Set<Object>> e : tags.asMap()
+                                                                          .entrySet()) {
+                        var values = e.getValue();
+                        if (!values.isEmpty()) {
+                            for (var v : e.getValue()) {
+                                out.handle(e.getKey(), v);
+                            }
+                        } else {
+                            out.handle(e.getKey(), null);
+                        }
+                    }
                 }
-              } else {
-                out.handle(e.getKey(), null);
-              }
-            }
-          }
-        };
+            };
 
     /**
      * Key associated with the metadata for specifying additional stack information with a log
@@ -256,7 +260,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
     }
 
     private int indexOf(FloggerMetadataKey<?> key) {
-      for (int index = 0; index < keyValueCount; index++) {
+      for (var index = 0; index < keyValueCount; index++) {
         if (keyValuePairs[2 * index].equals(key)) {
           return index;
         }
@@ -267,7 +271,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
     @Override
     @Nullable
     public <T> T findValue(FloggerMetadataKey<T> key) {
-      int index = indexOf(key);
+      var index = indexOf(key);
       return index != -1 ? key.cast(keyValuePairs[(2 * index) + 1]) : null;
     }
 
@@ -278,7 +282,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      */
     <T> void addValue(FloggerMetadataKey<T> key, T value) {
       if (!key.canRepeat()) {
-        int index = indexOf(key);
+        var index = indexOf(key);
         if (index != -1) {
           keyValuePairs[(2 * index) + 1] = checkNotNull(value, "metadata value");
           return;
@@ -298,12 +302,12 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
 
     /** Removes all key/value pairs for a given key. */
     void removeAllValues(FloggerMetadataKey<?> key) {
-      int index = indexOf(key);
+      var index = indexOf(key);
       if (index >= 0) {
-        int dest = 2 * index;
-        int src = dest + 2;
+        var dest = 2 * index;
+        var src = dest + 2;
         while (src < (2 * keyValueCount)) {
-          Object nextKey = keyValuePairs[src];
+          var nextKey = keyValuePairs[src];
           if (!nextKey.equals(key)) {
             keyValuePairs[dest] = nextKey;
             keyValuePairs[dest + 1] = keyValuePairs[src + 1];
@@ -322,8 +326,8 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
     /** Strictly for debugging. */
     @Override
     public String toString() {
-      StringBuilder out = new StringBuilder("Metadata{");
-      for (int n = 0; n < size(); n++) {
+      var out = new StringBuilder("Metadata{");
+      for (var n = 0; n < size(); n++) {
         out.append(" '").append(getKey(n)).append("': ").append(getValue(n));
       }
       return out.append(" }").toString();
@@ -335,6 +339,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
    * instance must be unique and it is important not to replace this with {@code ""} or any other
    * value than might be interned and be accessible to code outside this class.
    */
+  @SuppressWarnings("StringOperationCanBeSimplified")
   private static final String LITERAL_VALUE_MESSAGE = new String();
 
   // TODO: Aggressively attempt to reduce the number of fields in this instance.
@@ -597,7 +602,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
         // Since the base class postProcess() should be invoked before subclass logic, we can set
         // the initial status here. Subclasses can combine this with other rate limiter statuses by
         // calling updateRateLimiterStatus() before we get back into shouldLog().
-        RateLimitStatus status = DurationRateLimiter.check(metadata, logSiteKey, timestampNanos);
+        var status = DurationRateLimiter.check(metadata, logSiteKey, timestampNanos);
         status = RateLimitStatus.combine(status, CountingRateLimiter.check(metadata, logSiteKey));
         status = RateLimitStatus.combine(status, SamplingRateLimiter.check(metadata, logSiteKey));
         this.rateLimitStatus = status;
@@ -610,7 +615,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
       }
 
       // This does not affect whether logging will occur, only what additional data it contains.
-      StackSize stackSize = metadata.findValue(Key.CONTEXT_STACK_SIZE);
+      var stackSize = metadata.findValue(Key.CONTEXT_STACK_SIZE);
       if (stackSize != null) {
         // We add this information to the stack trace exception so it doesn't need to go here.
         removeMetadata(Key.CONTEXT_STACK_SIZE);
@@ -626,7 +631,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
         //
         // By skipping the initial code inside this method, we don't trigger any stack capture until
         // after the "log" method.
-        LogSiteStackTrace context =
+        var context =
             new LogSiteStackTrace(
                 getMetadata().findValue(Key.LOG_CAUSE),
                 stackSize,
@@ -691,10 +696,10 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
         logSiteKey = specializeLogSiteKeyFromMetadata(logSiteKey, metadata);
       }
     }
-    boolean shouldLog = postProcess(logSiteKey);
+    var shouldLog = postProcess(logSiteKey);
     if (rateLimitStatus != null) {
       // We check rate limit status even if it is "DISALLOW" to update the skipped logs count.
-      int skippedLogs = RateLimitStatus.checkStatus(rateLimitStatus, logSiteKey, metadata);
+      var skippedLogs = RateLimitStatus.checkStatus(rateLimitStatus, logSiteKey, metadata);
       if (shouldLog && skippedLogs > 0) {
         metadata.addValue(Key.SKIPPED_LOG_COUNT, skippedLogs);
       }
@@ -745,7 +750,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
     // Evaluate any (rare) LazyArg instances early. This may throw exceptions from user code, but
     // it seems reasonable to propagate them in this case (they would have been thrown if the
     // argument was evaluated at the call site anyway).
-    for (int n = 0; n < args.length; n++) {
+    for (var n = 0; n < args.length; n++) {
       if (args[n] instanceof LazyArg) {
         args[n] = ((LazyArg<?>) args[n]).evaluate();
       }
@@ -759,9 +764,9 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
     }
     // Right at the end of processing add any tags injected by the platform. Any tags supplied at
     // the log site are merged with the injected tags (though this should be very rare).
-    Tags tags = Platform.getInjectedTags();
+    var tags = Platform.getInjectedTags();
     if (!tags.isEmpty()) {
-      Tags logSiteTags = getMetadata().findValue(Key.TAGS);
+      var logSiteTags = getMetadata().findValue(Key.TAGS);
       if (logSiteTags != null) {
         tags = tags.merge(logSiteTags);
       }
@@ -1061,7 +1066,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
       Object... rest) {
     if (shouldLog()) {
       // Manually create a new varargs array and copy the parameters in.
-      Object[] params = new Object[rest.length + 10];
+      var params = new Object[rest.length + 10];
       params[0] = p1;
       params[1] = p2;
       params[2] = p3;
