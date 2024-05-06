@@ -186,4 +186,3 @@ kover {
 
 LicenseReporter.generateReportIn(project)
 CheckStyleConfig.applyTo(project)
-JavadocConfig.applyTo(project)
