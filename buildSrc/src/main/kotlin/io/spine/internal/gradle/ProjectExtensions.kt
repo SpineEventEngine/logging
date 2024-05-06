@@ -98,4 +98,3 @@ val Project.artifactId: String
  */
 val Project.buildDirectory: File
     get() = layout.buildDirectory.get().asFile
-
