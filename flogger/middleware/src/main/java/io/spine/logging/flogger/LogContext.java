@@ -1,5 +1,5 @@
 /*
- * Copyright 2012, The Flogger Authors; 2023, TeamDev. All rights reserved.
+ * Copyright 2012, The Flogger Authors; 2024, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,8 +43,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import static io.spine.logging.flogger.FloggerLogSite.injectedLogSite;
-import static io.spine.logging.flogger.util.CallerFinder.getStackForCallerOf;
 import static io.spine.logging.flogger.util.Checks.checkNotNull;
+import static io.spine.reflect.CallerFinder.stackForCallerOf;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 /**
@@ -630,7 +630,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
             new LogSiteStackTrace(
                 getMetadata().findValue(Key.LOG_CAUSE),
                 stackSize,
-                getStackForCallerOf(LogContext.class, stackSize.getMaxDepth(), 1));
+                stackForCallerOf(LogContext.class, stackSize.getMaxDepth(), 1));
         // The "cause" is a unique metadata key, we must replace any existing value.
         addMetadata(Key.LOG_CAUSE, context);
       }

@@ -30,7 +30,7 @@ import io.spine.logging.flogger.AbstractLogger;
 import io.spine.logging.flogger.FloggerLogSite;
 import io.spine.logging.flogger.FloggerLogSites;
 import io.spine.logging.flogger.backend.Platform.LogCallerFinder;
-import io.spine.logging.flogger.util.CallerFinder;
+import io.spine.reflect.CallerFinder;
 
 /**
  * The default caller finder implementation for Java 9+.

@@ -24,6 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import io.spine.internal.dependency.Spine
 import io.spine.internal.gradle.java.disableLinters
 import io.spine.internal.gradle.testing.exposeTestConfiguration
 
@@ -32,6 +33,7 @@ plugins {
 }
 
 dependencies {
+    implementation(Spine.reflect)
     implementation(project(":platform-generator", configuration = "generatedPlatformProvider"))
     testImplementation(project(":testutil-logging"))
     testRuntimeOnly(project(":jvm-default-platform"))

@@ -35,7 +35,9 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/util/CallerFinder.java">
  *     Original Java code of Google Flogger</a>
+ * @deprecated please use {@link io.spine.reflect.CallFinder} instead.
  */
+@Deprecated
 public final class CallerFinder {
 
   private static final StackGetter STACK_GETTER = getBestStackGetter();
