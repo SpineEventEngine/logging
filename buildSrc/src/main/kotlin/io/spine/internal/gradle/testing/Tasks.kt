@@ -75,7 +75,7 @@ private const val SLOW_TAG = "slow"
 /**
  * Executes JUnit tests filtering out the ones tagged as `slow`.
  */
-private abstract class FastTest : Test() {
+private open class FastTest : Test() {
     init {
         description = "Executes all JUnit tests but the ones tagged as `slow`."
         group = "Verification"
@@ -89,7 +89,7 @@ private abstract class FastTest : Test() {
 /**
  * Executes JUnit tests tagged as `slow`.
  */
-private abstract class SlowTest : Test() {
+private open class SlowTest : Test() {
     init {
         description = "Executes JUnit tests tagged as `slow`."
         group = "Verification"

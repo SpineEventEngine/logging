@@ -28,7 +28,6 @@ package io.spine.internal.gradle.publish
 
 import dokkaKotlinJar
 import io.spine.internal.gradle.Repository
-import io.spine.internal.gradle.buildDirectory
 import io.spine.internal.gradle.sourceSets
 import java.util.*
 import org.gradle.api.InvalidUserDataException
@@ -39,11 +38,11 @@ import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.tasks.TaskContainer
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.api.tasks.bundling.Jar
-import org.gradle.kotlin.dsl.findByType
 import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.register
+import org.gradle.kotlin.dsl.the
 import org.gradle.kotlin.dsl.withType
 
 /**
@@ -59,23 +58,10 @@ internal val Project.publications: PublicationContainer
     get() = publishingExtension.publications
 
 /**
- * Obtains [SpinePublishing] extension from this [Project].
- *
- * If this [Project] doesn't have one, it returns [SpinePublishing]
- * declared in the root project.
+ * Obtains [SpinePublishing] extension from the root project.
  */
 internal val Project.spinePublishing: SpinePublishing
-    get() {
-        val local = this.extensions.findByType<SpinePublishing>()
-        if (local != null) {
-            return local
-        }
-        val fromRoot = this.rootProject.extensions.findByType<SpinePublishing>()
-        if (fromRoot != null) {
-            return fromRoot
-        }
-        throw IllegalStateException("`SpinePublishing` is not found in `${project.name}`.")
-    }
+    get() = this.rootProject.the<SpinePublishing>()
 
 /**
  * Tells if this project has custom publishing.
@@ -226,7 +212,7 @@ internal fun Project.testJar(): TaskProvider<Jar> = tasks.getOrCreate("testJar")
  */
 fun Project.javadocJar(): TaskProvider<Jar> = tasks.getOrCreate("javadocJar") {
     archiveClassifier.set("javadoc")
-    from(files("$buildDirectory/docs/javadoc"))
+    from(files("$buildDir/docs/javadoc"))
     dependsOn("javadoc")
 }
 

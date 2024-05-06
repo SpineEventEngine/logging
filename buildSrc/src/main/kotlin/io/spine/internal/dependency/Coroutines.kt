@@ -24,24 +24,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.gradle.java.disableLinters
-import io.spine.internal.gradle.testing.exposeTestConfiguration
+package io.spine.internal.dependency
 
-plugins {
-    `jvm-module`
-}
-
-dependencies {
-    implementation(project(":platform-generator", configuration = "generatedPlatformProvider"))
-    testImplementation(project(":testutil-logging"))
-    testRuntimeOnly(project(":jvm-default-platform"))
-}
-
-java {
-    /**
-     * Abstract tests and their `given` classes can be re-used to test
-     * different backend and context implementations.
-     */
-    exposeTestConfiguration()
-    disableLinters() // Due to non-migrated Flogger sources.
+/**
+ * Kotlin Coroutines.
+ * 
+ * @see <a href="https://github.com/Kotlin/kotlinx.coroutines">GitHub projecet</a>
+ */
+@Suppress("unused")
+object Coroutines {
+    const val version = "1.6.4"
+    const val jdk8 = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$version"
+    const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
+    const val bom = "org.jetbrains.kotlinx:kotlinx-coroutines-bom:$version"
+    const val coreJvm = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:$version"
 }
