@@ -131,15 +131,15 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
                 buf.append('[')
                    .append(first);
                 do {
-                    buf.append(',')
-                       .append(keys.next());
+                  buf.append(',')
+                     .append(keys.next());
                 } while (keys.hasNext());
                 out.handle(getLabel(), buf.append(']')
                                           .toString());
               }
             }
           }
-      };
+        };
 
     /**
      * The key associated with a {@code Boolean} value used to specify that the log statement must
