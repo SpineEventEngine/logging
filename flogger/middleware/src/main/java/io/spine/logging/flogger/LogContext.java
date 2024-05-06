@@ -190,22 +190,21 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      * Users should never build new {@link Tags} instances just to pass them into a log statement.
      */
     public static final FloggerMetadataKey<Tags> TAGS =
-            new FloggerMetadataKey<>("tags", Tags.class, false) {
-                @Override
-                public void emit(Tags tags, KeyValueHandler out) {
-                    for (Map.Entry<String, ? extends Set<Object>> e : tags.asMap()
-                                                                          .entrySet()) {
-                        var values = e.getValue();
-                        if (!values.isEmpty()) {
-                            for (var v : e.getValue()) {
-                                out.handle(e.getKey(), v);
-                            }
-                        } else {
-                            out.handle(e.getKey(), null);
-                        }
-                    }
+        new FloggerMetadataKey<>("tags", Tags.class, false) {
+          @Override
+          public void emit(Tags tags, KeyValueHandler out) {
+            for (Map.Entry<String, ? extends Set<Object>> e : tags.asMap().entrySet()) {
+              var values = e.getValue();
+              if (!values.isEmpty()) {
+                for (var v : e.getValue()) {
+                    out.handle(e.getKey(), v);
                 }
-            };
+              } else {
+                out.handle(e.getKey(), null);
+              }
+            }
+          }
+        };
 
     /**
      * Key associated with the metadata for specifying additional stack information with a log
