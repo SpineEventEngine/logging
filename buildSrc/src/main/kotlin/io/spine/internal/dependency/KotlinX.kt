@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,20 +24,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import org.jetbrains.dokka.gradle.DokkaTask
+package io.spine.internal.dependency
 
-plugins {
-    id("org.jetbrains.dokka") // Cannot use `Dokka` dependency object here yet.
-}
+@Suppress("unused", "ConstPropertyName")
+object KotlinX {
 
-dependencies {
-    useDokkaForKotlinAsJava()
-    useDokkaWithSpineExtensions()
-}
+    const val group = "org.jetbrains.kotlinx"
 
-tasks.withType<DokkaTask>().configureEach {
-    configureForJava()
-    onlyIf {
-        (it as DokkaTask).isInPublishingGraph()
+    object Coroutines {
+
+        // https://github.com/Kotlin/kotlinx.coroutines
+        const val version = "1.7.3"
+        const val core = "$group:kotlinx-coroutines-core:$version"
+        const val jdk8 = "$group:kotlinx-coroutines-jdk8:$version"
     }
 }

@@ -28,7 +28,7 @@ package io.spine.logging
 
 import io.spine.logging.flogger.FluentLogger2
 import io.spine.logging.flogger.backend.Platform
-import io.spine.logging.flogger.util.CallerFinder
+import io.spine.reflect.CallerFinder
 import kotlin.reflect.KClass
 
 /**
@@ -76,17 +76,6 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
     @JvmStatic
     public fun <T : Any> repeatedMetadataKey(label: String, type: Class<T>): MetadataKey<T> =
         repeatedMetadataKey(label, type.kotlin)
-
-    /**
-     * Obtains an instance of [FluentLogger2] for the given class.
-     *
-     * The same instance is returned for the same class.
-     */
-    @JvmStatic
-    @JvmName("getFluentLogger") // Set the name explicitly to avoid synthetic `$logging` suffix.
-    internal fun getFluentLogger(cls: Class<*>): FluentLogger2 {
-        return get(cls).delegate
-    }
 
     private fun createForClass(cls: Class<*>): JvmLogger {
         val floggerBackend = Platform.getBackend(cls.name)

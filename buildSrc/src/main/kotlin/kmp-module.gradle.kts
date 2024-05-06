@@ -75,6 +75,21 @@ plugins {
     `project-report`
 }
 
+project.forceConfigurations()
+
+fun Project.forceConfigurations() {
+    with(configurations) {
+        forceVersions()
+        all {
+            resolutionStrategy {
+                force(
+                    Spine.reflect
+                )
+            }
+        }
+    }
+}
+
 /**
  * Configures Kotlin Multiplatform plugin.
  *
@@ -82,6 +97,7 @@ plugins {
  * It configures KMP, in which Kotlin for JVM is only one of
  * possible targets.
  */
+@Suppress("UNUSED_VARIABLE") // Avoid warnings for source set vars.
 kotlin {
     // Enables explicit API mode for any Kotlin sources within the module.
     explicitApi()
@@ -170,4 +186,3 @@ kover {
 
 LicenseReporter.generateReportIn(project)
 CheckStyleConfig.applyTo(project)
-JavadocConfig.applyTo(project)

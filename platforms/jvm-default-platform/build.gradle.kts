@@ -25,6 +25,7 @@
  */
 
 import io.spine.internal.dependency.AutoService
+import io.spine.internal.dependency.Spine
 import io.spine.internal.gradle.java.disableLinters
 
 plugins {
@@ -33,6 +34,7 @@ plugins {
 }
 
 dependencies {
+    implementation(Spine.reflect)
     implementation(project(":middleware"))
     implementation(project(":jul-backend"))
     testImplementation(project(":middleware", configuration = "testArtifacts"))

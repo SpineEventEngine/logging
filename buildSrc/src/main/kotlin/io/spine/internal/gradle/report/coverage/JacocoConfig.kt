@@ -94,7 +94,8 @@ class JacocoConfig(
         fun applyTo(project: Project) {
             project.applyPlugin(BasePlugin::class.java)
             val javaProjects: Iterable<Project> = eligibleProjects(project)
-            val reportsDir = project.rootProject.buildDirectory.resolve(reportsDirSuffix)
+            val reportsDir = project.rootProject.layout
+                .buildDirectory.dir(reportsDirSuffix).get().asFile
             JacocoConfig(project.rootProject, reportsDir, javaProjects).configure()
         }
 
@@ -138,7 +139,6 @@ class JacocoConfig(
             dependsOn(rootReport)
         }
     }
-
     private fun registerRootReport(
         tasks: TaskContainer,
         copyReports: TaskProvider<Copy>?

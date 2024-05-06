@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2024, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,6 @@
 
 import io.spine.internal.dependency.Dokka
 import io.spine.internal.gradle.publish.getOrCreate
-import io.spine.internal.gradle.buildDirectory
 import java.io.File
 import java.time.LocalDate
 import org.gradle.api.Project
@@ -69,8 +68,9 @@ fun DependencyHandlerScope.useDokkaWithSpineExtensions() {
 private fun DependencyHandler.dokkaPlugin(dependencyNotation: Any): Dependency? =
     add("dokkaPlugin", dependencyNotation)
 
-private fun Project.dokkaOutput(language: String): File =
-    buildDirectory.resolve("docs/dokka${language.capitalized()}")
+private fun Project.dokkaOutput(language: String): File {
+    return layout.buildDirectory.file("docs/dokka${language.capitalized()}").get().asFile
+}
 
 private fun Project.dokkaConfigFile(file: String): File {
     val dokkaConfDir = project.rootDir.resolve("buildSrc/src/main/resources/dokka")
@@ -144,6 +144,7 @@ fun TaskContainer.dokkaHtmlTask(): DokkaTask? = this.findByName("dokkaHtml") as 
  * Dokka can properly generate documentation for either Kotlin or Java depending on
  * the configuration, but not both.
  */
+@Suppress("unused")
 internal fun GradleDokkaSourceSetBuilder.onlyJavaSources(): FileCollection {
     return sourceRoots.filter(File::isJavaSourceDirectory)
 }
@@ -169,6 +170,19 @@ fun Project.dokkaKotlinJar(): TaskProvider<Jar> = tasks.getOrCreate("dokkaKotlin
 }
 
 /**
+ * Tells if this task belongs to the execution graph which contains publishing tasks.
+ *
+ * The task `"publishToMavenLocal"` is excluded from the check because it is a part of
+ * the local testing workflow.
+ */
+fun DokkaTask.isInPublishingGraph(): Boolean =
+    project.gradle.taskGraph.allTasks.any {
+        with(it.name) {
+            startsWith("publish") && !startsWith("publishToMavenLocal")
+        }
+    }
+
+/**
  * Locates or creates `dokkaJavaJar` task in this [Project].
  *
  * The output of this task is a `jar` archive. The archive contains the Dokka output, generated upon
@@ -181,5 +195,23 @@ fun Project.dokkaJavaJar(): TaskProvider<Jar> = tasks.getOrCreate("dokkaJavaJar"
 
     tasks.dokkaHtmlTask()?.let{ dokkaTask ->
         this@getOrCreate.dependsOn(dokkaTask)
+    }
+}
+
+/**
+ * Disables Dokka and Javadoc tasks in this `Project`.
+ *
+ * This function could be useful to improve build speed when building subprojects containing
+ * test environments or integration test projects.
+ */
+@Suppress("unused")
+fun Project.disableDocumentationTasks() {
+    gradle.taskGraph.whenReady {
+        tasks.forEach { task ->
+            val lowercaseName = task.name.lowercase()
+            if (lowercaseName.contains("dokka") || lowercaseName.contains("javadoc")) {
+                task.enabled = false
+            }
+        }
     }
 }

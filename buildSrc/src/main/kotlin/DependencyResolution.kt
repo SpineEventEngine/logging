@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2024, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,6 @@ import io.spine.internal.dependency.CommonsLogging
 import io.spine.internal.dependency.Dokka
 import io.spine.internal.dependency.ErrorProne
 import io.spine.internal.dependency.FindBugs
-import io.spine.internal.dependency.Flogger
 import io.spine.internal.dependency.Gson
 import io.spine.internal.dependency.Guava
 import io.spine.internal.dependency.Hamcrest
@@ -81,7 +80,7 @@ fun NamedDomainObjectContainer<Configuration>.forceVersions() {
 }
 
 private fun ResolutionStrategy.forceProductionDependencies() {
-    @Suppress("DEPRECATION") // Force versions of SLF4J, Flogger, and Kotlin libs.
+    @Suppress("DEPRECATION") // Force versions of SLF4J and Kotlin libs.
     force(
         AnimalSniffer.lib,
         AutoCommon.lib,
@@ -91,8 +90,7 @@ private fun ResolutionStrategy.forceProductionDependencies() {
         ErrorProne.annotations,
         ErrorProne.core,
         FindBugs.annotations,
-        Flogger.Runtime.systemBackend,
-        Flogger.lib,
+        Gson.lib,
         Guava.lib,
         Kotlin.reflect,
         Kotlin.stdLib,
