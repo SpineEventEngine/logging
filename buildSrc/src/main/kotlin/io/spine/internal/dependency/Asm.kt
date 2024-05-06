@@ -29,6 +29,6 @@ package io.spine.internal.dependency
 // https://asm.ow2.io/
 @Suppress("unused", "ConstPropertyName")
 object Asm {
-    private const val version = "9.4"
+    private const val version = "9.6"
     const val lib = "org.ow2.asm:asm:$version"
 }
