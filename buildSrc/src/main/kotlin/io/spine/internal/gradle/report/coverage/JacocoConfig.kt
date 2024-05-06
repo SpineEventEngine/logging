@@ -26,7 +26,9 @@
 
 package io.spine.internal.gradle.report.coverage
 
+import io.spine.internal.dependency.Jacoco
 import io.spine.internal.gradle.applyPlugin
+import io.spine.internal.gradle.buildDirectory
 import io.spine.internal.gradle.findTask
 import io.spine.internal.gradle.report.coverage.TaskName.check
 import io.spine.internal.gradle.report.coverage.TaskName.copyReports
@@ -45,7 +47,9 @@ import org.gradle.api.tasks.SourceSetOutput
 import org.gradle.api.tasks.TaskContainer
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.get
+import org.gradle.kotlin.dsl.the
 import org.gradle.testing.jacoco.plugins.JacocoPlugin
+import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
 import org.gradle.testing.jacoco.tasks.JacocoReport
 
 /**
@@ -118,14 +122,23 @@ class JacocoConfig(
     }
 
     private fun configure() {
+        configureVersion()
+        configureTask()
+    }
+
+    private fun configureVersion() {
+        val jacoco = rootProject.the<JacocoPluginExtension>()
+        jacoco.toolVersion = Jacoco.version
+    }
+
+    private fun configureTask() {
         val tasks = rootProject.tasks
         val copyReports = registerCopy(tasks)
         val rootReport = registerRootReport(tasks, copyReports)
-        rootProject
-            .findTask<Task>(check.name)
-            .dependsOn(rootReport)
+        tasks.named(check.name) {
+            dependsOn(rootReport)
+        }
     }
-
     private fun registerRootReport(
         tasks: TaskContainer,
         copyReports: TaskProvider<Copy>?

@@ -33,5 +33,5 @@ package io.spine.internal.dependency
  */
 @Suppress("ConstPropertyName")
 object Jacoco {
-    const val version = "0.8.10"
+    const val version = "0.8.12"
 }
