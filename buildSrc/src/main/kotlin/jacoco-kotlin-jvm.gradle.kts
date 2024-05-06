@@ -55,7 +55,8 @@ private val about = ""
  */
 val jacocoTestReport: JacocoReport by tasks.getting(JacocoReport::class) {
 
-    val classFiles = File("${buildDir}/classes/kotlin/jvm/")
+    val buildDir = layout.buildDirectory.get().asFile
+    val classFiles = File("$buildDir/classes/kotlin/jvm/")
         .walkBottomUp()
         .toSet()
     classDirectories.setFrom(classFiles)

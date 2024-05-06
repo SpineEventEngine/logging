@@ -80,7 +80,7 @@ object LicenseReporter {
      */
     fun generateReportIn(project: Project) {
         project.applyPlugin(LicenseReportPlugin::class.java)
-        val reportOutputDir = project.buildDir.resolve(Paths.relativePath)
+        val reportOutputDir = project.layout.buildDirectory.dir(Paths.relativePath).get().asFile
 
         with(project.the<LicenseReportExtension>()) {
             outputDir = reportOutputDir.absolutePath
@@ -146,7 +146,8 @@ object LicenseReporter {
         rootProject: Project
     ) {
         val paths = sourceProjects.map {
-            "${it.buildDir}/${Paths.relativePath}/${Paths.outputFilename}"
+            val buildDir = it.layout.buildDirectory.asFile.get()
+            "$buildDir/${Paths.relativePath}/${Paths.outputFilename}"
         }
         println("Merging the license reports from the all projects.")
         val mergedContent = paths.joinToString("\n\n\n") { (File(it)).readText() }
