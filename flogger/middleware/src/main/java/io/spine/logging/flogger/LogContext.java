@@ -124,18 +124,18 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
             if (keys.hasNext()) {
               var first = keys.next();
               if (!keys.hasNext()) {
-                  out.handle(getLabel(), first);
+                out.handle(getLabel(), first);
               } else {
-                  // In the very unlikely case there's more than one aggregation key, emit a list.
-                  var buf = new StringBuilder();
-                  buf.append('[')
-                     .append(first);
-                  do {
-                      buf.append(',')
-                         .append(keys.next());
-                  } while (keys.hasNext());
-                  out.handle(getLabel(), buf.append(']')
-                                            .toString());
+                // In the very unlikely case there's more than one aggregation key, emit a list.
+                var buf = new StringBuilder();
+                buf.append('[')
+                   .append(first);
+                do {
+                    buf.append(',')
+                       .append(keys.next());
+                } while (keys.hasNext());
+                out.handle(getLabel(), buf.append(']')
+                                          .toString());
               }
             }
           }
