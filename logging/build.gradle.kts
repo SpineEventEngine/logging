@@ -69,21 +69,3 @@ kotlin {
         }
     }
 }
-
-tasks {
-    /**
-     * Prevents loading any members from “unloaded” package
-     * hierarchy in advance.
-     *
-     * `PackageAnnotationLookupSpec` needs these members to be
-     * unloaded from the beginning. This behavior matches
-     * the production runtime, in which classes (and packages)
-     * are loaded as needed.
-     *
-     * JUnit loads test classes in advance to support its features.
-     * For example, test includes and excludes functionality.
-     */
-    named<Test>("jvmTest") {
-        filter.excludeTestsMatching("io.spine.reflect.given.unloaded*")
-    }
-}

@@ -53,7 +53,7 @@ object Spine {
          *
          * @see <a href="https://github.com/SpineEventEngine/reflect">spine-reflect</a>
          */
-        const val reflect = "2.0.0-SNAPSHOT.188"
+        const val reflect = "2.0.0-SNAPSHOT.190"
 
         /**
          * The version of [Spine.Logging].
