@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2024, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,7 +84,13 @@ object LicenseReporter {
 
         with(project.the<LicenseReportExtension>()) {
             outputDir = reportOutputDir.absolutePath
-            excludeGroups = arrayOf("io.spine", "io.spine.tools", "io.spine.gcloud")
+            excludeGroups = arrayOf(
+                "io.spine",
+                "io.spine.gcloud",
+                "io.spine.protodata",
+                "io.spine.tools",
+                "io.spine.validation"
+            )
             configurations = ALL
 
             renderers = arrayOf(MarkdownReportRenderer(Paths.outputFilename))

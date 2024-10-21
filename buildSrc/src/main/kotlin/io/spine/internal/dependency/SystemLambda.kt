@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2024, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@
 package io.spine.internal.dependency
 
 // https://github.com/stefanbirkner/system-lambda
+@Suppress("unused", "ConstPropertyName")
 object SystemLambda {
     const val version = "1.2.1"
     const val group = "com.github.stefanbirkner"

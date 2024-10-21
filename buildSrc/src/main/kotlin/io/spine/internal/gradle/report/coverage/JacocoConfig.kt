@@ -28,7 +28,6 @@ package io.spine.internal.gradle.report.coverage
 
 import io.spine.internal.dependency.Jacoco
 import io.spine.internal.gradle.applyPlugin
-import io.spine.internal.gradle.buildDirectory
 import io.spine.internal.gradle.findTask
 import io.spine.internal.gradle.report.coverage.TaskName.check
 import io.spine.internal.gradle.report.coverage.TaskName.copyReports
@@ -38,7 +37,6 @@ import io.spine.internal.gradle.sourceSets
 import java.io.File
 import java.util.*
 import org.gradle.api.Project
-import org.gradle.api.Task
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.plugins.BasePlugin
 import org.gradle.api.tasks.Copy
@@ -139,6 +137,7 @@ class JacocoConfig(
             dependsOn(rootReport)
         }
     }
+
     private fun registerRootReport(
         tasks: TaskContainer,
         copyReports: TaskProvider<Copy>?

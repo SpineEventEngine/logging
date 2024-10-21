@@ -59,7 +59,6 @@ spinePublishing {
     )
     destinations = with(PublishingRepos) {
         setOf(
-            cloudRepo,
             cloudArtifactRegistry,
             gitHub("logging")
         )

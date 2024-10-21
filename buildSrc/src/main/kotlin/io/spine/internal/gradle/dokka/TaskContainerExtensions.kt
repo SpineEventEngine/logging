@@ -24,19 +24,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.internal.gradle.publish
+package io.spine.internal.gradle.dokka
 
-import io.spine.internal.gradle.Repository
+import org.gradle.api.tasks.TaskContainer
+import org.jetbrains.dokka.gradle.DokkaTask
 
 /**
- * Repositories to which we may publish.
+ * Finds the `dokkaHtml` Gradle task.
  */
-object PublishingRepos {
-
-    val cloudArtifactRegistry = CloudArtifactRegistry.repository
-
-    /**
-     * Obtains a GitHub repository by the given name.
-     */
-    fun gitHub(repoName: String): Repository = GitHubPackages.repository(repoName)
-}
+@Suppress("unused")
+fun TaskContainer.dokkaHtmlTask() = this.getByName("dokkaHtml") as DokkaTask

@@ -24,19 +24,25 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.internal.gradle.publish
+package io.spine.internal.gradle.dokka
 
-import io.spine.internal.gradle.Repository
+import java.io.File
+import org.gradle.api.file.FileCollection
+import org.jetbrains.dokka.gradle.GradleDokkaSourceSetBuilder
 
 /**
- * Repositories to which we may publish.
+ * Returns only Java source roots out of all present in the source set.
+ *
+ * It is a helper method for generating documentation by Dokka only for Java code.
+ * It is helpful when both Java and Kotlin source files are present in a source set.
+ * Dokka can properly generate documentation for either Kotlin or Java depending on
+ * the configuration, but not both.
  */
-object PublishingRepos {
+@Suppress("unused")
+internal fun GradleDokkaSourceSetBuilder.onlyJavaSources(): FileCollection {
+    return sourceRoots.filter(File::isJavaSourceDirectory)
+}
 
-    val cloudArtifactRegistry = CloudArtifactRegistry.repository
-
-    /**
-     * Obtains a GitHub repository by the given name.
-     */
-    fun gitHub(repoName: String): Repository = GitHubPackages.repository(repoName)
+private fun File.isJavaSourceDirectory(): Boolean {
+    return isDirectory && name == "java"
 }
