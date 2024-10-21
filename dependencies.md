@@ -1,6 +1,6 @@
 
 
-# Dependencies of `io.spine:spine-logging-fixtures:2.0.0-SNAPSHOT.235`
+# Dependencies of `io.spine:spine-logging-fixtures:2.0.0-SNAPSHOT.236`
 
 ## Runtime
 1.  **Group** : com.github.ajalt. **Name** : colormath. **Version** : 1.2.0.
@@ -49,66 +49,66 @@
 1.  **Group** : com.google.protobuf. **Name** : protobuf-kotlin. **Version** : 3.25.1.
      * **License:** [BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause)
 
-1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.162.
+1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.172.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
 
 1.  **Group** : io.github.java-diff-utils. **Name** : java-diff-utils. **Version** : 4.12.
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
@@ -152,7 +152,10 @@
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -161,34 +164,42 @@
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.opentest4j. **Name** : opentest4j. **Version** : 1.3.0.
      * **Project URL:** [https://github.com/ota4j-team/opentest4j](https://github.com/ota4j-team/opentest4j)
      * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.6.
+     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
+     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
 1.  **Group** : com.beust. **Name** : jcommander. **Version** : 1.82.
@@ -292,7 +303,7 @@
      * **Project URL:** [https://picocli.info](https://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.162.
+1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.172.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
 
@@ -300,7 +311,10 @@
      * **Project URL:** [https://github.com/davidburstrom/contester](https://github.com/davidburstrom/contester)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.**No license information found**
+1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.
+     * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k-jvm. **Version** : 0.4.0.
      * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -400,87 +414,87 @@
      * **Project URL:** [https://detekt.dev](https://detekt.dev)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
@@ -657,7 +671,10 @@
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -674,12 +691,15 @@
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.20.2.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.23.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -687,23 +707,23 @@
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -711,17 +731,26 @@
      * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
      * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.**No license information found**
+1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.
+     * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
+     * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
+
 1.  **Group** : org.junit.jupiter. **Name** : junit-jupiter-api. **Version** : 5.10.0.
      * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
@@ -785,12 +814,12 @@
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon Oct 21 18:28:48 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-grpc-context:2.0.0-SNAPSHOT.235`
+# Dependencies of `io.spine:spine-logging-grpc-context:2.0.0-SNAPSHOT.236`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -851,6 +880,10 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -858,6 +891,11 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk8. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.6.
+     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
+     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
 1.  **Group** : aopalliance. **Name** : aopalliance. **Version** : 1.0.
@@ -872,7 +910,11 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://jcommander.org](https://jcommander.org)
      * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.**No license information found**
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.
+     * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-annotations. **Version** : 2.15.3.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -1035,7 +1077,7 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://picocli.info](https://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.162.
+1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.172.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
 
@@ -1043,7 +1085,10 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/davidburstrom/contester](https://github.com/davidburstrom/contester)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.**No license information found**
+1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.
+     * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k-jvm. **Version** : 0.4.0.
      * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -1151,59 +1196,93 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/grpc/grpc-java](https://github.com/grpc/grpc-java)
      * **License:** [Apache 2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : it.unimi.dsi. **Name** : fastutil-core. **Version** : 8.5.12.
+     * **Project URL:** [http://fastutil.di.unimi.it/](http://fastutil.di.unimi.it/)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 1.  **Group** : javax.annotation. **Name** : javax.annotation-api. **Version** : 1.3.2.
      * **Project URL:** [http://jcp.org/en/jsr/detail?id=250](http://jcp.org/en/jsr/detail?id=250)
@@ -1299,7 +1378,7 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The BSD License](http://www.opensource.org/licenses/bsd-license.php)
 
-1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.31.
+1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.32.
      * **Project URL:** [https://freemarker.apache.org/](https://freemarker.apache.org/)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -1333,28 +1412,31 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.3.1.**No license information found**
-1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.3.1.
+1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.5.2.
      * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.5.2.
+     * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -1434,7 +1516,10 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -1443,62 +1528,86 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.20.2.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.23.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.0.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.5.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.6.3.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.3.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.7.5.
-     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
-     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.8.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
      * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.9.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
+     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.15.3.
+1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.16.1.
      * **Project URL:** [https://jsoup.org/](https://jsoup.org/)
      * **License:** [The MIT License](https://jsoup.org/license)
 
-1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.**No license information found**
+1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.
+     * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
+     * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
+
 1.  **Group** : org.junit-pioneer. **Name** : junit-pioneer. **Version** : 2.0.1.
      * **Project URL:** [https://junit-pioneer.org/](https://junit-pioneer.org/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
@@ -1570,12 +1679,12 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon Oct 21 18:28:48 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jul-backend:2.0.0-SNAPSHOT.235`
+# Dependencies of `io.spine:spine-logging-jul-backend:2.0.0-SNAPSHOT.236`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -1632,6 +1741,10 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -1639,6 +1752,11 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk8. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.6.
+     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
+     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
 1.  **Group** : aopalliance. **Name** : aopalliance. **Version** : 1.0.
@@ -1653,7 +1771,11 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://jcommander.org](https://jcommander.org)
      * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.**No license information found**
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.
+     * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-annotations. **Version** : 2.15.3.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -1816,7 +1938,7 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://picocli.info](https://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.162.
+1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.172.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
 
@@ -1824,7 +1946,10 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/davidburstrom/contester](https://github.com/davidburstrom/contester)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.**No license information found**
+1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.
+     * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k-jvm. **Version** : 0.4.0.
      * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -1928,59 +2053,93 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://detekt.dev](https://detekt.dev)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : it.unimi.dsi. **Name** : fastutil-core. **Version** : 8.5.12.
+     * **Project URL:** [http://fastutil.di.unimi.it/](http://fastutil.di.unimi.it/)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 1.  **Group** : javax.annotation. **Name** : javax.annotation-api. **Version** : 1.3.2.
      * **Project URL:** [http://jcp.org/en/jsr/detail?id=250](http://jcp.org/en/jsr/detail?id=250)
@@ -2076,7 +2235,7 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The BSD License](http://www.opensource.org/licenses/bsd-license.php)
 
-1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.31.
+1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.32.
      * **Project URL:** [https://freemarker.apache.org/](https://freemarker.apache.org/)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -2110,28 +2269,31 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.3.1.**No license information found**
-1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.3.1.
+1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.5.2.
      * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.5.2.
+     * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -2211,7 +2373,10 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -2220,62 +2385,86 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.20.2.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.23.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.0.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.5.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.6.3.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.3.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.7.5.
-     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
-     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.8.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
      * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.9.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
+     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.15.3.
+1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.16.1.
      * **Project URL:** [https://jsoup.org/](https://jsoup.org/)
      * **License:** [The MIT License](https://jsoup.org/license)
 
-1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.**No license information found**
+1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.
+     * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
+     * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
+
 1.  **Group** : org.junit-pioneer. **Name** : junit-pioneer. **Version** : 2.0.1.
      * **Project URL:** [https://junit-pioneer.org/](https://junit-pioneer.org/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
@@ -2347,12 +2536,12 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon Oct 21 18:28:49 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-default-platform:2.0.0-SNAPSHOT.235`
+# Dependencies of `io.spine:spine-logging-jvm-default-platform:2.0.0-SNAPSHOT.236`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -2409,6 +2598,10 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -2416,6 +2609,11 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk8. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.6.
+     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
+     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
 1.  **Group** : aopalliance. **Name** : aopalliance. **Version** : 1.0.
@@ -2430,7 +2628,11 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://jcommander.org](https://jcommander.org)
      * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.**No license information found**
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.
+     * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-annotations. **Version** : 2.15.3.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -2597,7 +2799,7 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://picocli.info](https://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.162.
+1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.172.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
 
@@ -2605,7 +2807,10 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/davidburstrom/contester](https://github.com/davidburstrom/contester)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.**No license information found**
+1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.
+     * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k-jvm. **Version** : 0.4.0.
      * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -2709,59 +2914,93 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://detekt.dev](https://detekt.dev)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : it.unimi.dsi. **Name** : fastutil-core. **Version** : 8.5.12.
+     * **Project URL:** [http://fastutil.di.unimi.it/](http://fastutil.di.unimi.it/)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 1.  **Group** : javax.annotation. **Name** : javax.annotation-api. **Version** : 1.3.2.
      * **Project URL:** [http://jcp.org/en/jsr/detail?id=250](http://jcp.org/en/jsr/detail?id=250)
@@ -2857,7 +3096,7 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The BSD License](http://www.opensource.org/licenses/bsd-license.php)
 
-1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.31.
+1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.32.
      * **Project URL:** [https://freemarker.apache.org/](https://freemarker.apache.org/)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -2891,28 +3130,31 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.3.1.**No license information found**
-1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.3.1.
+1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.5.2.
      * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.5.2.
+     * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -2996,7 +3238,10 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -3005,62 +3250,86 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.20.2.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.23.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.0.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.5.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.6.3.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.3.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.7.5.
-     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
-     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.8.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
      * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.9.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
+     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.15.3.
+1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.16.1.
      * **Project URL:** [https://jsoup.org/](https://jsoup.org/)
      * **License:** [The MIT License](https://jsoup.org/license)
 
-1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.**No license information found**
+1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.
+     * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
+     * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
+
 1.  **Group** : org.junit-pioneer. **Name** : junit-pioneer. **Version** : 2.0.1.
      * **Project URL:** [https://junit-pioneer.org/](https://junit-pioneer.org/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
@@ -3132,12 +3401,12 @@ This report was generated on **Mon May 06 18:27:39 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon Oct 21 18:28:49 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-jul-backend-grpc-context:2.0.0-SNAPSHOT.235`
+# Dependencies of `io.spine:spine-logging-jvm-jul-backend-grpc-context:2.0.0-SNAPSHOT.236`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -3186,9 +3455,30 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-reflect. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk8. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.6.
+     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
+     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
 1.  **Group** : aopalliance. **Name** : aopalliance. **Version** : 1.0.
@@ -3203,7 +3493,11 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://jcommander.org](https://jcommander.org)
      * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.**No license information found**
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.
+     * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-annotations. **Version** : 2.15.3.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -3366,7 +3660,7 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://picocli.info](https://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.162.
+1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.172.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
 
@@ -3374,7 +3668,10 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/davidburstrom/contester](https://github.com/davidburstrom/contester)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.**No license information found**
+1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.
+     * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k-jvm. **Version** : 0.4.0.
      * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -3482,59 +3779,93 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/grpc/grpc-java](https://github.com/grpc/grpc-java)
      * **License:** [Apache 2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : it.unimi.dsi. **Name** : fastutil-core. **Version** : 8.5.12.
+     * **Project URL:** [http://fastutil.di.unimi.it/](http://fastutil.di.unimi.it/)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 1.  **Group** : javax.annotation. **Name** : javax.annotation-api. **Version** : 1.3.2.
      * **Project URL:** [http://jcp.org/en/jsr/detail?id=250](http://jcp.org/en/jsr/detail?id=250)
@@ -3630,7 +3961,7 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The BSD License](http://www.opensource.org/licenses/bsd-license.php)
 
-1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.31.
+1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.32.
      * **Project URL:** [https://freemarker.apache.org/](https://freemarker.apache.org/)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -3664,28 +3995,31 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.3.1.**No license information found**
-1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.3.1.
+1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.5.2.
      * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.5.2.
+     * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -3765,7 +4099,10 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -3774,62 +4111,86 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.20.2.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.23.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.0.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.5.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.6.3.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.3.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.7.5.
-     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
-     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.8.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
      * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.9.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
+     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.15.3.
+1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.16.1.
      * **Project URL:** [https://jsoup.org/](https://jsoup.org/)
      * **License:** [The MIT License](https://jsoup.org/license)
 
-1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.**No license information found**
+1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.
+     * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
+     * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
+
 1.  **Group** : org.junit-pioneer. **Name** : junit-pioneer. **Version** : 2.0.1.
      * **Project URL:** [https://junit-pioneer.org/](https://junit-pioneer.org/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
@@ -3901,12 +4262,12 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon Oct 21 18:28:49 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-jul-backend-std-context:2.0.0-SNAPSHOT.235`
+# Dependencies of `io.spine:spine-logging-jvm-jul-backend-std-context:2.0.0-SNAPSHOT.236`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -3955,9 +4316,30 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-reflect. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk8. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.6.
+     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
+     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
 1.  **Group** : aopalliance. **Name** : aopalliance. **Version** : 1.0.
@@ -3972,7 +4354,11 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://jcommander.org](https://jcommander.org)
      * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.**No license information found**
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.
+     * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-annotations. **Version** : 2.15.3.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -4135,7 +4521,7 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://picocli.info](https://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.162.
+1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.172.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
 
@@ -4143,7 +4529,10 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/davidburstrom/contester](https://github.com/davidburstrom/contester)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.**No license information found**
+1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.
+     * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k-jvm. **Version** : 0.4.0.
      * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -4247,59 +4636,93 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://detekt.dev](https://detekt.dev)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : it.unimi.dsi. **Name** : fastutil-core. **Version** : 8.5.12.
+     * **Project URL:** [http://fastutil.di.unimi.it/](http://fastutil.di.unimi.it/)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 1.  **Group** : javax.annotation. **Name** : javax.annotation-api. **Version** : 1.3.2.
      * **Project URL:** [http://jcp.org/en/jsr/detail?id=250](http://jcp.org/en/jsr/detail?id=250)
@@ -4395,7 +4818,7 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The BSD License](http://www.opensource.org/licenses/bsd-license.php)
 
-1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.31.
+1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.32.
      * **Project URL:** [https://freemarker.apache.org/](https://freemarker.apache.org/)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -4429,28 +4852,31 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.3.1.**No license information found**
-1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.3.1.
+1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.5.2.
      * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.5.2.
+     * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -4530,7 +4956,10 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -4539,62 +4968,86 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.20.2.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.23.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.0.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.5.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.6.3.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.3.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.7.5.
-     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
-     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.8.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
      * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.9.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
+     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.15.3.
+1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.16.1.
      * **Project URL:** [https://jsoup.org/](https://jsoup.org/)
      * **License:** [The MIT License](https://jsoup.org/license)
 
-1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.**No license information found**
+1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.
+     * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
+     * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
+
 1.  **Group** : org.junit-pioneer. **Name** : junit-pioneer. **Version** : 2.0.1.
      * **Project URL:** [https://junit-pioneer.org/](https://junit-pioneer.org/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
@@ -4666,12 +5119,12 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon Oct 21 18:28:49 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-log4j2-backend-std-context:2.0.0-SNAPSHOT.235`
+# Dependencies of `io.spine:spine-logging-jvm-log4j2-backend-std-context:2.0.0-SNAPSHOT.236`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -4720,9 +5173,30 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-reflect. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk8. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.6.
+     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
+     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
 1.  **Group** : aopalliance. **Name** : aopalliance. **Version** : 1.0.
@@ -4737,7 +5211,11 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://jcommander.org](https://jcommander.org)
      * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.**No license information found**
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.
+     * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-annotations. **Version** : 2.15.3.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -4900,7 +5378,7 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://picocli.info](https://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.162.
+1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.172.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
 
@@ -4908,7 +5386,10 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/davidburstrom/contester](https://github.com/davidburstrom/contester)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.**No license information found**
+1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.
+     * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k-jvm. **Version** : 0.4.0.
      * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -5012,59 +5493,93 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://detekt.dev](https://detekt.dev)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : it.unimi.dsi. **Name** : fastutil-core. **Version** : 8.5.12.
+     * **Project URL:** [http://fastutil.di.unimi.it/](http://fastutil.di.unimi.it/)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 1.  **Group** : javax.annotation. **Name** : javax.annotation-api. **Version** : 1.3.2.
      * **Project URL:** [http://jcp.org/en/jsr/detail?id=250](http://jcp.org/en/jsr/detail?id=250)
@@ -5160,7 +5675,7 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The BSD License](http://www.opensource.org/licenses/bsd-license.php)
 
-1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.31.
+1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.32.
      * **Project URL:** [https://freemarker.apache.org/](https://freemarker.apache.org/)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -5194,28 +5709,31 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.3.1.**No license information found**
-1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.3.1.
+1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.5.2.
      * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.5.2.
+     * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -5295,7 +5813,10 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -5304,62 +5825,86 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.20.2.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.23.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.0.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.5.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.6.3.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.3.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.7.5.
-     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
-     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.8.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
      * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.9.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
+     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.15.3.
+1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.16.1.
      * **Project URL:** [https://jsoup.org/](https://jsoup.org/)
      * **License:** [The MIT License](https://jsoup.org/license)
 
-1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.**No license information found**
+1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.
+     * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
+     * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
+
 1.  **Group** : org.junit-pioneer. **Name** : junit-pioneer. **Version** : 2.0.1.
      * **Project URL:** [https://junit-pioneer.org/](https://junit-pioneer.org/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
@@ -5431,12 +5976,12 @@ This report was generated on **Mon May 06 18:27:40 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon Oct 21 18:28:50 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-slf4j-jdk14-backend-std-context:2.0.0-SNAPSHOT.235`
+# Dependencies of `io.spine:spine-logging-jvm-slf4j-jdk14-backend-std-context:2.0.0-SNAPSHOT.236`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -5485,9 +6030,30 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-reflect. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk8. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.6.
+     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
+     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
 1.  **Group** : aopalliance. **Name** : aopalliance. **Version** : 1.0.
@@ -5502,7 +6068,11 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://jcommander.org](https://jcommander.org)
      * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.**No license information found**
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.
+     * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-annotations. **Version** : 2.15.3.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -5665,7 +6235,7 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://picocli.info](https://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.162.
+1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.172.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
 
@@ -5673,7 +6243,10 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/davidburstrom/contester](https://github.com/davidburstrom/contester)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.**No license information found**
+1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.
+     * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k-jvm. **Version** : 0.4.0.
      * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -5777,59 +6350,93 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://detekt.dev](https://detekt.dev)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : it.unimi.dsi. **Name** : fastutil-core. **Version** : 8.5.12.
+     * **Project URL:** [http://fastutil.di.unimi.it/](http://fastutil.di.unimi.it/)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 1.  **Group** : javax.annotation. **Name** : javax.annotation-api. **Version** : 1.3.2.
      * **Project URL:** [http://jcp.org/en/jsr/detail?id=250](http://jcp.org/en/jsr/detail?id=250)
@@ -5925,7 +6532,7 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The BSD License](http://www.opensource.org/licenses/bsd-license.php)
 
-1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.31.
+1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.32.
      * **Project URL:** [https://freemarker.apache.org/](https://freemarker.apache.org/)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -5959,28 +6566,31 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.3.1.**No license information found**
-1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.3.1.
+1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.5.2.
      * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.5.2.
+     * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -6060,7 +6670,10 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -6069,62 +6682,86 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.20.2.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.23.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.0.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.5.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.6.3.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.3.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.7.5.
-     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
-     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.8.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
      * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.9.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
+     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.15.3.
+1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.16.1.
      * **Project URL:** [https://jsoup.org/](https://jsoup.org/)
      * **License:** [The MIT License](https://jsoup.org/license)
 
-1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.**No license information found**
+1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.
+     * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
+     * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
+
 1.  **Group** : org.junit-pioneer. **Name** : junit-pioneer. **Version** : 2.0.1.
      * **Project URL:** [https://junit-pioneer.org/](https://junit-pioneer.org/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
@@ -6204,12 +6841,12 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon Oct 21 18:28:50 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-slf4j-reload4j-backend-std-context:2.0.0-SNAPSHOT.235`
+# Dependencies of `io.spine:spine-logging-jvm-slf4j-reload4j-backend-std-context:2.0.0-SNAPSHOT.236`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -6258,9 +6895,30 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-reflect. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk8. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.6.
+     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
+     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
 1.  **Group** : aopalliance. **Name** : aopalliance. **Version** : 1.0.
@@ -6279,7 +6937,11 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://jcommander.org](https://jcommander.org)
      * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.**No license information found**
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.
+     * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-annotations. **Version** : 2.15.3.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -6442,7 +7104,7 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://picocli.info](https://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.162.
+1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.172.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
 
@@ -6450,7 +7112,10 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/davidburstrom/contester](https://github.com/davidburstrom/contester)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.**No license information found**
+1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.
+     * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k-jvm. **Version** : 0.4.0.
      * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -6554,59 +7219,93 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://detekt.dev](https://detekt.dev)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : it.unimi.dsi. **Name** : fastutil-core. **Version** : 8.5.12.
+     * **Project URL:** [http://fastutil.di.unimi.it/](http://fastutil.di.unimi.it/)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 1.  **Group** : javax.annotation. **Name** : javax.annotation-api. **Version** : 1.3.2.
      * **Project URL:** [http://jcp.org/en/jsr/detail?id=250](http://jcp.org/en/jsr/detail?id=250)
@@ -6702,7 +7401,7 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The BSD License](http://www.opensource.org/licenses/bsd-license.php)
 
-1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.31.
+1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.32.
      * **Project URL:** [https://freemarker.apache.org/](https://freemarker.apache.org/)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -6736,28 +7435,31 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.3.1.**No license information found**
-1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.3.1.
+1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.5.2.
      * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.5.2.
+     * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -6837,7 +7539,10 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -6846,62 +7551,86 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.20.2.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.23.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.0.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.5.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.6.3.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.3.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.7.5.
-     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
-     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.8.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
      * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.9.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
+     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.15.3.
+1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.16.1.
      * **Project URL:** [https://jsoup.org/](https://jsoup.org/)
      * **License:** [The MIT License](https://jsoup.org/license)
 
-1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.**No license information found**
+1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.
+     * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
+     * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
+
 1.  **Group** : org.junit-pioneer. **Name** : junit-pioneer. **Version** : 2.0.1.
      * **Project URL:** [https://junit-pioneer.org/](https://junit-pioneer.org/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
@@ -6981,12 +7710,12 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon Oct 21 18:28:50 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-log4j2-backend:2.0.0-SNAPSHOT.235`
+# Dependencies of `io.spine:spine-logging-log4j2-backend:2.0.0-SNAPSHOT.236`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -7051,6 +7780,10 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -7058,6 +7791,11 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk8. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.6.
+     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
+     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
 1.  **Group** : aopalliance. **Name** : aopalliance. **Version** : 1.0.
@@ -7072,7 +7810,11 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://jcommander.org](https://jcommander.org)
      * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.**No license information found**
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.
+     * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-annotations. **Version** : 2.15.3.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -7235,7 +7977,7 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://picocli.info](https://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.162.
+1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.172.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
 
@@ -7243,7 +7985,10 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/davidburstrom/contester](https://github.com/davidburstrom/contester)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.**No license information found**
+1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.
+     * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k-jvm. **Version** : 0.4.0.
      * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -7351,59 +8096,93 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/grpc/grpc-java](https://github.com/grpc/grpc-java)
      * **License:** [Apache 2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : it.unimi.dsi. **Name** : fastutil-core. **Version** : 8.5.12.
+     * **Project URL:** [http://fastutil.di.unimi.it/](http://fastutil.di.unimi.it/)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 1.  **Group** : javax.annotation. **Name** : javax.annotation-api. **Version** : 1.3.2.
      * **Project URL:** [http://jcp.org/en/jsr/detail?id=250](http://jcp.org/en/jsr/detail?id=250)
@@ -7499,7 +8278,7 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The BSD License](http://www.opensource.org/licenses/bsd-license.php)
 
-1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.31.
+1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.32.
      * **Project URL:** [https://freemarker.apache.org/](https://freemarker.apache.org/)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -7533,28 +8312,31 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.3.1.**No license information found**
-1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.3.1.
+1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.5.2.
      * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.5.2.
+     * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -7634,7 +8416,10 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -7643,62 +8428,86 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.20.2.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.23.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.0.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.5.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.6.3.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.3.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.7.5.
-     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
-     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.8.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
      * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.9.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
+     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.15.3.
+1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.16.1.
      * **Project URL:** [https://jsoup.org/](https://jsoup.org/)
      * **License:** [The MIT License](https://jsoup.org/license)
 
-1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.**No license information found**
+1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.
+     * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
+     * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
+
 1.  **Group** : org.junit-pioneer. **Name** : junit-pioneer. **Version** : 2.0.1.
      * **Project URL:** [https://junit-pioneer.org/](https://junit-pioneer.org/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
@@ -7770,12 +8579,12 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon Oct 21 18:28:50 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging:2.0.0-SNAPSHOT.235`
+# Dependencies of `io.spine:spine-logging:2.0.0-SNAPSHOT.236`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -7832,6 +8641,10 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -7840,12 +8653,21 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.6.
+     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
+     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 ## Compile, tests, and tooling
 1.  **Group** : com.beust. **Name** : jcommander. **Version** : 1.82.
      * **Project URL:** [https://jcommander.org](https://jcommander.org)
      * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.**No license information found**
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.
+     * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-annotations. **Version** : 2.15.3.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -7976,7 +8798,7 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://picocli.info](https://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.162.
+1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.172.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
 
@@ -7984,7 +8806,10 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/davidburstrom/contester](https://github.com/davidburstrom/contester)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.**No license information found**
+1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.
+     * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k-jvm. **Version** : 0.4.0.
      * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -8084,89 +8909,93 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://detekt.dev](https://detekt.dev)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : it.unimi.dsi. **Name** : fastutil-core. **Version** : 8.5.12.
+     * **Project URL:** [http://fastutil.di.unimi.it/](http://fastutil.di.unimi.it/)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 1.  **Group** : javax.annotation. **Name** : javax.annotation-api. **Version** : 1.3.2.
      * **Project URL:** [http://jcp.org/en/jsr/detail?id=250](http://jcp.org/en/jsr/detail?id=250)
@@ -8240,7 +9069,7 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The BSD License](http://www.opensource.org/licenses/bsd-license.php)
 
-1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.31.
+1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.32.
      * **Project URL:** [https://freemarker.apache.org/](https://freemarker.apache.org/)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -8274,24 +9103,27 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.3.1.**No license information found**
-1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.3.1.
+1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.5.2.
      * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.5.2.
+     * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -8371,7 +9203,10 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -8388,14 +9223,23 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.20.2.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.23.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -8403,53 +9247,62 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.6.3.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.3.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.7.5.
-     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
-     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.8.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
      * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.9.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
+     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.15.3.
+1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.16.1.
      * **Project URL:** [https://jsoup.org/](https://jsoup.org/)
      * **License:** [The MIT License](https://jsoup.org/license)
 
-1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.**No license information found**
+1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.
+     * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
+     * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
+
 1.  **Group** : org.junit-pioneer. **Name** : junit-pioneer. **Version** : 2.0.1.
      * **Project URL:** [https://junit-pioneer.org/](https://junit-pioneer.org/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
@@ -8517,12 +9370,12 @@ This report was generated on **Mon May 06 18:27:41 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon Oct 21 18:28:51 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-middleware:2.0.0-SNAPSHOT.235`
+# Dependencies of `io.spine:spine-logging-middleware:2.0.0-SNAPSHOT.236`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -8579,6 +9432,10 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -8586,6 +9443,11 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk8. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.6.
+     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
+     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
 1.  **Group** : aopalliance. **Name** : aopalliance. **Version** : 1.0.
@@ -8600,7 +9462,11 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://jcommander.org](https://jcommander.org)
      * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.**No license information found**
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.
+     * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-annotations. **Version** : 2.15.3.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -8763,7 +9629,7 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://picocli.info](https://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.162.
+1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.172.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
 
@@ -8771,7 +9637,10 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/davidburstrom/contester](https://github.com/davidburstrom/contester)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.**No license information found**
+1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.
+     * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k-jvm. **Version** : 0.4.0.
      * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -8875,59 +9744,93 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://detekt.dev](https://detekt.dev)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : it.unimi.dsi. **Name** : fastutil-core. **Version** : 8.5.12.
+     * **Project URL:** [http://fastutil.di.unimi.it/](http://fastutil.di.unimi.it/)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 1.  **Group** : javax.annotation. **Name** : javax.annotation-api. **Version** : 1.3.2.
      * **Project URL:** [http://jcp.org/en/jsr/detail?id=250](http://jcp.org/en/jsr/detail?id=250)
@@ -9023,7 +9926,7 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The BSD License](http://www.opensource.org/licenses/bsd-license.php)
 
-1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.31.
+1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.32.
      * **Project URL:** [https://freemarker.apache.org/](https://freemarker.apache.org/)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -9057,28 +9960,31 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.3.1.**No license information found**
-1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.3.1.
+1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.5.2.
      * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.5.2.
+     * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -9158,7 +10064,10 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -9167,62 +10076,86 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.20.2.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.23.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.0.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.5.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.6.3.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.3.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.7.5.
-     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
-     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.8.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
      * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.9.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
+     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.15.3.
+1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.16.1.
      * **Project URL:** [https://jsoup.org/](https://jsoup.org/)
      * **License:** [The MIT License](https://jsoup.org/license)
 
-1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.**No license information found**
+1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.
+     * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
+     * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
+
 1.  **Group** : org.junit-pioneer. **Name** : junit-pioneer. **Version** : 2.0.1.
      * **Project URL:** [https://junit-pioneer.org/](https://junit-pioneer.org/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
@@ -9294,12 +10227,12 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon Oct 21 18:28:51 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-platform-generator:2.0.0-SNAPSHOT.235`
+# Dependencies of `io.spine:spine-logging-platform-generator:2.0.0-SNAPSHOT.236`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -9348,7 +10281,23 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-reflect. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk8. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -9370,7 +10319,11 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://jcommander.org](https://jcommander.org)
      * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.**No license information found**
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.
+     * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-annotations. **Version** : 2.15.3.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -9533,7 +10486,7 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://picocli.info](https://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.162.
+1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.172.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
 
@@ -9541,7 +10494,10 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/davidburstrom/contester](https://github.com/davidburstrom/contester)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.**No license information found**
+1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.
+     * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k-jvm. **Version** : 0.4.0.
      * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -9645,59 +10601,93 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://detekt.dev](https://detekt.dev)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : it.unimi.dsi. **Name** : fastutil-core. **Version** : 8.5.12.
+     * **Project URL:** [http://fastutil.di.unimi.it/](http://fastutil.di.unimi.it/)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 1.  **Group** : javax.annotation. **Name** : javax.annotation-api. **Version** : 1.3.2.
      * **Project URL:** [http://jcp.org/en/jsr/detail?id=250](http://jcp.org/en/jsr/detail?id=250)
@@ -9785,7 +10775,7 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The BSD License](http://www.opensource.org/licenses/bsd-license.php)
 
-1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.31.
+1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.32.
      * **Project URL:** [https://freemarker.apache.org/](https://freemarker.apache.org/)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -9819,28 +10809,31 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.3.1.**No license information found**
-1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.3.1.
+1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.5.2.
      * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.5.2.
+     * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -9920,7 +10913,10 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -9929,62 +10925,86 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.20.2.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.23.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.0.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.5.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.6.3.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.3.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.7.5.
-     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
-     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.8.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
      * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.9.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
+     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.15.3.
+1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.16.1.
      * **Project URL:** [https://jsoup.org/](https://jsoup.org/)
      * **License:** [The MIT License](https://jsoup.org/license)
 
-1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.**No license information found**
+1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.
+     * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
+     * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
+
 1.  **Group** : org.junit-pioneer. **Name** : junit-pioneer. **Version** : 2.0.1.
      * **Project URL:** [https://junit-pioneer.org/](https://junit-pioneer.org/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
@@ -10056,12 +11076,12 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon Oct 21 18:28:51 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-probe-backend:2.0.0-SNAPSHOT.235`
+# Dependencies of `io.spine:spine-logging-probe-backend:2.0.0-SNAPSHOT.236`
 
 ## Runtime
 1.  **Group** : com.github.ajalt. **Name** : colormath. **Version** : 1.2.0.
@@ -10141,64 +11161,94 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
 1.  **Group** : com.google.truth.extensions. **Name** : truth-proto-extension. **Version** : 1.1.5.
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.162.
+1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.172.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
 
 1.  **Group** : io.github.java-diff-utils. **Name** : java-diff-utils. **Version** : 4.12.
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
@@ -10263,7 +11313,10 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -10272,26 +11325,38 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.
+     * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
+     * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
+
 1.  **Group** : org.junit-pioneer. **Name** : junit-pioneer. **Version** : 2.0.1.
      * **Project URL:** [https://junit-pioneer.org/](https://junit-pioneer.org/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
@@ -10346,7 +11411,11 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://jcommander.org](https://jcommander.org)
      * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.**No license information found**
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.
+     * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-annotations. **Version** : 2.15.3.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -10513,7 +11582,7 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://picocli.info](https://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.162.
+1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.172.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
 
@@ -10521,7 +11590,10 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/davidburstrom/contester](https://github.com/davidburstrom/contester)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.**No license information found**
+1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.
+     * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k-jvm. **Version** : 0.4.0.
      * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -10625,59 +11697,93 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://detekt.dev](https://detekt.dev)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : it.unimi.dsi. **Name** : fastutil-core. **Version** : 8.5.12.
+     * **Project URL:** [http://fastutil.di.unimi.it/](http://fastutil.di.unimi.it/)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 1.  **Group** : javax.annotation. **Name** : javax.annotation-api. **Version** : 1.3.2.
      * **Project URL:** [http://jcp.org/en/jsr/detail?id=250](http://jcp.org/en/jsr/detail?id=250)
@@ -10773,7 +11879,7 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The BSD License](http://www.opensource.org/licenses/bsd-license.php)
 
-1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.31.
+1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.32.
      * **Project URL:** [https://freemarker.apache.org/](https://freemarker.apache.org/)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -10807,28 +11913,31 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.3.1.**No license information found**
-1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.3.1.
+1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.5.2.
      * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.5.2.
+     * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -10912,7 +12021,10 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -10921,62 +12033,86 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.20.2.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.23.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.0.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.5.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.6.3.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.3.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.7.5.
-     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
-     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.8.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
      * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.9.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
+     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.15.3.
+1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.16.1.
      * **Project URL:** [https://jsoup.org/](https://jsoup.org/)
      * **License:** [The MIT License](https://jsoup.org/license)
 
-1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.**No license information found**
+1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.
+     * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
+     * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
+
 1.  **Group** : org.junit-pioneer. **Name** : junit-pioneer. **Version** : 2.0.1.
      * **Project URL:** [https://junit-pioneer.org/](https://junit-pioneer.org/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
@@ -11048,12 +12184,12 @@ This report was generated on **Mon May 06 18:27:42 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon Oct 21 18:28:51 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-smoke-test:2.0.0-SNAPSHOT.235`
+# Dependencies of `io.spine:spine-logging-smoke-test:2.0.0-SNAPSHOT.236`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -11097,26 +12233,35 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
 1.  **Group** : io.github.java-diff-utils. **Name** : java-diff-utils. **Version** : 4.12.
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
@@ -11140,7 +12285,10 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -11149,20 +12297,26 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.
+     * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
+     * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
+
 1.  **Group** : org.junit.jupiter. **Name** : junit-jupiter-api. **Version** : 5.10.0.
      * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
@@ -11179,6 +12333,11 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/ota4j-team/opentest4j](https://github.com/ota4j-team/opentest4j)
      * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.6.
+     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
+     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 ## Compile, tests, and tooling
 1.  **Group** : aopalliance. **Name** : aopalliance. **Version** : 1.0.
      * **Project URL:** [http://aopalliance.sourceforge.net](http://aopalliance.sourceforge.net)
@@ -11192,7 +12351,11 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://jcommander.org](https://jcommander.org)
      * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.**No license information found**
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.
+     * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-annotations. **Version** : 2.15.3.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -11355,7 +12518,7 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://picocli.info](https://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.162.
+1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.172.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
 
@@ -11363,7 +12526,10 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/davidburstrom/contester](https://github.com/davidburstrom/contester)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.**No license information found**
+1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.
+     * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k-jvm. **Version** : 0.4.0.
      * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -11467,62 +12633,93 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://detekt.dev](https://detekt.dev)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : it.unimi.dsi. **Name** : fastutil-core. **Version** : 8.5.12.
+     * **Project URL:** [http://fastutil.di.unimi.it/](http://fastutil.di.unimi.it/)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 1.  **Group** : javax.annotation. **Name** : javax.annotation-api. **Version** : 1.3.2.
      * **Project URL:** [http://jcp.org/en/jsr/detail?id=250](http://jcp.org/en/jsr/detail?id=250)
@@ -11610,7 +12807,7 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The BSD License](http://www.opensource.org/licenses/bsd-license.php)
 
-1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.31.
+1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.32.
      * **Project URL:** [https://freemarker.apache.org/](https://freemarker.apache.org/)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -11644,28 +12841,31 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.3.1.**No license information found**
-1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.3.1.
+1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.5.2.
      * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.5.2.
+     * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -11745,7 +12945,10 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -11754,14 +12957,23 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.20.2.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.23.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -11769,50 +12981,62 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.6.3.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.3.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.7.5.
-     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
-     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.8.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
      * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.9.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
+     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.15.3.
+1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.16.1.
      * **Project URL:** [https://jsoup.org/](https://jsoup.org/)
      * **License:** [The MIT License](https://jsoup.org/license)
 
-1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.**No license information found**
+1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.
+     * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
+     * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
+
 1.  **Group** : org.junit-pioneer. **Name** : junit-pioneer. **Version** : 2.0.1.
      * **Project URL:** [https://junit-pioneer.org/](https://junit-pioneer.org/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
@@ -11884,12 +13108,12 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon Oct 21 18:28:51 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-std-context:2.0.0-SNAPSHOT.235`
+# Dependencies of `io.spine:spine-logging-std-context:2.0.0-SNAPSHOT.236`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -11946,6 +13170,10 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -11953,6 +13181,11 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk8. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.6.
+     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
+     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
 1.  **Group** : aopalliance. **Name** : aopalliance. **Version** : 1.0.
@@ -11967,7 +13200,11 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://jcommander.org](https://jcommander.org)
      * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.**No license information found**
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.
+     * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-annotations. **Version** : 2.15.3.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -12130,7 +13367,7 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://picocli.info](https://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.162.
+1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.172.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
 
@@ -12138,7 +13375,10 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/davidburstrom/contester](https://github.com/davidburstrom/contester)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.**No license information found**
+1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.
+     * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k-jvm. **Version** : 0.4.0.
      * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -12242,59 +13482,93 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://detekt.dev](https://detekt.dev)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.8.0.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.9.1.
+     * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
+     * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : it.unimi.dsi. **Name** : fastutil-core. **Version** : 8.5.12.
+     * **Project URL:** [http://fastutil.di.unimi.it/](http://fastutil.di.unimi.it/)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 1.  **Group** : javax.annotation. **Name** : javax.annotation-api. **Version** : 1.3.2.
      * **Project URL:** [http://jcp.org/en/jsr/detail?id=250](http://jcp.org/en/jsr/detail?id=250)
@@ -12390,7 +13664,7 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The BSD License](http://www.opensource.org/licenses/bsd-license.php)
 
-1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.31.
+1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.32.
      * **Project URL:** [https://freemarker.apache.org/](https://freemarker.apache.org/)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -12424,28 +13698,31 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.3.1.**No license information found**
-1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.3.1.
+1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.5.2.
      * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.5.2.
+     * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : kotlin-as-java-plugin. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -12525,7 +13802,10 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -12534,62 +13814,86 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.20.2.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.23.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.0.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.5.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.6.3.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.3.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.7.5.
-     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
-     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.8.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
      * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.9.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
+     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.15.3.
+1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.16.1.
      * **Project URL:** [https://jsoup.org/](https://jsoup.org/)
      * **License:** [The MIT License](https://jsoup.org/license)
 
-1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.**No license information found**
+1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.
+     * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
+     * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
+
 1.  **Group** : org.junit-pioneer. **Name** : junit-pioneer. **Version** : 2.0.1.
      * **Project URL:** [https://junit-pioneer.org/](https://junit-pioneer.org/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
@@ -12661,12 +13965,12 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon Oct 21 18:28:52 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine.tools:spine-testutil-logging:2.0.0-SNAPSHOT.235`
+# Dependencies of `io.spine.tools:spine-testutil-logging:2.0.0-SNAPSHOT.236`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -12731,6 +14035,10 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -12739,12 +14047,21 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.ow2.asm. **Name** : asm. **Version** : 9.6.
+     * **Project URL:** [http://asm.ow2.io/](http://asm.ow2.io/)
+     * **License:** [BSD-3-Clause](https://asm.ow2.io/license.html)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 ## Compile, tests, and tooling
 1.  **Group** : com.beust. **Name** : jcommander. **Version** : 1.82.
      * **Project URL:** [https://jcommander.org](https://jcommander.org)
      * **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.**No license information found**
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.15.3.
+     * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-annotations. **Version** : 2.15.3.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -12871,7 +14188,7 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://picocli.info](https://picocli.info)
      * **License:** [The Apache Software License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.162.
+1.  **Group** : io.github.classgraph. **Name** : classgraph. **Version** : 4.8.172.
      * **Project URL:** [https://github.com/classgraph/classgraph](https://github.com/classgraph/classgraph)
      * **License:** [The MIT License (MIT)](http://opensource.org/licenses/MIT)
 
@@ -12879,7 +14196,10 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/davidburstrom/contester](https://github.com/davidburstrom/contester)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.**No license information found**
+1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k. **Version** : 0.4.0.
+     * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : io.github.detekt.sarif4k. **Name** : sarif4k-jvm. **Version** : 0.4.0.
      * **Project URL:** [https://detekt.github.io/detekt](https://detekt.github.io/detekt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -12979,89 +14299,93 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://detekt.dev](https://detekt.dev)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-extensions-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-api-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-concurrency-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-datatest-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-discovery-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-framework-engine-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.8.0.
+1.  **Group** : io.kotest. **Name** : kotest-runner-junit5-jvm. **Version** : 5.9.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
+
+1.  **Group** : it.unimi.dsi. **Name** : fastutil-core. **Version** : 8.5.12.
+     * **Project URL:** [http://fastutil.di.unimi.it/](http://fastutil.di.unimi.it/)
+     * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 1.  **Group** : javax.annotation. **Name** : javax.annotation-api. **Version** : 1.3.2.
      * **Project URL:** [http://jcp.org/en/jsr/detail?id=250](http://jcp.org/en/jsr/detail?id=250)
@@ -13135,7 +14459,7 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The BSD License](http://www.opensource.org/licenses/bsd-license.php)
 
-1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.31.
+1.  **Group** : org.freemarker. **Name** : freemarker. **Version** : 2.3.32.
      * **Project URL:** [https://freemarker.apache.org/](https://freemarker.apache.org/)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -13169,24 +14493,27 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/JetBrains/java-annotations](https://github.com/JetBrains/java-annotations)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.3.1.**No license information found**
-1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.3.1.
+1.  **Group** : org.jetbrains. **Name** : markdown. **Version** : 0.5.2.
      * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains. **Name** : markdown-jvm. **Version** : 0.5.2.
+     * **Project URL:** [https://github.com/JetBrains/markdown](https://github.com/JetBrains/markdown)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-kotlin-descriptors. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : analysis-markdown. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-base. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.10.
+1.  **Group** : org.jetbrains.dokka. **Name** : dokka-core. **Version** : 1.9.20.
      * **Project URL:** [https://github.com/Kotlin/dokka](https://github.com/Kotlin/dokka)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -13266,7 +14593,10 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.**No license information found**
+1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-common. **Version** : 1.9.23.
+     * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
+     * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib-jdk7. **Version** : 1.9.23.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -13283,14 +14613,23 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.20.2.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.23.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.0.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.6.3.**No license information found**
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.8.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.7.3.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -13298,53 +14637,62 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.6.3.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.3.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-core-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-debug. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-jdk8. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.7.0.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-test-jvm. **Version** : 1.8.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
-
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.7.5.
-     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
-     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.8.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
      * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-html-jvm. **Version** : 0.9.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
+     * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-core-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.**No license information found**
+1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json. **Version** : 1.4.1.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-serialization-json-jvm. **Version** : 1.4.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.15.3.
+1.  **Group** : org.jsoup. **Name** : jsoup. **Version** : 1.16.1.
      * **Project URL:** [https://jsoup.org/](https://jsoup.org/)
      * **License:** [The MIT License](https://jsoup.org/license)
 
-1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.**No license information found**
+1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.10.0.
+     * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
+     * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
+
 1.  **Group** : org.junit.jupiter. **Name** : junit-jupiter-api. **Version** : 5.10.0.
      * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
@@ -13408,4 +14756,4 @@ This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-Lic
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Mon May 06 18:27:43 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Mon Oct 21 18:28:52 WEST 2024** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).

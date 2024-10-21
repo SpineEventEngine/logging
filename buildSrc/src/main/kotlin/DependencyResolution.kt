@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -50,14 +50,18 @@ import io.spine.internal.dependency.OpenTest4J
 import io.spine.internal.dependency.Plexus
 import io.spine.internal.dependency.Protobuf
 import io.spine.internal.dependency.Slf4J
+import io.spine.internal.dependency.Spine
 import io.spine.internal.dependency.Truth
 import org.gradle.api.NamedDomainObjectContainer
+import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ConfigurationContainer
+import org.gradle.api.artifacts.ModuleDependency
 import org.gradle.api.artifacts.ResolutionStrategy
+import org.gradle.kotlin.dsl.exclude
 
 /**
- * The function to be used in `buildscript` when a fully-qualified call must be made.
+ * The function to be used in `buildscript` when a fully qualified call must be made.
  */
 @Suppress("unused")
 fun doForceVersions(configurations: ConfigurationContainer) {
@@ -165,4 +169,38 @@ fun NamedDomainObjectContainer<Configuration>.excludeProtobufLite() {
 
     excludeProtoLite("runtimeOnly")
     excludeProtoLite("testRuntimeOnly")
+}
+
+/**
+ * Excludes `spine-base` from the dependencies.
+ */
+@Suppress("unused")
+fun ModuleDependency.excludeSpineBase() {
+    exclude(group = Spine.group, module = "spine-base")
+}
+
+/**
+ * Forces the version of [Spine.base] in the given project.
+ */
+@Suppress("unused")
+fun Project.forceSpineBase() {
+    configurations.all {
+        resolutionStrategy {
+            force(Spine.base)
+        }
+    }
+}
+
+/**
+ * Forces configurations containing `"proto"` in their names (disregarding the case) to
+ * use [Spine.baseForBuildScript].
+ */
+fun Project.forceBaseInProtoTasks() {
+    configurations.configureEach {
+        if (name.toLowerCase().contains("proto")) {
+            resolutionStrategy {
+                force(Spine.baseForBuildScript)
+            }
+        }
+    }
 }

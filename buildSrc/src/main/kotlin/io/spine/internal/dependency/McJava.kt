@@ -1,11 +1,11 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2024, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -24,21 +24,35 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.reflect.given;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Repeatable;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+package io.spine.internal.dependency
 
 /**
- * An annotation that can't be used with {@code PackageAnnotationLookup}
- * because it is repeatable.
+ * Dependencies on Spine Model Compiler for Java.
+ *
+ * See [mc-java](https://github.com/SpineEventEngine/mc-java).
  */
-@Target(ElementType.PACKAGE)
-@Retention(RetentionPolicy.RUNTIME)
-@Repeatable(TestAnnotationContainer.class)
-public @interface RepeatableTestAnnotation {
+@Suppress(
+    "MemberVisibilityCanBePrivate" /* `pluginLib()` is used by subprojects. */,
+    "ConstPropertyName"
+)
+object McJava {
+    const val group = Spine.toolsGroup
 
+    /** The version used to in the build classpath. */
+    const val dogfoodingVersion = "2.0.0-SNAPSHOT.242"
+
+    /** The version to be used for integration tests. */
+    const val version = "2.0.0-SNAPSHOT.243"
+
+    const val pluginId = "io.spine.mc-java"
+
+    val pluginLib = pluginLib(dogfoodingVersion)
+    fun pluginLib(version: String): String = "$group:spine-mc-java-plugins:$version:all"
+
+    /** The artifact reference for forcing in configurations. */
+    @Suppress("unused")
+    const val pluginsArtifact: String = "$group:spine-mc-java-plugins:$version"
+
+    val base = base(version)
+    fun base(version: String): String = "$group:spine-mc-java-base:$version"
 }
