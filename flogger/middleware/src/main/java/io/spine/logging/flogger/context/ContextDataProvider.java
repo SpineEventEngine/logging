@@ -126,6 +126,18 @@ public abstract class ContextDataProvider {
   }
 
   /**
+   * Obtains a custom logging level set for the logger with the given name.
+   *
+   * <p>The default implementation always returns {@code null}.
+   *
+   * @param loggerName the name of the logger
+   * @return the custom level set for the logger or {@ode null} if the level is not set
+   */
+  public @Nullable Level getMappedLevel(String loggerName) {
+    return null;
+  }
+
+  /**
    * Returns a set of tags to be added to a log statement. These tags can be used to provide
    * additional contextual metadata to log statements (e.g. request IDs).
    *

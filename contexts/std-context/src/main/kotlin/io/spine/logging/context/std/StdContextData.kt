@@ -26,14 +26,14 @@
 
 package io.spine.logging.context.std
 
+import io.spine.logging.Level
+import io.spine.logging.compareTo
+import io.spine.logging.context.LogLevelMap
 import io.spine.logging.flogger.LoggingScope
 import io.spine.logging.flogger.context.ContextMetadata
 import io.spine.logging.flogger.context.ScopeType
 import io.spine.logging.flogger.context.ScopedLoggingContext.ScopeList
 import io.spine.logging.flogger.context.Tags
-import io.spine.logging.Level
-import io.spine.logging.compareTo
-import io.spine.logging.context.LogLevelMap
 
 /**
  * The data of a scoped logging context with merging capabilities when
@@ -161,6 +161,12 @@ internal object CurrentStdContext {
             }
         }
         return false
+    }
+
+    fun mappedLevelOf(loggerName: String): Level? {
+        return data?.let {
+            it.logLevelMapRef.get()?.levelOf(loggerName)
+        }
     }
 
     /**

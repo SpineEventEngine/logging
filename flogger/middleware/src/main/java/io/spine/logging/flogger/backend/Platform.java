@@ -1,11 +1,11 @@
 /*
- * Copyright 2016, The Flogger Authors; 2023, TeamDev. All rights reserved.
+ * Copyright 2014, The Flogger Authors; 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -26,6 +26,7 @@
 
 package io.spine.logging.flogger.backend;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import io.spine.logging.flogger.AbstractLogger;
@@ -33,6 +34,8 @@ import io.spine.logging.flogger.FloggerLogSite;
 import io.spine.logging.flogger.context.ContextDataProvider;
 import io.spine.logging.flogger.context.Tags;
 import io.spine.logging.flogger.util.RecursionDepth;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 
@@ -80,7 +83,7 @@ public abstract class Platform {
 
     private static Platform loadFirstAvailablePlatform(String[] platformClass) {
       Platform platform = null;
-      // Try the platform provider first, if it's available.
+      // Try the platform provider first if it's available.
       try {
         platform = PlatformProvider.getPlatform();
       } catch (NoClassDefFoundError e) {
@@ -141,11 +144,11 @@ public abstract class Platform {
 
   /**
    * API for determining the logging class and log statement sites, return from {@link
-   * #getCallerFinder}. This classes is immutable and thread safe.
+   * #getCallerFinder}. These classes are immutable and thread-safe.
    *
    * <p>This functionality is not provided directly by the {@code Platform} API because doing so
    * would require several additional levels to be added to the stack before the implementation was
-   * reached. This is problematic for Android which has only limited stack analysis. By allowing
+   * reached. This is problematic for Android, which has only limited stack analysis. By allowing
    * callers to resolve the implementation early and then call an instance directly (this is not an
    * interface), we reduce the number of elements in the stack before the caller is found.
    *
@@ -167,7 +170,7 @@ public abstract class Platform {
    * instance fields at all in the implementation.
    *
    * <p>While this sounds onerous it's not difficult to achieve because this API is a singleton, and
-   * can delay any actual work until its methods are called. For example if any additional state is
+   * can delay any actual work until its methods are called. For example, if any additional state is
    * required in the implementation, it can be held via a "lazy holder" to defer initialization.
    */
   public abstract static class LogCallerFinder {
@@ -244,11 +247,31 @@ public abstract class Platform {
    *
    * @param loggerName the fully qualified logger name (e.g. "com.example.SomeClass")
    * @param level the level of the log statement being invoked
-   * @param isEnabled whether the logger is enabled at the given level (i.e. the result of calling
+   * @param isEnabled whether the logger is enabled at the given level (i.e., the result of calling
    *     {@code isLoggable()} on the backend instance)
    */
   public static boolean shouldForceLogging(String loggerName, Level level, boolean isEnabled) {
     return getContextDataProvider().shouldForceLogging(loggerName, level, isEnabled);
+  }
+
+  /**
+   * Obtains a custom logging level set to the logger with the given name via
+   * a {@link io.spine.logging.flogger.context.LogLevelMap} set in the current logging context.
+   *
+   * <p>The method returns {@code null} if:
+   * <ul>
+   *    <li>There is no current logging context installed.
+   *    <li>The context does not have a log level map.
+   *    <li>The log level map does not have a custom level for the given logger.
+   * </ul>
+   * @param loggerName the name of the logger
+   * @return the custom level or {@code null}
+   */
+  public static @Nullable Level getMappedLevel(String loggerName) {
+      checkNotNull(loggerName);
+      var provider = getContextDataProvider();
+      var result = provider.getMappedLevel(loggerName);
+      return result;
   }
 
   /** Returns {@link Tags} from with the current context to be injected into log statements. */
@@ -276,18 +299,18 @@ public abstract class Platform {
   }
 
   protected long getCurrentTimeNanosImpl() {
-    // Sadly this is the best you can currently do with vanilla Java. In Java9 you have access to
-    // nano-second clocks, but Flogger needs to be backwards compatible, so it won't be as simple
+    // Sadly, this is the best you can currently do with vanilla Java. In Java9 you have access to
+    // nanosecond clocks, but Flogger needs to be backwards compatible, so it won't be as simple
     // as just changing this line of code.
     // Overflow will not occur until sometime around 2264, so it's safe not to care for now.
     return MILLISECONDS.toNanos(System.currentTimeMillis());
   }
 
   /**
-   * Returns a human readable string describing the platform and its configuration. This should
+   * Returns a human-readable string describing the platform and its configuration. This should
    * contain everything a human would need to see to check that the Platform was configured as
    * expected. It should contain the platform name along with any configurable elements
-   * (e.g. plugin services) and their settings. It is recommended (though not required) that this
+   * (e.g., plugin services) and their settings. It is recommended (though not required) that this
    * string is formatted with one piece of configuration per line in a tabular format, such as:
    * <pre>{@code
    * platform: <human readable name>

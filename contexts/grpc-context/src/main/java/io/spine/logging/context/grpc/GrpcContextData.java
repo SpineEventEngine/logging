@@ -74,6 +74,24 @@ final class GrpcContextData {
     return false;
   }
 
+  /**
+   * Obtains a custom level set for the logger with the given name via
+   * a {@link LogLevelMap}, if it exists.
+   *
+   * @param loggerName the name of the logger
+   * @return the custom level or {@code null} if there is no map, or the map does not affect
+   *  the level of the given logger
+   */
+  @Nullable
+  Level getMappedLevel(String loggerName) {
+    var map = logLevelMapRef.get();
+    if (map == null) {
+        return null;
+    }
+    var result = map.getLevel(loggerName);
+    return result;
+  }
+
   @Nullable
   static LoggingScope lookupScopeFor(@Nullable GrpcContextData contextData, ScopeType type) {
     return contextData != null ? ScopeList.lookup(contextData.scopes, type) : null;
