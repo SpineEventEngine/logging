@@ -131,7 +131,7 @@ public abstract class ContextDataProvider {
    * <p>The default implementation always returns {@code null}.
    *
    * @param loggerName the name of the logger
-   * @return the custom level set for the logger or {@ode null} if the level is not set
+   * @return the custom level set for the logger or {@code null} if the level is not set
    */
   public @Nullable Level getMappedLevel(String loggerName) {
     return null;
