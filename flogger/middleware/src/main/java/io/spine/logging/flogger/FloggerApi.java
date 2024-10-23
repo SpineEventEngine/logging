@@ -298,7 +298,7 @@ public interface FloggerApi<API extends FloggerApi<API>> {
    * and logging is aggregated by the unique combination of keys passed to all "per" methods.
    *
    * @param scopeProvider a constant used to define the type of the scope in which
-   *                     logging is aggregated.
+   *     logging is aggregated.
    */
   API per(LoggingScopeProvider scopeProvider);
 
