@@ -1,11 +1,11 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2024, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -33,12 +33,10 @@ import kotlin.reflect.KClass
  * Base class for fluent API loggers.
  *
  * A logger is a factory of fluent logging [API] instances,
- * which allow to build log statements via method chaining.
+ * which allow building log statements via method chaining.
  *
- * @param [API]
- *          the logging API provided by this logger.
- * @param [cls]
- *          the class which is going to perform the logging operations using this logger.
+ * @param [API] The logging API provided by this logger.
+ * @param [cls] The class which is going to perform the logging operations using this logger.
  * @see [LoggingApi]
  */
 public abstract class Logger<API: LoggingApi<API>>(
@@ -77,7 +75,7 @@ public abstract class Logger<API: LoggingApi<API>>(
      * IMPLEMENTATION NOTE
      *
      * The following methods are not implemented as extension functions in order to
-     * preserve the calling site which is supposed to be set by `createApi()` method
+     * preserve the calling site, which is supposed to be set by `createApi()` method
      * of the concrete logger implementation.
      *
      * Had we implemented these methods as extension functions, the calling site would
