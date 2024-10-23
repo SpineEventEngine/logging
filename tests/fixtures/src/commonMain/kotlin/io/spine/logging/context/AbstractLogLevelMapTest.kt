@@ -1,11 +1,11 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2024, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -39,7 +39,7 @@ import kotlin.reflect.full.createInstance
 /**
  * Base class for integration test suites of [LogLevelMap].
  *
- * This class is responsible for the general purpose configuration of a test suite.
+ * This class is responsible for the general-purpose configuration of a test suite.
  * For the actual definition of tests, please see [BaseLogLevelMapTest].
  *
  * @see BaseLogLevelMapTest
@@ -98,13 +98,10 @@ public abstract class AbstractLogLevelMapTest(
     /**
      * Executes the [test] with the started logging [Recorder].
      *
-     * @param T the type of the logging test fixture to be used in the test.
-     * @param displayName
-     *         the name of the test.
-     * @param loggingClass
-     *         the class of the logging test fixture used in the test.
-     * @param test
-     *         the block with the testing code.
+     * @param T The type of the logging test fixture to be used in the test.
+     * @param displayName The name of the test.
+     * @param loggingClass The class of the logging test fixture used in the test.
+     * @param test The block with the testing code.
      */
     protected fun <T: LoggingTestFixture> should(
         displayName: String,
@@ -123,13 +120,10 @@ public abstract class AbstractLogLevelMapTest(
     /**
      * Executes the [test] with fixtures created for the given [loggingClasses].
      *
-     * @param T the type of the logging test fixtures to be used in the test.
-     * @param displayName
-     *         the name of the test.
-     * @param loggingClasses
-     *         the classes of the logging test fixture used in the test.
-     * @param test
-     *         the block with the testing code.
+     * @param T The type of the logging test fixtures to be used in the test.
+     * @param displayName The name of the test.
+     * @param loggingClasses The classes of the logging test fixture used in the test.
+     * @param test The block with the testing code.
      */
     protected fun <T : LoggingTestFixture> shouldMany(
         displayName: String,
