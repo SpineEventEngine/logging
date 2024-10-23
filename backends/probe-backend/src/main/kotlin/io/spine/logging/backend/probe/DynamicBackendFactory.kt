@@ -1,11 +1,11 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2024, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -31,7 +31,7 @@ import io.spine.logging.flogger.backend.BackendFactory
 import io.spine.logging.backend.jul.JulBackendFactory
 
 /**
- * A factory that delegates backends creation to another factory,
+ * A factory that delegates backends creation to another factory
  * and allows changing of the underlying factory in runtime.
  *
  * In general, the logging facade doesn't provide a mechanism for changing
@@ -76,7 +76,7 @@ public object DynamicBackendFactory : BackendFactory() {
         delegate?.create(loggingClassName) ?: julBackends.create(loggingClassName)
 
     /**
-     * Returns a fully-qualified name of this class.
+     * Returns a fully qualified name of this class.
      */
     override fun toString(): String = javaClass.name
 }
