@@ -255,7 +255,7 @@ public abstract class Platform {
   }
 
   /**
-   * Obtains a custom logging level set to the logger with the given name via
+   * Obtains a custom logging level set for the logger with the given name via
    * a {@link io.spine.logging.flogger.context.LogLevelMap} set in the current logging context.
    *
    * <p>The method returns {@code null} if:
