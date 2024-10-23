@@ -39,7 +39,7 @@ import java.util.concurrent.Callable;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
- * A user facing API for creating and modifying scoped logging contexts in applications.
+ * A user-facing API for creating and modifying scoped logging contexts in applications.
  *
  * <p>Scoped contexts provide a way for application code to attach metadata and control the
  * behaviour of logging within well defined contexts. This is most often associated with making "per
@@ -55,14 +55,14 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * be available to logging as long as the context is installed.
  *
  * <p>Note that in the current API contexts are also modifiable after creation, but this usage is
- * discouraged and may be removed in future. The problem with modifying contexts after creation is
- * that, since contexts can be shared between threads, it is potentially confusing if tags are added
- * to a context when it is being used concurrently by multiple threads.
+ * discouraged and may be removed in the future. The problem with modifying contexts after creation
+ * is that, since contexts can be shared between threads, it is potentially confusing if tags are
+ * added to a context when it is being used concurrently by multiple threads.
  *
  * <p>Note that since logging contexts are designed to be modified by code in libraries and helper
  * functions which do not know about each other, the data structures and behaviour of logging
- * contexts are carefully designed to avoid any accidental "undoing" of existing behaviour. In
- * particular:
+ * contexts are carefully designed to avoid any accidental "undoing" of existing behaviour.
+ * In particular:
  *
  * <ul>
  *   <li>Tags can only be added to contexts, never modified or removed.
@@ -70,13 +70,13 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * </ul>
  *
  * <p>One possibly surprising result of this behaviour is that it's not possible to disable logging
- * from within a context. However this is quite intentional, since overly verbose logging should be
+ * from within a context. However, this is quite intentional, since overly verbose logging should be
  * fixed by other mechanisms (code changes, global logging configuration), and not on a "per
  * request" basis.
  *
  * <p>Depending on the framework used, it's possible that the current logging context will be
- * automatically propagated to some or all threads or sub-tasks started from within the context.
- * This is not guaranteed however and the semantic behaviour of context propagation is not defined
+ * automatically propagated to some or all threads or subtasks started from within the context.
+ * This is not guaranteed, however, and the semantic behaviour of context propagation is not defined
  * by this class.
  *
  * <p>In particular, if you haven't explicitly opened a context in which to run your code, there is
@@ -86,8 +86,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * <p>Context support and automatic propagation is heavily reliant on Java platform capabilities,
  * and precise behaviour is likely to differ between runtime environments or frameworks. Context
  * propagation may not behave the same everywhere, and in some situations logging contexts may not
- * be supported at all. Methods which attempt to affect context state may do nothing in some
- * environments, or when called at some points in an application. If application code relies on
+ * be supported at all. Methods which attempt to affect a context state may do nothing in some
+ * environments or when called at some points in an application. If application code relies on
  * modifications to an existing, implicit logging context, it should always check the return values
  * of any modification methods called (e.g. {@link #addTags(Tags)}).
  *

@@ -36,6 +36,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.flogger.LogContext.Key
 import io.spine.logging.flogger.backend.Metadata
+import io.spine.logging.flogger.backend.Platform
 import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
 import io.spine.logging.flogger.backend.given.shouldBeEmpty
 import io.spine.logging.flogger.backend.given.shouldContainInOrder
@@ -44,7 +45,7 @@ import io.spine.logging.flogger.backend.given.shouldUniquelyContain
 import io.spine.logging.flogger.given.ConfigurableLogger
 import io.spine.logging.flogger.repeatedKey
 import io.spine.logging.flogger.singleKey
-import java.util.logging.Level
+import java.util.logging.Level as JLevel
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -118,6 +119,7 @@ abstract class AbstractContextDataProviderSpec {
         callbackWasExecuted = true
     }
 
+    @Suppress("unused") // False positive from IDEA.
     @Nested inner class
     `create a new context` {
 
@@ -152,7 +154,7 @@ abstract class AbstractContextDataProviderSpec {
 
         @Test
         fun `with a log level map`() {
-            val defaultLevel = Level.FINE
+            val defaultLevel = JLevel.FINE
             val mapping = "foo.bar" to defaultLevel
             val levelMap = LogLevelMap.create(mapOf(mapping), defaultLevel)
             val (logger, level) = mapping
@@ -250,36 +252,36 @@ abstract class AbstractContextDataProviderSpec {
             val (other, fooBar, fooBarBaz) = listOf("other.package", "foo.bar", "foo.bar.Baz")
 
             // Everything in "foo.bar" gets at least FINE logging.
-            val fooBarFine = levelMap(fooBar to Level.FINE)
+            val fooBarFine = levelMap(fooBar to JLevel.FINE)
 
-            contextData.shouldNotForceLogging(Level.FINE, other, fooBar, fooBarBaz)
+            contextData.shouldNotForceLogging(JLevel.FINE, other, fooBar, fooBarBaz)
             context.newContext()
                 .withLogLevelMap(fooBarFine)
                 .run {
-                    contextData.shouldForceLogging(Level.FINE, fooBar, fooBarBaz)
-                    contextData.shouldNotForceLogging(Level.FINEST, fooBar, fooBarBaz)
-                    contextData.shouldNotForceLogging(Level.FINE, other)
+                    contextData.shouldForceLogging(JLevel.FINE, fooBar, fooBarBaz)
+                    contextData.shouldNotForceLogging(JLevel.FINEST, fooBar, fooBarBaz)
+                    contextData.shouldNotForceLogging(JLevel.FINE, other)
 
                     // Everything in "foo.bar.Baz" gets at least FINEST logging.
-                    val fooBazFinest = levelMap(fooBarBaz to Level.FINEST)
+                    val fooBazFinest = levelMap(fooBarBaz to JLevel.FINEST)
 
                     context.newContext()
                         .withLogLevelMap(fooBazFinest)
                         .run {
-                            contextData.shouldForceLogging(Level.FINE, fooBar, fooBarBaz)
-                            contextData.shouldForceLogging(Level.FINEST, fooBarBaz)
-                            contextData.shouldNotForceLogging(Level.FINE, other)
+                            contextData.shouldForceLogging(JLevel.FINE, fooBar, fooBarBaz)
+                            contextData.shouldForceLogging(JLevel.FINEST, fooBarBaz)
+                            contextData.shouldNotForceLogging(JLevel.FINE, other)
                             markCallbackExecuted()
                         }
 
                     // Everything is restored after a scope.
-                    contextData.shouldForceLogging(Level.FINE, fooBar, fooBarBaz)
-                    contextData.shouldNotForceLogging(Level.FINEST, fooBar, fooBarBaz)
-                    contextData.shouldNotForceLogging(Level.FINE, other)
+                    contextData.shouldForceLogging(JLevel.FINE, fooBar, fooBarBaz)
+                    contextData.shouldNotForceLogging(JLevel.FINEST, fooBar, fooBarBaz)
+                    contextData.shouldNotForceLogging(JLevel.FINE, other)
                 }
 
             // Everything is restored after a scope.
-            contextData.shouldNotForceLogging(Level.FINE, other, fooBar, fooBarBaz)
+            contextData.shouldNotForceLogging(JLevel.FINE, other, fooBar, fooBarBaz)
             checkCallbackWasExecuted()
         }
 
@@ -369,6 +371,32 @@ abstract class AbstractContextDataProviderSpec {
         contextData.getScope(SUB_TASK).shouldBeNull()
         checkCallbackWasExecuted()
     }
+
+    /**
+     * This test verifies that a custom level set to a logger via a log level map can
+     * be obtained via the [Platform].
+     *
+     * Please note that we use the top-level API of Spine Logging
+     * e.g., [io.spine.logging.Level], instead of [java.util.logging.Level], or
+     * [io.spine.logging.context.LogLevelMap], instead of
+     * [io.spine.logging.flogger.context.LogLevelMap].
+     * We do so because we want to test how the code works from the level of user's code
+     * rather than implementation details.
+     *
+     * Since this class is an abstract base for tests of `ContextDataProvider` implementations,
+     * the final test suite classes should provide testing for all the implementations from
+     * the top-level API.
+     */
+    @Test
+    fun `obtain custom log level set via a log level map`() {
+        val loggerName = this::class.java.name
+        val level = io.spine.logging.Level.DEBUG
+        val map = io.spine.logging.context.LogLevelMap.create(mapOf(loggerName to level))
+        io.spine.logging.context.ScopedLoggingContext.newContext().withLogLevelMap(map).execute {
+            val customLevel = Platform.getMappedLevel(loggerName)
+            customLevel shouldBe level
+        }
+    }
 }
 
 /**
@@ -377,7 +405,7 @@ abstract class AbstractContextDataProviderSpec {
  *
  * Otherwise, returns `false`.
  */
-private fun ContextDataProvider.isLoggingForced(logger: LoggerName, level: Level): Boolean {
+private fun ContextDataProvider.isLoggingForced(logger: LoggerName, level: JLevel): Boolean {
     // We expect that by default the specified level is disabled,
     // and the context itself would force the logging.
     val isEnabledByLevel = false
@@ -385,17 +413,17 @@ private fun ContextDataProvider.isLoggingForced(logger: LoggerName, level: Level
     return isForced
 }
 
-private fun ContextDataProvider.shouldForceLogging(level: Level, vararg loggers: LoggerName) =
+private fun ContextDataProvider.shouldForceLogging(level: JLevel, vararg loggers: LoggerName) =
     loggers.forEach { logger ->
         isLoggingForced(logger, level).shouldBeTrue()
     }
 
-private fun ContextDataProvider.shouldNotForceLogging(level: Level, vararg loggers: LoggerName) =
+private fun ContextDataProvider.shouldNotForceLogging(level: JLevel, vararg loggers: LoggerName) =
     loggers.forEach { logger ->
         isLoggingForced(logger, level).shouldBeFalse()
     }
 
 private fun levelMap(
-    mapping: Pair<LoggerName, Level>,
-    defaultLevel: Level = Level.INFO
+    mapping: Pair<LoggerName, JLevel>,
+    defaultLevel: JLevel = JLevel.INFO
 ): LogLevelMap = LogLevelMap.create(mapOf(mapping), defaultLevel)

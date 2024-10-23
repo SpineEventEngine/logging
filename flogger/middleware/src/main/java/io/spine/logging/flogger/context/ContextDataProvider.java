@@ -142,7 +142,7 @@ public abstract class ContextDataProvider {
 
   /**
    * Returns a set of tags to be added to a log statement. These tags can be used to provide
-   * additional contextual metadata to log statements (e.g. request IDs).
+   * additional contextual metadata to log statements (e.g., request IDs).
    *
    * <p>Implementations which do not support scoped {@link Tags} should not override this method;
    * the default implementation returns {@code Tags.empty()}.

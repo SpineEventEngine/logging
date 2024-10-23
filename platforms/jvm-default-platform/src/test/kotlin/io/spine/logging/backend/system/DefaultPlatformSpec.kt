@@ -29,8 +29,8 @@ package io.spine.logging.backend.system
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
-import io.spine.logging.backend.system.given.MemoizingLoggerBackendFactory
 import io.spine.logging.backend.system.given.FixedTime
+import io.spine.logging.backend.system.given.MemoizingLoggerBackendFactory
 import io.spine.logging.backend.system.given.NoOpCallerFinder
 import io.spine.logging.backend.system.given.StubBackendFactoryService
 import io.spine.logging.backend.system.given.StubClockService
