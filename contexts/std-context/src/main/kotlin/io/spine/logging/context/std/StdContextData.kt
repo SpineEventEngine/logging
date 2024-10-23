@@ -39,12 +39,9 @@ import io.spine.logging.flogger.context.Tags
  * The data of a scoped logging context with merging capabilities when
  * contexts are nested.
  *
- * @param scopeType
- *        the type of the scope to be created, or `null` if no type is required.
- * @constructor
- *        creates an instance taking initial values from the currently installed
- *        context data. If there is no current logging context, it initializes
- *        the instance with `null`s.
+ * @param scopeType The type of the scope to be created, or `null` if no type is required.
+ * @constructor Creates an instance taking initial values from the currently installed context data.
+ *   If there is no current logging context, it initializes the instance with `null`s.
  */
 internal class StdContextData(scopeType: ScopeType?) {
 
@@ -163,6 +160,14 @@ internal object CurrentStdContext {
         return false
     }
 
+    /**
+     * Obtains a custom level set for the logger with the given name via [LogLevelMap],
+     * if it exists.
+     *
+     * @param loggerName The name of the logger.
+     * @return The custom level or `null` if there is no map, or the map does not affect
+     *   the level of the given logger.
+     */
     fun mappedLevelOf(loggerName: String): Level? {
         return data?.let {
             it.logLevelMapRef.get()?.levelOf(loggerName)
