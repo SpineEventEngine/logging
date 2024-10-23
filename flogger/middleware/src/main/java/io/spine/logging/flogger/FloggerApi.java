@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * The basic logging API. An implementation of this API (or an extension of it) will be
- * returned by any fluent logger, and forms the basis of the fluent call chain.
+ * returned by any fluent logger and forms the basis of the fluent call chain.
  * <p>
  * In typical usage each method in the API, with the exception of the terminal {@code log()}
  * statements, will carry out some simple task (which may involve modifying the context of the log
@@ -44,32 +44,34 @@ import java.util.concurrent.TimeUnit;
  * <li>Methods which return an alternate API in order to implement context specific grammar (though
  *     these alternate APIs should always return the original logging API eventually).
  * </ul>
- * A hypothetical example of a context specific grammar might be:
+ * A hypothetical example of a context-specific grammar might be:
  * <pre>{@code
  * logger.at(WARNING).whenSystem().isLowOnMemory().log("");
  * }</pre>
- * In this example the {@code whenSystem()} method would return its own API with several context
- * specific methods ({@code isLowOnMemory()}, {@code isThrashing()} etc...), however each of these
- * sub-APIs must eventually return the original logging API.
+ * In this example the {@code whenSystem()} method would return its own API with several
+ * context-specific methods ({@code isLowOnMemory()}, {@code isThrashing()} etc...).
+ * However, each of these sub-APIs must eventually return the original logging API.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LoggingApi.java">
  *     Original Java code of Google Flogger</a>
  */
-// NOTE: new methods to this interface should be coordinated with google-java-format
+@SuppressWarnings({"ClassWithTooManyMethods", "OverlyComplexClass"})
 public interface FloggerApi<API extends FloggerApi<API>> {
   /**
    * Associates a {@link Throwable} instance with the current log statement, to be interpreted as
-   * the cause of this statement. Typically this method will be used from within catch blocks to log
+   * the cause of this statement.
+   *
+   * <p>Typically, this method will be used from within catch blocks to log
    * the caught exception or error. If the cause is {@code null} then this method has no effect.
-   * <p>
-   * If this method is called multiple times for a single log statement, the last invocation will
+   *
+   * <p>If this method is called multiple times for a single log statement, the last invocation will
    * take precedence.
    */
   API withCause(@Nullable Throwable cause);
 
   /**
    * Modifies the current log statement to be emitted at most one-in-N times. The specified count
-   * must be greater than zero and it is expected, but not required, that it is constant. In the
+   * must be greater than zero, and it is expected, but not required, that it is constant. In the
    * absence of any other rate limiting, this method always allows the first invocation of any log
    * statement to be emitted.
    *
@@ -144,7 +146,7 @@ public interface FloggerApi<API extends FloggerApi<API>> {
    * logging would occur after {@code 0s}, {@code 2.4s} and {@code 4.8s} (not {@code 4.2s}),
    * giving an effective duration of {@code 2.4s} between log statements over time.
    * <p>
-   * Providing a zero length duration (ie, {@code n == 0}) disables rate limiting and makes this
+   * Providing a zero-length duration (i.e., {@code n == 0}) disables rate limiting and makes this
    * method an effective no-op.
    *
    * <h3>Granularity</h3>
@@ -235,7 +237,7 @@ public interface FloggerApi<API extends FloggerApi<API>> {
    * Aggregates stateful logging with respect to the given enum value.
    *
    * <p>Normally log statements with conditional behaviour (e.g. rate limiting) use the same state
-   * for each invocation (e.g. counters or timestamps). This method allows an additional qualifier
+   * for each invocation (e.g., counters or timestamps). This method allows an additional qualifier
    * to be given which allows for different conditional state for each unique qualifier.
    *
    * <p>This only makes a difference for log statements which use persistent state to control
@@ -291,7 +293,7 @@ public interface FloggerApi<API extends FloggerApi<API>> {
    * the current scope.
    *
    * <p>If a log statement using this method is invoked outside a context of the given type, this
-   * call has no effect (e.g. rate limiting will apply normally, without respect to any specific
+   * call has no effect (e.g., rate limiting will apply normally, without respect to any specific
    * scope).
    *
    * <p>If multiple aggregation keys are added to a single log statement, then they all take effect
@@ -334,7 +336,7 @@ public interface FloggerApi<API extends FloggerApi<API>> {
    * repeating non-repeatable keys).
    *
    * <p>If {@code value} is {@code null}, this method is a no-op. This is useful for specifying
-   * conditional values (e.g. via {@code logger.atInfo().with(MY_KEY, getValueOrNull()).log(...)}).
+   * conditional values (e.g., via {@code logger.atInfo().with(MY_KEY, getValueOrNull()).log(...)}).
    *
    * @param key the metadata key (expected to be a static constant)
    * @param value a value to be associated with the key in this log statement. Null values are
@@ -369,7 +371,7 @@ public interface FloggerApi<API extends FloggerApi<API>> {
    * Sets the log site for the current log statement. Explicit log site injection is very rarely
    * necessary, since either the log site is injected automatically, or it is determined at runtime
    * via stack analysis. The one use case where calling this method explicitly may be useful is when
-   * making logging helper methods, where some common project specific logging behavior is
+   * making logging helper methods, where some common project-specific logging behavior is
    * enshrined. For example, you can write:
    *
    * <pre>{@code
@@ -458,9 +460,10 @@ public interface FloggerApi<API extends FloggerApi<API>> {
    * <pre>{@code logger.atFine().every(100).isEnabled()}</pre>
    * is incorrect because it will always behave identically to:
    * <pre>{@code logger.atFine().isEnabled()}</pre>
-   * <p>
+   *
    * <h3>Implementation Note</h3>
-   * By avoiding passing a separate {@code Level} at runtime to determine "loggability", this API
+   *
+   * <p>By avoiding passing a separate {@code Level} at runtime to determine "loggability", this API
    * makes it easier to coerce bytecode optimizers into doing "dead code" removal on sections
    * guarded by this method.
    * <p>
@@ -489,13 +492,13 @@ public interface FloggerApi<API extends FloggerApi<API>> {
 
   /**
    * Terminal log statement when a message is not required. A {@code log} method must terminate all
-   * fluent logging chains and the no-argument method can be used if there is no need for a log
+   * fluent logging chains, and the no-argument method can be used if there is no need for a log
    * message. For example:
    * <pre>{@code
    * logger.at(INFO).withCause(error).log();
    * }</pre>
    * <p>
-   * However as it is good practice to give all log statements a meaningful log message, use of this
+   * However, as it is good practice to give all log statements a meaningful log message, use of this
    * method should be rare.
    */
   void log();
@@ -504,7 +507,7 @@ public interface FloggerApi<API extends FloggerApi<API>> {
    * Logs the given literal string without interpreting any argument placeholders.
    * <p>
    * Important: This is intended only for use with hard-coded, literal strings which cannot
-   * contain user data. If you wish to log user generated data, you should do something like:
+   * contain user data. If you wish to log user-generated data, you should do something like:
    * <pre>{@code
    * log("user data=%s", value);
    * }</pre>
@@ -523,7 +526,7 @@ public interface FloggerApi<API extends FloggerApi<API>> {
    * logger's choice of parser.
    * <p>
    * Note that printf-style loggers are always expected to accept the standard Java printf
-   * formatting characters (e.g. "%s", "%d" etc...) and all flags unless otherwise stated.
+   * formatting characters (e.g. "%s", "%d", etc...) and all flags unless otherwise stated.
    * Null arguments are formatted as the literal string {@code "null"} regardless of
    * formatting flags.
    *
