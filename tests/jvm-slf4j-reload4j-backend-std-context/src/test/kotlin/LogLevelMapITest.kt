@@ -24,38 +24,25 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.logging.flogger.backend.Platform
-import io.kotest.matchers.shouldBe
+import io.kotest.core.annotation.Ignored
 import io.spine.logging.Level
-import io.spine.logging.backend.log4j2.Log4j2BackendFactory
 import io.spine.logging.context.BaseLogLevelMapTest
-import io.spine.logging.context.std.StdContextDataProvider
-import io.spine.logging.testing.Log4j2Recorder
 import io.spine.logging.testing.Recorder
-import org.junit.jupiter.api.Test
 
 /**
  * This is a non-abstract integration test of [LogLevelMap][io.spine.logging.context.LogLevelMap]
- * executed in the project in which logging backend is based on Log4j2.
+ * executed in the project with SLF4J backend and `spine-logging-std-context`.
+ * SLF4J uses Reload4J logging.
  *
  * Please see `build.gradle.kts` of this module for the details.
  */
-internal class LogLevelMapLog4j2BackendITest: BaseLogLevelMapTest() {
+@Ignored // Until recording for Reload4J is implemented.
+@Suppress("unused") // Until SLF4J backend is added.
+internal class LogLevelMapITest: BaseLogLevelMapTest() {
 
-    override fun createRecorder(loggerName: String, minLevel: Level): Recorder =
-        Log4j2Recorder(loggerName, minLevel)
-
-    @Test
-    fun `should use 'Log4j2LoggerBackend`() {
-        val loggerName = this::class.qualifiedName!!
-        val platformProvided = Platform.getBackend(loggerName)
-        val factoryProvided = Log4j2BackendFactory().create(loggerName)
-        platformProvided::class shouldBe factoryProvided::class
-    }
-
-    @Test
-    fun `should use 'StdContextDataProvider'`() {
-        val provider = Platform.getContextDataProvider()
-        provider::class shouldBe StdContextDataProvider::class
+    // TODO:2023-10-10:yevhenii.nadtochii: Make this test work when SLF4J backend is added.
+    //  See issue: https://github.com/SpineEventEngine/logging/issues/77
+    override fun createRecorder(loggerName: String, minLevel: Level): Recorder {
+        error("Not implemented.")
     }
 }

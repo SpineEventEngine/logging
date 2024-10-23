@@ -24,12 +24,38 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.logging.context.JulLogLevelMapTest
+import io.spine.logging.flogger.backend.Platform
+import io.kotest.matchers.shouldBe
+import io.spine.logging.Level
+import io.spine.logging.backend.log4j2.Log4j2BackendFactory
+import io.spine.logging.context.BaseLogLevelMapTest
+import io.spine.logging.context.std.StdContextDataProvider
+import io.spine.logging.testing.Log4j2Recorder
+import io.spine.logging.testing.Recorder
+import org.junit.jupiter.api.Test
 
 /**
  * This is a non-abstract integration test of [LogLevelMap][io.spine.logging.context.LogLevelMap]
- * executed in the project in which logging contexts implemented using gRPC.
+ * executed in the project in which logging backend is based on Log4j2.
  *
  * Please see `build.gradle.kts` of this module for the details.
  */
-internal class LogLevelMapOnGrpcContextTest: JulLogLevelMapTest()
+internal class LogLevelMapITest: BaseLogLevelMapTest() {
+
+    override fun createRecorder(loggerName: String, minLevel: Level): Recorder =
+        Log4j2Recorder(loggerName, minLevel)
+
+    @Test
+    fun `should use 'Log4j2LoggerBackend`() {
+        val loggerName = this::class.qualifiedName!!
+        val platformProvided = Platform.getBackend(loggerName)
+        val factoryProvided = Log4j2BackendFactory().create(loggerName)
+        platformProvided::class shouldBe factoryProvided::class
+    }
+
+    @Test
+    fun `should use 'StdContextDataProvider'`() {
+        val provider = Platform.getContextDataProvider()
+        provider::class shouldBe StdContextDataProvider::class
+    }
+}

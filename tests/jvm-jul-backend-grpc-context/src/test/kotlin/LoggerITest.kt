@@ -26,4 +26,4 @@
 
 import io.spine.logging.context.LoggerTest
 
-internal class LoggerOnGrpcContextTest : LoggerTest(LoggerOnGrpcContextTest::class)
+internal class LoggerITest : LoggerTest(LoggerITest::class)
