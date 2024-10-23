@@ -98,7 +98,7 @@ public final class FluentLogger2 extends AbstractLogger<FluentLogger2.Api> {
   public Api at(Level level) {
     var loggerName = getName();
     var mappedLevel = Platform.getMappedLevel(loggerName);
-    if (Level.OFF.equals(mappedLevel)) {
+    if (io.spine.logging.Level.Companion.getOFF().equals(mappedLevel)) {
       return NO_OP;
     }
     var isLoggable = isLoggable(level);
