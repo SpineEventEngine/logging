@@ -29,7 +29,6 @@ import io.kotest.matchers.shouldBe
 import io.spine.logging.backend.jul.JulBackendFactory
 import io.spine.logging.context.JulLogLevelMapTest
 import io.spine.logging.context.std.StdContextDataProvider
-import org.junit.jupiter.api.Test
 
 /**
  * This is a non-abstract integration test of [LogLevelMap][io.spine.logging.context.LogLevelMap]
@@ -39,17 +38,17 @@ import org.junit.jupiter.api.Test
  */
 internal class LogLevelMapITest : JulLogLevelMapTest() {
 
-    @Test
-    fun `should use 'JulBackendFactory`() {
-        val loggerName = this::class.qualifiedName!!
-        val platformProvided = Platform.getBackend(loggerName)
-        val factoryProvided = JulBackendFactory().create(loggerName)
-        platformProvided::class shouldBe factoryProvided::class
-    }
+    init {
+        should("use `JulBackendFactory`") {
+            val loggerName = this::class.qualifiedName!!
+            val platformProvided = Platform.getBackend(loggerName)
+            val factoryProvided = JulBackendFactory().create(loggerName)
+            platformProvided::class shouldBe factoryProvided::class
+        }
 
-    @Test
-    fun `should use 'StdContextDataProvider'`() {
-        val provider = Platform.getContextDataProvider()
-        provider::class shouldBe StdContextDataProvider::class
+        should("use `StdContextDataProvider`") {
+            val provider = Platform.getContextDataProvider()
+            provider::class shouldBe StdContextDataProvider::class
+        }
     }
 }
