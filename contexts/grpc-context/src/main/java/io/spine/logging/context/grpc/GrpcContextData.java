@@ -37,7 +37,7 @@ import java.util.logging.Level;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
- * A mutable thread-safe holder for context scoped logging information.
+ * A mutable thread-safe holder for context-scoped logging information.
  *
  * @see <a href="https://rb.gy/nfnwv">Original Java code of Google Flogger</a>
  */
@@ -45,7 +45,7 @@ final class GrpcContextData {
 
   static Tags getTagsFor(@Nullable GrpcContextData context) {
     if (context != null) {
-      Tags tags = context.tagRef.get();
+      var tags = context.tagRef.get();
       if (tags != null) {
         return tags;
       }
@@ -55,7 +55,7 @@ final class GrpcContextData {
 
   static ContextMetadata getMetadataFor(@Nullable GrpcContextData context) {
     if (context != null) {
-      ContextMetadata metadata = context.metadataRef.get();
+      var metadata = context.metadataRef.get();
       if (metadata != null) {
         return metadata;
       }
@@ -66,12 +66,30 @@ final class GrpcContextData {
   static boolean shouldForceLoggingFor(
       @Nullable GrpcContextData context, String loggerName, Level level) {
     if (context != null) {
-      LogLevelMap map = context.logLevelMapRef.get();
+      var map = context.logLevelMapRef.get();
       if (map != null) {
         return map.getLevel(loggerName).intValue() <= level.intValue();
       }
     }
     return false;
+  }
+
+  /**
+   * Obtains a custom level set for the logger with the given name via
+   * a {@link LogLevelMap}, if it exists.
+   *
+   * @param loggerName the name of the logger
+   * @return the custom level or {@code null} if there is no map, or the map does not affect
+   *  the level of the given logger
+   */
+  @Nullable
+  Level getMappedLevel(String loggerName) {
+    var map = logLevelMapRef.get();
+    if (map == null) {
+        return null;
+    }
+    var result = map.getLevel(loggerName);
+    return result;
   }
 
   @Nullable
@@ -118,21 +136,21 @@ final class GrpcContextData {
       GrpcContextDataProvider provider) {
     this.scopes = ScopeList.addScope(parent != null ? parent.scopes : null, scopeType);
     this.tagRef =
-        new ScopedReference<Tags>(parent != null ? parent.tagRef.get() : null) {
+        new ScopedReference<>(parent != null ? parent.tagRef.get() : null) {
           @Override
           Tags merge(Tags current, Tags delta) {
             return current.merge(delta);
           }
         };
     this.metadataRef =
-        new ScopedReference<ContextMetadata>(parent != null ? parent.metadataRef.get() : null) {
+        new ScopedReference<>(parent != null ? parent.metadataRef.get() : null) {
           @Override
           ContextMetadata merge(ContextMetadata current, ContextMetadata delta) {
             return current.concatenate(delta);
           }
         };
     this.logLevelMapRef =
-        new ScopedReference<LogLevelMap>(parent != null ? parent.logLevelMapRef.get() : null) {
+        new ScopedReference<>(parent != null ? parent.logLevelMapRef.get() : null) {
           @Override
           LogLevelMap merge(LogLevelMap current, LogLevelMap delta) {
             return current.merge(delta);

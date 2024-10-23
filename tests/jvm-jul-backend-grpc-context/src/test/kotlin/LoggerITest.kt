@@ -24,4 +24,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-val versionToPublish: String by extra("2.0.0-SNAPSHOT.237")
+import io.spine.logging.context.LoggerTest
+
+internal class LoggerITest : LoggerTest(LoggerITest::class)

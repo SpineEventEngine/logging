@@ -24,31 +24,25 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.logging.flogger.backend.Platform
-import io.kotest.matchers.shouldBe
-import io.spine.logging.backend.jul.JulBackendFactory
-import io.spine.logging.context.JulLogLevelMapTest
-import io.spine.logging.context.std.StdContextDataProvider
+import io.kotest.core.annotation.Ignored
+import io.spine.logging.Level
+import io.spine.logging.context.BaseLogLevelMapTest
+import io.spine.logging.testing.Recorder
 
 /**
  * This is a non-abstract integration test of [LogLevelMap][io.spine.logging.context.LogLevelMap]
- * executed in the project in which logging contexts implemented using `spine-logging-std-context`.
+ * executed in the project with SLF4J backend and `spine-logging-std-context`.
+ * SLF4J uses JDK 1.4 logging (`java.util.logging`, JUL).
  *
  * Please see `build.gradle.kts` of this module for the details.
  */
-internal class LogLevelMapITest : JulLogLevelMapTest() {
+@Ignored // Until recording for SLF4J is implemented.
+@Suppress("unused") // Until SLF4J backend is added.
+internal class LogLevelMapITest: BaseLogLevelMapTest() {
 
-    init {
-        should("use `JulBackendFactory`") {
-            val loggerName = this::class.qualifiedName!!
-            val platformProvided = Platform.getBackend(loggerName)
-            val factoryProvided = JulBackendFactory().create(loggerName)
-            platformProvided::class shouldBe factoryProvided::class
-        }
-
-        should("use `StdContextDataProvider`") {
-            val provider = Platform.getContextDataProvider()
-            provider::class shouldBe StdContextDataProvider::class
-        }
+    // TODO:2023-10-10:yevhenii.nadtochii: Make this test work when SLF4J backend is added.
+    //  See issue: https://github.com/SpineEventEngine/logging/issues/77
+    override fun createRecorder(loggerName: String, minLevel: Level): Recorder {
+        error("Not implemented.")
     }
 }

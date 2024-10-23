@@ -184,9 +184,7 @@ fun Module.setupTests() {
     tasks {
         registerTestTasks()
         test.configure {
-            useJUnitPlatform {
-                includeEngines("junit-jupiter")
-            }
+            useJUnitPlatform()
             configureLogging()
         }
     }

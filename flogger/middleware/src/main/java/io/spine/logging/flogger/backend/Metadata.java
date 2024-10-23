@@ -52,7 +52,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  */
 public abstract class Metadata {
 
-  /** Returns an immutable {@link Metadata} that has no items. */
+  /** Returns an immutable {@code Metadata} that has no items. */
   public static Metadata empty() {
     return Empty.INSTANCE;
   }
@@ -71,11 +71,15 @@ public abstract class Metadata {
 
     @Override
     public FloggerMetadataKey<?> getKey(int n) {
-      throw new IndexOutOfBoundsException("cannot read from empty metadata");
+      throw cannotReadFromEmpty();
     }
 
     @Override
     public Object getValue(int n) {
+      throw cannotReadFromEmpty();
+    }
+
+    private static IndexOutOfBoundsException cannotReadFromEmpty() {
       throw new IndexOutOfBoundsException("cannot read from empty metadata");
     }
 
@@ -92,14 +96,16 @@ public abstract class Metadata {
   /**
    * Returns the key for the Nth piece of metadata.
    *
-   * @throws IndexOutOfBoundsException if either {@code n < 0} or {n >= getCount()}.
+   * @throws IndexOutOfBoundsException if either {@code n} is negative or {@code n} is greater
+   *  or equal to {@code getCount()}.
    */
   public abstract FloggerMetadataKey<?> getKey(int n);
 
   /**
    * Returns the non-null value for the Nth piece of metadata.
    *
-   * @throws IndexOutOfBoundsException if either {@code n < 0} or {n >= getCount()}.
+   * @throws IndexOutOfBoundsException if either {@code n} is negative or {@code n} is greater
+   *  or equal to {@code getCount()}.
    */
   public abstract Object getValue(int n);
 

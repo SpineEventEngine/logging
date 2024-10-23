@@ -33,27 +33,29 @@ import java.util.logging.Level;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
- * An API for injecting scoped metadata for log statements (either globally or on a per-request
- * basis). Thiis class is not a public API and should never need to be invoked directly by
+ * An API for injecting scoped metadata for log statements (either globally or on
+ * a per-request basis).
+ *
+ * <p>This class is not a public API and should never need to be invoked directly by
  * application code.
  *
- * <p>Note that since this class (and any installed implementation sub-class) is loaded when the
+ * <p>Note that since this class (and any installed implementation subclass) is loaded when the
  * logging platform is loaded, care must be taken to avoid cyclic references during static
- * initialisation. This means that no static fields or static initialization can reference fluent
+ * initialization. This means that no static fields or static initialization can reference fluent
  * loggers or the logging platform (either directly or indirectly).
  *
  * <h2>This is a service type</h2>
  *
- * <p>This type is considered a <i>service type</i> and implemenations may be loaded from the
+ * <p>This type is considered a <i>service type</i> and implementations may be loaded from the
  * classpath via {@link java.util.ServiceLoader} provided the proper service metadata is included in
  * the jar file containing the implementation. When creating an implementation of this class, you
- * can provide serivce metadata (and thereby allow users to get your implementation just by
- * including your jar file) by either manually including a {@code
- * META-INF/services/io.spine.logging.flogger.context.ContextDataProvider} file containing the name
- * of your implementation class or by annotating your implementation class using <a
- * href="https://github.com/google/auto/tree/master/service">
- * {@code @AutoService(ContextDataProvider.class)}</a>. See the documentation
- * of both {@link java.util.ServiceLoader} and {@code DefaultPlatform}
+ * can provide service metadata (and thereby allow users to get your implementation just by
+ * including your jar file) by either manually including
+ * a {@code META-INF/services/io.spine.logging.flogger.context.ContextDataProvider} file
+ * containing the name of your implementation class or by annotating your implementation class
+ * using <a href="https://github.com/google/auto/tree/master/service">
+ * {@code @AutoService(ContextDataProvider.class)}</a>.
+ * See the documentation of both {@link java.util.ServiceLoader} and {@code DefaultPlatform}
  * for more information.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/ContextDataProvider.java">
@@ -86,18 +88,19 @@ public abstract class ContextDataProvider {
    * within an application. This method should be overridden by subclasses to provide the specific
    * implementation of the API.
    *
-   * <p>This method should never be called directly (other than in tests) and users should always go
-   * via {@link ScopedLoggingContext#getInstance}, without needing to reference this class at all.
+   * <p>This method should never be called directly (other than in tests), and users should
+   * always go via {@link ScopedLoggingContext#getInstance}, without needing to reference
+   * this class at all.
    *
    * <p>If an implementation wishes to allow logging from the context API class, that class must be
-   * lazily loaded when this method is called (e.g. using a "lazy holder"). Failure to do so is
+   * lazily loaded when this method is called (e.g., using a "lazy holder"). Failure to do so is
    * likely to result in errors during the initialization of the logging platform classes.
    */
   public abstract ScopedLoggingContext getContextApiSingleton();
 
   /**
    * Returns whether the given logger should have logging forced at the specified level. When
-   * logging is forced for a log statement it will be emitted regardless or the normal log level
+   * logging is forced for a log statement, it will be emitted regardless or the normal log level
    * configuration of the logger and ignoring any rate limiting or other filtering.
    *
    * <p>Implementations which do not support forced logging should not override this method; the
@@ -110,8 +113,8 @@ public abstract class ContextDataProvider {
    * <p>{@code isEnabledByLevel} indicates that the log statement is enabled according to its log
    * level, but a {@code true} value does not necessarily indicate that logging will occur, due to
    * rate limiting or other conditional logging mechanisms. To bypass conditional logging and ensure
-   * that an enabled log statement will be emitted, this method should return {@code true} if {@code
-   * isEnabledByLevel} was {@code true}.
+   * that an enabled log statement will be emitted, this method should return {@code true} if
+   * {@code isEnabledByLevel} was {@code true}.
    *
    * <p>WARNING: This method MUST complete quickly and without allocating any memory. It is invoked
    * for every log statement regardless of logging configuration, so any implementation must go to
@@ -126,8 +129,20 @@ public abstract class ContextDataProvider {
   }
 
   /**
+   * Obtains a custom logging level set for the logger with the given name.
+   *
+   * <p>The default implementation always returns {@code null}.
+   *
+   * @param loggerName the name of the logger
+   * @return the custom level set for the logger or {@code null} if the level is not set
+   */
+  public @Nullable Level getMappedLevel(String loggerName) {
+    return null;
+  }
+
+  /**
    * Returns a set of tags to be added to a log statement. These tags can be used to provide
-   * additional contextual metadata to log statements (e.g. request IDs).
+   * additional contextual metadata to log statements (e.g., request IDs).
    *
    * <p>Implementations which do not support scoped {@link Tags} should not override this method;
    * the default implementation returns {@code Tags.empty()}.

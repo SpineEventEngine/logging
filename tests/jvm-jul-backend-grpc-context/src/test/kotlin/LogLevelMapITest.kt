@@ -1,11 +1,11 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2024, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -24,31 +24,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.logging.flogger.backend.Platform
-import io.kotest.matchers.shouldBe
-import io.spine.logging.backend.jul.JulBackendFactory
 import io.spine.logging.context.JulLogLevelMapTest
-import io.spine.logging.context.std.StdContextDataProvider
 
 /**
  * This is a non-abstract integration test of [LogLevelMap][io.spine.logging.context.LogLevelMap]
- * executed in the project in which logging contexts implemented using `spine-logging-std-context`.
+ * executed in the project in which logging contexts implemented using gRPC.
  *
  * Please see `build.gradle.kts` of this module for the details.
  */
-internal class LogLevelMapITest : JulLogLevelMapTest() {
-
-    init {
-        should("use `JulBackendFactory`") {
-            val loggerName = this::class.qualifiedName!!
-            val platformProvided = Platform.getBackend(loggerName)
-            val factoryProvided = JulBackendFactory().create(loggerName)
-            platformProvided::class shouldBe factoryProvided::class
-        }
-
-        should("use `StdContextDataProvider`") {
-            val provider = Platform.getContextDataProvider()
-            provider::class shouldBe StdContextDataProvider::class
-        }
-    }
-}
+internal class LogLevelMapITest: JulLogLevelMapTest()

@@ -186,9 +186,10 @@ public abstract class LogPerBucketingStrategy<T> {
    * <p>To avoid unwanted allocation at log sites, users are strongly encouraged to assign the
    * returned value to a static field, and pass that to any log statements which need it.
    */
-  public static final LogPerBucketingStrategy<Object> byHashCode(final int maxBuckets) {
+  public static LogPerBucketingStrategy<Object> byHashCode(final int maxBuckets) {
     checkArgument(maxBuckets > 0, "maxBuckets must be positive");
-    return new LogPerBucketingStrategy<Object>("ByHashCode(" + maxBuckets + ")") {
+    return new LogPerBucketingStrategy<Object>("ByHashCode(" + maxBuckets + ')') {
+      @SuppressWarnings("MagicNumber")
       @Override
       protected Object apply(Object key) {
         // Modulo can return -ve values and we want a value in the range (0 <= modulo < maxBuckets).
@@ -222,12 +223,12 @@ public abstract class LogPerBucketingStrategy<T> {
    * requirements and ideally have singleton semantics (e.g. an {@code Enum} or {@code Integer}
    * value).
    *
-   * <p><em>Warning</em>: If keys are not known to have natural singleton semantics (e.g. {@code
-   * String}) then returning the given key instance is generally a bad idea. Even if the set of key
-   * values is small, the set of distinct allocated instances passed to {@link
-   * FloggerApi#per(T,LogPerBucketingStrategy<T>)} can be unbounded, and that's what matters. As
-   * such it is always better to map keys to some singleton identifier or intern the keys in some
-   * way.
+   * <p><em>Warning</em>: If keys are not known to have natural singleton semantics
+   * (e.g. {@code String}) then returning the given key instance is generally a bad idea.
+   * Even if the set of key values is small, the set of distinct allocated instances passed to
+   * {@link FloggerApi#per(T,LogPerBucketingStrategy)} can be unbounded, and that's what matters.
+   * As such, it is always better to map keys to some singleton identifier or intern the keys in
+   * some way.
    *
    * @param key a non-null key from a potentially unbounded set of log aggregation keys.
    * @return an immutable value from some known bounded set, which will be held persistently by
@@ -239,6 +240,6 @@ public abstract class LogPerBucketingStrategy<T> {
 
   @Override
   public final String toString() {
-    return LogPerBucketingStrategy.class.getSimpleName() + "[" + name + "]";
+    return LogPerBucketingStrategy.class.getSimpleName() + '[' + name + ']';
   }
 }

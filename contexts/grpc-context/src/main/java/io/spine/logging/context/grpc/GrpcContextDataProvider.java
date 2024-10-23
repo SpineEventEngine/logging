@@ -125,6 +125,19 @@ public final class GrpcContextDataProvider extends ContextDataProvider {
         && GrpcContextData.shouldForceLoggingFor(currentContext(), loggerName, level);
   }
 
+  @Override
+  public @Nullable Level getMappedLevel(String loggerName) {
+    if (!hasLogLevelMap) {
+      return null;
+    }
+    var context = currentContext();
+    if (context == null) {
+      return null;
+    }
+    var result = context.getMappedLevel(loggerName);
+    return result;
+  }
+
   // Static lazy-holder to avoid needing to call unknown code during Flogger initialization. While
   // gRPC context keys don't trigger any logging now, it's not certain that this is guaranteed.
   private static final class KeyHolder {

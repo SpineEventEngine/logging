@@ -36,10 +36,12 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.MustBeClosed;
 import java.io.Closeable;
 import java.util.concurrent.Callable;
+
+import io.spine.logging.flogger.LoggingScopeProvider;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
- * A user facing API for creating and modifying scoped logging contexts in applications.
+ * A user-facing API for creating and modifying scoped logging contexts in applications.
  *
  * <p>Scoped contexts provide a way for application code to attach metadata and control the
  * behaviour of logging within well defined contexts. This is most often associated with making "per
@@ -55,14 +57,14 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * be available to logging as long as the context is installed.
  *
  * <p>Note that in the current API contexts are also modifiable after creation, but this usage is
- * discouraged and may be removed in future. The problem with modifying contexts after creation is
- * that, since contexts can be shared between threads, it is potentially confusing if tags are added
- * to a context when it is being used concurrently by multiple threads.
+ * discouraged and may be removed in the future. The problem with modifying contexts after creation
+ * is that, since contexts can be shared between threads, it is potentially confusing if tags are
+ * added to a context when it is being used concurrently by multiple threads.
  *
  * <p>Note that since logging contexts are designed to be modified by code in libraries and helper
  * functions which do not know about each other, the data structures and behaviour of logging
- * contexts are carefully designed to avoid any accidental "undoing" of existing behaviour. In
- * particular:
+ * contexts are carefully designed to avoid any accidental "undoing" of existing behaviour.
+ * In particular:
  *
  * <ul>
  *   <li>Tags can only be added to contexts, never modified or removed.
@@ -70,13 +72,13 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * </ul>
  *
  * <p>One possibly surprising result of this behaviour is that it's not possible to disable logging
- * from within a context. However this is quite intentional, since overly verbose logging should be
+ * from within a context. However, this is quite intentional, since overly verbose logging should be
  * fixed by other mechanisms (code changes, global logging configuration), and not on a "per
  * request" basis.
  *
  * <p>Depending on the framework used, it's possible that the current logging context will be
- * automatically propagated to some or all threads or sub-tasks started from within the context.
- * This is not guaranteed however and the semantic behaviour of context propagation is not defined
+ * automatically propagated to some or all threads or subtasks started from within the context.
+ * This is not guaranteed, however, and the semantic behaviour of context propagation is not defined
  * by this class.
  *
  * <p>In particular, if you haven't explicitly opened a context in which to run your code, there is
@@ -86,8 +88,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * <p>Context support and automatic propagation is heavily reliant on Java platform capabilities,
  * and precise behaviour is likely to differ between runtime environments or frameworks. Context
  * propagation may not behave the same everywhere, and in some situations logging contexts may not
- * be supported at all. Methods which attempt to affect context state may do nothing in some
- * environments, or when called at some points in an application. If application code relies on
+ * be supported at all. Methods which attempt to affect a context state may do nothing in some
+ * environments or when called at some points in an application. If application code relies on
  * modifications to an existing, implicit logging context, it should always check the return values
  * of any modification methods called (e.g. {@link #addTags(Tags)}).
  *
@@ -195,8 +197,8 @@ public abstract class ScopedLoggingContext {
      * Note that each time this runnable is executed, a new context will be installed extending from
      * the currently installed context at the time of execution.
      *
-     * @throws InvalidLoggingScopeStateException if the context created during this method cannot be
-     *     closed correctly (e.g. if a nested context has also been opened, but not closed).
+     * @throws InvalidLoggingContextStateException if the context created during this method cannot
+     *  be closed correctly (e.g., if a nested context has also been opened, but not closed).
      */
     public final Runnable wrap(final Runnable r) {
       return new Runnable() {
@@ -221,8 +223,8 @@ public abstract class ScopedLoggingContext {
      * Note that each time this runnable is executed, a new context will be installed extending from
      * the currently installed context at the time of execution.
      *
-     * @throws InvalidLoggingScopeStateException if the context created during this method cannot be
-     *     closed correctly (e.g. if a nested context has also been opened, but not closed).
+     * @throws InvalidLoggingContextStateException if the context created during this method cannot
+     *  be closed correctly (e.g., if a nested context has also been opened, but not closed).
      */
     public final <R> Callable<R> wrap(final Callable<R> c) {
       return new Callable<R>() {
@@ -292,7 +294,7 @@ public abstract class ScopedLoggingContext {
      *
      * <p>Note that the returned {@link LoggingContextCloseable} is not required to enforce the
      * correct closure of nested contexts, and while it is permitted to throw a {@link
-     * InvalidLoggingScopeStateException} in the face of mismatched or invalid usage, it is not
+     * InvalidLoggingContextStateException} in the face of mismatched or invalid usage, it is not
      * required.
      */
     @MustBeClosed
@@ -365,10 +367,10 @@ public abstract class ScopedLoggingContext {
    * Creates a new context builder to which additional logging metadata can be attached before being
    * installed or used to wrap some existing code.
    *
-   * <p>This method is the same as {@link #newContext()} except it additionally binds a new {@link
-   * ScopeType} instance to the newly created context. This allows log statements to control
-   * stateful logging operations (e.g. rate limiting) using
-   * {@link FloggerApi#per(ScopeType) per(ScopeType)} method.
+   * <p>This method is the same as {@link #newContext()} except it additionally binds a new
+   * {@link ScopeType} instance to the newly created context.
+   * This allows log statements to control stateful logging operations (e.g., rate limiting) using
+   * {@link FloggerApi#per(LoggingScopeProvider) per(ScopeType)} method.
    *
    * <p>Note for users: if you don't need an instance of {@code ScopedLoggingContext} for some
    * reason such as testability (injecting it, for example), consider using the static methods in
@@ -445,15 +447,15 @@ public abstract class ScopedLoggingContext {
 
   private static void closeAndMaybePropagateError(
       LoggingContextCloseable context, boolean callerHasError) {
-    // Because LoggingContextCloseable is not just a "Closeable" there's no risk of it throwing any
-    // checked
-    // exceptions. Inparticular, when this is switched to use AutoCloseable, there's no risk of
+    // Because LoggingContextCloseable is not just a `Closeable`, there's no risk of it
+    // throwing any checked exceptions.
+    // In particular, when this is switched to use AutoCloseable, there's no risk of
     // having to deal with InterruptedException. That's why having an extended interface is always
     // better than using [Auto]Closeable directly.
     try {
       context.close();
     } catch (RuntimeException e) {
-      // This method is always called from a finally block which may be about to rethrow a user
+      // This method is always called from a `finally` block which may be about to rethrow a user
       // exception, so ignore any errors during close() if that's the case.
       if (!callerHasError) {
         throw (e instanceof InvalidLoggingContextStateException)
@@ -469,12 +471,11 @@ public abstract class ScopedLoggingContext {
    * but simply where it was first detected.
    */
   public static final class InvalidLoggingContextStateException extends IllegalStateException {
-    public InvalidLoggingContextStateException(String message, Throwable cause) {
-      super(message, cause);
-    }
 
-    public InvalidLoggingContextStateException(String message) {
-      super(message);
+    private static final long serialVersionUID = 0L;
+
+    private InvalidLoggingContextStateException(String message, Throwable cause) {
+      super(message, cause);
     }
   }
 

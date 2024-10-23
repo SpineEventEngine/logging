@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
- * Status for rate limiting operations, usable by rate limiters and available to subclasses of
+ * Status for rate-limiting operations, usable by rate limiters and available to subclasses of
  * {@code LogContext} to handle rate limiting consistently.
  *
  * <h2>Design Notes</h2>
@@ -51,7 +51,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  *
  * <pre>{@code
  * rateLimitStatus = RateLimitStatus.combine(rateLimitStatus, MyCustomRateLimiter.check(...));
- * }>/pre>
+ * }</pre>
  *
  * <p>A rate limiter should switch between two primary states "limiting" and "pending":
  * <ul>
@@ -91,7 +91,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  *  }
  *
  *  RateLimitStatus checkRateLimit(MyRateLimitData rateLimitData, ...) {
- *    <update internal state>
+ *    // Update internal state.
  *    return <is-pending> ? this : DISALLOW;
  *  }
  *
@@ -100,7 +100,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  *     <reset from "pending" to "limiting" state>
  *   }
  * }
- * }>/pre>
+ * }</pre>
  *
  * <p>The use of {@code LogLevelMap} ensures a rate limiter instance is held separately for each log
  * statement, but it also handles complex garbage collection issues around "specialized" log site
@@ -162,8 +162,8 @@ public abstract class RateLimitStatus {
           }
         };
 
-    static int checkAndGetSkippedCount(
-        RateLimitStatus status, LogSiteKey logSiteKey, Metadata metadata) {
+    private static int checkAndGetSkippedCount(
+            RateLimitStatus status, LogSiteKey logSiteKey, Metadata metadata) {
       LogGuard guard = guardMap.get(logSiteKey, metadata);
       // Pre-increment pendingCount to include this log statement, so (pendingCount > 0).
       int pendingCount = guard.pendingLogCount.incrementAndGet();
@@ -208,7 +208,7 @@ public abstract class RateLimitStatus {
    * </ol>
    *
    * <p>This code ensures that in the normal case of having no rate limiting for a log statement, no
-   * allocations occur. It also ensures that (assuming well written rate limiters) there are no
+   * allocations occur. It also ensures that (assuming well-written rate limiters) there are no
    * allocations for log statements using a single rate limiter.
    */
   @Nullable
@@ -223,7 +223,7 @@ public abstract class RateLimitStatus {
       return a;
     }
     // This is already a rare situation where 2 rate limiters are active for the same log statement.
-    // However in most of these cases, at least one will likley "disallow" logging.
+    // However, in most of these cases, at least one will likley "disallow" logging.
     if (a == DISALLOW || b == ALLOW) {
       return a;
     }

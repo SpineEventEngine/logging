@@ -96,8 +96,13 @@ public final class FluentLogger2 extends AbstractLogger<FluentLogger2.Api> {
 
   @Override
   public Api at(Level level) {
+    var loggerName = getName();
+    var mappedLevel = Platform.getMappedLevel(loggerName);
+    if (io.spine.logging.Level.Companion.getOFF().equals(mappedLevel)) {
+      return NO_OP;
+    }
     var isLoggable = isLoggable(level);
-    var isForced = Platform.shouldForceLogging(getName(), level, isLoggable);
+    var isForced = Platform.shouldForceLogging(loggerName, level, isLoggable);
     return (isLoggable || isForced) ? new Context(level, isForced) : NO_OP;
   }
 

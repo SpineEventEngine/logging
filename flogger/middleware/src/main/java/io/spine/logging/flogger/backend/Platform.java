@@ -1,11 +1,11 @@
 /*
- * Copyright 2016, The Flogger Authors; 2023, TeamDev. All rights reserved.
+ * Copyright 2016, The Flogger Authors; 2024, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -26,34 +26,35 @@
 
 package io.spine.logging.flogger.backend;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-
 import io.spine.logging.flogger.AbstractLogger;
 import io.spine.logging.flogger.FloggerLogSite;
 import io.spine.logging.flogger.context.ContextDataProvider;
 import io.spine.logging.flogger.context.Tags;
 import io.spine.logging.flogger.util.RecursionDepth;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+import static io.spine.logging.JvmLoggerKt.toLevel;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 /**
  * Platform abstraction layer required to allow fluent logger implementations to work on differing
  * Java platforms (such as Android or GWT). The {@code Platform} class is responsible for providing
- * any platform specific APIs, including the mechanism by which logging backends are created.
+ * any platform-specific APIs, including the mechanism by which logging backends are created.
  *
  * <p>To enable an additional logging platform implementation, the class name should be added to
  * the list of available platforms before the default platform (which must always be at the end).
  * Platform implementation classes must subclass {@code Platform} and have a public, no-argument
- * constructor. Platform instances are created on first-use of a fluent logger and platform
+ * constructor. Platform instances are created on first-use of a fluent logger, and platform
  * implementors must take care to avoid cycles during initialization and re-entrant behaviour.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/Platform.java">
  *     Original Java code of Google Flogger</a>
  */
 public abstract class Platform {
-  // non-final to prevent javac inlining.
-
-  // non-final to prevent javac inlining.
 
   // non-final to prevent javac inlining.
   @SuppressWarnings("ConstantField")
@@ -61,17 +62,17 @@ public abstract class Platform {
       "io.spine.logging.backend.system.DefaultPlatform";
 
   // The first available platform from this list is used. Each platform is defined separately
-  // outside of this array so that the IdentifierNameString annotation can be applied to each. This
-  // annotation tells Proguard that these strings refer to class names. If Proguard decides to
-  // obfuscate those classes, it will also obfuscate these strings, so that reflection can still be
-  // used.
+  // outside of this array so that the IdentifierNameString annotation can be applied to each.
+  // This annotation tells Proguard that these strings refer to class names.
+  // If Proguard decides to obfuscate those classes, it will also obfuscate these strings so
+  // that reflection can still be used.
   private static final String[] AVAILABLE_PLATFORMS =
       new String[] {
         // The fallback/default platform gives a workable, logging backend.
         DEFAULT_PLATFORM
       };
 
-  // Use the lazy holder idiom here to avoid class loading issues. Loading the Platform sub-class
+  // Use the lazy holder idiom here to avoid class loading issues. Loading the Platform subclass
   // will trigger static initialization of the Platform class first, which would not be possible if
   // the INSTANCE field were a static field in Platform. This means that any errors in platform
   // loading are deferred until the first time one of the Platform's static methods is invoked.
@@ -80,7 +81,7 @@ public abstract class Platform {
 
     private static Platform loadFirstAvailablePlatform(String[] platformClass) {
       Platform platform = null;
-      // Try the platform provider first, if it's available.
+      // Try the platform provider first if it's available.
       try {
         platform = PlatformProvider.getPlatform();
       } catch (NoClassDefFoundError e) {
@@ -132,7 +133,7 @@ public abstract class Platform {
    *
    * <p>When the core Flogger library detects the depth exceeding a preset threshold, it may start
    * to modify its behaviour to attempt to mitigate the risk of unbounded reentrant logging. For
-   * example, some or all metadata may be removed from log sites, since processing user provided
+   * example, some or all metadata may be removed from log sites, since processing user-provided
    * metadata may itself trigger reentrant logging.
    */
   public static int getCurrentRecursionDepth() {
@@ -141,11 +142,11 @@ public abstract class Platform {
 
   /**
    * API for determining the logging class and log statement sites, return from {@link
-   * #getCallerFinder}. This classes is immutable and thread safe.
+   * #getCallerFinder}. These classes are immutable and thread-safe.
    *
    * <p>This functionality is not provided directly by the {@code Platform} API because doing so
    * would require several additional levels to be added to the stack before the implementation was
-   * reached. This is problematic for Android which has only limited stack analysis. By allowing
+   * reached. This is problematic for Android, which has only limited stack analysis. By allowing
    * callers to resolve the implementation early and then call an instance directly (this is not an
    * interface), we reduce the number of elements in the stack before the caller is found.
    *
@@ -167,7 +168,7 @@ public abstract class Platform {
    * instance fields at all in the implementation.
    *
    * <p>While this sounds onerous it's not difficult to achieve because this API is a singleton, and
-   * can delay any actual work until its methods are called. For example if any additional state is
+   * can delay any actual work until its methods are called. For example, if any additional state is
    * required in the implementation, it can be held via a "lazy holder" to defer initialization.
    */
   public abstract static class LogCallerFinder {
@@ -210,8 +211,8 @@ public abstract class Platform {
    * class name must be in the normal dot-separated form (e.g. "com.example.Foo$Bar") rather than
    * the internal binary format (e.g. "com/example/Foo$Bar").
    *
-   * @param className the fully-qualified name of the Java class to which the logger is associated.
-   *     The logger name is derived from this string in a platform specific way.
+   * @param className the fully qualified name of the Java class to which the logger is associated.
+   *     The logger name is derived from this string in a platform-specific way.
    */
   public static LoggerBackend getBackend(String className) {
     return LazyHolder.INSTANCE.getBackendImpl(className);
@@ -235,20 +236,45 @@ public abstract class Platform {
   }
 
   /**
-   * Returns whether the given logger should have logging forced at the specified level. When
-   * logging is forced for a log statement it will be emitted regardless or the normal log level
-   * configuration of the logger and ignoring any rate limiting or other filtering.
-   * <p>
-   * This method is intended to be invoked unconditionally from a fluent logger's
+   * Returns whether the given logger should have logging forced at the specified level.
+   *
+   * <p>When logging is forced for a log statement, it will be emitted regardless.
+   * Or, the normal log level configuration of the logger and ignoring any rate limiting or
+   * other filtering.
+   *
+   * <p>This method is intended to be invoked unconditionally from a fluent logger's
    * {@code at(Level)} method to permit overriding of default logging behavior.
    *
    * @param loggerName the fully qualified logger name (e.g. "com.example.SomeClass")
    * @param level the level of the log statement being invoked
-   * @param isEnabled whether the logger is enabled at the given level (i.e. the result of calling
+   * @param isEnabled whether the logger is enabled at the given level (i.e., the result of calling
    *     {@code isLoggable()} on the backend instance)
    */
   public static boolean shouldForceLogging(String loggerName, Level level, boolean isEnabled) {
     return getContextDataProvider().shouldForceLogging(loggerName, level, isEnabled);
+  }
+
+  /**
+   * Obtains a custom logging level set for the logger with the given name via
+   * a {@link io.spine.logging.flogger.context.LogLevelMap} set in the current logging context.
+   *
+   * <p>The method returns {@code null} if:
+   * <ul>
+   *    <li>There is no current logging context installed.
+   *    <li>The context does not have a log level map.
+   *    <li>The log level map does not have a custom level for the given logger.
+   * </ul>
+   * @param loggerName the name of the logger
+   * @return the custom level or {@code null}
+   */
+  public static io.spine.logging.@Nullable Level getMappedLevel(String loggerName) {
+      checkNotNull(loggerName);
+      var provider = getContextDataProvider();
+      var result = provider.getMappedLevel(loggerName);
+      if (result == null) {
+        return null;
+      }
+      return toLevel(result);
   }
 
   /** Returns {@link Tags} from with the current context to be injected into log statements. */
@@ -267,8 +293,8 @@ public abstract class Platform {
    * This is a non-negative signed 64-bit value, which must be in the range {@code 0 <= timestamp
    * < 2^63}, ensuring that the difference between any two timestamps will always yield a valid
    * signed value.
-   * <p>
-   * Warning: Not all Platform implementations will be able to deliver nanosecond precision and
+   *
+   * <p>Warning: Not all Platform implementations will be able to deliver nanosecond precision and
    * code should avoid relying on any implied precision.
    */
   public static long getCurrentTimeNanos() {
@@ -276,18 +302,18 @@ public abstract class Platform {
   }
 
   protected long getCurrentTimeNanosImpl() {
-    // Sadly this is the best you can currently do with vanilla Java. In Java9 you have access to
-    // nano-second clocks, but Flogger needs to be backwards compatible, so it won't be as simple
+    // Sadly, this is the best you can currently do with vanilla Java. In Java9 you have access to
+    // nanosecond clocks, but Flogger needs to be backwards compatible, so it won't be as simple
     // as just changing this line of code.
     // Overflow will not occur until sometime around 2264, so it's safe not to care for now.
     return MILLISECONDS.toNanos(System.currentTimeMillis());
   }
 
   /**
-   * Returns a human readable string describing the platform and its configuration. This should
+   * Returns a human-readable string describing the platform and its configuration. This should
    * contain everything a human would need to see to check that the Platform was configured as
    * expected. It should contain the platform name along with any configurable elements
-   * (e.g. plugin services) and their settings. It is recommended (though not required) that this
+   * (e.g., plugin services) and their settings. It is recommended (though not required) that this
    * string is formatted with one piece of configuration per line in a tabular format, such as:
    * <pre>{@code
    * platform: <human readable name>
