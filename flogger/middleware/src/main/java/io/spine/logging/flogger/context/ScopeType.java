@@ -46,8 +46,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  */
 public final class ScopeType implements LoggingScopeProvider {
   /**
-   * The built in "request" scope. This can be bound to a scoped context in order to provide a
-   * distinct request scope for each context, allowing stateful logging operations (e.g. rate
+   * The built-in "request" scope. This can be bound to a scoped context in order to provide a
+   * distinct request scope for each context, allowing stateful logging operations (e.g., rate
    * limiting) to be scoped to the current request.
    *
    * <p>Enable a request scope using:

@@ -36,6 +36,8 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.MustBeClosed;
 import java.io.Closeable;
 import java.util.concurrent.Callable;
+
+import io.spine.logging.flogger.LoggingScopeProvider;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
@@ -195,8 +197,8 @@ public abstract class ScopedLoggingContext {
      * Note that each time this runnable is executed, a new context will be installed extending from
      * the currently installed context at the time of execution.
      *
-     * @throws InvalidLoggingScopeStateException if the context created during this method cannot be
-     *     closed correctly (e.g. if a nested context has also been opened, but not closed).
+     * @throws InvalidLoggingContextStateException if the context created during this method cannot
+     *  be closed correctly (e.g., if a nested context has also been opened, but not closed).
      */
     public final Runnable wrap(final Runnable r) {
       return new Runnable() {
@@ -221,8 +223,8 @@ public abstract class ScopedLoggingContext {
      * Note that each time this runnable is executed, a new context will be installed extending from
      * the currently installed context at the time of execution.
      *
-     * @throws InvalidLoggingScopeStateException if the context created during this method cannot be
-     *     closed correctly (e.g. if a nested context has also been opened, but not closed).
+     * @throws InvalidLoggingContextStateException if the context created during this method cannot
+     *  be closed correctly (e.g., if a nested context has also been opened, but not closed).
      */
     public final <R> Callable<R> wrap(final Callable<R> c) {
       return new Callable<R>() {
@@ -292,7 +294,7 @@ public abstract class ScopedLoggingContext {
      *
      * <p>Note that the returned {@link LoggingContextCloseable} is not required to enforce the
      * correct closure of nested contexts, and while it is permitted to throw a {@link
-     * InvalidLoggingScopeStateException} in the face of mismatched or invalid usage, it is not
+     * InvalidLoggingContextStateException} in the face of mismatched or invalid usage, it is not
      * required.
      */
     @MustBeClosed
@@ -365,10 +367,10 @@ public abstract class ScopedLoggingContext {
    * Creates a new context builder to which additional logging metadata can be attached before being
    * installed or used to wrap some existing code.
    *
-   * <p>This method is the same as {@link #newContext()} except it additionally binds a new {@link
-   * ScopeType} instance to the newly created context. This allows log statements to control
-   * stateful logging operations (e.g., rate limiting) using
-   * {@link FloggerApi#per(ScopeType) per(ScopeType)} method.
+   * <p>This method is the same as {@link #newContext()} except it additionally binds a new
+   * {@link ScopeType} instance to the newly created context.
+   * This allows log statements to control stateful logging operations (e.g., rate limiting) using
+   * {@link FloggerApi#per(LoggingScopeProvider) per(ScopeType)} method.
    *
    * <p>Note for users: if you don't need an instance of {@code ScopedLoggingContext} for some
    * reason such as testability (injecting it, for example), consider using the static methods in
@@ -445,15 +447,15 @@ public abstract class ScopedLoggingContext {
 
   private static void closeAndMaybePropagateError(
       LoggingContextCloseable context, boolean callerHasError) {
-    // Because LoggingContextCloseable is not just a "Closeable" there's no risk of it throwing any
-    // checked
-    // exceptions. Inparticular, when this is switched to use AutoCloseable, there's no risk of
+    // Because LoggingContextCloseable is not just a `Closeable`, there's no risk of it
+    // throwing any checked exceptions.
+    // In particular, when this is switched to use AutoCloseable, there's no risk of
     // having to deal with InterruptedException. That's why having an extended interface is always
     // better than using [Auto]Closeable directly.
     try {
       context.close();
     } catch (RuntimeException e) {
-      // This method is always called from a finally block which may be about to rethrow a user
+      // This method is always called from a `finally` block which may be about to rethrow a user
       // exception, so ignore any errors during close() if that's the case.
       if (!callerHasError) {
         throw (e instanceof InvalidLoggingContextStateException)
@@ -469,12 +471,11 @@ public abstract class ScopedLoggingContext {
    * but simply where it was first detected.
    */
   public static final class InvalidLoggingContextStateException extends IllegalStateException {
-    public InvalidLoggingContextStateException(String message, Throwable cause) {
-      super(message, cause);
-    }
 
-    public InvalidLoggingContextStateException(String message) {
-      super(message);
+    private static final long serialVersionUID = 0L;
+
+    private InvalidLoggingContextStateException(String message, Throwable cause) {
+      super(message, cause);
     }
   }
 
