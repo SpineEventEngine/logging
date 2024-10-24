@@ -37,7 +37,7 @@ kotlin {
             dependencies{
                 implementation(project(":logging"))
                 implementation(Spine.reflect)
-                api(project(":testutil-logging"))
+                api(project(":logging-testlib"))
                 api(Kotest.assertions)
                 api(Kotest.frameworkApi)
                 api(Kotest.frameworkEngine)
