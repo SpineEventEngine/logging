@@ -35,7 +35,7 @@ plugins {
 dependencies {
     implementation(Spine.reflect)
     implementation(project(":platform-generator", configuration = "generatedPlatformProvider"))
-    testImplementation(project(":testlib"))
+    testImplementation(project(":logging-testlib"))
     testRuntimeOnly(project(":jvm-default-platform"))
 }
 

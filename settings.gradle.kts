@@ -35,7 +35,7 @@ rootProject.name = "spine-logging"
 
 include(
     "logging",
-    "testlib",
+    "logging-testlib",
 )
 
 includeBackend(

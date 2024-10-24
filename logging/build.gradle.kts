@@ -63,7 +63,7 @@ kotlin {
         }
         val jvmTest by getting {
             dependencies {
-                implementation(project(":testlib"))
+                implementation(project(":logging-testlib"))
                 implementation(project(":probe-backend"))
             }
         }
