@@ -1,11 +1,11 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2024, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -31,7 +31,7 @@ import org.gradle.kotlin.dsl.named
 /**
  * Configures publications for `kmp-module`.
  *
- * As for now, [spinePublishing][io.spine.internal.gradle.publish.spinePublishing]
+ * As for now, [spinePublishing][io.spine.gradle.publish.spinePublishing]
  * doesn't support Kotlin Multiplatform modules. So, their publications are
  * configured by this script plugin. Other publishing-related configuration
  * is still performed by the extension.

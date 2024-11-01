@@ -24,17 +24,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.dependency.Dokka
-import io.spine.internal.dependency.JUnit
-import io.spine.internal.dependency.Jackson
-import io.spine.internal.dependency.Spine
-import io.spine.internal.dependency.Validation
-import io.spine.internal.gradle.publish.PublishingRepos
-import io.spine.internal.gradle.publish.spinePublishing
-import io.spine.internal.gradle.report.coverage.JacocoConfig
-import io.spine.internal.gradle.report.license.LicenseReporter
-import io.spine.internal.gradle.report.pom.PomGenerator
-import io.spine.internal.gradle.standardToSpineSdk
+import io.spine.dependency.build.Dokka
+import io.spine.dependency.test.JUnit
+import io.spine.dependency.lib.Jackson
+import io.spine.dependency.local.Logging
+import io.spine.dependency.local.Spine
+import io.spine.dependency.local.ToolBase
+import io.spine.dependency.local.Validation
+import io.spine.gradle.publish.PublishingRepos
+import io.spine.gradle.publish.spinePublishing
+import io.spine.gradle.report.coverage.JacocoConfig
+import io.spine.gradle.report.license.LicenseReporter
+import io.spine.gradle.report.pom.PomGenerator
+import io.spine.gradle.standardToSpineSdk
 
 plugins {
     idea
@@ -79,7 +81,8 @@ allprojects {
             resolutionStrategy {
                 force(
                     Spine.base,
-                    Spine.toolBase,
+                    ToolBase.lib,
+                    Logging.lib,
                     Validation.runtime,
                     Dokka.BasePlugin.lib,
                     Jackson.databind,

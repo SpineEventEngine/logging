@@ -1,11 +1,11 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2024, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -24,17 +24,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.internal.dependency.JUnit
-import io.spine.internal.dependency.Jacoco
-import io.spine.internal.dependency.Kotest
-import io.spine.internal.dependency.Spine
-import io.spine.internal.gradle.checkstyle.CheckStyleConfig
-import io.spine.internal.gradle.javac.configureJavac
-import io.spine.internal.gradle.javadoc.JavadocConfig
-import io.spine.internal.gradle.kotlin.setFreeCompilerArgs
-import io.spine.internal.gradle.report.license.LicenseReporter
-import io.spine.internal.gradle.testing.configureLogging
-import io.spine.internal.gradle.testing.registerTestTasks
+import io.spine.dependency.test.JUnit
+import io.spine.dependency.test.Jacoco
+import io.spine.dependency.test.Kotest
+import io.spine.dependency.local.Spine
+import io.spine.gradle.checkstyle.CheckStyleConfig
+import io.spine.gradle.javac.configureJavac
+import io.spine.gradle.javadoc.JavadocConfig
+import io.spine.gradle.kotlin.setFreeCompilerArgs
+import io.spine.gradle.report.license.LicenseReporter
+import io.spine.gradle.testing.configureLogging
+import io.spine.gradle.testing.registerTestTasks
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 /**
