@@ -59,7 +59,7 @@ java {
  */
 afterEvaluate {
     // `kaptKotlin` task is created after the configuration phase,
-    // so we have to use `afterEvaluate` block.
+    // so we have to use the `afterEvaluate` block.
     val kaptKotlin by tasks.existing
     val dokkaHtml by tasks.existing {
         dependsOn(kaptKotlin)

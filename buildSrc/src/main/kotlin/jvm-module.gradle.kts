@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,33 +24,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import BuildSettings.javaVersion
 import io.spine.dependency.build.CheckerFramework
 import io.spine.dependency.build.Dokka
 import io.spine.dependency.build.ErrorProne
+import io.spine.dependency.build.JSpecify
 import io.spine.dependency.lib.Guava
-import io.spine.dependency.lib.JavaX
 import io.spine.dependency.lib.Protobuf
-import io.spine.dependency.local.Logging
-import io.spine.dependency.local.Spine
-import io.spine.dependency.test.JUnit
+import io.spine.dependency.local.Reflect
 import io.spine.dependency.test.Jacoco
-import io.spine.dependency.test.Kotest
 import io.spine.gradle.checkstyle.CheckStyleConfig
 import io.spine.gradle.github.pages.updateGitHubPages
 import io.spine.gradle.javac.configureErrorProne
 import io.spine.gradle.javac.configureJavac
 import io.spine.gradle.javadoc.JavadocConfig
-import io.spine.gradle.kotlin.applyJvmToolchain
 import io.spine.gradle.kotlin.setFreeCompilerArgs
 import io.spine.gradle.report.license.LicenseReporter
-import io.spine.gradle.testing.configureLogging
-import io.spine.gradle.testing.registerTestTasks
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `java-library`
-    idea
     id("net.ltgt.errorprone")
     id("pmd-settings")
     id("project-report")
@@ -67,23 +58,23 @@ JavadocConfig.applyTo(project)
 CheckStyleConfig.applyTo(project)
 
 project.run {
-    configureJava(javaVersion)
-    configureKotlin(javaVersion)
+    configureJava()
+    configureKotlin()
     addDependencies()
     forceConfigurations()
 
     val generatedDir = "$projectDir/generated"
     setTaskDependencies(generatedDir)
-    setupTests()
 
     configureGitHubPages()
 }
 
 typealias Module = Project
 
-fun Module.configureJava(javaVersion: JavaLanguageVersion) {
+fun Module.configureJava() {
     java {
-        toolchain.languageVersion.set(javaVersion)
+        sourceCompatibility = BuildSettings.javaVersionCompat
+        targetCompatibility = BuildSettings.javaVersionCompat
     }
 
     tasks {
@@ -94,27 +85,29 @@ fun Module.configureJava(javaVersion: JavaLanguageVersion) {
     }
 }
 
-fun Module.configureKotlin(javaVersion: JavaLanguageVersion) {
+fun Module.configureKotlin() {
     kotlin {
-        applyJvmToolchain(javaVersion.asInt())
         explicitApi()
-    }
-
-    tasks {
-        withType<KotlinCompile>().configureEach {
-            kotlinOptions.jvmTarget = javaVersion.toString()
+        compilerOptions {
+            jvmTarget.set(BuildSettings.jvmTarget)
             setFreeCompilerArgs()
         }
     }
 
-    kover {
-        useJacoco(version = Jacoco.version)
+    // See:
+    // https://github.com/Kotlin/kotlinx-kover?tab=readme-ov-file#to-create-report-combining-coverage-info-from-different-gradle-projects
+    // https://github.com/Kotlin/kotlinx-kover/blob/main/kover-gradle-plugin/examples/jvm/merged/build.gradle.kts
+    rootProject.dependencies {
+        kover(this@configureKotlin)
     }
 
-    koverReport {
-        defaults {
-            xml {
-                onCheck = true
+    kover {
+        useJacoco(version = Jacoco.version)
+        reports {
+            total {
+                xml {
+                    onCheck = true
+                }
             }
         }
     }
@@ -134,21 +127,8 @@ fun Module.addDependencies() = dependencies {
     api(Guava.lib)
 
     compileOnlyApi(CheckerFramework.annotations)
-    compileOnlyApi(JavaX.annotations)
+    api(JSpecify.annotations)
     ErrorProne.annotations.forEach { compileOnlyApi(it) }
-
-    implementation(Logging.lib)
-
-    testImplementation(Guava.testLib)
-    testImplementation(JUnit.runner)
-    testImplementation(JUnit.pioneer)
-    JUnit.api.forEach { testImplementation(it) }
-
-    testImplementation(Spine.testlib)
-    testImplementation(Kotest.frameworkEngine)
-    testImplementation(Kotest.datatest)
-    testImplementation(Kotest.runnerJUnit5Jvm)
-    testImplementation(JUnit.runner)
 }
 
 fun Module.forceConfigurations() {
@@ -158,24 +138,10 @@ fun Module.forceConfigurations() {
         all {
             resolutionStrategy {
                 force(
-                    JUnit.bom,
-                    JUnit.runner,
                     Dokka.BasePlugin.lib,
-                    Spine.reflect
+                    Reflect.lib,
                 )
             }
-        }
-    }
-}
-
-fun Module.setupTests() {
-    tasks {
-        registerTestTasks()
-        test.configure {
-            useJUnitPlatform {
-                includeEngines("junit-jupiter")
-            }
-            configureLogging()
         }
     }
 }
@@ -194,7 +160,9 @@ fun Module.setTaskDependencies(generatedDir: String) {
             publish?.dependsOn("${project.path}:updateGitHubPages")
         }
     }
-    configureTaskDependencies()
+    afterEvaluate {
+        configureTaskDependencies()
+    }
 }
 
 fun Module.configureGitHubPages() {

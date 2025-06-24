@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,9 +33,12 @@ package io.spine.dependency.local
  */
 @Suppress("ConstPropertyName", "unused")
 object Logging {
-    const val version = "2.0.0-SNAPSHOT.240"
+    const val version = "2.0.0-SNAPSHOT.242"
     const val group = Spine.group
-    const val lib = "$group:spine-logging:$version"
+
+    const val loggingArtifact = "spine-logging"
+
+    const val lib = "$group:$loggingArtifact:$version"
     const val libJvm = "$group:spine-logging-jvm:$version"
 
     const val log4j2Backend = "$group:spine-logging-log4j2-backend:$version"
@@ -43,10 +46,12 @@ object Logging {
     const val grpcContext = "$group:spine-logging-grpc-context:$version"
     const val smokeTest = "$group:spine-logging-smoke-test:$version"
 
+    const val testLib = "${Spine.toolsGroup}:spine-logging-testlib:$version"
+
     // Transitive dependencies.
     // Make `public` and use them to force a version in a particular repository, if needed.
     internal const val julBackend = "$group:spine-logging-jul-backend:$version"
-    internal const val middleware = "$group:spine-logging-middleware:$version"
+    const val middleware = "$group:spine-logging-middleware:$version"
     internal const val platformGenerator = "$group:spine-logging-platform-generator:$version"
     internal const val jvmDefaultPlatform = "$group:spine-logging-jvm-default-platform:$version"
 }

@@ -24,6 +24,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+@file:Suppress("unused") // source set accessed via `by getting`.
+
 import io.spine.dependency.local.Spine
 import io.spine.gradle.publish.IncrementGuard
 import io.spine.gradle.publish.SpinePublishing
@@ -33,10 +35,7 @@ plugins {
     `kmp-module`
     `kmp-publish`
 }
-
-apply {
-    plugin<IncrementGuard>()
-}
+apply<IncrementGuard>()
 
 // This module configures `spinePublishing` on its own to change a prefix
 // specified by the root project.

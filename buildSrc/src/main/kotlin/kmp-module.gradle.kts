@@ -24,6 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import io.spine.dependency.local.Reflect
 import io.spine.dependency.test.JUnit
 import io.spine.dependency.test.Jacoco
 import io.spine.dependency.test.Kotest
@@ -83,7 +84,7 @@ fun Project.forceConfigurations() {
         all {
             resolutionStrategy {
                 force(
-                    Spine.reflect
+                    Reflect.lib
                 )
             }
         }
@@ -133,6 +134,12 @@ kotlin {
     }
 }
 
+java {
+    sourceCompatibility = BuildSettings.javaVersionCompat
+    targetCompatibility = BuildSettings.javaVersionCompat
+}
+
+
 /**
  * Performs the standard task's configuration.
  *
@@ -147,9 +154,6 @@ kotlin {
 tasks {
     withType<JavaCompile>().configureEach {
         configureJavac()
-    }
-    withType<KotlinCompile>().configureEach {
-        setFreeCompilerArgs()
     }
 
     registerTestTasks()
@@ -175,8 +179,8 @@ detekt {
 
 kover {
     useJacoco(version = Jacoco.version)
-    koverReport {
-        defaults {
+    reports {
+        total {
             xml {
                 onCheck = true
             }

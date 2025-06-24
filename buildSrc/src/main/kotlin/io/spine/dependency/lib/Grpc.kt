@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,25 +26,58 @@
 
 package io.spine.dependency.lib
 
+import io.spine.dependency.DependencyWithBom
+
 // https://github.com/grpc/grpc-java
-@Suppress("unused", "ConstPropertyName")
-object Grpc {
-    @Suppress("MemberVisibilityCanBePrivate")
-    const val version        = "1.59.0"
-    const val api            = "io.grpc:grpc-api:$version"
-    const val auth           = "io.grpc:grpc-auth:$version"
-    const val core           = "io.grpc:grpc-core:$version"
-    const val context        = "io.grpc:grpc-context:$version"
-    const val inProcess      = "io.grpc:grpc-inprocess:$version"
-    const val stub           = "io.grpc:grpc-stub:$version"
-    const val okHttp         = "io.grpc:grpc-okhttp:$version"
-    const val protobuf       = "io.grpc:grpc-protobuf:$version"
-    const val protobufLite   = "io.grpc:grpc-protobuf-lite:$version"
-    const val netty          = "io.grpc:grpc-netty:$version"
-    const val nettyShaded    = "io.grpc:grpc-netty-shaded:$version"
+@Suppress("unused")
+object Grpc : DependencyWithBom() {
+
+    override val version = "1.72.0"
+    override val group = "io.grpc"
+    override val bom = "$group:grpc-bom:$version"
+
+    val api            = "$group:grpc-api"
+    val auth           = "$group:grpc-auth"
+    val core           = "$group:grpc-core"
+    val context        = "$group:grpc-context"
+    val inProcess      = "$group:grpc-inprocess"
+    val stub           = "$group:grpc-stub"
+    val okHttp         = "$group:grpc-okhttp"
+    val protobuf       = "$group:grpc-protobuf"
+    val protobufLite   = "$group:grpc-protobuf-lite"
+    val netty          = "$group:grpc-netty"
+    val nettyShaded    = "$group:grpc-netty-shaded"
+
+    override val modules = listOf(
+        api,
+        auth,
+        core,
+        context,
+        inProcess,
+        stub,
+        okHttp,
+        protobuf,
+        protobufLite,
+        netty,
+        nettyShaded
+    )
+
 
     object ProtocPlugin {
         const val id = "grpc"
-        const val artifact = "io.grpc:protoc-gen-grpc-java:$version"
+        @Deprecated(
+            message = "Please use `GrpcKotlin.ProtocPlugin.artifact` instead.",
+            replaceWith = ReplaceWith("GrpcKotlin.ProtocPlugin.artifact")
+        )
+        const val kotlinPluginVersion = GrpcKotlin.version
+        val artifact = "$group:protoc-gen-grpc-java:$version"
+
+        // https://github.com/grpc/grpc-kotlin
+        // https://repo.maven.apache.org/maven2/io/grpc/protoc-gen-grpc-kotlin/
+        @Deprecated(
+            message = "Please use `GrpcKotlin.ProtocPlugin.artifact` instead.",
+            replaceWith = ReplaceWith("GrpcKotlin.ProtocPlugin.artifact")
+        )
+        const val artifactKotlin = GrpcKotlin.ProtocPlugin.artifact
     }
 }

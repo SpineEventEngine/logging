@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,27 +68,31 @@ object PomGenerator {
     fun applyTo(project: Project) {
 
         /**
-         * In some cases, the `base` plugin, which is by default is added by e.g. `java`,
-         * is not yet added. `base` plugin defines the `build` task. This generator needs it.
+         * In some cases, the `base` plugin, which by default is added by e.g. `java`,
+         * is not yet added.
+         *
+         * The `base` plugin defines the `build` task.
+         * This generator needs it.
          */
         project.apply {
             plugin(BasePlugin::class.java)
         }
 
-        val task = project.tasks.create("generatePom")
-        task.doLast {
-            val pomFile = project.projectDir.resolve("pom.xml")
-            project.delete(pomFile)
+        val task = project.tasks.register("generatePom") {
+            doLast {
+                val pomFile = project.projectDir.resolve("pom.xml")
+                project.delete(pomFile)
 
-            val projectData = project.metadata()
-            val writer = PomXmlWriter(projectData)
-            writer.writeTo(pomFile)
+                val projectData = project.metadata()
+                val writer = PomXmlWriter(projectData)
+                writer.writeTo(pomFile)
+            }
+
+            val assembleTask = project.tasks.findByName("assemble")!!
+            dependsOn(assembleTask)
         }
 
         val buildTask = project.tasks.findByName("build")!!
         buildTask.finalizedBy(task)
-
-        val assembleTask = project.tasks.findByName("assemble")!!
-        task.dependsOn(assembleTask)
     }
 }

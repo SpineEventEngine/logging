@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@ import io.spine.dependency.build.CheckerFramework
 import io.spine.dependency.build.Dokka
 import io.spine.dependency.build.ErrorProne
 import io.spine.dependency.build.FindBugs
+import io.spine.dependency.build.JSpecify
 import io.spine.dependency.lib.Asm
 import io.spine.dependency.lib.AutoCommon
 import io.spine.dependency.lib.AutoService
@@ -39,16 +40,15 @@ import io.spine.dependency.lib.CommonsLogging
 import io.spine.dependency.lib.Gson
 import io.spine.dependency.lib.Guava
 import io.spine.dependency.lib.J2ObjC
-import io.spine.dependency.lib.Jackson
 import io.spine.dependency.lib.JavaDiffUtils
 import io.spine.dependency.lib.Kotlin
 import io.spine.dependency.lib.Okio
 import io.spine.dependency.lib.Plexus
 import io.spine.dependency.lib.Protobuf
 import io.spine.dependency.lib.Slf4J
+import io.spine.dependency.local.Base
 import io.spine.dependency.local.Spine
 import io.spine.dependency.test.Hamcrest
-import io.spine.dependency.test.JUnit
 import io.spine.dependency.test.Kotest
 import io.spine.dependency.test.OpenTest4J
 import io.spine.dependency.test.Truth
@@ -85,6 +85,9 @@ fun NamedDomainObjectContainer<Configuration>.forceVersions() {
 
 private fun ResolutionStrategy.forceProductionDependencies() {
     @Suppress("DEPRECATION") // Force versions of SLF4J and Kotlin libs.
+    Protobuf.libs.forEach {
+        force(it)
+    }
     force(
         AnimalSniffer.lib,
         AutoCommon.lib,
@@ -96,11 +99,7 @@ private fun ResolutionStrategy.forceProductionDependencies() {
         FindBugs.annotations,
         Gson.lib,
         Guava.lib,
-        Kotlin.reflect,
-        Kotlin.stdLib,
-        Kotlin.stdLibCommon,
-        Kotlin.stdLibJdk7,
-        Kotlin.stdLibJdk8,
+        JSpecify.annotations,
         Protobuf.GradlePlugin.lib,
         Protobuf.libs,
         Slf4J.lib
@@ -110,11 +109,6 @@ private fun ResolutionStrategy.forceProductionDependencies() {
 private fun ResolutionStrategy.forceTestDependencies() {
     force(
         Guava.testLib,
-        JUnit.api,
-        JUnit.bom,
-        JUnit.Platform.commons,
-        JUnit.Platform.launcher,
-        JUnit.legacy,
         Truth.libs,
         Kotest.assertions,
     )
@@ -137,16 +131,6 @@ private fun ResolutionStrategy.forceTransitiveDependencies() {
         Gson.lib,
         Hamcrest.core,
         J2ObjC.annotations,
-        JUnit.Platform.engine,
-        JUnit.Platform.suiteApi,
-        JUnit.runner,
-        Jackson.annotations,
-        Jackson.bom,
-        Jackson.core,
-        Jackson.databind,
-        Jackson.dataformatXml,
-        Jackson.dataformatYaml,
-        Jackson.moduleKotlin,
         JavaDiffUtils.lib,
         Kotlin.jetbrainsAnnotations,
         Okio.lib,
@@ -186,7 +170,7 @@ fun ModuleDependency.excludeSpineBase() {
 fun Project.forceSpineBase() {
     configurations.all {
         resolutionStrategy {
-            force(Spine.base)
+            force(Base.lib)
         }
     }
 }
@@ -198,9 +182,9 @@ fun Project.forceSpineBase() {
 @Suppress("unused")
 fun Project.forceBaseInProtoTasks() {
     configurations.configureEach {
-        if (name.lowercased().contains("proto")) {
+        if (name.lowercase().contains("proto")) {
             resolutionStrategy {
-                force(Spine.baseForBuildScript)
+                force(Base.libForBuildScript)
             }
         }
     }

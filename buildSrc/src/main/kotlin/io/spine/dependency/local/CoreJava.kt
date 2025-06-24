@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,9 +34,15 @@ package io.spine.dependency.local
 @Suppress("ConstPropertyName", "unused")
 object CoreJava {
     const val group = Spine.group
-    const val version = "2.0.0-SNAPSHOT.177"
-    const val core = "$group:spine-core:$version"
-    const val client = "$group:spine-client:$version"
-    const val server = "$group:spine-server:$version"
+    const val version = "2.0.0-SNAPSHOT.316"
+
+    const val coreArtifact = "spine-core"
+    const val clientArtifact = "spine-client"
+    const val serverArtifact = "spine-server"
+
+    const val core = "$group:$coreArtifact:$version"
+    const val client = "$group:$clientArtifact:$version"
+    const val server = "$group:$serverArtifact:$version"
+
     const val testUtilServer = "${Spine.toolsGroup}:spine-testutil-server:$version"
 }

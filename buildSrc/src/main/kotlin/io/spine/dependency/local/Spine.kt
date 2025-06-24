@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,30 +35,65 @@ object Spine {
     const val group = "io.spine"
     const val toolsGroup = "io.spine.tools"
 
-    const val base = "$group:spine-base:${ArtifactVersion.base}"
-    const val baseForBuildScript = "$group:spine-base:${ArtifactVersion.baseForBuildScript}"
+    @Deprecated(message = "Please use `Base.lib`.", ReplaceWith("Base.lib"))
+    const val base = Base.lib
 
-    const val reflect = "$group:spine-reflect:${ArtifactVersion.reflect}"
-    const val baseTypes = "$group:spine-base-types:${ArtifactVersion.baseTypes}"
-    const val time = "$group:spine-time:${ArtifactVersion.time}"
-    const val change = "$group:spine-change:${ArtifactVersion.change}"
-    const val text = "$group:spine-text:${ArtifactVersion.text}"
+    @Deprecated(
+        message = "Please use `Base.libForBuildScript`.",
+        ReplaceWith("Base.libForBuildScript")
+    )
+    const val baseForBuildScript = Base.libForBuildScript
 
-    const val testlib = "$toolsGroup:spine-testlib:${ArtifactVersion.testlib}"
-    const val testUtilTime = "$toolsGroup:spine-testutil-time:${ArtifactVersion.time}"
+    @Deprecated(message = "Please use `Reflect.lib`.", ReplaceWith("Reflect.lib"))
+    const val reflect = Reflect.lib
+
+    @Deprecated(message = "Please use `BaseTypes.lib`.", ReplaceWith("BaseTypes.lib"))
+    const val baseTypes = BaseTypes.lib
+
+    @Deprecated(message = "Please use `Time.lib`.", ReplaceWith("Time.lib"))
+    const val time = Time.lib
+
+    @Deprecated(message = "Please use `Change.lib`.", ReplaceWith("Change.lib"))
+    const val change = Change.lib
+
+    @Deprecated(message = "Please use `Text.lib`.", ReplaceWith("Text.lib"))
+    const val text = Text.lib
+
+    @Deprecated(message = "Please use `TestLib.lib`.", ReplaceWith("TestLib.lib"))
+    const val testlib = TestLib.lib
+
+    @Deprecated(message = "Please use `Time.testLib`.", ReplaceWith("Time.testLib"))
+    const val testUtilTime = Time.testLib
 
     @Deprecated(message = "Please use `ToolBase.psiJava` instead`.")
-    const val psiJava = "$toolsGroup:spine-psi-java:${ArtifactVersion.toolBase}"
-    @Deprecated(message = "Please use `ToolBase.psiJava` instead`.")
-    const val psiJavaBundle = "$toolsGroup:spine-psi-java-bundle:${ArtifactVersion.toolBase}"
-    @Deprecated(message = "Please use `ToolBase.lib` instead`.")
-    const val toolBase = "$toolsGroup:spine-tool-base:${ArtifactVersion.toolBase}"
-    @Deprecated(message = "Please use `ToolBase.pluginBase` instead`.")
-    const val pluginBase = "$toolsGroup:spine-plugin-base:${ArtifactVersion.toolBase}"
-    @Deprecated(message = "Please use `ToolBase.pluginTestlib` instead`.")
-    const val pluginTestlib = "$toolsGroup:spine-plugin-testlib:${ArtifactVersion.toolBase}"
+    const val psiJava = "$toolsGroup:spine-psi-java:${ToolBase.version}"
 
-    const val modelCompiler = "$toolsGroup:spine-model-compiler:${ArtifactVersion.mc}"
+    @Deprecated(
+        message = "Please use `ToolBase.psiJava` instead`.",
+        ReplaceWith("ToolBase.psiJava")
+    )
+    const val psiJavaBundle = "$toolsGroup:spine-psi-java-bundle:${ToolBase.version}"
+
+    @Deprecated(message = "Please use `ToolBase.lib` instead`.", ReplaceWith("ToolBase.lib"))
+    const val toolBase = "$toolsGroup:spine-tool-base:${ToolBase.version}"
+
+    @Deprecated(
+        message = "Please use `ToolBase.pluginBase` instead`.",
+        ReplaceWith("ToolBase.pluginBase")
+    )
+    const val pluginBase = "$toolsGroup:spine-plugin-base:${ToolBase.version}"
+
+    @Deprecated(
+        message = "Please use `ToolBase.pluginTestlib` instead`.",
+        ReplaceWith("ToolBase.pluginTestlib")
+    )
+    const val pluginTestlib = ToolBase.pluginTestlib
+
+    @Deprecated(
+        message = "Please use `ModelCompiler.lib` instead.",
+        ReplaceWith("ModelCompiler.lib")
+    )
+    const val modelCompiler = ModelCompiler.lib
 
     @Deprecated(
         message = "Please use top level `McJava` object instead.",

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,43 +24,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.gradle
+@file:Suppress("unused")
 
-import org.gradle.api.GradleException
+package io.spine.dependency.build
 
 /**
- * A name of a repository.
+ * The Gradle plugin for publishing Gradle plugins to the Gradle Plugin Portal.
+ *
+ * @see <a href="https://plugins.gradle.org/plugin/com.gradle.plugin-publish">
+ *     The plugin page at the Portal</a>
+ * @see <a href="https://plugins.gradle.org/docs/publish-plugin">Publishing Rules</a>
  */
-class RepoSlug(val value: String) {
-
-    companion object {
-
-        /**
-         * The name of the environment variable containing the repository slug, for which
-         * the Gradle build is performed.
-         */
-        private const val environmentVariable = "REPO_SLUG"
-
-        /**
-         * Reads `REPO_SLUG` environment variable and returns its value.
-         *
-         * In case it is not set, a [GradleException] is thrown.
-         */
-        fun fromVar(): RepoSlug {
-            val envValue = System.getenv(environmentVariable)
-            if (envValue.isNullOrEmpty()) {
-                throw GradleException("`REPO_SLUG` environment variable is not set.")
-            }
-            return RepoSlug(envValue)
-        }
-    }
-
-    override fun toString(): String = value
-
-    /**
-     * Returns the GitHub URL to the project repository.
-     */
-    fun gitHost(): String {
-        return "git@github.com-publish:${value}.git"
-    }
+@Suppress("ConstPropertyName")
+object PluginPublishPlugin {
+    const val version = "1.3.1"
+    const val id = "com.gradle.plugin-publish"
 }
