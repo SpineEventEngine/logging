@@ -24,11 +24,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import io.spine.dependency.boms.BomsPlugin
 import io.spine.dependency.build.CheckerFramework
 import io.spine.dependency.build.Dokka
 import io.spine.dependency.build.ErrorProne
 import io.spine.dependency.build.JSpecify
 import io.spine.dependency.lib.Guava
+import io.spine.dependency.lib.Kotlin
 import io.spine.dependency.lib.Protobuf
 import io.spine.dependency.local.Reflect
 import io.spine.dependency.test.Jacoco
@@ -48,11 +50,12 @@ plugins {
     id("dokka-for-java")
     kotlin("jvm")
     id("io.kotest")
-    id("org.jetbrains.kotlinx.kover")
     id("detekt-code-analysis")
     id("dokka-for-kotlin")
+    id("org.jetbrains.kotlinx.kover")
+    id("module-testing")
 }
-
+apply<BomsPlugin>()
 LicenseReporter.generateReportIn(project)
 JavadocConfig.applyTo(project)
 CheckStyleConfig.applyTo(project)
@@ -92,13 +95,6 @@ fun Module.configureKotlin() {
             jvmTarget.set(BuildSettings.jvmTarget)
             setFreeCompilerArgs()
         }
-    }
-
-    // See:
-    // https://github.com/Kotlin/kotlinx-kover?tab=readme-ov-file#to-create-report-combining-coverage-info-from-different-gradle-projects
-    // https://github.com/Kotlin/kotlinx-kover/blob/main/kover-gradle-plugin/examples/jvm/merged/build.gradle.kts
-    rootProject.dependencies {
-        kover(this@configureKotlin)
     }
 
     kover {

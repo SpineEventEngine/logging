@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@
  */
 
 import io.spine.dependency.lib.AutoService
-import io.spine.dependency.local.Spine
+import io.spine.dependency.local.Reflect
 import io.spine.gradle.java.disableLinters
 
 plugins {
@@ -34,7 +34,7 @@ plugins {
 }
 
 dependencies {
-    implementation(Spine.reflect)
+    implementation(Reflect.lib)
     implementation(project(":middleware"))
     implementation(project(":jul-backend"))
     testImplementation(project(":middleware", configuration = "testArtifacts"))
@@ -61,6 +61,7 @@ afterEvaluate {
     // `kaptKotlin` task is created after the configuration phase,
     // so we have to use the `afterEvaluate` block.
     val kaptKotlin by tasks.existing
+    @Suppress("unused")
     val dokkaHtml by tasks.existing {
         dependsOn(kaptKotlin)
     }

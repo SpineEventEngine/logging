@@ -169,6 +169,7 @@ dependencies {
         "com.github.jk1:gradle-license-report:$licenseReportVersion",
         "com.google.guava:guava:$guavaVersion",
         "com.google.protobuf:protobuf-gradle-plugin:$protobufPluginVersion",
+        "com.google.protobuf:protobuf-gradle-plugin:$protobufPluginVersion",
         "com.gradleup.shadow:shadow-gradle-plugin:$shadowVersion",
         "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion",
         "io.kotest:kotest-gradle-plugin:$kotestJvmPluginVersion",
