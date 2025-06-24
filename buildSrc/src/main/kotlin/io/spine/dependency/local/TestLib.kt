@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,17 +24,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.gradle.javadoc
-
-import org.gradle.api.tasks.TaskContainer
-import org.gradle.api.tasks.javadoc.Javadoc
+package io.spine.dependency.local
 
 /**
- * Finds a [Javadoc] Gradle task by the passed name.
+ * Spine TestLib library.
+ *
+ * @see <a href="https://github.com/SpineEventEngine/testlib">spine-testlib</a>
  */
-fun TaskContainer.javadocTask(named: String) = this.getByName(named) as Javadoc
-
-/**
- * Finds a default [Javadoc] Gradle task.
- */
-fun TaskContainer.javadocTask() = this.getByName("javadoc") as Javadoc
+@Suppress("ConstPropertyName")
+object TestLib {
+    const val version = "2.0.0-SNAPSHOT.202"
+    const val group = Spine.toolsGroup
+    const val artifact = "spine-testlib"
+    const val lib = "$group:$artifact:$version"
+}
