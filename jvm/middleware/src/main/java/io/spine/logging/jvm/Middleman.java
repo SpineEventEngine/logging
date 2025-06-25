@@ -48,7 +48,7 @@ import java.util.logging.Level;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/FluentLogger.java">
  *     Original Java code of Google Flogger</a>
  */
-public final class FluentLogger2 extends AbstractLogger<FluentLogger2.Api> {
+public final class Middleman extends AbstractLogger<Middleman.Api> {
   /**
    * The non-wildcard, fully specified, logging API for this logger. Fluent logger implementations
    * should specify a non-wildcard API like this with which to generify the abstract logger.
@@ -76,11 +76,11 @@ public final class FluentLogger2 extends AbstractLogger<FluentLogger2.Api> {
    * Returns a new logger instance which parses log messages using printf format for the enclosing
    * class using the system default logging backend.
    */
-  public static FluentLogger2 forEnclosingClass() {
+  public static Middleman forEnclosingClass() {
     // NOTE: It is _vital_ that the call to "caller finder" is made directly inside the static
     // factory method. See getCallerFinder() for more information.
-    var loggingClass = Platform.getCallerFinder().findLoggingClass(FluentLogger2.class);
-    return new FluentLogger2(Platform.getBackend(loggingClass));
+    var loggingClass = Platform.getCallerFinder().findLoggingClass(Middleman.class);
+    return new Middleman(Platform.getBackend(loggingClass));
   }
 
   /**
@@ -91,7 +91,7 @@ public final class FluentLogger2 extends AbstractLogger<FluentLogger2.Api> {
    *         {@code io.spine.logging.JvmLoggerFactoryKt}. Now, as we aggregate the Flogger code,
    *         we open the constructor for simplicity.
    */
-  public FluentLogger2(LoggerBackend backend) {
+  public Middleman(LoggerBackend backend) {
     super(backend);
   }
 
@@ -109,14 +109,14 @@ public final class FluentLogger2 extends AbstractLogger<FluentLogger2.Api> {
 
   /** Logging context implementing the fully specified API for this logger. */
   // VisibleForTesting
-  final class Context extends LogContext<FluentLogger2, Api> implements Api {
+  final class Context extends LogContext<Middleman, Api> implements Api {
     private Context(Level level, boolean isForced) {
       super(level, isForced);
     }
 
     @Override
-    protected FluentLogger2 getLogger() {
-      return FluentLogger2.this;
+    protected Middleman getLogger() {
+      return Middleman.this;
     }
 
     @Override
