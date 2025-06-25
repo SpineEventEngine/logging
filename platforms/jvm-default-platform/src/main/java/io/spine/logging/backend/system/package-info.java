@@ -28,9 +28,8 @@
  * Contains the default logger platform implementation for a server-side
  * Java environment.
  *
- * <p>Although, {@code system} is not the best name for this package.
- * The better option is {@code default}, but it is reserved by Java
- * and cannot be used here.
+ * <p>Although {@code system} is not the best name for this package,
+ * the better option, {@code default}, is reserved by Java and cannot be used here.
  *
  * @see <a href="https://rb.gy/39mdu">Original Java code of Google Flogger</a>
  */

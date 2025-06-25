@@ -35,9 +35,9 @@ import java.io.StringWriter
 /**
  * Writes the dependencies of a Gradle project and its subprojects as a `pom.xml` file.
  *
- * The resulting file is not usable for `maven` build tasks, but serves rather as a description
- * of the first-level dependencies for each project/subproject. Their transitive dependencies
- * are not included into the result.
+ * The resulting file is not usable for `maven` build tasks but serves as a description
+ * of the first-level dependencies for each project or subproject. Their transitive dependencies
+ * are not included in the result.
  */
 internal class PomXmlWriter
 internal constructor(
@@ -48,10 +48,10 @@ internal constructor(
      * Writes the `pom.xml` file containing dependencies of this project
      * and its subprojects to the specified location.
      *
-     * <p>If a file with the specified location exists, its contents will be substituted
+     * <p>If a file with the specified location exists, its contents are replaced
      * with a new `pom.xml`.
      *
-     * @param file a file to write `pom.xml` contents to
+     * @param file a file to write the `pom.xml` contents to
      */
     fun writeTo(file: File) {
         val fileWriter = FileWriter(file)
@@ -74,7 +74,7 @@ internal constructor(
     /**
      * Obtains a string that contains project dependencies as XML.
      *
-     * <p>Obtained string also contains a closing project tag.
+     * <p>The returned string also contains the closing project tag.
      */
     private fun projectDependencies(): String {
         val destination = StringWriter()

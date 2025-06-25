@@ -46,15 +46,15 @@ private const val ABOUT = ""
 class Cli(private val workingFolder: File) {
 
     /**
-     * Executes the given terminal command and retrieves the command output.
+     * Executes the given terminal command and returns its output.
      *
-     * <p>{@link Runtime#exec(String[], String[], File) Executes} the given {@code String} array as
-     * a CLI command. If the execution is successful, returns the command output. Throws
-     * an {@link IllegalStateException} otherwise.
+     * <p>Internally calls {@link Runtime#exec(String[], String[], File)} to run the given
+     * {@code String} array as a CLI command. If the execution is successful, the command output
+     * is returned; otherwise an {@link IllegalStateException} is thrown.
      *
      * @param command the command to execute
      * @return the command line output
-     * @throws IllegalStateException upon an execution error
+     * @throws IllegalStateException if the execution fails
      */
     fun execute(vararg command: String): String {
         val outWriter = StringWriter()
@@ -87,7 +87,7 @@ class Cli(private val workingFolder: File) {
 
 /**
  * Asynchronously reads all lines from this [InputStream] and appends them
- * to the passed [StringWriter].
+ * to the given [StringWriter].
  */
 fun InputStream.pourTo(dest: StringWriter) {
     Thread {
