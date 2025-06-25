@@ -111,6 +111,7 @@ public abstract class LoggerBackend {
    *     that simply trying to log this again will succeed and error handlers must be careful in how
    *     they handle this instance, its arguments and metadata. References to {@code badData} must
    *     not be held after the {@code handleError} invocation returns.
+ *
    * @throws LoggingException to indicate an error which should be propagated into user code.
    */
   public abstract void handleError(RuntimeException error, LogData badData);

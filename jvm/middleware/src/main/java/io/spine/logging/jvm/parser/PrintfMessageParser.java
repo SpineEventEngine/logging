@@ -31,6 +31,7 @@ package io.spine.logging.jvm.parser;
  * {@link String#format}. This is an abstract parser which knows how to
  * process and extract placeholder terms at a high level, but does not impose its own semantics
  * for place-holder types.
+ *
  * <p>
  * Typically you should not subclass this class, but instead subclass
  * {@link DefaultPrintfMessageParser}, which provides compatibility with {@link String#format}.
@@ -61,6 +62,7 @@ public abstract class PrintfMessageParser extends MessageParser {
 
   /**
    * Parses a single printf-like term from a log message into a message template builder.
+ *
    * <p>
    * A simple example of an implicit parameter (the argument index is not specified):
    * <pre>
@@ -71,6 +73,7 @@ public abstract class PrintfMessageParser extends MessageParser {
    * return: 8 ────────╯
    * </pre>
    * If this case there is no format specification, so {@code specStart == formatStart}.
+ *
    * <p>
    * A complex example with an explicit index:
    * <pre>
@@ -89,6 +92,7 @@ public abstract class PrintfMessageParser extends MessageParser {
    * @param termStart the index of the initial '%' character that starts the term.
    * @param specStart the index of the first format specification character (after any optional
    *        index specification).
+ *
    * @param formatStart the index of the (first) format character in the term.
    * @return the index after the last character of the term.
    */

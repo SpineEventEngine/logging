@@ -33,6 +33,7 @@ import java.io.Serial;
 /**
  * Exception thrown when a log statement cannot be emitted correctly. This exception should only be
  * thrown by logger backend implementations which have opted not to handle specific issues.
+ *
  * <p>
  * Typically a logger backend would only throw {@code LoggingException} in response to issues in
  * test code or other debugging environments. In production code, the backend should be configured

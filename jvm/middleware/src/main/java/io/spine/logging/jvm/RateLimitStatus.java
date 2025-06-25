@@ -78,6 +78,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * final class CustomRateLimiter extends RateLimitStatus {
  *   private static final LogSiteMap<CustomRateLimiter> map =
  *       new LogSiteMap<CustomRateLimiter>() {
+ *
  *         @Override protected CustomRateLimiter initialValue() {
  *           return new CustomRateLimiter();
  *         }

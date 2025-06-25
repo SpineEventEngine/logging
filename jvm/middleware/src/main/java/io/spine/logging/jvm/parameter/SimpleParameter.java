@@ -38,6 +38,7 @@ import static io.spine.logging.jvm.util.Checks.checkNotNull;
 /**
  * A simple, single argument, parameter which can format arguments according to the rules specified
  * by {@link FormatChar}.
+ *
  * <p>
  * This class is immutable and thread safe, as per the Parameter contract.
  *
@@ -75,10 +76,13 @@ public final class SimpleParameter extends Parameter {
      *
      * @param index
      *         the index of the argument to be processed.
+ *
      * @param formatChar
      *         the basic formatting type.
+ *
      * @param options
      *         additional formatting options.
+ *
      * @return the immutable, thread safe parameter instance.
      */
     public static SimpleParameter of(int index, FormatChar formatChar, FormatOptions options) {

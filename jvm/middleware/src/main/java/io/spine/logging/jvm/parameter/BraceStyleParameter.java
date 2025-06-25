@@ -74,6 +74,7 @@ public class BraceStyleParameter extends Parameter {
      *
      * @param index
      *         the index of the argument to be processed.
+ *
      * @return the immutable, thread safe parameter instance.
      */
     public static BraceStyleParameter of(int index) {

@@ -33,6 +33,7 @@ import io.spine.logging.jvm.parameter.BraceStyleParameter;
  * mechanism supports the more general "{n,xxx}" form for brace format style logging, the default
  * message parser is currently limited to simple indexed place holders (e.g. "{0}"). This class
  * could easily be extended to support these trailing format specifiers.
+ *
  * <p>
  * Note also that the implicit place holder syntax used by Log4J (i.e. "{}") is not currently
  * supported, however this may change. Currently an unescaped "{}" term in a log message will cause

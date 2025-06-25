@@ -31,6 +31,7 @@ package io.spine.logging.jvm.parser;
  * {@link java.text.MessageFormat MessageFormat}. This is an abstract parser which knows how to
  * process and extract place-holder terms at a high level, but does not impose its own semantics
  * on formatting extensions (eg, "{0,number,#.##}").
+ *
  * <p>
  * Typically you should not subclass this class, but instead subclass
  * {@link DefaultBraceStyleMessageParser}, which provides default behavior for simple place-holders.
@@ -49,6 +50,7 @@ public abstract class BraceStyleMessageParser extends MessageParser {
    * Parses a single brace format term from a log message into a message template builder. Note that
    * the default brace style parser currently does not handle anything other than the simplest "{n}"
    * forms of parameter specification, and it will treat anything more complex as a parsing error.
+ *
    * <p>
    * A simple example of a positional parameter:
    * <pre>
@@ -57,6 +59,7 @@ public abstract class BraceStyleMessageParser extends MessageParser {
    * formatStart: -1    │
    * termEnd: 9 ────────╯
    * </pre>
+ *
    * <p>
    * A more complex example with a trailing format specification:
    * <pre>
@@ -72,6 +75,7 @@ public abstract class BraceStyleMessageParser extends MessageParser {
    * @param termStart the index of the initial '{' character that starts the term.
    * @param formatStart the index of the optional formatting substring after the first comma
    *        (which extends to {@code termEnd - 1}) or -1 if there is no formatting substring.
+ *
    * @param termEnd the index after the final '}' character that completes this term.
    */
   abstract void parseBraceFormatTerm(

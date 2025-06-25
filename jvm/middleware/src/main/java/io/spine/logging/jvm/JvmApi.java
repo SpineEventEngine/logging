@@ -35,6 +35,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * The basic logging API. An implementation of this API (or an extension of it) will be
  * returned by any fluent logger and forms the basis of the fluent call chain.
+ *
  * <p>
  * In typical usage each method in the API, with the exception of the terminal {@code log()}
  * statements, will carry out some simple task (which may involve modifying the context of the log
@@ -82,9 +83,11 @@ public interface JvmApi<API extends JvmApi<API>> {
    * is emitted all the rate limiters are reset. In particular for {@code every(N)} this means that
    * logs need not always be emitted at multiples of {@code N} if other rate limiters are active,
    * though it will always be at least {@code N}.
+ *
    * <p>
    * When rate limiting is active, a {@code "skipped"} count is added to log statements to indicate
    * how many logs were disallowed since the last log statement was emitted.
+ *
    * <p>
    * If this method is called multiple times for a single log statement, the last invocation will
    * take precedence.
@@ -107,9 +110,11 @@ public interface JvmApi<API extends JvmApi<API>> {
    * only be emitted once all rate limiters have reached their threshold, and when a log statement
    * is emitted all the rate limiters are reset. In particular for {@code onAverageEvery(N)} this
    * means that logs may occurs less frequently than one-in-N if other rate limiters are active.
+ *
    * <p>
    * When rate limiting is active, a {@code "skipped"} count is added to log statements to indicate
    * how many logs were disallowed since the last log statement was emitted.
+ *
    * <p>
    * If this method is called multiple times for a single log statement, the last invocation will
    * take precedence.
@@ -124,6 +129,7 @@ public interface JvmApi<API extends JvmApi<API>> {
    * specified duration must not be negative, and it is expected, but not required, that it is
    * constant.  In the absence of any other rate limiting, this method always allows the first
    * invocation of any log statement to be emitted.
+ *
    * <p>
    * Note that for performance reasons {@code atMostEvery()} is explicitly <em>not</em> intended to
    * perform "proper" rate limiting to produce a limited average rate over many samples.
@@ -136,6 +142,7 @@ public interface JvmApi<API extends JvmApi<API>> {
    * }</pre>
    * where {@code currentTimestampNanos} is the timestamp of the current log statement and
    * {@code lastTimestampNanos} is a time stamp of the last log statement that was emitted.
+ *
    * <p>
    * The effect of this is that when logging invocation is relatively infrequent, the period
    * between emitted log statements can be higher than the specified duration. For example
@@ -145,6 +152,7 @@ public interface JvmApi<API extends JvmApi<API>> {
    * }</pre>
    * logging would occur after {@code 0s}, {@code 2.4s} and {@code 4.8s} (not {@code 4.2s}),
    * giving an effective duration of {@code 2.4s} between log statements over time.
+ *
    * <p>
    * Providing a zero-length duration (i.e., {@code n == 0}) disables rate limiting and makes this
    * method an effective no-op.
@@ -165,9 +173,11 @@ public interface JvmApi<API extends JvmApi<API>> {
    * only be emitted once all rate limiters have reached their threshold, and when a log statement
    * is emitted all the rate limiters are reset. So even if the rate limit duration has expired, it
    * does not mean that logging will occur.
+ *
    * <p>
    * When rate limiting is active, a {@code "skipped"} count is added to log statements to indicate
    * how many logs were disallowed since the last log statement was emitted.
+ *
    * <p>
    * If this method is called multiple times for a single log statement, the last invocation will
    * take precedence.
@@ -341,6 +351,7 @@ public interface JvmApi<API extends JvmApi<API>> {
    * @param key the metadata key (expected to be a static constant)
    * @param value a value to be associated with the key in this log statement. Null values are
    *        allowed, but the effect is always a no-op
+ *
    * @throws NullPointerException if the given key is null
    * @see JvmMetadataKey
    */
@@ -431,6 +442,7 @@ public interface JvmApi<API extends JvmApi<API>> {
    *     16 bits is a log statement index to distinguish multiple statements on the same line
    *     (this becomes important if line numbers are stripped from the class file and everything
    *     appears to be on the same line).
+ *
    * @param sourceFileName Optional base name of the source file (this value is strictly for
    *     debugging and does not contribute to either equals() or hashCode() behavior).
    */
@@ -449,11 +461,13 @@ public interface JvmApi<API extends JvmApi<API>> {
    *     logger.atFine().log("Message: %s", value);
    *   }
    * }</pre>
+ *
    * <p>
    * Note that if logging is enabled for a log level, it does not always follow that the log
    * statement will definitely be written to the backend (due to the effects of other methods in
    * the fluent chain), but if this method returns {@code false} then it can safely be assumed that
    * no logging will occur.
+ *
    * <p>
    * This method is unaffected by additional methods in the fluent chain and should only ever be
    * invoked immediately after the level selector method. In other words, the expression:
@@ -466,6 +480,7 @@ public interface JvmApi<API extends JvmApi<API>> {
    * <p>By avoiding passing a separate {@code Level} at runtime to determine "loggability", this API
    * makes it easier to coerce bytecode optimizers into doing "dead code" removal on sections
    * guarded by this method.
+ *
    * <p>
    * If a proxy logger class is supplied for which:
    * <pre>{@code logger.atFine()}</pre>
@@ -486,6 +501,7 @@ public interface JvmApi<API extends JvmApi<API>> {
    *
    * @param message the message template string containing an argument placeholder for each element
    *     of {@code varargs}.
+ *
    * @param varargs the non-null array of arguments to be formatted.
    */
   void logVarargs(String message, @Nullable Object[] varargs);
@@ -497,6 +513,7 @@ public interface JvmApi<API extends JvmApi<API>> {
    * <pre>{@code
    * logger.at(INFO).withCause(error).log();
    * }</pre>
+ *
    * <p>
    * However, as it is good practice to give all log statements a meaningful log message, use of this
    * method should be rare.
@@ -505,6 +522,7 @@ public interface JvmApi<API extends JvmApi<API>> {
 
   /**
    * Logs the given literal string without interpreting any argument placeholders.
+ *
    * <p>
    * Important: This is intended only for use with hard-coded, literal strings which cannot
    * contain user data. If you wish to log user-generated data, you should do something like:
@@ -524,6 +542,7 @@ public interface JvmApi<API extends JvmApi<API>> {
    * Logs a formatted representation of the given parameter, using the specified message template.
    * The message string is expected to contain argument placeholder terms appropriate to the
    * logger's choice of parser.
+ *
    * <p>
    * Note that printf-style loggers are always expected to accept the standard Java printf
    * formatting characters (e.g. "%s", "%d", etc...) and all flags unless otherwise stated.
@@ -816,6 +835,7 @@ public interface JvmApi<API extends JvmApi<API>> {
 
   /**
    * An implementation of {@link JvmApi} which does nothing and discards all parameters.
+ *
    * <p>
    * This class (or a subclass in the case of an extended API) should be returned whenever logging
    * is definitely disabled (e.g. when the log level is too low).

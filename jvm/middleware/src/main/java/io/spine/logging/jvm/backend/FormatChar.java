@@ -32,6 +32,7 @@ import org.jspecify.annotations.Nullable;
  * An enum representing the printf-like formatting characters that must be supported by all logging
  * backends. It is important to note that while backends must accept any of these format specifiers,
  * they are not obliged to implement all specified formatting behavior.
+ *
  * <p>
  * The default term formatter takes care of supporting all these options when expressed in their
  * normal '%X' form (including flags, width and precision). Custom messages parsers must convert
@@ -46,6 +47,7 @@ public enum FormatChar {
      * Formats the argument in a manner specific to the chosen logging backend. In many cases this
      * will be equivalent to using {@code STRING}, but it allows backend implementations to log more
      * structured representations of known types.
+ *
      * <p>
      * This is a non-numeric format with an upper-case variant.
      */
@@ -53,6 +55,7 @@ public enum FormatChar {
 
     /**
      * Formats the argument as a boolean.
+ *
      * <p>
      * This is a non-numeric format with an upper-case variant.
      */
@@ -63,6 +66,7 @@ public enum FormatChar {
      * integral numeric value, providing that {@link Character#isValidCodePoint(int)} returns
      * true. Note that if the argument cannot be represented losslessly as an integer, it must be
      * considered invalid.
+ *
      * <p>
      * This is a non-numeric format with an upper-case variant.
      */
@@ -70,6 +74,7 @@ public enum FormatChar {
 
     /**
      * Formats the argument as a decimal integer.
+ *
      * <p>
      * This is a numeric format.
      */
@@ -77,8 +82,10 @@ public enum FormatChar {
 
     /**
      * Formats the argument as an unsigned octal integer.
+ *
      * <p>
      * This is a numeric format.
+ *
      * <p>
      * '(' is only supported for {@link java.math.BigInteger} or {@link java.math.BigDecimal}
      */
@@ -86,8 +93,10 @@ public enum FormatChar {
 
     /**
      * Formats the argument as an unsigned hexadecimal integer.
+ *
      * <p>
      * This is a numeric format with an upper-case variant.
+ *
      * <p>
      * '(' is only supported for {@link java.math.BigInteger} or {@link java.math.BigDecimal}
      */
@@ -95,6 +104,7 @@ public enum FormatChar {
 
     /**
      * Formats the argument as a signed decimal floating value.
+ *
      * <p>
      * This is a numeric format.
      */
@@ -102,6 +112,7 @@ public enum FormatChar {
 
     /**
      * Formats the argument using computerized scientific notation.
+ *
      * <p>
      * This is a numeric format with an upper-case variant.
      */
@@ -109,6 +120,7 @@ public enum FormatChar {
 
     /**
      * Formats the argument using general scientific notation.
+ *
      * <p>
      * This is a numeric format with an upper-case variant.
      */
@@ -118,6 +130,7 @@ public enum FormatChar {
      * Formats the argument using hexadecimal exponential form. This formatting option is primarily
      * useful when debugging issues with the precise bit-wise representation of doubles because no
      * rounding of the value takes place.
+ *
      * <p>
      * This is a numeric format with an upper-case variant.
      */
@@ -178,6 +191,7 @@ public enum FormatChar {
 
     /**
      * Returns the lower-case printf style formatting character.
+ *
      * <p>
      * Note that as this enumeration is not a subset of any other common formatting syntax, it is
      * not

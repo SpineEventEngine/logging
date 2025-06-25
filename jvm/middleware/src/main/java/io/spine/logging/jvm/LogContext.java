@@ -387,6 +387,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      *
      * @param level
      *         the log level for this log statement.
+ *
      * @param isForced
      *         whether to force this log statement (see {@link #wasForced()} for details).
      */
@@ -406,8 +407,10 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      *
      * @param level
      *         the log level for this log statement.
+ *
      * @param isForced
      *         whether to force this log statement (see {@link #wasForced()} for details).
+ *
      * @param timestampNanos
      *         the nanosecond timestamp for this log statement.
      */
@@ -524,6 +527,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      *
      * @param key
      *         the metadata key (see {@link LogData}).
+ *
      * @param value
      *         the metadata value.
      */
@@ -628,6 +632,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      *
      * @param logSiteKey
      *         used to lookup persistent, per log statement, state.
+ *
      * @return true if logging should be attempted (usually based on rate limiter state).
      */
     protected boolean postProcess(@Nullable LogSiteKey logSiteKey) {
@@ -703,6 +708,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      *
      * @param status
      *         a rate limiting status, or {@code null} if the rate limiter was not active.
+ *
      * @return whether logging will occur based on the current combined state of
      *         active rate limiters.
      */

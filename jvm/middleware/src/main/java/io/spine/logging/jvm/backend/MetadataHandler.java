@@ -47,6 +47,7 @@ import static io.spine.logging.jvm.util.Checks.checkNotNull;
  *
  * @param <C>
  *         the arbitrary context type.
+ *
  * @see <a
  *         href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/MetadataHandler.java">
  *         Original Java code of Google Flogger</a>
@@ -61,10 +62,13 @@ public abstract class MetadataHandler<C> {
      *
      * @param key
      *         the metadata key (not necessarily a "singleton" key).
+ *
      * @param value
      *         associated metadata value.
+ *
      * @param context
      *         an arbitrary context object supplied to the process method.
+ *
      * @param <T>
      *         the key/value type.
      */
@@ -77,11 +81,14 @@ public abstract class MetadataHandler<C> {
      *
      * @param key
      *         the repeatable metadata key.
+ *
      * @param values
      *         a lightweight iterator over all values associated with the key. Note that this
      *         instance is read-only and must not be held beyond the scope of this callback.
+ *
      * @param context
      *         an arbitrary context object supplied to the process method.
+ *
      * @param <T>
      *         the key/value type.
      */
@@ -112,6 +119,7 @@ public abstract class MetadataHandler<C> {
      *
      * @param defaultHandler
      *         the default handler for unknown keys/values.
+ *
      * @param <C>
      *         the context type.
      */
@@ -124,6 +132,7 @@ public abstract class MetadataHandler<C> {
      *
      * @param <T>
      *         the key/value type.
+ *
      * @param <C>
      *         the type of the context passed to the callbacks.
      */
@@ -134,8 +143,10 @@ public abstract class MetadataHandler<C> {
          *
          * @param key
          *         the metadata key (not necessarily a "singleton" key).
+ *
          * @param value
          *         associated metadata value.
+ *
          * @param context
          *         an arbitrary context object supplied to the process method.
          */
@@ -147,6 +158,7 @@ public abstract class MetadataHandler<C> {
      *
      * @param <T>
      *         the key/value type.
+ *
      * @param <C>
      *         the type of the context passed to the callbacks.
      */
@@ -158,9 +170,11 @@ public abstract class MetadataHandler<C> {
          * @param key
          *         the repeatable metadata key for which this handler was registered, or an unknown
          *         key if this is the default handler.
+ *
          * @param values
          *         a lightweight iterator over all values associated with the key. Note that this
          *         instance is read-only and must not be held beyond the scope of this callback.
+ *
          * @param context
          *         an arbitrary context object supplied to the process method.
          */
@@ -208,6 +222,7 @@ public abstract class MetadataHandler<C> {
          *
          * @param defaultHandler
          *         the default handler for unknown repeated keys/values.
+ *
          * @return the builder instance for chaining.
          */
         @CanIgnoreReturnValue
@@ -223,10 +238,13 @@ public abstract class MetadataHandler<C> {
          *
          * @param key
          *         the key for which the handler should be invoked (can be a repeated key).
+ *
          * @param handler
          *         the value handler to be invoked for every value associated with the key.
+ *
          * @param <T>
          *         the key/value type.
+ *
          * @return the builder instance for chaining.
          */
         @CanIgnoreReturnValue
@@ -245,10 +263,13 @@ public abstract class MetadataHandler<C> {
          *
          * @param key
          *         the repeated key for which the handler should be invoked.
+ *
          * @param handler
          *         the repeated value handler to be invoked once for all associated values.
+ *
          * @param <T>
          *         the key/value type.
+ *
          * @return the builder instance for chaining.
          */
         @CanIgnoreReturnValue
@@ -267,8 +288,10 @@ public abstract class MetadataHandler<C> {
          *
          * @param key
          *         a key to ignore in the builder.
+ *
          * @param rest
          *         additional keys to ignore in the builder.
+ *
          * @return the builder instance for chaining.
          */
         @CanIgnoreReturnValue
@@ -285,6 +308,7 @@ public abstract class MetadataHandler<C> {
          *
          * @param keys
          *         the keys to ignore in the builder.
+ *
          * @return the builder instance for chaining.
          */
         @CanIgnoreReturnValue
@@ -313,8 +337,10 @@ public abstract class MetadataHandler<C> {
          *
          * @param key
          *         a key to remove from the builder.
+ *
          * @param rest
          *         additional keys to remove from the builder.
+ *
          * @return the builder instance for chaining.
          */
         @CanIgnoreReturnValue

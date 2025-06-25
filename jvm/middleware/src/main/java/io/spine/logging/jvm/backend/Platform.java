@@ -194,6 +194,7 @@ public abstract class Platform {
          *
          * @param loggerClass
          *         the class containing the log() methods whose caller we need to find.
+ *
          * @return the name of the class that called the specified logger.
          * @throws IllegalStateException
          *         if there was no caller of the specified logged passed on the
@@ -208,9 +209,11 @@ public abstract class Platform {
          *
          * @param loggerApi
          *         the class containing the log() methods whose caller we need to find.
+ *
          * @param stackFramesToSkip
          *         the number of method calls which exist on the stack between the
          *         {@code log()} method and the point at which this method is invoked.
+ *
          * @return A log site inferred from the stack, or {@link JvmLogSite#INVALID} if no log site
          *         can be determined.
          */
@@ -270,8 +273,10 @@ public abstract class Platform {
      *
      * @param loggerName
      *         the fully qualified logger name (e.g. "com.example.SomeClass")
+ *
      * @param level
      *         the level of the log statement being invoked
+ *
      * @param isEnabled
      *         whether the logger is enabled at the given level (i.e., the result of calling
      *         {@code isLoggable()} on the backend instance)
@@ -293,6 +298,7 @@ public abstract class Platform {
      *
      * @param loggerName
      *         the name of the logger
+ *
      * @return the custom level or {@code null}
      */
     public static @Nullable Level getMappedLevel(String loggerName) {

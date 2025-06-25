@@ -254,6 +254,7 @@ public abstract class LogPerBucketingStrategy<T> {
      *
      * @param key
      *         a non-null key from a potentially unbounded set of log aggregation keys.
+ *
      * @return an immutable value from some known bounded set, which will be held persistently by
      *         internal Flogger data structures as part of the log aggregation feature. If
      *         {@code null} is

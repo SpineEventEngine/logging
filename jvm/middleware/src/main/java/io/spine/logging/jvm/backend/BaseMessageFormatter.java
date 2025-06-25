@@ -66,8 +66,10 @@ public class BaseMessageFormatter extends MessageBuilder<StringBuilder>
      *
      * @param data
      *         the log data with the message to be appended.
+ *
      * @param out
      *         a buffer to append to.
+ *
      * @return the given buffer (for method chaining).
      */
     @CanIgnoreReturnValue

@@ -61,12 +61,16 @@ public final class ParseException extends RuntimeException {
      *
      * @param errorMessage
      *         the user error message.
+ *
      * @param logMessage
      *         the original log message.
+ *
      * @param start
      *         the index of the first character in the invalid section of the log message.
+ *
      * @param end
      *         the index after the last character in the invalid section of the log message.
+ *
      * @return the parser exception.
      */
     public static ParseException withBounds(
@@ -79,10 +83,13 @@ public final class ParseException extends RuntimeException {
      *
      * @param errorMessage
      *         the user error message.
+ *
      * @param logMessage
      *         the original log message.
+ *
      * @param position
      *         the index of the invalid character in the log message.
+ *
      * @return the parser exception.
      */
     public static ParseException atPosition(String errorMessage, String logMessage, int position) {
@@ -95,10 +102,13 @@ public final class ParseException extends RuntimeException {
      *
      * @param errorMessage
      *         the user error message.
+ *
      * @param logMessage
      *         the original log message.
+ *
      * @param start
      *         the index of the first character in the invalid section of the log message.
+ *
      * @return the parser exception.
      */
     public static ParseException withStartPosition(

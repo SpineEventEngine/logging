@@ -170,10 +170,13 @@ public final class FormatOptions {
      *
      * @param message
      *         the original log message in which the formatting options have been identified.
+ *
      * @param pos
      *         the index of the first character to parse.
+ *
      * @param end
      *         the index after the last character to be parsed.
+ *
      * @return the parsed options instance.
      * @throws ParseException
      *         if the specified sub-sequence of the string could not be parsed.
@@ -293,8 +296,10 @@ public final class FormatOptions {
      * @param allowedFlags
      *         A mask of flag values to be retained in the returned instance. Use
      *         {@link #ALL_FLAGS} to retain all flag values, or {@code 0} to suppress all flags.
+ *
      * @param allowWidth
      *         specifies whether to include width in the returned instance.
+ *
      * @param allowPrecision
      *         specifies whether to include precision in the returned instance.
      */
@@ -348,6 +353,7 @@ public final class FormatOptions {
     /**
      * Validates these options according to the allowed criteria and checks for inconsistencies in
      * flag values.
+ *
      * <p>
      * Note that there is not requirement for options used internally in custom message parsers to
      * be
@@ -357,8 +363,10 @@ public final class FormatOptions {
      * @param allowedFlags
      *         a bit mask specifying a subset of the printf flags that are allowed for
      *         these options.
+ *
      * @param allowPrecision
      *         true if these options are allowed to have a precision value specified.
+ *
      * @return true if these options are valid given the specified constraints.
      */
     public boolean validate(int allowedFlags, boolean allowPrecision) {
@@ -399,6 +407,7 @@ public final class FormatOptions {
     /**
      * Validates these options as if they were being applied to the given {@link FormatChar} and
      * checks for inconsistencies in flag values.
+ *
      * <p>
      * Note that there is not requirement for options used internally in custom message parsers to
      * be
@@ -408,6 +417,7 @@ public final class FormatOptions {
      *
      * @param formatChar
      *         the formatting rule to check these options against.
+ *
      * @return true if these options are valid for the given format.
      */
     public boolean areValidFor(FormatChar formatChar) {
@@ -426,6 +436,7 @@ public final class FormatOptions {
 
     /**
      * Corresponds to printf flag '-' (incompatible with '0').
+ *
      * <p>
      * Logging backends may ignore this flag, though it does provide some visual clarity when
      * aligning
@@ -437,6 +448,7 @@ public final class FormatOptions {
 
     /**
      * Corresponds to printf flag '#'.
+ *
      * <p>
      * Logging backends should honor this flag for hex or octal, as it is a common way to avoid
      * ambiguity when formatting non-decimal values.
@@ -447,6 +459,7 @@ public final class FormatOptions {
 
     /**
      * Corresponds to printf flag '0'.
+ *
      * <p>
      * Logging backends should honor this flag, as it is very commonly used to format hexadecimal or
      * octal values to allow specific bit values to be calculated.
@@ -457,6 +470,7 @@ public final class FormatOptions {
 
     /**
      * Corresponds to printf flag '+'.
+ *
      * <p>
      * Logging backends are free to ignore this flag, though it does provide some visual clarity
      * when
@@ -468,6 +482,7 @@ public final class FormatOptions {
 
     /**
      * Corresponds to printf flag ' '.
+ *
      * <p>
      * Logging backends are free to ignore this flag, though if they choose to support
      * {@link #shouldPrefixPlusForPositiveValues()} then it is advisable to support this as well.
@@ -478,6 +493,7 @@ public final class FormatOptions {
 
     /**
      * Corresponds to printf flag ','.
+ *
      * <p>
      * Logging backends are free to select the locale in which the formatting will occur or ignore
      * this flag altogether.
@@ -488,6 +504,7 @@ public final class FormatOptions {
 
     /**
      * Corresponds to formatting with an upper-case format character.
+ *
      * <p>
      * Logging backends are free to ignore this flag.
      */

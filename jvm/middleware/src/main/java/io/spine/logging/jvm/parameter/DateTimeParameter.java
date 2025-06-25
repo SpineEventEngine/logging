@@ -30,6 +30,7 @@ import io.spine.logging.jvm.backend.FormatOptions;
 
 /**
  * A parameter for formatting date/time arguments.
+ *
  * <p>
  * This class is immutable and thread safe, as per the Parameter contract.
  *

@@ -30,10 +30,12 @@ import io.spine.logging.jvm.backend.FormatOptions;
 
 /**
  * An abstract representation of a parameter for a message template.
+ *
  * <p>
  * Note that this is implemented as a class (rather than via an interface) because it is very
  * helpful to have explicit checks for the index values and count to ensure we can calculate
  * reliable low bounds for the number of arguments a template can accept.
+ *
  * <p>
  * Note that all subclasses of Parameter must be immutable and thread safe.
  *
@@ -51,6 +53,7 @@ public abstract class Parameter {
      *
      * @param options
      *         the format options for this parameter.
+ *
      * @param index
      *         the index of the argument processed by this parameter.
      */

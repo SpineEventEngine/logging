@@ -103,8 +103,10 @@ public abstract class MetadataProcessor {
      *
      * @param scopeMetadata
      *         Metadata for the current scope (i.e., from {@code ScopedLoggingContext})
+ *
      * @param logMetadata
      *         Metadata extracted from the current log statement (i.e., from {@code LogData})
+ *
      * @return a processor to handle a unified view of the data
      */
     public static MetadataProcessor forScopeAndLogSite(Metadata scopeMetadata,
@@ -159,6 +161,7 @@ public abstract class MetadataProcessor {
      *
      * @param handler
      *         the metadata handler to be called back
+ *
      * @param context
      *         arbitrary context instance to be passed into each callback.
      */

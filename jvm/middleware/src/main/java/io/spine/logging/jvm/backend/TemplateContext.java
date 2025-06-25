@@ -34,6 +34,7 @@ import io.spine.logging.jvm.parser.MessageParser;
  * A context object for templates that allows caches to validate existing templates or create new
  * ones. If two template contexts are equal (via {@link #equals}) then the templates they produce
  * are interchangeable.
+ *
  * <p>
  * Template contexts are created by the frontend and passed through to backend implementations via
  * the {@link LogData} interface.

@@ -43,11 +43,13 @@ public abstract class MessageParser {
 
   /**
    * Abstract parse method implemented by specific subclasses to modify parsing behavior.
+ *
    * <p>
    * Note that when extending parsing behavior, it is expected that specific parsers such as
    * {@link DefaultPrintfMessageParser} or {@link DefaultBraceStyleMessageParser} will be
    * sub-classed. Extending this class directly is only necessary when an entirely new type of
    * format needs to be supported (which should be extremely rare).
+ *
    * <p>
    * Implementations of this method are required to invoke the
    * {@link MessageBuilder#addParameterImpl} method of the supplied builder once for each
