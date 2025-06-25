@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ internal class ModuleDependency(
     val project: Project,
     val configuration: Configuration,
     private val dependency: Dependency,
-    private val factualVersion: String = dependency.version!!
+    private val factualVersion: String? = dependency.version
 
 ) : Dependency by dependency, Comparable<ModuleDependency> {
 
@@ -52,7 +52,7 @@ internal class ModuleDependency(
             .thenBy { it.factualVersion }
     }
 
-    override fun getVersion(): String = factualVersion
+    override fun getVersion(): String? = factualVersion
 
     /**
      * A project dependency with its [scope][DependencyScope].

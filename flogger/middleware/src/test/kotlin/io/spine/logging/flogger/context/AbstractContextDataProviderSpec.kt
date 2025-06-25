@@ -1,11 +1,11 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -45,11 +45,17 @@ import io.spine.logging.flogger.backend.given.shouldUniquelyContain
 import io.spine.logging.flogger.given.ConfigurableLogger
 import io.spine.logging.flogger.repeatedKey
 import io.spine.logging.flogger.singleKey
-import java.util.logging.Level as JLevel
+import io.spine.logging.toJavaLogging
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+
+/* These types clash with simple class names in this package. */
+import io.spine.logging.Level as TLevel
+import io.spine.logging.context.LogLevelMap as TLogLevelMap
+import io.spine.logging.context.ScopedLoggingContext as TScopedLoggingContext
+import java.util.logging.Level as JLevel
 
 private typealias LoggerName = String
 
@@ -390,11 +396,11 @@ abstract class AbstractContextDataProviderSpec {
     @Test
     fun `obtain custom log level set via a log level map`() {
         val loggerName = this::class.java.name
-        val level = io.spine.logging.Level.DEBUG
-        val map = io.spine.logging.context.LogLevelMap.create(mapOf(loggerName to level))
-        io.spine.logging.context.ScopedLoggingContext.newContext().withLogLevelMap(map).execute {
+        val level = TLevel.DEBUG
+        val map = TLogLevelMap.create(mapOf(loggerName to level))
+        TScopedLoggingContext.newContext().withLogLevelMap(map).execute {
             val customLevel = Platform.getMappedLevel(loggerName)
-            customLevel shouldBe level
+            customLevel shouldBe level.toJavaLogging()
         }
     }
 }

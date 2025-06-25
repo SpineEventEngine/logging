@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,16 +26,30 @@
 
 package io.spine.dependency.lib
 
+import io.spine.dependency.Dependency
+import io.spine.dependency.DependencyWithBom
+
 // https://github.com/JetBrains/kotlin
 // https://github.com/Kotlin
-@Suppress("unused", "ConstPropertyName")
-object Kotlin {
+@Suppress("unused")
+object Kotlin : DependencyWithBom() {
 
     /**
-     * When changing the version, also change the version used in the `buildSrc/build.gradle.kts`.
+     * This is the version of Kotlin we use for writing code which does not
+     * depend on Gradle and the version of embedded Kotlin.
      */
     @Suppress("MemberVisibilityCanBePrivate") // used directly from the outside.
-    const val version = "1.9.23"
+    const val runtimeVersion = "2.1.21"
+
+    override val version = runtimeVersion
+    override val group = "org.jetbrains.kotlin"
+    override val bom = "$group:kotlin-bom:$runtimeVersion"
+
+    /**
+     * This is the version of
+     * [Kotlin embedded into Gradle](https://docs.gradle.org/current/userguide/compatibility.html#kotlin).
+     */
+    const val embeddedVersion = "2.1.21"
 
     /**
      * The version of the JetBrains annotations library, which is a transitive
@@ -43,24 +57,64 @@ object Kotlin {
      *
      * @see <a href="https://github.com/JetBrains/java-annotations">Java Annotations</a>
      */
-    private const val annotationsVersion = "24.0.1"
+    private const val annotationsVersion = "26.0.2"
 
-    private const val group = "org.jetbrains.kotlin"
+    val scriptRuntime = "$group:kotlin-script-runtime:$runtimeVersion"
 
-    const val stdLib       = "$group:kotlin-stdlib:$version"
-    const val stdLibCommon = "$group:kotlin-stdlib-common:$version"
+    object StdLib : Dependency() {
+        override val version = runtimeVersion
+        override val group = Kotlin.group
 
-    @Deprecated("Please use `stdLib` instead.")
-    const val stdLibJdk7   = "$group:kotlin-stdlib-jdk7:$version"
+        private const val infix = "kotlin-stdlib"
+        val itself = "$group:$infix"
+        val common = "$group:$infix-common"
+        val jdk7 = "$group:$infix-jdk7"
+        val jdk8 = "$group:$infix-jdk8"
 
-    @Deprecated("Please use `stdLib` instead.")
-    const val stdLibJdk8   = "$group:kotlin-stdlib-jdk8:$version"
+        override val modules = listOf(itself, common, jdk7, jdk8)
+    }
 
-    const val reflect    = "$group:kotlin-reflect:$version"
-    const val testJUnit5 = "$group:kotlin-test-junit5:$version"
+    @Deprecated("Please use `StdLib.itself` instead.", ReplaceWith("StdLib.itself"))
+    val stdLib       = StdLib.itself
 
-    const val gradlePluginApi = "$group:kotlin-gradle-plugin-api:$version"
-    const val gradlePluginLib = "$group:kotlin-gradle-plugin:$version"
+    @Deprecated("Please use `StdLib.common` instead.", ReplaceWith("StdLib.common"))
+    val stdLibCommon = StdLib.common
+
+    @Deprecated("Please use `StdLib.jdk7` instead.", ReplaceWith("StdLib.jdk7"))
+    val stdLibJdk7   = StdLib.jdk7
+
+    @Deprecated("Please use `StdLib.jdk8` instead.")
+    val stdLibJdk8   = StdLib.jdk8
+
+    val toolingCore = "$group:kotlin-tooling-core"
+    val reflect    = "$group:kotlin-reflect"
+    val testJUnit5 = "$group:kotlin-test-junit5"
+
+    /**
+     * The modules our interest that do not belong to [StdLib].
+     */
+    override val modules = listOf(reflect, testJUnit5)
+
+    @Deprecated(message = "Please use `GradlePlugin.api` instead.", ReplaceWith("GradlePlugin.api"))
+    val gradlePluginApi = "$group:kotlin-gradle-plugin-api"
+
+    @Deprecated(message = "Please use `GradlePlugin.lib` instead.", ReplaceWith("GradlePlugin.lib"))
+    val gradlePluginLib = "$group:kotlin-gradle-plugin"
 
     const val jetbrainsAnnotations = "org.jetbrains:annotations:$annotationsVersion"
+
+    object Compiler {
+        val embeddable = "$group:kotlin-compiler-embeddable:$embeddedVersion"
+    }
+
+    object GradlePlugin : Dependency() {
+        override val version = runtimeVersion
+        override val group = Kotlin.group
+
+        val api = "$group:kotlin-gradle-plugin-api:$version"
+        val lib = "$group:kotlin-gradle-plugin:$version"
+        val model = "$group:kotlin-gradle-model:$version"
+
+        override val modules = listOf(api, lib, model)
+    }
 }

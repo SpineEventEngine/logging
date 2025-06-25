@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -100,7 +100,7 @@ open class RunGradle : DefaultTask() {
     }
 
     @TaskAction
-    private fun execute() {
+    public fun execute() {
         // Ensure build error output log.
         // Since we're executing this task in another process, we redirect error output to
         // the file under the `_out` directory. Using the `build` directory for this purpose

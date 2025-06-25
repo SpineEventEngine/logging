@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,18 +24,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.dependency.local.Spine
-import io.spine.gradle.publish.IncrementGuard
+@file:Suppress("unused") // source set accessed via `by getting`.
+
+import io.spine.dependency.local.Reflect
 import io.spine.gradle.publish.SpinePublishing
 import io.spine.gradle.publish.spinePublishing
 
 plugins {
     `kmp-module`
     `kmp-publish`
-}
-
-apply {
-    plugin<IncrementGuard>()
 }
 
 // This module configures `spinePublishing` on its own to change a prefix
@@ -52,7 +49,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(Spine.reflect)
+                implementation(Reflect.lib)
             }
         }
         val jvmMain by getting {

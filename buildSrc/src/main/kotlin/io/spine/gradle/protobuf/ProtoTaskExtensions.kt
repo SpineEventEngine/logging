@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,28 +24,36 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+@file:Suppress("unused", "UnusedReceiverParameter") /* Extensions declared in this file
+ are used in the modules that build proto files without using the Spine Compiler. */
+
 package io.spine.gradle.protobuf
 
 import com.google.protobuf.gradle.GenerateProtoTask
+import com.google.protobuf.gradle.ProtobufExtension
 import io.spine.gradle.sourceSets
 import java.io.File
 import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
 import java.nio.file.StandardOpenOption.TRUNCATE_EXISTING
+import kotlin.io.path.Path
 import org.gradle.api.Project
 import org.gradle.api.file.SourceDirectorySet
 import org.gradle.api.tasks.SourceSet
 import org.gradle.kotlin.dsl.get
+import org.gradle.kotlin.dsl.getByType
 import org.gradle.plugins.ide.idea.GenerateIdeaModule
 import org.gradle.plugins.ide.idea.model.IdeaModel
 import org.gradle.plugins.ide.idea.model.IdeaModule
-import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 import titleCaseFirstChar
 
 /**
- * Obtains the name of the `generated` directory under the project root directory.
+ * Obtains the path of the `generated` directory under the project root directory.
  */
-private val Project.generatedDir: String
-    get() = "${projectDir}/generated"
+private val Project.generatedDir: Path
+    get() = projectDir.resolve("generated").toPath()
 
 /**
  * Obtains the `generated` directory for the source set of the task.
@@ -58,14 +66,14 @@ private fun GenerateProtoTask.generatedDir(language: String = ""): File {
 }
 
 /**
- * Configures protobuf code generation task for the code which cannot use Spine Model Compiler
- * (e.g. the `base` project).
+ * Configures a [GenerateProtoTask] for the code which cannot use Spine Model Compiler
+ * (e.g., Spine Base or Spine Validation modules).
  *
  * The task configuration consists of the following steps:
  *
  * 1. Adding `"kotlin"` to the list of involved `protoc` builtins.
  *
- * 2. Generation of descriptor set file is turned on for each source set.
+ * 2. Turning on the generation of a descriptor set file for each source set.
  *    These files are placed under the `build/descriptors` directory.
  *
  * 3. Removing source code generated for `com.google` package for both Java and Kotlin.
@@ -78,10 +86,8 @@ private fun GenerateProtoTask.generatedDir(language: String = ""): File {
  * The usage of this extension in a <em>module build file</em> would be:
  * ```
  *  protobuf {
- *      generateProtoTasks {
- *         for (task in all()) {
- *            task.setup()
- *         }
+ *      generateProtoTasks.all().configureEach {
+ *         setup()
  *     }
  * }
  * ```
@@ -103,35 +109,38 @@ private fun GenerateProtoTask.generatedDir(language: String = ""): File {
 fun GenerateProtoTask.setup() {
     builtins.maybeCreate("kotlin")
     setupDescriptorSetFileCreation()
+    doFirst {
+        excludeProtocOutput()
+    }
     doLast {
         copyGeneratedFiles()
     }
-    excludeProtocOutput()
     setupKotlinCompile()
     dependOnProcessResourcesTask()
-    configureIdeaDirs()
+    makeDirsForIdeaModule()
 }
 
 /**
  * Tell `protoc` to generate descriptor set files under the project build dir.
  *
  * The name of the descriptor set file to be generated
- * is made to be unique per project's Maven coordinates.
+ * is made to be unique via the project's Maven coordinates.
  *
  * As the last step of this task, writes a `desc.ref` file
  * for the contextual source set, pointing to the generated descriptor set file.
- * This is needed in order to allow other Spine libraries
- * to locate and load the generated descriptor set files properly.
+ * This is needed to allow other Spine libraries to locate and load the generated
+ * descriptor set files properly.
  *
- * Such a job is usually performed by Spine McJava plugin,
+ * Such a job is usually performed by Spine McJava plugin;
  * however, it is not possible to use this plugin (or its code)
  * in this repository due to cyclic dependencies.
  */
 @Suppress(
-    "TooGenericExceptionCaught" /* Handling all file-writing failures in the same way.*/)
-private fun GenerateProtoTask.setupDescriptorSetFileCreation() {
-    // Tell `protoc` generate descriptor set file.
-    // The name of the generated file reflects project's Maven coordinates.
+    "TooGenericExceptionCaught" /* Handling all file-writing failures in the same way.*/
+)
+fun GenerateProtoTask.setupDescriptorSetFileCreation() {
+    // Tell `protoc` generate a descriptor set file.
+    // The name of the generated file reflects the Maven coordinates of the project.
     val ssn = sourceSet.name
     generateDescriptorSet = true
     val buildDir = project.layout.buildDirectory.asFile.get().path
@@ -143,7 +152,7 @@ private fun GenerateProtoTask.setupDescriptorSetFileCreation() {
         includeSourceInfo = true
     }
 
-    // Make the descriptor set file included into the resources.
+    // Add the descriptor set file into the resources.
     project.sourceSets.named(ssn) {
         resources.srcDirs(descriptorsDir)
     }
@@ -167,7 +176,7 @@ private fun GenerateProtoTask.setupDescriptorSetFileCreation() {
  * reflecting the Maven coordinates of Gradle artifact, and the source set
  * for which the descriptor set name is to be generated.
  *
- * The returned value is just a file name, and does not contain a file path.
+ * The returned value is just a file name and does not contain a file path.
  */
 private fun Project.descriptorSetName(sourceSet: SourceSet) =
     arrayOf(
@@ -220,7 +229,7 @@ private fun GenerateProtoTask.deleteComGoogle(language: String) {
  * Exclude [GenerateProtoTask.outputBaseDir] from Java source set directories to avoid
  * duplicated source code files.
  */
-private fun GenerateProtoTask.excludeProtocOutput() {
+fun GenerateProtoTask.excludeProtocOutput() {
     val protocOutputDir = File(outputBaseDir).parentFile
     val java: SourceDirectorySet = sourceSet.java
 
@@ -228,6 +237,8 @@ private fun GenerateProtoTask.excludeProtocOutput() {
     val newSourceDirectories = java.sourceDirectories
         .filter { !it.residesIn(protocOutputDir) }
         .toSet()
+    // Make sure we start from scratch.
+    // Not doing this failed the following, real, assignment sometimes.
     java.setSrcDirs(listOf<String>())
     java.srcDirs(newSourceDirectories)
 
@@ -239,8 +250,8 @@ private fun GenerateProtoTask.excludeProtocOutput() {
 /**
  * Make sure Kotlin compilation explicitly depends on this `GenerateProtoTask` to avoid racing.
  */
-private fun GenerateProtoTask.setupKotlinCompile() {
-    val kotlinCompile = project.kotlinCompileFor(sourceSet)
+fun GenerateProtoTask.setupKotlinCompile() {
+    val kotlinCompile = project.kotlinCompilationTaskFor(sourceSet)
     kotlinCompile?.dependsOn(this)
 }
 
@@ -253,7 +264,7 @@ private fun GenerateProtoTask.setupKotlinCompile() {
  *     by Gradle during the build because Protobuf Gradle Plugin does not set
  *     dependencies between `generateProto` and `processResources` tasks.
  */
-private fun GenerateProtoTask.dependOnProcessResourcesTask() {
+fun GenerateProtoTask.dependOnProcessResourcesTask() {
     val processResources = processResourceTaskName(sourceSet.name)
     project.tasks[processResources].dependsOn(this)
 }
@@ -268,78 +279,167 @@ private fun processResourceTaskName(sourceSetName: String): String {
     return "process${infix}Resources"
 }
 
-/**
- * Attempts to obtain the Kotlin compilation Gradle task for the given source set.
- *
- * Typically, the task is named by a pattern: `compile<SourceSet name>Kotlin`, or just
- * `compileKotlin` if the source set name is `"main"`. If the task does not fit this described
- * pattern, this method will not find it.
- */
-private fun Project.kotlinCompileFor(sourceSet: SourceSet): KotlinCompile<*>? {
+private fun Project.kotlinCompilationTaskFor(sourceSet: SourceSet): KotlinCompilationTask<*>? {
     val taskName = sourceSet.getCompileTaskName("Kotlin")
-    return tasks.findByName(taskName) as KotlinCompile<*>?
+    return tasks.named(taskName, KotlinCompilationTask::class.java).orNull
 }
 
 private fun File.residesIn(directory: File): Boolean =
     canonicalFile.startsWith(directory.absolutePath)
 
-private fun GenerateProtoTask.configureIdeaDirs() = project.plugins.withId("idea") {
-    val module = project.extensions.findByType(IdeaModel::class.java)!!.module
-
-    // Make IDEA forget about sources under `outputBaseDir`.
-    val protocOutputDir = File(outputBaseDir).parentFile
-    module.generatedSourceDirs.removeIf { dir ->
-        dir.residesIn(protocOutputDir)
-    }
-
-    module.sourceDirs.removeIf { dir ->
-        dir.residesIn(protocOutputDir)
-    }
-
-    val javaDir = generatedDir("java")
-    val kotlinDir = generatedDir("kotlin")
-
-    // As advised by `Utils.groovy` from Protobuf Gradle plugin:
-    // This is required because the IntelliJ IDEA plugin does not allow adding source directories
-    // that do not exist. The IntelliJ IDEA config files should be valid from the start even if
-    // a user runs './gradlew idea' before running './gradlew generateProto'.
-    project.tasks.withType(GenerateIdeaModule::class.java).forEach {
-        it.doFirst {
-            javaDir.mkdirs()
-            kotlinDir.mkdirs()
+/**
+ * Ensures that generated directories for Java and Kotlin are created before [GenerateIdeaModule].
+ *
+ * This works as advised by `Utils.groovy` from Protobuf Gradle plugin:
+ * ```
+ * This is required because the IntelliJ IDEA plugin does not allow adding source directories
+ * that do not exist. The IntelliJ IDEA config files should be valid from the start even if
+ * a user runs './gradlew idea' before running './gradlew generateProto'.
+ * ```
+ */
+fun GenerateProtoTask.makeDirsForIdeaModule() {
+    project.plugins.withId("idea") {
+        val javaDir = generatedDir("java")
+        val kotlinDir = generatedDir("kotlin")
+        project.tasks.withType(GenerateIdeaModule::class.java).forEach {
+            it.doFirst {
+                javaDir.mkdirs()
+                kotlinDir.mkdirs()
+            }
         }
-    }
-
-    if (isTest) {
-        module.testSources.run {
-            from(javaDir)
-            from(kotlinDir)
-        }
-    } else {
-        module.sourceDirs.run {
-            add(javaDir)
-            add(kotlinDir)
-        }
-    }
-
-    module.generatedSourceDirs.run {
-        add(javaDir)
-        add(kotlinDir)
     }
 }
 
 /**
  * Prints diagnostic output of `sourceDirs` and `generatedSourceDirs` of an [IdeaModule].
  *
- * The warning `"unused"` is suppressed because this function is not used in
- * the production mode.
+ * To get a handle on [IdeaModule] please use the following code:
+ *
+ * ```kotlin
+ * val module = project.extensions.findByType(IdeaModel::class.java)!!.module
+ * ```
  */
-@Suppress("unused")
-private fun IdeaModule.printSourceDirectories() {
+@Suppress("unused") // To be used when debugging build scripts.
+fun IdeaModule.printSourceDirectories() {
     println("**** [IDEA] Source directories:")
     sourceDirs.forEach { println(it) }
     println()
     println("**** [IDEA] Generated source directories:")
     generatedSourceDirs.forEach { println(it) }
     println()
+    println("**** [IDEA] Excluded directories:")
+    excludeDirs.forEach { println(it) }
+}
+
+/**
+ * Obtains the extension of Protobuf Gradle Plugin in the given project.
+ */
+val Project.protobufExtension: ProtobufExtension?
+    get() = extensions.findByType(ProtobufExtension::class.java)
+
+/**
+ * Obtains the directory where the Protobuf Gradle Plugin should place the generated code.
+ *
+ * The directory is fixed to be `$buildDir/generated/source/proto` in versions pre v0.9.5
+ * and cannot be changed by the settings of the plugin.
+ * In the v0.9.5 the path was changed to
+ * [`$buildDir/generated/sources/proto`](https://github.com/google/protobuf-gradle-plugin/releases/tag/v0.9.5).
+ *
+ * Even though [ProtobufExtension] has a property
+ * [generatedFilesBaseDir][ProtobufExtension.getGeneratedFilesBaseDir], which is supposed
+ * to be used for this purpose, it is declared with `@PackageScope` (again in earlier versions)
+ * and thus cannot be accessed from outside the plugin.
+ * The Protobuf Gradle Plugin (at v0.9.2) does not modify the value of the property either.
+ * Therefore, we try getting the path using the newer version API and resort to the "legacy"
+ * convention if the call fails.
+ */
+val Project.generatedSourceProtoDir: Path
+    get() {
+        val legacyPath = layout.buildDirectory.dir("generated/source/proto").get().asFile.toPath()
+        protobufExtension?.let {
+            return try {
+                it.generatedFilesBaseDir.let { Path(it) }
+            } catch (_: Throwable) {
+                // Probably we're running on an older version of the Protobuf Gradle Plugin
+                // which has `package-access` for the `getGeneratedFilesDir()` method.
+                legacyPath
+            }
+        }
+        return legacyPath
+    }
+
+/**
+ * Ensures that the sources generated by Protobuf Gradle Plugin
+ * are not included in the IDEA project.
+ *
+ * IDEA should only see the sources generated by ProtoData as
+ * we define in [GenerateProtoTask.excludeProtocOutput].
+ */
+@Suppress("unused")
+fun Project.configureIdea() {
+
+    fun filterSources(sources: Set<File>, excludeDir: File): Set<File> =
+        sources.filter { !it.residesIn(excludeDir) }.toSet()
+
+    pluginManager.withPlugin("idea") {
+        val idea = extensions.getByType<IdeaModel>()
+        with(idea.module) {
+            val protocOutput = file(generatedSourceProtoDir)
+            val protocTargets = protocTargets()
+            excludeWithNested(protocOutput.toPath(), protocTargets)
+            sourceDirs = filterSources(sourceDirs, protocOutput)
+            testSources.filter { !it.residesIn(protocOutput) }
+            generatedSourceDirs = generatedDir.resolve(protocTargets)
+                .map { it.toFile() }
+                .toSet()
+        }
+    }
+}
+
+/**
+ * Lists target directories for Protobuf code generation.
+ *
+ * The directory names are in the following format:
+ *
+ * `<source-set-name>/<builtIn-or-plugin-name>`
+ */
+private fun Project.protocTargets(): List<Path> {
+    val protobufTasks = tasks.withType(GenerateProtoTask::class.java)
+    val codegenTargets = sequence {
+        protobufTasks.forEach { task ->
+            val sourceSet = task.sourceSet.name
+            val builtins = task.builtins.map { builtin -> builtin.name }
+            val plugins = task.plugins.map { plugin -> plugin.name }
+            val combined = builtins + plugins
+            combined.forEach { subdir ->
+                yield(Paths.get(sourceSet, subdir))
+            }
+        }
+    }
+    return codegenTargets.toList()
+}
+
+private fun Path.resolve(subdirs: Iterable<Path>): List<Path> =
+    subdirs.map {
+        resolve(it)
+    }
+
+/**
+ * Excludes the given directory and its subdirectories from
+ * being seen as ones with the source code.
+ *
+ * The primary use of this extension is to exclude `build/generated/source/proto` and its
+ * subdirectories to avoid duplication of types in the generated code with those in
+ * produced by ProtoData under the `$projectDir/generated/` directory.
+ */
+private fun IdeaModule.excludeWithNested(directory: Path, subdirs: Iterable<Path>) {
+    excludeDirs.add(directory.toFile())
+    directory.resolve(subdirs).forEach {
+        excludeDirs.add(it.toFile())
+    }
+}
+
+@Suppress("unused") // To be used when debugging build scripts.
+private fun printExcluded(dir: Any) {
+    println("  [IDEA] Excluding directory: $dir")
 }

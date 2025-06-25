@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,13 +26,17 @@
 
 import io.spine.dependency.test.JUnit
 import io.spine.dependency.test.Kotest
+import io.spine.dependency.lib.Jackson
+import io.spine.dependency.boms.BomsPlugin
 
 plugins {
     `jvm-module`
 }
+apply<BomsPlugin>()
 
 dependencies {
     implementation(project(":logging"))
     implementation(Kotest.assertions)
-    JUnit.api.forEach { implementation(it) }
+    implementation(enforcedPlatform(Jackson.bom))
+    implementation(JUnit.Jupiter.api)
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import io.spine.dependency.boms.BomsPlugin
 import io.spine.dependency.lib.Log4j2
 import io.spine.gradle.publish.SpinePublishing
 import io.spine.gradle.publish.spinePublishing
@@ -32,6 +33,7 @@ plugins {
     `kmp-module`
     `kmp-publish`
 }
+apply<BomsPlugin>()
 
 group = "io.spine.tools"
 
@@ -48,11 +50,13 @@ spinePublishing {
 
 kotlin {
     sourceSets {
+        @Suppress("unused")
         val commonMain by getting {
             dependencies {
                 implementation(project(":logging"))
             }
         }
+        @Suppress("unused")
         val jvmMain by getting {
             dependencies {
                 implementation(Log4j2.core)

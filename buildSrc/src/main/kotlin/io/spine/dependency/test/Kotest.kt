@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,7 +53,7 @@ object Kotest {
 
     // https://github.com/kotest/kotest-gradle-plugin
     object JvmGradlePlugin {
-        const val version = "0.4.11"
+        const val version = "0.4.10"
         const val id = "io.kotest"
         const val classpath = "$group:kotest-gradle-plugin:$version"
     }

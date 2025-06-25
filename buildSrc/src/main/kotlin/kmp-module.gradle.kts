@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,18 +24,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import io.spine.dependency.boms.BomsPlugin
+import io.spine.dependency.local.Reflect
+import io.spine.dependency.local.TestLib
 import io.spine.dependency.test.JUnit
 import io.spine.dependency.test.Jacoco
 import io.spine.dependency.test.Kotest
-import io.spine.dependency.local.Spine
 import io.spine.gradle.checkstyle.CheckStyleConfig
 import io.spine.gradle.javac.configureJavac
-import io.spine.gradle.javadoc.JavadocConfig
 import io.spine.gradle.kotlin.setFreeCompilerArgs
+import io.spine.gradle.publish.IncrementGuard
 import io.spine.gradle.report.license.LicenseReporter
 import io.spine.gradle.testing.configureLogging
 import io.spine.gradle.testing.registerTestTasks
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 /**
  * Configures this [Project] as a Kotlin Multiplatform module.
@@ -74,6 +75,8 @@ plugins {
     id("org.jetbrains.kotlinx.kover")
     `project-report`
 }
+apply<BomsPlugin>()
+apply<IncrementGuard>()
 
 project.forceConfigurations()
 
@@ -83,7 +86,7 @@ fun Project.forceConfigurations() {
         all {
             resolutionStrategy {
                 force(
-                    Spine.reflect
+                    Reflect.lib
                 )
             }
         }
@@ -104,10 +107,9 @@ kotlin {
 
     // Enables and configures JVM target.
     jvm {
-        withJava()
-        val javaVersion = "${BuildSettings.javaVersion}"
-        compilations.configureEach {
-            kotlinOptions.jvmTarget = javaVersion
+        compilerOptions {
+            jvmTarget.set(BuildSettings.jvmTarget)
+            setFreeCompilerArgs()
         }
     }
 
@@ -125,13 +127,20 @@ kotlin {
         }
         val jvmTest by getting {
             dependencies {
-                implementation(Spine.testlib)
-                implementation(JUnit.runner)
+                implementation(dependencies.enforcedPlatform(JUnit.bom))
+                implementation(TestLib.lib)
+                implementation(JUnit.Jupiter.engine)
                 implementation(Kotest.runnerJUnit5Jvm)
             }
         }
     }
 }
+
+java {
+    sourceCompatibility = BuildSettings.javaVersionCompat
+    targetCompatibility = BuildSettings.javaVersionCompat
+}
+
 
 /**
  * Performs the standard task's configuration.
@@ -147,16 +156,6 @@ kotlin {
 tasks {
     withType<JavaCompile>().configureEach {
         configureJavac()
-    }
-    withType<KotlinCompile>().configureEach {
-        setFreeCompilerArgs()
-    }
-
-    registerTestTasks()
-
-    withType<Test>().configureEach {
-        useJUnitPlatform()
-        configureLogging()
     }
 }
 
@@ -175,8 +174,8 @@ detekt {
 
 kover {
     useJacoco(version = Jacoco.version)
-    koverReport {
-        defaults {
+    reports {
+        total {
             xml {
                 onCheck = true
             }

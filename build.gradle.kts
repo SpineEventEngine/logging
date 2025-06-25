@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,20 +25,21 @@
  */
 
 import io.spine.dependency.build.Dokka
-import io.spine.dependency.test.JUnit
 import io.spine.dependency.lib.Jackson
+import io.spine.dependency.local.Base
 import io.spine.dependency.local.Logging
-import io.spine.dependency.local.Spine
 import io.spine.dependency.local.ToolBase
 import io.spine.dependency.local.Validation
+import io.spine.dependency.test.JUnit
 import io.spine.gradle.publish.PublishingRepos
 import io.spine.gradle.publish.spinePublishing
+import io.spine.gradle.repo.standardToSpineSdk
 import io.spine.gradle.report.coverage.JacocoConfig
 import io.spine.gradle.report.license.LicenseReporter
 import io.spine.gradle.report.pom.PomGenerator
-import io.spine.gradle.standardToSpineSdk
 
 plugins {
+    id("org.jetbrains.dokka")
     idea
     jacoco
     `gradle-doctor`
@@ -71,6 +72,7 @@ spinePublishing {
 }
 
 allprojects {
+    apply(plugin = Dokka.GradlePlugin.id)
     group = "io.spine"
     version = rootProject.extra["versionToPublish"]!!
     repositories.standardToSpineSdk()
@@ -80,13 +82,13 @@ allprojects {
             exclude("io.spine:spine-validate")
             resolutionStrategy {
                 force(
-                    Spine.base,
+                    Base.lib,
                     ToolBase.lib,
                     Logging.lib,
                     Validation.runtime,
                     Dokka.BasePlugin.lib,
-                    Jackson.databind,
-                    JUnit.runner,
+                    Jackson.bom,
+                    JUnit.bom,
                 )
             }
         }
@@ -97,4 +99,10 @@ gradle.projectsEvaluated {
     JacocoConfig.applyTo(project)
     LicenseReporter.mergeAllReports(project)
     PomGenerator.applyTo(project)
+}
+
+dependencies {
+    productionModules.forEach {
+        dokka(it)
+    }
 }

@@ -1,11 +1,11 @@
 /*
- * Copyright 2012, The Flogger Authors; 2023, TeamDev. All rights reserved.
+ * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -30,6 +30,7 @@ import io.spine.logging.flogger.backend.LoggerBackend;
 import io.spine.logging.flogger.backend.Platform;
 import io.spine.logging.flogger.parser.DefaultPrintfMessageParser;
 import io.spine.logging.flogger.parser.MessageParser;
+
 import java.util.logging.Level;
 
 /**
@@ -98,7 +99,7 @@ public final class FluentLogger2 extends AbstractLogger<FluentLogger2.Api> {
   public Api at(Level level) {
     var loggerName = getName();
     var mappedLevel = Platform.getMappedLevel(loggerName);
-    if (io.spine.logging.Level.Companion.getOFF().equals(mappedLevel)) {
+    if (Level.OFF.equals(mappedLevel)) {
       return NO_OP;
     }
     var isLoggable = isLoggable(level);

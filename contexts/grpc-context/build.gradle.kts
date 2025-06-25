@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@ plugins {
 
 dependencies {
     implementation(Grpc.api)
+    implementation(platform(Grpc.bom))
     implementation(project(":middleware"))
     testImplementation(project(":middleware", configuration = "testArtifacts"))
 }

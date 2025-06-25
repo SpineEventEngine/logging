@@ -1,11 +1,11 @@
 /*
- * Copyright 2015, The Flogger Authors; 2023, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -284,7 +284,7 @@ public abstract class AbstractJulRecord extends LogRecord {
     // Not set explicitly normally, but a copy should be safe (even if it's null). We don't copy
     // the sequence number since that's intended to be unique per LogRecord, and resource bundles
     // are not supported.
-    copy.setThreadID(getThreadID());
+    copy.setLongThreadID(getLongThreadID());
     return copy;
   }
 

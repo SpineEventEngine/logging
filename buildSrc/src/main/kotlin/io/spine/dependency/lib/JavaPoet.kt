@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,5 +30,8 @@ package io.spine.dependency.lib
 @Suppress("unused", "ConstPropertyName")
 object JavaPoet {
     private const val version = "1.13.0"
-    const val lib = "com.squareup:javapoet:$version"
+    const val group = "com.squareup"
+    const val artifact = "javapoet"
+    const val module = "$group:$artifact"
+    const val lib = "$module:$version"
 }

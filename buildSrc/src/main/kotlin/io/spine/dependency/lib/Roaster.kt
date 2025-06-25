@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,8 +37,9 @@ object Roaster {
      * [2.29.0.Final](https://github.com/forge/roaster/releases/tag/2.29.0.Final),
      * Roaster requires Java 17.
      */
-    private const val version = "2.28.0.Final"
+    private const val version = "2.29.0.Final"
 
-    const val api = "org.jboss.forge.roaster:roaster-api:$version"
-    const val jdt = "org.jboss.forge.roaster:roaster-jdt:$version"
+    const val group = "org.jboss.forge.roaster"
+    const val api = "$group:roaster-api:$version"
+    const val jdt = "$group:roaster-jdt:$version"
 }
