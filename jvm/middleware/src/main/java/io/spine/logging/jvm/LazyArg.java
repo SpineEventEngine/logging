@@ -24,61 +24,28 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-    }
-}
+package io.spine.logging.jvm;
 
-rootProject.name = "spine-logging"
+import org.jspecify.annotations.Nullable;
 
-include(
-    "logging",
-    "logging-testlib",
-)
-
-includeBackend(
-    "log4j2-backend",
-    "jul-backend",
-    "probe-backend",
-)
-
-includeContext(
-    "grpc-context",
-    "std-context",
-)
-
-includePlatform(
-    "jvm-default-platform"
-)
-
-includeTest(
-    "fixtures",
-    "jvm-jul-backend-std-context",
-    "jvm-jul-backend-grpc-context",
-    "jvm-log4j2-backend-std-context",
-    "jvm-slf4j-jdk14-backend-std-context",
-    "jvm-slf4j-reload4j-backend-std-context",
-    "smoke-test",
-)
-
-includeJvm(
-    "middleware",
-    "platform-generator",
-)
-
-fun includeBackend(vararg modules: String) = includeTo("backends", modules)
-
-fun includeContext(vararg modules: String) = includeTo("contexts", modules)
-
-fun includePlatform(vararg modules: String) = includeTo("platforms", modules)
-
-fun includeTest(vararg modules: String) = includeTo("tests", modules)
-
-fun includeJvm(vararg modules: String) = includeTo("jvm", modules)
-
-fun includeTo(directory: String, modules: Array<out String>) = modules.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("$directory/$name")
+/**
+ * Functional interface for allowing lazily evaluated arguments to be supplied to Flogger. This
+ * allows callers to defer argument evaluation efficiently when:
+ *
+ * <ul>
+ *   <li>Doing "fine" logging that's normally disabled
+ *   <li>Applying rate limiting to log statements
+ * </ul>
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LazyArg.java">
+ *     Original Java code of Google Flogger</a>
+ */
+public interface LazyArg<T> {
+  /**
+   * Computes a value to use as a log argument. This method is invoked once the Flogger library has
+   * determined that logging will occur, and the returned value is used in place of the {@code
+   * LazyArg} instance that was passed into the log statement.
+   */
+  @Nullable
+  T evaluate();
 }

@@ -24,61 +24,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-    }
-}
+package io.spine.logging.jvm;
 
-rootProject.name = "spine-logging"
+/**
+ * A tagging interface to mark implementations that are suitable for use as a key for looking up
+ * per log site persistent state. Normally the class used is just {@link JvmLogSite} but other,
+ * more specific, keys can be used. There are no method requirements on this interface,
+ * but the instance must have correct {@code equals()}, {@code hashCode()} and {@code toString()}
+ * implementations and must be at least as unique as the associated {@code LogSite} (i.e., two keys
+ * created for different log sites must never be equal).
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSiteKey.java">
+ *     Original Java code of Google Flogger</a>
+ */
+public interface LogSiteKey {}
 
-include(
-    "logging",
-    "logging-testlib",
-)
-
-includeBackend(
-    "log4j2-backend",
-    "jul-backend",
-    "probe-backend",
-)
-
-includeContext(
-    "grpc-context",
-    "std-context",
-)
-
-includePlatform(
-    "jvm-default-platform"
-)
-
-includeTest(
-    "fixtures",
-    "jvm-jul-backend-std-context",
-    "jvm-jul-backend-grpc-context",
-    "jvm-log4j2-backend-std-context",
-    "jvm-slf4j-jdk14-backend-std-context",
-    "jvm-slf4j-reload4j-backend-std-context",
-    "smoke-test",
-)
-
-includeJvm(
-    "middleware",
-    "platform-generator",
-)
-
-fun includeBackend(vararg modules: String) = includeTo("backends", modules)
-
-fun includeContext(vararg modules: String) = includeTo("contexts", modules)
-
-fun includePlatform(vararg modules: String) = includeTo("platforms", modules)
-
-fun includeTest(vararg modules: String) = includeTo("tests", modules)
-
-fun includeJvm(vararg modules: String) = includeTo("jvm", modules)
-
-fun includeTo(directory: String, modules: Array<out String>) = modules.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("$directory/$name")
-}

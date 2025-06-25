@@ -24,61 +24,42 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
+package io.spine.logging.jvm.backend.given
+
+import com.google.errorprone.annotations.CanIgnoreReturnValue
+import io.spine.logging.jvm.JvmMetadataKey
+import io.spine.logging.jvm.backend.Metadata
+
+/**
+ * A mutable [Metadata] implementation for testing logging backends
+ * and other log handling code.
+ *
+ * @see <a href="http://rb.gy/h75mb">Original Java code of Google Flogger</a>
+ */
+class FakeMetadata : Metadata() {
+
+    private class KeyValuePair<T>(val key: JvmMetadataKey<T>, val value: T)
+
+    private val entries = mutableListOf<KeyValuePair<*>>()
+
+    /**
+     * Adds a key/value pair to this [Metadata].
+     */
+    @CanIgnoreReturnValue
+    fun <T> add(key: JvmMetadataKey<T>, value: T): FakeMetadata {
+        entries.add(KeyValuePair(key, value))
+        return this
     }
-}
 
-rootProject.name = "spine-logging"
+    override fun size(): Int = entries.size
 
-include(
-    "logging",
-    "logging-testlib",
-)
+    override fun getKey(n: Int): JvmMetadataKey<*> = entries[n].key
 
-includeBackend(
-    "log4j2-backend",
-    "jul-backend",
-    "probe-backend",
-)
+    override fun getValue(n: Int): Any = entries[n].value!!
 
-includeContext(
-    "grpc-context",
-    "std-context",
-)
-
-includePlatform(
-    "jvm-default-platform"
-)
-
-includeTest(
-    "fixtures",
-    "jvm-jul-backend-std-context",
-    "jvm-jul-backend-grpc-context",
-    "jvm-log4j2-backend-std-context",
-    "jvm-slf4j-jdk14-backend-std-context",
-    "jvm-slf4j-reload4j-backend-std-context",
-    "smoke-test",
-)
-
-includeJvm(
-    "middleware",
-    "platform-generator",
-)
-
-fun includeBackend(vararg modules: String) = includeTo("backends", modules)
-
-fun includeContext(vararg modules: String) = includeTo("contexts", modules)
-
-fun includePlatform(vararg modules: String) = includeTo("platforms", modules)
-
-fun includeTest(vararg modules: String) = includeTo("tests", modules)
-
-fun includeJvm(vararg modules: String) = includeTo("jvm", modules)
-
-fun includeTo(directory: String, modules: Array<out String>) = modules.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("$directory/$name")
+    override fun <T : Any?> findValue(key: JvmMetadataKey<T>): T? {
+        val entry = entries.firstOrNull { it.key == key }
+        val casted = key.cast(entry?.value) // It is safe to pass `null` here.
+        return casted
+    }
 }

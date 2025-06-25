@@ -1,0 +1,111 @@
+/*
+ * Copyright 2025, TeamDev. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Redistribution and use in source and/or binary forms, with or without
+ * modification, must retain the above copyright notice and the following
+ * disclaimer.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+package io.spine.logging.jvm.context
+
+import io.spine.logging.jvm.context.LogLevelMap.create
+import io.kotest.matchers.shouldBe
+import java.util.logging.Level
+
+import java.util.logging.Level.FINE
+import java.util.logging.Level.FINER
+import java.util.logging.Level.INFO
+import java.util.logging.Level.WARNING
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+
+/**
+ * Tests for [LogLevelMap].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/context/LogLevelMapTest.java">
+ *     Original Java code of Google Flogger</a>
+ */
+@DisplayName("`LogLevelMap` should")
+internal class LogLevelMapSpec {
+
+    @Test
+    fun `return the default level when given no mapping`() {
+        val levelMap = create(emptyMap(), WARNING)
+        levelMap[""] shouldBe WARNING
+        levelMap["com"] shouldBe WARNING
+        levelMap["com.example"] shouldBe WARNING
+    }
+
+    @Test
+    fun `return level in accordance to a single mapping`() {
+        val levelMap = create(mapOf("com.example" to FINE), WARNING)
+        levelMap[""] shouldBe WARNING
+        levelMap["com"] shouldBe WARNING
+        levelMap["com.example"] shouldBe FINE
+        levelMap["com.example.foo"] shouldBe FINE
+    }
+
+    @Test
+    fun `return level in accordance to a diverse mapping`() {
+        val mapping = mapOf(
+            "com.example.foo" to INFO,
+            "com.example.foobar" to FINE,
+            "com.example.foo.bar" to FINER
+        )
+        val levelMap = create(mapping, WARNING)
+        levelMap[""] shouldBe WARNING
+        levelMap["com"] shouldBe WARNING
+        levelMap["com.example"] shouldBe WARNING
+        levelMap["com.example.foo"] shouldBe INFO
+        levelMap["com.example.foo.foo"] shouldBe INFO
+        levelMap["com.example.foo.foo.foo.foo"] shouldBe INFO
+        levelMap["com.example.foobar"] shouldBe FINE
+        levelMap["com.example.foo.bar"] shouldBe FINER
+    }
+
+    @Test
+    fun `not alter level mapping when the input map changes`() {
+        val mutableMapping = hashMapOf("com.example" to INFO)
+        val levelMap = create(mutableMapping, WARNING)
+        levelMap["com.example.foo"] shouldBe INFO
+
+        // Changing the mutable map has no effect after creating the level map.
+        mutableMapping["com.example.foo"] = FINE
+        levelMap["com.example.foo"] shouldBe INFO
+    }
+
+    @Test
+    fun `provide a builder`() {
+        val levelMap = LogLevelMap.builder()
+            .add(FINE, String::class.java)
+            .add(WARNING, String::class.java.getPackage())
+            .setDefault(INFO)
+            .build()
+        levelMap["com.google"] shouldBe INFO
+        levelMap["java.lang"] shouldBe WARNING
+        levelMap["java.lang.String"] shouldBe FINE
+    }
+}
+
+// For readability.
+private operator fun LogLevelMap.get(logger: String): Level {
+    return getLevel(logger)
+}

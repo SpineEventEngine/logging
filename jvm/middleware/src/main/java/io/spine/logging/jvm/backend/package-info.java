@@ -24,61 +24,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-    }
-}
+/**
+ * Introduces a logging backend and dependent entities.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/package-info.java">
+ *     Original Java code of Google Flogger</a>
+ */
+@CheckReturnValue
+package io.spine.logging.jvm.backend;
 
-rootProject.name = "spine-logging"
-
-include(
-    "logging",
-    "logging-testlib",
-)
-
-includeBackend(
-    "log4j2-backend",
-    "jul-backend",
-    "probe-backend",
-)
-
-includeContext(
-    "grpc-context",
-    "std-context",
-)
-
-includePlatform(
-    "jvm-default-platform"
-)
-
-includeTest(
-    "fixtures",
-    "jvm-jul-backend-std-context",
-    "jvm-jul-backend-grpc-context",
-    "jvm-log4j2-backend-std-context",
-    "jvm-slf4j-jdk14-backend-std-context",
-    "jvm-slf4j-reload4j-backend-std-context",
-    "smoke-test",
-)
-
-includeJvm(
-    "middleware",
-    "platform-generator",
-)
-
-fun includeBackend(vararg modules: String) = includeTo("backends", modules)
-
-fun includeContext(vararg modules: String) = includeTo("contexts", modules)
-
-fun includePlatform(vararg modules: String) = includeTo("platforms", modules)
-
-fun includeTest(vararg modules: String) = includeTo("tests", modules)
-
-fun includeJvm(vararg modules: String) = includeTo("jvm", modules)
-
-fun includeTo(directory: String, modules: Array<out String>) = modules.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("$directory/$name")
-}
+import com.google.errorprone.annotations.CheckReturnValue;

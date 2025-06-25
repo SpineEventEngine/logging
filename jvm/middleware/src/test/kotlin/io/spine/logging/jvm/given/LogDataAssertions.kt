@@ -24,61 +24,42 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
+package io.spine.logging.jvm.given
+
+import io.spine.logging.jvm.backend.LogData
+import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.shouldBe
+
+/**
+ * This file contains Kotest-like assertions for [LogData].
+ */
+
+/**
+ * Asserts that this [LogData] has a given [value] as a literal
+ * or template message.
+ *
+ * The message is literal when it is passed to the logger without
+ * any formatting arguments, otherwise it is part of [LogData.getTemplateContext].
+ */
+internal infix fun LogData.shouldHaveMessage(value: String?) {
+    if (templateContext != null) {
+        templateContext.message shouldBe value
+    } else {
+        literalArgument shouldBe value
     }
 }
 
-rootProject.name = "spine-logging"
-
-include(
-    "logging",
-    "logging-testlib",
-)
-
-includeBackend(
-    "log4j2-backend",
-    "jul-backend",
-    "probe-backend",
-)
-
-includeContext(
-    "grpc-context",
-    "std-context",
-)
-
-includePlatform(
-    "jvm-default-platform"
-)
-
-includeTest(
-    "fixtures",
-    "jvm-jul-backend-std-context",
-    "jvm-jul-backend-grpc-context",
-    "jvm-log4j2-backend-std-context",
-    "jvm-slf4j-jdk14-backend-std-context",
-    "jvm-slf4j-reload4j-backend-std-context",
-    "smoke-test",
-)
-
-includeJvm(
-    "middleware",
-    "platform-generator",
-)
-
-fun includeBackend(vararg modules: String) = includeTo("backends", modules)
-
-fun includeContext(vararg modules: String) = includeTo("contexts", modules)
-
-fun includePlatform(vararg modules: String) = includeTo("platforms", modules)
-
-fun includeTest(vararg modules: String) = includeTo("tests", modules)
-
-fun includeJvm(vararg modules: String) = includeTo("jvm", modules)
-
-fun includeTo(directory: String, modules: Array<out String>) = modules.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("$directory/$name")
+/**
+ * Asserts that this [LogData] has given [args], which were passed
+ * for message formatting.
+ *
+ * This method will NOT fail if the passed [args] is empty as long as
+ * this [LogData] doesn't have any arguments too.
+ */
+internal fun LogData.shouldHaveArguments(vararg args: Any?) {
+    if (templateContext == null && args.isEmpty()) {
+        return
+    } else {
+        arguments.shouldContainExactly(*args)
+    }
 }

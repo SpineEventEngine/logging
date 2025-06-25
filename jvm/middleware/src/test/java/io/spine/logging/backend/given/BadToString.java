@@ -24,61 +24,21 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
+package io.spine.logging.backend.given;
+
+import org.jspecify.annotations.Nullable;
+
+/**
+ * Returns {@code null} on call to {@code toString()}.
+ *
+ * <p>This class is needed in Kotlin tests, where it is impossible to create
+ * an inheritor from {@code Object} or {@code Any} with nullable {@code toString()}.
+ */
+public final class BadToString {
+
+    @Override
+    @SuppressWarnings("ToStringReturnsNull") // Needed for error resilience tests.
+    public @Nullable String toString() {
+        return null;
     }
-}
-
-rootProject.name = "spine-logging"
-
-include(
-    "logging",
-    "logging-testlib",
-)
-
-includeBackend(
-    "log4j2-backend",
-    "jul-backend",
-    "probe-backend",
-)
-
-includeContext(
-    "grpc-context",
-    "std-context",
-)
-
-includePlatform(
-    "jvm-default-platform"
-)
-
-includeTest(
-    "fixtures",
-    "jvm-jul-backend-std-context",
-    "jvm-jul-backend-grpc-context",
-    "jvm-log4j2-backend-std-context",
-    "jvm-slf4j-jdk14-backend-std-context",
-    "jvm-slf4j-reload4j-backend-std-context",
-    "smoke-test",
-)
-
-includeJvm(
-    "middleware",
-    "platform-generator",
-)
-
-fun includeBackend(vararg modules: String) = includeTo("backends", modules)
-
-fun includeContext(vararg modules: String) = includeTo("contexts", modules)
-
-fun includePlatform(vararg modules: String) = includeTo("platforms", modules)
-
-fun includeTest(vararg modules: String) = includeTo("tests", modules)
-
-fun includeJvm(vararg modules: String) = includeTo("jvm", modules)
-
-fun includeTo(directory: String, modules: Array<out String>) = modules.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("$directory/$name")
 }

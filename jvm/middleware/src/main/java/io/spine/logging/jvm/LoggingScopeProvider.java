@@ -24,61 +24,26 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-    }
-}
+package io.spine.logging.jvm;
 
-rootProject.name = "spine-logging"
+import org.jspecify.annotations.Nullable;
 
-include(
-    "logging",
-    "logging-testlib",
-)
-
-includeBackend(
-    "log4j2-backend",
-    "jul-backend",
-    "probe-backend",
-)
-
-includeContext(
-    "grpc-context",
-    "std-context",
-)
-
-includePlatform(
-    "jvm-default-platform"
-)
-
-includeTest(
-    "fixtures",
-    "jvm-jul-backend-std-context",
-    "jvm-jul-backend-grpc-context",
-    "jvm-log4j2-backend-std-context",
-    "jvm-slf4j-jdk14-backend-std-context",
-    "jvm-slf4j-reload4j-backend-std-context",
-    "smoke-test",
-)
-
-includeJvm(
-    "middleware",
-    "platform-generator",
-)
-
-fun includeBackend(vararg modules: String) = includeTo("backends", modules)
-
-fun includeContext(vararg modules: String) = includeTo("contexts", modules)
-
-fun includePlatform(vararg modules: String) = includeTo("platforms", modules)
-
-fun includeTest(vararg modules: String) = includeTo("tests", modules)
-
-fun includeJvm(vararg modules: String) = includeTo("jvm", modules)
-
-fun includeTo(directory: String, modules: Array<out String>) = modules.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("$directory/$name")
+/**
+ * Provides a scope to a log statement via the {@link LogContext#per(LoggingScopeProvider)} method.
+ *
+ * <p>This interface exists to avoid needing to pass specific instances of {@link LoggingScope}
+ * around in user code. The scope provider can lookup the correct scope instance for the current
+ * thread, and different providers can provide different types of scope (e.g. you can have a
+ * provider for "request" scopes and a provider for "sub-task" scopes)
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LoggingScopeProvider.java">
+ *     Original Java code of Google Flogger</a>
+ */
+public interface LoggingScopeProvider {
+  /**
+   * Returns the current scope (most likely via global or thread local state) or {@code null} if
+   * there is no current scope.
+   */
+  @Nullable
+  LoggingScope getCurrentScope();
 }
