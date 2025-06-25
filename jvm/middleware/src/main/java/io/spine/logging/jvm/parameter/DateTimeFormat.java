@@ -90,18 +90,15 @@ public enum DateTimeFormat {
 
     /**
      * RFC 822 style numeric time zone offset from GMT, e.g. "-0800". This value will be adjusted
-     * as
-     * necessary for Daylight Saving Time. For long, Long, and Date the time zone used is the
-     * default
-     * time zone for this instance of the Java virtual machine.
+     * as necessary for Daylight Saving Time. For long, Long, and Date the time zone used is the
+     * default time zone for this instance of the Java virtual machine.
      */
     TIME_TZ_NUMERIC('z'),
 
     /**
      * A string representing the abbreviation for the time zone. This value will be adjusted as
      * necessary for Daylight Saving Time. For long, Long, and Date the time zone used is the
-     * default
-     * time zone for this instance of the Java virtual machine.
+     * default time zone for this instance of the Java virtual machine.
      */
     TIME_TZ_SHORT('Z'),
 
@@ -130,8 +127,8 @@ public enum DateTimeFormat {
 
     /**
      * Four-digit year divided by 100, formatted as two digits with leading zero as necessary,
-     * i.e., 00 - 99. Note that this is not strictly the "century",
-     * because "19xx" is "19", not "20".
+     * i.e., 00 - 99. Note that this is not strictly the "century", because "19xx" is "19", not
+     * "20".
      */
     DATE_CENTURY_PADDED('C'),
 
@@ -142,8 +139,7 @@ public enum DateTimeFormat {
     DATE_YEAR_OF_CENTURY_PADDED('y'),
 
     /**
-     * Day of year, formatted as three digits with leading zeros as necessary,
-     * e.g. 001 - 366.
+     * Day of year, formatted as three digits with leading zeros as necessary, e.g. 001 - 366.
      */
     DATE_DAY_OF_YEAR_PADDED('j'),
 

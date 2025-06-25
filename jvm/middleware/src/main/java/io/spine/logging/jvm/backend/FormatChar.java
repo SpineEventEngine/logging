@@ -60,11 +60,9 @@ public enum FormatChar {
 
     /**
      * Formats a Unicode code-point. This formatting rule can be applied to any character or
-     * integral
-     * numeric value, providing that {@link Character#isValidCodePoint(int)} returns true. Note
-     * that
-     * if the argument cannot be represented losslessly as an integer, it must be considered
-     * invalid.
+     * integral numeric value, providing that {@link Character#isValidCodePoint(int)} returns
+     * true. Note that if the argument cannot be represented losslessly as an integer, it must be
+     * considered invalid.
      * <p>
      * This is a non-numeric format with an upper-case variant.
      */

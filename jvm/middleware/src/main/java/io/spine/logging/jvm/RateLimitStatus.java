@@ -126,7 +126,7 @@ public abstract class RateLimitStatus {
     /**
      * The status to return whenever a rate limiter determines that logging should not occur.
      *
-     * <p>All other statuses implicity "allow" logging.
+     * <p>All other statuses implicitly "allow" logging.
      */
     public static final RateLimitStatus DISALLOW = sentinel();
 
@@ -135,8 +135,7 @@ public abstract class RateLimitStatus {
      *
      * <p>Note: Truly stateless rate limiters should be <em>very</em> rare, since they cannot hold
      * onto a pending "allow" state. Even a simple "sampling rate limiter" should be stateful if
-     * once
-     * the "allow" state is reached it continues to be returned until logging actually occurs.
+     * once the "allow" state is reached it continues to be returned until logging actually occurs.
      */
     public static final RateLimitStatus ALLOW = sentinel();
 
@@ -150,16 +149,13 @@ public abstract class RateLimitStatus {
 
     /**
      * A log guard ensures that only one thread can claim "logging rights" for a log statement once
-     * an
-     * "allow" rate limit status is set. It also tracks the number of skipped invocations of the
-     * log
-     * site key.
+     * an "allow" rate limit status is set. It also tracks the number of skipped invocations of the
+     * log site key.
      *
      * <p>Note that the skipped count is tracked via the "log site key" and there may be several
-     * keys
-     * for a single log site (e.g. due to use of the {@code per(...)} methods). This is consistent
-     * with everywhere else which handles log site specific state, but does make it a little less
-     * obvious what the skipped count refers to at first glance.
+     * keys for a single log site (e.g. due to use of the {@code per(...)} methods). This is
+     * consistent with everywhere else which handles log site specific state, but does make it a
+     * little less obvious what the skipped count refers to at first glance.
      */
     private static final class LogGuard {
 
@@ -231,7 +227,7 @@ public abstract class RateLimitStatus {
             return a;
         }
         // This is already a rare situation where 2 rate limiters are active for the same log statement.
-        // However, in most of these cases, at least one will likley "disallow" logging.
+        // However, in most of these cases, at least one will likely "disallow" logging.
         if (a == DISALLOW || b == ALLOW) {
             return a;
         }

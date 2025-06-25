@@ -34,9 +34,10 @@ import io.spine.logging.jvm.StackSize;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 
 /**
- * Static methods equivalent to the instance methods on {@link ScopedLoggingContext} but which
- * always operate on the current {@link ScopedLoggingContext} that would be returned by {@link
- * ScopedLoggingContext#getInstance}.
+ * Static methods equivalent to the instance methods on
+ * {@link ScopedLoggingContext} but which always operate on the current
+ * {@link ScopedLoggingContext} that would be returned by
+ * {@link ScopedLoggingContext#getInstance}.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/ScopedLoggingContexts.java">
  *     Original Java code of Google Flogger</a>
@@ -63,8 +64,9 @@ public final class ScopedLoggingContexts {
   private ScopedLoggingContexts() {}
 
   /**
-   * Creates a new {@link ScopedLoggingContext.Builder} to which additional logging metadata can be
-   * attached before being installed or used to wrap some existing code.
+   * Creates a new {@link ScopedLoggingContext.Builder} to which additional
+   * logging metadata can be attached before being installed or used to wrap
+   * some existing code.
    *
    * <pre>{@code
    * Foo result = ScopedLoggingContexts.newContext()
@@ -79,29 +81,38 @@ public final class ScopedLoggingContexts {
   /**
    * Adds tags by modifying the current context (if one exists).
    *
-   * <p>Warning: It is always better to create a new context via {@link #newContext()} rather than
-   * attempting to modify an existing context. In order of preference you should:
+   * <p>Warning: It is always better to create a new context via
+   * {@link #newContext()} rather than attempting to modify an existing
+   * context. In order of preference you should:
    *
    * <ol>
    *   <li>Call or wrap a new context with metadata added to it.
-   *   <li>{@link ScopedLoggingContext.Builder#install install()} a new context and close it when
-   *       you it exits (e.g. if you are using callbacks to listen to state changes in a task).
-   *       However it is vital that the returned {@link ScopedLoggingContext.LoggingContextCloseable}
-   *       is always closed.
-   *   <li>Call this method and check that it succeeded (e.g. logging a warning if it fails).
+   *   <li>{@link ScopedLoggingContext.Builder#install install()} a new
+   *       context and close it when you it exits (e.g. if you are using
+   *       callbacks to listen to state changes in a task). However it is
+   *       vital that the returned
+   *       {@link ScopedLoggingContext.LoggingContextCloseable} is always
+   *       closed.
+   *   <li>Call this method and check that it succeeded (e.g. logging a
+   *       warning if it fails).
    * </ol>
    *
-   * <p>The given tags are merged with those of the modifed context but existing tags will not be
-   * overwritten or removed. This is deliberate since two pieces of code may not know about each
-   * other and could accidentally use the same tag name; in that situation it's important that both
-   * tag values are preserved.
+   * <p>The given tags are merged with those of the modified context but
+   * existing tags will not be overwritten or removed. This is deliberate
+   * since two pieces of code may not know about each other and could
+   * accidentally use the same tag name; in that situation it's important
+   * that both tag values are preserved.
    *
-   * <p>Furthermore, the types of data allowed for tag values are strictly controlled. This is also
-   * very deliberate since these tags must be efficiently added to every log statement and so it's
-   * important that they resulting string representation is reliably cacheable and can be calculated
-   * without invoking arbitrary code (e.g. the {@code toString()} method of some unknown user type).
+   * <p>Furthermore, the types of data allowed for tag values are strictly
+   * controlled. This is also very deliberate since these tags must be
+   * efficiently added to every log statement and so it's important that
+   * their resulting string representation is reliably cacheable and can be
+   * calculated without invoking arbitrary code (e.g. the {@code toString()}
+   * method of some unknown user type).
    *
-   * @return false if there is no current context, or scoped contexts are not supported.
+   * @param tags the tags to add to the current context.
+   * @return {@code false} if there is no current context, or scoped
+   *         contexts are not supported.
    */
   @CanIgnoreReturnValue
   public static boolean addTags(Tags tags) {
@@ -111,23 +122,35 @@ public final class ScopedLoggingContexts {
   /**
    * Adds a single metadata key/value pair to the current context.
    *
-   * <p>Warning: It is always better to create a new context via {@link #newContext()} rather than
-   * attempting to modify an existing context. In order of preference you should:
+   * <p>Warning: It is always better to create a new context via
+   * {@link #newContext()} rather than attempting to modify an existing
+   * context. In order of preference you should:
    *
    * <ol>
    *   <li>Call or wrap a new context with metadata added to it.
-   *   <li>{@link ScopedLoggingContext.Builder#install install()} a new context and close it when
-   *       you it exits (e.g. if you are using callbacks to listen to state changes in a task).
-   *       However it is vital that the returned {@link ScopedLoggingContext.LoggingContextCloseable}
-   *       is always closed.
-   *   <li>Call this method and check that it succeeded (e.g. logging a warning if it fails).
+   *   <li>{@link ScopedLoggingContext.Builder#install install()} a new
+   *       context and close it when you it exits (e.g. if you are using
+   *       callbacks to listen to state changes in a task). However, it is
+   *       vital that the returned
+   *       {@link ScopedLoggingContext.LoggingContextCloseable} is always
+   *       closed.
+   *   <li>Call this method and check that it succeeded (e.g. logging a
+   *       warning if it fails).
    * </ol>
    *
-   * <p>Unlike {@link Tags}, which have a well defined value ordering, independent of the order in
-   * which values were added, context metadata preserves the order of addition. As such, it is not
-   * advised to add values for the same metadata key from multiple threads, since that may create
-   * non-deterministic ordering. It is recommended (where possible) to add metadata when building a
-   * new context, rather than adding it to context visible to multiple threads.
+   * <p>Unlike {@link Tags}, which have a well defined value ordering,
+   * independent of the order in which values were added, context metadata
+   * preserves the order of addition. As such, it is not advised to add
+   * values for the same metadata key from multiple threads, since that may
+   * create non-deterministic ordering. It is recommended (where possible)
+   * to add metadata when building a new context, rather than adding it to
+   * context visible to multiple threads.
+   *
+   * @param <T> the type of the metadata value.
+   * @param key the metadata key.
+   * @param value the metadata value.
+   * @return {@code false} if there is no current context, or scoped
+   *         contexts are not supported.
    */
   @CanIgnoreReturnValue
   public static <T> boolean addMetadata(JvmMetadataKey<T> key, T value) {
@@ -137,29 +160,37 @@ public final class ScopedLoggingContexts {
   /**
    * Applies the given log level map to the current context.
    *
-   * <p>Warning: It is always better to create a new context via {@link #newContext()} rather than
-   * attempting to modify an existing context. In order of preference you should:
+   * <p>Warning: It is always better to create a new context via
+   * {@link #newContext()} rather than attempting to modify an existing
+   * context. In order of preference you should:
    *
    * <ol>
    *   <li>Call or wrap a new context with metadata added to it.
-   *   <li>{@link ScopedLoggingContext.Builder#install install()} a new context and close it when
-   *       you it exits (e.g. if you are using callbacks to listen to state changes in a task).
-   *       However it is vital that the returned {@link ScopedLoggingContext.LoggingContextCloseable}
-   *       is always closed.
-   *   <li>Call this method and check that it succeeded (e.g. logging a warning if it fails).
+   *   <li>{@link ScopedLoggingContext.Builder#install install()} a new
+   *       context and close it when you it exits (e.g. if you are using
+   *       callbacks to listen to state changes in a task). However it is
+   *       vital that the returned
+   *       {@link ScopedLoggingContext.LoggingContextCloseable} is always
+   *       closed.
+   *   <li>Call this method and check that it succeeded (e.g. logging a
+   *       warning if it fails).
    * </ol>
    *
-   * Log level settings are merged with any existing setting from the current (or parent) contexts
-   * such that logging will be enabled for a log statement if:
+   * <p>Log level settings are merged with any existing setting from the
+   * current (or parent) contexts such that logging will be enabled for a
+   * log statement if:
    *
    * <ul>
    *   <li>It was enabled by the given map.
    *   <li>It was already enabled by the current context.
    * </ul>
    *
-   * <p>The effects of this call will be undone only when the current context terminates.
+   * <p>The effects of this call will be undone only when the current
+   * context terminates.
    *
-   * @return false if there is no current context, or scoped contexts are not supported.
+   * @param logLevelMap the log level map to apply to the current context.
+   * @return {@code false} if there is no current context, or scoped
+   *         contexts are not supported.
    */
   @CanIgnoreReturnValue
   public static boolean applyLogLevelMap(LogLevelMap logLevelMap) {
