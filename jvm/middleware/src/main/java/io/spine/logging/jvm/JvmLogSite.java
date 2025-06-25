@@ -62,7 +62,7 @@ public abstract class JvmLogSite implements LogSiteKey {
    * fails for any reason.
    * <p>
    * If a log statement does end up with invalid log site information, then any fluent logging
-   * methods which rely on being able to look up site specific metadata will be disabled and
+   * methods which rely on being able to look up site-specific metadata will be disabled and
    * essentially become "no ops".
    */
   public static final JvmLogSite INVALID = new JvmLogSite() {

@@ -26,7 +26,7 @@
 
 package io.spine.logging
 
-import io.spine.logging.jvm.FluentLogger2
+import io.spine.logging.jvm.Middleman
 import io.spine.logging.jvm.backend.Platform
 import io.spine.reflect.CallerFinder
 import kotlin.reflect.KClass
@@ -79,7 +79,7 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
 
     private fun createForClass(cls: Class<*>): JvmLogger {
         val floggerBackend = Platform.getBackend(cls.name)
-        val flogger = FluentLogger2(floggerBackend)
+        val flogger = Middleman(floggerBackend)
         // As for now, `JvmLogger` just delegates actual work to Flogger.
         return JvmLogger(cls.kotlin, flogger)
     }

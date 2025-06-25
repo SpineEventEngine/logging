@@ -29,14 +29,14 @@ package io.spine.logging.jvm
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldNotBeInstanceOf
-import io.spine.logging.jvm.FluentLogger2.forEnclosingClass
+import io.spine.logging.jvm.Middleman.forEnclosingClass
 import io.spine.logging.jvm.backend.given.MemoizingLoggerBackend
 import java.util.logging.Level
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for [FluentLogger2].
+ * Tests for [Middleman].
  *
  * Fluent loggers are typically very simple classes whose only real
  * responsibility is to be a factory for specific API implementations.
@@ -69,7 +69,7 @@ internal class LoggerSpec {
     @Test
     fun `provide a no-op API for disabled levels`() {
         val backend = MemoizingLoggerBackend()
-        val logger = FluentLogger2(backend)
+        val logger = Middleman(backend)
         backend.setLevel(Level.INFO)
 
         // Down to and including the configured log level are not no-op instances.
@@ -77,9 +77,9 @@ internal class LoggerSpec {
         logger.atWarning().shouldNotBeInstanceOf<JvmApi.NoOp<*>>()
         logger.atInfo().shouldNotBeInstanceOf<JvmApi.NoOp<*>>()
 
-        logger.atSevere().shouldBeInstanceOf<FluentLogger2.Context>()
-        logger.atWarning().shouldBeInstanceOf<FluentLogger2.Context>()
-        logger.atInfo().shouldBeInstanceOf<FluentLogger2.Context>()
+        logger.atSevere().shouldBeInstanceOf<Middleman.Context>()
+        logger.atWarning().shouldBeInstanceOf<Middleman.Context>()
+        logger.atInfo().shouldBeInstanceOf<Middleman.Context>()
 
         // Below the configured log level, you only get no-op instances.
         logger.atFine().shouldBeInstanceOf<JvmApi.NoOp<*>>()

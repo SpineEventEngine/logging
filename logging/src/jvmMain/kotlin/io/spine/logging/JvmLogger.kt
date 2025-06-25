@@ -26,7 +26,7 @@
 
 package io.spine.logging
 
-import io.spine.logging.jvm.FluentLogger2
+import io.spine.logging.jvm.Middleman
 import io.spine.logging.jvm.JvmLogSites.callerOf
 import com.google.errorprone.annotations.CheckReturnValue
 import io.spine.logging.jvm.JvmLogSite
@@ -36,12 +36,12 @@ import kotlin.time.toTimeUnit
 import java.util.logging.Level as JLevel
 
 /**
- * Implements [FluentLogger2] using [FluentLogger2] as the underlying implementation.
+ * Implements [Middleman] using [Middleman] as the underlying implementation.
  */
 @CheckReturnValue
 public class JvmLogger(
     cls: KClass<*>,
-    internal val delegate: FluentLogger2
+    internal val delegate: Middleman
 ) : Logger<JvmLogger.Api>(cls) {
 
     /**
@@ -65,9 +65,9 @@ public class JvmLogger(
 }
 
 /**
- * Implements [LoggingApi] wrapping [FluentLogger2.Api].
+ * Implements [LoggingApi] wrapping [Middleman.Api].
  */
-private class ApiImpl(private val delegate: FluentLogger2.Api): JvmLogger.Api {
+private class ApiImpl(private val delegate: Middleman.Api): JvmLogger.Api {
 
     private var loggingDomain: LoggingDomain? = null
 

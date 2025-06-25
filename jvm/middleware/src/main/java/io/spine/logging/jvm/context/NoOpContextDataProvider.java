@@ -26,7 +26,7 @@
 
 package io.spine.logging.jvm.context;
 
-import io.spine.logging.jvm.FluentLogger2;
+import io.spine.logging.jvm.Middleman;
 import io.spine.logging.jvm.JvmMetadataKey;
 import io.spine.logging.jvm.StackSize;
 import io.spine.logging.jvm.context.ScopedLoggingContext.LoggingContextCloseable;
@@ -63,7 +63,7 @@ final class NoOpContextDataProvider extends ContextDataProvider {
         // is complete.
         private static final class LazyLogger {
 
-            private static final FluentLogger2 logger = FluentLogger2.forEnclosingClass();
+            private static final Middleman logger = Middleman.forEnclosingClass();
         }
 
         private final AtomicBoolean haveWarned = new AtomicBoolean();

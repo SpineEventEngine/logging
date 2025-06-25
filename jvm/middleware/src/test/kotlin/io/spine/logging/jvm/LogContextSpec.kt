@@ -72,7 +72,7 @@ import org.junit.jupiter.api.Test
 internal class LogContextSpec {
 
     private val backend = MemoizingLoggerBackend()
-    private val logger = FluentLogger2(backend)
+    private val logger = Middleman(backend)
 
     companion object {
         // Arbitrary constants of overloaded types for testing argument mappings.
@@ -93,7 +93,7 @@ internal class LogContextSpec {
         // In normal use, the logger would never need to be passed in,
         // and you'd use `logVarargs()`.
         private fun logHelper(
-            logger: FluentLogger2,
+            logger: Middleman,
             logSite: JvmLogSite,
             n: Int,
             message: String
