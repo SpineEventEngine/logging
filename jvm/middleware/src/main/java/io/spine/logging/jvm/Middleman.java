@@ -36,11 +36,13 @@ import java.util.logging.Level;
 /**
  * The default implementation of {@link AbstractLogger} which returns the basic {@link JvmApi}
  * and uses the default parser and system configured backend.
+ *
  * <p>
  * Note that when extending the logging API or specifying a new parser, you will need to create a
  * new logger class (rather than extending this one). Unlike the {@link LogContext} class,
  * which must be extended in order to modify the logging API, this class is not generified and thus
  * cannot be modified to produce a different logging API.
+ *
  * <p>
  * The choice to prevent direct extension of loggers was made deliberately to ensure that users of
  * a specific logger implementation always get the same behavior.
@@ -52,6 +54,7 @@ public final class Middleman extends AbstractLogger<Middleman.Api> {
   /**
    * The non-wildcard, fully specified, logging API for this logger. Fluent logger implementations
    * should specify a non-wildcard API like this with which to generify the abstract logger.
+ *
    * <p>
    * It is possible to add methods to this logger-specific API directly, but it is recommended that
    * a separate top-level API and LogContext is created, allowing it to be shared by other

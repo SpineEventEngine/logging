@@ -142,11 +142,14 @@ public final class SimpleMessageFormatter {
      * @param metadataProcessor
      *         snapshot of the metadata to be processed ({@link MetadataProcessor} is
      *         reusable so passing one in can save repeated processing of the same metadata).
+ *
      * @param metadataHandler
      *         a metadata handler for intercepting and dispatching metadata during
      *         formatting.
+ *
      * @param buffer
      *         destination buffer into which the log message and metadata will be appended.
+ *
      * @return the given destination buffer (for method chaining).
      */
     @CanIgnoreReturnValue
@@ -172,6 +175,7 @@ public final class SimpleMessageFormatter {
      *
      * @param logData
      *         the log statement data.
+ *
      * @return the single logged value as a string.
      * @throws IllegalStateException
      *         if the log data had arguments to be formatted (i.e. there was a
@@ -204,8 +208,10 @@ public final class SimpleMessageFormatter {
      *
      * @param logData
      *         the log statement data.
+ *
      * @param metadata
      *         the metadata intended to be formatted with the log statement.
+ *
      * @param keysToIgnore
      *         a set of metadata keys which are known not to appear in the final formatted
      *         message.

@@ -39,6 +39,7 @@ import io.spine.logging.jvm.backend.FormatOptions;
 public interface ParameterVisitor {
   /**
    * Visits a log message argument with formatting specified by {@code %s}, {@code %d} etc...
+ *
    * <p>
    * Note that this method may still visit arguments which represent date/time values if the format
    * is not explicit (e.g. {@code log("time=%s", dateTime)}).
@@ -51,6 +52,7 @@ public interface ParameterVisitor {
 
   /**
    * Visits a date/time log message argument with formatting specified by {@code %t} or similar.
+ *
    * <p>
    * Note that because this method is called based on the specified format (and not the argument
    * type) it may visit arguments whose type is not a known date/time value. This is necessary to
@@ -65,6 +67,7 @@ public interface ParameterVisitor {
   /**
    * Visits a log message argument for which formatting has already occurred. This method is only
    * invoked when non-printf message formatting is used (e.g. brace style formatting).
+ *
    * <p>
    * This method is intended for use by {@code Parameter} implementations which describe formatting
    * rules which cannot by represented by either {@link FormatChar} or {@link DateTimeFormat}. This

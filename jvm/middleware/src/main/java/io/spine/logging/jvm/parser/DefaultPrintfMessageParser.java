@@ -42,6 +42,7 @@ import static io.spine.logging.jvm.backend.FormatOptions.FLAG_UPPER_CASE;
  * available in {@code String#format} but can be extended, if desired, for additional behavior
  * For consistency it is recommended, but not required, that custom printf parsers always extend
  * from this class.
+ *
  * <p>
  * This class is immutable and thread safe (and any subclasses must also be so).
  *

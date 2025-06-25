@@ -46,6 +46,7 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS;
  *
  * @param <API>
  *         the logging API provided by this logger.
+ *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/AbstractLogger.java">
  *      Original Java code of Google Flogger</a>
  */
@@ -81,10 +82,12 @@ public abstract class AbstractLogger<API extends JvmApi<API>> {
 
     /**
      * Returns a fluent logging API appropriate for the specified log level.
+ *
      * <p>
      * If a logger implementation determines that logging is definitely disabled at this point then
      * this method is expected to return a "no-op" implementation of that logging API, which will
      * result in all further calls made for the log statement to being silently ignored.
+ *
      * <p>
      * A simple implementation of this method in a concrete subclass might look like:
      * <pre>{@code

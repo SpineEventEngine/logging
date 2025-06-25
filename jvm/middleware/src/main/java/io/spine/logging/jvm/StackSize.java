@@ -43,12 +43,14 @@ public enum StackSize {
    * also be useful for {@code WARNING} level log statements in cases where context is not as
    * important. For {@code SEVERE} log statements, it is advised to use a stack size of
    * {@link #MEDIUM} or above.
+ *
    * <p>
    * Requesting a small stack trace for log statements which occur under normal circumstances is
    * acceptable, but may affect performance. Consider using
    * {@link JvmApi#withStackTrace(StackSize)} in conjunction with rate limiting methods,
    * such as {@link JvmApi#atMostEvery(int, java.util.concurrent.TimeUnit)}, to mitigate
    * performance issues.
+ *
    * <p>
    * The current maximum size of a {@code SMALL} stack trace is 10 elements, but this may change.
    */
@@ -58,9 +60,11 @@ public enum StackSize {
    * Produces a medium sized stack suitable for providing contextual information for most log
    * statements at {@code WARNING} or above. There should be enough stack trace elements in a
    * {@code MEDIUM} stack to provide sufficient debugging context in most cases.
+ *
    * <p>
    * Requesting a medium stack trace for any log statements which can occur regularly under normal
    * circumstances is not recommended.
+ *
    * <p>
    * The current maximum size of a {@code MEDIUM} stack trace is 20 elements, but this may change.
    */
@@ -70,9 +74,11 @@ public enum StackSize {
    * Produces a large stack suitable for providing highly detailed contextual information.
    * This is most useful for {@code SEVERE} log statements which might be processed by external
    * tools and subject to automated analysis.
+ *
    * <p>
    * Requesting a large stack trace for any log statement which can occur under normal circumstances
    * is not recommended.
+ *
    * <p>
    * The current maximum size of a {@code LARGE} stack trace is 50 elements, but this may change.
    */
@@ -81,6 +87,7 @@ public enum StackSize {
   /**
    * Provides the complete stack trace. This is included for situations in which it is known that
    * the upper-most elements of the stack are definitely required for analysis.
+ *
    * <p>
    * Requesting a full stack trace for any log statement which can occur under normal circumstances
    * is not recommended.
@@ -107,6 +114,7 @@ public enum StackSize {
   /**
    * Returns the maximum stack depth to create when adding contextual stack information to a log
    * statement.
+ *
    * <p>
    * Note that the precise number of stack elements emitted for the enum values might change over
    * time, but it can be assumed that {@code NONE < SMALL <= MEDIUM <= LARGE <= FULL}.

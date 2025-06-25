@@ -37,6 +37,7 @@ import io.spine.logging.jvm.util.Checks;
  *
  * @param <T>
  *         The message type being built.
+ *
  * @see <a
  *         href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parser/MessageBuilder.java">
  *         Original Java code of Google Flogger</a>
@@ -84,9 +85,11 @@ public abstract class MessageBuilder<T> {
      * @param termStart
      *         the index of the first character in the log message string that was parsed to
      *         form the given parameter.
+ *
      * @param termEnd
      *         the index after the last character in the log message string that was parsed to
      *         form the given parameter.
+ *
      * @param param
      *         a parameter representing the format specified by the substring of the log message
      *         in the range {@code [termStart, termEnd)}.
@@ -104,6 +107,7 @@ public abstract class MessageBuilder<T> {
     /**
      * Adds the specified parameter to the format instance currently being built. This method is to
      * signify that the parsing of the next parameter is complete.
+ *
      * <p>
      * Note that each successive call to this method during parsing will specify a disjoint ranges
      * of
@@ -113,9 +117,11 @@ public abstract class MessageBuilder<T> {
      * @param termStart
      *         the index of the first character in the log message string that was parsed to
      *         form the given parameter.
+ *
      * @param termEnd
      *         the index after the last character in the log message string that was parsed to
      *         form the given parameter.
+ *
      * @param param
      *         a parameter representing the format specified by the substring of the log message
      *         in the range {@code [termStart, termEnd)}.

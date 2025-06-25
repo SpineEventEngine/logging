@@ -33,14 +33,17 @@ import org.jspecify.annotations.Nullable;
 /**
  * A value type which representing the location of a single log statement. This class is similar to
  * the {@code StackTraceElement} class but differs in one important respect.
+ *
  * <p>
  * A LogSite can be associated with a globally unique ID, which can identify a log statement more
  * uniquely than a line number (it is possible to have multiple log statements appear to be on a
  * single line, especially for obfuscated classes).
+ *
  * <p>
  * Log sites are intended to be injected into code automatically, typically via some form of
  * bytecode rewriting. Each injection mechanism can have its own implementation of {@code LogSite}
  * adapted to its needs.
+ *
  * <p>
  * As a fallback, for cases where no injection mechanism is configured, a log site based upon stack
  * trace analysis is used. However, due to limitations in the information available from
@@ -60,6 +63,7 @@ public abstract class JvmLogSite implements LogSiteKey {
    * injecting it via {@link JvmApi#withInjectedLogSite} which will suppress any further
    * log site analysis for that log statement. This is also returned if stack trace analysis
    * fails for any reason.
+ *
    * <p>
    * If a log statement does end up with invalid log site information, then any fluent logging
    * methods which rely on being able to look up site-specific metadata will be disabled and
@@ -135,6 +139,7 @@ public abstract class JvmLogSite implements LogSiteKey {
 
   /**
    * Creates a log site injected from constants held a class' constant pool.
+ *
    * <p>
    * Used for compile-time log site injection, and by the agent.
    *
@@ -145,6 +150,7 @@ public abstract class JvmLogSite implements LogSiteKey {
    *     16 bits is a log statement index to distinguish multiple statements on the same line
    *     (this becomes important if line numbers are stripped from the class file and everything
    *     appears to be on the same line).
+ *
    * @param sourceFileName Optional base name of the source file (this value is strictly for
    *     debugging and does not contribute to either equals() or hashCode() behavior).
    *

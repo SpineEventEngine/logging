@@ -247,10 +247,13 @@ abstract class SegmentTrie<T> {
          *
          * @param k
          *         the key whose parent value we wish to find.
+ *
          * @param idx
          *         the index of the closest matching key in the trie ({@code k < keys[idx]}).
+ *
          * @param len
          *         the common prefix length between {@code k} and {@code keys[idx]}.
+ *
          * @return the value of the nearest parent of {@code k}.
          */
         private T findParent(String k, int idx, int len) {
@@ -282,8 +285,10 @@ abstract class SegmentTrie<T> {
          *
          * @param p
          *         the candidate parent key to check.
+ *
          * @param k
          *         the key whose parent we are looking for.
+ *
          * @param len
          *         the maximum length of any possible parent of {@code k}.
          */
@@ -312,11 +317,14 @@ abstract class SegmentTrie<T> {
          *
          * @param lhs
          *         first value to compare.
+ *
          * @param rhs
          *         second value to compare.
+ *
          * @param start
          *         a lower bound for the common prefix length of the given keys, which must be
          *         {@code <= min(lhs.length(), rhs.length())}.
+ *
          * @return the common prefix length, encoded to indicate lexicographical ordering.
          */
         private static int prefixCompare(String lhs, String rhs, int start) {

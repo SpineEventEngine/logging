@@ -48,6 +48,7 @@ public final class LogSiteStackTrace extends Exception {
 
   /**
    * Creates a synthetic exception to hold a call-stack generated for the log statement itself.
+ *
    * <p>
    * This exception is never expected to actually get thrown or caught at any point.
    *

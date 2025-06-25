@@ -44,6 +44,7 @@ public final class JvmLogSites {
  * conjunction with the {@link JvmApi#withInjectedLogSite(JvmLogSite)} method to implement
    * logging helper methods. In some platforms, log site determination may be unsupported, and in
    * those cases this method will always return the {@link JvmLogSite#INVALID} instance.
+ *
    * <p>
    * For example (in {@code MyLoggingHelper}):
    * <pre>{@code
@@ -53,34 +54,40 @@ public final class JvmLogSites {
    *       .logVarargs(message, args);
    * }
    * }</pre>
+ *
    * <p>
    * This method should be used for the simple cases where the class in which the logging occurs is
    * a public logging API. If the log statement is in a different class (not the public logging API)
    * and the {@code LogSite} instance needs to be passed through several layers, consider using
    * {@link #logSite()} instead to avoid too much "magic" in your code.
+ *
    * <p>
    * You should also seek to ensure that any API used with this method "looks like a logging API".
    * It's no good if a log entry contains a class and method name which doesn't correspond to
    * anything the user can relate to. In particular, the API should probably always accept the log
    * message or at least some of its parameters, and should always have methods with "log" in their
    * names to make the connection clear.
+ *
    * <p>
    * It is very important to note that this method can be very slow, since determining the log site
    * can involve stack trace analysis. It is only recommended that it is used for cases where
    * logging is expected to occur (e.g. {@code INFO} level or above). Implementing a helper method
    * for {@code FINE} logging is usually unnecessary (it doesn't normally need to follow any
    * specific "best practice" behavior).
+ *
    * <p>
    * Note that even when log site determination is supported, it is not defined as to whether two
    * invocations of this method on the same line of code will produce the same instance, equivalent
    * instances or distinct instance. Thus you should never invoke this method twice in a single
    * statement (and you should never need to).
+ *
    * <p>
    * Note that this method call may be replaced in compiled applications via bytecode manipulation
    * or other mechanisms to improve performance.
    *
    * @param loggingApi the logging API to be identified as the source of log statements (this must
    *        appear somewhere on the stack above the point at which this method is called).
+ *
    * @return the log site of the caller of the specified logging API,
    *        or {@link JvmLogSite#INVALID} if the logging API was not found.
    */
@@ -94,6 +101,7 @@ public final class JvmLogSites {
  * the {@link JvmApi#withInjectedLogSite(JvmLogSite)} method to implement logging helper
    * methods. In some platforms, log site determination may be unsupported, and in those cases this
    * method will always return the {@link JvmLogSite#INVALID} instance.
+ *
    * <p>
    * For example (in {@code MyLoggingHelper}):
    * <pre>{@code
@@ -107,21 +115,25 @@ public final class JvmLogSites {
    * <pre>{@code
    * MyLoggingHelper.logAndSomethingElse(logSite(), "message...");
    * }</pre>
+ *
    * <p>
    * Because this method adds an additional parameter and exposes a Flogger specific type to the
    * calling code, you should consider using {@link #callerOf(Class)} for simple logging
    * utilities.
+ *
    * <p>
    * It is very important to note that this method can be very slow, since determining the log site
    * can involve stack trace analysis. It is only recommended that it is used for cases where
    * logging is expected to occur (e.g. {@code INFO} level or above). Implementing a helper method
    * for {@code FINE} logging is usually unnecessary (it doesn't normally need to follow any
    * specific "best practice" behavior).
+ *
    * <p>
    * Note that even when log site determination is supported, it is not defined as to whether two
    * invocations of this method on the same line of code will produce the same instance, equivalent
    * instances or distinct instance. Thus you should never invoke this method twice in a single
    * statement (and you should never need to).
+ *
    * <p>
    * Note that this method call may be replaced in compiled applications via bytecode manipulation
    * or other mechanisms to improve performance.
