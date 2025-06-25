@@ -52,8 +52,6 @@ tasks {
         val inputClasspath = sourceSets.main.get().runtimeClasspath
         classpath(inputClasspath)
         inputs.files(inputClasspath)
-
-        println(" >>>> Task $this registered.")
     }
 }
 
