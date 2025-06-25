@@ -34,8 +34,8 @@ plugins {
 
 dependencies {
     implementation(Reflect.lib)
-    implementation(project(":logging", configuration = "mainApi"))
     implementation(project(":platform-generator", configuration = "generatedPlatformProvider"))
+    testImplementation(project(":logging"))
     testImplementation(project(":logging-testlib"))
     testRuntimeOnly(project(":jvm-default-platform"))
 }

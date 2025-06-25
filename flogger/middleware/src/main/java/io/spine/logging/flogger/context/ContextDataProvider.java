@@ -1,11 +1,11 @@
 /*
- * Copyright 2019, The Flogger Authors; 2023, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -30,7 +30,7 @@ import io.spine.logging.flogger.LoggingScope;
 import io.spine.logging.flogger.backend.Metadata;
 import io.spine.logging.flogger.backend.Platform;
 import java.util.logging.Level;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * An API for injecting scoped metadata for log statements (either globally or on

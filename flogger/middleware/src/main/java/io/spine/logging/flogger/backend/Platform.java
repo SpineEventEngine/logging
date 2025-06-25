@@ -1,5 +1,5 @@
 /*
- * Copyright 2016, The Flogger Authors; 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,13 +31,12 @@ import io.spine.logging.flogger.FloggerLogSite;
 import io.spine.logging.flogger.context.ContextDataProvider;
 import io.spine.logging.flogger.context.Tags;
 import io.spine.logging.flogger.util.RecursionDepth;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static io.spine.logging.JvmLoggerKt.toLevel;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 /**
@@ -267,14 +266,14 @@ public abstract class Platform {
    * @param loggerName the name of the logger
    * @return the custom level or {@code null}
    */
-  public static io.spine.logging.@Nullable Level getMappedLevel(String loggerName) {
+  public static @Nullable Level getMappedLevel(String loggerName) {
       checkNotNull(loggerName);
       var provider = getContextDataProvider();
       var result = provider.getMappedLevel(loggerName);
       if (result == null) {
         return null;
       }
-      return toLevel(result);
+      return result;
   }
 
   /** Returns {@link Tags} from with the current context to be injected into log statements. */

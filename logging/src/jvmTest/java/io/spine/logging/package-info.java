@@ -24,28 +24,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.flogger;
-
-import org.jspecify.annotations.Nullable;
-
 /**
- * Functional interface for allowing lazily evaluated arguments to be supplied to Flogger. This
- * allows callers to defer argument evaluation efficiently when:
- *
- * <ul>
- *   <li>Doing "fine" logging that's normally disabled
- *   <li>Applying rate limiting to log statements
- * </ul>
- *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LazyArg.java">
- *     Original Java code of Google Flogger</a>
+ * This package provides a JVM implementation of Spine Logging API.
  */
-public interface LazyArg<T> {
-  /**
-   * Computes a value to use as a log argument. This method is invoked once the Flogger library has
-   * determined that logging will occur, and the returned value is used in place of the {@code
-   * LazyArg} instance that was passed into the log statement.
-   */
-  @Nullable
-  T evaluate();
-}
+@CheckReturnValue
+@NullMarked
+package io.spine.logging;
+
+import com.google.errorprone.annotations.CheckReturnValue;
+import org.jspecify.annotations.NullMarked;

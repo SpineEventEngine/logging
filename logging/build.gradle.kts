@@ -45,18 +45,6 @@ spinePublishing {
     }
 }
 
-// In logging/build.gradle.kts
-val mainApi: Configuration? by configurations.creating {
-    isCanBeConsumed = true
-    isCanBeResolved = false
-}
-
-
-// Expose the commonMain classes through this configuration.
-artifacts {
-    add("mainApi", tasks.named<Jar>("jvmJar"))
-}
-
 kotlin {
     sourceSets {
         val commonMain by getting {

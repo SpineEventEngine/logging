@@ -1,11 +1,11 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -69,7 +69,7 @@ internal class DefaultBraceStyleMessageParserSpec {
         // Now visit the parameter and verify the expected callback occurred.
         val param = memoizingBuilder.param
         val memoizingVisitor = MemoizingParameterVisitor()
-        param.accept(memoizingVisitor, arrayOf("Answer: ", 42))
+        param.accept(memoizingVisitor, arrayOf<Any>("Answer: ", 42))
 
         with(memoizingVisitor) {
             value shouldBe 42
