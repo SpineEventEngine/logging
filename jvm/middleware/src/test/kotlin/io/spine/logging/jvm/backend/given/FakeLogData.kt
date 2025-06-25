@@ -37,7 +37,6 @@ import io.spine.logging.jvm.given.FakeLogSite
 import io.spine.logging.jvm.parser.DefaultBraceStyleMessageParser
 import io.spine.logging.jvm.parser.DefaultPrintfMessageParser
 import io.spine.logging.jvm.parser.MessageParser
-import java.util.concurrent.TimeUnit
 import java.util.logging.Level
 
 /**
@@ -119,11 +118,6 @@ class FakeLogData : LogData {
 
     override fun getLevel(): Level {
         return level
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun getTimestampMicros(): Long {
-        return TimeUnit.NANOSECONDS.toMicros(timestampNanos)
     }
 
     override fun getTimestampNanos(): Long {

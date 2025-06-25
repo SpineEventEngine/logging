@@ -28,17 +28,24 @@ package io.spine.logging.jvm;
 
 import org.jspecify.annotations.Nullable;
 
+import java.io.Serial;
+
 /**
  * A synthetic exception which can be attached to log statements when additional stack trace
  * information is required in log files or via tools such as ECatcher.
- * <p>
- * The name of this class may become relied upon implicitly by tools such as ECatcher. Do not
+ *
+ * <p>The name of this class may become relied upon implicitly by tools such as ECatcher. Do not
  * rename or move this class without checking for implicit in logging tools.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSiteStackTrace.java">
  *     Original Java code of Google Flogger</a>
  */
+@SuppressWarnings("ExceptionClassNameDoesntEndWithException")
 public final class LogSiteStackTrace extends Exception {
+
+  @Serial
+  private static final long serialVersionUID = 0L;
+
   /**
    * Creates a synthetic exception to hold a call-stack generated for the log statement itself.
    * <p>

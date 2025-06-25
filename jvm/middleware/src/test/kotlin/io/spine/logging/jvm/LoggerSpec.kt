@@ -49,7 +49,7 @@ import org.junit.jupiter.api.Test
  *     Original Java code of Google Flogger</a>
  */
 @DisplayName("`FluentLogger2` should")
-internal class FluentLogger2Spec {
+internal class LoggerSpec {
 
     @Test
     fun `create a logger for enclosing class`() {

@@ -28,6 +28,8 @@ package io.spine.logging.jvm.backend;
 
 import org.jspecify.annotations.Nullable;
 
+import java.io.Serial;
+
 /**
  * Exception thrown when a log statement cannot be emitted correctly. This exception should only be
  * thrown by logger backend implementations which have opted not to handle specific issues.
@@ -35,19 +37,18 @@ import org.jspecify.annotations.Nullable;
  * Typically a logger backend would only throw {@code LoggingException} in response to issues in
  * test code or other debugging environments. In production code, the backend should be configured
  * to emit a modified log statement which includes the error information.
- * <p>
- * See also {@link LoggerBackend#handleError(RuntimeException, LogData)}.
+ *
+ * <p>See also {@link LoggerBackend#handleError(RuntimeException, LogData)}.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/LoggingException.java">
- *     Original Java code of Google Flogger</a>
+ *      Original Java code of Google Flogger</a>
  */
 public class LoggingException extends RuntimeException {
 
-  public LoggingException(@Nullable String message) {
-    super(message);
-  }
+    @Serial
+    private static final long serialVersionUID = 0L;
 
-  public LoggingException(@Nullable String message, @Nullable Throwable cause) {
-    super(message, cause);
-  }
+    public LoggingException(@Nullable String message) {
+        super(message);
+    }
 }

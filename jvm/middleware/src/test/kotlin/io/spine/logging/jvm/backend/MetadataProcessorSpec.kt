@@ -46,6 +46,7 @@ import org.junit.jupiter.api.Test
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/backend/MetadataProcessorTest.java">
  *     Original Java code of Google Flogger</a>
  */
+@Suppress("unused")
 internal abstract class MetadataProcessorSpec(private val factory: ProcessorFactory) {
 
     companion object {

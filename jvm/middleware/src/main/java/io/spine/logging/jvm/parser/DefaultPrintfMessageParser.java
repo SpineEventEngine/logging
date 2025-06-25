@@ -26,9 +26,6 @@
 
 package io.spine.logging.jvm.parser;
 
-import static io.spine.logging.jvm.backend.FormatOptions.FLAG_LEFT_ALIGN;
-import static io.spine.logging.jvm.backend.FormatOptions.FLAG_UPPER_CASE;
-
 import io.spine.logging.jvm.backend.FormatChar;
 import io.spine.logging.jvm.backend.FormatOptions;
 import io.spine.logging.jvm.parameter.DateTimeFormat;
@@ -36,6 +33,9 @@ import io.spine.logging.jvm.parameter.DateTimeParameter;
 import io.spine.logging.jvm.parameter.Parameter;
 import io.spine.logging.jvm.parameter.ParameterVisitor;
 import io.spine.logging.jvm.parameter.SimpleParameter;
+
+import static io.spine.logging.jvm.backend.FormatOptions.FLAG_LEFT_ALIGN;
+import static io.spine.logging.jvm.backend.FormatOptions.FLAG_UPPER_CASE;
 
 /**
  * Default implementation of the printf message parser. This parser supports all the place-holders
@@ -46,85 +46,89 @@ import io.spine.logging.jvm.parameter.SimpleParameter;
  * This class is immutable and thread safe (and any subclasses must also be so).
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parser/DefaultPrintfMessageParser.java">
- *     Original Java code of Google Flogger</a>
+ *      Original Java code of Google Flogger</a>
  */
 public class DefaultPrintfMessageParser extends PrintfMessageParser {
-  private static final PrintfMessageParser INSTANCE = new DefaultPrintfMessageParser();
 
-  public static PrintfMessageParser getInstance() {
-    return INSTANCE;
-  }
+    private static final PrintfMessageParser INSTANCE = new DefaultPrintfMessageParser();
 
-  private DefaultPrintfMessageParser() {}
-
-  @Override
-  public int parsePrintfTerm(
-      MessageBuilder<?> builder,
-      int index,
-      String message,
-      int termStart,
-      int specStart,
-      int formatStart)
-      throws ParseException {
-
-    // Assume terms are single characters.
-    int termEnd = formatStart + 1;
-    // This _must_ be an ASCII letter representing printf-like specifier (but need not be valid).
-    char typeChar = message.charAt(formatStart);
-    boolean isUpperCase = (typeChar & 0x20) == 0;
-    FormatOptions options = FormatOptions.parse(message, specStart, formatStart, isUpperCase);
-
-    Parameter parameter;
-    FormatChar formatChar = FormatChar.of(typeChar);
-    if (formatChar != null) {
-      if (!options.areValidFor(formatChar)) {
-        throw ParseException.withBounds("invalid format specifier", message, termStart, termEnd);
-      }
-      parameter = SimpleParameter.of(index, formatChar, options);
-    } else if (typeChar == 't' || typeChar == 'T') {
-      if (!options.validate(FLAG_LEFT_ALIGN | FLAG_UPPER_CASE, false)) {
-        throw ParseException.withBounds(
-            "invalid format specification", message, termStart, termEnd);
-      }
-      // Time/date format terms have an extra character in them.
-      termEnd += 1;
-      if (termEnd > message.length()) {
-        throw ParseException.atPosition("truncated format specifier", message, termStart);
-      }
-      DateTimeFormat dateTimeFormat = DateTimeFormat.of(message.charAt(formatStart + 1));
-      if (dateTimeFormat == null) {
-        throw ParseException.atPosition("illegal date/time conversion", message, formatStart + 1);
-      }
-      parameter = DateTimeParameter.of(dateTimeFormat, options, index);
-    } else if (typeChar == 'h' || typeChar == 'H') {
-      // %h/%H is a legacy format we want to support for syntax compliance with String.format()
-      // but which we don't need to support in the backend.
-      if (!options.validate(FLAG_LEFT_ALIGN | FLAG_UPPER_CASE, false)) {
-        throw ParseException.withBounds(
-            "invalid format specification", message, termStart, termEnd);
-      }
-      parameter = wrapHexParameter(options, index);
-    } else {
-      throw ParseException.withBounds(
-          "invalid format specification", message, termStart, formatStart + 1);
+    public static PrintfMessageParser getInstance() {
+        return INSTANCE;
     }
-    builder.addParameter(termStart, termEnd, parameter);
-    return termEnd;
-  }
 
-  // Static method so the anonymous synthetic parameter is static, rather than an inner class.
-  private static Parameter wrapHexParameter(final FormatOptions options, int index) {
-    // %h / %H is really just %x / %X on the hashcode.
-    return new Parameter(options, index) {
-      @Override
-      protected void accept(ParameterVisitor visitor, Object value) {
-        visitor.visit(value.hashCode(), FormatChar.HEX, getFormatOptions());
-      }
+    private DefaultPrintfMessageParser() {
+    }
 
-      @Override
-      public String getFormat() {
-        return options.shouldUpperCase() ? "%H" : "%h";
-      }
-    };
-  }
+    @Override
+    public int parsePrintfTerm(
+            MessageBuilder<?> builder,
+            int index,
+            String message,
+            int termStart,
+            int specStart,
+            int formatStart)
+            throws ParseException {
+
+        // Assume terms are single characters.
+        var termEnd = formatStart + 1;
+        // This _must_ be an ASCII letter representing printf-like specifier (but need not be valid).
+        var typeChar = message.charAt(formatStart);
+        var isUpperCase = (typeChar & 0x20) == 0;
+        var options = FormatOptions.parse(message, specStart, formatStart, isUpperCase);
+
+        Parameter parameter;
+        var formatChar = FormatChar.of(typeChar);
+        if (formatChar != null) {
+            if (!options.areValidFor(formatChar)) {
+                throw ParseException.withBounds("invalid format specifier", message, termStart,
+                                                termEnd);
+            }
+            parameter = SimpleParameter.of(index, formatChar, options);
+        } else if (typeChar == 't' || typeChar == 'T') {
+            if (!options.validate(FLAG_LEFT_ALIGN | FLAG_UPPER_CASE, false)) {
+                throw ParseException.withBounds(
+                        "invalid format specification", message, termStart, termEnd);
+            }
+            // Time/date format terms have an extra character in them.
+            termEnd += 1;
+            if (termEnd > message.length()) {
+                throw ParseException.atPosition("truncated format specifier", message, termStart);
+            }
+            var dateTimeFormat = DateTimeFormat.of(message.charAt(formatStart + 1));
+            if (dateTimeFormat == null) {
+                throw ParseException.atPosition("illegal date/time conversion", message,
+                                                formatStart + 1);
+            }
+            parameter = DateTimeParameter.of(dateTimeFormat, options, index);
+        } else if (typeChar == 'h' || typeChar == 'H') {
+            // %h/%H is a legacy format we want to support for syntax compliance with String.format()
+            // but which we don't need to support in the backend.
+            if (!options.validate(FLAG_LEFT_ALIGN | FLAG_UPPER_CASE, false)) {
+                throw ParseException.withBounds(
+                        "invalid format specification", message, termStart, termEnd);
+            }
+            parameter = wrapHexParameter(options, index);
+        } else {
+            throw ParseException.withBounds(
+                    "invalid format specification", message, termStart, formatStart + 1);
+        }
+        builder.addParameter(termStart, termEnd, parameter);
+        return termEnd;
+    }
+
+    // Static method so the anonymous synthetic parameter is static, rather than an inner class.
+    private static Parameter wrapHexParameter(final FormatOptions options, int index) {
+        // %h / %H is really just %x / %X on the hashcode.
+        return new Parameter(options, index) {
+            @Override
+            protected void accept(ParameterVisitor visitor, Object value) {
+                visitor.visit(value.hashCode(), FormatChar.HEX, getFormatOptions());
+            }
+
+            @Override
+            public String getFormat() {
+                return options.shouldUpperCase() ? "%H" : "%h";
+            }
+        };
+    }
 }

@@ -58,7 +58,7 @@ final class SpecializedLogSiteKey implements LogSiteKey {
     if (!(obj instanceof SpecializedLogSiteKey)) {
       return false;
     }
-    SpecializedLogSiteKey other = (SpecializedLogSiteKey) obj;
+      var other = (SpecializedLogSiteKey) obj;
     return delegate.equals(other.delegate) && qualifier.equals(other.qualifier);
   }
 

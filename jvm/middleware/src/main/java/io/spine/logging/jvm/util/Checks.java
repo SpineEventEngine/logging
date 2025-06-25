@@ -32,61 +32,63 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
  * Flogger's own version of the Guava {@code Preconditions} class for simple, often used checks.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/util/Checks.java">
- *     Original Java code of Google Flogger</a>
+ *      Original Java code of Google Flogger</a>
  */
 public class Checks {
-  private Checks() {}
 
-  // Warning: The methods in this class may not use String.format() to construct "fancy" error
-  // messages (because that's not GWT compatible).
+    private Checks() {
+    }
 
-  @CanIgnoreReturnValue
-  public static <T> T checkNotNull(T value, String name) {
-    if (value == null) {
-      throw new NullPointerException(name + " must not be null");
-    }
-    return value;
-  }
+    // Warning: The methods in this class may not use String.format() to construct "fancy" error
+    // messages (because that's not GWT compatible).
 
-  public static void checkArgument(boolean condition, String message) {
-    if (!condition) {
-      throw new IllegalArgumentException(message);
+    @CanIgnoreReturnValue
+    public static <T> T checkNotNull(T value, String name) {
+        if (value == null) {
+            throw new NullPointerException(name + " must not be null");
+        }
+        return value;
     }
-  }
 
-  public static void checkState(boolean condition, String message) {
-    if (!condition) {
-      throw new IllegalStateException(message);
+    public static void checkArgument(boolean condition, String message) {
+        if (!condition) {
+            throw new IllegalArgumentException(message);
+        }
     }
-  }
 
-  /** Checks if the given string is a valid metadata identifier. */
-  @CanIgnoreReturnValue
-  public static String checkMetadataIdentifier(String s) {
-    // Note that we avoid using regular expressions here, since we've not used it anywhere else
-    // thus far in Flogger (avoid it make it more likely that Flogger can be transpiled).
-    if (s.isEmpty()) {
-      throw new IllegalArgumentException("identifier must not be empty");
+    public static void checkState(boolean condition, String message) {
+        if (!condition) {
+            throw new IllegalStateException(message);
+        }
     }
-    if (!isLetter(s.charAt(0))) {
-      throw new IllegalArgumentException("identifier must start with an ASCII letter: " + s);
-    }
-    for (int n = 1; n < s.length(); n++) {
-      char c = s.charAt(n);
-      if (!isLetter(c) && (c < '0' || c > '9') && c != '_') {
-        throw new IllegalArgumentException(
-            "identifier must contain only ASCII letters, digits or underscore: " + s);
-      }
-    }
-    return s;
-  }
 
-  // WARNING: The reason the we are NOT using method from Character like "isLetter()",
-  // "isJavaLetter()", "isJavaIdentifierStart()" etc. is that these rely on the Unicode definitions
-  // of "LETTER", which are not stable between releases. In theory something marked as a letter in
-  // Unicode could be changed to not be a letter in a later release. There is a notion of stable
-  // identifiers in Unicode, which is what should be used here, but that needs more investigation.
-  private static boolean isLetter(char c) {
-    return ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z');
-  }
+    /** Checks if the given string is a valid metadata identifier. */
+    @CanIgnoreReturnValue
+    public static String checkMetadataIdentifier(String s) {
+        // Note that we avoid using regular expressions here, since we've not used it anywhere else
+        // thus far in Flogger (avoid it make it more likely that Flogger can be transpiled).
+        if (s.isEmpty()) {
+            throw new IllegalArgumentException("identifier must not be empty");
+        }
+        if (!isLetter(s.charAt(0))) {
+            throw new IllegalArgumentException("identifier must start with an ASCII letter: " + s);
+        }
+        for (var n = 1; n < s.length(); n++) {
+            var c = s.charAt(n);
+            if (!isLetter(c) && (c < '0' || c > '9') && c != '_') {
+                throw new IllegalArgumentException(
+                        "identifier must contain only ASCII letters, digits or underscore: " + s);
+            }
+        }
+        return s;
+    }
+
+    // WARNING: The reason the we are NOT using method from Character like "isLetter()",
+    // "isJavaLetter()", "isJavaIdentifierStart()" etc. is that these rely on the Unicode definitions
+    // of "LETTER", which are not stable between releases. In theory something marked as a letter in
+    // Unicode could be changed to not be a letter in a later release. There is a notion of stable
+    // identifiers in Unicode, which is what should be used here, but that needs more investigation.
+    private static boolean isLetter(char c) {
+        return ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z');
+    }
 }

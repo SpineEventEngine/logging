@@ -65,8 +65,7 @@ public abstract class JvmLogSite implements LogSiteKey {
    * methods which rely on being able to look up site specific metadata will be disabled and
    * essentially become "no ops".
    */
-  public static final JvmLogSite INVALID =
-      new JvmLogSite() {
+  public static final JvmLogSite INVALID = new JvmLogSite() {
         @Override
         public String getClassName() {
           return "<unknown class>";
@@ -83,7 +82,7 @@ public abstract class JvmLogSite implements LogSiteKey {
         }
 
         @Override
-        public String getFileName() {
+        public @Nullable String getFileName() {
           return null;
         }
         // No need to implement equals() or hashCode() for a singleton instance.
@@ -98,8 +97,8 @@ public abstract class JvmLogSite implements LogSiteKey {
   /**
    * Returns a valid line number for the log statement in the range 1 - 65535, or
    * {@link #UNKNOWN_LINE} if not known.
-   * <p>
-   * There is a limit of 16 bits for line numbers in a class. See
+   *
+   * <p>There is a limit of 16 bits for line numbers in a class. See
    * <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.7.12">here</a>
    * for more details.
    */

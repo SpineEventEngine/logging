@@ -26,6 +26,7 @@
 
 package io.spine.logging.jvm;
 
+import com.google.common.annotations.VisibleForTesting;
 import io.spine.logging.jvm.backend.Metadata;
 import org.jspecify.annotations.Nullable;
 
@@ -43,59 +44,59 @@ import static io.spine.logging.jvm.LogContext.Key.LOG_SAMPLE_EVERY_N;
  *
  * <p>This class is thread safe.
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/SamplingRateLimiter.java">
- *     Original Java code of Google Flogger</a>
+ * @see <a
+ *         href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/SamplingRateLimiter.java">
+ *         Original Java code of Google Flogger</a>
  */
 final class SamplingRateLimiter extends RateLimitStatus {
-  private static final LogSiteMap<SamplingRateLimiter> map =
-      new LogSiteMap<SamplingRateLimiter>() {
-        @Override
-        protected SamplingRateLimiter initialValue() {
-          return new SamplingRateLimiter();
+
+    private static final LogSiteMap<SamplingRateLimiter> map =
+            new LogSiteMap<>() {
+                @Override
+                protected SamplingRateLimiter initialValue() {
+                    return new SamplingRateLimiter();
+                }
+            };
+
+    @Nullable
+    static RateLimitStatus check(Metadata metadata, LogSiteKey logSiteKey) {
+        Integer rateLimitCount = metadata.findValue(LOG_SAMPLE_EVERY_N);
+        if (rateLimitCount == null || rateLimitCount <= 0) {
+            // Without valid rate limiter specific metadata, this limiter has no effect.
+            return null;
         }
-      };
-
-  @Nullable
-  static RateLimitStatus check(Metadata metadata, LogSiteKey logSiteKey) {
-    Integer rateLimitCount = metadata.findValue(LOG_SAMPLE_EVERY_N);
-    if (rateLimitCount == null || rateLimitCount <= 0) {
-      // Without valid rate limiter specific metadata, this limiter has no effect.
-      return null;
+        return map.get(logSiteKey, metadata)
+                  .sampleOneIn(rateLimitCount);
     }
-    return map.get(logSiteKey, metadata).sampleOneIn(rateLimitCount);
-  }
 
-  // Even though Random is synchonized, we have to put it in a ThreadLocal to avoid thread
-  // contention. We cannot use ThreadLocalRandom (yet) due to JDK level.
-  private static final ThreadLocal<Random> random = new ThreadLocal<Random>() {
+    // Even though Random is synchonized, we have to put it in a ThreadLocal to avoid thread
+    // contention. We cannot use ThreadLocalRandom (yet) due to JDK level.
+    private static final ThreadLocal<Random> random = ThreadLocal.withInitial(Random::new);
+
+    @VisibleForTesting
+    final AtomicInteger pendingCount = new AtomicInteger();
+
+    @VisibleForTesting
+    SamplingRateLimiter() {
+    }
+
+    RateLimitStatus sampleOneIn(int rateLimitCount) {
+        // Always "roll the dice" and adjust the count if necessary (even if we were already
+        // pending). This means that in the long run we will account for every time we roll a
+        // zero, and the number of logs will end up statistically close to 1-in-N (even if at
+        // times they can be "bursty" due to the action of other rate limiting mechanisms).
+        int pending;
+        if (random.get()
+                  .nextInt(rateLimitCount) == 0) {
+            pending = pendingCount.incrementAndGet();
+        } else {
+            pending = pendingCount.get();
+        }
+        return pending > 0 ? this : DISALLOW;
+    }
+
     @Override
-    protected Random initialValue() {
-      return new Random();
+    public void reset() {
+        pendingCount.decrementAndGet();
     }
-  };
-
-  // Visible for testing.
-  final AtomicInteger pendingCount = new AtomicInteger();
-
-  // Visible for testing.
-  SamplingRateLimiter() {}
-
-  RateLimitStatus sampleOneIn(int rateLimitCount) {
-    // Always "roll the dice" and adjust the count if necessary (even if we were already
-    // pending). This means that in the long run we will account for every time we roll a
-    // zero and the number of logs will end up statistically close to 1-in-N (even if at
-    // times they can be "bursty" due to the action of other rate limiting mechanisms).
-    int pending;
-    if (random.get().nextInt(rateLimitCount) == 0) {
-      pending = pendingCount.incrementAndGet();
-    } else {
-      pending = pendingCount.get();
-    }
-    return pending > 0 ? this : DISALLOW;
-  }
-
-  @Override
-  public void reset() {
-    pendingCount.decrementAndGet();
-  }
 }

@@ -37,57 +37,61 @@ import io.spine.logging.jvm.backend.FormatOptions;
  * <p>
  * Note that all subclasses of Parameter must be immutable and thread safe.
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parameter/Parameter.java">
- *     Original Java code of Google Flogger</a>
+ * @see <a
+ *         href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parameter/Parameter.java">
+ *         Original Java code of Google Flogger</a>
  */
 public abstract class Parameter {
-  private final int index;
-  private final FormatOptions options;
 
-  /**
-   * Constructs a parameter to format an argument using specified formatting options.
-   *
-   * @param options the format options for this parameter.
-   * @param index the index of the argument processed by this parameter.
-   */
-  protected Parameter(FormatOptions options, int index) {
-    if (options == null) {
-      throw new IllegalArgumentException("format options cannot be null");
+    private final int index;
+    private final FormatOptions options;
+
+    /**
+     * Constructs a parameter to format an argument using specified formatting options.
+     *
+     * @param options
+     *         the format options for this parameter.
+     * @param index
+     *         the index of the argument processed by this parameter.
+     */
+    protected Parameter(FormatOptions options, int index) {
+        if (options == null) {
+            throw new IllegalArgumentException("format options cannot be null");
+        }
+        if (index < 0) {
+            throw new IllegalArgumentException("invalid index: " + index);
+        }
+        this.index = index;
+        this.options = options;
     }
-    if (index < 0) {
-      throw new IllegalArgumentException("invalid index: " + index);
+
+    /** Returns the index of the argument to be processed by this parameter. */
+    public final int getIndex() {
+        return index;
     }
-    this.index = index;
-    this.options = options;
-  }
 
-  /** Returns the index of the argument to be processed by this parameter. */
-  public final int getIndex() {
-    return index;
-  }
-
-  /** Returns the formatting options. */
-  protected final FormatOptions getFormatOptions() {
-    return options;
-  }
-
-  public final void accept(ParameterVisitor visitor, Object[] args) {
-    if (getIndex() < args.length) {
-      Object value = args[getIndex()];
-      if (value != null) {
-        accept(visitor, value);
-      } else {
-        visitor.visitNull();
-      }
-    } else {
-      visitor.visitMissing();
+    /** Returns the formatting options. */
+    protected final FormatOptions getFormatOptions() {
+        return options;
     }
-  }
 
-  protected abstract void accept(ParameterVisitor visitor, Object value);
+    public final void accept(ParameterVisitor visitor, Object[] args) {
+        if (getIndex() < args.length) {
+            var value = args[getIndex()];
+            if (value != null) {
+                accept(visitor, value);
+            } else {
+                visitor.visitNull();
+            }
+        } else {
+            visitor.visitMissing();
+        }
+    }
 
-  /**
-   * Returns the printf format string specified for this parameter (eg, "%d" or "%tc").
-   */
-  public abstract String getFormat();
+    protected abstract void accept(ParameterVisitor visitor, Object value);
+
+    /**
+     * Returns the printf format string specified for this parameter (eg, "%d" or "%tc").
+     */
+    public abstract String getFormat();
 }

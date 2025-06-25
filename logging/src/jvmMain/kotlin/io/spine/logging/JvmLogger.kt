@@ -36,7 +36,7 @@ import kotlin.time.toTimeUnit
 import java.util.logging.Level as JLevel
 
 /**
- * Implements [Logger] using [FluentLogger2] as the underlying implementation.
+ * Implements [FluentLogger2] using [FluentLogger2] as the underlying implementation.
  */
 @CheckReturnValue
 public class JvmLogger(

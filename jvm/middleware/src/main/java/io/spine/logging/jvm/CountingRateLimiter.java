@@ -26,11 +26,13 @@
 
 package io.spine.logging.jvm;
 
-import static io.spine.logging.jvm.LogContext.Key.LOG_EVERY_N;
-
+import com.google.common.annotations.VisibleForTesting;
 import io.spine.logging.jvm.backend.Metadata;
-import java.util.concurrent.atomic.AtomicLong;
 import org.jspecify.annotations.Nullable;
+
+import java.util.concurrent.atomic.AtomicLong;
+
+import static io.spine.logging.jvm.LogContext.Key.LOG_EVERY_N;
 
 /**
  * Rate limiter to support {@code every(N)} functionality.
@@ -41,58 +43,63 @@ import org.jspecify.annotations.Nullable;
  *
  * <p>Instances of this class are thread safe.
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/CountingRateLimiter.java">
- *     Original Java code of Google Flogger</a>
+ * @see <a
+ *         href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/CountingRateLimiter.java">
+ *         Original Java code of Google Flogger</a>
  */
 final class CountingRateLimiter extends RateLimitStatus {
-  private static final LogSiteMap<CountingRateLimiter> map =
-      new LogSiteMap<CountingRateLimiter>() {
-        @Override
-        protected CountingRateLimiter initialValue() {
-          return new CountingRateLimiter();
+
+    private static final LogSiteMap<CountingRateLimiter> map =
+            new LogSiteMap<>() {
+                @Override
+                protected CountingRateLimiter initialValue() {
+                    return new CountingRateLimiter();
+                }
+            };
+
+    /**
+     * Returns the status of the rate limiter, or {@code null} if the {@code LOG_EVERY_N} metadata
+     * was not present.
+     *
+     * <p>The rate limiter status is {@code DISALLOW} until the log count exceeds the specified
+     * limit, and then the limiter switches to its pending state and returns an allow status until
+     * it is reset.
+     */
+    @Nullable
+    static RateLimitStatus check(Metadata metadata, LogSiteKey logSiteKey) {
+        var rateLimitCount = metadata.findValue(LOG_EVERY_N);
+        if (rateLimitCount == null) {
+            // Without rate limiter specific metadata, this limiter has no effect.
+            return null;
         }
-      };
-
-  /**
-   * Returns the status of the rate limiter, or {@code null} if the {@code LOG_EVERY_N} metadata was
-   * not present.
-   *
-   * <p>The rate limiter status is {@code DISALLOW} until the log count exceeds the specified limit,
-   * and then the limiter switches to its pending state and returns an allow status until it is
-   * reset.
-   */
-  @Nullable
-  static RateLimitStatus check(Metadata metadata, LogSiteKey logSiteKey) {
-    Integer rateLimitCount = metadata.findValue(LOG_EVERY_N);
-    if (rateLimitCount == null) {
-      // Without rate limiter specific metadata, this limiter has no effect.
-      return null;
+        return map.get(logSiteKey, metadata)
+                  .incrementAndCheckLogCount(rateLimitCount);
     }
-    return map.get(logSiteKey, metadata).incrementAndCheckLogCount(rateLimitCount);
-  }
 
-  // By setting the initial value as Integer#MAX_VALUE we ensure that the first time rate limiting
-  // is checked, the rate limit count (which is only an Integer) must be reached, placing the
-  // limiter into its pending state immediately. If this is the only limiter used, this corresponds
-  // to the first log statement always being emitted.
-  private final AtomicLong invocationCount = new AtomicLong(Integer.MAX_VALUE);
+    // By setting the initial value as Integer#MAX_VALUE we ensure that the first time rate limiting
+    // is checked, the rate limit count (which is only an Integer) must be reached, placing the
+    // limiter into its pending state immediately. If this is the only limiter used,
+    // this corresponds to the first log statement always being emitted.
+    private final AtomicLong invocationCount = new AtomicLong(Integer.MAX_VALUE);
 
-  // Visible for testing.
-  CountingRateLimiter() {}
+    @VisibleForTesting
+    CountingRateLimiter() {
+    }
 
-  /**
-   * Increments the invocation count and returns true if it reached the specified rate limit count.
-   * This is invoked during post-processing if a rate limiting count was set via {@link
-   * JvmApi#every(int)}.
-   */
-  // Visible for testing.
-  RateLimitStatus incrementAndCheckLogCount(int rateLimitCount) {
-    return invocationCount.incrementAndGet() >= rateLimitCount ? this : DISALLOW;
-  }
+    /**
+     * Increments the invocation count and returns true if it reached the specified
+     * rate limit count.
+     * This is invoked during post-processing if a rate limiting count was set via {@link
+     * JvmApi#every(int)}.
+     */
+    @VisibleForTesting
+    RateLimitStatus incrementAndCheckLogCount(int rateLimitCount) {
+        return invocationCount.incrementAndGet() >= rateLimitCount ? this : DISALLOW;
+    }
 
-  // Reset function called to move the limiter out of the "pending" state after a log occurs.
-  @Override
-  public void reset() {
-    invocationCount.set(0);
-  }
+    // Reset function called to move the limiter out of the "pending" state after a log occurs.
+    @Override
+    public void reset() {
+        invocationCount.set(0);
+    }
 }

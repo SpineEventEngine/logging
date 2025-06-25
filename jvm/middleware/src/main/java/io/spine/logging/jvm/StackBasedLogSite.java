@@ -26,10 +26,10 @@
 
 package io.spine.logging.jvm;
 
+import org.jspecify.annotations.Nullable;
+
 import static io.spine.logging.jvm.util.Checks.checkNotNull;
 import static java.lang.Math.max;
-
-import org.jspecify.annotations.Nullable;
 
 /**
  * A stack based log site which uses information from a given {@code StackTraceElement}.
@@ -47,49 +47,51 @@ import org.jspecify.annotations.Nullable;
  * generate a {@link JvmLogSite} from a {@link StackTraceElement}, use {@link
  * JvmLogSites#logSiteFrom(StackTraceElement) LogSites.logSiteFrom(myStackTaceElement)}.
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/StackBasedLogSite.java">
- *     Original Java code of Google Flogger</a>
+ * @see <a
+ *         href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/StackBasedLogSite.java">
+ *         Original Java code of Google Flogger</a>
  */
 final class StackBasedLogSite extends JvmLogSite {
-  // StackTraceElement is unmodifiable once created.
-  private final StackTraceElement stackElement;
 
-  public StackBasedLogSite(StackTraceElement stackElement) {
-    this.stackElement = checkNotNull(stackElement, "stack element");
-  }
+    // StackTraceElement is unmodifiable once created.
+    private final StackTraceElement stackElement;
 
-  @Override
-  public String getClassName() {
-    return stackElement.getClassName();
-  }
+    public StackBasedLogSite(StackTraceElement stackElement) {
+        this.stackElement = checkNotNull(stackElement, "stack element");
+    }
 
-  @Override
-  public String getMethodName() {
-    return stackElement.getMethodName();
-  }
+    @Override
+    public String getClassName() {
+        return stackElement.getClassName();
+    }
 
-  @Override
-  public int getLineNumber() {
-    // Prohibit negative numbers (which can appear in stack trace elements) from being returned.
-    return max(stackElement.getLineNumber(), JvmLogSite.UNKNOWN_LINE);
-  }
+    @Override
+    public String getMethodName() {
+        return stackElement.getMethodName();
+    }
 
-  @Override
-  public String getFileName() {
-    return stackElement.getFileName();
-  }
+    @Override
+    public int getLineNumber() {
+        // Prohibit negative numbers (which can appear in stack trace elements) from being returned.
+        return max(stackElement.getLineNumber(), UNKNOWN_LINE);
+    }
 
-  @Override
-  public boolean equals(@Nullable Object obj) {
-    return (obj instanceof StackBasedLogSite)
-        && stackElement.equals(((StackBasedLogSite) obj).stackElement);
-  }
+    @Override
+    public String getFileName() {
+        return stackElement.getFileName();
+    }
 
-  @Override
-  public int hashCode() {
-    // Note that (unlike other log site implementations) this hash-code appears to include the
-    // file name when creating a hashcode, but this should be the same every time a stack trace
-    // element is created, so it shouldn't be a problem.
-    return stackElement.hashCode();
-  }
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        return (obj instanceof StackBasedLogSite)
+                && stackElement.equals(((StackBasedLogSite) obj).stackElement);
+    }
+
+    @Override
+    public int hashCode() {
+        // Note that (unlike other log site implementations) this hash-code appears to include the
+        // file name when creating a hashcode, but this should be the same every time a stack trace
+        // element is created, so it shouldn't be a problem.
+        return stackElement.hashCode();
+    }
 }

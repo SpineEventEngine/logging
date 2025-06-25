@@ -102,6 +102,7 @@ internal class AbstractLoggerSpec {
     fun `report nested exceptions`() {
         val innerException = IllegalStateException("<<IGNORED>>")
         val outerException = object : IllegalStateException("Ooopsie") {
+            @Suppress("unused")
             private val serialVersionUID: Long = 42L
             override fun toString(): String = throw innerException // It is a nested throwing.
         }
