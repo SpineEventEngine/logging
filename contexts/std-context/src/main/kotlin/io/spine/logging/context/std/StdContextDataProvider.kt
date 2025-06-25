@@ -27,13 +27,13 @@
 package io.spine.logging.context.std
 
 import io.spine.logging.context.toMap
-import io.spine.logging.flogger.LoggingScope
-import io.spine.logging.flogger.backend.Metadata
-import io.spine.logging.flogger.context.ContextDataProvider
-import io.spine.logging.flogger.context.ScopeType
-import io.spine.logging.flogger.context.ScopedLoggingContext
-import io.spine.logging.flogger.context.ScopedLoggingContext.LoggingContextCloseable
-import io.spine.logging.flogger.context.Tags
+import io.spine.logging.jvm.LoggingScope
+import io.spine.logging.jvm.backend.Metadata
+import io.spine.logging.jvm.context.ContextDataProvider
+import io.spine.logging.jvm.context.ScopeType
+import io.spine.logging.jvm.context.ScopedLoggingContext
+import io.spine.logging.jvm.context.ScopedLoggingContext.LoggingContextCloseable
+import io.spine.logging.jvm.context.Tags
 import io.spine.logging.toJavaLogging
 import io.spine.logging.toLevel
 import java.util.logging.Level

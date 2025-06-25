@@ -29,12 +29,12 @@ package io.spine.logging.backend.log4j2
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
-import io.spine.logging.flogger.LogContext.Key
-import io.spine.logging.flogger.context.ContextDataProvider
-import io.spine.logging.flogger.context.Tags
-import io.spine.logging.flogger.given.ConfigurableLogger
-import io.spine.logging.flogger.repeatedKey
-import io.spine.logging.flogger.singleKey
+import io.spine.logging.jvm.LogContext.Key
+import io.spine.logging.jvm.context.ContextDataProvider
+import io.spine.logging.jvm.context.Tags
+import io.spine.logging.jvm.given.ConfigurableLogger
+import io.spine.logging.jvm.repeatedKey
+import io.spine.logging.jvm.singleKey
 import java.util.concurrent.atomic.AtomicInteger
 import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.LogManager
@@ -48,7 +48,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for interaction between [ScopedLoggingContext][io.spine.logging.flogger.context.ScopedLoggingContext]
+ * Tests for interaction between [ScopedLoggingContext][io.spine.logging.jvm.context.ScopedLoggingContext]
  * and [Log4j2LoggerBackend].
  *
  * `ScopedLoggingContext` is abstract. To test it with Log4j backend,

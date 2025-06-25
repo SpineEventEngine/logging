@@ -26,10 +26,10 @@
 
 package io.spine.logging
 
-import io.spine.logging.flogger.FluentLogger2
-import io.spine.logging.flogger.FloggerLogSites.callerOf
+import io.spine.logging.jvm.FluentLogger2
+import io.spine.logging.jvm.JvmLogSites.callerOf
 import com.google.errorprone.annotations.CheckReturnValue
-import io.spine.logging.flogger.FloggerLogSite
+import io.spine.logging.jvm.JvmLogSite
 import kotlin.reflect.KClass
 import kotlin.time.DurationUnit
 import kotlin.time.toTimeUnit
@@ -159,20 +159,20 @@ public operator fun JLevel.compareTo(other: JLevel): Int =
     intValue().compareTo(other.intValue())
 
 /**
- * Converts this [LogSite] to Flogger's counterpart.
+ * Converts this [LogSite] to the JVM logging counterpart.
  */
-private fun LogSite.toFloggerSite(): FloggerLogSite {
+private fun LogSite.toFloggerSite(): JvmLogSite {
     if (this == LogSite.INVALID) {
-        return FloggerLogSite.INVALID
+        return JvmLogSite.INVALID
     }
-    return object : FloggerLogSite() {
+    return object : JvmLogSite() {
         override fun getClassName(): String = this@toFloggerSite.className
         override fun getMethodName(): String = this@toFloggerSite.methodName
         override fun getLineNumber(): Int = this@toFloggerSite.lineNumber
         override fun getFileName(): String? = null
         override fun hashCode(): Int = this@toFloggerSite.hashCode()
         override fun equals(other: Any?): Boolean {
-            if (other !is FloggerLogSite) {
+            if (other !is JvmLogSite) {
                 return false
             }
             return lineNumber == other.lineNumber &&

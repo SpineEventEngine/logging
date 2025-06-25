@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.logging.flogger.backend.Platform
+import io.spine.logging.jvm.backend.Platform
 import io.kotest.matchers.shouldBe
 import io.spine.logging.Level
 import io.spine.logging.backend.log4j2.Log4j2BackendFactory

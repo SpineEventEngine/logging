@@ -60,7 +60,7 @@ import static org.objectweb.asm.Opcodes.V1_6;
 /**
  * Generates {@code PlatformProvider} class from scratch.
  *
- * <p>The generated class discovers {@code io.spine.logging.flogger.backend.Platform}
+ * <p>The generated class discovers {@code io.spine.logging.jvm.backend.Platform}
  * implementations, and creates their instances.
  *
  * <p>This generator is necessary to create a class, which explicitly
@@ -83,7 +83,7 @@ import static org.objectweb.asm.Opcodes.V1_6;
 public final class PlatformProviderGenerator {
 
     private static final String[] PLATFORM_CLASSES = {
-            "Lio/spine/logging/flogger/backend/system/DefaultPlatform;",
+            "Lio/spine/logging/jvm/backend/system/DefaultPlatform;",
     };
 
     /**
@@ -99,7 +99,7 @@ public final class PlatformProviderGenerator {
         classWriter.visit(
                 V1_6,
                 ACC_PUBLIC + ACC_FINAL + ACC_SUPER,
-                "io/spine/logging/flogger/backend/PlatformProvider",
+                "io/spine/logging/jvm/backend/PlatformProvider",
                 null,
                 "java/lang/Object",
                 null)
@@ -118,7 +118,7 @@ public final class PlatformProviderGenerator {
         methodVisitor = classWriter.visitMethod(
                 ACC_PUBLIC + ACC_STATIC,
                 "getPlatform",
-                "()Lio/spine/logging/flogger/backend/Platform;",
+                "()Lio/spine/logging/jvm/backend/Platform;",
                 null,
                 null
         );
@@ -141,7 +141,7 @@ public final class PlatformProviderGenerator {
         var path = Paths.get(args[0]);
         Files.createDirectories(path.getParent());
         try (var jar = new JarOutputStream(newOutputStream(path, StandardOpenOption.CREATE_NEW))) {
-            var entry = new ZipEntry("io/spine/logging/flogger/backend/PlatformProvider.class");
+            var entry = new ZipEntry("io/spine/logging/jvm/backend/PlatformProvider.class");
             // Clear timestamp to ensure JAR is deterministic for build cache.
             entry.setTime(0);
             jar.putNextEntry(entry);
@@ -231,7 +231,7 @@ public final class PlatformProviderGenerator {
                 "newInstance",
                 "([Ljava/lang/Object;)Ljava/lang/Object;",
                 false);
-        methodVisitor.visitTypeInsn(CHECKCAST, "io/spine/logging/flogger/backend/Platform");
+        methodVisitor.visitTypeInsn(CHECKCAST, "io/spine/logging/jvm/backend/Platform");
         methodVisitor.visitLabel(endLabel);
         methodVisitor.visitInsn(ARETURN);
 

@@ -26,7 +26,7 @@
 
 package io.spine.logging
 
-import io.spine.logging.flogger.FloggerMetadataKey
+import io.spine.logging.jvm.JvmMetadataKey as FloggerMetadataKey
 import kotlin.reflect.KClass
 import kotlin.reflect.cast
 

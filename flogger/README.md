@@ -3,7 +3,7 @@
 This directory contains Flogger [modules][flogger-github] built with Gradle.
 
 Original Flogger sources have been repackaged from `com.google.common.*` 
-to `io.spine.logging.flogger.*`. It prevents a runtime clash in situations 
+to `io.spine.logging.jvm.*`. It prevents a runtime clash in situations 
 when a user has both `spine-logging` and `flogger` on the classpath. 
 However, a user is not meant to use two logging libraries simultaneously.
 `flogger` may appear on the classpath as a transitive dependency.

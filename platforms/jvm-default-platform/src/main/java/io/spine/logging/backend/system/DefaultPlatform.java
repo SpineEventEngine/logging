@@ -27,18 +27,18 @@
 package io.spine.logging.backend.system;
 
 import io.spine.logging.backend.jul.JulBackendFactory;
-import io.spine.logging.flogger.backend.BackendFactory;
-import io.spine.logging.flogger.backend.Clock;
-import io.spine.logging.flogger.backend.LoggerBackend;
-import io.spine.logging.flogger.backend.Platform;
-import io.spine.logging.flogger.context.ContextDataProvider;
+import io.spine.logging.jvm.backend.BackendFactory;
+import io.spine.logging.jvm.backend.Clock;
+import io.spine.logging.jvm.backend.LoggerBackend;
+import io.spine.logging.jvm.backend.Platform;
+import io.spine.logging.jvm.context.ContextDataProvider;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
 
-import static io.spine.logging.flogger.util.StaticMethodCaller.getInstanceFromSystemProperty;
+import static io.spine.logging.jvm.util.StaticMethodCaller.getInstanceFromSystemProperty;
 
 /**
  * The default logger platform for a server-side Java environment.

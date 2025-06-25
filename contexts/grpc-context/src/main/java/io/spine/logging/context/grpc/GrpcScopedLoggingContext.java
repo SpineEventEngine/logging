@@ -26,14 +26,14 @@
 
 package io.spine.logging.context.grpc;
 
-import static io.spine.logging.flogger.util.Checks.checkNotNull;
+import static io.spine.logging.jvm.util.Checks.checkNotNull;
 
-import io.spine.logging.flogger.FloggerMetadataKey;
-import io.spine.logging.flogger.context.ContextMetadata;
-import io.spine.logging.flogger.context.LogLevelMap;
-import io.spine.logging.flogger.context.ScopeType;
-import io.spine.logging.flogger.context.ScopedLoggingContext;
-import io.spine.logging.flogger.context.Tags;
+import io.spine.logging.jvm.JvmMetadataKey;
+import io.spine.logging.jvm.context.ContextMetadata;
+import io.spine.logging.jvm.context.LogLevelMap;
+import io.spine.logging.jvm.context.ScopeType;
+import io.spine.logging.jvm.context.ScopedLoggingContext;
+import io.spine.logging.jvm.context.Tags;
 import io.grpc.Context;
 import org.jspecify.annotations.Nullable;
 
@@ -99,7 +99,7 @@ final class GrpcScopedLoggingContext extends ScopedLoggingContext {
   }
 
   @Override
-  public <T> boolean addMetadata(FloggerMetadataKey<T> key, T value) {
+  public <T> boolean addMetadata(JvmMetadataKey<T> key, T value) {
     // Serves as the null pointer check, and we don't care much about the extra allocation in the
     // case where there's no context, because that should be very rare (and the singleton is small).
     ContextMetadata metadata = ContextMetadata.singleton(key, value);

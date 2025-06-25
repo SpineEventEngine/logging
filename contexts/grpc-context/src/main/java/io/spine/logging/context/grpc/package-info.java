@@ -26,7 +26,7 @@
 
 /**
  * Contains {@link io.grpc.Context gRPC}-based implementation of
- * {@link io.spine.logging.flogger.context.ScopedLoggingContext ScopedLoggingContext}.
+ * {@link io.spine.logging.jvm.context.ScopedLoggingContext ScopedLoggingContext}.
  *
  * @see <a href="https://rb.gy/zghcm">Original Java code of Google Flogger</a>
  */

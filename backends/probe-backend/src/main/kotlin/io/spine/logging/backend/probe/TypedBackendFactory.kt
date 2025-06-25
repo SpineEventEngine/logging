@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.probe
 
-import io.spine.logging.flogger.backend.LoggerBackend
+import io.spine.logging.jvm.backend.LoggerBackend
 
 /**
  * A typed [BackendFactory][io.spine.logging.backend.system.BackendFactory].

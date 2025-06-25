@@ -33,13 +33,13 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
-import io.spine.logging.flogger.FloggerLogSite
-import io.spine.logging.flogger.LogContext.Key
-import io.spine.logging.flogger.backend.given.FakeLogData
-import io.spine.logging.flogger.given.FakeLogSite
-import io.spine.logging.flogger.parser.ParseException
-import io.spine.logging.flogger.repeatedKey
-import io.spine.logging.flogger.singleKey
+import io.spine.logging.jvm.JvmLogSite
+import io.spine.logging.jvm.LogContext.Key
+import io.spine.logging.jvm.backend.given.FakeLogData
+import io.spine.logging.jvm.given.FakeLogSite
+import io.spine.logging.jvm.parser.ParseException
+import io.spine.logging.jvm.repeatedKey
+import io.spine.logging.jvm.singleKey
 import java.util.concurrent.atomic.AtomicInteger
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.core.Appender
@@ -175,7 +175,7 @@ internal class Log4j2LoggerBackendSpec {
             testLogSite(logSite)
         }
 
-        private fun testLogSite(logSite: FloggerLogSite) {
+        private fun testLogSite(logSite: JvmLogSite) {
             val data = FakeLogData("")
                 .setLogSite(logSite)
             backend.log(data)

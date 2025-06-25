@@ -27,11 +27,11 @@
 package io.spine.logging.backend.system.given
 
 import com.google.auto.service.AutoService
-import io.spine.logging.flogger.backend.LoggerBackend
-import io.spine.logging.flogger.backend.BackendFactory
-import io.spine.logging.flogger.backend.Clock
-import io.spine.logging.flogger.context.ContextDataProvider
-import io.spine.logging.flogger.context.ScopedLoggingContext
+import io.spine.logging.jvm.backend.LoggerBackend
+import io.spine.logging.jvm.backend.BackendFactory
+import io.spine.logging.jvm.backend.Clock
+import io.spine.logging.jvm.context.ContextDataProvider
+import io.spine.logging.jvm.context.ScopedLoggingContext
 
 /**
  * This file contains Java services that are used to test how

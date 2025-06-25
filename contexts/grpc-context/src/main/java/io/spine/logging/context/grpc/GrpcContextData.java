@@ -26,12 +26,12 @@
 
 package io.spine.logging.context.grpc;
 
-import io.spine.logging.flogger.LoggingScope;
-import io.spine.logging.flogger.context.ContextMetadata;
-import io.spine.logging.flogger.context.LogLevelMap;
-import io.spine.logging.flogger.context.ScopeType;
-import io.spine.logging.flogger.context.ScopedLoggingContext.ScopeList;
-import io.spine.logging.flogger.context.Tags;
+import io.spine.logging.jvm.LoggingScope;
+import io.spine.logging.jvm.context.ContextMetadata;
+import io.spine.logging.jvm.context.LogLevelMap;
+import io.spine.logging.jvm.context.ScopeType;
+import io.spine.logging.jvm.context.ScopedLoggingContext.ScopeList;
+import io.spine.logging.jvm.context.Tags;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import org.jspecify.annotations.Nullable;

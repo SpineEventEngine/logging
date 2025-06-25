@@ -26,12 +26,12 @@
 
 package io.spine.logging.backend.jul;
 
-import io.spine.logging.flogger.backend.LogData;
-import io.spine.logging.flogger.backend.LogMessageFormatter;
-import io.spine.logging.flogger.backend.MessageUtils;
-import io.spine.logging.flogger.backend.Metadata;
-import io.spine.logging.flogger.backend.MetadataProcessor;
-import io.spine.logging.flogger.backend.SimpleMessageFormatter;
+import io.spine.logging.jvm.backend.LogData;
+import io.spine.logging.jvm.backend.LogMessageFormatter;
+import io.spine.logging.jvm.backend.MessageUtils;
+import io.spine.logging.jvm.backend.Metadata;
+import io.spine.logging.jvm.backend.MetadataProcessor;
+import io.spine.logging.jvm.backend.SimpleMessageFormatter;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 
 import java.util.Arrays;

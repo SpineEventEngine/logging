@@ -26,10 +26,10 @@
 
 package io.spine.logging.backend.system;
 
-import io.spine.logging.flogger.AbstractLogger;
-import io.spine.logging.flogger.FloggerLogSite;
-import io.spine.logging.flogger.FloggerLogSites;
-import io.spine.logging.flogger.backend.Platform.LogCallerFinder;
+import io.spine.logging.jvm.AbstractLogger;
+import io.spine.logging.jvm.JvmLogSite;
+import io.spine.logging.jvm.JvmLogSites;
+import io.spine.logging.jvm.backend.Platform.LogCallerFinder;
 
 import static io.spine.reflect.CallerFinder.findCallerOf;
 
@@ -61,13 +61,13 @@ public final class StackBasedCallerFinder extends LogCallerFinder {
   }
 
   @Override
-  public FloggerLogSite findLogSite(Class<?> loggerApi, int stackFramesToSkip) {
+  public JvmLogSite findLogSite(Class<?> loggerApi, int stackFramesToSkip) {
     // Skip an additional stack frame because we create the Throwable inside this method, not at
     // the point that this method was invoked (which allows completely alternate implementations
     // to avoid even constructing the Throwable instance).
     var caller = findCallerOf(loggerApi, stackFramesToSkip + 1);
     // Returns INVALID if "caller" is null (no caller found for given API class).
-    return FloggerLogSites.logSiteFrom(caller);
+    return JvmLogSites.logSiteFrom(caller);
   }
 
   @Override

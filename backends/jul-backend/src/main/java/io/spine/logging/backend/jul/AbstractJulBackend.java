@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.jul;
 
-import io.spine.logging.flogger.backend.LoggerBackend;
+import io.spine.logging.jvm.backend.LoggerBackend;
 
 import java.util.logging.Filter;
 import java.util.logging.Handler;

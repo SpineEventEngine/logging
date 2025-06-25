@@ -26,8 +26,8 @@
 
 package io.spine.logging.backend.jul
 
-import io.spine.logging.flogger.backend.BackendFactory
-import io.spine.logging.flogger.backend.LoggerBackend
+import io.spine.logging.jvm.backend.BackendFactory
+import io.spine.logging.jvm.backend.LoggerBackend
 
 /**
  * A [BackendFactory] producing [LoggerBackend] which supports publishing

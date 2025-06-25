@@ -26,13 +26,13 @@
 
 package io.spine.logging.backend.system.given
 
-import io.spine.logging.flogger.backend.BackendFactory
-import io.spine.logging.flogger.backend.Clock
-import io.spine.logging.flogger.AbstractLogger
-import io.spine.logging.flogger.FloggerLogSite
-import io.spine.logging.flogger.backend.LoggerBackend
-import io.spine.logging.flogger.backend.Platform
-import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
+import io.spine.logging.jvm.backend.BackendFactory
+import io.spine.logging.jvm.backend.Clock
+import io.spine.logging.jvm.AbstractLogger
+import io.spine.logging.jvm.JvmLogSite
+import io.spine.logging.jvm.backend.LoggerBackend
+import io.spine.logging.jvm.backend.Platform
+import io.spine.logging.jvm.backend.given.MemoizingLoggerBackend
 
 /**
  * A primitive factory of [MemoizingLoggerBackend].
@@ -72,6 +72,6 @@ internal class NoOpCallerFinder : Platform.LogCallerFinder() {
     /**
      * Throws [IllegalStateException].
      */
-    override fun findLogSite(loggerApi: Class<*>?, stackFramesToSkip: Int): FloggerLogSite =
+    override fun findLogSite(loggerApi: Class<*>?, stackFramesToSkip: Int): JvmLogSite =
         throw UnsupportedOperationException()
 }
