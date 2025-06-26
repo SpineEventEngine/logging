@@ -84,36 +84,36 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
          * This
          * value is set by {@link JvmApi#withCause(Throwable)}.
          */
-        public static final JvmMetadataKey<Throwable> LOG_CAUSE =
-                JvmMetadataKey.single("cause", Throwable.class);
+        public static final MetadataKey<Throwable> LOG_CAUSE =
+                MetadataKey.single("cause", Throwable.class);
 
         /**
          * The key associated with a rate limiting counter for "1-in-N" rate limiting. The value is
          * set by {@link JvmApi#every(int)}.
          */
-        public static final JvmMetadataKey<Integer> LOG_EVERY_N =
-                JvmMetadataKey.single("ratelimit_count", Integer.class);
+        public static final MetadataKey<Integer> LOG_EVERY_N =
+                MetadataKey.single("ratelimit_count", Integer.class);
 
         /**
          * The key associated with a rate limiting counter for "1-in-N" randomly sampled rate
          * limiting. The value is set by {@link JvmApi#onAverageEvery(int)}.
          */
-        public static final JvmMetadataKey<Integer> LOG_SAMPLE_EVERY_N =
-                JvmMetadataKey.single("sampling_count", Integer.class);
+        public static final MetadataKey<Integer> LOG_SAMPLE_EVERY_N =
+                MetadataKey.single("sampling_count", Integer.class);
 
         /**
          * The key associated with a rate limiting period for "at most once every N" rate limiting.
          * The value is set by {@link JvmApi#atMostEvery(int, TimeUnit)}.
          */
-        public static final JvmMetadataKey<RateLimitPeriod> LOG_AT_MOST_EVERY =
-                JvmMetadataKey.single("ratelimit_period", RateLimitPeriod.class);
+        public static final MetadataKey<RateLimitPeriod> LOG_AT_MOST_EVERY =
+                MetadataKey.single("ratelimit_period", RateLimitPeriod.class);
 
         /**
          * The key associated with a count of rate limited logs. This is only public so backends can
          * reference the key to control formatting.
          */
-        public static final JvmMetadataKey<Integer> SKIPPED_LOG_COUNT =
-                JvmMetadataKey.single("skipped", Integer.class);
+        public static final MetadataKey<Integer> SKIPPED_LOG_COUNT =
+                MetadataKey.single("skipped", Integer.class);
 
         /**
          * The key associated with a sequence of log site "grouping keys". These serve to specialize
@@ -121,8 +121,8 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
          * used by the {@code per()} methods and is only public so backends can reference the key to
          * control formatting.
          */
-        public static final JvmMetadataKey<Object> LOG_SITE_GROUPING_KEY =
-                new JvmMetadataKey<>("group_by", Object.class, true) {
+        public static final MetadataKey<Object> LOG_SITE_GROUPING_KEY =
+                new MetadataKey<>("group_by", Object.class, true) {
                     @Override
                     public void emitRepeated(Iterator<Object> keys, KeyValueHandler out) {
                         if (keys.hasNext()) {
@@ -179,8 +179,8 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
          * statement itself. Thus it makes no sense to provide a public method to set this value
          * programmatically for a log statement.
          */
-        public static final JvmMetadataKey<Boolean> WAS_FORCED =
-                JvmMetadataKey.single("forced", Boolean.class);
+        public static final MetadataKey<Boolean> WAS_FORCED =
+                MetadataKey.single("forced", Boolean.class);
 
         /**
          * The key associated with any injected {@link Tags}.
@@ -195,8 +195,8 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
          * data. Users should never build new {@link Tags} instances just to pass them into a log
          * statement.
          */
-        public static final JvmMetadataKey<Tags> TAGS =
-                new JvmMetadataKey<>("tags", Tags.class, false) {
+        public static final MetadataKey<Tags> TAGS =
+                new MetadataKey<>("tags", Tags.class, false) {
                     @Override
                     public void emit(Tags tags, KeyValueHandler out) {
                         for (Map.Entry<String, ? extends Set<Object>> e : tags.asMap()
@@ -217,8 +217,8 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
          * Key associated with the metadata for specifying additional stack information with a log
          * statement.
          */
-        public static final JvmMetadataKey<StackSize> CONTEXT_STACK_SIZE =
-                JvmMetadataKey.single("stack_size", StackSize.class);
+        public static final MetadataKey<StackSize> CONTEXT_STACK_SIZE =
+                MetadataKey.single("stack_size", StackSize.class);
     }
 
     static final class MutableMetadata extends Metadata {
@@ -252,11 +252,11 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
         }
 
         @Override
-        public JvmMetadataKey<?> getKey(int n) {
+        public MetadataKey<?> getKey(int n) {
             if (n >= keyValueCount) {
                 throw new IndexOutOfBoundsException();
             }
-            return (JvmMetadataKey<?>) keyValuePairs[2 * n];
+            return (MetadataKey<?>) keyValuePairs[2 * n];
         }
 
         @Override
@@ -267,7 +267,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
             return keyValuePairs[(2 * n) + 1];
         }
 
-        private int indexOf(JvmMetadataKey<?> key) {
+        private int indexOf(MetadataKey<?> key) {
             for (var index = 0; index < keyValueCount; index++) {
                 if (keyValuePairs[2 * index].equals(key)) {
                     return index;
@@ -278,7 +278,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
 
         @Override
         @Nullable
-        public <T> T findValue(JvmMetadataKey<T> key) {
+        public <T> T findValue(MetadataKey<T> key) {
             var index = indexOf(key);
             return index != -1 ? key.cast(keyValuePairs[(2 * index) + 1]) : null;
         }
@@ -289,7 +289,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
          * cannot be repeated, and there is already a value for the key in the metadata, then the
          * existing value is replaced, otherwise the value is added at the end of the metadata.
          */
-        <T> void addValue(JvmMetadataKey<T> key, T value) {
+        <T> void addValue(MetadataKey<T> key, T value) {
             if (!key.canRepeat()) {
                 var index = indexOf(key);
                 if (index != -1) {
@@ -309,7 +309,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
             keyValueCount += 1;
         }
 
-        private static <T> @NonNull JvmMetadataKey<T> checkKey(JvmMetadataKey<T> key) {
+        private static <T> @NonNull MetadataKey<T> checkKey(MetadataKey<T> key) {
             return checkNotNull(key, "metadata key");
         }
 
@@ -318,7 +318,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
         }
 
         /** Removes all key/value pairs for a given key. */
-        private void removeAllValues(JvmMetadataKey<?> key) {
+        private void removeAllValues(MetadataKey<?> key) {
             var index = indexOf(key);
             if (index >= 0) {
                 var dest = 2 * index;
@@ -531,7 +531,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      * @param value
      *         the metadata value.
      */
-    protected final <T> void addMetadata(JvmMetadataKey<T> key, T value) {
+    protected final <T> void addMetadata(MetadataKey<T> key, T value) {
         if (metadata == null) {
             metadata = new MutableMetadata();
         }
@@ -547,7 +547,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      * @param key
      *         the metadata key (see {@link LogData}).
      */
-    protected final void removeMetadata(JvmMetadataKey<?> key) {
+    protected final void removeMetadata(MetadataKey<?> key) {
         if (metadata != null) {
             metadata.removeAllValues(key);
         }
@@ -863,7 +863,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
     }
 
     @Override
-    public final <T> API with(JvmMetadataKey<T> key, @Nullable T value) {
+    public final <T> API with(MetadataKey<T> key, @Nullable T value) {
         // Null keys are always bad (even if the value is also null). This is one of the few places
         // where the logger API will throw a runtime exception (and as such it's important to ensure
         // the NoOp implementation also does the check). The reasoning for this is that the metadata
@@ -877,7 +877,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
     }
 
     @Override
-    public final API with(JvmMetadataKey<Boolean> key) {
+    public final API with(MetadataKey<Boolean> key) {
         return with(key, Boolean.TRUE);
     }
 
@@ -921,7 +921,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
         return everyImpl(Key.LOG_SAMPLE_EVERY_N, n, "sampling");
     }
 
-    private API everyImpl(JvmMetadataKey<Integer> key, int n, String label) {
+    private API everyImpl(MetadataKey<Integer> key, int n, String label) {
         // See wasForced() for discussion as to why this occurs before argument checking.
         if (wasForced()) {
             return api();

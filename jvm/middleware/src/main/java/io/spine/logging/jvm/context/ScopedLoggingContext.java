@@ -29,7 +29,7 @@ package io.spine.logging.jvm.context;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.MustBeClosed;
 import io.spine.logging.jvm.JvmApi;
-import io.spine.logging.jvm.JvmMetadataKey;
+import io.spine.logging.jvm.MetadataKey;
 import io.spine.logging.jvm.LoggingScope;
 import io.spine.logging.jvm.LoggingScopeProvider;
 import org.jspecify.annotations.Nullable;
@@ -183,7 +183,7 @@ public abstract class ScopedLoggingContext {
          * times on a builder.
          */
         @CanIgnoreReturnValue
-        public final <T> Builder withMetadata(JvmMetadataKey<T> key, T value) {
+        public final <T> Builder withMetadata(MetadataKey<T> key, T value) {
             if (metadata == null) {
                 metadata = ContextMetadata.builder();
             }
@@ -464,7 +464,7 @@ public abstract class ScopedLoggingContext {
      * new context, rather than adding it to context visible to multiple threads.
      */
     @CanIgnoreReturnValue
-    public <T> boolean addMetadata(JvmMetadataKey<T> key, T value) {
+    public <T> boolean addMetadata(MetadataKey<T> key, T value) {
         checkNotNull(key, "key");
         checkNotNull(value, "value");
         return false;

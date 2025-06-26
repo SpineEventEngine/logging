@@ -27,7 +27,7 @@
 package io.spine.logging.jvm.context;
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
-import io.spine.logging.jvm.JvmMetadataKey;
+import io.spine.logging.jvm.MetadataKey;
 import io.spine.logging.jvm.backend.Metadata;
 import org.jspecify.annotations.Nullable;
 
@@ -52,10 +52,10 @@ public abstract class ContextMetadata extends Metadata {
 
     private static final class Entry<T> {
 
-        final JvmMetadataKey<T> key;
+        final MetadataKey<T> key;
         final T value;
 
-        Entry(JvmMetadataKey<T> key, T value) {
+        Entry(MetadataKey<T> key, T value) {
             this.key = checkNotNull(key, "key");
             this.value = checkNotNull(value, "value");
         }
@@ -82,7 +82,7 @@ public abstract class ContextMetadata extends Metadata {
 
         /** Add a single metadata key/value pair to the builder. */
         @CanIgnoreReturnValue
-        public <T> Builder add(JvmMetadataKey<T> key, T value) {
+        public <T> Builder add(MetadataKey<T> key, T value) {
             // Entries are immutable and get moved into the metadata when it is built,
             // so these get shared and reduce the size of the metadata storage compared
             // to storing adjacent key/value pairs.
@@ -103,7 +103,7 @@ public abstract class ContextMetadata extends Metadata {
     }
 
     /** Returns a space efficient {@code ScopeMetadata} containing a single value. */
-    public static <T> ContextMetadata singleton(JvmMetadataKey<T> key, T value) {
+    public static <T> ContextMetadata singleton(MetadataKey<T> key, T value) {
         return new SingletonMetadata(key, value);
     }
 
@@ -127,7 +127,7 @@ public abstract class ContextMetadata extends Metadata {
      *
      * <p>Use {@link io.spine.logging.jvm.backend.MetadataProcessor MetadataProcessor} to process
      * metadata consistently with respect to single valued and repeated keys, and use {@link
-     * Metadata#findValue(JvmMetadataKey)} to look up the “most recent” value for a single
+     * Metadata#findValue(MetadataKey)} to look up the “most recent” value for a single
      * valued key.
      */
     public abstract ContextMetadata concatenate(ContextMetadata metadata);
@@ -136,7 +136,7 @@ public abstract class ContextMetadata extends Metadata {
     abstract Entry<?> get(int n);
 
     @Override
-    public JvmMetadataKey<?> getKey(int n) {
+    public MetadataKey<?> getKey(int n) {
         return get(n).key;
     }
 
@@ -166,7 +166,7 @@ public abstract class ContextMetadata extends Metadata {
         @Override
         @Nullable
         @SuppressWarnings("unchecked")
-        public <T> T findValue(JvmMetadataKey<T> key) {
+        public <T> T findValue(MetadataKey<T> key) {
             checkCannotRepeat(key);
             for (var n = entries.length - 1; n >= 0; n--) {
                 var e = entries[n];
@@ -195,7 +195,7 @@ public abstract class ContextMetadata extends Metadata {
         }
     }
 
-    private static <T> void checkCannotRepeat(JvmMetadataKey<T> key) {
+    private static <T> void checkCannotRepeat(MetadataKey<T> key) {
         checkArgument(!key.canRepeat(), "metadata key must be single valued");
     }
 
@@ -203,7 +203,7 @@ public abstract class ContextMetadata extends Metadata {
 
         private final Entry<?> entry;
 
-        private <T> SingletonMetadata(JvmMetadataKey<T> key, T value) {
+        private <T> SingletonMetadata(MetadataKey<T> key, T value) {
             this.entry = new Entry<T>(key, value);
         }
 
@@ -223,7 +223,7 @@ public abstract class ContextMetadata extends Metadata {
         @Override
         @Nullable
         @SuppressWarnings("unchecked")
-        public <R> R findValue(JvmMetadataKey<R> key) {
+        public <R> R findValue(MetadataKey<R> key) {
             checkCannotRepeat(key);
             return entry.key.equals(key) ? (R) entry.value : null;
         }
@@ -267,7 +267,7 @@ public abstract class ContextMetadata extends Metadata {
 
         @Override
         @Nullable
-        public <T> T findValue(JvmMetadataKey<T> key) {
+        public <T> T findValue(MetadataKey<T> key) {
             // For consistency, do the same checks as for non-empty instances.
             checkCannotRepeat(key);
             return null;

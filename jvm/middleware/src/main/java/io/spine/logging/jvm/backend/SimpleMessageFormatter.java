@@ -27,8 +27,8 @@
 package io.spine.logging.jvm.backend;
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
-import io.spine.logging.jvm.JvmMetadataKey;
-import io.spine.logging.jvm.JvmMetadataKey.KeyValueHandler;
+import io.spine.logging.jvm.MetadataKey;
+import io.spine.logging.jvm.MetadataKey.KeyValueHandler;
 import io.spine.logging.jvm.LogContext;
 import org.jspecify.annotations.Nullable;
 
@@ -59,7 +59,7 @@ import java.util.logging.Level;
  * }</pre>
  *
  * <p>If additional metadata keys, other than the {@code cause} are to be omitted, then {@link
- * #getSimpleFormatterIgnoring(JvmMetadataKey...)} can be used to obtain a static formatter,
+ * #getSimpleFormatterIgnoring(MetadataKey...)} can be used to obtain a static formatter,
  * instead of using the default.
  *
  * @see <a
@@ -69,7 +69,7 @@ import java.util.logging.Level;
 public final class SimpleMessageFormatter {
 
     @SuppressWarnings("ConstantCaseForConstants")
-    private static final Set<JvmMetadataKey<?>> DEFAULT_KEYS_TO_IGNORE =
+    private static final Set<MetadataKey<?>> DEFAULT_KEYS_TO_IGNORE =
             Collections.singleton(LogContext.Key.LOG_CAUSE);
 
     private static final LogMessageFormatter DEFAULT_FORMATTER = newFormatter(
@@ -120,11 +120,11 @@ public final class SimpleMessageFormatter {
      * also be suppressed.
      */
     public static LogMessageFormatter getSimpleFormatterIgnoring(
-            JvmMetadataKey<?>... extraIgnoredKeys) {
+            MetadataKey<?>... extraIgnoredKeys) {
         if (extraIgnoredKeys.length == 0) {
             return getDefaultFormatter();
         }
-        Set<JvmMetadataKey<?>> ignored = new HashSet<>(DEFAULT_KEYS_TO_IGNORE);
+        Set<MetadataKey<?>> ignored = new HashSet<>(DEFAULT_KEYS_TO_IGNORE);
         Collections.addAll(ignored, extraIgnoredKeys);
         return newFormatter(ignored);
     }
@@ -217,7 +217,7 @@ public final class SimpleMessageFormatter {
      *         message.
      */
     public static boolean mustBeFormatted(
-            LogData logData, MetadataProcessor metadata, Set<JvmMetadataKey<?>> keysToIgnore) {
+            LogData logData, MetadataProcessor metadata, Set<MetadataKey<?>> keysToIgnore) {
         // If there are logged arguments or more metadata keys than can be ignored, we fail immediately
         // which avoids the cost of creating the metadata key set (so don't remove the size check).
         return logData.getTemplateContext() != null
@@ -230,7 +230,7 @@ public final class SimpleMessageFormatter {
      * must
      * ensure that the given set is effectively immutable.
      */
-    private static LogMessageFormatter newFormatter(final Set<JvmMetadataKey<?>> keysToIgnore) {
+    private static LogMessageFormatter newFormatter(final Set<MetadataKey<?>> keysToIgnore) {
         return new LogMessageFormatter() {
             private final MetadataHandler<KeyValueHandler> handler =
                     MetadataKeyValueHandlers.getDefaultHandler(keysToIgnore);

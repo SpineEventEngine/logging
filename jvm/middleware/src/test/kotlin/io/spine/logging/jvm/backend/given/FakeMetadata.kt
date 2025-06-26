@@ -27,7 +27,7 @@
 package io.spine.logging.jvm.backend.given
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
-import io.spine.logging.jvm.JvmMetadataKey
+import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.backend.Metadata
 
 /**
@@ -38,7 +38,7 @@ import io.spine.logging.jvm.backend.Metadata
  */
 class FakeMetadata : Metadata() {
 
-    private class KeyValuePair<T>(val key: JvmMetadataKey<T>, val value: T)
+    private class KeyValuePair<T>(val key: MetadataKey<T>, val value: T)
 
     private val entries = mutableListOf<KeyValuePair<*>>()
 
@@ -46,18 +46,18 @@ class FakeMetadata : Metadata() {
      * Adds a key/value pair to this [Metadata].
      */
     @CanIgnoreReturnValue
-    fun <T> add(key: JvmMetadataKey<T>, value: T): FakeMetadata {
+    fun <T> add(key: MetadataKey<T>, value: T): FakeMetadata {
         entries.add(KeyValuePair(key, value))
         return this
     }
 
     override fun size(): Int = entries.size
 
-    override fun getKey(n: Int): JvmMetadataKey<*> = entries[n].key
+    override fun getKey(n: Int): MetadataKey<*> = entries[n].key
 
     override fun getValue(n: Int): Any = entries[n].value!!
 
-    override fun <T : Any?> findValue(key: JvmMetadataKey<T>): T? {
+    override fun <T : Any?> findValue(key: MetadataKey<T>): T? {
         val entry = entries.firstOrNull { it.key == key }
         val casted = key.cast(entry?.value) // It is safe to pass `null` here.
         return casted

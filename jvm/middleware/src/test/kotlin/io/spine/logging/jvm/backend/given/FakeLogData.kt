@@ -28,7 +28,7 @@ package io.spine.logging.jvm.backend.given
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.logging.jvm.JvmLogSite
-import io.spine.logging.jvm.JvmMetadataKey
+import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.LogContext
 import io.spine.logging.jvm.backend.LogData
 import io.spine.logging.jvm.backend.Metadata
@@ -111,7 +111,7 @@ class FakeLogData : LogData {
     }
 
     @CanIgnoreReturnValue
-    fun <T> addMetadata(key: JvmMetadataKey<T>, value: Any?): FakeLogData {
+    fun <T> addMetadata(key: MetadataKey<T>, value: Any?): FakeLogData {
         metadata.add(key, key.cast(value))
         return this
     }

@@ -29,7 +29,7 @@ package io.spine.logging.jvm.backend
 import com.google.common.base.Joiner
 import com.google.common.collect.Iterators
 import io.kotest.matchers.shouldBe
-import io.spine.logging.jvm.JvmMetadataKey
+import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.backend.given.FakeMetadata
 import io.spine.logging.jvm.repeatedKey
 import io.spine.logging.jvm.singleKey
@@ -192,7 +192,7 @@ private fun process(
  *
  * @see MetadataHandler.builder
  */
-private fun appendUnknownValue(key: JvmMetadataKey<*>, value: Any, out: StringBuilder) {
+private fun appendUnknownValue(key: MetadataKey<*>, value: Any, out: StringBuilder) {
     out.append("${key.label}=<<$value>> ")
 }
 
@@ -202,7 +202,7 @@ private fun appendUnknownValue(key: JvmMetadataKey<*>, value: Any, out: StringBu
  * @see MetadataHandler.builder
  */
 private fun appendUnknownValues(
-    key: JvmMetadataKey<*>,
+    key: MetadataKey<*>,
     values: Iterator<*>,
     out: StringBuilder
 ) {
@@ -210,16 +210,16 @@ private fun appendUnknownValues(
     appendUnknownValue(key, joinedValues, out)
 }
 
-private fun appendValue(key: JvmMetadataKey<*>, value: Any, out: StringBuilder) {
+private fun appendValue(key: MetadataKey<*>, value: Any, out: StringBuilder) {
     out.append("${key.label}=$value ")
 }
 
-private fun appendValues(key: JvmMetadataKey<*>, values: Iterator<*>, out: StringBuilder) {
+private fun appendValues(key: MetadataKey<*>, values: Iterator<*>, out: StringBuilder) {
     val joinedValues = Iterators.toString(values)
     appendValue(key, joinedValues, out)
 }
 
-private fun appendSum(key: JvmMetadataKey<Int>, values: Iterator<Int>, out: StringBuilder) {
+private fun appendSum(key: MetadataKey<Int>, values: Iterator<Int>, out: StringBuilder) {
     var sum = 0
     values.forEach { sum += it }
     out.append("sum(${key.label})=$sum ")

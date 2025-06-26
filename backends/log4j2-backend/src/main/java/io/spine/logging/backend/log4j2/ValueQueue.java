@@ -28,7 +28,7 @@ package io.spine.logging.backend.log4j2;
 
 import static io.spine.logging.jvm.util.Checks.checkNotNull;
 
-import io.spine.logging.jvm.JvmMetadataKey.KeyValueHandler;
+import io.spine.logging.jvm.MetadataKey.KeyValueHandler;
 import io.spine.logging.jvm.context.Tags;
 import java.util.Iterator;
 import java.util.LinkedList;

@@ -26,8 +26,8 @@
 
 package io.spine.logging.jvm
 
-import io.spine.logging.jvm.JvmMetadataKey.repeated
-import io.spine.logging.jvm.JvmMetadataKey.single
+import io.spine.logging.jvm.MetadataKey.repeated
+import io.spine.logging.jvm.MetadataKey.single
 import io.spine.logging.jvm.backend.Platform
 import io.spine.logging.jvm.given.MemoizingKvHandler
 import io.spine.logging.jvm.given.iterate
@@ -41,7 +41,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for [JvmMetadataKey].
+ * Tests for [MetadataKey].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/MetadataKeyTest.java">
  *     Original Java code of Google Flogger</a>
@@ -63,7 +63,7 @@ internal class JvmMetadataKeySpec {
         val badLabels = mutableListOf("", "foo bar", "_FOO")
         badLabels.forEach { label ->
             shouldThrow<IllegalArgumentException> {
-                JvmMetadataKey(label, String::class.java, false)
+                MetadataKey(label, String::class.java, false)
             }
         }
     }
@@ -154,8 +154,8 @@ internal class JvmMetadataKeySpec {
     @Test
     fun `throw on 'null's`() {
         val badInstantiations = listOf(
-            { JvmMetadataKey(null, String::class.java, false) },
-            { JvmMetadataKey<Any>("label", null, false) },
+            { MetadataKey(null, String::class.java, false) },
+            { MetadataKey<Any>("label", null, false) },
             { single(null, String::class.java) },
             { single("label", null) },
             { repeated(null, String::class.java) },
@@ -175,7 +175,7 @@ internal class JvmMetadataKeySpec {
  * include that key, even in code, which has no explicit knowledge of it.
  */
 private class ReenteringKey(label: String) :
-    JvmMetadataKey<Any>(label, Any::class.java, true) {
+    MetadataKey<Any>(label, Any::class.java, true) {
 
     override fun emit(value: Any, kvh: KeyValueHandler) {
         val currentDepth = Platform.getCurrentRecursionDepth()

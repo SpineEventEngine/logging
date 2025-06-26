@@ -27,7 +27,7 @@
 package io.spine.logging.jvm.backend;
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
-import io.spine.logging.jvm.JvmMetadataKey;
+import io.spine.logging.jvm.MetadataKey;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -72,7 +72,7 @@ public abstract class MetadataHandler<C> {
      * @param <T>
      *         the key/value type.
      */
-    protected abstract <T> void handle(JvmMetadataKey<T> key, T value, C context);
+    protected abstract <T> void handle(MetadataKey<T> key, T value, C context);
 
     /**
      * Handles values for a repeatable metadata key. The method is called for all repeatable keys
@@ -92,7 +92,7 @@ public abstract class MetadataHandler<C> {
      * @param <T>
      *         the key/value type.
      */
-    protected <T> void handleRepeated(JvmMetadataKey<T> key, Iterator<T> values, C context) {
+    protected <T> void handleRepeated(MetadataKey<T> key, Iterator<T> values, C context) {
         while (values.hasNext()) {
             handle(key, values.next(), context);
         }
@@ -150,7 +150,7 @@ public abstract class MetadataHandler<C> {
          * @param context
          *         an arbitrary context object supplied to the process method.
          */
-        void handle(JvmMetadataKey<T> key, T value, C context);
+        void handle(MetadataKey<T> key, T value, C context);
     }
 
     /**
@@ -178,7 +178,7 @@ public abstract class MetadataHandler<C> {
          * @param context
          *         an arbitrary context object supplied to the process method.
          */
-        void handle(JvmMetadataKey<T> key, Iterator<T> values, C context);
+        void handle(MetadataKey<T> key, Iterator<T> values, C context);
     }
 
     /**
@@ -198,9 +198,9 @@ public abstract class MetadataHandler<C> {
         private static final RepeatedValueHandler<Object, Object> IGNORE_REPEATED_VALUE =
                 (key, value, context) -> { /* No op. */ };
 
-        private final Map<JvmMetadataKey<?>, ValueHandler<?, ? super C>> singleValueHandlers =
+        private final Map<MetadataKey<?>, ValueHandler<?, ? super C>> singleValueHandlers =
                 new HashMap<>();
-        private final Map<JvmMetadataKey<?>, RepeatedValueHandler<?, ? super C>> repeatedValueHandlers =
+        private final Map<MetadataKey<?>, RepeatedValueHandler<?, ? super C>> repeatedValueHandlers =
                 new HashMap<>();
         private final ValueHandler<Object, ? super C> defaultHandler;
         private RepeatedValueHandler<Object, ? super C> defaultRepeatedHandler = null;
@@ -214,10 +214,10 @@ public abstract class MetadataHandler<C> {
          * generic {@link Iterator}. To handle repeated values against a known key with their
          * expected
          * type, register a handler via
-         * {@link #addRepeatedHandler(JvmMetadataKey, RepeatedValueHandler)}.
+         * {@link #addRepeatedHandler(MetadataKey, RepeatedValueHandler)}.
          *
          * <p>Note that if a repeated key is associated with an individual value handler (i.e. via
-         * {@link #addHandler(JvmMetadataKey, ValueHandler)}), then that will be used in preference
+         * {@link #addHandler(MetadataKey, ValueHandler)}), then that will be used in preference
          * to the default handler set here.
          *
          * @param defaultHandler
@@ -249,7 +249,7 @@ public abstract class MetadataHandler<C> {
          */
         @CanIgnoreReturnValue
         public <T> Builder<C> addHandler(
-                JvmMetadataKey<T> key, ValueHandler<? super T, ? super C> handler) {
+                MetadataKey<T> key, ValueHandler<? super T, ? super C> handler) {
             checkNotNull(key, "key");
             checkNotNull(handler, "handler");
             repeatedValueHandlers.remove(key);
@@ -274,7 +274,7 @@ public abstract class MetadataHandler<C> {
          */
         @CanIgnoreReturnValue
         public <T> Builder<C> addRepeatedHandler(
-                JvmMetadataKey<? extends T> key, RepeatedValueHandler<T, ? super C> handler) {
+                MetadataKey<? extends T> key, RepeatedValueHandler<T, ? super C> handler) {
             checkNotNull(key, "key");
             checkNotNull(handler, "handler");
             checkArgument(key.canRepeat(), "key must be repeating");
@@ -295,9 +295,9 @@ public abstract class MetadataHandler<C> {
          * @return the builder instance for chaining.
          */
         @CanIgnoreReturnValue
-        public Builder<C> ignoring(JvmMetadataKey<?> key, JvmMetadataKey<?>... rest) {
+        public Builder<C> ignoring(MetadataKey<?> key, MetadataKey<?>... rest) {
             checkAndIgnore(key);
-            for (JvmMetadataKey<?> k : rest) {
+            for (MetadataKey<?> k : rest) {
                 checkAndIgnore(k);
             }
             return this;
@@ -312,14 +312,14 @@ public abstract class MetadataHandler<C> {
          * @return the builder instance for chaining.
          */
         @CanIgnoreReturnValue
-        public Builder<C> ignoring(Iterable<JvmMetadataKey<?>> keys) {
-            for (JvmMetadataKey<?> k : keys) {
+        public Builder<C> ignoring(Iterable<MetadataKey<?>> keys) {
+            for (MetadataKey<?> k : keys) {
                 checkAndIgnore(k);
             }
             return this;
         }
 
-        <T> void checkAndIgnore(JvmMetadataKey<T> key) {
+        <T> void checkAndIgnore(MetadataKey<T> key) {
             checkNotNull(key, "key");
             // It is more efficient to ignore a repeated key explicitly.
             if (key.canRepeat()) {
@@ -344,15 +344,15 @@ public abstract class MetadataHandler<C> {
          * @return the builder instance for chaining.
          */
         @CanIgnoreReturnValue
-        public Builder<C> removeHandlers(JvmMetadataKey<?> key, JvmMetadataKey<?>... rest) {
+        public Builder<C> removeHandlers(MetadataKey<?> key, MetadataKey<?>... rest) {
             checkAndRemove(key);
-            for (JvmMetadataKey<?> k : rest) {
+            for (MetadataKey<?> k : rest) {
                 checkAndRemove(k);
             }
             return this;
         }
 
-        void checkAndRemove(JvmMetadataKey<?> key) {
+        void checkAndRemove(MetadataKey<?> key) {
             checkNotNull(key, "key");
             singleValueHandlers.remove(key);
             repeatedValueHandlers.remove(key);
@@ -366,9 +366,9 @@ public abstract class MetadataHandler<C> {
 
     private static final class MapBasedhandler<C> extends MetadataHandler<C> {
 
-        private final Map<JvmMetadataKey<?>, ValueHandler<?, ? super C>> singleValueHandlers =
+        private final Map<MetadataKey<?>, ValueHandler<?, ? super C>> singleValueHandlers =
                 new HashMap<>();
-        private final Map<JvmMetadataKey<?>, RepeatedValueHandler<?, ? super C>> repeatedValueHandlers =
+        private final Map<MetadataKey<?>, RepeatedValueHandler<?, ? super C>> repeatedValueHandlers =
                 new HashMap<>();
         private final ValueHandler<Object, ? super C> defaultHandler;
         private final RepeatedValueHandler<Object, ? super C> defaultRepeatedHandler;
@@ -382,7 +382,7 @@ public abstract class MetadataHandler<C> {
 
         @SuppressWarnings("unchecked") // See comments for why casting is safe.
         @Override
-        protected <T> void handle(JvmMetadataKey<T> key, T value, C context) {
+        protected <T> void handle(MetadataKey<T> key, T value, C context) {
             // Safe cast because of how our private map is managed.
             ValueHandler<T, ? super C> handler =
                     (ValueHandler<T, ? super C>) singleValueHandlers.get(key);
@@ -390,13 +390,13 @@ public abstract class MetadataHandler<C> {
                 handler.handle(key, value, context);
             } else {
                 // Casting MetadataKey<T> to "<? super T>" is safe since it only produces elements of 'T'.
-                defaultHandler.handle((JvmMetadataKey<Object>) key, value, context);
+                defaultHandler.handle((MetadataKey<Object>) key, value, context);
             }
         }
 
         @SuppressWarnings("unchecked") // See comments for why casting is safe.
         @Override
-        protected <T> void handleRepeated(JvmMetadataKey<T> key, Iterator<T> values, C context) {
+        protected <T> void handleRepeated(MetadataKey<T> key, Iterator<T> values, C context) {
             // Safe cast because of how our private map is managed.
             RepeatedValueHandler<T, ? super C> handler =
                     (RepeatedValueHandler<T, ? super C>) repeatedValueHandlers.get(key);
@@ -406,7 +406,7 @@ public abstract class MetadataHandler<C> {
                 // Casting MetadataKey<T> to "<? super T>" is safe since it only produces elements of 'T'.
                 // Casting the iterator is safe since it also only produces elements of 'T'.
                 defaultRepeatedHandler.handle(
-                        (JvmMetadataKey<Object>) key, (Iterator<Object>) values, context);
+                        (MetadataKey<Object>) key, (Iterator<Object>) values, context);
             } else {
                 // Dispatches keys individually.
                 super.handleRepeated(key, values, context);

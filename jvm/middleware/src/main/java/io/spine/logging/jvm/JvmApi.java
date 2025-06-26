@@ -339,7 +339,7 @@ public interface JvmApi<API extends JvmApi<API>> {
    *   <li>Key value pairs which are explicitly extracted from logs by tools.
    * </ul>
    *
-   * <p>Metadata keys can support repeated values (see {@link JvmMetadataKey#canRepeat()}), and if a
+   * <p>Metadata keys can support repeated values (see {@link MetadataKey#canRepeat()}), and if a
    * repeatable key is used multiple times in the same log statement, the effect is to collect all
    * the given values in order. If a non-repeatable key is passed multiple times, only the last
    * value is retained (though callers should not rely on this behavior and should simply avoid
@@ -353,9 +353,9 @@ public interface JvmApi<API extends JvmApi<API>> {
    *        allowed, but the effect is always a no-op
  *
    * @throws NullPointerException if the given key is null
-   * @see JvmMetadataKey
+   * @see MetadataKey
    */
-  <T> API with(JvmMetadataKey<T> key, @Nullable T value);
+  <T> API with(MetadataKey<T> key, @Nullable T value);
 
   /**
    * Sets a boolean metadata key constant to {@code true} for this log statement in a structured way
@@ -374,9 +374,9 @@ public interface JvmApi<API extends JvmApi<API>> {
    *
    * @param key the boolean metadata key (expected to be a static constant)
    * @throws NullPointerException if the given key is null
-   * @see JvmMetadataKey
+   * @see MetadataKey
    */
-  API with(JvmMetadataKey<Boolean> key);
+  API with(MetadataKey<Boolean> key);
 
   /**
    * Sets the log site for the current log statement. Explicit log site injection is very rarely
@@ -866,14 +866,14 @@ public interface JvmApi<API extends JvmApi<API>> {
     }
 
     @Override
-    public final <T> API with(JvmMetadataKey<T> key, @Nullable T value) {
+    public final <T> API with(MetadataKey<T> key, @Nullable T value) {
       // Identical to the check in LogContext for consistency.
       checkNotNull(key, "metadata key");
       return noOp();
     }
 
     @Override
-    public final API with(JvmMetadataKey<Boolean> key) {
+    public final API with(MetadataKey<Boolean> key) {
       // Do this inline rather than calling with(key, true) to keep no-op minimal.
       checkNotNull(key, "metadata key");
       return noOp();

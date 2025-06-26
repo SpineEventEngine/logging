@@ -35,7 +35,7 @@ import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldEndWith
 import io.kotest.matchers.string.shouldNotContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
-import io.spine.logging.jvm.JvmMetadataKey
+import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.jvm.backend.Metadata
 import io.spine.logging.jvm.backend.given.FakeLogData
@@ -62,7 +62,7 @@ internal class JulRecordSpec {
         private val INT_KEY = singleKey<Int>("int")
         private val STR_KEY = singleKey<String>("str")
         private val PATH_KEY =
-            object : JvmMetadataKey<String>("path", String::class.java, true) {
+            object : MetadataKey<String>("path", String::class.java, true) {
                 override fun emitRepeated(values: Iterator<String>, out: KeyValueHandler) {
                     val joined = values.asSequence().joinToString("/")
                     out.handle(label, joined)

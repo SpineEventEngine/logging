@@ -26,12 +26,12 @@
 
 package io.spine.logging.jvm.given
 
-import io.spine.logging.jvm.JvmMetadataKey
+import io.spine.logging.jvm.MetadataKey
 
 /**
  * Remembers all handled key/value pairs.
  */
-internal class MemoizingKvHandler : JvmMetadataKey.KeyValueHandler {
+internal class MemoizingKvHandler : MetadataKey.KeyValueHandler {
 
     val entries = ArrayList<String?>()
 

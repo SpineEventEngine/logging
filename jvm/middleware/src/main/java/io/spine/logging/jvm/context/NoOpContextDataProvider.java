@@ -27,7 +27,7 @@
 package io.spine.logging.jvm.context;
 
 import io.spine.logging.jvm.Middleman;
-import io.spine.logging.jvm.JvmMetadataKey;
+import io.spine.logging.jvm.MetadataKey;
 import io.spine.logging.jvm.StackSize;
 import io.spine.logging.jvm.context.ScopedLoggingContext.LoggingContextCloseable;
 
@@ -111,7 +111,7 @@ final class NoOpContextDataProvider extends ContextDataProvider {
         }
 
         @Override
-        public <T> boolean addMetadata(JvmMetadataKey<T> key, T value) {
+        public <T> boolean addMetadata(MetadataKey<T> key, T value) {
             logWarningOnceOnly();
             return super.addMetadata(key, value);
         }

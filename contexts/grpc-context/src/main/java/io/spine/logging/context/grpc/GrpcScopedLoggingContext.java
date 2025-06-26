@@ -28,7 +28,7 @@ package io.spine.logging.context.grpc;
 
 import static io.spine.logging.jvm.util.Checks.checkNotNull;
 
-import io.spine.logging.jvm.JvmMetadataKey;
+import io.spine.logging.jvm.MetadataKey;
 import io.spine.logging.jvm.context.ContextMetadata;
 import io.spine.logging.jvm.context.LogLevelMap;
 import io.spine.logging.jvm.context.ScopeType;
@@ -99,7 +99,7 @@ final class GrpcScopedLoggingContext extends ScopedLoggingContext {
   }
 
   @Override
-  public <T> boolean addMetadata(JvmMetadataKey<T> key, T value) {
+  public <T> boolean addMetadata(MetadataKey<T> key, T value) {
     // Serves as the null pointer check, and we don't care much about the extra allocation in the
     // case where there's no context, because that should be very rare (and the singleton is small).
     ContextMetadata metadata = ContextMetadata.singleton(key, value);

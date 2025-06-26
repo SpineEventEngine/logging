@@ -26,7 +26,7 @@
 
 package io.spine.logging.jvm.backend;
 
-import io.spine.logging.jvm.JvmMetadataKey.KeyValueHandler;
+import io.spine.logging.jvm.MetadataKey.KeyValueHandler;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;

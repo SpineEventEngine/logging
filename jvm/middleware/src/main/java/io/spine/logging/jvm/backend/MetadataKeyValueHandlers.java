@@ -26,8 +26,8 @@
 
 package io.spine.logging.jvm.backend;
 
-import io.spine.logging.jvm.JvmMetadataKey;
-import io.spine.logging.jvm.JvmMetadataKey.KeyValueHandler;
+import io.spine.logging.jvm.MetadataKey;
+import io.spine.logging.jvm.MetadataKey.KeyValueHandler;
 import io.spine.logging.jvm.backend.MetadataHandler.RepeatedValueHandler;
 import io.spine.logging.jvm.backend.MetadataHandler.ValueHandler;
 
@@ -44,10 +44,10 @@ import java.util.Set;
 public final class MetadataKeyValueHandlers {
 
     private static final ValueHandler<Object, KeyValueHandler> EMIT_METADATA =
-            JvmMetadataKey::safeEmit;
+            MetadataKey::safeEmit;
 
     private static final RepeatedValueHandler<Object, KeyValueHandler> EMIT_REPEATED_METADATA =
-            JvmMetadataKey::safeEmitRepeated;
+            MetadataKey::safeEmitRepeated;
 
     /**
      * Returns a singleton value handler which dispatches metadata to a {@link KeyValueHandler}.
@@ -72,7 +72,7 @@ public final class MetadataKeyValueHandlers {
      * @return a builder configured with the default key/value handlers and ignored keys.
      */
     public static MetadataHandler.Builder<KeyValueHandler> getDefaultBuilder(
-            Set<JvmMetadataKey<?>> ignored) {
+            Set<MetadataKey<?>> ignored) {
         return MetadataHandler.builder(getDefaultValueHandler())
                 .setDefaultRepeatedHandler(getDefaultRepeatedValueHandler())
                 .ignoring(ignored);
@@ -86,7 +86,7 @@ public final class MetadataKeyValueHandlers {
      * @return a handler configured with the default key/value handlers and ignored keys.
      */
     public static MetadataHandler<KeyValueHandler> getDefaultHandler(
-            Set<JvmMetadataKey<?>> ignored) {
+            Set<MetadataKey<?>> ignored) {
         return getDefaultBuilder(ignored).build();
     }
 

@@ -27,7 +27,7 @@
 package io.spine.logging.jvm
 
 /**
- * Creates a new single [JvmMetadataKey] with the given [label].
+ * Creates a new single [MetadataKey] with the given [label].
  *
  * In JVM, if the given type [T] describes a Java primitive,
  * this method would use a type of the corresponding object wrapper.
@@ -36,11 +36,11 @@ package io.spine.logging.jvm
  *
  * @param T type of values that can be associated with this key
  */
-public inline fun <reified T : Any> singleKey(label: String): JvmMetadataKey<T> =
-    JvmMetadataKey.single(label, T::class.javaObjectType)
+public inline fun <reified T : Any> singleKey(label: String): MetadataKey<T> =
+    MetadataKey.single(label, T::class.javaObjectType)
 
 /**
- * Creates a new repeated [JvmMetadataKey] with the given [label].
+ * Creates a new repeated [MetadataKey] with the given [label].
  *
  * In JVM, if the given type [T] describes a Java primitive,
  * this method would use a type of the corresponding object wrapper.
@@ -49,5 +49,5 @@ public inline fun <reified T : Any> singleKey(label: String): JvmMetadataKey<T> 
  *
  * @param T type of values that can be associated with this key
  */
-public inline fun <reified T : Any> repeatedKey(label: String): JvmMetadataKey<T> =
-    JvmMetadataKey.repeated(label, T::class.javaObjectType)
+public inline fun <reified T : Any> repeatedKey(label: String): MetadataKey<T> =
+    MetadataKey.repeated(label, T::class.javaObjectType)

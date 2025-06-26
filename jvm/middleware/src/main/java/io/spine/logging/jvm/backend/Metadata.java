@@ -26,7 +26,7 @@
 
 package io.spine.logging.jvm.backend;
 
-import io.spine.logging.jvm.JvmMetadataKey;
+import io.spine.logging.jvm.MetadataKey;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -34,7 +34,7 @@ import org.jspecify.annotations.Nullable;
  * directly via methods in the fluent API, of as part of a scoped logging context.
  *
  * <p>Metadata keys can be “single valued” or “repeating” based on
- * {@link JvmMetadataKey#canRepeat() MetadataKey.canRepeat()}, but it is permitted for
+ * {@link MetadataKey#canRepeat() MetadataKey.canRepeat()}, but it is permitted for
  * a {@code Metadata} implementation to retain multiple single valued keys, and in that situation
  * the key at the largest index is the one that should be used.
  *
@@ -43,7 +43,7 @@ import org.jspecify.annotations.Nullable;
  * of the sequence of key/value pairs, and this is what results in the potential for multiple single
  * valued keys to exist.
  *
- * <p>If the value of a single valued key is required, the {@link #findValue(JvmMetadataKey)}
+ * <p>If the value of a single valued key is required, the {@link #findValue(MetadataKey)}
  * method should be used to look it up. For all other metadata processing, a {@link MetadataProcessor}
  * should be created to ensure that scope and log site metadata can be merged correctly.
  *
@@ -70,7 +70,7 @@ public abstract class Metadata {
     }
 
     @Override
-    public JvmMetadataKey<?> getKey(int n) {
+    public MetadataKey<?> getKey(int n) {
       throw cannotReadFromEmpty();
     }
 
@@ -85,7 +85,7 @@ public abstract class Metadata {
 
     @Override
     @Nullable
-    public <T> T findValue(JvmMetadataKey<T> key) {
+    public <T> T findValue(MetadataKey<T> key) {
       return null;
     }
   }
@@ -99,7 +99,7 @@ public abstract class Metadata {
    * @throws IndexOutOfBoundsException if either {@code n} is negative or {@code n} is greater
    *  or equal to {@code getCount()}.
    */
-  public abstract JvmMetadataKey<?> getKey(int n);
+  public abstract MetadataKey<?> getKey(int n);
 
   /**
    * Returns the non-null value for the Nth piece of metadata.
@@ -116,5 +116,5 @@ public abstract class Metadata {
    */
   // TODO(dbeaumont): Make this throw an exception for repeated keys.
   @Nullable
-  public abstract <T> T findValue(JvmMetadataKey<T> key);
+  public abstract <T> T findValue(MetadataKey<T> key);
 }

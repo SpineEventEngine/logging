@@ -33,7 +33,7 @@ import static java.util.logging.Level.WARNING;
 
 import io.spine.logging.jvm.LogContext;
 import io.spine.logging.jvm.JvmLogSite;
-import io.spine.logging.jvm.JvmMetadataKey;
+import io.spine.logging.jvm.MetadataKey;
 import io.spine.logging.jvm.backend.BaseMessageFormatter;
 import io.spine.logging.jvm.backend.LogData;
 import io.spine.logging.jvm.backend.MessageUtils;
@@ -205,11 +205,11 @@ final class Log4j2LogEventUtil {
     out.append("\n  line number: ").append(data.getLogSite().getLineNumber());
   }
 
-  private static final MetadataHandler<JvmMetadataKey.KeyValueHandler> HANDLER =
+  private static final MetadataHandler<MetadataKey.KeyValueHandler> HANDLER =
       MetadataHandler.builder(Log4j2LogEventUtil::handleMetadata).build();
 
   private static void handleMetadata(
-          JvmMetadataKey<Object> key, Object value, JvmMetadataKey.KeyValueHandler kvh) {
+          MetadataKey<Object> key, Object value, MetadataKey.KeyValueHandler kvh) {
     if (key.getClass().equals(LogContext.Key.TAGS.getClass())) {
       processTags(key, value, kvh);
     } else {
@@ -225,7 +225,7 @@ final class Log4j2LogEventUtil {
   }
 
   private static void processTags(
-          JvmMetadataKey<Object> key, Object value, JvmMetadataKey.KeyValueHandler kvh) {
+          MetadataKey<Object> key, Object value, MetadataKey.KeyValueHandler kvh) {
     ValueQueue valueQueue = ValueQueue.appendValueToNewQueue(value);
     // Unlike single metadata (which is usually formatted as a single value), tags are always
     // formatted as a list.

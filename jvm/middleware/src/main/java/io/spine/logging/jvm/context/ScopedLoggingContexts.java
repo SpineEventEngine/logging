@@ -29,7 +29,7 @@ package io.spine.logging.jvm.context;
 import static java.util.concurrent.TimeUnit.MINUTES;
 
 import io.spine.logging.jvm.Middleman;
-import io.spine.logging.jvm.JvmMetadataKey;
+import io.spine.logging.jvm.MetadataKey;
 import io.spine.logging.jvm.StackSize;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 
@@ -153,7 +153,7 @@ public final class ScopedLoggingContexts {
    *         contexts are not supported.
    */
   @CanIgnoreReturnValue
-  public static <T> boolean addMetadata(JvmMetadataKey<T> key, T value) {
+  public static <T> boolean addMetadata(MetadataKey<T> key, T value) {
     return warnOnFailure(ScopedLoggingContext.getInstance().addMetadata(key, value));
   }
 

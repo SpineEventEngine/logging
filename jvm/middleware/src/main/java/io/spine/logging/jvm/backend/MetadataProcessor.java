@@ -26,7 +26,7 @@
 
 package io.spine.logging.jvm.backend;
 
-import io.spine.logging.jvm.JvmMetadataKey;
+import io.spine.logging.jvm.MetadataKey;
 import io.spine.logging.jvm.LogContext;
 import org.jspecify.annotations.Nullable;
 
@@ -77,11 +77,11 @@ public abstract class MetadataProcessor {
         }
 
         @Override
-        public <C> void handle(JvmMetadataKey<?> key, MetadataHandler<C> handler, C context) {
+        public <C> void handle(MetadataKey<?> key, MetadataHandler<C> handler, C context) {
         }
 
         @Override
-        public <T> T getSingleValue(JvmMetadataKey<T> key) {
+        public <T> T getSingleValue(MetadataKey<T> key) {
             return null;
         }
 
@@ -91,7 +91,7 @@ public abstract class MetadataProcessor {
         }
 
         @Override
-        public Set<JvmMetadataKey<?>> keySet() {
+        public Set<MetadataKey<?>> keySet() {
             return Collections.emptySet();
         }
     };
@@ -172,7 +172,7 @@ public abstract class MetadataProcessor {
      * The handler method invoked depends on whether the key is single valued or repeated.
      * If no metadata is present for the given key, the handler is not invoked.
      */
-    public abstract <C> void handle(JvmMetadataKey<?> key, MetadataHandler<C> handler, C context);
+    public abstract <C> void handle(MetadataKey<?> key, MetadataHandler<C> handler, C context);
 
     /**
      * Returns the unique value for a single valued key, or {@code null} if not present.
@@ -180,7 +180,7 @@ public abstract class MetadataProcessor {
      * @throws IllegalArgumentException
      *         if passed a repeatable key (even if that key has one value).
      */
-    public abstract <T> T getSingleValue(JvmMetadataKey<T> key);
+    public abstract <T> T getSingleValue(MetadataKey<T> key);
 
     /**
      * Returns the number of unique keys represented by this processor. This is the same as the
@@ -192,11 +192,11 @@ public abstract class MetadataProcessor {
     public abstract int keyCount();
 
     /**
-     * Returns the set of {@link JvmMetadataKey}s known to this processor, in the order in which
+     * Returns the set of {@link MetadataKey}s known to this processor, in the order in which
      * they will be processed. Note that this implementation is lightweight, but not necessarily
      * performant for things like containment testing.
      */
-    public abstract Set<JvmMetadataKey<?>> keySet();
+    public abstract Set<MetadataKey<?>> keySet();
 
     /*
      * The values in the keyMap array are structured as:
@@ -246,7 +246,7 @@ public abstract class MetadataProcessor {
         }
 
         @Override
-        public <C> void handle(JvmMetadataKey<?> key, MetadataHandler<C> handler, C context) {
+        public <C> void handle(MetadataKey<?> key, MetadataHandler<C> handler, C context) {
             var index = indexOf(key, keyMap, keyCount);
             if (index >= 0) {
                 dispatch(key, keyMap[index], handler, context);
@@ -254,7 +254,7 @@ public abstract class MetadataProcessor {
         }
 
         @Override
-        public <T> T getSingleValue(JvmMetadataKey<T> key) {
+        public <T> T getSingleValue(MetadataKey<T> key) {
             checkArgument(!key.canRepeat(), "key must be single valued");
             var index = indexOf(key, keyMap, keyCount);
             // For single keys, the keyMap values are just the value index.
@@ -267,17 +267,17 @@ public abstract class MetadataProcessor {
         }
 
         @Override
-        public Set<JvmMetadataKey<?>> keySet() {
+        public Set<MetadataKey<?>> keySet() {
             // We may want to cache this, since it's effectively immutable, but it's also a small and
             // likely short lived instance, so quite possibly not worth it for the cost of another field.
-            return new AbstractSet<JvmMetadataKey<?>>() {
+            return new AbstractSet<MetadataKey<?>>() {
                 @Override
                 public int size() {
                     return keyCount;
                 }
 
                 @Override
-                public Iterator<JvmMetadataKey<?>> iterator() {
+                public Iterator<MetadataKey<?>> iterator() {
                     return new Iterator<>() {
                         private int i = 0;
 
@@ -287,7 +287,7 @@ public abstract class MetadataProcessor {
                         }
 
                         @Override
-                        public JvmMetadataKey<?> next() {
+                        public MetadataKey<?> next() {
                             return getKey(keyMap[i++] & 0x1F);
                         }
 
@@ -302,7 +302,7 @@ public abstract class MetadataProcessor {
         }
 
         // Separate method to re-capture the value type.
-        private <T, C> void dispatch(JvmMetadataKey<T> key, int n,
+        private <T, C> void dispatch(MetadataKey<T> key, int n,
                                      MetadataHandler<C> handler, C context) {
             if (!key.canRepeat()) {
                 // For single keys, the keyMap values are just the value index.
@@ -317,13 +317,13 @@ public abstract class MetadataProcessor {
         // a fairly unusual use case.
         private final class ValueIterator<T> implements Iterator<T> {
 
-            private final JvmMetadataKey<T> key;
+            private final MetadataKey<T> key;
             private int nextIndex;
             // For repeated keys, the bits 5-32 contain a mask of additional indices (where bit 5
             // implies index 1, since index 0 cannot apply to an additional repeated value).
             private int mask;
 
-            private ValueIterator(JvmMetadataKey<T> key, int valueIndices) {
+            private ValueIterator(MetadataKey<T> key, int valueIndices) {
                 this.key = key;
                 // Get the first element index (lowest 5 bits, 0-27).
                 this.nextIndex = valueIndices & 0x1F;
@@ -400,7 +400,7 @@ public abstract class MetadataProcessor {
         }
 
         // Returns the (unique) index into the keyMap array for the given key.
-        private int indexOf(JvmMetadataKey<?> key, int[] keyMap, int count) {
+        private int indexOf(MetadataKey<?> key, int[] keyMap, int count) {
             for (var i = 0; i < count; i++) {
                 // Low 5 bits of keyMap values are *always* an index to a valid metadata key.
                 if (key.equals(getKey(keyMap[i] & 0x1F))) {
@@ -410,7 +410,7 @@ public abstract class MetadataProcessor {
             return -1;
         }
 
-        private JvmMetadataKey<?> getKey(int n) {
+        private MetadataKey<?> getKey(int n) {
             var scopeSize = scope.size();
             return n >= scopeSize ? logged.getKey(n - scopeSize) : scope.getKey(n);
         }
@@ -431,10 +431,10 @@ public abstract class MetadataProcessor {
      */
     private static final class SimpleProcessor extends MetadataProcessor {
 
-        private final Map<JvmMetadataKey<?>, Object> map;
+        private final Map<MetadataKey<?>, Object> map;
 
         private SimpleProcessor(Metadata scope, Metadata logged) {
-            var map = new LinkedHashMap<JvmMetadataKey<?>, Object>();
+            var map = new LinkedHashMap<MetadataKey<?>, Object>();
             addTo(map, scope);
             addTo(map, logged);
             // Wrap any repeated value lists to make them unmodifiable (required for correctness).
@@ -449,7 +449,7 @@ public abstract class MetadataProcessor {
 
         // Unlike the LightweightProcessor, we copy references from the Metadata eagerly, so can "cast"
         // values to their key-types early, ensuring safe casting when dispatching.
-        private static void addTo(Map<JvmMetadataKey<?>, Object> map, Metadata metadata) {
+        private static void addTo(Map<MetadataKey<?>, Object> map, Metadata metadata) {
             for (var i = 0; i < metadata.size(); i++) {
                 var key = metadata.getKey(i);
                 var value = map.get(key);
@@ -477,7 +477,7 @@ public abstract class MetadataProcessor {
         }
 
         @Override
-        public <C> void handle(JvmMetadataKey<?> key, MetadataHandler<C> handler, C context) {
+        public <C> void handle(MetadataKey<?> key, MetadataHandler<C> handler, C context) {
             var value = map.get(key);
             if (value != null) {
                 dispatch(key, value, handler, context);
@@ -487,7 +487,7 @@ public abstract class MetadataProcessor {
         // It's safe to ignore warnings since single keys are only ever 'T' when added to the map.
         @Override
         @SuppressWarnings("unchecked")
-        public <@Nullable T> T getSingleValue(JvmMetadataKey<T> key) {
+        public <@Nullable T> T getSingleValue(MetadataKey<T> key) {
             checkArgument(!key.canRepeat(), "key must be single valued");
             var value = map.get(key);
             return (value != null) ? (T) value : null;
@@ -499,7 +499,7 @@ public abstract class MetadataProcessor {
         }
 
         @Override
-        public Set<JvmMetadataKey<?>> keySet() {
+        public Set<MetadataKey<?>> keySet() {
             return map.keySet();
         }
 
@@ -507,7 +507,7 @@ public abstract class MetadataProcessor {
         // and single keys are only ever 'T' when added to the map.
         @SuppressWarnings("unchecked")
         private static <T, C> void dispatch(
-                JvmMetadataKey<T> key, Object value, MetadataHandler<C> handler, C context) {
+                MetadataKey<T> key, Object value, MetadataHandler<C> handler, C context) {
             if (key.canRepeat()) {
                 handler.handleRepeated(key, ((List<T>) value).iterator(), context);
             } else {

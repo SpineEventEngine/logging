@@ -33,7 +33,7 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.ints.shouldBeLessThanOrEqual
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
-import io.spine.logging.jvm.JvmMetadataKey
+import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.backend.given.FakeMetadata
 import io.spine.logging.jvm.repeatedKey
 import io.spine.logging.jvm.singleKey
@@ -186,8 +186,8 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
             .add(REP_1, "two")
         val metadata = factory.processorFor(scope, Metadata.empty())
         val handler: MetadataHandler<Void> = object : MetadataHandler<Void>() {
-            override fun <T> handle(key: JvmMetadataKey<T>, value: T, context: Void) = Unit
-            override fun <T> handleRepeated(key: JvmMetadataKey<T>,
+            override fun <T> handle(key: MetadataKey<T>, value: T, context: Void) = Unit
+            override fun <T> handleRepeated(key: MetadataKey<T>,
                                             values: MutableIterator<T>,
                                             context: Void?) {
                 values.hasNext().shouldBeTrue()
@@ -222,7 +222,7 @@ private fun entries(metadata: MetadataProcessor): List<String> {
  * Processes the given [metadata] for a single metadata [key],
  * returning the formatted entry.
  */
-private fun handleEntry(metadata: MetadataProcessor, key: JvmMetadataKey<*>): String? {
+private fun handleEntry(metadata: MetadataProcessor, key: MetadataKey<*>): String? {
     val entries = arrayListOf<String>()
     metadata.handle(key, COLLECTING_HANDLER, entries)
     entries.size shouldBeLessThanOrEqual 1
@@ -231,12 +231,12 @@ private fun handleEntry(metadata: MetadataProcessor, key: JvmMetadataKey<*>): St
 
 private object COLLECTING_HANDLER : MetadataHandler<MutableList<String>>() {
 
-    override fun <T : Any?> handle(key: JvmMetadataKey<T>, value: T, out: MutableList<String>) {
+    override fun <T : Any?> handle(key: MetadataKey<T>, value: T, out: MutableList<String>) {
         val stringified = "%s=%s".format(key.label, value)
         out.add(stringified)
     }
 
-    override fun <T : Any?> handleRepeated(key: JvmMetadataKey<T>,
+    override fun <T : Any?> handleRepeated(key: MetadataKey<T>,
                                            values: MutableIterator<T>,
                                            out: MutableList<String>) {
         val stringified = "%s=%s".format(key.label, Iterators.toString(values))
