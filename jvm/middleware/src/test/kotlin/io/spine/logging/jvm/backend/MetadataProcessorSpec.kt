@@ -186,8 +186,8 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
             .add(REP_1, "two")
         val metadata = factory.processorFor(scope, Metadata.empty())
         val handler: MetadataHandler<Void> = object : MetadataHandler<Void>() {
-            override fun <T> handle(key: MetadataKey<T>, value: T, context: Void) = Unit
-            override fun <T> handleRepeated(key: MetadataKey<T>,
+            override fun <T : Any> handle(key: MetadataKey<T>, value: T, context: Void) = Unit
+            override fun <T : Any> handleRepeated(key: MetadataKey<T>,
                                             values: MutableIterator<T>,
                                             context: Void?) {
                 values.hasNext().shouldBeTrue()
@@ -231,12 +231,12 @@ private fun handleEntry(metadata: MetadataProcessor, key: MetadataKey<*>): Strin
 
 private object COLLECTING_HANDLER : MetadataHandler<MutableList<String>>() {
 
-    override fun <T : Any?> handle(key: MetadataKey<T>, value: T, out: MutableList<String>) {
+    override fun <T : Any> handle(key: MetadataKey<T>, value: T, out: MutableList<String>) {
         val stringified = "%s=%s".format(key.label, value)
         out.add(stringified)
     }
 
-    override fun <T : Any?> handleRepeated(key: MetadataKey<T>,
+    override fun <T : Any> handleRepeated(key: MetadataKey<T>,
                                            values: MutableIterator<T>,
                                            out: MutableList<String>) {
         val stringified = "%s=%s".format(key.label, Iterators.toString(values))

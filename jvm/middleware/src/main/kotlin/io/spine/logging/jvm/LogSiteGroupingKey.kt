@@ -24,42 +24,38 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.backend.given
-
-import com.google.errorprone.annotations.CanIgnoreReturnValue
-import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.backend.Metadata
+package io.spine.logging.jvm
 
 /**
- * A mutable [Metadata] implementation for testing logging backends
- * and other log handling code.
+ * The key associated with a sequence of log site "grouping keys".
  *
- * @see <a href="http://rb.gy/h75mb">Original Java code of Google Flogger</a>
+ * These serve to specialize the log site key to group the behaviour of stateful
+ * operations like rate limiting.
+ *
+ * This is used by the `per()` methods and is only public so backends can
+ * reference the key to control formatting.
  */
-class FakeMetadata : Metadata() {
+public open class LogSiteGroupingKey : MetadataKey<Any>("group_by", Any::class.java, true) {
 
-    private class KeyValuePair<T : Any>(val key: MetadataKey<T>, val value: T)
-
-    private val entries = mutableListOf<KeyValuePair<*>>()
-
-    /**
-     * Adds a key/value pair to this [Metadata].
-     */
-    @CanIgnoreReturnValue
-    fun <T : Any> add(key: MetadataKey<T>, value: T): FakeMetadata {
-        entries.add(KeyValuePair(key, value))
-        return this
-    }
-
-    override fun size(): Int = entries.size
-
-    override fun getKey(n: Int): MetadataKey<*> = entries[n].key
-
-    override fun getValue(n: Int): Any = entries[n].value
-
-    override fun <T : Any> findValue(key: MetadataKey<T>): T? {
-        val entry = entries.firstOrNull { it.key == key }
-        val casted = key.cast(entry?.value) // It is safe to pass `null` here.
-        return casted
+    override fun emitRepeated(values: Iterator<Any>, kvh: KeyValueHandler) {
+        if (values.hasNext()) {
+            val first = values.next()
+            if (!values.hasNext()) {
+                kvh.handle(label, first)
+            } else {
+                // In the very unlikely case there's more than one aggregation key, emit a list.
+                val buf = StringBuilder()
+                buf.append('[')
+                    .append(first)
+                do {
+                    buf.append(',')
+                        .append(values.next())
+                } while (values.hasNext())
+                kvh.handle(
+                    label, buf.append(']')
+                        .toString()
+                )
+            }
+        }
     }
 }

@@ -33,9 +33,9 @@ import io.spine.logging.jvm.MetadataKey
  */
 internal class MemoizingKvHandler : MetadataKey.KeyValueHandler {
 
-    val entries = ArrayList<String?>()
+    val entries = ArrayList<String>()
 
-    override fun handle(label: String, value: Any) {
-        entries.add("$label=$value")
+    override fun handle(key: String, value: Any) {
+        entries.add("$key=$value")
     }
 }
