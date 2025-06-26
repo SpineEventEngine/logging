@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -26,10 +26,10 @@
 
 package io.spine.logging
 
-import io.spine.logging.flogger.backend.Platform
+import io.spine.logging.jvm.backend.Platform
 import kotlin.reflect.KClass
-import io.spine.logging.flogger.FloggerLogSite
-import io.spine.logging.flogger.FloggerLogSites
+import io.spine.logging.jvm.JvmLogSite
+import io.spine.logging.jvm.JvmLogSites
 
 /**
  * Determines log sites for the current line of code using Flogger utils.
@@ -43,7 +43,7 @@ public actual object LogSiteLookup {
      * the [LogSite.INVALID] instance.
      */
     public actual fun callerOf(loggingApi: KClass<*>): LogSite {
-        val floggerSite = FloggerLogSites.callerOf(loggingApi.java)
+        val floggerSite = JvmLogSites.callerOf(loggingApi.java)
         val logSite = floggerSite.toLogSite()
         return logSite
     }
@@ -64,8 +64,8 @@ public actual object LogSiteLookup {
     }
 }
 
-private fun FloggerLogSite.toLogSite(): LogSite {
-    if (this == FloggerLogSite.INVALID) {
+private fun JvmLogSite.toLogSite(): LogSite {
+    if (this == JvmLogSite.INVALID) {
         return LogSite.INVALID
     }
     return InjectedLogSite(

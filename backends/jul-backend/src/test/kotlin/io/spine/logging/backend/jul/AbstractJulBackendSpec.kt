@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -41,7 +41,7 @@ import org.junit.jupiter.api.Test
 /**
  * Tests for [AbstractJulBackend].
  *
- * @see <a href="https://rb.gy/tuo9x">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/tuo9x">Original Java code of Google Flogger</a> for historical context.
  */
 @DisplayName("`AbstractJulBackend` should")
 internal class AbstractJulBackendSpec {

@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -29,8 +29,8 @@ package io.spine.logging.context.grpc
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.optional.shouldBePresent
 import io.kotest.matchers.types.shouldBeInstanceOf
-import io.spine.logging.flogger.context.AbstractContextDataProviderSpec
-import io.spine.logging.flogger.context.ContextDataProvider
+import io.spine.logging.jvm.context.AbstractContextDataProviderSpec
+import io.spine.logging.jvm.context.ContextDataProvider
 import java.util.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test
 /**
  * Tests for [GrpcContextDataProvider].
  *
- * @see <a href="https://rb.gy/hccpy">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/hccpy">Original Java code of Google Flogger</a> for historical context.
  */
 @DisplayName("`GrpcContextDataProvider` should")
 internal class GrpcContextDataProviderSpec : AbstractContextDataProviderSpec() {

@@ -26,8 +26,8 @@
 
 package io.spine.logging.backend.probe
 
-import io.spine.logging.flogger.backend.LoggerBackend
-import io.spine.logging.flogger.backend.BackendFactory
+import io.spine.logging.jvm.backend.LoggerBackend
+import io.spine.logging.jvm.backend.BackendFactory
 import io.spine.logging.backend.jul.JulBackendFactory
 
 /**

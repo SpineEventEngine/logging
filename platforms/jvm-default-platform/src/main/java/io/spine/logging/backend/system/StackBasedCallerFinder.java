@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -26,10 +26,10 @@
 
 package io.spine.logging.backend.system;
 
-import io.spine.logging.flogger.AbstractLogger;
-import io.spine.logging.flogger.FloggerLogSite;
-import io.spine.logging.flogger.FloggerLogSites;
-import io.spine.logging.flogger.backend.Platform.LogCallerFinder;
+import io.spine.logging.jvm.AbstractLogger;
+import io.spine.logging.jvm.JvmLogSite;
+import io.spine.logging.jvm.JvmLogSites;
+import io.spine.logging.jvm.backend.Platform.LogCallerFinder;
 
 import static io.spine.reflect.CallerFinder.findCallerOf;
 
@@ -39,7 +39,7 @@ import static io.spine.reflect.CallerFinder.findCallerOf;
  * <p>See class documentation in {@link LogCallerFinder} for important
  * implementation restrictions.
  *
- * @see <a href="https://rb.gy/qozq3">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/qozq3">Original Java code of Google Flogger</a> for historical context.
  */
 public final class StackBasedCallerFinder extends LogCallerFinder {
   private static final LogCallerFinder INSTANCE = new StackBasedCallerFinder();
@@ -61,13 +61,13 @@ public final class StackBasedCallerFinder extends LogCallerFinder {
   }
 
   @Override
-  public FloggerLogSite findLogSite(Class<?> loggerApi, int stackFramesToSkip) {
+  public JvmLogSite findLogSite(Class<?> loggerApi, int stackFramesToSkip) {
     // Skip an additional stack frame because we create the Throwable inside this method, not at
     // the point that this method was invoked (which allows completely alternate implementations
     // to avoid even constructing the Throwable instance).
     var caller = findCallerOf(loggerApi, stackFramesToSkip + 1);
     // Returns INVALID if "caller" is null (no caller found for given API class).
-    return FloggerLogSites.logSiteFrom(caller);
+    return JvmLogSites.logSiteFrom(caller);
   }
 
   @Override

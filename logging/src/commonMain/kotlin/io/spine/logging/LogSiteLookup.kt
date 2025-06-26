@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -31,7 +31,7 @@ import kotlin.reflect.KClass
 /**
  * Determines log sites for the current line of code.
  *
- * Please note that determining of a log site at runtime can be a very slow
+ * Note that determining of a log site at runtime can be a slow
  * operation because it usually involves some form of stack trace analysis.
  *
  * Methods of this class can be used with the [LoggingApi.withInjectedLogSite]

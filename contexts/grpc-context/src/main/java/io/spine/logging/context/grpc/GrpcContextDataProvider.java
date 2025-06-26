@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,12 +26,12 @@
 
 package io.spine.logging.context.grpc;
 
-import io.spine.logging.flogger.LoggingScope;
-import io.spine.logging.flogger.context.ContextDataProvider;
-import io.spine.logging.flogger.context.ContextMetadata;
-import io.spine.logging.flogger.context.ScopeType;
-import io.spine.logging.flogger.context.ScopedLoggingContext;
-import io.spine.logging.flogger.context.Tags;
+import io.spine.logging.jvm.LoggingScope;
+import io.spine.logging.jvm.context.ContextDataProvider;
+import io.spine.logging.jvm.context.ContextMetadata;
+import io.spine.logging.jvm.context.ScopeType;
+import io.spine.logging.jvm.context.ScopedLoggingContext;
+import io.spine.logging.jvm.context.Tags;
 import io.grpc.Context;
 import java.util.logging.Level;
 import org.jspecify.annotations.Nullable;
@@ -52,7 +52,7 @@ import org.jspecify.annotations.Nullable;
  *   <li>{@code flogger.logging_context=io.spine.logging.context.grpc.GrpcContextDataProvider}
  * </ul>
  *
- * @see <a href="https://rb.gy/0cy88">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/0cy88">Original Java code of Google Flogger</a> for historical context.
  */
 public final class GrpcContextDataProvider extends ContextDataProvider {
 

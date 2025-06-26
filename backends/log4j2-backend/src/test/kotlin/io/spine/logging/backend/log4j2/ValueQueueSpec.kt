@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -41,7 +41,7 @@ import org.junit.jupiter.api.Test
  * Tests for [ValueQueue].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/log4j2/src/test/java/com/google/common/flogger/backend/log4j2/ValueQueueTest.java">
- *     Original Java code of Google Flogger</a>
+ *     Original Java code of Google Flogger</a> for historical context.
  */
 @DisplayName("`ValueQueue` should")
 internal class ValueQueueSpec {

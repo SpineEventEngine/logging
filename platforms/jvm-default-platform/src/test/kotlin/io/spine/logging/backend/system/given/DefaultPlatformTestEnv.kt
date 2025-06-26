@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -26,13 +26,13 @@
 
 package io.spine.logging.backend.system.given
 
-import io.spine.logging.flogger.backend.BackendFactory
-import io.spine.logging.flogger.backend.Clock
-import io.spine.logging.flogger.AbstractLogger
-import io.spine.logging.flogger.FloggerLogSite
-import io.spine.logging.flogger.backend.LoggerBackend
-import io.spine.logging.flogger.backend.Platform
-import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
+import io.spine.logging.jvm.backend.BackendFactory
+import io.spine.logging.jvm.backend.Clock
+import io.spine.logging.jvm.AbstractLogger
+import io.spine.logging.jvm.JvmLogSite
+import io.spine.logging.jvm.backend.LoggerBackend
+import io.spine.logging.jvm.backend.Platform
+import io.spine.logging.jvm.backend.given.MemoizingLoggerBackend
 
 /**
  * A primitive factory of [MemoizingLoggerBackend].
@@ -72,6 +72,6 @@ internal class NoOpCallerFinder : Platform.LogCallerFinder() {
     /**
      * Throws [IllegalStateException].
      */
-    override fun findLogSite(loggerApi: Class<*>?, stackFramesToSkip: Int): FloggerLogSite =
+    override fun findLogSite(loggerApi: Class<*>?, stackFramesToSkip: Int): JvmLogSite =
         throw UnsupportedOperationException()
 }

@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -35,14 +35,14 @@ import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldEndWith
 import io.kotest.matchers.string.shouldNotContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
-import io.spine.logging.flogger.FloggerMetadataKey
-import io.spine.logging.flogger.LogContext.Key
-import io.spine.logging.flogger.backend.Metadata
-import io.spine.logging.flogger.backend.given.FakeLogData
-import io.spine.logging.flogger.backend.given.FakeMetadata
-import io.spine.logging.flogger.context.Tags
-import io.spine.logging.flogger.parser.ParseException
-import io.spine.logging.flogger.singleKey
+import io.spine.logging.jvm.MetadataKey
+import io.spine.logging.jvm.LogContext.Key
+import io.spine.logging.jvm.backend.Metadata
+import io.spine.logging.jvm.backend.given.FakeLogData
+import io.spine.logging.jvm.backend.given.FakeMetadata
+import io.spine.logging.jvm.context.Tags
+import io.spine.logging.jvm.parser.ParseException
+import io.spine.logging.jvm.singleKey
 import java.time.Instant.ofEpochMilli
 import java.util.concurrent.TimeUnit.NANOSECONDS
 import java.util.logging.Level
@@ -53,7 +53,7 @@ import org.junit.jupiter.api.Test
 /**
  * Tests [JulRecord].
  *
- * @see <a href="https://rb.gy/4cncp">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/4cncp">Original Java code of Google Flogger</a> for historical context.
  */
 @DisplayName("`JulRecord` should")
 internal class JulRecordSpec {
@@ -62,7 +62,7 @@ internal class JulRecordSpec {
         private val INT_KEY = singleKey<Int>("int")
         private val STR_KEY = singleKey<String>("str")
         private val PATH_KEY =
-            object : FloggerMetadataKey<String>("path", String::class.java, true) {
+            object : MetadataKey<String>("path", String::class.java, true) {
                 override fun emitRepeated(values: Iterator<String>, out: KeyValueHandler) {
                     val joined = values.asSequence().joinToString("/")
                     out.handle(label, joined)

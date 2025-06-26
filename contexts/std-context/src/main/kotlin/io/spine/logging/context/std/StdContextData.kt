@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -29,11 +29,11 @@ package io.spine.logging.context.std
 import io.spine.logging.Level
 import io.spine.logging.compareTo
 import io.spine.logging.context.LogLevelMap
-import io.spine.logging.flogger.LoggingScope
-import io.spine.logging.flogger.context.ContextMetadata
-import io.spine.logging.flogger.context.ScopeType
-import io.spine.logging.flogger.context.ScopedLoggingContext.ScopeList
-import io.spine.logging.flogger.context.Tags
+import io.spine.logging.jvm.LoggingScope
+import io.spine.logging.jvm.context.ContextMetadata
+import io.spine.logging.jvm.context.ScopeType
+import io.spine.logging.jvm.context.ScopedLoggingContext.ScopeList
+import io.spine.logging.jvm.context.Tags
 
 /**
  * The data of a scoped logging context with merging capabilities when

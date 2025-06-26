@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -28,11 +28,10 @@
  * Contains the default logger platform implementation for a server-side
  * Java environment.
  *
- * <p>Although, {@code system} is not the best name for this package.
- * The better option is {@code default}, but it is reserved by Java
- * and cannot be used here.
+ * <p>Although {@code system} is not the best name for this package,
+ * the better option, {@code default}, is reserved by Java and cannot be used here.
  *
- * @see <a href="https://rb.gy/39mdu">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/39mdu">Original Java code of Google Flogger</a> for historical context.
  */
 @CheckReturnValue
 package io.spine.logging.backend.system;

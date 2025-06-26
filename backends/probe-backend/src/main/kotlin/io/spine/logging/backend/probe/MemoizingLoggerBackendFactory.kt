@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.probe
 
-import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
+import io.spine.logging.jvm.backend.given.MemoizingLoggerBackend
 
 /**
  * A factory of [MemoizingLoggerBackend].

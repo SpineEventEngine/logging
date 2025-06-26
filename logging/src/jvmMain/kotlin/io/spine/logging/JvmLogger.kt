@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -26,22 +26,22 @@
 
 package io.spine.logging
 
-import io.spine.logging.flogger.FluentLogger2
-import io.spine.logging.flogger.FloggerLogSites.callerOf
+import io.spine.logging.jvm.Middleman
+import io.spine.logging.jvm.JvmLogSites.callerOf
 import com.google.errorprone.annotations.CheckReturnValue
-import io.spine.logging.flogger.FloggerLogSite
+import io.spine.logging.jvm.JvmLogSite
 import kotlin.reflect.KClass
 import kotlin.time.DurationUnit
 import kotlin.time.toTimeUnit
 import java.util.logging.Level as JLevel
 
 /**
- * Implements [Logger] using [FluentLogger2] as the underlying implementation.
+ * Implements [Middleman] using [Middleman] as the underlying implementation.
  */
 @CheckReturnValue
 public class JvmLogger(
     cls: KClass<*>,
-    internal val delegate: FluentLogger2
+    internal val delegate: Middleman
 ) : Logger<JvmLogger.Api>(cls) {
 
     /**
@@ -65,9 +65,9 @@ public class JvmLogger(
 }
 
 /**
- * Implements [LoggingApi] wrapping [FluentLogger2.Api].
+ * Implements [LoggingApi] wrapping [Middleman.Api].
  */
-private class ApiImpl(private val delegate: FluentLogger2.Api): JvmLogger.Api {
+private class ApiImpl(private val delegate: Middleman.Api): JvmLogger.Api {
 
     private var loggingDomain: LoggingDomain? = null
 
@@ -159,20 +159,20 @@ public operator fun JLevel.compareTo(other: JLevel): Int =
     intValue().compareTo(other.intValue())
 
 /**
- * Converts this [LogSite] to Flogger's counterpart.
+ * Converts this [LogSite] to the JVM logging counterpart.
  */
-private fun LogSite.toFloggerSite(): FloggerLogSite {
+private fun LogSite.toFloggerSite(): JvmLogSite {
     if (this == LogSite.INVALID) {
-        return FloggerLogSite.INVALID
+        return JvmLogSite.INVALID
     }
-    return object : FloggerLogSite() {
+    return object : JvmLogSite() {
         override fun getClassName(): String = this@toFloggerSite.className
         override fun getMethodName(): String = this@toFloggerSite.methodName
         override fun getLineNumber(): Int = this@toFloggerSite.lineNumber
         override fun getFileName(): String? = null
         override fun hashCode(): Int = this@toFloggerSite.hashCode()
         override fun equals(other: Any?): Boolean {
-            if (other !is FloggerLogSite) {
+            if (other !is JvmLogSite) {
                 return false
             }
             return lineNumber == other.lineNumber &&

@@ -1,11 +1,11 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -39,9 +39,9 @@ import io.spine.logging.LoggingApi
  * its execution rate is limited by [LoggingApi.every] method.
  *
  * @param invocations
- *          number of times a logging statement is invoked
+ *          number of times a logging statement is invoked.
  * @param invocationRateLimit
- *          the configured rate limitation
+ *          the configured rate limitation.
  */
 @Suppress("SameParameterValue") // Extracted to a method for better readability.
 internal fun expectedRuns(invocations: Int, invocationRateLimit: Int): Int {
@@ -55,9 +55,9 @@ internal fun expectedRuns(invocations: Int, invocationRateLimit: Int): Int {
  * enum value when the execution rate is limited by [LoggingApi.every] method.
  *
  * @param invocations
- *          number of times a logging statement is invoked for each enum value
+ *          number of times a logging statement is invoked for each enum value.
  * @param invocationRateLimit
- *          the configured rate limitation
+ *          the configured rate limitation.
  */
 @Suppress("SameParameterValue") // Extracted to a method for better readability.
 @JvmName("expectedRunsPerTask") // JVM has a problem with the conflicting erasures.
@@ -75,9 +75,9 @@ internal fun expectedRuns(
  *
  * @param invocations
  *          number of times a logging statement is invoked for each combination
- *          of enum values
+ *          of enum values.
  * @param invocationRateLimit
- *          the configured rate limitation
+ *          the configured rate limitation.
  */
 @Suppress("SameParameterValue") // Extracted to a method for better readability.
 @JvmName("expectedRunsPerTasks") // JVM has a problem with the conflicting erasures.
@@ -104,11 +104,11 @@ internal fun expectedRuns(invocations: InvocationsPerSite): Map<LogSite, Int>
  * its execution rate is limited by [LoggingApi.atMostEvery] method.
  *
  * @param invocations
- *          number of times a logging statement is invoked
+ *          number of times a logging statement is invoked.
  * @param intervalMillis
- *          time interval between each two invocations
+ *          time interval between each two invocations.
  * @param intervalLimitMillis
- *          the configured rate limitation
+ *          the configured rate limitation.
  */
 @Suppress("SameParameterValue") // Extracted to a method for better readability.
 internal fun expectedRuns(invocations: Int, intervalMillis: Long, intervalLimitMillis: Int): Int {
@@ -132,11 +132,11 @@ internal fun expectedRuns(invocations: Int, intervalMillis: Long, intervalLimitM
  * executed when [interval][LoggingApi.atMostEvery] rate limit is configured.
  *
  * @param invocations
- *          number of times a logging statement is invoked
+ *          number of times a logging statement is invoked.
  * @param intervalMillis
- *          time interval between each two invocations
+ *          time interval between each two invocations.
  * @param intervalLimitMillis
- *          the configured rate limitation
+ *          the configured rate limitation.
  */
 @Suppress("SameParameterValue") // Extracted to a method for better readability.
 internal fun expectedTimestamps(
@@ -167,13 +167,13 @@ internal fun expectedTimestamps(
  * [invocation][LoggingApi.every] rate limits are configured simultaneously.
  *
  * @param invocations
- *          number of times a logging statement is invoked
+ *          number of times a logging statement is invoked.
  * @param intervalMillis
- *          time interval between each two invocations
+ *          time interval between each two invocations.
  * @param intervalLimitMillis
- *          the configured time rate limitation
+ *          the configured time rate limitation.
  * @param invocationRateLimit
- *          the configured invocation rate limitation
+ *          the configured invocation rate limitation.
  */
 @Suppress("SameParameterValue") // Extracted to a method for better readability.
 internal fun expectedStamps(

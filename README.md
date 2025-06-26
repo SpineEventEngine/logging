@@ -211,7 +211,7 @@ dependencies {
 [codecov]: https://codecov.io/gh/SpineEventEngine/logging
 [codecov-badge]: https://codecov.io/gh/SpineEventEngine/logging/branch/master/graph/badge.svg
 [license-badge]: https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat
-[license]: http://www.apache.org/licenses/LICENSE-2.0
+[license]: https://www.apache.org/licenses/LICENSE-2.0
 [gh-actions]: https://github.com/SpineEventEngine/logging/actions
 [ubuntu-build-badge]: https://github.com/SpineEventEngine/logging/actions/workflows/build-on-ubuntu.yml/badge.svg
 [windows-build-badge]: https://github.com/SpineEventEngine/logging/actions/workflows/build-on-windows.yml/badge.svg

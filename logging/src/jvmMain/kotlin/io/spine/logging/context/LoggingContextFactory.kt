@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -35,9 +35,9 @@ import io.spine.logging.toJavaLogging
 import io.spine.logging.toLevel
 import io.spine.logging.toLoggerName
 import kotlin.reflect.KClass
-import io.spine.logging.flogger.context.ContextDataProvider as FContextDataProvider
-import io.spine.logging.flogger.context.LogLevelMap as FLogLevelMap
-import io.spine.logging.flogger.context.ScopedLoggingContext as FScopedLoggingContext
+import io.spine.logging.jvm.context.ContextDataProvider as JContextDataProvider
+import io.spine.logging.jvm.context.LogLevelMap as JLogLevelMap
+import io.spine.logging.jvm.context.ScopedLoggingContext as JScopedLoggingContext
 
 /**
  * A JVM implementation of `LoggingContextFactory`.
@@ -54,7 +54,7 @@ internal actual object LoggingContextFactory {
         MapImpl(map, defaultLevel)
 
     actual fun newContext(): ScopedLoggingContext.Builder {
-        val context = FContextDataProvider.getInstance().contextApiSingleton.newContext()
+        val context = JContextDataProvider.getInstance().contextApiSingleton.newContext()
         return DelegatingContextBuilder(context)
     }
 }
@@ -115,7 +115,7 @@ private class BuilderImpl : LogLevelMap.Builder {
  * Implements [LogLevelMap] by delegating to a log level map from Flogger.
  */
 @Immutable
-private class MapImpl(val delegate: FLogLevelMap): LogLevelMap {
+private class MapImpl(val delegate: JLogLevelMap): LogLevelMap {
 
     constructor(map: Map<String, Level>, defaultLevel: Level) :
             this(createDelegate(map, defaultLevel))
@@ -130,9 +130,9 @@ private class MapImpl(val delegate: FLogLevelMap): LogLevelMap {
     }
 
     companion object {
-        private fun createDelegate(map: Map<String, Level>, defaultLevel: Level): FLogLevelMap {
+        private fun createDelegate(map: Map<String, Level>, defaultLevel: Level): JLogLevelMap {
             val convertedMap = map.mapValues { it.value.toJavaLogging() }
-            return FLogLevelMap.create(convertedMap, defaultLevel.toJavaLogging())
+            return JLogLevelMap.create(convertedMap, defaultLevel.toJavaLogging())
         }
     }
 }
@@ -140,7 +140,7 @@ private class MapImpl(val delegate: FLogLevelMap): LogLevelMap {
 /**
  * Converts a nullable instance of logging level map from Flogger to our wrapped implementation.
  */
-public fun FLogLevelMap?.toMap(): LogLevelMap? {
+public fun JLogLevelMap?.toMap(): LogLevelMap? {
     return this?.let { MapImpl(this) }
 }
 
@@ -152,7 +152,7 @@ public fun FLogLevelMap?.toMap(): LogLevelMap? {
  * It is safe to assume that under a JVM, only [MapImpl] will be used because we
  * control the instantiation. This method ensures that the downcast is checked and documented.
  */
-private fun LogLevelMap.toFlogger(): FLogLevelMap {
+private fun LogLevelMap.toFlogger(): JLogLevelMap {
     if (this is MapImpl) {
         return this.delegate
     }
@@ -162,10 +162,10 @@ private fun LogLevelMap.toFlogger(): FLogLevelMap {
 
 /**
  * Implements [ScopedLoggingContext.Builder] by using
- * a [Flogger counterpart][FScopedLoggingContext.Builder] as underlying implementation.
+ * a [Flogger counterpart][JScopedLoggingContext.Builder] as underlying implementation.
  */
 private class DelegatingContextBuilder(
-    private val delegate: FScopedLoggingContext.Builder
+    private val delegate: JScopedLoggingContext.Builder
 ) : ScopedLoggingContext.Builder() {
 
     override fun withLogLevelMap(map: LogLevelMap): ScopedLoggingContext.Builder {

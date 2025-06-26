@@ -1,11 +1,11 @@
 /*
- * Copyright 2014, The Flogger Authors; 2023, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -26,9 +26,9 @@
 
 package io.spine.logging.backend.jul;
 
-import io.spine.logging.flogger.LogContext;
-import io.spine.logging.flogger.backend.LogData;
-import io.spine.logging.flogger.backend.Metadata;
+import io.spine.logging.jvm.LogContext;
+import io.spine.logging.jvm.backend.LogData;
+import io.spine.logging.jvm.backend.Metadata;
 
 import java.util.logging.LogRecord;
 
@@ -36,7 +36,7 @@ import java.util.logging.LogRecord;
  * An eagerly evaluating {@link LogRecord} that can be passed to a normal
  * log {@link java.util.logging.Handler Handler} instance for output.
  *
- * @see <a href="https://rb.gy/ed3eh">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/ed3eh">Original Java code of Google Flogger</a> for historical context.
  */
 public final class JulRecord extends AbstractJulRecord {
   /** Creates a {@link JulRecord} for a normal log statement from the given data. */

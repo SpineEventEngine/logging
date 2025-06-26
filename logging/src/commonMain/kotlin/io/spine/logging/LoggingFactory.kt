@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -36,14 +36,14 @@ public expect object LoggingFactory {
     /**
      * Obtains the logger for the enclosing class.
      *
-     * Implementation should provide the same logger instance for the same class.
+     * The implementation should return the same logger instance for the same class.
      */
     public fun <API: LoggingApi<API>> forEnclosingClass(): Logger<API>
 
     /**
      * Obtains the logger for the given class.
      *
-     * Implementation should provide the same logger instance for the same class.
+     * The implementation should return the same logger instance for the same class.
      */
     public fun <API: LoggingApi<API>> loggerFor(cls: KClass<*>): Logger<API>
 
@@ -56,8 +56,8 @@ public expect object LoggingFactory {
 
     /**
      * Creates a key for a single piece of metadata. If metadata is set more than once
-     * using this key for the same log statement, the last set value will be the one used, and
-     * other values will be ignored (although callers should never rely on this behavior).
+     * with this key for the same log statement, only the last value is used and
+     * other values are ignored (although callers should never rely on this behavior).
      *
      * Key instances behave like singletons, and two key instances with the same label will still
      * be considered distinct. The recommended approach is to always assign [MetadataKey]
@@ -69,7 +69,7 @@ public expect object LoggingFactory {
 
     /**
      * Creates a key for a repeated piece of metadata. If metadata is added more than once
-     * using this key for a log statement, all values will be retained as key/value pairs in
+     * with this key for a log statement, all values are retained as key/value pairs in
      * the order they were added.
      *
      * Key instances behave like singletons, and two key instances with the same label will still

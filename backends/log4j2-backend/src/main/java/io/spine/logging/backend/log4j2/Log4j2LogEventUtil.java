@@ -1,11 +1,11 @@
 /*
- * Copyright 2019, The Flogger Authors; 2023, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -26,23 +26,23 @@
 
 package io.spine.logging.backend.log4j2;
 
-import static io.spine.logging.flogger.backend.MetadataProcessor.forScopeAndLogSite;
+import static io.spine.logging.jvm.backend.MetadataProcessor.forScopeAndLogSite;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.logging.Level.WARNING;
 
-import io.spine.logging.flogger.LogContext;
-import io.spine.logging.flogger.FloggerLogSite;
-import io.spine.logging.flogger.FloggerMetadataKey;
-import io.spine.logging.flogger.backend.BaseMessageFormatter;
-import io.spine.logging.flogger.backend.LogData;
-import io.spine.logging.flogger.backend.MessageUtils;
-import io.spine.logging.flogger.backend.Metadata;
-import io.spine.logging.flogger.backend.MetadataHandler;
-import io.spine.logging.flogger.backend.Platform;
-import io.spine.logging.flogger.backend.SimpleMessageFormatter;
-import io.spine.logging.flogger.context.ScopedLoggingContext;
-import io.spine.logging.flogger.context.Tags;
+import io.spine.logging.jvm.LogContext;
+import io.spine.logging.jvm.JvmLogSite;
+import io.spine.logging.jvm.MetadataKey;
+import io.spine.logging.jvm.backend.BaseMessageFormatter;
+import io.spine.logging.jvm.backend.LogData;
+import io.spine.logging.jvm.backend.MessageUtils;
+import io.spine.logging.jvm.backend.Metadata;
+import io.spine.logging.jvm.backend.MetadataHandler;
+import io.spine.logging.jvm.backend.Platform;
+import io.spine.logging.jvm.backend.SimpleMessageFormatter;
+import io.spine.logging.jvm.context.ScopedLoggingContext;
+import io.spine.logging.jvm.context.Tags;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -111,7 +111,7 @@ final class Log4j2LogEventUtil {
       org.apache.logging.log4j.Level level,
       Throwable thrown) {
 
-    FloggerLogSite logSite = logData.getLogSite();
+    JvmLogSite logSite = logData.getLogSite();
     StackTraceElement locationInfo =
         new StackTraceElement(
             logSite.getClassName(),
@@ -205,11 +205,11 @@ final class Log4j2LogEventUtil {
     out.append("\n  line number: ").append(data.getLogSite().getLineNumber());
   }
 
-  private static final MetadataHandler<FloggerMetadataKey.KeyValueHandler> HANDLER =
+  private static final MetadataHandler<MetadataKey.KeyValueHandler> HANDLER =
       MetadataHandler.builder(Log4j2LogEventUtil::handleMetadata).build();
 
   private static void handleMetadata(
-          FloggerMetadataKey<Object> key, Object value, FloggerMetadataKey.KeyValueHandler kvh) {
+          MetadataKey<Object> key, Object value, MetadataKey.KeyValueHandler kvh) {
     if (key.getClass().equals(LogContext.Key.TAGS.getClass())) {
       processTags(key, value, kvh);
     } else {
@@ -225,7 +225,7 @@ final class Log4j2LogEventUtil {
   }
 
   private static void processTags(
-          FloggerMetadataKey<Object> key, Object value, FloggerMetadataKey.KeyValueHandler kvh) {
+          MetadataKey<Object> key, Object value, MetadataKey.KeyValueHandler kvh) {
     ValueQueue valueQueue = ValueQueue.appendValueToNewQueue(value);
     // Unlike single metadata (which is usually formatted as a single value), tags are always
     // formatted as a list.

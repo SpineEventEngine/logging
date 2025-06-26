@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,7 +63,7 @@ includeTest(
     "smoke-test",
 )
 
-includeFlogger(
+includeJvm(
     "middleware",
     "platform-generator",
 )
@@ -76,7 +76,7 @@ fun includePlatform(vararg modules: String) = includeTo("platforms", modules)
 
 fun includeTest(vararg modules: String) = includeTo("tests", modules)
 
-fun includeFlogger(vararg modules: String) = includeTo("flogger", modules)
+fun includeJvm(vararg modules: String) = includeTo("jvm", modules)
 
 fun includeTo(directory: String, modules: Array<out String>) = modules.forEach { name ->
     include(name)

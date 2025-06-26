@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -27,12 +27,12 @@
 package io.spine.logging.backend.jul.given
 
 import io.spine.logging.backend.jul.AbstractJulRecord
-import io.spine.logging.flogger.backend.LogData
-import io.spine.logging.flogger.backend.LogMessageFormatter
-import io.spine.logging.flogger.backend.Metadata
-import io.spine.logging.flogger.backend.MetadataProcessor
-import io.spine.logging.flogger.backend.SimpleMessageFormatter
-import io.spine.logging.flogger.backend.given.FakeLogData
+import io.spine.logging.jvm.backend.LogData
+import io.spine.logging.jvm.backend.LogMessageFormatter
+import io.spine.logging.jvm.backend.Metadata
+import io.spine.logging.jvm.backend.MetadataProcessor
+import io.spine.logging.jvm.backend.SimpleMessageFormatter
+import io.spine.logging.jvm.backend.given.FakeLogData
 
 /**
  * An instantiatable [AbstractJulRecord].

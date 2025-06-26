@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -35,8 +35,8 @@ import io.spine.logging.backend.system.given.NoOpCallerFinder
 import io.spine.logging.backend.system.given.StubBackendFactoryService
 import io.spine.logging.backend.system.given.StubClockService
 import io.spine.logging.backend.system.given.StubContextDataProviderService
-import io.spine.logging.flogger.backend.given.MemoizingLoggerBackend
-import io.spine.logging.flogger.context.ContextDataProvider
+import io.spine.logging.jvm.backend.given.MemoizingLoggerBackend
+import io.spine.logging.jvm.context.ContextDataProvider
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -48,7 +48,7 @@ import org.junit.jupiter.api.Test
  * the singleton behavior, since the precise platform loaded at runtime
  * can vary in details.
  *
- * @see <a href="https://rb.gy/550xu">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/550xu">Original Java code of Google Flogger</a> for historical context.
  */
 @DisplayName("`DefaultPlatform` should")
 internal class DefaultPlatformSpec {

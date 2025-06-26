@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -27,13 +27,13 @@
 package io.spine.logging.context.std
 
 import io.spine.logging.context.toMap
-import io.spine.logging.flogger.LoggingScope
-import io.spine.logging.flogger.backend.Metadata
-import io.spine.logging.flogger.context.ContextDataProvider
-import io.spine.logging.flogger.context.ScopeType
-import io.spine.logging.flogger.context.ScopedLoggingContext
-import io.spine.logging.flogger.context.ScopedLoggingContext.LoggingContextCloseable
-import io.spine.logging.flogger.context.Tags
+import io.spine.logging.jvm.LoggingScope
+import io.spine.logging.jvm.backend.Metadata
+import io.spine.logging.jvm.context.ContextDataProvider
+import io.spine.logging.jvm.context.ScopeType
+import io.spine.logging.jvm.context.ScopedLoggingContext
+import io.spine.logging.jvm.context.ScopedLoggingContext.LoggingContextCloseable
+import io.spine.logging.jvm.context.Tags
 import io.spine.logging.toJavaLogging
 import io.spine.logging.toLevel
 import java.util.logging.Level

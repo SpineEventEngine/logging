@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -33,13 +33,13 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
-import io.spine.logging.flogger.FloggerLogSite
-import io.spine.logging.flogger.LogContext.Key
-import io.spine.logging.flogger.backend.given.FakeLogData
-import io.spine.logging.flogger.given.FakeLogSite
-import io.spine.logging.flogger.parser.ParseException
-import io.spine.logging.flogger.repeatedKey
-import io.spine.logging.flogger.singleKey
+import io.spine.logging.jvm.JvmLogSite
+import io.spine.logging.jvm.LogContext.Key
+import io.spine.logging.jvm.backend.given.FakeLogData
+import io.spine.logging.jvm.given.FakeLogSite
+import io.spine.logging.jvm.parser.ParseException
+import io.spine.logging.jvm.repeatedKey
+import io.spine.logging.jvm.singleKey
 import java.util.concurrent.atomic.AtomicInteger
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.core.Appender
@@ -58,7 +58,7 @@ private typealias Log4jLevel = org.apache.logging.log4j.Level
  * Tests for [Log4j2LoggerBackend].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/log4j2/src/test/java/com/google/common/flogger/backend/log4j2/Log4j2Test.java">
- *     Original Java code of Google Flogger</a>
+ *     Original Java code of Google Flogger</a> for historical context.
  */
 @DisplayName("`Log4j2LoggerBackendSpec` should")
 internal class Log4j2LoggerBackendSpec {
@@ -175,7 +175,7 @@ internal class Log4j2LoggerBackendSpec {
             testLogSite(logSite)
         }
 
-        private fun testLogSite(logSite: FloggerLogSite) {
+        private fun testLogSite(logSite: JvmLogSite) {
             val data = FakeLogData("")
                 .setLogSite(logSite)
             backend.log(data)

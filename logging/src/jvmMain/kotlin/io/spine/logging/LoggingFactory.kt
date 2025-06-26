@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -26,8 +26,8 @@
 
 package io.spine.logging
 
-import io.spine.logging.flogger.FluentLogger2
-import io.spine.logging.flogger.backend.Platform
+import io.spine.logging.jvm.Middleman
+import io.spine.logging.jvm.backend.Platform
 import io.spine.reflect.CallerFinder
 import kotlin.reflect.KClass
 
@@ -79,7 +79,7 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
 
     private fun createForClass(cls: Class<*>): JvmLogger {
         val floggerBackend = Platform.getBackend(cls.name)
-        val flogger = FluentLogger2(floggerBackend)
+        val flogger = Middleman(floggerBackend)
         // As for now, `JvmLogger` just delegates actual work to Flogger.
         return JvmLogger(cls.kotlin, flogger)
     }

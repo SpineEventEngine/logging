@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.system;
 
-import io.spine.logging.flogger.backend.Clock;
+import io.spine.logging.jvm.backend.Clock;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
@@ -36,7 +36,7 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
  * <p>See class documentation in {@link Clock} for important
  * implementation restrictions.
  *
- * @see <a href="https://rb.gy/veqvb">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/veqvb">Original Java code of Google Flogger</a> for historical context.
  */
 public final class SystemClock extends Clock {
   private static final SystemClock INSTANCE = new SystemClock();
