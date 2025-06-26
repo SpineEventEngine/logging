@@ -51,7 +51,7 @@ internal constructor(
      * <p>If a file with the specified location exists, its contents will be substituted
      * with a new `pom.xml`.
      *
-     * @param file a file to write `pom.xml` contents to
+     * @param file a file to write `pom.xml` contents to.
      */
     fun writeTo(file: File) {
         val fileWriter = FileWriter(file)
@@ -83,4 +83,3 @@ internal constructor(
         return destination.toString()
     }
 }
-

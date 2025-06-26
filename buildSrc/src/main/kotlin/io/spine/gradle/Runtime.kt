@@ -24,6 +24,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+@file:Suppress("unused")
+
 package io.spine.gradle
 
 import java.io.File
@@ -35,7 +37,6 @@ import java.util.*
 /**
  * Utilities for working with processes from Gradle code.
  */
-@Suppress("unused")
 private const val ABOUT = ""
 
 /**
@@ -52,9 +53,9 @@ class Cli(private val workingFolder: File) {
      * {@code String} array as a CLI command. If the execution is successful, the command output
      * is returned; otherwise an {@link IllegalStateException} is thrown.
      *
-     * @param command the command to execute
-     * @return the command line output
-     * @throws IllegalStateException if the execution fails
+     * @param command the command to execute.
+     * @return the command line output.
+     * @throws IllegalStateException if the execution fails.
      */
     fun execute(vararg command: String): String {
         val outWriter = StringWriter()

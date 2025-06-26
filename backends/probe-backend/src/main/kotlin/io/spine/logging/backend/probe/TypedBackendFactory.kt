@@ -40,7 +40,7 @@ import io.spine.logging.jvm.backend.LoggerBackend
  *
  * The type is public because it is used in a public inline method.
  *
- * @param T type of the returned backends
+ * @param T type of the returned backends.
  */
 public fun interface TypedBackendFactory<out T : LoggerBackend> {
 
