@@ -41,7 +41,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
- * Tests [DefaultPlatform].
+ * Tests [DefaultJvmPlatform].
  *
  * This test suite checks that the internal implementation of the configured
  * platform “plugins” works as expected, but it doesn't really test
@@ -51,13 +51,13 @@ import org.junit.jupiter.api.Test
  * @see <a href="https://rb.gy/550xu">Original Java code of Google Flogger</a>
  */
 @DisplayName("`DefaultPlatform` should")
-internal class DefaultPlatformSpec {
+internal class DefaultJvmPlatformSpec {
 
     private val factory = MemoizingLoggerBackendFactory()
     private val context = ContextDataProvider.getNoOpProvider()
     private val clock = FixedTime()
     private val caller = NoOpCallerFinder()
-    private var platform = object : DefaultPlatform(factory, context, clock, caller) { }
+    private var platform = object : DefaultJvmPlatform(factory, context, clock, caller) { }
 
     @Test
     fun `use the given factory to create backend instances`() {
@@ -102,7 +102,7 @@ internal class DefaultPlatformSpec {
 
     @Test
     fun `load services from the classpath`() {
-        val platform = DefaultPlatform()
+        val platform = DefaultJvmPlatform()
         val configInfo = platform.configInfoImpl.trimEnd()
         val expectedServices = setOf(
             "BackendFactory: ${StubBackendFactoryService::class.java.name}",

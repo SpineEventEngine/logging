@@ -24,19 +24,44 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging
+package io.spine.logging.jvm;
 
-import java.util.logging.Logger
+import org.jspecify.annotations.Nullable;
 
 /**
- * Executes the given [action] and returns the text logged with
- * [Java Logging][Logger] backend.
+ * A singleton {@link JvmLogSite} instance used to indicate that valid log site information
+ * cannot be determined.
+ *
+ * <p>This can be used to indicate that log site information is not available by
+ * injecting it via {@link MiddlemanApi#withInjectedLogSite} which will suppress any further
+ * log site analysis for that log statement. This is also returned if stack trace analysis
+ * fails for any reason.
+ *
+ * <p>If a log statement does end up with invalid log site information, then any fluent logging
+ * methods, which rely on being able to look up site-specific metadata will be disabled and
+ * essentially become "no ops".
  */
-internal fun tapJavaLogging(action: () -> Unit): String {
-    val memoizingHandler = MemoizingHandler()
-    val rootLogger = Logger.getLogger("")
-    rootLogger.addHandler(memoizingHandler) // Handlers are propagated down to child loggers.
-    action.invoke()
-    rootLogger.removeHandler(memoizingHandler)
-    return memoizingHandler.result()
+final class InvalidLogSite extends JvmLogSite {
+
+    @Override
+    public String getClassName() {
+        return "<unknown class>";
+    }
+
+    @Override
+    public String getMethodName() {
+        return "<unknown method>";
+    }
+
+    @Override
+    public int getLineNumber() {
+        return UNKNOWN_LINE;
+    }
+
+    @Override
+    public @Nullable String getFileName() {
+        return null;
+    }
+    
+    // No need to implement equals() or hashCode() for a singleton instance.
 }
