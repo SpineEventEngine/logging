@@ -82,7 +82,7 @@ import static io.spine.logging.jvm.util.StaticMethodCaller.getInstanceFromSystem
  * @see <a href="http://rb.gy/nnjac">Original Java code of Google Flogger</a>
  */
 // Non-final for testing.
-public class DefaultJvmPlatform extends Platform {
+public class DefaultPlatform extends Platform {
 
     // System property names for properties expected to define "getters" for platform attributes.
     private static final String BACKEND_FACTORY = "flogger.backend_factory";
@@ -94,7 +94,7 @@ public class DefaultJvmPlatform extends Platform {
     private final Clock clock;
     private final LogCallerFinder callerFinder;
 
-    public DefaultJvmPlatform() {
+    public DefaultPlatform() {
         // To avoid eagerly loading the default implementations of each service when they might not
         // be required, we return null from the loadService() method rather than accepting a default
         // instance. This avoids a bunch of potentially unnecessary static initialization.
@@ -163,7 +163,7 @@ public class DefaultJvmPlatform extends Platform {
     }
 
     @VisibleForTesting
-    DefaultJvmPlatform(
+    DefaultPlatform(
             BackendFactory factory,
             ContextDataProvider context,
             Clock clock,
