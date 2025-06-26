@@ -37,15 +37,16 @@ import java.util.logging.Level;
  * The default implementation of {@link AbstractLogger} which returns the basic {@link MiddlemanApi}
  * and uses the default parser and system configured backend.
  *
- * <p>
- * Note that when extending the logging API or specifying a new parser, you will need to create a
+ * <p>Note that when extending the logging API or specifying a new parser, you will need to create a
  * new logger class (rather than extending this one). Unlike the {@link LogContext} class,
  * which must be extended in order to modify the logging API, this class is not generified and thus
  * cannot be modified to produce a different logging API.
  *
- * <p>
- * The choice to prevent direct extension of loggers was made deliberately to ensure that users of
- * a specific logger implementation always get the same behavior.
+ * <p>The choice to prevent direct extension of loggers was made to ensure that users
+ * of a specific logger implementation always get the same behavior.
+ *
+ * @apiNote It is expected that this class is going to be merged
+ *   with {@code io.spine.logging.JvmLogger} of the {@code logging} module.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/FluentLogger.java">
  *     Original Java code of Google Flogger</a> for historical context.
