@@ -39,7 +39,7 @@ import static io.spine.reflect.CallerFinder.findCallerOf;
  * <p>See class documentation in {@link LogCallerFinder} for important
  * implementation restrictions.
  *
- * @see <a href="https://rb.gy/qozq3">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/qozq3">Original Java code of Google Flogger</a> for historical context.
  */
 public final class StackBasedCallerFinder extends LogCallerFinder {
   private static final LogCallerFinder INSTANCE = new StackBasedCallerFinder();

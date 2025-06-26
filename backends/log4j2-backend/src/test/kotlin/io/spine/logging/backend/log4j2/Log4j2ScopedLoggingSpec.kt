@@ -55,7 +55,7 @@ import org.junit.jupiter.api.Test
  * a concrete implementation is needed. This test suite uses [GrpcScopedLoggingContext][io.spine.logging.context.grpc.GrpcScopedLoggingContext].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/log4j2/src/test/java/com/google/common/flogger/backend/log4j2/Log4j2ScopedLoggingTest.java">
- *     Original Java code of Google Flogger</a>
+ *     Original Java code of Google Flogger</a> for historical context.
  */
 @DisplayName("With Log4j backend, `ScopedLoggingContext` should")
 internal class Log4j2ScopedLoggingSpec {

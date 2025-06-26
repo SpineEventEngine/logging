@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -77,7 +77,7 @@ import static org.objectweb.asm.Opcodes.V1_6;
  * (e.g., proguard) observe the dependency correctly, which is not the case
  * when reflection is used to look up classes.
  *
- * @see <a href="http://rb.gy/mjs13">Original Java code of Google Flogger</a>
+ * @see <a href="http://rb.gy/mjs13">Original Java code of Google Flogger</a> for historical context.
  */
 @SuppressWarnings("DuplicateStringLiteralInspection") // Uses literals with FQN.
 public final class PlatformProviderGenerator {

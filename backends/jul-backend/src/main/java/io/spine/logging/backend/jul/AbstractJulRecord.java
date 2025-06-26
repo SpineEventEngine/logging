@@ -1,5 +1,5 @@
 /*
- * Copyright 2015, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -106,7 +106,7 @@ import static java.util.logging.Level.WARNING;
  *       set them is ignored.
  * </ul>
  *
- * @see <a href="https://rb.gy/yrrs4">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/yrrs4">Original Java code of Google Flogger</a> for historical context.
  */
 public abstract class AbstractJulRecord extends LogRecord {
 

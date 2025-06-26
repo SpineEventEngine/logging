@@ -28,7 +28,7 @@
  * Contains {@link io.grpc.Context gRPC}-based implementation of
  * {@link io.spine.logging.jvm.context.ScopedLoggingContext ScopedLoggingContext}.
  *
- * @see <a href="https://rb.gy/zghcm">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/zghcm">Original Java code of Google Flogger</a> for historical context.
  */
 @CheckReturnValue
 package io.spine.logging.context.grpc;

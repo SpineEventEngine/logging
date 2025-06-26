@@ -53,8 +53,11 @@ import java.util.concurrent.TimeUnit;
  * context-specific methods ({@code isLowOnMemory()}, {@code isThrashing()} etc...).
  * However, each of these sub-APIs must eventually return the original logging API.
  *
+ * @apiNote It is expected that this class is going to be merged
+ *   with {@code io.spine.logging.LoggingApi} of the {@code logging} module.
+ *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LoggingApi.java">
- *     Original Java code of Google Flogger</a>
+ *     Original Java code of Google Flogger</a> for historical context.
  */
 @SuppressWarnings({"ClassWithTooManyMethods", "OverlyComplexClass"})
 public interface MiddlemanApi<API extends MiddlemanApi<API>> {

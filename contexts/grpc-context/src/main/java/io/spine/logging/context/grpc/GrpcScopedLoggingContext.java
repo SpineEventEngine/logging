@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ import org.jspecify.annotations.Nullable;
  * {@link GrpcContextDataProvider#getContextApiSingleton()}, which provides
  * application code with a mechanism for controlling logging contexts.
  *
- * @see <a href="https://rb.gy/w1wyu">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/w1wyu">Original Java code of Google Flogger</a> for historical context.
  */
 final class GrpcScopedLoggingContext extends ScopedLoggingContext {
 

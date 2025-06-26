@@ -1,5 +1,5 @@
 /*
- * Copyright 2014, The Flogger Authors; 2023, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ import java.util.logging.Logger;
  * <p>This class handles everything except formatting of a log message
  * and metadata.
  *
- * @see <a href="https://rb.gy/jzz7x">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/jzz7x">Original Java code of Google Flogger</a> for historical context.
  */
 public abstract class AbstractJulBackend extends LoggerBackend {
   // Set if any attempt at logging via the "forcing" logger fails due to an inability to set the

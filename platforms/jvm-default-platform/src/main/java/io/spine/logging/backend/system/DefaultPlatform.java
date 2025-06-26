@@ -26,6 +26,7 @@
 
 package io.spine.logging.backend.system;
 
+import com.google.common.annotations.VisibleForTesting;
 import io.spine.logging.backend.jul.JulBackendFactory;
 import io.spine.logging.jvm.backend.BackendFactory;
 import io.spine.logging.jvm.backend.Clock;
@@ -59,159 +60,147 @@ import static io.spine.logging.jvm.util.StaticMethodCaller.getInstanceFromSystem
  *       <b>Note:</b> Support for {@code getInstance} is only provided to facilitate transition
  *       from older service implementations that include a {@code getInstance} method and will
  *       likely be removed in the future.
- *   <li><b>A fully-qualified class name followed by "#" and the name of a static method:</b> In
- *       this case, the platform will attempt to get an instance of that class by invoking either
- *       the named no-arg static method or the public no-arg constructor. <b>Note:</b> This option
- *       exists only for compatibility with previous Flogger behavior and may be removed in the
- *       future; service implementations should prefer providing a no-arg public constructor rather
- *       than a static method and system properties should prefer only including the class name.
+ *   <li><b>A fully-qualified class name followed by "#" and the name of a static method:</b>
+ *       In this case, the platform will attempt to get an instance of that class by invoking
+ *       either the named no-arg static method or the public no-arg constructor.
+ *       <b>Note:</b> This option exists only for compatibility with previous Flogger behavior and
+ *       may be removed in the future; service implementations should prefer providing a no-arg
+ *       public constructor rather than a static method, and system properties should prefer
+ *       only including the class name.
  * </ul>
  *
  * <p>The services used by this platform are the following:
  *
- * <table>
- * <tr>
- * <th>Service Type</th>
- * <th>System Property</th>
- * <th>Default</th>
- * </tr>
- * <tr>
- * <td>{@link BackendFactory}</td>
- * <td>{@code flogger.backend_factory}</td>
- * <td>{@link JulBackendFactory}</td>
- * </tr>
- * <tr>
- * <td>{@link ContextDataProvider}</td>
- * <td>{@code flogger.logging_context}</td>
- * <td>A no-op {@code ContextDataProvider}</td>
- * </tr>
- * <tr>
- * <td>{@link Clock}</td>
- * <td>{@code flogger.clock}</td>
- * <td>{@link SystemClock}, a millisecond-precision clock</td>
- * </tr>
- * </table>
+ * <pre>
+ * | Service Type            | System Property            | Default                                    |
+ * |------------------------|---------------------------|---------------------------------------------|
+ * | {@link BackendFactory} | {@code flogger.backend_factory} | {@link JulBackendFactory}                   |
+ * | {@link ContextDataProvider} | {@code flogger.logging_context} | A no-op {@code ContextDataProvider}         |
+ * | {@link Clock}          | {@code flogger.clock}           | {@link SystemClock}, a millisecond-precision clock |
+ * </pre>
  *
- * @see <a href="http://rb.gy/nnjac">Original Java code of Google Flogger</a>
+ * @see <a href="http://rb.gy/nnjac">Original Java code of Google Flogger</a> for historical context.
  */
 // Non-final for testing.
 public class DefaultPlatform extends Platform {
-  // System property names for properties expected to define "getters" for platform attributes.
-  private static final String BACKEND_FACTORY = "flogger.backend_factory";
-  private static final String CONTEXT_DATA_PROVIDER = "flogger.logging_context";
-  private static final String CLOCK = "flogger.clock";
 
-  private final BackendFactory backendFactory;
-  private final ContextDataProvider context;
-  private final Clock clock;
-  private final LogCallerFinder callerFinder;
+    // System property names for properties expected to define "getters" for platform attributes.
+    private static final String BACKEND_FACTORY = "flogger.backend_factory";
+    private static final String CONTEXT_DATA_PROVIDER = "flogger.logging_context";
+    private static final String CLOCK = "flogger.clock";
 
-  public DefaultPlatform() {
-    // To avoid eagerly loading the default implementations of each service when they might not
-    // be required, we return null from the loadService() method rather than accepting a default
-    // instance. This avoids a bunch of potentially unnecessary static initialization.
-    BackendFactory backendFactory = loadService(BackendFactory.class, BACKEND_FACTORY);
-    this.backendFactory = backendFactory != null ? backendFactory : new JulBackendFactory();
+    private final BackendFactory backendFactory;
+    private final ContextDataProvider context;
+    private final Clock clock;
+    private final LogCallerFinder callerFinder;
 
-    ContextDataProvider contextDataProvider =
-        loadService(ContextDataProvider.class, CONTEXT_DATA_PROVIDER);
-    this.context =
-        contextDataProvider != null ? contextDataProvider : ContextDataProvider.getNoOpProvider();
+    public DefaultPlatform() {
+        // To avoid eagerly loading the default implementations of each service when they might not
+        // be required, we return null from the loadService() method rather than accepting a default
+        // instance. This avoids a bunch of potentially unnecessary static initialization.
+        var backendFactory = loadService(BackendFactory.class, BACKEND_FACTORY);
+        this.backendFactory = backendFactory != null ? backendFactory : new JulBackendFactory();
 
-    Clock clock = loadService(Clock.class, CLOCK);
-    this.clock = clock != null ? clock : SystemClock.getInstance();
+        var contextDataProvider =
+                loadService(ContextDataProvider.class, CONTEXT_DATA_PROVIDER);
+        this.context =
+                contextDataProvider !=
+                        null ? contextDataProvider : ContextDataProvider.getNoOpProvider();
 
-    this.callerFinder = StackBasedCallerFinder.getInstance();
-  }
+        var clock = loadService(Clock.class, CLOCK);
+        this.clock = clock != null ? clock : SystemClock.getInstance();
 
-  /**
-   * Attempts to load an implementation of the given {@code serviceType}:
-   *
-   * <ol>
-   *   <li>First looks for an implementation specified by the value of the given {@code
-   *       systemProperty}, if that system property is set correctly. If the property is set but
-   *       can't be used to get an instance of the service type, prints an error and returns {@code
-   *       null}.
-   *   <li>Then attempts to load an implementation from the classpath via {@code ServiceLoader}, if
-   *       there is exactly one. If there is more than one, prints an error and returns {@code
-   *       null}.
-   *   <li>If neither is present, returns {@code null}.
-   * </ol>
-   */
-  @Nullable
-  private static <S> S loadService(Class<S> serviceType, String systemProperty) {
-    // TODO(cgdecker): Throw an exception if configuration is present but invalid?
-    // - If the system property is set but using it to get the service fails.
-    // - If the system property is not set and more than one service is loaded by ServiceLoader
-    // If no configuration is present, falling back to the default makes sense, but when invalid
-    // configuration is present it may be best to attempt to fail fast.
-    S service = getInstanceFromSystemProperty(systemProperty, serviceType);
-    if (service != null) {
-      // Service was loaded successfully via an explicitly overridden system property.
-      return service;
+        this.callerFinder = StackBasedCallerFinder.getInstance();
     }
 
-    List<S> loadedServices = new ArrayList<S>();
-    for (S loaded : ServiceLoader.load(serviceType)) {
-      loadedServices.add(loaded);
+    /**
+     * Attempts to load an implementation of the given {@code serviceType}:
+     *
+     * <ol>
+     *   <li>First looks for an implementation specified by the value of the given {@code
+     *       systemProperty}, if that system property is set correctly. If the property is set but
+     *       can't be used to get an instance of the service type, prints an error and returns {@code
+     *       null}.
+     *   <li>Then attempts to load an implementation from the classpath via {@code ServiceLoader}, if
+     *       there is exactly one. If there is more than one, prints an error and returns {@code
+     *       null}.
+     *   <li>If neither is present, returns {@code null}.
+     * </ol>
+     */
+    @Nullable
+    private static <S> S loadService(Class<S> serviceType, String systemProperty) {
+        // TODO(cgdecker): Throw an exception if configuration is present but invalid?
+        // - If the system property is set but using it to get the service fails.
+        // - If the system property is not set and more than one service is loaded by ServiceLoader
+        // If no configuration is present, falling back to the default makes sense, but when invalid
+        // configuration is present it may be best to attempt to fail fast.
+        var service = getInstanceFromSystemProperty(systemProperty, serviceType);
+        if (service != null) {
+            // Service was loaded successfully via an explicitly overridden system property.
+            return service;
+        }
+
+        List<S> loadedServices = new ArrayList<S>();
+        for (var loaded : ServiceLoader.load(serviceType)) {
+            loadedServices.add(loaded);
+        }
+
+        return switch (loadedServices.size()) {
+            // Normal use of the default service when nothing else exists.
+            case 0 -> null;
+            // A single service implementation was found and loaded automatically.
+            case 1 -> loadedServices.get(0);
+            default -> { System.err.printf(
+                    "Multiple implementations of service %s found on the classpath: %s%n"
+                    + "Ensure only the service implementation you want to use is included on the "
+                    + "classpath or else specify the service class at startup with the '%s' system "
+                    + "property. The default implementation will be used instead.%n",
+                    serviceType.getName(), loadedServices, systemProperty
+                );
+                yield null;
+            }
+        };
     }
 
-    switch (loadedServices.size()) {
-      case 0:
-        // Normal use of default service when nothing else exists.
-        return null;
-      case 1:
-        // A single service implementation was found and loaded automatically.
-        return loadedServices.get(0);
-      default:
-        System.err.printf(
-            "Multiple implementations of service %s found on the classpath: %s%n"
-                + "Ensure only the service implementation you want to use is included on the "
-                + "classpath or else specify the service class at startup with the '%s' system "
-                + "property. The default implementation will be used instead.%n",
-            serviceType.getName(), loadedServices, systemProperty);
-        return null;
+    @VisibleForTesting
+    DefaultPlatform(
+            BackendFactory factory,
+            ContextDataProvider context,
+            Clock clock,
+            LogCallerFinder callerFinder) {
+        this.backendFactory = factory;
+        this.context = context;
+        this.clock = clock;
+        this.callerFinder = callerFinder;
     }
-  }
 
-  // Visible for testing
-  DefaultPlatform(
-      BackendFactory factory,
-      ContextDataProvider context,
-      Clock clock,
-      LogCallerFinder callerFinder) {
-    this.backendFactory = factory;
-    this.context = context;
-    this.clock = clock;
-    this.callerFinder = callerFinder;
-  }
+    @Override
+    protected LogCallerFinder getCallerFinderImpl() {
+        return callerFinder;
+    }
 
-  @Override
-  protected LogCallerFinder getCallerFinderImpl() {
-    return callerFinder;
-  }
+    @Override
+    protected LoggerBackend getBackendImpl(String className) {
+        return backendFactory.create(className);
+    }
 
-  @Override
-  protected LoggerBackend getBackendImpl(String className) {
-    return backendFactory.create(className);
-  }
+    @Override
+    protected ContextDataProvider getContextDataProviderImpl() {
+        return context;
+    }
 
-  @Override
-  protected ContextDataProvider getContextDataProviderImpl() {
-    return context;
-  }
+    @Override
+    protected long getCurrentTimeNanosImpl() {
+        return clock.getCurrentTimeNanos();
+    }
 
-  @Override
-  protected long getCurrentTimeNanosImpl() {
-    return clock.getCurrentTimeNanos();
-  }
-
-  @Override
-  protected String getConfigInfoImpl() {
-    return "Platform: " + getClass().getName() + "\n"
-        + "BackendFactory: " + backendFactory + "\n"
-        + "Clock: " + clock + "\n"
-        + "ContextDataProvider: " + context + "\n"
-        + "LogCallerFinder: " + callerFinder + "\n";
-  }
+    @SuppressWarnings("HardcodedLineSeparator")
+    @Override
+    protected String getConfigInfoImpl() {
+        return "Platform: " + getClass().getName() + '\n'
+                + "BackendFactory: " + backendFactory + '\n'
+                + "Clock: " + clock + '\n'
+                + "ContextDataProvider: " + context + '\n'
+                + "LogCallerFinder: " + callerFinder + '\n';
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ import static io.spine.logging.jvm.util.Checks.checkNotNull;
  * This class is immutable and thread safe, as per the Parameter contract.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parameter/SimpleParameter.java">
- *      Original Java code of Google Flogger</a>
+ *      Original Java code of Google Flogger</a> for historical context.
  */
 public final class SimpleParameter extends Parameter {
 

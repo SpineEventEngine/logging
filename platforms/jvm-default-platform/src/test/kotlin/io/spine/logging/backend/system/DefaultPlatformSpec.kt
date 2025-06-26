@@ -48,7 +48,7 @@ import org.junit.jupiter.api.Test
  * the singleton behavior, since the precise platform loaded at runtime
  * can vary in details.
  *
- * @see <a href="https://rb.gy/550xu">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/550xu">Original Java code of Google Flogger</a> for historical context.
  */
 @DisplayName("`DefaultPlatform` should")
 internal class DefaultPlatformSpec {

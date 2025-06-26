@@ -1,5 +1,5 @@
 /*
- * Copyright 2014, The Flogger Authors; 2023, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ import java.util.logging.LogRecord;
  * An eagerly evaluating {@link LogRecord} that can be passed to a normal
  * log {@link java.util.logging.Handler Handler} instance for output.
  *
- * @see <a href="https://rb.gy/ed3eh">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/ed3eh">Original Java code of Google Flogger</a> for historical context.
  */
 public final class JulRecord extends AbstractJulRecord {
   /** Creates a {@link JulRecord} for a normal log statement from the given data. */
