@@ -28,6 +28,7 @@ package io.spine.logging.jvm.util
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
+import io.spine.logging.jvm.util.Checks.checkMetadataIdentifier
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -36,39 +37,10 @@ import org.junit.jupiter.api.Test
 internal class ChecksSpec {
 
     @Test
-    fun `return value for a not null reference`() {
-        val value = "foo"
-        Checks.checkNotNull(value, "value") shouldBe value
-    }
-
-    @Test
-    fun `throw NPE for a null reference`() {
-        shouldThrow<NullPointerException> {
-            Checks.checkNotNull(null, "value")
-        }
-    }
-
-    @Test
-    fun `enforce argument condition`() {
-        Checks.checkArgument(true, "message")
-        shouldThrow<IllegalArgumentException> {
-            Checks.checkArgument(false, "message")
-        }
-    }
-
-    @Test
-    fun `enforce state condition`() {
-        Checks.checkState(true, "message")
-        shouldThrow<IllegalStateException> {
-            Checks.checkState(false, "message")
-        }
-    }
-
-    @Test
     fun `validate metadata identifier`() {
-        Checks.checkMetadataIdentifier("abc_123") shouldBe "abc_123"
-        shouldThrow<IllegalArgumentException> { Checks.checkMetadataIdentifier("") }
-        shouldThrow<IllegalArgumentException> { Checks.checkMetadataIdentifier("_bad") }
-        shouldThrow<IllegalArgumentException> { Checks.checkMetadataIdentifier("no-dash") }
+        checkMetadataIdentifier("abc_123") shouldBe "abc_123"
+        shouldThrow<IllegalArgumentException> { checkMetadataIdentifier("") }
+        shouldThrow<IllegalArgumentException> { checkMetadataIdentifier("_bad") }
+        shouldThrow<IllegalArgumentException> { checkMetadataIdentifier("no-dash") }
     }
 }

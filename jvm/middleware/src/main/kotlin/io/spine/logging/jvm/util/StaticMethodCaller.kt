@@ -32,18 +32,24 @@ package io.spine.logging.jvm.util
  * that these constructors/methods will be invoked once during logger
  * initialization and then the results cached in the platform class.
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/util/StaticMethodCaller.java">Original Java code of Google Flogger</a>
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/util/StaticMethodCaller.java">
+ *   Original Java code of Google Flogger</a> for historical context.
  */
 public object StaticMethodCaller {
 
     // TODO(cgdecker): Rename this class; eventually perhaps just roll it into DefaultPlatform
 
-    @JvmStatic
-    fun <T> getInstanceFromSystemProperty(propertyName: String, type: Class<T>): T? =
-        getInstanceFromSystemProperty(propertyName, null, type)
+    private const val GET_INSTANCE = "getInstance"
 
     @JvmStatic
-    fun <T> getInstanceFromSystemProperty(
+    public fun <T> getInstanceFromSystemProperty(propertyName: String, type: Class<T>): T? =
+        getInstanceFromSystemProperty(propertyName, null, type)
+
+    //TODO:2025-06-26:alexander.yevsyukov: Migrate this to be a part of the Spine Reflect library.
+
+    @JvmStatic
+    @Suppress("ReturnCount", "TooGenericExceptionCaught")
+    public fun <T> getInstanceFromSystemProperty(
         propertyName: String,
         defaultValue: String?,
         type: Class<T>
@@ -53,7 +59,7 @@ public object StaticMethodCaller {
         val hashIndex = property.indexOf('#')
         val className = if (hashIndex == -1) property else property.substring(0, hashIndex)
         // TODO(cgdecker): Eventually we should eliminate method checks and only use constructors
-        val methodName = if (hashIndex == -1) "getInstance" else property.substring(hashIndex + 1)
+        val methodName = if (hashIndex == -1) GET_INSTANCE else property.substring(hashIndex + 1)
 
         var attemptedMethod = "$className#$methodName()"
         return try {
@@ -62,7 +68,7 @@ public object StaticMethodCaller {
                 val method = clazz.getMethod(methodName)
                 return type.cast(method.invoke(null))
             } catch (e: NoSuchMethodException) {
-                if (hashIndex == -1 || methodName != "getInstance") {
+                if (hashIndex == -1 || methodName != GET_INSTANCE) {
                     error("method '%s' does not exist: %s\n", property, e)
                     return null
                 }
@@ -88,19 +94,19 @@ public object StaticMethodCaller {
             null
         }
     }
+}
 
-    private fun readProperty(propertyName: String, defaultValue: String?): String? {
-        Checks.checkNotNull(propertyName, "property name")
-        return try {
-            System.getProperty(propertyName, defaultValue)
-        } catch (e: SecurityException) {
-            error("cannot read property name %s: %s", propertyName, e)
-            null
-        }
+private fun readProperty(propertyName: String, defaultValue: String?): String? {
+    return try {
+        System.getProperty(propertyName, defaultValue)
+    } catch (e: SecurityException) {
+        error("Cannot read property name %s: %s", propertyName, e)
+        null
     }
+}
 
-    // This cannot use a fluent logger here and it's even risky to use a JDK logger.
-    private fun error(msg: String, vararg args: Any?) {
-        System.err.println("${StaticMethodCaller::class.java}: " + String.format(msg, *args))
-    }
+// This cannot use a fluent logger here, and it is even risky to use a JDK logger.
+private fun error(msg: String, vararg args: Any?) {
+    val formattedMsg = if (args.isEmpty()) msg else msg.format(*args)
+    System.err.println("${StaticMethodCaller::class.java}: $formattedMsg")
 }

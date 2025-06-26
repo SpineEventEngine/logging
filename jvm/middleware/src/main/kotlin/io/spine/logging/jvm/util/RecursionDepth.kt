@@ -31,7 +31,7 @@ import java.io.Closeable
 /**
  * A thread local counter, incremented whenever a log statement is being
  * processed by the backend. If this value is greater than 1, then reentrant
- * logging has occurred and some code may behave differently to avoid issues
+ * logging has occurred, and some code may behave differently to avoid issues
  * such as unbounded recursion. Logging may even be disabled completely if the
  * depth gets too high.
  *
@@ -39,22 +39,28 @@ import java.io.Closeable
  * Flogger library. Backends which need to know the recursion depth should call
  * `Platform.getCurrentRecursionDepth()`.
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/util/RecursionDepth.java">Original Java code of Google Flogger</a>
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/util/RecursionDepth.java">
+ *   Original Java code of Google Flogger</a> for historical context.
  */
 public class RecursionDepth private constructor() : Closeable {
 
-    companion object {
+    public companion object {
+        
         private val holder = object : ThreadLocal<RecursionDepth>() {
             override fun initialValue(): RecursionDepth = RecursionDepth()
         }
 
-        /** Do not call this method directly, use `Platform.getCurrentRecursionDepth()`. */
+        /**
+         * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
+         */
         @JvmStatic
-        fun getCurrentDepth(): Int = holder.get().value
+        public fun getCurrentDepth(): Int = holder.get().value
 
-        /** Do not call this method directly, use `Platform.getCurrentRecursionDepth()`. */
+        /**
+         * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
+         */
         @JvmStatic
-        fun enterLogStatement(): RecursionDepth {
+        public fun enterLogStatement(): RecursionDepth {
             val depth = holder.get()
             if (++depth.value == 0) {
                 throw AssertionError(
@@ -67,16 +73,16 @@ public class RecursionDepth private constructor() : Closeable {
 
     private var value = 0
 
-    /** Do not call this method directly, use `Platform.getCurrentRecursionDepth()`. */
-    fun getValue(): Int = value
+    /**
+     * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
+     */
+    public fun getValue(): Int = value
 
     override fun close() {
         if (value > 0) {
             value -= 1
             return
         }
-        throw AssertionError(
-            "Mismatched calls to RecursionDepth (possible error in core library)"
-        )
+        throw AssertionError("Mismatched calls to RecursionDepth (possible error in core library)")
     }
 }

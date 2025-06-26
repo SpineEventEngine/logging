@@ -29,47 +29,68 @@ package io.spine.logging.jvm.util
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 
 /**
- * Flogger's own version of the Guava `Preconditions` class for simple,
- * often used checks.
+ * Preconditions for simple often used checks.
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/util/Checks.java">Original Java code of Google Flogger</a>
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/util/Checks.java">
+ *   Original Java code of Google Flogger</a> for historical context.
  */
 public object Checks {
 
     @CanIgnoreReturnValue
     @JvmStatic
-    fun <T> checkNotNull(value: T?, name: String): T {
-        require(value != null) { "$name must not be null" }
+    @Deprecated(
+        "Use `PreconditionsKt.checkNotNull(T)` instead",
+        ReplaceWith("checkNotNull(value)")
+    )
+    public fun <T> checkNotNull(value: T?, name: String): T {
+        checkNotNull(value) { "$name must not be null" }
         return value
     }
 
     @JvmStatic
-    fun checkArgument(condition: Boolean, message: String) =
+    @Deprecated(
+        "Use `require(Boolean, String)` instead",
+        ReplaceWith("require(condition) { message }")
+    )
+    public fun checkArgument(condition: Boolean, message: String): Unit =
         require(condition) { message }
 
     @JvmStatic
-    fun checkState(condition: Boolean, message: String) =
-        check(condition) { message }
+    @Deprecated(
+        "Use `check(Boolean, Message)` instead",
+        ReplaceWith("check(condition) { message }")
+    )
+    public fun checkState(condition: Boolean, message: String): Unit = check(condition) { message }
 
     /** Checks if the given string is a valid metadata identifier. */
-    @CanIgnoreReturnValue
     @JvmStatic
-    fun checkMetadataIdentifier(s: String): String {
-        require(s.isNotEmpty()) { "identifier must not be empty" }
-        require(isLetter(s[0])) { "identifier must start with an ASCII letter: $s" }
+    @CanIgnoreReturnValue
+    public fun checkMetadataIdentifier(s: String): String {
+        require(s.isNotEmpty()) { "An identifier must not be empty." }
+        require(isLetter(s[0])) { "An identifier must start with an ASCII letter: `$s`." }
         for (n in 1 until s.length) {
             val c = s[n]
             require(isLetter(c) || (c in '0'..'9') || c == '_') {
-                "identifier must contain only ASCII letters, digits or underscore: $s"
+                "An identifier must contain only ASCII letters, digits or underscore: `$s`."
             }
         }
         return s
     }
-
-    // WARNING: The reason the we are NOT using method from Character like "isLetter()",
-    // "isJavaLetter()", "isJavaIdentifierStart()" etc. is that these rely on the Unicode definitions
-    // of "LETTER", which are not stable between releases. In theory something marked as a letter in
-    // Unicode could be changed to not be a letter in a later release. There is a notion of stable
-    // identifiers in Unicode, which is what should be used here, but that needs more investigation.
-    private fun isLetter(c: Char): Boolean = (c in 'a'..'z') || (c in 'A'..'Z')
 }
+
+/**
+ * Tells if this character is a letter or not.
+ *
+ * ## Implementation note
+ *
+ * The reason we are NOT using method from Character like `isLetter()`,
+ * `isJavaLetter()`, `isJavaIdentifierStart()` or the like is that these rely on
+ * the Unicode definitions of "LETTER", which are not stable between releases.
+ *
+ * In theory something marked as a letter in Unicode could be changed
+ * to not be a letter in a later release.
+ *
+ * There is a notion of stable identifiers in Unicode, which is what should be used here,
+ * but that needs more investigation.
+ */
+private fun isLetter(c: Char): Boolean = (c in 'a'..'z') || (c in 'A'..'Z')
