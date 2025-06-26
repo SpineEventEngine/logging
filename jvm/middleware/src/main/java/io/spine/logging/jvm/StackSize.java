@@ -27,7 +27,7 @@
 package io.spine.logging.jvm;
 
 /**
- * Enum values to be passed into {@link JvmApi#withStackTrace} to control
+ * Enum values to be passed into {@link MiddlemanApi#withStackTrace} to control
  * the maximum number of stack trace elements created.
  *
  * <p>Note that the precise value returned by {@link #getMaxDepth()} may change over time,
@@ -47,8 +47,8 @@ public enum StackSize {
    * <p>
    * Requesting a small stack trace for log statements which occur under normal circumstances is
    * acceptable, but may affect performance. Consider using
-   * {@link JvmApi#withStackTrace(StackSize)} in conjunction with rate limiting methods,
-   * such as {@link JvmApi#atMostEvery(int, java.util.concurrent.TimeUnit)}, to mitigate
+   * {@link MiddlemanApi#withStackTrace(StackSize)} in conjunction with rate limiting methods,
+   * such as {@link MiddlemanApi#atMostEvery(int, java.util.concurrent.TimeUnit)}, to mitigate
    * performance issues.
  *
    * <p>

@@ -31,7 +31,7 @@ import kotlin.reflect.KClass
 /**
  * Determines log sites for the current line of code.
  *
- * Please note that determining of a log site at runtime can be a very slow
+ * Note that determining of a log site at runtime can be a slow
  * operation because it usually involves some form of stack trace analysis.
  *
  * Methods of this class can be used with the [LoggingApi.withInjectedLogSite]

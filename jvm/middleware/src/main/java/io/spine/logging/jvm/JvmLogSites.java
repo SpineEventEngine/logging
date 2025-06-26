@@ -41,7 +41,7 @@ import org.jspecify.annotations.Nullable;
 public final class JvmLogSites {
   /**
    * Returns a {@code LogSite} for the caller of the specified class. This can be used in
- * conjunction with the {@link JvmApi#withInjectedLogSite(JvmLogSite)} method to implement
+ * conjunction with the {@link MiddlemanApi#withInjectedLogSite(JvmLogSite)} method to implement
    * logging helper methods. In some platforms, log site determination may be unsupported, and in
    * those cases this method will always return the {@link JvmLogSite#INVALID} instance.
  *
@@ -98,7 +98,7 @@ public final class JvmLogSites {
 
   /**
    * Returns a {@code LogSite} for the current line of code. This can be used in conjunction with
- * the {@link JvmApi#withInjectedLogSite(JvmLogSite)} method to implement logging helper
+ * the {@link MiddlemanApi#withInjectedLogSite(JvmLogSite)} method to implement logging helper
    * methods. In some platforms, log site determination may be unsupported, and in those cases this
    * method will always return the {@link JvmLogSite#INVALID} instance.
  *

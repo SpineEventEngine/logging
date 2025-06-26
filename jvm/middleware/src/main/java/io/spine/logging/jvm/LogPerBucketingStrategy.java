@@ -247,7 +247,7 @@ public abstract class LogPerBucketingStrategy<T> {
      * <p><em>Warning</em>: If keys are not known to have natural singleton semantics
      * (e.g. {@code String}) then returning the given key instance is generally a bad idea.
      * Even if the set of key values is small, the set of distinct allocated instances passed to
-     * {@link JvmApi#per(Object, LogPerBucketingStrategy)} can be unbounded, and that's what
+     * {@link MiddlemanApi#per(Object, LogPerBucketingStrategy)} can be unbounded, and that's what
      * matters.
      * As such, it is always better to map keys to some singleton identifier or intern the keys in
      * some way.

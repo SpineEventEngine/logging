@@ -73,18 +73,18 @@ internal class LoggerSpec {
         backend.setLevel(Level.INFO)
 
         // Down to and including the configured log level are not no-op instances.
-        logger.atSevere().shouldNotBeInstanceOf<JvmApi.NoOp<*>>()
-        logger.atWarning().shouldNotBeInstanceOf<JvmApi.NoOp<*>>()
-        logger.atInfo().shouldNotBeInstanceOf<JvmApi.NoOp<*>>()
+        logger.atSevere().shouldNotBeInstanceOf<MiddlemanApi.NoOp<*>>()
+        logger.atWarning().shouldNotBeInstanceOf<MiddlemanApi.NoOp<*>>()
+        logger.atInfo().shouldNotBeInstanceOf<MiddlemanApi.NoOp<*>>()
 
         logger.atSevere().shouldBeInstanceOf<Middleman.Context>()
         logger.atWarning().shouldBeInstanceOf<Middleman.Context>()
         logger.atInfo().shouldBeInstanceOf<Middleman.Context>()
 
         // Below the configured log level, you only get no-op instances.
-        logger.atFine().shouldBeInstanceOf<JvmApi.NoOp<*>>()
-        logger.atFiner().shouldBeInstanceOf<JvmApi.NoOp<*>>()
-        logger.atFinest().shouldBeInstanceOf<JvmApi.NoOp<*>>()
+        logger.atFine().shouldBeInstanceOf<MiddlemanApi.NoOp<*>>()
+        logger.atFiner().shouldBeInstanceOf<MiddlemanApi.NoOp<*>>()
+        logger.atFinest().shouldBeInstanceOf<MiddlemanApi.NoOp<*>>()
 
         // Just verify that logs below the current log level are discarded.
         logger.atFine().log("DISCARDED")
@@ -96,8 +96,8 @@ internal class LoggerSpec {
         logger.atInfo().log("LOGGED")
         backend.loggedCount shouldBe 1
         backend.setLevel(Level.OFF)
-        logger.atSevere().shouldBeInstanceOf<JvmApi.NoOp<*>>()
+        logger.atSevere().shouldBeInstanceOf<MiddlemanApi.NoOp<*>>()
         backend.setLevel(Level.ALL)
-        logger.atFinest().shouldNotBeInstanceOf<JvmApi.NoOp<*>>()
+        logger.atFinest().shouldNotBeInstanceOf<MiddlemanApi.NoOp<*>>()
     }
 }

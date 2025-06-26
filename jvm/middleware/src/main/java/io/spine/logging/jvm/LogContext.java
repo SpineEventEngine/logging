@@ -50,7 +50,7 @@ import static io.spine.reflect.CallerFinder.stackForCallerOf;
 /**
  * The base context for a logging statement, which implements the base logging API.
  *
- * <p>This class is an implementation of the base {@link JvmApi} interface and acts as a holder
+ * <p>This class is an implementation of the base {@link MiddlemanApi} interface and acts as a holder
  * for any state applied to the log statement during the fluent call sequence. The lifecycle of a
  * logging context is very short; it is created by a logger, usually in response to a call to the
  * {@link AbstractLogger#at(Level)} method, and normally lasts only as long as the log statement.
@@ -66,8 +66,8 @@ import static io.spine.reflect.CallerFinder.stackForCallerOf;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogContext.java">
  *      Original Java code of Google Flogger</a>
  */
-public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends JvmApi<API>>
-        implements JvmApi<API>, LogData {
+public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends MiddlemanApi<API>>
+        implements MiddlemanApi<API>, LogData {
 
     /**
      * The predefined metadata keys used by the default logging API. Backend implementations can use
@@ -82,28 +82,28 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
         /**
          * The key associated with a {@link Throwable} cause to be associated with the log message.
          * This
-         * value is set by {@link JvmApi#withCause(Throwable)}.
+         * value is set by {@link MiddlemanApi#withCause(Throwable)}.
          */
         public static final MetadataKey<Throwable> LOG_CAUSE =
                 MetadataKey.single("cause", Throwable.class);
 
         /**
          * The key associated with a rate limiting counter for "1-in-N" rate limiting. The value is
-         * set by {@link JvmApi#every(int)}.
+         * set by {@link MiddlemanApi#every(int)}.
          */
         public static final MetadataKey<Integer> LOG_EVERY_N =
                 MetadataKey.single("ratelimit_count", Integer.class);
 
         /**
          * The key associated with a rate limiting counter for "1-in-N" randomly sampled rate
-         * limiting. The value is set by {@link JvmApi#onAverageEvery(int)}.
+         * limiting. The value is set by {@link MiddlemanApi#onAverageEvery(int)}.
          */
         public static final MetadataKey<Integer> LOG_SAMPLE_EVERY_N =
                 MetadataKey.single("sampling_count", Integer.class);
 
         /**
          * The key associated with a rate limiting period for "at most once every N" rate limiting.
-         * The value is set by {@link JvmApi#atMostEvery(int, TimeUnit)}.
+         * The value is set by {@link MiddlemanApi#atMostEvery(int, TimeUnit)}.
          */
         public static final MetadataKey<RateLimitPeriod> LOG_AT_MOST_EVERY =
                 MetadataKey.single("ratelimit_period", RateLimitPeriod.class);

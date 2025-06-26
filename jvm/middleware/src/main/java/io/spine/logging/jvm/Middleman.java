@@ -34,7 +34,7 @@ import io.spine.logging.jvm.parser.MessageParser;
 import java.util.logging.Level;
 
 /**
- * The default implementation of {@link AbstractLogger} which returns the basic {@link JvmApi}
+ * The default implementation of {@link AbstractLogger} which returns the basic {@link MiddlemanApi}
  * and uses the default parser and system configured backend.
  *
  * <p>
@@ -60,13 +60,13 @@ public final class Middleman extends AbstractLogger<Middleman.Api> {
    * a separate top-level API and LogContext is created, allowing it to be shared by other
    * implementations.
    */
-  public interface Api extends JvmApi<Api> {}
+  public interface Api extends MiddlemanApi<Api> {}
 
   /**
    * The non-wildcard, fully specified, no-op API implementation. This is required to provide a
    * no-op implementation whose type is compatible with this logger's API.
    */
-  private static final class NoOp extends JvmApi.NoOp<Api> implements Api {}
+  private static final class NoOp extends MiddlemanApi.NoOp<Api> implements Api {}
 
   // Singleton instance of the no-op API. This variable is purposefully declared as an instance of
   // the NoOp type instead of the Api type. This helps ProGuard optimization recognize the type of

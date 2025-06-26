@@ -28,7 +28,7 @@ package io.spine.logging.jvm.context;
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.MustBeClosed;
-import io.spine.logging.jvm.JvmApi;
+import io.spine.logging.jvm.MiddlemanApi;
 import io.spine.logging.jvm.MetadataKey;
 import io.spine.logging.jvm.LoggingScope;
 import io.spine.logging.jvm.LoggingScopeProvider;
@@ -407,7 +407,7 @@ public abstract class ScopedLoggingContext {
      * {@link ScopeType} instance to the newly created context.
      * This allows log statements to control stateful logging operations (e.g., rate limiting)
      * using
-     * {@link JvmApi#per(LoggingScopeProvider) per(ScopeType)} method.
+     * {@link MiddlemanApi#per(LoggingScopeProvider) per(ScopeType)} method.
      *
      * <p>Note for users: if you don't need an instance of {@code ScopedLoggingContext} for some
      * reason such as testability (injecting it, for example), consider using the static methods in

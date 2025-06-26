@@ -50,200 +50,207 @@ import org.jspecify.annotations.Nullable;
  * {@code StackTraceElement}, this log site will not be unique if multiple log statements are on
  * the same, or if line number information was stripped from the class file.
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSite.java">
- *     Original Java code of Google Flogger</a>
+ * @see <a
+ *         href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSite.java">
+ *         Original Java code of Google Flogger</a>
  */
 public abstract class JvmLogSite implements LogSiteKey {
-  /** A value used for line numbers when the true information is not available. */
-  public static final int UNKNOWN_LINE = 0;
 
-  /**
-   * An singleton LogSite instance used to indicate that valid log site information cannot be
-   * determined. This can be used to indicate that log site information is not available by
-   * injecting it via {@link JvmApi#withInjectedLogSite} which will suppress any further
-   * log site analysis for that log statement. This is also returned if stack trace analysis
-   * fails for any reason.
- *
-   * <p>
-   * If a log statement does end up with invalid log site information, then any fluent logging
-   * methods which rely on being able to look up site-specific metadata will be disabled and
-   * essentially become "no ops".
-   */
-  public static final JvmLogSite INVALID = new JvmLogSite() {
+    /** A value used for line numbers when the true information is not available. */
+    public static final int UNKNOWN_LINE = 0;
+
+    /**
+     * An singleton LogSite instance used to indicate that valid log site information cannot be
+     * determined. This can be used to indicate that log site information is not available by
+     * injecting it via {@link MiddlemanApi#withInjectedLogSite} which will suppress any further
+     * log site analysis for that log statement. This is also returned if stack trace analysis
+     * fails for any reason.
+     *
+     * <p>If a log statement does end up with invalid log site information, then any fluent logging
+     * methods, which rely on being able to look up site-specific metadata will be disabled and
+     * essentially become "no ops".
+     */
+    public static final JvmLogSite INVALID = new JvmLogSite() {
         @Override
         public String getClassName() {
-          return "<unknown class>";
+            return "<unknown class>";
         }
 
         @Override
         public String getMethodName() {
-          return "<unknown method>";
+            return "<unknown method>";
         }
 
         @Override
         public int getLineNumber() {
-          return UNKNOWN_LINE;
+            return UNKNOWN_LINE;
         }
 
         @Override
         public @Nullable String getFileName() {
-          return null;
+            return null;
         }
         // No need to implement equals() or hashCode() for a singleton instance.
-      };
+    };
 
-  /** Returns the name of the class containing the log statement. */
-  public abstract String getClassName();
+    /** Returns the name of the class containing the log statement. */
+    public abstract String getClassName();
 
-  /** Returns the name of the method containing the log statement. */
-  public abstract String getMethodName();
+    /** Returns the name of the method containing the log statement. */
+    public abstract String getMethodName();
 
-  /**
-   * Returns a valid line number for the log statement in the range 1 - 65535, or
-   * {@link #UNKNOWN_LINE} if not known.
-   *
-   * <p>There is a limit of 16 bits for line numbers in a class. See
-   * <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.7.12">here</a>
-   * for more details.
-   */
-  public abstract int getLineNumber();
+    /**
+     * Returns a valid line number for the log statement in the range 1 - 65535, or
+     * {@link #UNKNOWN_LINE} if not known.
+     *
+     * <p>There is a limit of 16 bits for line numbers in a class. See
+     * <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.7.12">here</a>
+     * for more details.
+     */
+    public abstract int getLineNumber();
 
-  /**
-   * Returns the name of the class file containing the log statement (or null if not known). The
-   * source file name is optional and strictly for debugging.
-   *
-   * <p>Normally this value (if present) is extracted from the SourceFile attribute of the class
-   * file (see the <a
-   * href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.7.10">JVM class
-   * file format specification</a> for more details).
-   */
-  @Nullable
-  public abstract String getFileName();
+    /**
+     * Returns the name of the class file containing the log statement (or null if not known).
+     * The source file name is optional and strictly for debugging.
+     *
+     * <p>Normally this value (if present) is extracted from the SourceFile attribute of the class
+     * file (see the <a
+     * href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.7.10">JVM class
+     * file format specification</a> for more details).
+     */
+    @Nullable
+    public abstract String getFileName();
 
-  // Provide a common toString() implementation for only the public attributes.
-  @Override
-  public final String toString() {
-    StringBuilder out = new StringBuilder()
-        .append("LogSite{ class=")
-        .append(getClassName())
-        .append(", method=")
-        .append(getMethodName())
-        .append(", line=")
-        .append(getLineNumber());
-    if (getFileName() != null) {
-        out.append(", file=")
-            .append(getFileName());
+    // Provide a common toString() implementation for only the public attributes.
+    @Override
+    public final String toString() {
+        StringBuilder out = new StringBuilder()
+                .append("LogSite{ class=")
+                .append(getClassName())
+                .append(", method=")
+                .append(getMethodName())
+                .append(", line=")
+                .append(getLineNumber());
+        if (getFileName() != null) {
+            out.append(", file=")
+               .append(getFileName());
+        }
+        return out.append(" }")
+                  .toString();
     }
-    return out.append(" }").toString();
-  }
 
-  /**
-   * Creates a log site injected from constants held a class' constant pool.
- *
-   * <p>
-   * Used for compile-time log site injection, and by the agent.
-   *
-   * @param internalClassName Slash separated class name obtained from the class constant pool.
-   * @param methodName Method name obtained from the class constant pool.
-   * @param encodedLineNumber line number and per-line log statement index encoded as a single
-   *     32-bit value. The low 16-bits is the line number (0 to 0xFFFF inclusive) and the high
-   *     16 bits is a log statement index to distinguish multiple statements on the same line
-   *     (this becomes important if line numbers are stripped from the class file and everything
-   *     appears to be on the same line).
- *
-   * @param sourceFileName Optional base name of the source file (this value is strictly for
-   *     debugging and does not contribute to either equals() or hashCode() behavior).
-   *
-   * @deprecated this method is only be used for log-site injection and should not be called
-   * directly.
-   */
-  @Deprecated
-  public static JvmLogSite injectedLogSite(
-          String internalClassName,
-          String methodName,
-          int encodedLineNumber,
-          @Nullable String sourceFileName) {
-    return new InjectedJvmLogSite(internalClassName,
+    /**
+     * Creates a log site injected from constants held a class' constant pool.
+     *
+     * <p>
+     * Used for compile-time log site injection, and by the agent.
+     *
+     * @param internalClassName
+     *         Slash separated class name obtained from the class constant pool.
+     * @param methodName
+     *         Method name obtained from the class constant pool.
+     * @param encodedLineNumber
+     *         line number and per-line log statement index encoded as a single
+     *         32-bit value. The low 16-bits is the line number (0 to 0xFFFF inclusive) and the
+     *         high
+     *         16 bits is a log statement index to distinguish multiple statements on the same line
+     *         (this becomes important if line numbers are stripped from the class file and
+     *         everything
+     *         appears to be on the same line).
+     * @param sourceFileName
+     *         Optional base name of the source file (this value is strictly for
+     *         debugging and does not contribute to either equals() or hashCode() behavior).
+     * @deprecated this method is only be used for log-site injection and should not be called
+     *         directly.
+     */
+    @Deprecated
+    public static JvmLogSite injectedLogSite(
+            String internalClassName,
+            String methodName,
+            int encodedLineNumber,
+            @Nullable String sourceFileName) {
+        return new InjectedJvmLogSite(internalClassName,
                                       methodName,
                                       encodedLineNumber,
                                       sourceFileName);
-  }
-
-  private static final class InjectedJvmLogSite extends JvmLogSite {
-
-    /** Internal (slash-separated) fully qualified class name (eg, "com/example/Foo$Bar"). */
-    private final String internalClassName;
-
-    /** Bare method name (no signature information). */
-    private final String methodName;
-    private final int encodedLineNumber;
-    @Nullable private final String sourceFileName;
-    private int hashcode = 0;
-
-    private InjectedJvmLogSite(
-        String internalClassName,
-        String methodName,
-        int encodedLineNumber,
-        @Nullable String sourceFileName) {
-      this.internalClassName = checkNotNull(internalClassName, "class name");
-      this.methodName = checkNotNull(methodName, "method name");
-      this.encodedLineNumber = encodedLineNumber;
-      this.sourceFileName = sourceFileName;
     }
 
-    @Override
-    public String getClassName() {
-      // We have to do the conversion from internal to public class name somewhere, and doing it
-      // earlier could cost work in cases where the log statement is dropped. We could cache the
-      // result somewhere, but in the default Fluent Logger backend, this method is actually only
-      // called once anyway when constructing the LogRecord instance.
-      return internalClassName.replace('/', '.');
-    }
+    private static final class InjectedJvmLogSite extends JvmLogSite {
 
-    @Override
-    public String getMethodName() {
-      return methodName;
-    }
+        /** Internal (slash-separated) fully qualified class name (eg, "com/example/Foo$Bar"). */
+        private final String internalClassName;
 
-    @Override
-    public int getLineNumber() {
-      // Strip additional "uniqueness" information from the upper 16 bits.
-      return encodedLineNumber & 0xFFFF;
-    }
+        /** Bare method name (no signature information). */
+        private final String methodName;
+        private final int encodedLineNumber;
+        @Nullable
+        private final String sourceFileName;
+        private int hashcode = 0;
 
-    @Override
-    @Nullable
-    public String getFileName() {
-      return sourceFileName;
-    }
+        private InjectedJvmLogSite(
+                String internalClassName,
+                String methodName,
+                int encodedLineNumber,
+                @Nullable String sourceFileName) {
+            this.internalClassName = checkNotNull(internalClassName, "class name");
+            this.methodName = checkNotNull(methodName, "method name");
+            this.encodedLineNumber = encodedLineNumber;
+            this.sourceFileName = sourceFileName;
+        }
 
-    @Override
-    public boolean equals(Object obj) {
-      if (obj instanceof InjectedJvmLogSite) {
-        InjectedJvmLogSite other = (InjectedJvmLogSite) obj;
-        // Probably not worth optimizing for "this == obj" because all strings should be interned.
-        return methodName.equals(other.methodName)
-            && encodedLineNumber == other.encodedLineNumber
-            // Check classname last because it isn't cached
-            && getClassName().equals(other.getClassName());
-      }
-      return false;
-    }
+        @Override
+        public String getClassName() {
+            // We have to do the conversion from internal to public class name somewhere, and doing it
+            // earlier could cost work in cases where the log statement is dropped. We could cache the
+            // result somewhere, but in the default Fluent Logger backend, this method is actually only
+            // called once anyway when constructing the LogRecord instance.
+            return internalClassName.replace('/', '.');
+        }
 
-    @Override
-    public int hashCode() {
-      if (hashcode == 0) {
-        // TODO(dbeaumont): Revisit the algorithm when looking at b/22753674.
-        // If the log statement uses metadata, the log site will be used as a key to look up the
-        // current value. In most cases the hashcode is never needed, but in others it may be used
-        // multiple times in different data structures.
-        int temp = 157;
-        // Don't include classname since it isn't cached. Other fields should be unique enough.
-        temp = 31 * temp + methodName.hashCode();
-        temp = 31 * temp + encodedLineNumber;
-        hashcode = temp;
-      }
-      return hashcode;
+        @Override
+        public String getMethodName() {
+            return methodName;
+        }
+
+        @Override
+        public int getLineNumber() {
+            // Strip additional "uniqueness" information from the upper 16 bits.
+            return encodedLineNumber & 0xFFFF;
+        }
+
+        @Override
+        @Nullable
+        public String getFileName() {
+            return sourceFileName;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj instanceof InjectedJvmLogSite) {
+                InjectedJvmLogSite other = (InjectedJvmLogSite) obj;
+                // Probably not worth optimizing for "this == obj" because all strings should be interned.
+                return methodName.equals(other.methodName)
+                        && encodedLineNumber == other.encodedLineNumber
+                        // Check classname last because it isn't cached
+                        && getClassName().equals(other.getClassName());
+            }
+            return false;
+        }
+
+        @Override
+        public int hashCode() {
+            if (hashcode == 0) {
+                // TODO(dbeaumont): Revisit the algorithm when looking at b/22753674.
+                // If the log statement uses metadata, the log site will be used as a key to look up the
+                // current value. In most cases the hashcode is never needed, but in others it may be used
+                // multiple times in different data structures.
+                int temp = 157;
+                // Don't include classname since it isn't cached. Other fields should be unique enough.
+                temp = 31 * temp + methodName.hashCode();
+                temp = 31 * temp + encodedLineNumber;
+                hashcode = temp;
+            }
+            return hashcode;
+        }
     }
-  }
 }

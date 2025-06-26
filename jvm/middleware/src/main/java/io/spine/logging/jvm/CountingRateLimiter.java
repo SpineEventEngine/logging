@@ -1,11 +1,11 @@
 /*
- * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2014, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * https://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -90,7 +90,7 @@ final class CountingRateLimiter extends RateLimitStatus {
      * Increments the invocation count and returns true if it reached the specified
      * rate limit count.
      * This is invoked during post-processing if a rate limiting count was set via {@link
-     * JvmApi#every(int)}.
+     * MiddlemanApi#every(int)}.
      */
     @VisibleForTesting
     RateLimitStatus incrementAndCheckLogCount(int rateLimitCount) {

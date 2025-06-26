@@ -57,7 +57,7 @@ import java.util.concurrent.TimeUnit;
  *     Original Java code of Google Flogger</a>
  */
 @SuppressWarnings({"ClassWithTooManyMethods", "OverlyComplexClass"})
-public interface JvmApi<API extends JvmApi<API>> {
+public interface MiddlemanApi<API extends MiddlemanApi<API>> {
   /**
    * Associates a {@link Throwable} instance with the current log statement, to be interpreted as
    * the cause of this statement.
@@ -834,13 +834,13 @@ public interface JvmApi<API extends JvmApi<API>> {
   void log(String msg, double p1, double p2);
 
   /**
-   * An implementation of {@link JvmApi} which does nothing and discards all parameters.
+   * An implementation of {@link MiddlemanApi} which does nothing and discards all parameters.
  *
    * <p>
    * This class (or a subclass in the case of an extended API) should be returned whenever logging
    * is definitely disabled (e.g. when the log level is too low).
    */
-  public static class NoOp<API extends JvmApi<API>> implements JvmApi<API> {
+  public static class NoOp<API extends MiddlemanApi<API>> implements MiddlemanApi<API> {
     @SuppressWarnings("unchecked")
     protected final API noOp() {
       return (API) this;
