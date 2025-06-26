@@ -87,7 +87,7 @@ class Cli(private val workingFolder: File) {
 
 /**
  * Asynchronously reads all lines from this [InputStream] and appends them
- * to the given [StringWriter].
+ * to the passed [StringWriter].
  */
 fun InputStream.pourTo(dest: StringWriter) {
     Thread {

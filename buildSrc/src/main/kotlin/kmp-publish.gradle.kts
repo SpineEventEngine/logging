@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ plugins {
 
 publishing.publications {
     named<MavenPublication>("kotlinMultiplatform") {
-        // Although, the “common artifact” can't be used independently
+        // Although, the "common artifact" can't be used independently
         // of target artifacts, it is published with documentation.
         artifact(project.dokkaKotlinJar())
     }

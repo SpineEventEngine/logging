@@ -48,10 +48,10 @@ internal constructor(
      * Writes the `pom.xml` file containing dependencies of this project
      * and its subprojects to the specified location.
      *
-     * <p>If a file with the specified location exists, its contents are replaced
+     * <p>If a file with the specified location exists, its contents will be substituted
      * with a new `pom.xml`.
      *
-     * @param file a file to write the `pom.xml` contents to
+     * @param file a file to write `pom.xml` contents to
      */
     fun writeTo(file: File) {
         val fileWriter = FileWriter(file)
@@ -74,7 +74,7 @@ internal constructor(
     /**
      * Obtains a string that contains project dependencies as XML.
      *
-     * <p>The returned string also contains the closing project tag.
+     * <p>Obtained string also contains a closing project tag.
      */
     private fun projectDependencies(): String {
         val destination = StringWriter()
