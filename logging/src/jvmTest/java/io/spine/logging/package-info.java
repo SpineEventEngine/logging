@@ -25,7 +25,11 @@
  */
 
 /**
- * This package provides a JVM implementation of Spine Logging API.
+ * This package tests the JVM implementation of Spine Logging API.
+ *
+ * <p>The purpose of this file is to avoid static analysis warnings
+ * when tools do not see the {@code package-info.java} file
+ * available from the {@code commonMain} source set.
  */
 @CheckReturnValue
 @NullMarked
