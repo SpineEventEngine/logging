@@ -35,13 +35,14 @@ import java.util.concurrent.atomic.AtomicLong;
 import static io.spine.logging.jvm.LogContext.Key.LOG_EVERY_N;
 
 /**
- * Rate limiter to support {@code every(N)} functionality.
+ * Rate limiter to support {@code every(N)} capability.
  *
- * <p>Instances of this class are created for each unique {@link LogSiteKey} for which rate limiting
- * via the {@code LOG_EVERY_N} metadata key is required. This class implements {@code
- * RateLimitStatus} as a mechanism for resetting the rate limiter state.
+ * <p>Instances of this class are created for each unique {@link LogSiteKey} for
+ * which rate limiting via the {@code LOG_EVERY_N} metadata key is required.
+ * This class implements {@code RateLimitStatus} as a mechanism for resetting
+ * the rate limiter state.
  *
- * <p>Instances of this class are thread safe.
+ * <p>Instances of this class are thread-safe.
  *
  * @see <a
  *         href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/CountingRateLimiter.java">
@@ -61,9 +62,9 @@ final class CountingRateLimiter extends RateLimitStatus {
      * Returns the status of the rate limiter, or {@code null} if the {@code LOG_EVERY_N} metadata
      * was not present.
      *
-     * <p>The rate limiter status is {@code DISALLOW} until the log count exceeds the specified
-     * limit, and then the limiter switches to its pending state and returns an allow status until
-     * it is reset.
+     * <p>The rate limiter status is {@code DISALLOW} until the log count exceeds
+     * the specified limit, and then the limiter switches to its pending state and
+     * returns an `allow` status until it is reset.
      */
     @Nullable
     static RateLimitStatus check(Metadata metadata, LogSiteKey logSiteKey) {
@@ -76,10 +77,12 @@ final class CountingRateLimiter extends RateLimitStatus {
                   .incrementAndCheckLogCount(rateLimitCount);
     }
 
-    // By setting the initial value as Integer#MAX_VALUE we ensure that the first time rate limiting
-    // is checked, the rate limit count (which is only an Integer) must be reached, placing the
-    // limiter into its pending state immediately. If this is the only limiter used,
-    // this corresponds to the first log statement always being emitted.
+    /**
+     * By setting the initial value as Integer#MAX_VALUE we ensure that the first time rate limiting
+     * is checked, the rate limit count (which is only an Integer) must be reached, placing the
+     * limiter into its pending state immediately. If this is the only limiter used,
+     * this corresponds to the first log statement always being emitted.
+     */
     private final AtomicLong invocationCount = new AtomicLong(Integer.MAX_VALUE);
 
     @VisibleForTesting
@@ -89,8 +92,9 @@ final class CountingRateLimiter extends RateLimitStatus {
     /**
      * Increments the invocation count and returns true if it reached the specified
      * rate limit count.
-     * This is invoked during post-processing if a rate limiting count was set via {@link
-     * MiddlemanApi#every(int)}.
+     *
+     * <p>This is invoked during post-processing if a rate-limiting count was set via
+     * {@link MiddlemanApi#every(int)}.
      */
     @VisibleForTesting
     RateLimitStatus incrementAndCheckLogCount(int rateLimitCount) {

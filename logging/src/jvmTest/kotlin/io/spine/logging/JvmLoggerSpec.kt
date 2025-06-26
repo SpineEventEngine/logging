@@ -293,7 +293,7 @@ internal class JvmLoggerSpec {
             val totalDuration = (invocations - 1) * intervalMillis
             val consoleOutput = tapConsole {
                 var i = 1
-                for (millis in 0..totalDuration step intervalMillis) {
+                (0..totalDuration step intervalMillis).forEach { millis ->
                     logger.atInfo()
                         .every(invocationLimit)
                         .atMostEvery(timeLimitMillis, MILLISECONDS)

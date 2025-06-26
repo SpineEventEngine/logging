@@ -181,7 +181,8 @@ public abstract class RateLimitStatus {
             } finally {
                 guard.shouldReset.set(false);
             }
-            // Subtract the pending count (this might not go to zero if other threads are incrementing).
+            // Subtract the pending count (this might not go to zero if other threads
+            // are incrementing).
             guard.pendingLogCount.addAndGet(-pendingCount);
             // Return the skipped log count (which must be >= 0).
             return pendingCount - 1;

@@ -39,14 +39,13 @@ import static io.spine.logging.jvm.LogContext.Key.LOG_SAMPLE_EVERY_N;
  * Rate limiter to support {@code onAverageEvery(N)} functionality.
  *
  * <p>Instances of this class are created for each unique {@link LogSiteKey} for which rate limiting
- * via the {@code LOG_SAMPLE_EVERY_N} metadata key is required. This class implements {@code
- * RateLimitStatus} as a mechanism for resetting its own state.
+ * via the {@code LOG_SAMPLE_EVERY_N} metadata key is required. This class implements
+ * {@code RateLimitStatus} as a mechanism for resetting its own state.
  *
  * <p>This class is thread safe.
  *
- * @see <a
- *         href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/SamplingRateLimiter.java">
- *         Original Java code of Google Flogger</a>
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/SamplingRateLimiter.java">
+ *        Original Java code of Google Flogger</a>
  */
 final class SamplingRateLimiter extends RateLimitStatus {
 
@@ -60,7 +59,7 @@ final class SamplingRateLimiter extends RateLimitStatus {
 
     @Nullable
     static RateLimitStatus check(Metadata metadata, LogSiteKey logSiteKey) {
-        Integer rateLimitCount = metadata.findValue(LOG_SAMPLE_EVERY_N);
+        var rateLimitCount = metadata.findValue(LOG_SAMPLE_EVERY_N);
         if (rateLimitCount == null || rateLimitCount <= 0) {
             // Without valid rate limiter specific metadata, this limiter has no effect.
             return null;
@@ -69,22 +68,27 @@ final class SamplingRateLimiter extends RateLimitStatus {
                   .sampleOneIn(rateLimitCount);
     }
 
-    // Even though Random is synchonized, we have to put it in a ThreadLocal to avoid thread
-    // contention. We cannot use ThreadLocalRandom (yet) due to JDK level.
+    /**
+     * Even though Random is synchonized, we have to put it in a ThreadLocal to avoid thread contention.
+     * We cannot use ThreadLocalRandom (yet) due to JDK level.
+     */
     private static final ThreadLocal<Random> random = ThreadLocal.withInitial(Random::new);
 
     @VisibleForTesting
+    @SuppressWarnings("PackageVisibleField")
     final AtomicInteger pendingCount = new AtomicInteger();
 
     @VisibleForTesting
     SamplingRateLimiter() {
     }
 
+    /**
+     * Always "roll the dice" and adjust the count if necessary (even if we were already pending).
+     * This means that in the long run we will account for every time we roll a zero, and the number
+     * of logs will end up statistically close to 1-in-N (even if at times they can be "bursty" due
+     * to the action of other rate limiting mechanisms).
+     */
     RateLimitStatus sampleOneIn(int rateLimitCount) {
-        // Always "roll the dice" and adjust the count if necessary (even if we were already
-        // pending). This means that in the long run we will account for every time we roll a
-        // zero, and the number of logs will end up statistically close to 1-in-N (even if at
-        // times they can be "bursty" due to the action of other rate limiting mechanisms).
         int pending;
         if (random.get()
                   .nextInt(rateLimitCount) == 0) {

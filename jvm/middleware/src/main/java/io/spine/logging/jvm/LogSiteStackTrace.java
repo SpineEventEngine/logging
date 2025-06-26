@@ -34,42 +34,52 @@ import java.io.Serial;
  * A synthetic exception which can be attached to log statements when additional stack trace
  * information is required in log files or via tools such as ECatcher.
  *
- * <p>The name of this class may become relied upon implicitly by tools such as ECatcher. Do not
- * rename or move this class without checking for implicit in logging tools.
+ * <p>The name of this class may become relied upon implicitly by tools such as ECatcher. Do not rename
+ * or move this class without checking for implicit in logging tools.
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSiteStackTrace.java">
- *     Original Java code of Google Flogger</a>
+ * @see <a
+ *         href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSiteStackTrace.java">
+ *         Original Java code of Google Flogger</a>
  */
 @SuppressWarnings("ExceptionClassNameDoesntEndWithException")
 public final class LogSiteStackTrace extends Exception {
 
-  @Serial
-  private static final long serialVersionUID = 0L;
+    @Serial
+    private static final long serialVersionUID = 0L;
 
-  /**
-   * Creates a synthetic exception to hold a call-stack generated for the log statement itself.
- *
-   * <p>
-   * This exception is never expected to actually get thrown or caught at any point.
-   *
-   * @param cause the optional cause (set via withCause() in the log statement).
-   * @param stackSize the requested size of the synthetic stack trace (actual trace can be shorter).
-   * @param syntheticStackTrace the synthetic stack trace starting at the log statement.
-   */
-  LogSiteStackTrace(
-      @Nullable Throwable cause, StackSize stackSize, StackTraceElement[] syntheticStackTrace) {
-    super(stackSize.toString(), cause);
-    // This takes a defensive copy, but there's no way around that. Note that we cannot override
-    // getStackTrace() to avoid a defensive copy because that breaks stack trace formatting
-    // (which doesn't call getStackTrace() directly). See b/27310448.
-    setStackTrace(syntheticStackTrace);
-  }
+    /**
+     * Creates a synthetic exception to hold a call-stack generated for the log statement itself.
+     *
+     * <p>This exception is never expected to actually get thrown or caught at any point.
+     *
+     * @param cause
+     *         the optional cause (set via withCause() in the log statement).
+     * @param stackSize
+     *         the requested size of the synthetic stack trace (actual trace can be shorter).
+     * @param syntheticStackTrace
+     *         the synthetic stack trace starting at the log statement.
+     */
+    LogSiteStackTrace(
+            @Nullable Throwable cause, 
+            StackSize stackSize,
+            StackTraceElement[] syntheticStackTrace
+    ) {
+        super(stackSize.toString(), cause);
+        /*
+         * This takes a defensive copy, but there's no way around that. Note that we cannot override
+         * getStackTrace() to avoid a defensive copy because that breaks stack trace formatting (which
+         * doesn't call getStackTrace() directly). See b/27310448.
+         */
+        setStackTrace(syntheticStackTrace);
+    }
 
-  // We override this because it gets called from the superclass constructor and we don't want
-  // it to do any work (we always replace it immediately).
-  @SuppressWarnings("UnsynchronizedOverridesSynchronized")
-  @Override
-  public Throwable fillInStackTrace() {
-    return this;
-  }
+    /**
+     * We override this because it gets called from the superclass constructor and we don't want it
+     * to do any work (we always replace it immediately).
+     */
+    @SuppressWarnings("UnsynchronizedOverridesSynchronized")
+    @Override
+    public Throwable fillInStackTrace() {
+        return this;
+    }
 }
