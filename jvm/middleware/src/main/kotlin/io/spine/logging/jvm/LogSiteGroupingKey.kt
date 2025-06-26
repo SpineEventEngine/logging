@@ -43,18 +43,17 @@ public open class LogSiteGroupingKey : MetadataKey<Any>("group_by", Any::class.j
             if (!values.hasNext()) {
                 kvh.handle(label, first)
             } else {
-                // In the very unlikely case there's more than one aggregation key, emit a list.
-                val buf = StringBuilder()
-                buf.append('[')
-                    .append(first)
-                do {
-                    buf.append(',')
-                        .append(values.next())
-                } while (values.hasNext())
-                kvh.handle(
-                    label, buf.append(']')
-                        .toString()
-                )
+                // In the very unlikely case there is more than one aggregation key, emit a list.
+                val value = buildString {
+                    append('[')
+                    append(first)
+                    do {
+                        append(',')
+                        append(values.next())
+                    } while (values.hasNext())
+                    append(']')
+                }
+                kvh.handle(label, value)
             }
         }
     }
