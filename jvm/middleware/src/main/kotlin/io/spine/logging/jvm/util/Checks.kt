@@ -38,28 +38,16 @@ public object Checks {
 
     @CanIgnoreReturnValue
     @JvmStatic
-//    @Deprecated(
-//        "Use `PreconditionsKt.checkNotNull(T)` instead",
-//        ReplaceWith("checkNotNull(value)")
-//    )
     public fun <T> checkNotNull(value: T?, name: String): T {
         checkNotNull(value) { "$name must not be null" }
         return value
     }
 
     @JvmStatic
-//    @Deprecated(
-//        "Use `require(Boolean, String)` instead",
-//        ReplaceWith("require(condition) { message }")
-//    )
     public fun checkArgument(condition: Boolean, message: String): Unit =
         require(condition) { message }
 
     @JvmStatic
-//    @Deprecated(
-//        "Use `check(Boolean, Message)` instead",
-//        ReplaceWith("check(condition) { message }")
-//    )
     public fun checkState(condition: Boolean, message: String): Unit = check(condition) { message }
 
     /** Checks if the given string is a valid metadata identifier. */
