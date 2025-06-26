@@ -31,7 +31,7 @@
  * <p>Although {@code system} is not the best name for this package,
  * the better option, {@code default}, is reserved by Java and cannot be used here.
  *
- * @see <a href="https://rb.gy/39mdu">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/39mdu">Original Java code of Google Flogger</a> for historical context.
  */
 @CheckReturnValue
 package io.spine.logging.backend.system;

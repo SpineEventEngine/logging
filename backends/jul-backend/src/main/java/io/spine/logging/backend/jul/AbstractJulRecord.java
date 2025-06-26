@@ -106,7 +106,7 @@ import static java.util.logging.Level.WARNING;
  *       set them is ignored.
  * </ul>
  *
- * @see <a href="https://rb.gy/yrrs4">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/yrrs4">Original Java code of Google Flogger</a> for historical context.
  */
 public abstract class AbstractJulRecord extends LogRecord {
 

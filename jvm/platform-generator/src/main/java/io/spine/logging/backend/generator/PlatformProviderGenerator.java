@@ -77,7 +77,7 @@ import static org.objectweb.asm.Opcodes.V1_6;
  * (e.g., proguard) observe the dependency correctly, which is not the case
  * when reflection is used to look up classes.
  *
- * @see <a href="http://rb.gy/mjs13">Original Java code of Google Flogger</a>
+ * @see <a href="http://rb.gy/mjs13">Original Java code of Google Flogger</a> for historical context.
  */
 @SuppressWarnings("DuplicateStringLiteralInspection") // Uses literals with FQN.
 public final class PlatformProviderGenerator {

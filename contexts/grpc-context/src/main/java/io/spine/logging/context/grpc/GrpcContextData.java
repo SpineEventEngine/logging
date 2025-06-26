@@ -39,7 +39,7 @@ import org.jspecify.annotations.Nullable;
 /**
  * A mutable thread-safe holder for context-scoped logging information.
  *
- * @see <a href="https://rb.gy/nfnwv">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/nfnwv">Original Java code of Google Flogger</a> for historical context.
  */
 final class GrpcContextData {
 

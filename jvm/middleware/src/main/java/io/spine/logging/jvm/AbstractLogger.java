@@ -48,7 +48,7 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS;
  *         the logging API provided by this logger.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/AbstractLogger.java">
- *      Original Java code of Google Flogger</a>
+ *      Original Java code of Google Flogger</a> for historical context.
  */
 public abstract class AbstractLogger<API extends MiddlemanApi<API>> {
 

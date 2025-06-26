@@ -79,7 +79,7 @@ import static io.spine.logging.jvm.util.StaticMethodCaller.getInstanceFromSystem
  * | {@link Clock}          | {@code flogger.clock}           | {@link SystemClock}, a millisecond-precision clock |
  * </pre>
  *
- * @see <a href="http://rb.gy/nnjac">Original Java code of Google Flogger</a>
+ * @see <a href="http://rb.gy/nnjac">Original Java code of Google Flogger</a> for historical context.
  */
 // Non-final for testing.
 public class DefaultPlatform extends Platform {

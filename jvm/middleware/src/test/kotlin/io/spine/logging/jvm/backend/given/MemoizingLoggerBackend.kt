@@ -35,7 +35,7 @@ import java.util.logging.Level
  *
  * This class is mutable and not thread safe.
  *
- * @see <a href="http://rb.gy/r6jjw">Original Java code of Google Flogger</a>
+ * @see <a href="http://rb.gy/r6jjw">Original Java code of Google Flogger</a> for historical context.
  */
 class MemoizingLoggerBackend(val name: String = "com.example.MyClass") : LoggerBackend() {
 

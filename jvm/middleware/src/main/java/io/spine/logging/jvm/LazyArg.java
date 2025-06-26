@@ -38,7 +38,7 @@ import org.jspecify.annotations.Nullable;
  * </ul>
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LazyArg.java">
- *     Original Java code of Google Flogger</a>
+ *     Original Java code of Google Flogger</a> for historical context.
  */
 public interface LazyArg<T> {
   /**

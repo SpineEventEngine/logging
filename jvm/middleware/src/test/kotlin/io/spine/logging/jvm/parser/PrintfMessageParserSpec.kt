@@ -42,7 +42,7 @@ import org.junit.jupiter.api.assertThrows
  * Tests for [PrintfMessageParser].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/parser/PrintfMessageParserTest.java">
- *     Original Java code of Google Flogger</a>
+ *     Original Java code of Google Flogger</a> for historical context.
  */
 @DisplayName("`PrintfMessageParserSpec` should")
 @Suppress("DANGEROUS_CHARACTERS") // '%' character is needed in the test name.

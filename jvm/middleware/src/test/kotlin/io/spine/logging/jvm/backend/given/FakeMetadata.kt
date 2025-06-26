@@ -34,7 +34,7 @@ import io.spine.logging.jvm.backend.Metadata
  * A mutable [Metadata] implementation for testing logging backends
  * and other log handling code.
  *
- * @see <a href="http://rb.gy/h75mb">Original Java code of Google Flogger</a>
+ * @see <a href="http://rb.gy/h75mb">Original Java code of Google Flogger</a> for historical context.
  */
 class FakeMetadata : Metadata() {
 

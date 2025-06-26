@@ -41,7 +41,7 @@ import java.util.logging.Level
  * This logger has specific methods for injecting timestamps
  * and forcing log statements.
  *
- * @see <a href="https://rb.gy/smalv">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/smalv">Original Java code of Google Flogger</a> for historical context.
  */
 class ConfigurableLogger(backend: LoggerBackend) : AbstractLogger<ConfigurableLogger.Api>(backend) {
 

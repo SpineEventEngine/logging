@@ -54,7 +54,7 @@ import java.util.concurrent.TimeUnit;
  * However, each of these sub-APIs must eventually return the original logging API.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LoggingApi.java">
- *     Original Java code of Google Flogger</a>
+ *     Original Java code of Google Flogger</a> for historical context.
  */
 @SuppressWarnings({"ClassWithTooManyMethods", "OverlyComplexClass"})
 public interface MiddlemanApi<API extends MiddlemanApi<API>> {
