@@ -27,9 +27,10 @@
 package io.spine.logging.jvm.backend;
 
 /**
- * An API to create logger backends for a given class name. This is implemented as an abstract class
- * (rather than an interface) to reduce to risk of breaking existing implementations if the API
- * changes.
+ * An API to create logger backends for a given class name.
+ *
+ * <p>This is implemented as an abstract class (rather than an interface) to reduce
+ * the risk of breaking existing implementations if the API changes.
  *
  * <h2>Essential Implementation Restrictions</h2>
  *
@@ -68,6 +69,7 @@ package io.spine.logging.jvm.backend;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/BackendFactory.java">
  *     Original Java code of Google Flogger</a> for historical context.
  */
+@SuppressWarnings("ClassMayBeInterface")
 public abstract class BackendFactory {
   /**
    * Creates a logger backend of the given class name for use by a Fluent Logger. Note that the
