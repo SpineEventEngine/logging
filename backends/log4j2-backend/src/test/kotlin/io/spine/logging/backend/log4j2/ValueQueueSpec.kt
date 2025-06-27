@@ -99,7 +99,7 @@ internal class ValueQueueSpec {
     fun `throw when given a 'null' value`() {
         val value = null
         val existingValue = null
-        shouldThrow<NullPointerException> {
+        shouldThrow<IllegalStateException> {
             maybeWrap(value, existingValue)
         }
     }

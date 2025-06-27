@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * https://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -24,18 +24,23 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.given
+package io.spine.logging.jvm.util
 
-import io.spine.logging.jvm.MetadataKey
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.shouldBe
+import io.spine.logging.jvm.util.Checks.checkMetadataIdentifier
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 
-/**
- * Remembers all handled key/value pairs.
- */
-internal class MemoizingKvHandler : MetadataKey.KeyValueHandler {
+/** Tests for [Checks]. */
+@DisplayName("`Checks` should")
+internal class ChecksSpec {
 
-    val entries = ArrayList<String>()
-
-    override fun handle(key: String, value: Any) {
-        entries.add("$key=$value")
+    @Test
+    fun `validate metadata identifier`() {
+        checkMetadataIdentifier("abc_123") shouldBe "abc_123"
+        shouldThrow<IllegalArgumentException> { checkMetadataIdentifier("") }
+        shouldThrow<IllegalArgumentException> { checkMetadataIdentifier("_bad") }
+        shouldThrow<IllegalArgumentException> { checkMetadataIdentifier("no-dash") }
     }
 }

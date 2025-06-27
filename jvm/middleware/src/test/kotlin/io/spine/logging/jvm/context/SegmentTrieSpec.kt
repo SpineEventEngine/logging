@@ -111,7 +111,7 @@ internal class SegmentTrieSpec {
         @Test
         fun `when given a mapping with only a 'null' key`() {
             val map = mapOf<String?, String>(null to "BAD")
-            assertThrows<NullPointerException> {
+            assertThrows<IllegalStateException> {
                 create(map, '.', DEFAULT)
             }
         }

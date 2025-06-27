@@ -111,8 +111,8 @@ class FakeLogData : LogData {
     }
 
     @CanIgnoreReturnValue
-    fun <T> addMetadata(key: MetadataKey<T>, value: Any?): FakeLogData {
-        metadata.add(key, key.cast(value))
+    fun <T : Any> addMetadata(key: MetadataKey<T>, value: Any): FakeLogData {
+        metadata.add(key, key.cast(value)!!)
         return this
     }
 

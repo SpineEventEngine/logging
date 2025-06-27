@@ -26,8 +26,8 @@
 
 package io.spine.logging.jvm
 
-import io.spine.logging.jvm.MetadataKey.repeated
-import io.spine.logging.jvm.MetadataKey.single
+import io.spine.logging.jvm.MetadataKey.Companion.repeated
+import io.spine.logging.jvm.MetadataKey.Companion.single
 import io.spine.logging.jvm.backend.Platform
 import io.spine.logging.jvm.given.MemoizingKvHandler
 import io.spine.logging.jvm.given.iterate
@@ -53,7 +53,7 @@ internal class JvmMetadataKeySpec {
     fun `create a key for a single piece of metadata`() {
         val labels = mutableListOf("foo", "foo_bar", "FooBar")
         labels.forEach { label ->
-            val key = single(label, String::class.java)
+            val key = single<String>(label)
             key.label shouldBe label
         }
     }
@@ -63,7 +63,7 @@ internal class JvmMetadataKeySpec {
         val badLabels = mutableListOf("", "foo bar", "_FOO")
         badLabels.forEach { label ->
             shouldThrow<IllegalArgumentException> {
-                MetadataKey(label, String::class.java, false)
+                MetadataKey.of(label, String::class.java, false)
             }
         }
     }
@@ -149,21 +149,6 @@ internal class JvmMetadataKeySpec {
         expected.add("reentrant=bar")
 
         handler.entries shouldContainExactly expected
-    }
-
-    @Test
-    fun `throw on 'null's`() {
-        val badInstantiations = listOf(
-            { MetadataKey(null, String::class.java, false) },
-            { MetadataKey<Any>("label", null, false) },
-            { single(null, String::class.java) },
-            { single("label", null) },
-            { repeated(null, String::class.java) },
-            { repeated("label", null) }
-        )
-        badInstantiations.forEach { action ->
-            shouldThrow<NullPointerException> { action() }
-        }
     }
 }
 

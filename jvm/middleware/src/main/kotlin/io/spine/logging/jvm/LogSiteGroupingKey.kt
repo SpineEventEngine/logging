@@ -24,18 +24,37 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.given
-
-import io.spine.logging.jvm.MetadataKey
+package io.spine.logging.jvm
 
 /**
- * Remembers all handled key/value pairs.
+ * The key associated with a sequence of log site "grouping keys".
+ *
+ * These serve to specialize the log site key to group the behaviour of stateful
+ * operations like rate limiting.
+ *
+ * This is used by the `per()` methods and is only public so backends can
+ * reference the key to control formatting.
  */
-internal class MemoizingKvHandler : MetadataKey.KeyValueHandler {
+public open class LogSiteGroupingKey : MetadataKey<Any>("group_by", Any::class.java, true) {
 
-    val entries = ArrayList<String>()
-
-    override fun handle(key: String, value: Any) {
-        entries.add("$key=$value")
+    override fun emitRepeated(values: Iterator<Any>, kvh: KeyValueHandler) {
+        if (values.hasNext()) {
+            val first = values.next()
+            if (!values.hasNext()) {
+                kvh.handle(label, first)
+            } else {
+                // In the very unlikely case there is more than one aggregation key, emit a list.
+                val value = buildString {
+                    append('[')
+                    append(first)
+                    do {
+                        append(',')
+                        append(values.next())
+                    } while (values.hasNext())
+                    append(']')
+                }
+                kvh.handle(label, value)
+            }
+        }
     }
 }

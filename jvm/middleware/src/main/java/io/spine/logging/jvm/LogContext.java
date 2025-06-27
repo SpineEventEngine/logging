@@ -33,11 +33,9 @@ import io.spine.logging.jvm.backend.Platform;
 import io.spine.logging.jvm.backend.TemplateContext;
 import io.spine.logging.jvm.context.Tags;
 import io.spine.logging.jvm.parser.MessageParser;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -116,34 +114,11 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
                 MetadataKey.single("skipped", Integer.class);
 
         /**
-         * The key associated with a sequence of log site "grouping keys". These serve to specialize
-         * the log site key to group the behaviour of stateful operations like rate limiting. This is
-         * used by the {@code per()} methods and is only public so backends can reference the key to
-         * control formatting.
+         * The key associated with a sequence of log site "grouping keys".
+         *
+         * @see LogSiteGroupingKey
          */
-        public static final MetadataKey<Object> LOG_SITE_GROUPING_KEY =
-                new MetadataKey<>("group_by", Object.class, true) {
-                    @Override
-                    public void emitRepeated(Iterator<Object> keys, KeyValueHandler out) {
-                        if (keys.hasNext()) {
-                            var first = keys.next();
-                            if (!keys.hasNext()) {
-                                out.handle(getLabel(), first);
-                            } else {
-                                // In the very unlikely case there's more than one aggregation key, emit a list.
-                                var buf = new StringBuilder();
-                                buf.append('[')
-                                   .append(first);
-                                do {
-                                    buf.append(',')
-                                       .append(keys.next());
-                                } while (keys.hasNext());
-                                out.handle(getLabel(), buf.append(']')
-                                                          .toString());
-                            }
-                        }
-                    }
-                };
+        public static final MetadataKey<Object> LOG_SITE_GROUPING_KEY = new LogSiteGroupingKey();
 
         /**
          * The key associated with a {@code Boolean} value used to specify that the log statement
@@ -151,7 +126,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
          *
          * <p>Forcing a log statement ensures that the {@code LoggerBackend} is passed the
          * {@code LogData} for this log statement regardless of the backend's log level or any other
-         * filtering or rate limiting which might normally occur.
+         * filtering or rate limiting, which might normally occur.
          *
          * <p>If a log statement is forced, this key will be set immediately on creation of the
          * logging context and will be visible to both fluent methods and post-processing.
@@ -217,142 +192,8 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
          * Key associated with the metadata for specifying additional stack information with a log
          * statement.
          */
-        public static final MetadataKey<StackSize> CONTEXT_STACK_SIZE =
+        private static final MetadataKey<StackSize> CONTEXT_STACK_SIZE =
                 MetadataKey.single("stack_size", StackSize.class);
-    }
-
-    static final class MutableMetadata extends Metadata {
-
-        /**
-         * The default number of key/value pairs we initially allocate space for when someone adds
-         * metadata to this context.
-         *
-         * <p>Note: As of 10/12 the VM allocates small object arrays very linearly with respect to
-         * the number of elements (an array has a 12 byte header with 4 bytes/element for object
-         * references). The allocation size is always rounded up to the next 8 bytes which means we
-         * can just pick a small value for the initial size and grow from there without too much
-         * waste.
-         *
-         * <p>For 4 key/value pairs, we will need 8 elements in the array, which will take up 48
-         * bytes {@code (12 + (8 * 4) = 44}, which when rounded up is 48.
-         */
-        private static final int INITIAL_KEY_VALUE_CAPACITY = 4;
-
-        /**
-         * The array of key/value pairs to hold any metadata that might be added by the logger or any
-         * of the fluent methods on our API. This is an array so it is as space efficient as possible.
-         */
-        private Object[] keyValuePairs = new Object[2 * INITIAL_KEY_VALUE_CAPACITY];
-        /** The number of key/value pairs currently stored in the array. */
-        private int keyValueCount = 0;
-
-        @Override
-        public int size() {
-            return keyValueCount;
-        }
-
-        @Override
-        public MetadataKey<?> getKey(int n) {
-            if (n >= keyValueCount) {
-                throw new IndexOutOfBoundsException();
-            }
-            return (MetadataKey<?>) keyValuePairs[2 * n];
-        }
-
-        @Override
-        public Object getValue(int n) {
-            if (n >= keyValueCount) {
-                throw new IndexOutOfBoundsException();
-            }
-            return keyValuePairs[(2 * n) + 1];
-        }
-
-        private int indexOf(MetadataKey<?> key) {
-            for (var index = 0; index < keyValueCount; index++) {
-                if (keyValuePairs[2 * index].equals(key)) {
-                    return index;
-                }
-            }
-            return -1;
-        }
-
-        @Override
-        @Nullable
-        public <T> T findValue(MetadataKey<T> key) {
-            var index = indexOf(key);
-            return index != -1 ? key.cast(keyValuePairs[(2 * index) + 1]) : null;
-        }
-
-        /**
-         * Adds the key/value pair to the metadata (growing the internal array as necessary). If the
-         * key
-         * cannot be repeated, and there is already a value for the key in the metadata, then the
-         * existing value is replaced, otherwise the value is added at the end of the metadata.
-         */
-        <T> void addValue(MetadataKey<T> key, T value) {
-            if (!key.canRepeat()) {
-                var index = indexOf(key);
-                if (index != -1) {
-                    keyValuePairs[(2 * index) + 1] = checkValue(value);
-                    return;
-                }
-            }
-            // Check that the array is big enough for one more element.
-            if (2 * (keyValueCount + 1) > keyValuePairs.length) {
-                // Use doubling here (this code should almost never be hit in normal usage and the total
-                // number of items should always stay relatively small. If this resizing algorithm is ever
-                // modified it is vital that the new value is always an even number.
-                keyValuePairs = Arrays.copyOf(keyValuePairs, 2 * keyValuePairs.length);
-            }
-            keyValuePairs[2 * keyValueCount] = checkKey(key);
-            keyValuePairs[(2 * keyValueCount) + 1] = checkValue(value);
-            keyValueCount += 1;
-        }
-
-        private static <T> @NonNull MetadataKey<T> checkKey(MetadataKey<T> key) {
-            return checkNotNull(key, "metadata key");
-        }
-
-        private static <T> @NonNull T checkValue(T value) {
-            return checkNotNull(value, "metadata value");
-        }
-
-        /** Removes all key/value pairs for a given key. */
-        private void removeAllValues(MetadataKey<?> key) {
-            var index = indexOf(key);
-            if (index >= 0) {
-                var dest = 2 * index;
-                var src = dest + 2;
-                while (src < (2 * keyValueCount)) {
-                    var nextKey = keyValuePairs[src];
-                    if (!nextKey.equals(key)) {
-                        keyValuePairs[dest] = nextKey;
-                        keyValuePairs[dest + 1] = keyValuePairs[src + 1];
-                        dest += 2;
-                    }
-                    src += 2;
-                }
-                // We know src & dest are +ve and (src > dest), so shifting is safe here.
-                keyValueCount -= (src - dest) >> 1;
-                while (dest < src) {
-                    keyValuePairs[dest++] = null;
-                }
-            }
-        }
-
-        /** Strictly for debugging. */
-        @Override
-        public String toString() {
-            var out = new StringBuilder("Metadata{");
-            for (var n = 0; n < size(); n++) {
-                out.append(" '")
-                   .append(getKey(n))
-                   .append("': ")
-                   .append(getValue(n));
-            }
-            return out.append(" }")
-                      .toString();
-        }
     }
 
     /**
@@ -367,17 +208,22 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
 
     /** The log level of the log statement that this context was created for. */
     private final Level level;
+
     /** The timestamp of the log statement that this context is associated with. */
     private final long timestampNanos;
 
     /** Additional metadata for this log statement (added via fluent API methods). */
     private MutableMetadata metadata = null;
+
     /** The log site information for this log statement (set immediately prior to post-processing). */
     private JvmLogSite logSite = null;
+
     /** Rate limit status (only set if rate limiting occurs). */
     private RateLimitStatus rateLimitStatus = null;
+
     /** The template context if formatting is required (set only after post-processing). */
     private TemplateContext templateContext = null;
+
     /** The log arguments (set only after post-processing). */
     private Object[] args = null;
 

@@ -38,7 +38,7 @@ import io.spine.logging.jvm.backend.Metadata
  */
 class FakeMetadata : Metadata() {
 
-    private class KeyValuePair<T>(val key: MetadataKey<T>, val value: T)
+    private class KeyValuePair<T : Any>(val key: MetadataKey<T>, val value: T)
 
     private val entries = mutableListOf<KeyValuePair<*>>()
 
@@ -46,7 +46,7 @@ class FakeMetadata : Metadata() {
      * Adds a key/value pair to this [Metadata].
      */
     @CanIgnoreReturnValue
-    fun <T> add(key: MetadataKey<T>, value: T): FakeMetadata {
+    fun <T : Any> add(key: MetadataKey<T>, value: T): FakeMetadata {
         entries.add(KeyValuePair(key, value))
         return this
     }
@@ -55,9 +55,9 @@ class FakeMetadata : Metadata() {
 
     override fun getKey(n: Int): MetadataKey<*> = entries[n].key
 
-    override fun getValue(n: Int): Any = entries[n].value!!
+    override fun getValue(n: Int): Any = entries[n].value
 
-    override fun <T : Any?> findValue(key: MetadataKey<T>): T? {
+    override fun <T : Any> findValue(key: MetadataKey<T>): T? {
         val entry = entries.firstOrNull { it.key == key }
         val casted = key.cast(entry?.value) // It is safe to pass `null` here.
         return casted

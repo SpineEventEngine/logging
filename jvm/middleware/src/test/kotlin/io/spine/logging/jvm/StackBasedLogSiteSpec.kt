@@ -66,7 +66,7 @@ internal class StackBasedLogSiteSpec {
 
     @Test
     fun `throw when the given stack trace element is 'null'`() {
-        shouldThrow<NullPointerException> {
+        shouldThrow<IllegalStateException> {
             StackBasedLogSite(null)
         }
     }
