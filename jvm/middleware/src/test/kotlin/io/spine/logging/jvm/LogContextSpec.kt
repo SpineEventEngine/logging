@@ -898,9 +898,8 @@ internal class LogContextSpec {
         backend.logged[1].logSite shouldNotBe JvmLogSite.INVALID
     }
 
-    @Nested
-    inner class
-    specialize {
+    @Nested inner class
+    Specialize {
 
         @Test
         fun `log site key from a singleton key`() {
