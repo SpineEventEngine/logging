@@ -33,17 +33,33 @@ import io.spine.logging.jvm.parser.ParseException
  *
  * This class is immutable and thread-safe.
  *
+ * @property flags The flag bits for this options instance.
+ *   Where possible the per-flag methods `shouldXxx()` should be preferred for code clarity,
+ *   but for efficiency and when testing multiple flags values at the same time,
+ *   this method is useful.
+ *
+ * @property width The width for these options, or [UNSET] if not specified.
+ *   This is a non-negative decimal integer, which typically indicates the minimum
+ *   number of characters to be written to the output, but its precise meaning is
+ *   dependent on the formatting rule it is applied to.
+ *
+ * @property precision The precision for these options, or [UNSET] if not specified.
+ *   This is a non-negative decimal integer, usually used to restrict the number of characters,
+ *   but its precise meaning is dependent on the formatting rule it is applied to.
+ *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/FormatOptions.java">
  *   Original Java code of Google Flogger</a> for historical context.
  */
 @Suppress("TooManyFunctions")
 public class FormatOptions private constructor(
-    private val flags: Int,
-    private val width: Int,
-    private val precision: Int
+    public val flags: Int,
+    public val width: Int,
+    public val precision: Int
 ) {
 
+    @Suppress("MagicNumber")
     public companion object {
+
         private const val MAX_ALLOWED_WIDTH = 999999
         private const val MAX_ALLOWED_PRECISION = 999999
 
@@ -52,8 +68,8 @@ public class FormatOptions private constructor(
         private const val MIN_FLAG_VALUE = ' '.code
         private const val MAX_FLAG_VALUE = '0'.code
 
-        // For a flag character 'c' in [MIN_FLAG_VALUE, MAX_FLAG_VALUE] the flag index is stored in 3 bits
-        // starting at bit-N, where N = (3 * (c - MIN_FLAG_VALUE)).
+        // For a flag character 'c' in [MIN_FLAG_VALUE, MAX_FLAG_VALUE] the flag index
+        // is stored in 3 bits starting at bit-N, where N = (3 * (c - MIN_FLAG_VALUE)).
         private val ENCODED_FLAG_INDICES: Long
 
         public const val INVALID_FLAG: String = "invalid flag"
@@ -102,7 +118,7 @@ public class FormatOptions private constructor(
          * A formatting flag which specifies that for signed numeric output,
          * negative values should be surrounded by parentheses.
          *
-         * This corresponds to the '(' printf flag and is valid for all signed numeric types.
+         * This corresponds to the `'('` printf flag and is valid for all signed numeric types.
          */
         public const val FLAG_USE_PARENS_FOR_NEGATIVE_VALUES: Int = (1 shl 2)
 
@@ -175,14 +191,14 @@ public class FormatOptions private constructor(
         @Suppress("MagicNumber", "ReturnCount")
         @JvmStatic
         public fun of(flags: Int, width: Int, precision: Int): FormatOptions {
-            if (!checkFlagConsistency(flags, width != UNSET)) {
-                throw IllegalArgumentException("invalid flags: 0x${flags.toString(16)}")
+            require(checkFlagConsistency(flags, width != UNSET)) {
+                "invalid flags: 0x${flags.toString(16)}"
             }
-            if ((width < 1 || width > MAX_ALLOWED_WIDTH) && width != UNSET) {
-                throw IllegalArgumentException("invalid width: $width")
+            require((width in 1..MAX_ALLOWED_WIDTH) || width == UNSET) {
+                "invalid width: $width"
             }
-            if ((precision < 0 || precision > MAX_ALLOWED_PRECISION) && precision != UNSET) {
-                throw IllegalArgumentException("invalid precision: $precision")
+            require((precision in 0..MAX_ALLOWED_PRECISION) || precision == UNSET) {
+                "invalid precision: $precision"
             }
             return FormatOptions(flags, width, precision)
         }
@@ -201,7 +217,7 @@ public class FormatOptions private constructor(
          * @throws ParseException if the specified subsequence of the string could not be parsed.
          */
         @JvmStatic
-        @Suppress("CyclomaticComplexMethod", "ReturnCount")
+        @Suppress("CyclomaticComplexMethod", "ReturnCount", "ThrowsCount")
         public fun parse(message: String, pos: Int, end: Int, isUpperCase: Boolean): FormatOptions {
             // It is vital that we shortcut parsing and return the default instance here
             // (rather than just creating a new instance with default values) because we
@@ -255,7 +271,11 @@ public class FormatOptions private constructor(
                 }
                 val n = c.code - '0'.code
                 if (n >= 10) {
-                    throw ParseException.atPosition("invalid width character", message, currentPos - 1)
+                    throw ParseException.atPosition(
+                        "invalid width character",
+                        message,
+                        currentPos - 1
+                    )
                 }
                 width = (width * 10) + n
                 if (width > MAX_ALLOWED_WIDTH) {
@@ -264,6 +284,7 @@ public class FormatOptions private constructor(
             }
         }
 
+        @Suppress("ThrowsCount")
         private fun parsePrecision(message: String, start: Int, end: Int): Int {
             if (start == end) {
                 throw ParseException.atPosition("missing precision", message, start - 1)
@@ -288,6 +309,7 @@ public class FormatOptions private constructor(
 
         /** Internal helper method for creating a bit-mask from a string of valid flag characters. */
         @JvmStatic
+        @Suppress("UseRequire")
         internal fun parseValidFlags(flagChars: String, hasUpperVariant: Boolean): Int {
             var flags = if (hasUpperVariant) FLAG_UPPER_CASE else 0
             for (i in flagChars.indices) {
@@ -301,17 +323,20 @@ public class FormatOptions private constructor(
         }
 
         // Helper to check for legal combinations of flags.
+        @Suppress("ReturnCount")
         internal fun checkFlagConsistency(flags: Int, hasWidth: Boolean): Boolean {
             // Check that we specify at most one of 'prefix plus' and 'prefix space'.
             if ((flags and
-                    (FLAG_PREFIX_PLUS_FOR_POSITIVE_VALUES or FLAG_PREFIX_SPACE_FOR_POSITIVE_VALUES))
+                        (FLAG_PREFIX_PLUS_FOR_POSITIVE_VALUES or
+                                FLAG_PREFIX_SPACE_FOR_POSITIVE_VALUES))
                 == (FLAG_PREFIX_PLUS_FOR_POSITIVE_VALUES or FLAG_PREFIX_SPACE_FOR_POSITIVE_VALUES)
             ) {
                 return false
             }
             // Check that we specify at most one of 'left align' and 'leading zeros'.
             if ((flags and (FLAG_LEFT_ALIGN or FLAG_SHOW_LEADING_ZEROS))
-                == (FLAG_LEFT_ALIGN or FLAG_SHOW_LEADING_ZEROS)) {
+                == (FLAG_LEFT_ALIGN or FLAG_SHOW_LEADING_ZEROS)
+            ) {
                 return false
             }
             // Check that if 'left align' or 'leading zeros' is specified,
@@ -333,12 +358,13 @@ public class FormatOptions private constructor(
      * @param allowWidth specifies whether to include width in the returned instance.
      * @param allowPrecision specifies whether to include precision in the returned instance.
      */
+    @Suppress("ReturnCount")
     public fun filter(
         allowedFlags: Int,
         allowWidth: Boolean,
         allowPrecision: Boolean
     ): FormatOptions {
-        if (isDefault()) {
+        if (isDefault) {
             return this
         }
         val newFlags = allowedFlags and flags
@@ -358,23 +384,12 @@ public class FormatOptions private constructor(
         return FormatOptions(newFlags, newWidth, newPrecision)
     }
 
-    /** Returns true if this instance has only default formatting options. */
+    /**
+     * Returns `true` if this instance has only default formatting options.
+     */
     @Suppress("ReferenceEquality")
-    public fun isDefault(): Boolean = this === getDefault()
-
-    /**
-     * Returns the width for these options, or [UNSET] if not specified. This is a non-negative
-     * decimal integer which typically indicates the minimum number of characters to be written to
-     * the output, but its precise meaning is dependent on the formatting rule it is applied to.
-     */
-    public fun getWidth(): Int = width
-
-    /**
-     * Returns the precision for these options, or [UNSET] if not specified. This is a
-     * non-negative decimal integer, usually used to restrict the number of characters, but its
-     * precise meaning is dependent on the formatting rule it is applied to.
-     */
-    public fun getPrecision(): Int = precision
+    public val isDefault: Boolean
+        get() = this === DEFAULT
 
     /**
      * Validates these options according to the allowed criteria and checks for inconsistencies in
@@ -384,14 +399,16 @@ public class FormatOptions private constructor(
      * be validated, but any format options passed through the `ParameterVisitor` interface must
      * be valid with respect to the associated [FormatChar] instance.
      *
-     * @param allowedFlags a bit mask specifying a subset of the printf flags that are allowed for
-     *         these options.
-     * @param allowPrecision true if these options are allowed to have a precision value specified.
-     * @return true if these options are valid given the specified constraints.
+     * @param allowedFlags A bit mask specifying a subset of the printf flags that are allowed for
+     *   these options.
+     * @param allowPrecision `true` if these options are allowed to have
+     *   a precision value specified, `false` otherwise.
+     * @return `true` if these options are valid given the specified constraints.
      */
+    @Suppress("ReturnCount")
     public fun validate(allowedFlags: Int, allowPrecision: Boolean): Boolean {
-        // The default instance is always valid (commonest case).
-        if (isDefault()) {
+        // The default instance is always valid (the commonest case).
+        if (isDefault) {
             return true
         }
         // Check if our flags are a subset of the allowed flags.
@@ -402,7 +419,7 @@ public class FormatOptions private constructor(
         if (!allowPrecision && precision != UNSET) {
             return false
         }
-        return checkFlagConsistency(flags, getWidth() != UNSET)
+        return checkFlagConsistency(flags, width != UNSET)
     }
 
     /**
@@ -420,14 +437,6 @@ public class FormatOptions private constructor(
     public fun areValidFor(formatChar: FormatChar): Boolean {
         return validate(formatChar.allowedFlags, formatChar.type.supportsPrecision())
     }
-
-    /**
-     * Returns the flag bits for this options instance.
-     *
-     * Where possible the per-flag methods `shouldXxx()` should be preferred for code clarity, but for efficiency and when testing
-     * multiple flags values at the same time, this method is useful.
-     */
-    public fun getFlags(): Int = flags
 
     /**
      * Corresponds to `printf` flag '-' (incompatible with '0').
@@ -454,23 +463,25 @@ public class FormatOptions private constructor(
     public fun shouldShowLeadingZeros(): Boolean = (flags and FLAG_SHOW_LEADING_ZEROS) != 0
 
     /**
-     * Corresponds to printf flag '+'.
+     * Corresponds to `printf` flag `'+'`.
      *
      * Logging backends are free to ignore this flag, though it does provide some visual clarity
      * when tabulating certain types of values.
      */
-    public fun shouldPrefixPlusForPositiveValues(): Boolean = (flags and FLAG_PREFIX_PLUS_FOR_POSITIVE_VALUES) != 0
+    public fun shouldPrefixPlusForPositiveValues(): Boolean =
+        (flags and FLAG_PREFIX_PLUS_FOR_POSITIVE_VALUES) != 0
 
     /**
-     * Corresponds to printf flag ' '.
+     * Corresponds to `printf` flag `' '`.
      *
      * Logging backends are free to ignore this flag, though if they choose to support
      * [shouldPrefixPlusForPositiveValues] then it is advisable to support this as well.
      */
-    public fun shouldPrefixSpaceForPositiveValues(): Boolean = (flags and FLAG_PREFIX_SPACE_FOR_POSITIVE_VALUES) != 0
+    public fun shouldPrefixSpaceForPositiveValues(): Boolean =
+        (flags and FLAG_PREFIX_SPACE_FOR_POSITIVE_VALUES) != 0
 
     /**
-     * Corresponds to printf flag ','.
+     * Corresponds to `printf` flag `','`.
      *
      * Logging backends are free to select the locale in which the formatting will occur or ignore
      * this flag altogether.
@@ -486,41 +497,45 @@ public class FormatOptions private constructor(
 
     /**
      * Appends the data for this options instance in a printf compatible form to the given buffer.
-     * This method neither appends the leading `%` symbol nor a format type character. Output is
-     * written in the form `[width][.precision][flags]` and for the default instance, nothing is
-     * appended.
+     * This method neither appends the leading ``%`` symbol, nor a format type character.
+     * Output is written in the form `[width][.precision][flags]` and for the default instance,
+     * nothing is appended.
      *
      * @param out The output buffer to which the options are appended.
      */
     public fun appendPrintfOptions(out: StringBuilder): StringBuilder {
-        if (!isDefault()) {
-            // Knock out the upper-case flag because that does not correspond to an options character.
-            val optionFlags = flags and FLAG_UPPER_CASE.inv()
-            var bit = 0
-            while ((1 shl bit) <= optionFlags) {
-                if ((optionFlags and (1 shl bit)) != 0) {
-                    out.append(FLAG_CHARS_ORDERED[bit])
-                }
-                bit++
+        if (isDefault) {
+            return out
+        }
+
+        // Knock out the upper-case flag because that does not correspond to an options character.
+        val optionFlags = flags and FLAG_UPPER_CASE.inv()
+        var bit = 0
+        while ((1 shl bit) <= optionFlags) {
+            if ((optionFlags and (1 shl bit)) != 0) {
+                out.append(FLAG_CHARS_ORDERED[bit])
             }
-            if (width != UNSET) {
-                out.append(width)
-            }
-            if (precision != UNSET) {
-                out.append('.').append(precision)
-            }
+            bit++
+        }
+        if (width != UNSET) {
+            out.append(width)
+        }
+        if (precision != UNSET) {
+            out.append('.').append(precision)
         }
         return out
     }
 
     override fun equals(other: Any?): Boolean {
-        // Various functions ensure that the same instance gets re-used, so it seems likely
-        // that it is worth optimizing for it here.
+        // Various functions ensure that the same instance gets re-used,
+        // so it seems likely it is worth optimizing for it here.
         if (other === this) {
             return true
         }
         if (other is FormatOptions) {
-            return (other.flags == flags) && (other.width == width) && (other.precision == precision)
+            return (other.flags == flags)
+                    && (other.width == width)
+                    && (other.precision == precision)
         }
         return false
     }

@@ -35,10 +35,10 @@ import io.kotest.matchers.string.shouldNotContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.backend.given.BadToString
 import io.spine.logging.jvm.JvmLogSite
-import io.spine.logging.jvm.backend.FormatOptions.FLAG_SHOW_ALT_FORM
-import io.spine.logging.jvm.backend.FormatOptions.FLAG_SHOW_LEADING_ZEROS
-import io.spine.logging.jvm.backend.FormatOptions.FLAG_UPPER_CASE
-import io.spine.logging.jvm.backend.FormatOptions.UNSET
+import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_SHOW_ALT_FORM
+import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_SHOW_LEADING_ZEROS
+import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_UPPER_CASE
+import io.spine.logging.jvm.backend.FormatOptions.Companion.UNSET
 import io.spine.logging.jvm.backend.MessageUtils.appendHex
 import io.spine.logging.jvm.backend.MessageUtils.appendLogSite
 import io.spine.logging.jvm.backend.MessageUtils.safeFormatTo

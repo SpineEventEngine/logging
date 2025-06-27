@@ -26,6 +26,8 @@
 
 package io.spine.logging.jvm.backend
 
+import java.io.Serial
+
 /**
  * Exception thrown when a log statement cannot be emitted correctly. This exception should only be
  * thrown by logger backend implementations which have opted not to handle specific issues.
