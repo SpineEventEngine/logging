@@ -26,7 +26,6 @@
 
 package io.spine.logging.jvm;
 
-import io.spine.logging.jvm.DurationRateLimiter.RateLimitPeriod;
 import io.spine.logging.jvm.backend.LogData;
 import io.spine.logging.jvm.backend.Metadata;
 import io.spine.logging.jvm.backend.Platform;
@@ -108,7 +107,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
                 MetadataKey.single("sampling_count", Integer.class);
 
         /**
-         * The key associated with a rate limiting period for "at most once every N" rate limiting.
+         * The key associated with a rate-limiting period for "at most once every N" rate limiting.
          * The value is set by {@link MiddlemanApi#atMostEvery(int, TimeUnit)}.
          */
         public static final MetadataKey<RateLimitPeriod> LOG_AT_MOST_EVERY =

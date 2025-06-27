@@ -26,7 +26,6 @@
 
 package io.spine.logging.jvm;
 
-import io.spine.logging.jvm.backend.LogData;
 import io.spine.logging.jvm.backend.Metadata;
 import org.jspecify.annotations.Nullable;
 
@@ -35,7 +34,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import static io.spine.logging.jvm.LogContext.Key.LOG_AT_MOST_EVERY;
 import static io.spine.logging.jvm.util.Checks.checkArgument;
-import static io.spine.logging.jvm.util.Checks.checkNotNull;
 import static java.lang.Math.max;
 
 /**
@@ -82,54 +80,6 @@ final class DurationRateLimiter extends RateLimitStatus {
         }
         return map.get(logSiteKey, metadata)
                   .checkLastTimestamp(timestampNanos, rateLimitPeriod);
-    }
-
-    /**
-     * Immutable metadata for rate limiting based on a fixed count. This corresponds to the
-     * LOG_AT_MOST_EVERY metadata key in {@link LogData}. Unlike the metadata for {@code every(N)},
-     * we
-     * need to use a wrapper class here to preserve the time unit information.
-     */
-    public static final class RateLimitPeriod {
-
-        private final int n;
-        private final TimeUnit unit;
-
-        private RateLimitPeriod(int n, TimeUnit unit) {
-            // This code will work with a zero length time period, but it's nonsensical to try.
-            if (n <= 0) {
-                throw new IllegalArgumentException("time period must be positive: " + n);
-            }
-            this.n = n;
-            this.unit = checkNotNull(unit, "time unit");
-        }
-
-        private long toNanos() {
-            // Since nanoseconds are the smallest level of precision a TimeUnit can express, we are
-            // guaranteed that "unit.toNanos(n) >= n > 0". This is important for correctness (see comment
-            // in checkLastTimestamp()) because it ensures the new timestamp that indicates when logging
-            // should occur always differs from the previous timestamp.
-            return unit.toNanos(n);
-        }
-
-        @Override
-        public String toString() {
-            return n + " " + unit;
-        }
-
-        @Override
-        public int hashCode() {
-            // Rough and ready. We don't expect this be be needed much at all.
-            return (n * 37) ^ unit.hashCode();
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (obj instanceof RateLimitPeriod that) {
-                return this.n == that.n && this.unit == that.unit;
-            }
-            return false;
-        }
     }
 
     private final AtomicLong lastTimestampNanos = new AtomicLong(-1L);
