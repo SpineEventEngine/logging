@@ -54,9 +54,7 @@ internal constructor(
      * @param file a file to write `pom.xml` contents to.
      */
     fun writeTo(file: File) {
-        val fileWriter = FileWriter(file)
         val out = StringWriter()
-
         writeStart(out)
         writeBlocks(
             out,
@@ -67,8 +65,9 @@ internal constructor(
         )
         PomFormatting.writeEnd(out)
 
-        fileWriter.write(out.toString())
-        fileWriter.close()
+        FileWriter(file).use {
+            it.write(out.toString())
+        }
     }
 
     /**

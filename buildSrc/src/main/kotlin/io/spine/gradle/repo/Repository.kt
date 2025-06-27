@@ -116,7 +116,7 @@ data class Repository(
         val password = properties.getProperty("user.password")
         return Credentials(username, password)
     }
-
+    
     override fun equals(other: Any?): Boolean = when {
         this === other -> true
         other !is Repository -> false
