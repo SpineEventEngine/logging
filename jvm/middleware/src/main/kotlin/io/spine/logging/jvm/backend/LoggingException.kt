@@ -43,6 +43,7 @@ public class LoggingException(message: String?) : RuntimeException(message) {
 
     public companion object {
         @JvmStatic
+        @Serial
         private val serialVersionUID: Long = 0L
     }
 }
