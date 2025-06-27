@@ -35,9 +35,12 @@ import java.util.logging.Level
  *
  * This class is mutable and not thread safe.
  *
- * @see <a href="http://rb.gy/r6jjw">Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="http://rb.gy/r6jjw">Original Java code of Google Flogger</a>
+ *   for historical context.
  */
-class MemoizingLoggerBackend(val name: String = "com.example.MyClass") : LoggerBackend() {
+class MemoizingLoggerBackend(
+    override val loggerName: String = "com.example.MyClass"
+) : LoggerBackend() {
 
     private var minLevel = Level.INFO
     private val mutableLogged: MutableList<LogData> = ArrayList()
@@ -73,9 +76,7 @@ class MemoizingLoggerBackend(val name: String = "com.example.MyClass") : LoggerB
         minLevel = level
     }
 
-    override fun getLoggerName() = name
-
-    override fun isLoggable(loggedLevel: Level) = loggedLevel.intValue() >= minLevel.intValue()
+    override fun isLoggable(level: Level) = level.intValue() >= minLevel.intValue()
 
     override fun log(data: LogData) {
         mutableLogged.add(data)

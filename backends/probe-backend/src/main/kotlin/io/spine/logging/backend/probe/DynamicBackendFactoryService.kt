@@ -55,8 +55,8 @@ public class DynamicBackendFactoryService : BackendFactory() {
     /**
      * Delegates actual backend creation to [DynamicBackendFactory] object.
      */
-    override fun create(loggingClassName: String): LoggerBackend =
-        DynamicBackendFactory.create(loggingClassName)
+    override fun create(loggingClass: String): LoggerBackend =
+        DynamicBackendFactory.create(loggingClass)
 
     /**
      * Returns a fully-qualified name of this class.

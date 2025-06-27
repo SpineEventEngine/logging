@@ -28,10 +28,9 @@ package io.spine.logging.jvm.backend.given
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.logging.jvm.JvmLogSite
-import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.LogContext
+import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.backend.LogData
-import io.spine.logging.jvm.backend.Metadata
 import io.spine.logging.jvm.backend.TemplateContext
 import io.spine.logging.jvm.given.FakeLogSite
 import io.spine.logging.jvm.parser.DefaultBraceStyleMessageParser
@@ -42,18 +41,19 @@ import java.util.logging.Level
 /**
  * A mutable [LogData] fot testing backends and other log handling code.
  *
- * @see <a href="http://rb.gy/z2i0q">Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="http://rb.gy/z2i0q">Original Java code of Google Flogger</a>
+ *   for historical context.
  */
 @Suppress("TooManyFunctions") // Many getters and setters.
 class FakeLogData : LogData {
 
-    private var level = Level.INFO
+    override var level: Level = Level.INFO
     private var context: TemplateContext? = null
-    private var arguments: Array<out Any?>? = null
-    private var literalArgument: Any? = null
-    private var timestampNanos = 0L
-    private val metadata = FakeMetadata()
-    private var logSite: JvmLogSite = LOG_SITE
+    private var _arguments: Array<Any?>? = null
+    private var _literalArgument: Any? = null
+    override var timestampNanos = 0L
+    override val metadata = FakeMetadata()
+    override var logSite: JvmLogSite = LOG_SITE
 
     companion object {
         private const val LOGGER_NAME = "io.spine.LoggerName"
@@ -84,12 +84,12 @@ class FakeLogData : LogData {
      * Creates an instance with a single literal argument.
      */
     constructor(literalArgument: Any?) {
-        this.literalArgument = literalArgument
+        this._literalArgument = literalArgument
     }
 
     private constructor(parser: MessageParser, message: String, vararg arguments: Any?) {
         context = TemplateContext(parser, message)
-        this.arguments = arguments
+        this._arguments = arguments.toList().toTypedArray()
     }
 
     @CanIgnoreReturnValue
@@ -116,25 +116,8 @@ class FakeLogData : LogData {
         return this
     }
 
-    override fun getLevel(): Level {
-        return level
-    }
-
-    override fun getTimestampNanos(): Long {
-        return timestampNanos
-    }
-
-    override fun getLoggerName(): String {
-        return LOGGER_NAME
-    }
-
-    override fun getLogSite(): JvmLogSite {
-        return logSite
-    }
-
-    override fun getMetadata(): Metadata {
-        return metadata
-    }
+    override val loggerName: String
+        get() = LOGGER_NAME
 
     override fun wasForced(): Boolean {
         // Check explicit `TRUE` here because `findValue()` can return `null`.
@@ -142,22 +125,23 @@ class FakeLogData : LogData {
         return metadata.findValue(LogContext.Key.WAS_FORCED) == true
     }
 
-    override fun getTemplateContext(): TemplateContext? {
-        return context
-    }
+    override val templateContext: TemplateContext?
+        get() = context
 
-    override fun getArguments(): Array<out Any?> {
-        check(context != null) {
-            "Cannot get log data's arguments without a context."
+    override val arguments: Array<Any?>
+        get() {
+            check(context != null) {
+                "Cannot get log data's arguments without a context."
+            }
+            return _arguments!!.clone()
         }
-        return arguments!!.clone()
-    }
 
-    override fun getLiteralArgument(): Any? {
-        check(context == null) {
-            "Cannot get log data's literal argument if a context exists."
+    override val literalArgument: Any?
+        get() {
+            check(context == null) {
+                "Cannot get log data's literal argument if a context exists."
+            }
+            return _literalArgument
         }
-        return literalArgument
-    }
 }
 

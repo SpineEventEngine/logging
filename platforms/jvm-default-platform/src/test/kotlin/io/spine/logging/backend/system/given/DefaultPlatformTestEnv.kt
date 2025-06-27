@@ -39,8 +39,8 @@ import io.spine.logging.jvm.backend.given.MemoizingLoggerBackend
  */
 internal class MemoizingLoggerBackendFactory : BackendFactory() {
 
-    override fun create(loggingClassName: String): LoggerBackend =
-        MemoizingLoggerBackend(loggingClassName)
+    override fun create(loggingClass: String): LoggerBackend =
+        MemoizingLoggerBackend(loggingClass)
 
     override fun toString(): String = javaClass.name
 }

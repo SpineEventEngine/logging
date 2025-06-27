@@ -157,7 +157,7 @@ internal class LogContextSpec {
         // Cannot ask for format arguments as none exist.
         backend.lastLogged.templateContext.shouldBeNull()
         shouldThrow<IllegalStateException> {
-            backend.lastLogged.getArguments()
+            backend.lastLogged.arguments
         }
     }
 
@@ -651,25 +651,18 @@ internal class LogContextSpec {
     @Test
     fun `accept a nullable argument`() {
         logger.atInfo().log(MESSAGE_PATTERN, null)
-        backend.lastLogged.shouldHaveMessage(MESSAGE_PATTERN)
-        backend.lastLogged.shouldHaveArguments(null)
+        backend.lastLogged.let {
+            it shouldHaveMessage (MESSAGE_PATTERN)
+            it.shouldHaveArguments(null)
+        }
     }
 
-    /**
-     * Currently having a `null` message and a `null` argument will throw a runtime exception,
-     * but perhaps it shouldn't (it could come from data).
-     *
-     * In general, it is expected that when there are arguments to a log statement,
-     * the message is a literal, which makes this situation very unlikely and probably
-     * a code bug. But even then, throwing an exception is something that will only
-     * happen when the log statement is enabled.
-     *
-     * Consider allowing this case to work without throwing a runtime exception.
-     */
     @Test
-    fun `throw when 'null' is passed for message and argument simultaneously`() {
-        shouldThrow<IllegalStateException> {
-            logger.atInfo().log(null, null)
+    fun `log 'null' if given message and argument are 'null' simultaneously`() {
+        logger.atInfo().log(null, null)
+        backend.lastLogged.let {
+            it shouldHaveMessage ("<null>")
+            it.shouldHaveArguments(null)
         }
     }
 
@@ -905,7 +898,8 @@ internal class LogContextSpec {
         backend.logged[1].logSite shouldNotBe JvmLogSite.INVALID
     }
 
-    @Nested inner class
+    @Nested
+    inner class
     specialize {
 
         @Test

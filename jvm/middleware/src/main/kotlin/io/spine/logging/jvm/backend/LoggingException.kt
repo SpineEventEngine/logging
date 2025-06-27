@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,32 +24,25 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.backend;
-
-import org.jspecify.annotations.Nullable;
-
-import java.io.Serial;
+package io.spine.logging.jvm.backend
 
 /**
  * Exception thrown when a log statement cannot be emitted correctly. This exception should only be
  * thrown by logger backend implementations which have opted not to handle specific issues.
  *
- * <p>
- * Typically a logger backend would only throw {@code LoggingException} in response to issues in
+ * Typically a logger backend would only throw `LoggingException` in response to issues in
  * test code or other debugging environments. In production code, the backend should be configured
  * to emit a modified log statement which includes the error information.
  *
- * <p>See also {@link LoggerBackend#handleError(RuntimeException, LogData)}.
+ * See also [LoggerBackend.handleError].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/LoggingException.java">
  *      Original Java code of Google Flogger</a> for historical context.
  */
-public class LoggingException extends RuntimeException {
+public class LoggingException(message: String?) : RuntimeException(message) {
 
-    @Serial
-    private static final long serialVersionUID = 0L;
-
-    public LoggingException(@Nullable String message) {
-        super(message);
+    public companion object {
+        @JvmStatic
+        private val serialVersionUID: Long = 0L
     }
 }

@@ -75,7 +75,7 @@ final class DurationRateLimiter extends RateLimitStatus {
      */
     @Nullable
     static RateLimitStatus check(Metadata metadata, LogSiteKey logSiteKey, long timestampNanos) {
-        RateLimitPeriod rateLimitPeriod = metadata.findValue(LOG_AT_MOST_EVERY);
+        var rateLimitPeriod = metadata.findValue(LOG_AT_MOST_EVERY);
         if (rateLimitPeriod == null) {
             // Without rate limiter specific metadata, this limiter has no effect.
             return null;
@@ -90,7 +90,7 @@ final class DurationRateLimiter extends RateLimitStatus {
      * we
      * need to use a wrapper class here to preserve the time unit information.
      */
-    static final class RateLimitPeriod {
+    public static final class RateLimitPeriod {
 
         private final int n;
         private final TimeUnit unit;
@@ -125,8 +125,7 @@ final class DurationRateLimiter extends RateLimitStatus {
 
         @Override
         public boolean equals(Object obj) {
-            if (obj instanceof RateLimitPeriod) {
-                RateLimitPeriod that = (RateLimitPeriod) obj;
+            if (obj instanceof RateLimitPeriod that) {
                 return this.n == that.n && this.unit == that.unit;
             }
             return false;
@@ -152,9 +151,9 @@ final class DurationRateLimiter extends RateLimitStatus {
         // If this is negative, we are in the pending state and will return "allow" until we are reset.
         // The value held here is updated to be the most recent negated timestamp, and is negated again
         // (making it positive and setting us into the rate limiting state) when we are reset.
-        long lastNanos = lastTimestampNanos.get();
+        var lastNanos = lastTimestampNanos.get();
         if (lastNanos >= 0) {
-            long deadlineNanos = lastNanos + period.toNanos();
+            var deadlineNanos = lastNanos + period.toNanos();
             // Check for negative deadline to avoid overflow for ridiculous durations. Assume overflow
             // always means "no logging".
             if (deadlineNanos < 0 || timestampNanos < deadlineNanos) {

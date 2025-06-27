@@ -46,9 +46,9 @@ internal open class FormattingBackend : LoggerBackend() {
      */
     val logged: List<String> get() = mutableLogged
 
-    override fun getLoggerName(): String = "<unused>"
+    override val loggerName: String = "<unused>"
 
-    override fun isLoggable(lvl: Level): Boolean = true
+    override fun isLoggable(level: Level): Boolean = true
 
     /**
      * Formats the given [LogData] without using core logging utils,
@@ -60,7 +60,7 @@ internal open class FormattingBackend : LoggerBackend() {
     override fun log(data: LogData) {
         val templateContext = data.templateContext
         if (templateContext == null) {
-            mutableLogged.add("${data.getLiteralArgument()}")
+            mutableLogged.add("${data.literalArgument}")
         } else {
             val pattern = templateContext.message
             val formatted = pattern.format(Locale.ENGLISH, *data.arguments)

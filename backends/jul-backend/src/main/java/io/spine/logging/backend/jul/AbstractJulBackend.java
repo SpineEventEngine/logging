@@ -79,8 +79,8 @@ public abstract class AbstractJulBackend extends LoggerBackend {
   }
 
   @Override
-  public final boolean isLoggable(Level lvl) {
-    return logger.isLoggable(lvl);
+  public final boolean isLoggable(Level level) {
+    return logger.isLoggable(level);
   }
 
   /**
