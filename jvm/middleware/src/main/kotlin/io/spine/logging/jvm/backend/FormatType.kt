@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,50 +24,47 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.backend;
+package io.spine.logging.jvm.backend
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.math.BigDecimal
+import java.math.BigInteger
 
 /**
- * The general formatting type of any one of the predefined {@code FormatChar} instances.
+ * The general formatting type of any one of the predefined `FormatChar` instances.
  *
  * @see <a
  *         href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/FormatType.java">
  *         Original Java code of Google Flogger</a> for historical context.
  */
-public enum FormatType {
+public enum class FormatType(
+    private val isNumeric: Boolean,
+    private val supportsPrecision: Boolean
+) {
     /** General formatting that can be applied to any type. */
     GENERAL(false, true) {
-        @Override
-        public boolean canFormat(Object arg) {
-            return true;
+        override fun canFormat(arg: Any?): Boolean {
+            return true
         }
     },
 
     /** Formatting that can be applied to any boolean type. */
     BOOLEAN(false, false) {
-        @Override
-        public boolean canFormat(Object arg) {
-            return arg instanceof Boolean;
+        override fun canFormat(arg: Any?): Boolean {
+            return arg is Boolean
         }
     },
 
     /**
      * Formatting that can be applied to Character or any integral type that can be losslessly
-     * converted to an int and for which {@link Character#isValidCodePoint(int)} returns true.
+     * converted to an int and for which [Character.isValidCodePoint] returns true.
      */
     CHARACTER(false, false) {
-        @Override
-        public boolean canFormat(Object arg) {
+        override fun canFormat(arg: Any?): Boolean {
             // Ordering in relative likelihood.
-            if (arg instanceof Character) {
-                return true;
-            } else if ((arg instanceof Integer) || (arg instanceof Byte) ||
-                    (arg instanceof Short)) {
-                return Character.isValidCodePoint(((Number) arg).intValue());
-            } else {
-                return false;
+            return when (arg) {
+                is Char -> true
+                is Int, is Byte, is Short -> Character.isValidCodePoint((arg as Number).toInt())
+                else -> false
             }
         }
     },
@@ -78,17 +75,16 @@ public enum FormatType {
      * Short, Integer, Long and BigInteger but may also support additional numeric types directly.
      * A
      * logging backend that encounters an unknown numeric type should fall back to using
-     * {@code toString()}.
+     * `toString()`.
      */
     INTEGRAL(true, false) {
-        @Override
-        public boolean canFormat(Object arg) {
+        override fun canFormat(arg: Any?): Boolean {
             // Ordering in relative likelihood.
-            return (arg instanceof Integer)
-                    || (arg instanceof Long)
-                    || (arg instanceof Byte)
-                    || (arg instanceof Short)
-                    || (arg instanceof BigInteger);
+            return arg is Int
+                    || arg is Long
+                    || arg is Byte
+                    || arg is Short
+                    || arg is BigInteger
         }
     },
 
@@ -98,23 +94,14 @@ public enum FormatType {
      * numeric
      * types directly. A logging backend that encounters an unknown numeric type should fall back
      * to
-     * using {@code toString()}.
+     * using `toString()`.
      */
     FLOAT(true, true) {
-        @Override
-        public boolean canFormat(Object arg) {
+        override fun canFormat(arg: Any?): Boolean {
             // Ordering in relative likelihood.
-            return (arg instanceof Double) || (arg instanceof Float) || (arg instanceof BigDecimal);
+            return arg is Double || arg is Float || arg is BigDecimal
         }
     };
-
-    private final boolean isNumeric;
-    private final boolean supportsPrecision;
-
-    private FormatType(boolean isNumeric, boolean supportsPrecision) {
-        this.isNumeric = isNumeric;
-        this.supportsPrecision = supportsPrecision;
-    }
 
     /**
      * True if the notion of a specified precision value makes sense to this format type. Precision
@@ -123,17 +110,17 @@ public enum FormatType {
      * (e.g.
      * how many digits to output after the decimal point for floating point values).
      */
-    boolean supportsPrecision() {
-        return supportsPrecision;
+    public fun supportsPrecision(): Boolean {
+        return supportsPrecision
     }
 
     /**
-     * True if this format type requires a {@link Number} instance (or one of the corresponding
+     * True if this format type requires a [Number] instance (or one of the corresponding
      * fundamental types) as an argument.
      */
-    public boolean isNumeric() {
-        return isNumeric;
+    public fun isNumeric(): Boolean {
+        return isNumeric
     }
 
-    public abstract boolean canFormat(Object arg);
+    public abstract fun canFormat(arg: Any?): Boolean
 }

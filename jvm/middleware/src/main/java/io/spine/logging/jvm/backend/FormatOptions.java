@@ -425,7 +425,9 @@ public final class FormatOptions {
     }
 
     /**
-     * Returns the flag bits for this options instance. Where possible the per-flag methods
+     * Returns the flag bits for this options instance.
+     *
+     * <p>Where possible the per-flag methods
      * {@code shouldXxx()} should be preferred for code clarity, but for efficiency and when testing
      * multiple flags values at the same time, this method is useful.
      */
@@ -434,12 +436,10 @@ public final class FormatOptions {
     }
 
     /**
-     * Corresponds to printf flag '-' (incompatible with '0').
- *
-     * <p>
-     * Logging backends may ignore this flag, though it does provide some visual clarity when
-     * aligning
-     * values.
+     * Corresponds to `printf` flag '-' (incompatible with '0').
+     *
+     * <p>Logging backends may ignore this flag, though it does provide some visual
+     * clarity when aligning values.
      */
     public boolean shouldLeftAlign() {
         return (flags & FLAG_LEFT_ALIGN) != 0;
@@ -448,9 +448,8 @@ public final class FormatOptions {
     /**
      * Corresponds to printf flag '#'.
  *
-     * <p>
-     * Logging backends should honor this flag for hex or octal, as it is a common way to avoid
-     * ambiguity when formatting non-decimal values.
+     * <p>Logging backends should honor this flag for hex or octal, as it is a common
+     * way to avoid ambiguity when formatting non-decimal values.
      */
     public boolean shouldShowAltForm() {
         return (flags & FLAG_SHOW_ALT_FORM) != 0;
