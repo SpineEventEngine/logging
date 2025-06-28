@@ -422,23 +422,22 @@ public class FormatOptions private constructor(
     }
 
     /**
-     * Validates these options as if they were being applied to the given [FormatChar] and
-     * checks for inconsistencies in flag values.
+     * Validates these options as if they were being applied to
+     * the given [FormatChar] and checks for inconsistencies in flag values.
      *
-     * Note that there is not requirement for options used internally in custom message parsers to
-     * be validated, but any format options passed through the
-     * `ParameterVisitor` interface must
-     * be valid with respect to the associated [FormatChar] instance.
+     * Note that there is not requirement for options used internally in
+     * custom message parsers to be validated, but any format options passed
+     * through the `ParameterVisitor` interface must be valid with respect to
+     * the associated [FormatChar] instance.
      *
-     * @param formatChar the formatting rule to check these options against.
-     * @return true if these options are valid for the given format.
+     * @param fc the formatting rule to check these options against.
+     * @return `true` if these options are valid for the given format.
      */
-    public fun areValidFor(formatChar: FormatChar): Boolean {
-        return validate(formatChar.allowedFlags, formatChar.type.supportsPrecision())
-    }
+    public fun areValidFor(fc: FormatChar): Boolean =
+        validate(fc.allowedFlags, fc.type.supportsPrecision())
 
     /**
-     * Corresponds to `printf` flag '-' (incompatible with '0').
+     * Corresponds to `printf` flag `'-'` (incompatible with `'0'`).
      *
      * Logging backends may ignore this flag, though it does provide some visual
      * clarity when aligning values.
@@ -446,7 +445,7 @@ public class FormatOptions private constructor(
     public fun shouldLeftAlign(): Boolean = (flags and FLAG_LEFT_ALIGN) != 0
 
     /**
-     * Corresponds to printf flag '#'.
+     * Corresponds to printf flag `'#'`.
      *
      * Logging backends should honor this flag for hex or octal, as it is a common
      * way to avoid ambiguity when formatting non-decimal values.
@@ -454,10 +453,10 @@ public class FormatOptions private constructor(
     public fun shouldShowAltForm(): Boolean = (flags and FLAG_SHOW_ALT_FORM) != 0
 
     /**
-     * Corresponds to printf flag '0'.
+     * Corresponds to printf flag `'0'`.
      *
-     * Logging backends should honor this flag, as it is very commonly used to format hexadecimal or
-     * octal values to allow specific bit values to be calculated.
+     * Logging backends should honor this flag, as it is very commonly used to
+     * format hexadecimal or octal values to allow specific bit values to be calculated.
      */
     public fun shouldShowLeadingZeros(): Boolean = (flags and FLAG_SHOW_LEADING_ZEROS) != 0
 
