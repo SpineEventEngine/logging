@@ -65,14 +65,14 @@ public enum class FormatChar(
      *
      * This is a non-numeric format with an upper-case variant.
      */
-    STRING('s', FormatType.GENERAL, "-#", true /* upper-case variant */),
+    STRING('s', FormatType.GENERAL, "-#", hasUpperCaseVariant = true),
 
     /**
      * Formats the argument as a boolean.
      *
      * This is a non-numeric format with an upper-case variant.
      */
-    BOOLEAN('b', FormatType.BOOLEAN, "-", true /* upper-case variant */),
+    BOOLEAN('b', FormatType.BOOLEAN, "-", hasUpperCaseVariant = true),
 
     /**
      * Formats a Unicode code-point.
@@ -161,9 +161,8 @@ public enum class FormatChar(
      */
     public val defaultFormatString: String = "%$char"
 
-    private fun hasUpperCaseVariant(): Boolean {
-        return (allowedFlags and FormatOptions.FLAG_UPPER_CASE) != 0
-    }
+    private fun hasUpperCaseVariant(): Boolean =
+        (allowedFlags and FormatOptions.FLAG_UPPER_CASE) != 0
 
     public companion object {
         
@@ -197,11 +196,11 @@ public enum class FormatChar(
             get() = (code and 0x20) != 0
 
         /**
-         * Obtains [FormatChar] instance corresponding to this character.
+         * Obtains [FormatChar] instance corresponding to this character or `null` if
+         * there is no such an entry in the [MAP].
          */
         @Suppress("MemberNameEqualsClassName") // OK for this private extension logic.
-        private val Char.formatChar: FormatChar?
-            get() = MAP[letterIndex]
+        private fun Char.toFormatChar(): FormatChar? = MAP[letterIndex]
 
         /**
          * Returns the FormatChar instance associated with the given printf format specifier.
@@ -214,7 +213,7 @@ public enum class FormatChar(
             // If the given value was not an ASCII letter, then the index will be out-of-range,
             // but when called by the parser, it is always guaranteed to be an ASCII letter
             // (but perhaps not a valid format character).
-            val fc = c.formatChar
+            val fc = c.toFormatChar()
             if (c.isAsciiLowerCase) {
                 // If we were given a lower case char to find,
                 // we're done (even if the result is `null`).
