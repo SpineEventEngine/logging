@@ -21,5 +21,4 @@
 16. [Interaction tips – key to effective collaboration!](interaction-tips.md)
 17. [LLM goals](llm-goals.md)
     - [Problem-solving framework](llm-goals.md#problem-solving-framework-for-complex-tasks)
-    - [GPT-4o advanced capabilities](llm-goals.md#-gpt-4o-advanced-capabilities)
 18. [Common tasks](common-tasks.md)
