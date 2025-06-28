@@ -37,15 +37,22 @@ import com.google.common.base.Preconditions.checkNotNull
 import java.lang.reflect.InvocationTargetException
 
 /**
- * Platform abstraction layer required to allow fluent logger implementations to work on differing
- * Java platforms (such as Android or GWT). The `Platform` class is responsible for providing
- * any platform-specific APIs, including the mechanism by which logging backends are created.
+ * Platform abstraction layer required to allow fluent logger implementations 
+ * to work on differing Java platforms (such as Android or GWT).
  *
- * To enable an additional logging platform implementation, the class name should be added to
- * the list of available platforms before the default platform (which must always be at the end).
- * Platform implementation classes must subclass `Platform` and have a public, no-argument
- * constructor. Platform instances are created on first-use of a fluent logger, and platform
- * implementors must take care to avoid cycles during initialization and re-entrant behaviour.
+ * The `Platform` class is responsible for providing any platform-specific APIs, 
+ * including the mechanism by which logging backends are created.
+ *
+ * To enable an additional logging platform implementation, the class name 
+ * should be added to the list of available platforms before the default platform 
+ * (which must always be at the end).
+ *
+ * Platform implementation classes must subclass `Platform` and have a public, 
+ * no-argument constructor.
+ *
+ * Platform instances are created on first-use of a fluent logger, and 
+ * platform implementors must take care to avoid cycles during initialization 
+ * and re-entrant behaviour.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/Platform.java">
  *   Original Java code of Google Flogger</a> for historical context.
@@ -55,25 +62,24 @@ public abstract class Platform {
     /**
      * Returns the current depth of recursion for logging in the current thread.
      *
-     * This method is intended only for use by logging backends or the core Flogger library and
-     * only needs to be called by code which is invoking user code which itself might trigger
+     * This method is intended only for use by logging backends or the core of the Logging library.
+     * It needs to be called by code which is invoking user code that might trigger
      * reentrant logging.
      *
-     *  * A value of 1 means that this thread is in a normal log statement.
-     *    This is the expected state, and the caller should behave normally.
+     * - A value of 1 means that this thread is in a normal log statement.
+     *   This is the expected state, and the caller should behave normally.
      *
-     *  * A value greater than 1 means that this thread is performing reentrant logging,
-     *    and the caller may choose to change behaviour depending on the value if there is
-     *    a risk that reentrant logging is being caused by the caller's code.
+     * - A value greater than 1 means that this thread is performing reentrant logging.
+     *   The caller may choose to change behaviour depending on the value if 
+     *   there is a risk that reentrant logging is being caused by the caller's code.
      *
-     *  * A value of zero means that this thread is not logging (though since this method
-     *    should only be called as part of a logging library, this is expected to never happen).
-     *    It should be ignored.
+     * - A value of zero means that this thread is not logging. (This is expected to never occur 
+     *   as this method should only be called as part of a logging library). It should be ignored.
      *
-     * When the core Flogger library detects the depth exceeding a preset threshold, it may start
-     * to modify its behaviour to attempt to mitigate the risk of unbounded reentrant logging.
-     * For example, some or all metadata may be removed from log sites, since processing
-     * user-provided metadata may itself trigger reentrant logging.
+     * When the core Flogger library detects the depth exceeding a preset threshold, 
+     * it may start to modify behaviour to mitigate the risk of unbounded reentrant logging.
+     * For example, some or all metadata may be removed from log sites since processing 
+     * user-provided metadata can itself trigger reentrant logging.
      */
     public companion object {
 
@@ -99,16 +105,19 @@ public abstract class Platform {
          * (e.g., `"com/example/Foo$Bar"`).
          *
          * @param className The fully qualified name of the class to which the logger is associated.
-         *        The logger name is derived from this string in a platform-specific way.
+         * The logger name is derived from this string in a platform-specific way.
          */
         @JvmStatic
         public fun getBackend(className: String): LoggerBackend =
             LazyHolder.INSTANCE.getBackendImpl(className)
 
         /**
-         * Returns the singleton ContextDataProvider from which a ScopedLoggingContext can be obtained.
-         * Platform implementations are required to always provide the same instance here, since this
-         * can be cached by callers.
+         * Returns the singleton ContextDataProvider from which
+         * a [ScopedLoggingContext][io.spine.logging.jvm.context.ScopedLoggingContext]
+         * can be obtained.
+         *
+         * Platform implementations are required to always provide the same instance here,
+         * as this can be cached by callers.
          */
         @JvmStatic
         public fun getContextDataProvider(): ContextDataProvider =
@@ -117,17 +126,17 @@ public abstract class Platform {
         /**
          * Returns whether the given logger should have logging forced at the specified level.
          *
-         * When logging is forced for a log statement, it will be emitted regardless.
-         * Or, the normal log level configuration of the logger and ignoring any rate limiting or
-         * other filtering.
+         * When logging is forced for a log statement, it will be emitted regardless 
+         * of the normal log level configuration of the logger and ignoring rate limiting 
+         * or other filtering.
          *
          * This method is intended to be invoked unconditionally from a fluent logger's
          * `at(Level)` method to permit overriding of default logging behavior.
          *
-         * @param loggerName The fully qualified logger name (e.g., "com.example.SomeClass")
-         * @param level The level of the log statement being invoked
-         * @param isEnabled Whether the logger is enabled at the given level
-         *        (i.e., the result of calling `isLoggable()` on the backend instance).
+         * @param loggerName The fully qualified logger name (e.g., "com.example.SomeClass").
+         * @param level The level of the log statement being invoked.
+         * @param isEnabled Whether the logger is enabled at the given level 
+         * (i.e., the result of calling `isLoggable()` on the backend instance).
          */
         @JvmStatic
         public fun shouldForceLogging(
@@ -141,9 +150,9 @@ public abstract class Platform {
          * a [io.spine.logging.jvm.context.LogLevelMap] set in the current logging context.
          *
          * The method returns `null` if:
-         *  * There is no current logging context installed.
-         *  * The context does not have a log level map.
-         *  * The log level map does not have a custom level for the given logger.
+         * - There is no current logging context installed.
+         * - The context does not have a log level map.
+         * - The log level map does not have a custom level for the given logger.
          *
          * @param loggerName The name of the logger.
          * @return the custom level or `null`.
@@ -160,13 +169,13 @@ public abstract class Platform {
         }
 
         /**
-         * Returns [Tags] from with the current context to be injected into log statements.
+         * Returns [Tags] from the current context to be included in log statements.
          */
         @JvmStatic
         public fun getInjectedTags(): Tags = getContextDataProvider().getTags()
 
         /**
-         * Returns [Metadata] from with the current context to be injected into log statements.
+         * Returns [Metadata] from the current context to be included in log statements.
          */
         @JvmStatic
         public fun getInjectedMetadata(): Metadata =
@@ -178,17 +187,16 @@ public abstract class Platform {
          * Returns the current time from the epoch (`00:00 1st Jan, 1970`)
          * with nanosecond granularity.
          *
-         * This is a non-negative signed 64-bit value, which must be in the range
-         * `0 <= timestamp < 2^63`, ensuring that the difference between any two timestamps
-         * will always yield a valid signed value.
+         * This is a non-negative signed 64-bit value in the range
+         * `0 <= timestamp < 2^63`. This ensures that the difference between
+         * any two timestamps will always yield a valid signed value.
          *
-         * **Warning:** Not all [Platform] implementations will be able to deliver nanosecond
-         * precision and code should avoid relying on any implied precision.
+         * **Warning:** Not all [Platform] implementations will deliver nanosecond precision.
+         * The code should avoid relying on any implied precision.
          */
         @JvmStatic
-        public fun getCurrentTimeNanos(): Long {
-            return LazyHolder.INSTANCE.getCurrentTimeNanosImpl()
-        }
+        public fun getCurrentTimeNanos(): Long =
+            LazyHolder.INSTANCE.getCurrentTimeNanosImpl()
 
         /**
          * Returns a human-readable string describing the platform and its configuration.
