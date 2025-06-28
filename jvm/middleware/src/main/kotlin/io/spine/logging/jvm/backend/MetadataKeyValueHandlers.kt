@@ -32,12 +32,14 @@ import io.spine.logging.jvm.backend.MetadataHandler.RepeatedValueHandler
 import io.spine.logging.jvm.backend.MetadataHandler.ValueHandler
 
 /**
- * A helper class providing the default callbacks and handlers for processing metadata as key/value
- * pairs. It is expected that most text-based logger backends will format unknown metadata using the
- * handlers from this class.
+ * A helper class providing the default callbacks and handlers for processing
+ * metadata as key/value pairs.
+ *
+ * It is expected that most text-based logger backends will format unknown metadata
+ * using the handlers from this class.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/MetadataKeyValueHandlers.java">
- *      Original Java code of Google Flogger</a> for historical context.
+ *   Original Java code of Google Flogger</a> for historical context.
  */
 public object MetadataKeyValueHandlers {
 
@@ -54,17 +56,15 @@ public object MetadataKeyValueHandlers {
      * Returns a singleton value handler which dispatches metadata to a [KeyValueHandler].
      */
     @JvmStatic
-    public fun getDefaultValueHandler(): ValueHandler<Any, KeyValueHandler> {
-        return EMIT_METADATA
-    }
+    public fun getDefaultValueHandler(): ValueHandler<Any, KeyValueHandler> =
+        EMIT_METADATA
 
     /**
      * Returns a singleton value handler which dispatches metadata to a [KeyValueHandler].
      */
     @JvmStatic
-    public fun getDefaultRepeatedValueHandler(): RepeatedValueHandler<Any, KeyValueHandler> {
-        return EMIT_REPEATED_METADATA
-    }
+    public fun getDefaultRepeatedValueHandler(): RepeatedValueHandler<Any, KeyValueHandler> =
+        EMIT_REPEATED_METADATA
 
     /**
      * Returns a new [MetadataHandler.Builder] which handles all non-ignored metadata keys by
@@ -74,7 +74,7 @@ public object MetadataKeyValueHandlers {
      * The returned builder can be built immediately or customized further to handler some keys
      * specially (e.g., allowing keys/values to modify logging behaviour).
      *
-     * @return A builder configured with the default key/value handlers and ignored keys.
+     * @return a builder configured with the default key/value handlers and ignored keys.
      */
     @JvmStatic
     public fun getDefaultBuilder(
@@ -85,16 +85,16 @@ public object MetadataKeyValueHandlers {
             .ignoring(ignored)
 
     /**
-     * Returns a new [MetadataHandler] which handles all non-ignored metadata keys by
-     * dispatching their values to the key itself. This is convenient for generic metadata
-     * processing when used in conjunction with something like [KeyValueFormatter].
+     * Returns a new [MetadataHandler] which handles all non-ignored
+     * metadata keys by dispatching their values to the key itself.
      *
-     * @return A handler configured with the default key/value handlers and ignored keys.
+     * This is convenient for generic metadata processing when used in
+     * conjunction with something like [KeyValueFormatter].
+     *
+     * @return a handler configured with the default key/value handlers and ignored keys.
      */
     @JvmStatic
     public fun getDefaultHandler(
         ignored: Set<MetadataKey<*>>
-    ): MetadataHandler<KeyValueHandler> {
-        return getDefaultBuilder(ignored).build()
-    }
+    ): MetadataHandler<KeyValueHandler> = getDefaultBuilder(ignored).build()
 }
