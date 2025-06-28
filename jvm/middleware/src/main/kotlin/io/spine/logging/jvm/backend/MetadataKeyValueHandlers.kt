@@ -41,11 +41,11 @@ import io.spine.logging.jvm.backend.MetadataHandler.ValueHandler
  */
 public object MetadataKeyValueHandlers {
 
-    internal val EMIT_METADATA = ValueHandler<Any, KeyValueHandler> { key, value, handler ->
+    private val EMIT_METADATA = ValueHandler<Any, KeyValueHandler> { key, value, handler ->
         key.safeEmit(value, handler)
     }
 
-    internal val EMIT_REPEATED_METADATA =
+    private val EMIT_REPEATED_METADATA =
         RepeatedValueHandler<Any, KeyValueHandler> { key, values, handler ->
             key.safeEmitRepeated(values, handler)
         }
@@ -74,7 +74,7 @@ public object MetadataKeyValueHandlers {
      * The returned builder can be built immediately or customized further to handler some keys
      * specially (e.g., allowing keys/values to modify logging behaviour).
      *
-     * @return a builder configured with the default key/value handlers and ignored keys.
+     * @return A builder configured with the default key/value handlers and ignored keys.
      */
     @JvmStatic
     public fun getDefaultBuilder(
@@ -89,7 +89,7 @@ public object MetadataKeyValueHandlers {
      * dispatching their values to the key itself. This is convenient for generic metadata
      * processing when used in conjunction with something like [KeyValueFormatter].
      *
-     * @return a handler configured with the default key/value handlers and ignored keys.
+     * @return A handler configured with the default key/value handlers and ignored keys.
      */
     @JvmStatic
     public fun getDefaultHandler(
