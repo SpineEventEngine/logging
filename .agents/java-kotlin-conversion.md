@@ -33,6 +33,7 @@
 * Ensure proper handling of Java static initialization blocks in Kotlin companion objects.
 * Verify that Java overloaded methods convert correctly with appropriate default parameter values in Kotlin.
 * Remember that Kotlin has smart casts which can eliminate explicit type casting needed in Java.
+* Suppress `detekt` build errors using this format: `[Error]` with `@Suppress("Error")`.
 
 ## Documentation Conversion
 
