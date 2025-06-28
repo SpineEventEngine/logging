@@ -27,7 +27,14 @@
 package io.spine.logging.jvm.backend
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
+import io.spine.logging.jvm.backend.FormatChar.BOOLEAN
+import io.spine.logging.jvm.backend.FormatChar.CHAR
+import io.spine.logging.jvm.backend.FormatChar.DECIMAL
+import io.spine.logging.jvm.backend.FormatChar.HEX
+import io.spine.logging.jvm.backend.FormatChar.STRING
+import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_UPPER_CASE
 import io.spine.logging.jvm.backend.MessageUtils.FORMAT_LOCALE
+import io.spine.logging.jvm.backend.MessageUtils.appendHex
 import io.spine.logging.jvm.backend.MessageUtils.safeToString
 import io.spine.logging.jvm.parameter.DateTimeFormat
 import io.spine.logging.jvm.parameter.Parameter
@@ -187,12 +194,12 @@ protected constructor(
             options: FormatOptions
         ): Boolean {
             return when (format) {
-                FormatChar.STRING -> handleString(out, value, options)
-                FormatChar.DECIMAL, FormatChar.BOOLEAN -> {
+                STRING -> handleString(out, value, options)
+                DECIMAL, BOOLEAN -> {
                     handleDecimalOrBoolean(out, value, options)
                 }
-                FormatChar.HEX -> handleHex(out, value, options)
-                FormatChar.CHAR -> handleChar(out, value, options)
+                HEX -> handleHex(out, value, options)
+                CHAR -> handleChar(out, value, options)
                 else -> false
             }
         }
@@ -224,8 +231,8 @@ protected constructor(
         }
 
         private fun handleHex(out: StringBuilder, value: Any?, options: FormatOptions): Boolean {
-            if (options.filter(FormatOptions.FLAG_UPPER_CASE, false, false) == options) {
-                MessageUtils.appendHex(out, value as Number, options)
+            if (options.filter(FLAG_UPPER_CASE, false, false) == options) {
+                appendHex(out, value as Number, options)
                 return true
             }
             return false
