@@ -42,7 +42,7 @@ import java.util.HashMap
  * via the [Builder] class, which lets keys be individually mapped to callbacks.
  * However, the class can also just be extended to implement alternate/custom behavior.
  *
- * @param C the arbitrary context type.
+ * @param C The arbitrary context type.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/MetadataHandler.java">
  *   Original Java code of Google Flogger</a> for historical context.
@@ -56,10 +56,10 @@ public abstract class MetadataHandler<C : Any> {
      * be called for repeated keys by the default implementation of [handleRepeated].
      * It is up to the implementation to override that method if this behaviour is unwanted.
      *
-     * @param key the metadata key (not necessarily a "singleton" key).
-     * @param value associated metadata value.
-     * @param context an arbitrary context object supplied to the process method.
-     * @param T the key/value type.
+     * @param key The metadata key (not necessarily a "singleton" key).
+     * @param value The associated metadata value.
+     * @param context An arbitrary context object supplied to the process method.
+     * @param T The key/value type.
      */
     protected abstract fun <T : Any> handle(key: MetadataKey<T>, value: T, context: C)
 
@@ -70,12 +70,12 @@ public abstract class MetadataHandler<C : Any> {
      * The default implementation makes repeated callbacks to the [handle] method,
      * in order, for each value.
      *
-     * @param key the repeatable metadata key.
-     * @param values a lightweight iterator over all values associated with the key.
+     * @param key The repeatable metadata key.
+     * @param values A lightweight iterator over all values associated with the key.
      *        Note that this instance is read-only and must not be held beyond
      *        the scope of this callback.
-     * @param context an arbitrary context object supplied to the process method.
-     * @param T the key/value type.
+     * @param context An arbitrary context object supplied to the process method.
+     * @param T The key/value type.
      */
     protected open fun <T : Any> handleRepeated(
         key: MetadataKey<T>,
@@ -90,17 +90,17 @@ public abstract class MetadataHandler<C : Any> {
     /**
      * API for handling metadata key/value pairs individually.
      *
-     * @param T the key/value type.
-     * @param C the type of the context passed to the callbacks.
+     * @param T The key/value type.
+     * @param C The type of the context passed to the callbacks.
      */
     public fun interface ValueHandler<T : Any, C> {
 
         /**
          * Handles metadata values individually.
          *
-         * @param key the metadata key (not necessarily a "singleton" key).
-         * @param value associated metadata value.
-         * @param context an arbitrary context object supplied to the process method.
+         * @param key The metadata key (not necessarily a "singleton" key).
+         * @param value The associated metadata value.
+         * @param context An arbitrary context object supplied to the process method.
          */
         public fun handle(key: MetadataKey<T>, value: T, context: C)
     }
@@ -115,12 +115,12 @@ public abstract class MetadataHandler<C : Any> {
         /**
          * Handles all repeated metadata values for a given key.
          *
-         * @param key the repeatable metadata key for which this handler was registered,
+         * @param key The repeatable metadata key for which this handler was registered,
          *        or an unknown key if this is the default handler.
-         * @param values a lightweight iterator over all values associated with the key.
+         * @param values A lightweight iterator over all values associated with the key.
          *        Note that this instance is read-only and must not be held beyond
          *        the scope of this callback.
-         * @param context an arbitrary context object supplied to the process method.
+         * @param context An arbitrary context object supplied to the process method.
          */
         public fun handle(key: MetadataKey<T>, values: Iterator<T>, context: C)
     }
@@ -129,7 +129,7 @@ public abstract class MetadataHandler<C : Any> {
      * Builder for a map-based [MetadataHandler] which allows handlers to
      * be associated with individual callbacks.
      *
-     * @param C the context type.
+     * @param C The context type.
      */
     public class Builder<C : Any> internal constructor(
         internal val defaultHandler: ValueHandler<Any, in C>
@@ -147,8 +147,8 @@ public abstract class MetadataHandler<C : Any> {
          * Note that if a repeated key is associated with an individual value handler (i.e., via
          * [addHandler]), then that will be used in preference to the default handler set here.
          *
-         * @param defaultHandler the default handler for unknown repeated keys/values.
-         * @return the builder instance for chaining.
+         * @param defaultHandler The default handler for unknown repeated keys/values.
+         * @return The builder instance for chaining.
          */
         @CanIgnoreReturnValue
         public fun setDefaultRepeatedHandler(
@@ -162,10 +162,10 @@ public abstract class MetadataHandler<C : Any> {
          * Registers a value handler for the specified key, replacing any
          * previously registered value.
          *
-         * @param key the key for which the handler should be invoked (can be a repeated key).
-         * @param handler the value handler to be invoked for every value associated with the key.
-         * @param T the key/value type.
-         * @return the builder instance for chaining.
+         * @param key The key for which the handler should be invoked (can be a repeated key).
+         * @param handler The value handler to be invoked for every value associated with the key.
+         * @param T The key/value type.
+         * @return The builder instance for chaining.
          */
         @CanIgnoreReturnValue
         public fun <T : Any> addHandler(
@@ -184,10 +184,10 @@ public abstract class MetadataHandler<C : Any> {
          * Registers a repeated value handler for the specified key, replacing any previously
          * registered value.
          *
-         * @param key the repeated key for which the handler should be invoked.
-         * @param handler the repeated value handler to be invoked once for all associated values.
-         * @param T the key/value type.
-         * @return the builder instance for chaining.
+         * @param key The repeated key for which the handler should be invoked.
+         * @param handler The repeated value handler to be invoked once for all associated values.
+         * @param T The key/value type.
+         * @return The builder instance for chaining.
          */
         @CanIgnoreReturnValue
         public fun <T : Any> addRepeatedHandler(
@@ -206,9 +206,9 @@ public abstract class MetadataHandler<C : Any> {
         /**
          * Registers "no op" handlers for the given keys, resulting in their values being ignored.
          *
-         * @param key a key to ignore in the builder.
-         * @param rest additional keys to ignore in the builder.
-         * @return the builder instance for chaining.
+         * @param key A key to ignore in the builder.
+         * @param rest Additional keys to ignore in the builder.
+         * @return The builder instance for chaining.
          */
         @CanIgnoreReturnValue
         public fun ignoring(key: MetadataKey<*>, vararg rest: MetadataKey<*>): Builder<C> {
@@ -222,8 +222,8 @@ public abstract class MetadataHandler<C : Any> {
         /**
          * Registers "no op" handlers for the given keys, resulting in their values being ignored.
          *
-         * @param keys the keys to ignore in the builder.
-         * @return the builder instance for chaining.
+         * @param keys The keys to ignore in the builder.
+         * @return The builder instance for chaining.
          */
         @CanIgnoreReturnValue
         public fun ignoring(keys: Iterable<MetadataKey<*>>): Builder<C> {
@@ -252,9 +252,9 @@ public abstract class MetadataHandler<C : Any> {
          * This method is useful when making several handlers with
          * different mappings from a single builder.
          *
-         * @param key a key to remove from the builder.
-         * @param rest additional keys to remove from the builder.
-         * @return the builder instance for chaining.
+         * @param key A key to remove from the builder.
+         * @param rest Additional keys to remove from the builder.
+         * @return The builder instance for chaining.
          */
         @CanIgnoreReturnValue
         public fun removeHandlers(key: MetadataKey<*>, vararg rest: MetadataKey<*>): Builder<C> {
@@ -306,8 +306,8 @@ public abstract class MetadataHandler<C : Any> {
          * However, the entire point of this map-based handler is to avoid any need to
          * do explicit matching, so the default handler should not need to know the value type.
          *
-         * @param defaultHandler the default handler for unknown keys/values.
-         * @param C the context type.
+         * @param defaultHandler The default handler for unknown keys/values.
+         * @param C The context type.
          */
         @JvmStatic
         public fun <C : Any> builder(defaultHandler: ValueHandler<Any, in C>): Builder<C> =
@@ -373,4 +373,3 @@ private class MapBasedHandler<C : Any>(builder: Builder<C>) : MetadataHandler<C>
         }
     }
 }
-

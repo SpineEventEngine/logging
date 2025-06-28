@@ -101,7 +101,7 @@ public open class MetadataKey<T : Any> private constructor(
     private val canRepeat: Boolean,
     private val isCustom: Boolean
 ) {
-    
+
     /**
      * Callback interface to handle additional contextual `Metadata` in log statements. This
      * interface is only intended to be implemented by logger backend classes as part of handling
@@ -109,7 +109,7 @@ public open class MetadataKey<T : Any> private constructor(
      * [MetadataKey.emit] method in this class.
      */
     public fun interface KeyValueHandler {
-        
+
         /** 
          * Handle a single key/value a pair of contextual metadata for a log statement.  
          */
@@ -141,7 +141,7 @@ public open class MetadataKey<T : Any> private constructor(
      *
      * @param label A short human-readable text label.
      * @param clazz The class representing the type [T].
-     * @param canRepeat whether this key supports multiple values.
+     * @param canRepeat Whether this key supports multiple values.
      */
     protected constructor(label: String, clazz: Class<out T>, canRepeat: Boolean) :
             this(label, clazz, canRepeat, true)
@@ -316,7 +316,7 @@ public open class MetadataKey<T : Any> private constructor(
          */
         public inline fun <reified T : Any> single(label: String): MetadataKey<T> =
             single(label, T::class.java)
-            
+
         /**
          * Creates a key for a repeated piece of metadata. 
          * 
