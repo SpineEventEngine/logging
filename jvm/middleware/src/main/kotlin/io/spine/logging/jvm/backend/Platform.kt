@@ -74,10 +74,11 @@ public abstract class Platform {
      *   The caller may choose to change behaviour depending on the value if 
      *   there is a risk that reentrant logging is being caused by the caller's code.
      *
-     * - A value of zero means that this thread is not logging. (This is expected to never occur 
-     *   as this method should only be called as part of a logging library). It should be ignored.
+     * - A value of zero means that this thread is not logging.
+     *   (This is expected to never occur as this method should only be called as
+     *   part of a logging library). It should be ignored.
      *
-     * When the core Flogger library detects the depth exceeding a preset threshold, 
+     * When the core Logging library detects the depth exceeding a preset threshold,
      * it may start to modify behaviour to mitigate the risk of unbounded reentrant logging.
      * For example, some or all metadata may be removed from log sites since processing 
      * user-provided metadata can itself trigger reentrant logging.
