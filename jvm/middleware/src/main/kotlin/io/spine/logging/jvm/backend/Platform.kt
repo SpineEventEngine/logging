@@ -35,6 +35,7 @@ import java.util.logging.Level
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import com.google.common.base.Preconditions.checkNotNull
 import java.lang.reflect.InvocationTargetException
+import kotlin.time.ExperimentalTime
 
 /**
  * Platform abstraction layer required to allow fluent logger implementations 
@@ -307,19 +308,14 @@ public abstract class Platform {
     /**
      * Returns the current time in nanoseconds for this platform implementation.
      *
-     * This default implementation converts the system time millis to nanos.
-     * Platform implementations may override this to provide more precise timing
-     * if available on their platform.
-     *
-     * Note: Overflow will not occur until around the year 2264.
+     * This default implementation uses [kotlin.time.Clock.System.now] to
+     * provide the nanoseconds precision.
      */
+    @OptIn(ExperimentalTime::class)
     protected open fun getCurrentTimeNanosImpl(): Long {
-        // TODO(ChatGPT): Migrate to nano-seconds clock from Java 17 in this method.
-        // Sadly, this is the best you can currently do with vanilla Java.
-        // In Java9 you have access to nanosecond clocks, but Flogger needs to be backwards
-        // compatible, so it won't be as simple as just changing this line of code.
-        // Overflow will not occur until sometime around 2264, so it's safe not to care for now.
-        return MILLISECONDS.toNanos(System.currentTimeMillis())
+        return kotlin.time.Clock.System.now().let {
+            it.epochSeconds * MILLISECONDS.toNanos(1) + it.nanosecondsOfSecond
+        }
     }
 
     /**
