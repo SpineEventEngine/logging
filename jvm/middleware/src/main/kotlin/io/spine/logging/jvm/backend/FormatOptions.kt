@@ -272,9 +272,7 @@ public class FormatOptions private constructor(
                 val n = c.code - '0'.code
                 if (n >= 10) {
                     throw ParseException.atPosition(
-                        "invalid width character",
-                        message,
-                        currentPos - 1
+                        "invalid width character", message, currentPos - 1
                     )
                 }
                 width = (width * 10) + n
