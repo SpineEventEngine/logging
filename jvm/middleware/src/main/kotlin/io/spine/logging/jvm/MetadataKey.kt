@@ -113,7 +113,7 @@ public open class MetadataKey<T : Any> private constructor(
         /** 
          * Handle a single key/value a pair of contextual metadata for a log statement.  
          */
-        public fun handle(key: String, value: Any)
+        public fun handle(key: String, value: Any?)
     }
 
     /**

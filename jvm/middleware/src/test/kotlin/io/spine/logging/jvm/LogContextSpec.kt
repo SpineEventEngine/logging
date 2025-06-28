@@ -958,7 +958,7 @@ internal class LogContextSpec {
     @Test
     fun `provide a grouping key for specialization`() {
         val singletonKey = iterate("foo")
-        Key.LOG_SITE_GROUPING_KEY.emitRepeatedForTests(singletonKey) { key: String, value: Any ->
+        Key.LOG_SITE_GROUPING_KEY.emitRepeatedForTests(singletonKey) { key: String, value: Any? ->
             key shouldBe "group_by"
             value shouldBe "foo"
         }
@@ -966,7 +966,7 @@ internal class LogContextSpec {
         // We don't care too much about the case with multiple keys
         // because it is so rare, but it should be vaguely sensible.
         val multipleKeys = iterate("foo", "bar")
-        Key.LOG_SITE_GROUPING_KEY.emitRepeatedForTests(multipleKeys) { k: String, v: Any ->
+        Key.LOG_SITE_GROUPING_KEY.emitRepeatedForTests(multipleKeys) { k: String, v: Any? ->
             k shouldBe "group_by"
             v shouldBe "[foo,bar]"
         }

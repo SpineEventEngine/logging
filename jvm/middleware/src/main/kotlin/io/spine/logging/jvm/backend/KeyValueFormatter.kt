@@ -76,7 +76,7 @@ public class KeyValueFormatter(
      */
     private var haveSeenValues = false
 
-    override fun handle(key: String, value: Any) {
+    override fun handle(key: String, value: Any?) {
         if (haveSeenValues) {
             out.append(' ')
         } else {
@@ -113,33 +113,38 @@ public class KeyValueFormatter(
          * All fundamental types other than "Character", since that can require escaping.
          */
         private val FUNDAMENTAL_TYPES = setOf(
-            Boolean::class.java,
-            Byte::class.java,
-            Short::class.java,
-            Int::class.java,
-            Long::class.java,
-            Float::class.java,
-            Double::class.java
+            Boolean::class,
+            Byte::class,
+            Short::class,
+            Int::class,
+            Long::class,
+            Float::class,
+            Double::class,
         )
 
         /**
-         * Helper method to emit metadata key/value pairs in a format consistent with JSON. String
-         * values which need to be quoted are JSON escaped, while other values are appended without
-         * quoting or escaping. Labels are expected to be JSON "safe", and are never quoted. This format
-         * is compatible with various "lightweight" JSON representations.
+         * Helper method to emit metadata key/value pairs in a format consistent with JSON.
+         *
+         * String values which need to be quoted are JSON escaped, while other values are appended
+         * without quoting or escaping. Labels are expected to be JSON "safe", and are never quoted.
+         *
+         * This format is compatible with various "lightweight" JSON representations.
          */
         @JvmStatic
-        public fun appendJsonFormattedKeyAndValue(label: String, value: Any?, out: StringBuilder) {
+        public fun appendJsonFormattedKeyAndValue(
+            label: String,
+            value: Any?,
+            out: StringBuilder
+        ) {
             out.append(label)
                .append('=')
             // We could also consider enums as safe if we used name() rather than toString().
             when {
                 value == null -> {
-                    // Alternately, just emit the label without '=' to
-                    // indicate presence without a value.
+                    // Alternately, emit the label without '=' to indicate presence without a value.
                     out.append(true)
                 }
-                FUNDAMENTAL_TYPES.contains(value.javaClass) -> {
+                FUNDAMENTAL_TYPES.contains(value::class) -> {
                     out.append(value)
                 }
                 else -> {
@@ -150,28 +155,26 @@ public class KeyValueFormatter(
             }
         }
 
+        @Suppress("LoopWithTooManyJumpStatements")
         private fun appendEscaped(out: StringBuilder, s: String) {
             var start = 0
             // Most of the time this loop is executed zero times as there are no escapable chars.
             for (idx in nextEscapableChar(s, start)) {
                 out.append(s, start, idx)
                 start = idx + 1
-                val c = s[idx]
+                var c = s[idx]
                 when (c) {
                     '"', '\\' -> {
                         // No character substitution needed
                     }
                     '\n' -> {
-                        out.append("\\n")
-                        continue
+                        c = 'n'
                     }
                     '\r' -> {
-                        out.append("\\r")
-                        continue
+                        c = 'r'
                     }
                     '\t' -> {
-                        out.append("\\t")
-                        continue
+                        c = 't'
                     }
                     else -> {
                         // All that remains are unprintable ASCII control characters.
@@ -189,6 +192,7 @@ public class KeyValueFormatter(
             out.append(s, start, s.length)
         }
 
+        @Suppress("MagicNumber")
         private fun nextEscapableChar(s: String, n: Int): Sequence<Int> = sequence {
             for (i in n until s.length) {
                 val c = s[i]

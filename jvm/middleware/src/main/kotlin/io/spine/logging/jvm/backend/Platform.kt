@@ -59,14 +59,14 @@ public abstract class Platform {
      * only needs to be called by code which is invoking user code which itself might trigger
      * reentrant logging.
      *
-     *  * A value of 1 means that this thread is currently in a normal log statement.
+     *  * A value of 1 means that this thread is in a normal log statement.
      *    This is the expected state, and the caller should behave normally.
      *
-     *  * A value greater than 1 means that this thread is currently performing reentrant logging,
+     *  * A value greater than 1 means that this thread is performing reentrant logging,
      *    and the caller may choose to change behaviour depending on the value if there is
      *    a risk that reentrant logging is being caused by the caller's code.
      *
-     *  * A value of zero means that this thread is not currently logging (though since this method
+     *  * A value of zero means that this thread is not logging (though since this method
      *    should only be called as part of a logging library, this is expected to never happen).
      *    It should be ignored.
      *
@@ -78,43 +78,41 @@ public abstract class Platform {
     public companion object {
 
         @JvmStatic
-        public fun getCurrentRecursionDepth(): Int {
-            return RecursionDepth.getCurrentDepth()
-        }
+        public fun getCurrentRecursionDepth(): Int =
+            RecursionDepth.getCurrentDepth()
 
         /**
          * Returns the API for obtaining caller information about loggers and logging classes.
          */
         @JvmStatic
-        public fun getCallerFinder(): LogCallerFinder {
-            return PlatformLazyHolder.INSTANCE.getCallerFinderImpl()
-        }
+        public fun getCallerFinder(): LogCallerFinder =
+            LazyHolder.INSTANCE.getCallerFinderImpl()
 
         /**
-         * Returns a logger backend of the given class name for use by a Fluent Logger. Note that the
-         * returned backend need not be unique; one backend could be used by multiple loggers. The given
-         * class name must be in the normal dot-separated form (e.g., "com.example.Foo$Bar") rather than
-         * the internal binary format (e.g., "com/example/Foo$Bar").
+         * Returns a logger backend of the given class name for use by a logger.
          *
-         * @param className
-         *         the fully qualified name of the Java class to which the logger is associated.
-         *         The logger name is derived from this string in a platform-specific way.
+         * Note that the returned backend need not be unique; one backend could
+         * be used by multiple loggers.
+         *
+         * The given class name must be in the normal dot-separated form
+         * (e.g., `"com.example.Foo$Bar"`) rather than the internal binary format
+         * (e.g., `"com/example/Foo$Bar"`).
+         *
+         * @param className The fully qualified name of the class to which the logger is associated.
+         *        The logger name is derived from this string in a platform-specific way.
          */
         @JvmStatic
-        public fun getBackend(className: String): LoggerBackend {
-            return PlatformLazyHolder.INSTANCE.getBackendImpl(className)
-        }
+        public fun getBackend(className: String): LoggerBackend =
+            LazyHolder.INSTANCE.getBackendImpl(className)
 
         /**
          * Returns the singleton ContextDataProvider from which a ScopedLoggingContext can be obtained.
          * Platform implementations are required to always provide the same instance here, since this
-         * can
-         * be cached by callers.
+         * can be cached by callers.
          */
         @JvmStatic
-        public fun getContextDataProvider(): ContextDataProvider {
-            return PlatformLazyHolder.INSTANCE.getContextDataProviderImpl()
-        }
+        public fun getContextDataProvider(): ContextDataProvider =
+            LazyHolder.INSTANCE.getContextDataProviderImpl()
 
         /**
          * Returns whether the given logger should have logging forced at the specified level.
@@ -126,18 +124,17 @@ public abstract class Platform {
          * This method is intended to be invoked unconditionally from a fluent logger's
          * `at(Level)` method to permit overriding of default logging behavior.
          *
-         * @param loggerName
-         *         the fully qualified logger name (e.g., "com.example.SomeClass")
-         * @param level
-         *         the level of the log statement being invoked
-         * @param isEnabled
-         *         whether the logger is enabled at the given level (i.e., the result of calling
-         *         `isLoggable()` on the backend instance)
+         * @param loggerName The fully qualified logger name (e.g., "com.example.SomeClass")
+         * @param level The level of the log statement being invoked
+         * @param isEnabled Whether the logger is enabled at the given level
+         *        (i.e., the result of calling `isLoggable()` on the backend instance).
          */
         @JvmStatic
-        public fun shouldForceLogging(loggerName: String, level: Level, isEnabled: Boolean): Boolean {
-            return getContextDataProvider().shouldForceLogging(loggerName, level, isEnabled)
-        }
+        public fun shouldForceLogging(
+            loggerName: String,
+            level: Level,
+            isEnabled: Boolean
+        ): Boolean = getContextDataProvider().shouldForceLogging(loggerName, level, isEnabled)
 
         /**
          * Obtains a custom logging level set for the logger with the given name via
@@ -148,9 +145,8 @@ public abstract class Platform {
          *  * The context does not have a log level map.
          *  * The log level map does not have a custom level for the given logger.
          *
-         * @param loggerName
-         *         the name of the logger
-         * @return the custom level or `null`
+         * @param loggerName The name of the logger.
+         * @return the custom level or `null`.
          */
         @JvmStatic
         public fun getMappedLevel(loggerName: String): Level? {
@@ -163,39 +159,46 @@ public abstract class Platform {
             return result
         }
 
-        /** Returns [Tags] from with the current context to be injected into log statements. */
+        /**
+         * Returns [Tags] from with the current context to be injected into log statements.
+         */
         @JvmStatic
-        public fun getInjectedTags(): Tags {
-            return getContextDataProvider().getTags()
-        }
-
-        /** Returns [Metadata] from with the current context to be injected into log statements. */
-        // TODO(dbeaumont): Make this return either an extensible MetadataProcessor or ScopeMetadata.
-        @JvmStatic
-        public fun getInjectedMetadata(): Metadata {
-            return getContextDataProvider().getMetadata()
-        }
+        public fun getInjectedTags(): Tags = getContextDataProvider().getTags()
 
         /**
-         * Returns the current time from the epoch (00:00 1st Jan, 1970) with nanosecond granularity.
-         * This is a non-negative signed 64-bit value, which must be in the range `0 <= timestamp
-         * < 2^63`, ensuring that the difference between any two timestamps will always yield a valid
-         * signed value.
+         * Returns [Metadata] from with the current context to be injected into log statements.
+         */
+        @JvmStatic
+        public fun getInjectedMetadata(): Metadata =
+            // TODO(dbeaumont): Make this return either an extensible MetadataProcessor or
+            //  ScopeMetadata.
+            getContextDataProvider().metadata
+
+        /**
+         * Returns the current time from the epoch (`00:00 1st Jan, 1970`)
+         * with nanosecond granularity.
          *
-         * Warning: Not all Platform implementations will be able to deliver nanosecond precision and
-         * code should avoid relying on any implied precision.
+         * This is a non-negative signed 64-bit value, which must be in the range
+         * `0 <= timestamp < 2^63`, ensuring that the difference between any two timestamps
+         * will always yield a valid signed value.
+         *
+         * **Warning:** Not all [Platform] implementations will be able to deliver nanosecond
+         * precision and code should avoid relying on any implied precision.
          */
         @JvmStatic
         public fun getCurrentTimeNanos(): Long {
-            return PlatformLazyHolder.INSTANCE.getCurrentTimeNanosImpl()
+            return LazyHolder.INSTANCE.getCurrentTimeNanosImpl()
         }
 
         /**
-         * Returns a human-readable string describing the platform and its configuration. This should
-         * contain everything a human would need to see to check that the Platform was configured as
-         * expected. It should contain the platform name along with any configurable elements
-         * (e.g., plugin services) and their settings. It is recommended (though not required) that this
-         * string is formatted with one piece of configuration per line in a tabular format, such as:
+         * Returns a human-readable string describing the platform and its configuration.
+         *
+         * This should contain everything a human would need to see to check that the Platform
+         * was configured as expected.
+         * It should contain the platform name along with any configurable elements
+         * (e.g., plugin services) and their settings. It is recommended (though not required)
+         * that this string is formatted with one piece of configuration per line in a tabular
+         * format, such as:
          * ```
          * platform: <human readable name>
          * formatter: com.example.logging.FormatterPlugin
@@ -205,29 +208,24 @@ public abstract class Platform {
          * It is not required that this string be machine parseable (though it should be stable).
          */
         @JvmStatic
-        public fun getConfigInfo(): String {
-            return PlatformLazyHolder.INSTANCE.getConfigInfoImpl()
-        }
+        public fun getConfigInfo(): String =
+            LazyHolder.INSTANCE.getConfigInfoImpl()
     }
 
     /**
      * API for determining the logging class and log statement sites, return from [getCallerFinder].
      * These classes are immutable and thread-safe.
      *
-     * This functionality is not provided directly by the `Platform` API because doing so
-     * would require several additional levels to be added to the stack before the implementation
-     * was
+     * This functionality is not provided directly by the `Platform` API because doing so would
+     * require several additional levels to be added to the stack before the implementation was
      * reached. This is problematic for Android, which has only limited stack analysis. By allowing
      * callers to resolve the implementation early and then call an instance directly (this is not
-     * an
-     * interface), we reduce the number of elements in the stack before the caller is found.
+     * an interface), we reduce the number of elements in the stack before the caller is found.
      *
      * ## Essential Implementation Restrictions
      *
-     * Any implementation of this API *MUST* follow the rules listed below to avoid any risk
-     * of
-     * re-entrant code calling during logger initialization. Failure to do so risks creating
-     * complex,
+     * Any implementation of this API *MUST* follow the rules listed below to avoid any risk of
+     * re-entrant code calling during logger initialization. Failure to do so risks creating complex,
      * hard to debug, issues with Flogger configuration.
      *
      * 1. Implementations *MUST NOT* attempt any logging in static methods or constructors.
@@ -235,22 +233,24 @@ public abstract class Platform {
      * 3. Implementations *MUST NOT* depend on any unknown code in constructors.
      *
      * Note that logging and calling arbitrary unknown code (which might log) are permitted inside
-     * the instance methods of this API, since they are not called during platform initialization. The
+     * the instance methods of this API, since they are not called during platform initialization.
+     * The
      * easiest way to achieve this is to simply avoid having any non-trivial static fields or any
      * instance fields at all in the implementation.
      *
-     * While this sounds onerous it's not difficult to achieve because this API is a singleton, and
+     * While this sounds onerous it is not difficult to achieve because this API is a singleton, and
      * can delay any actual work until its methods are called. For example, if any additional state is
      * required in the implementation, it can be held via a "lazy holder" to defer initialization.
      */
     public abstract class LogCallerFinder {
 
         /**
-         * Returns the name of the immediate caller of the given logger class. This is useful when
-         * determining the class name with which to create a logger backend.
+         * Returns the name of the immediate caller of the given logger class.
+         *
+         * This is useful when determining the class name with which to create a logger backend.
          *
          * @param loggerClass The class containing the log() methods whose caller we need to find.
-         * @return The name of the class that called the specified logger.
+         * @return The name of the class called the specified logger.
          * @throws IllegalStateException If there was no caller of the specified logged passed
          *         on the stack (which may occur if the logger class was invoked directly by JNI).
          */
@@ -258,8 +258,7 @@ public abstract class Platform {
 
         /**
          * Returns a LogSite found from the current stack trace for the caller of the log() method
-         * on
-         * the given logging class.
+         * on the given logging class.
          *
          * @param loggerApi The class containing the log() methods whose caller we need to find.
          * @param stackFramesToSkip The number of method calls which exist on the stack between the
@@ -286,18 +285,16 @@ public abstract class Platform {
      */
     protected abstract fun getBackendImpl(className: String): LoggerBackend
 
-
     /**
      * Returns the [ContextDataProvider] implementation for this platform.
      *
      * This method provides a default no-op implementation, but platform implementations
      * are expected to override it with their own context data provider.
-     * In the future, this method may become abstract requiring all platforms to provide
+     * In the future, this method may become abstract, requiring all platforms to provide
      * their own implementation.
      */
-    protected open fun getContextDataProviderImpl(): ContextDataProvider {
-        return ContextDataProvider.getNoOpProvider()
-    }
+    protected open fun getContextDataProviderImpl(): ContextDataProvider =
+        ContextDataProvider.getNoOpProvider()
 
     /**
      * Returns the current time in nanoseconds for this platform implementation.
@@ -311,9 +308,8 @@ public abstract class Platform {
     protected open fun getCurrentTimeNanosImpl(): Long {
         // TODO(ChatGPT): Migrate to nano-seconds clock from Java 17 in this method.
         // Sadly, this is the best you can currently do with vanilla Java.
-        // In Java9 you have access to
-        // nanosecond clocks, but Flogger needs to be backwards compatible, so it won't be as simple
-        // as just changing this line of code.
+        // In Java9 you have access to nanosecond clocks, but Flogger needs to be backwards
+        // compatible, so it won't be as simple as just changing this line of code.
         // Overflow will not occur until sometime around 2264, so it's safe not to care for now.
         return MILLISECONDS.toNanos(System.currentTimeMillis())
     }
@@ -332,10 +328,10 @@ public abstract class Platform {
  * will trigger static initialization of the Platform class first, which would not be possible if
  * the [INSTANCE] field were a static field in Platform.
  *
- * This means that any errors in platform loading are deferred until the first time one
- * of the [Platform]'s static methods is invoked.
+ * This means that any errors in platform loading are deferred until the first time one of the
+ * [Platform]'s static methods is invoked.
  */
-private object PlatformLazyHolder {
+private object LazyHolder {
 
     /**
      * Non-final to prevent javac inlining.
@@ -358,6 +354,7 @@ private object PlatformLazyHolder {
 
     val INSTANCE: Platform = loadFirstAvailablePlatform(availablePlatforms)
 
+    @Suppress("TooGenericExceptionCaught", "InstanceOfCheckForException")
     private fun loadFirstAvailablePlatform(platformClass: Array<String>): Platform {
         val platform = viaHolder()
         if (platform != null) {
