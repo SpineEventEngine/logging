@@ -40,14 +40,14 @@ import org.jetbrains.annotations.VisibleForTesting
  *
  * Examples of where using `MetadataKey` is suitable are:
  *
- * * Logging a value with special semantics (e.g. values that are handled specially by the
+ * * Logging a value with special semantics (e.g., values that are handled specially by the
  *   logger backend).
  * * Passing configuration to a specific logger backend to modify behaviour for individual log
  *   statements or all log statements in a `ScopedLoggingContext`.
  * * Logging a structured value in many places with consistent formatting (e.g., so it can later
  *   be re-parsed by logs related tools).
  *
- * If you just want to log an general "key value pair" in a small number of log statements, it is
+ * If you just want to log a general "key value pair" in a small number of log statements, it is
  * still better to just do something like `log("key=%s", value)`.
  *
  * Metadata keys are expected to be singleton constants, and should never be allocated at the log
@@ -218,8 +218,8 @@ public open class MetadataKey<T : Any> private constructor(
      *
      * * Calling any code which could log using the same `MetadataKey` instance (unless you
      *   implement protection against reentrant calling in this method).
-     * * Calling code which might block (e.g. performing file I/O or acquiring locks).
-     * * Allocating non-trivial amounts of memory (e.g. recording values in an unbounded data
+     * * Calling code which might block (e.g., performing file I/O or acquiring locks).
+     * * * Allocating non-trivial amounts of memory (e.g., recording values in an unbounded data
      *   structure).
      *
      * If you do implement a `MetadataKey` with non-trivial value processing,
@@ -232,9 +232,10 @@ public open class MetadataKey<T : Any> private constructor(
         kvh.handle(this.label, value)
 
     /**
-     * Override this method to provide custom logic for emitting one or more key/value pairs for a
-     * sequence of metadata values (call [.safeEmitRepeated] from logging code to actually emit
-     * values).
+     * Override this method to provide custom logic for emitting one or more
+     * key/value pairs for a sequence of metadata values.
+     *
+     * Call [safeEmitRepeated] from logging code to actually emit values.
      *
      * Emits one or more key/value pairs for a sequence of repeated metadata values.
      * By default, this method simply calls [.emit] once for each value, in order.

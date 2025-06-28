@@ -63,9 +63,9 @@ internal class JulRecordSpec {
         private val STR_KEY = singleKey<String>("str")
         private val PATH_KEY =
             object : MetadataKey<String>("path", String::class.java, true) {
-                override fun emitRepeated(values: Iterator<String>, out: KeyValueHandler) {
+                override fun emitRepeated(values: Iterator<String>, kvh: KeyValueHandler) {
                     val joined = values.asSequence().joinToString("/")
-                    out.handle(label, joined)
+                    kvh.handle(label, joined)
                 }
             }
         private const val LITERAL = "literal message"
@@ -222,6 +222,7 @@ internal class JulRecordSpec {
         val record = JulRecord.create(data, Metadata.empty())
         record.message shouldEndWith "[ERROR: MISSING LOG ARGUMENT]"
     }
+
 
     @Test
     fun `report an unused argument`() {

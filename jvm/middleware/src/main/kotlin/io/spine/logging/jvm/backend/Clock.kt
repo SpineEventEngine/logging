@@ -31,7 +31,7 @@ package io.spine.logging.jvm.backend
  * class (rather than an interface) to reduce to risk of breaking existing implementations if the
  * API changes.
  *
- * ## Essential Implementation Restrictions
+ * ### Essential Implementation Restrictions
  *
  * Any implementation of this API **MUST** follow the rules listed below to avoid any risk of
  * re-entrant code calling during logger initialization. Failure to do so risks creating complex,
@@ -50,26 +50,29 @@ package io.spine.logging.jvm.backend
  * can delay any actual work until its methods are called. For example if any additional state is
  * required in the implementation, it can be held via a "lazy holder" to defer initialization.
  *
- * ## This is a service type
+ * ### This is a service type
  *
- * This type is considered a *service type* and implementations may be loaded from the
+ * This type is considered a *service type*, and implementations may be loaded from the
  * classpath via [java.util.ServiceLoader] provided the proper service metadata is included in
  * the jar file containing the implementation. When creating an implementation of this class, you
  * can provide service metadata (and thereby allow users to get your implementation just by
- * including your jar file) by either manually including a `META-INF/services/io.spine.logging.jvm.backend.Clock` file containing the name of
- * your implementation class or by annotating your implementation class using [AutoService(Clock::class)](https://github.com/google/auto/tree/master/service).
+ * including your jar file) by either manually including a
+ * `META-INF/services/io.spine.logging.jvm.backend.Clock` file containing the name of
+ * your implementation class or by annotating your implementation class using
+ * [AutoService(Clock::class)](https://github.com/google/auto/tree/master/service).
  * See the documentation of both [java.util.ServiceLoader] and `DefaultPlatform` for
  * more information.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/Clock.java">
- *     Original Java code of Google Flogger</a> for historical context.
+ *   Original Java code of Google Flogger</a> for historical context.
  */
 public abstract class Clock {
     
     /**
-     * Returns the current time from the epoch (00:00 1st Jan, 1970) with nanosecond granularity,
-     * though not necessarily nanosecond precision. This clock measures UTC and is not required to
-     * handle leap seconds.
+     * Returns the current time from the epoch (`00:00 1st Jan, 1970`) with nanosecond
+     * granularity, though not necessarily nanosecond precision.
+     *
+     * This clock measures UTC and is not required to handle leap seconds.
      */
     public abstract fun getCurrentTimeNanos(): Long
 }

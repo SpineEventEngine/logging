@@ -107,8 +107,7 @@ public enum class FormatType(
      * True if the notion of a specified precision value makes sense to this format type. Precision
      * is
      * specified in addition to width and can control the resolution of a formatting operation
-     * (e.g.
-     * how many digits to output after the decimal point for floating point values).
+     * (e.g., how many digits to output after the decimal point for floating point values).
      */
     public fun supportsPrecision(): Boolean {
         return supportsPrecision

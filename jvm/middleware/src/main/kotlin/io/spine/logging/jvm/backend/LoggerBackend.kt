@@ -92,7 +92,7 @@ public abstract class LoggerBackend {
      * 3. Runtime errors in the backend itself.
      *
      * It is recommended that backend implementations avoid propagating exceptions in user code
-     * (e.g. calls to `toString()`), as the nature of logging means that log statements are
+     * (e.g., calls to `toString()`), as the nature of logging means that log statements are
      * often only enabled when debugging. If errors were propagated up into user code, enabling
      * logging to look for the cause of one issue could trigger previously unknown bugs, which could
      * then seriously hinder debugging the original issue.

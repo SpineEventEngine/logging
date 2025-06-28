@@ -359,10 +359,10 @@ private class MapBasedHandler<C : Any>(builder: Builder<C>) : MetadataHandler<C>
             defaultRepeatedHandler.handle(
 
                 // Casting MetadataKey<T> to "<? super T>" is safe since it
-                // only produces elements of 'T'.
+                // only produces elements of `T`.
                 key as MetadataKey<Any>,
 
-                // Casting the iterator is safe since it also only produces elements of 'T'.
+                // Casting the iterator is safe since it also only produces elements of `T`.
                 values as Iterator<Any>,
 
                 context

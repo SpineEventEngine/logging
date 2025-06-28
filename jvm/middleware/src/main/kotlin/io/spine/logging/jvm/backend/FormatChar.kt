@@ -27,29 +27,32 @@
 package io.spine.logging.jvm.backend
 
 /**
- * An enum representing the printf-like formatting characters that must be supported by all logging
- * backends. It is important to note that while backends must accept any of these format specifiers,
- * they are not obliged to implement all specified formatting behavior.
+ * An enum representing the `printf`-like formatting characters that must
+ * be supported by all logging backends.
  *
- * The default term formatter takes care of supporting all these options when expressed in their
- * normal '%X' form (including flags, width and precision). Custom messages parsers must convert
- * arguments into one of these forms before passing then through to the backend.
+ * It is important to note that while backends must accept any of these format
+ * specifiers, they are not obliged to implement all specified formatting behavior.
  *
- * @property formatChar The lower-case printf style formatting character.
+ * The default term formatter takes care of supporting all these options when
+ * expressed in their normal `'%X'` form (including flags, width and precision).
+ *
+ * Custom messages parsers must convert arguments into one of these forms before
+ * passing then through to the backend.
+ *
+ * @property char The lower-case `printf` style formatting character.
  *   **Note** that as this enumeration is not a subset of any other common formatting syntax,
- *   it is not safe to assume that this character can be used to construct a formatting
+ *   it is unsafe to assume that this character can be used to construct a formatting
  *   string to pass to other formatting libraries.
 
  * @property type The general format type for this character.
  *
- * @param allowedFlagChars The [flags][allowedFlags] allowed for the [formatChar].
+ * @param allowedFlagChars The [flags][allowedFlags] allowed for the [char].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/FormatChar.java">
  *   Original Java code of Google Flogger</a> for historical context.
  */
 public enum class FormatChar(
-    @get:JvmName("getChar")
-    public val formatChar: Char,
+    public val char: Char,
     public val type: FormatType,
     allowedFlagChars: String,
     hasUpperCaseVariant: Boolean
@@ -76,6 +79,7 @@ public enum class FormatChar(
      * 
      * This formatting rule can be applied to any character or integral numeric value,
      * providing that [Character.isValidCodePoint] returns true.
+     * 
      * Note that if the argument cannot be represented losslessly as an integer,
      * it must be considered invalid.
      *
@@ -95,7 +99,7 @@ public enum class FormatChar(
      *
      * This is a numeric format.
      *
-     * '(' is only supported for [java.math.BigInteger] or [java.math.BigDecimal]
+     * `(` is only supported for `[java.math.BigInteger]` or `[java.math.BigDecimal]`
      */
     OCTAL('o', FormatType.INTEGRAL, "-#0(", hasUpperCaseVariant = false),
 
@@ -104,7 +108,7 @@ public enum class FormatChar(
      *
      * This is a numeric format with an upper-case variant.
      *
-     * '(' is only supported for [java.math.BigInteger] or [java.math.BigDecimal]
+     * `(` is only supported for `[java.math.BigInteger]` or `[java.math.BigDecimal]`
      */
     HEX('x', FormatType.INTEGRAL, "-#0(", hasUpperCaseVariant = true),
 
@@ -155,7 +159,7 @@ public enum class FormatChar(
     /**
      * Obtains the format string for this character according to `printf` conventions.
      */
-    public val defaultFormatString: String = "%$formatChar"
+    public val defaultFormatString: String = "%$char"
 
     private fun hasUpperCaseVariant(): Boolean {
         return (allowedFlags and FormatOptions.FLAG_UPPER_CASE) != 0
@@ -174,7 +178,7 @@ public enum class FormatChar(
 
         init {
             for (fc in entries) {
-                MAP[fc.formatChar.letterIndex] = fc
+                MAP[fc.char.letterIndex] = fc
             }
         }
 

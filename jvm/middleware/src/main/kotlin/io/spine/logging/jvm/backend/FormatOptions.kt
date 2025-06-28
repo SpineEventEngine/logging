@@ -374,10 +374,11 @@ public class FormatOptions private constructor(
         if (newFlags == 0 && newWidth == UNSET && newPrecision == UNSET) {
             return DEFAULT
         }
-        // This check would be faster if we encoded the entire state into a long value. It's also
-        // entirely possible we should just allocate a new instance and be damned (especially as
-        // having anything other than the default instance is rare).
-        // TODO(dbeaumont): Measure performance and see about removing this code, almost certainly fine.
+        // This check would be faster if we encoded the entire state into a long value.
+        // It's also entirely possible we should just allocate a new instance and be damned
+        // (especially as having anything other than the default instance is rare).
+        // TODO(dbeaumont): Measure performance and see about removing this code,
+        //  almost certainly fine.
         if (newFlags == flags && newWidth == width && newPrecision == precision) {
             return this
         }
@@ -497,7 +498,7 @@ public class FormatOptions private constructor(
 
     /**
      * Appends the data for this options instance in a printf compatible form to the given buffer.
-     * This method neither appends the leading ``%`` symbol, nor a format type character.
+     * This method neither appends the leading `'%'` symbol, nor a format type character.
      * Output is written in the form `[width][.precision][flags]` and for the default instance,
      * nothing is appended.
      *
