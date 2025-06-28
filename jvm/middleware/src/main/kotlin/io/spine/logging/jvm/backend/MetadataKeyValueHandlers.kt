@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,14 +24,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.backend;
+package io.spine.logging.jvm.backend
 
-import io.spine.logging.jvm.MetadataKey;
-import io.spine.logging.jvm.MetadataKey.KeyValueHandler;
-import io.spine.logging.jvm.backend.MetadataHandler.RepeatedValueHandler;
-import io.spine.logging.jvm.backend.MetadataHandler.ValueHandler;
-
-import java.util.Set;
+import io.spine.logging.jvm.MetadataKey
+import io.spine.logging.jvm.MetadataKey.KeyValueHandler
+import io.spine.logging.jvm.backend.MetadataHandler.RepeatedValueHandler
+import io.spine.logging.jvm.backend.MetadataHandler.ValueHandler
 
 /**
  * A helper class providing the default callbacks and handlers for processing metadata as key/value
@@ -41,58 +39,62 @@ import java.util.Set;
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/MetadataKeyValueHandlers.java">
  *      Original Java code of Google Flogger</a> for historical context.
  */
-public final class MetadataKeyValueHandlers {
+public object MetadataKeyValueHandlers {
 
-    private static final ValueHandler<Object, KeyValueHandler> EMIT_METADATA =
-            MetadataKey::safeEmit;
+    internal val EMIT_METADATA = ValueHandler<Any, KeyValueHandler> { key, value, handler ->
+        key.safeEmit(value, handler)
+    }
 
-    private static final RepeatedValueHandler<Object, KeyValueHandler> EMIT_REPEATED_METADATA =
-            MetadataKey::safeEmitRepeated;
+    internal val EMIT_REPEATED_METADATA =
+        RepeatedValueHandler<Any, KeyValueHandler> { key, values, handler ->
+            key.safeEmitRepeated(values, handler)
+        }
 
     /**
-     * Returns a singleton value handler which dispatches metadata to a {@link KeyValueHandler}.
+     * Returns a singleton value handler which dispatches metadata to a [KeyValueHandler].
      */
-    public static ValueHandler<Object, KeyValueHandler> getDefaultValueHandler() {
-        return EMIT_METADATA;
-    }
-
-    /** Returns a singleton value handler which dispatches metadata to a {@link KeyValueHandler}. */
-    public static RepeatedValueHandler<Object, KeyValueHandler> getDefaultRepeatedValueHandler() {
-        return EMIT_REPEATED_METADATA;
+    @JvmStatic
+    public fun getDefaultValueHandler(): ValueHandler<Any, KeyValueHandler> {
+        return EMIT_METADATA
     }
 
     /**
-     * Returns a new {@link MetadataHandler.Builder} which handles all non-ignored metadata keys by
+     * Returns a singleton value handler which dispatches metadata to a [KeyValueHandler].
+     */
+    @JvmStatic
+    public fun getDefaultRepeatedValueHandler(): RepeatedValueHandler<Any, KeyValueHandler> {
+        return EMIT_REPEATED_METADATA
+    }
+
+    /**
+     * Returns a new [MetadataHandler.Builder] which handles all non-ignored metadata keys by
      * dispatching their values to the key itself. This is convenient for generic metadata
-     * processing when used in conjunction with something like {@link KeyValueFormatter}.
+     * processing when used in conjunction with something like [KeyValueFormatter].
      *
-     * <p>The returned builder can be built immediately or customized further to handler some keys
+     * The returned builder can be built immediately or customized further to handler some keys
      * specially (e.g., allowing keys/values to modify logging behaviour).
      *
      * @return a builder configured with the default key/value handlers and ignored keys.
      */
-    public static MetadataHandler.Builder<KeyValueHandler> getDefaultBuilder(
-            Set<MetadataKey<?>> ignored) {
-        return MetadataHandler.builder(getDefaultValueHandler())
-                .setDefaultRepeatedHandler(getDefaultRepeatedValueHandler())
-                .ignoring(ignored);
-    }
+    @JvmStatic
+    public fun getDefaultBuilder(
+        ignored: Set<MetadataKey<*>>
+    ): MetadataHandler.Builder<KeyValueHandler> =
+        MetadataHandler.builder(getDefaultValueHandler())
+            .setDefaultRepeatedHandler(getDefaultRepeatedValueHandler())
+            .ignoring(ignored)
 
     /**
-     * Returns a new {@link MetadataHandler} which handles all non-ignored metadata keys by
+     * Returns a new [MetadataHandler] which handles all non-ignored metadata keys by
      * dispatching their values to the key itself. This is convenient for generic metadata
-     * processing when used in conjunction with something like {@link KeyValueFormatter}.
+     * processing when used in conjunction with something like [KeyValueFormatter].
      *
      * @return a handler configured with the default key/value handlers and ignored keys.
      */
-    public static MetadataHandler<KeyValueHandler> getDefaultHandler(
-            Set<MetadataKey<?>> ignored) {
-        return getDefaultBuilder(ignored).build();
-    }
-
-    /**
-     * Prevents instantiation of this utility class.
-     */
-    private MetadataKeyValueHandlers() {
+    @JvmStatic
+    public fun getDefaultHandler(
+        ignored: Set<MetadataKey<*>>
+    ): MetadataHandler<KeyValueHandler> {
+        return getDefaultBuilder(ignored).build()
     }
 }

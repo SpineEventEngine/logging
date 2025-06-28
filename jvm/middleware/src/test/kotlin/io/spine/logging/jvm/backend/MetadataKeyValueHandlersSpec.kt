@@ -26,15 +26,17 @@
 
 package io.spine.logging.jvm.backend
 
+import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.spine.logging.jvm.backend.MetadataKeyValueHandlers.getDefaultHandler
 import io.spine.logging.jvm.backend.MetadataKeyValueHandlers.getDefaultRepeatedValueHandler
 import io.spine.logging.jvm.backend.MetadataKeyValueHandlers.getDefaultValueHandler
 import io.spine.logging.jvm.given.MemoizingKvHandler
 import io.spine.logging.jvm.given.iterate
-import io.kotest.matchers.collections.shouldContainExactly
-import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.spine.logging.jvm.repeatedKey
 import io.spine.logging.jvm.singleKey
+import kotlin.reflect.full.declaredFunctions
+import kotlin.reflect.jvm.isAccessible
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -77,9 +79,22 @@ internal class MetadataKeyValueHandlersSpec {
         val keyValueHandler = MemoizingKvHandler()
         val metadataHandler = getDefaultHandler(setOf(ignored))
 
-        metadataHandler.handle(single, "foo", keyValueHandler)
-        metadataHandler.handle(ignored, "ignored", keyValueHandler)
-        metadataHandler.handleRepeated(repeated, iterate("bar", "baz"), keyValueHandler)
+        // Call the protected methods `handle()` and `handleRepeated()` reflectively
+        // because they are `protected` in the Kotlin class.
+        metadataHandler::class.declaredFunctions.forEach { method ->
+            when (method.name) {
+                "handle" -> {
+                    method.isAccessible = true
+                    method.call(metadataHandler, single, "foo", keyValueHandler)
+                    method.call(metadataHandler, ignored, "ignored", keyValueHandler)
+                }
+
+                "handleRepeated" -> {
+                    method.isAccessible = true
+                    method.call(metadataHandler, repeated, iterate("bar", "baz"), keyValueHandler)
+                }
+            }
+        }
 
         val expected = listOf("single=foo", "repeated=bar", "repeated=baz")
         keyValueHandler.entries shouldContainExactlyInAnyOrder expected

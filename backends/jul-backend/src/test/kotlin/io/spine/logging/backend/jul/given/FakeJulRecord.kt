@@ -56,11 +56,11 @@ private class FakeLogMessageFormatter : LogMessageFormatter() {
     override fun append(
         logData: LogData,
         metadata: MetadataProcessor,
-        out: StringBuilder
+        buffer: StringBuilder
     ): StringBuilder {
-        out.append("Appended: ")
-        defaultFormatter.append(logData, metadata, out)
-        return out
+        buffer.append("Appended: ")
+        defaultFormatter.append(logData, metadata, buffer)
+        return buffer
     }
 
     override fun format(logData: LogData, metadata: MetadataProcessor): String =

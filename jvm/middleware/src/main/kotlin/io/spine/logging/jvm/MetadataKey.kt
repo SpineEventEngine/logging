@@ -89,8 +89,8 @@ import org.jetbrains.annotations.VisibleForTesting
  * @param T The type of values associated with this key.
  * @property label A short human-readable text label.
  * @property clazz The class representing the type [T].
- * @property canRepeat whether this key supports multiple values.
- * @property isCustom whether this is a custom key with overridden emit methods.
+ * @property canRepeat Whether this key supports multiple values.
+ * @property isCustom Whether this is a custom key with overridden emit methods.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/MetadataKey.java">
  *   Original Java code of Google Flogger</a> for historical context.

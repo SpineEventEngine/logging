@@ -185,18 +185,18 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
             .add(REP_1, "one")
             .add(REP_1, "two")
         val metadata = factory.processorFor(scope, Metadata.empty())
-        val handler: MetadataHandler<Void> = object : MetadataHandler<Void>() {
-            override fun <T : Any> handle(key: MetadataKey<T>, value: T, context: Void) = Unit
+        val handler: MetadataHandler<String> = object : MetadataHandler<String>() {
+            override fun <T : Any> handle(key: MetadataKey<T>, value: T, context: String) = Unit
             override fun <T : Any> handleRepeated(key: MetadataKey<T>,
-                                            values: MutableIterator<T>,
-                                            context: Void?) {
+                                            values: Iterator<T>,
+                                            context: String) {
                 values.hasNext().shouldBeTrue()
                 values.next() shouldBe "one"
-                values.remove()
+                (values as MutableIterator).remove()
             }
         }
         shouldThrow<UnsupportedOperationException> {
-            metadata.process(handler, null)
+            metadata.process(handler, "")
         }
     }
 }
@@ -214,7 +214,7 @@ fun interface ProcessorFactory {
  */
 private fun entries(metadata: MetadataProcessor): List<String> {
     val entries = arrayListOf<String>()
-    metadata.process(COLLECTING_HANDLER, entries)
+    metadata.process(CollectingHandler, entries)
     return entries
 }
 
@@ -224,23 +224,28 @@ private fun entries(metadata: MetadataProcessor): List<String> {
  */
 private fun handleEntry(metadata: MetadataProcessor, key: MetadataKey<*>): String? {
     val entries = arrayListOf<String>()
-    metadata.handle(key, COLLECTING_HANDLER, entries)
+    metadata.handle(key, CollectingHandler, entries)
     entries.size shouldBeLessThanOrEqual 1
     return entries.firstOrNull()
 }
 
-private object COLLECTING_HANDLER : MetadataHandler<MutableList<String>>() {
+private object CollectingHandler : MetadataHandler<MutableList<String>>() {
 
-    override fun <T : Any> handle(key: MetadataKey<T>, value: T, out: MutableList<String>) {
+    override fun <T : Any> handle(
+        key: MetadataKey<T>,
+        value: T,
+        context: MutableList<String>
+    ) {
         val stringified = "%s=%s".format(key.label, value)
-        out.add(stringified)
+        context.add(stringified)
     }
 
-    override fun <T : Any> handleRepeated(key: MetadataKey<T>,
-                                           values: MutableIterator<T>,
-                                           out: MutableList<String>) {
+    override fun <T : Any> handleRepeated(
+        key: MetadataKey<T>,
+        values: Iterator<T>,
+        context: MutableList<String>
+    ) {
         val stringified = "%s=%s".format(key.label, Iterators.toString(values))
-        out.add(stringified)
+        context.add(stringified)
     }
-
 }
