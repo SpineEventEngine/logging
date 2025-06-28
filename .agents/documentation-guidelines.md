@@ -7,7 +7,3 @@
 - File and directory names should be formatted as code.
 
 [todo-comments]: https://github.com/SpineEventEngine/documentation/wiki/TODO-comments
-
----
-
-End of guide.
