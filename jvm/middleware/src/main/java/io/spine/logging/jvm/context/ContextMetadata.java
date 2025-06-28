@@ -87,7 +87,7 @@ public abstract class ContextMetadata extends Metadata {
             // Entries are immutable and get moved into the metadata when it is built,
             // so these get shared and reduce the size of the metadata storage compared
             // to storing adjacent key/value pairs.
-            entries.add(new Entry<T>(key, value));
+            entries.add(new Entry<>(key, value));
             return this;
         }
 
@@ -167,7 +167,7 @@ public abstract class ContextMetadata extends Metadata {
 
         @Override
         @Nullable
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({"unchecked", "LocalVariableNamingConvention"})
         public <T> T findValue(MetadataKey<T> key) {
             checkCannotRepeat(key);
             for (var n = entries.length - 1; n >= 0; n--) {
@@ -182,7 +182,7 @@ public abstract class ContextMetadata extends Metadata {
 
         @Override
         public ContextMetadata concatenate(ContextMetadata metadata) {
-            int extraSize = metadata.size();
+            var extraSize = metadata.size();
             if (extraSize == 0) {
                 return this;
             }
@@ -190,7 +190,7 @@ public abstract class ContextMetadata extends Metadata {
                 return metadata;
             }
             var merged = Arrays.copyOf(entries, entries.length + extraSize);
-            for (int i = 0; i < extraSize; i++) {
+            for (var i = 0; i < extraSize; i++) {
                 merged[i + entries.length] = metadata.get(i);
             }
             return new ImmutableScopeMetadata(merged);
@@ -206,7 +206,7 @@ public abstract class ContextMetadata extends Metadata {
         private final Entry<?> entry;
 
         private <T> SingletonMetadata(MetadataKey<T> key, T value) {
-            this.entry = new Entry<T>(key, value);
+            this.entry = new Entry<>(key, value);
         }
 
         @Override
@@ -233,13 +233,13 @@ public abstract class ContextMetadata extends Metadata {
         @Override
         public ContextMetadata concatenate(ContextMetadata metadata) {
             // No check for size() == 0 since this instance always has one value.
-            int extraSize = metadata.size();
+            var extraSize = metadata.size();
             if (extraSize == 0) {
                 return this;
             }
-            Entry<?>[] merged = new Entry<?>[extraSize + 1];
+            var merged = new Entry<?>[extraSize + 1];
             merged[0] = entry;
-            for (int i = 0; i < extraSize; i++) {
+            for (var i = 0; i < extraSize; i++) {
                 merged[i + 1] = metadata.get(i);
             }
             return new ImmutableScopeMetadata(merged);
