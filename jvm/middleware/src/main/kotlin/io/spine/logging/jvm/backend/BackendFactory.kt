@@ -44,25 +44,25 @@ package io.spine.logging.jvm.backend
  *
  * Note that logging and calling arbitrary unknown code (which might log) are permitted inside
  * the instance methods of this API, since they are not called during platform initialization.
- * The easiest way to achieve this is to simply avoid having any non-trivial static fields or
+ * The easiest way to achieve this is to avoid having any non-trivial static fields or
  * any instance fields at all in the implementation.
  *
- * While this sounds onerous it is not difficult to achieve because this API is a singleton, and
+ * While this sounds onerous, it is not difficult to achieve because this API is a singleton, and
  * can delay any actual work until its methods are called. For example if any additional state
  * is required in the implementation, it can be held via a "lazy holder" to defer initialization.
  *
  * ### This is a service type
  *
- * This type is considered a *service type* and implementations may be loaded from the
+ * This type is considered a *service type*. Implementations may be loaded from the
  * classpath via [java.util.ServiceLoader] provided the proper service metadata is included in
- * the jar file containing the implementation. When creating an implementation of this class,
- * you can provide service metadata (and thereby allow users to get your implementation just by
- * including your jar file) by either manually including a
- * `META-INF/services/io.spine.logging.jvm.backend.BackendFactory` file containing the name of
- * your implementation class or by annotating your implementation class using
- * [AutoService(BackendFactory::class)](https://github.com/google/auto/tree/master/service).
- * See the documentation of both [java.util.ServiceLoader] and `DefaultPlatform`
- * for more information.
+ * the jar file containing the implementation.
+ *
+ * When creating an implementation of this class, you can provide service metadata (and thereby
+ * allow users to get your implementation just by including your jar file) by either manually
+ * including a `META-INF/services/io.spine.logging.jvm.backend.BackendFactory` file containing
+ * the name of your implementation class or by annotating your implementation class using
+ * [@AutoService(BackendFactory::class)] (https://github.com/google/auto/tree/master/service).
+ * See the documentation of both `ServiceLoader` and `DefaultPlatform` for more information.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/BackendFactory.java">
  *     Original Java code of Google Flogger</a> for historical context.
