@@ -36,8 +36,15 @@
 
 ## Documentation Conversion
 
-* Convert `@param` to `@param` with the same description.
+* Convert `@param` to `@param` with the same description: 
+  - Start the description on the same line with the `@param` tag 
+  - Break at 90 chars
+  - Continue with the margin of 7 space chars.
+
 * Convert `@return` to `@return` with the same description.
 * Convert `@throws` to `@throws` with the same description.
 * Convert `{@link}` to `[name][fully.qualified.Name]` format.
 * Convert `{@code}` to inline code with backticks (`).
+
+## Conversion tasks
+ * Convert end-line comments above methods and fields to KDoc.
