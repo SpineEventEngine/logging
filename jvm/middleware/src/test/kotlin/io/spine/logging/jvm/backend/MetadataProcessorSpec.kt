@@ -50,11 +50,11 @@ import org.junit.jupiter.api.Test
 internal abstract class MetadataProcessorSpec(private val factory: ProcessorFactory) {
 
     companion object {
-        private val KEY_1 = singleKey<String>("K1")
-        private val KEY_2 = singleKey<String>("K2")
-        private val KEY_3 = singleKey<String>("K3")
-        private val REP_1 = repeatedKey<String>("R1")
-        private val REP_2 = repeatedKey<String>("R2")
+        private val KEY_1 = singleKey<Any>("K1")
+        private val KEY_2 = singleKey<Any>("K2")
+        private val KEY_3 = singleKey<Any>("K3")
+        private val REP_1 = repeatedKey<Any>("R1")
+        private val REP_2 = repeatedKey<Any>("R2")
     }
 
     @Nested inner class
@@ -222,7 +222,7 @@ private fun entries(metadata: MetadataProcessor): List<String> {
  * Processes the given [metadata] for a single metadata [key],
  * returning the formatted entry.
  */
-private fun handleEntry(metadata: MetadataProcessor, key: MetadataKey<*>): String? {
+private fun handleEntry(metadata: MetadataProcessor, key: MetadataKey<Any>): String? {
     val entries = arrayListOf<String>()
     metadata.handle(key, CollectingHandler, entries)
     entries.size shouldBeLessThanOrEqual 1

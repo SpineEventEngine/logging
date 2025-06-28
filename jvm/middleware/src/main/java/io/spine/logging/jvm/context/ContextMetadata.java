@@ -29,6 +29,7 @@ package io.spine.logging.jvm.context;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import io.spine.logging.jvm.MetadataKey;
 import io.spine.logging.jvm.backend.Metadata;
+import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -135,9 +136,10 @@ public abstract class ContextMetadata extends Metadata {
     // Internal method to deal in entries directly during concatenation.
     abstract Entry<?> get(int n);
 
+    @SuppressWarnings("unchecked")
     @Override
-    public MetadataKey<?> getKey(int n) {
-        return get(n).key;
+    public @NotNull MetadataKey<@NotNull Object> getKey(int n) {
+        return (MetadataKey<Object>) get(n).key;
     }
 
     @Override

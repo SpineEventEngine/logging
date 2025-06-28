@@ -28,6 +28,7 @@ package io.spine.logging.jvm;
 
 import io.spine.logging.jvm.backend.Metadata;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Arrays;
@@ -68,12 +69,13 @@ final class MutableMetadata extends Metadata {
         return keyValueCount;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public MetadataKey<?> getKey(int n) {
+    public @NotNull MetadataKey<@NotNull Object> getKey(int n) {
         if (n >= keyValueCount) {
             throw new IndexOutOfBoundsException(n);
         }
-        return (MetadataKey<?>) keyValuePairs[2 * n];
+        return (MetadataKey<Object>) keyValuePairs[2 * n];
     }
 
     @Override

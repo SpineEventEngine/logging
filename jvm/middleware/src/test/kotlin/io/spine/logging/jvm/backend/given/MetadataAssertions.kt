@@ -92,7 +92,8 @@ internal infix fun <T : Any> Metadata.shouldContain(key: MetadataKey<T>) {
  */
 internal fun <T : Any> Metadata.shouldUniquelyContain(key: MetadataKey<T>, value: T) {
     findValue(key) shouldBe value
-    val allKeys = (0..<size()).map { i -> getKey(i) }.toList()
+    @Suppress("UNCHECKED_CAST") val allKeys: List<MetadataKey<T>> =
+        (0..<size()).map { i -> (getKey(i) as T) }.toList() as List<MetadataKey<T>>
     allKeys.indexOf(key) shouldBe allKeys.lastIndexOf(key)
 }
 

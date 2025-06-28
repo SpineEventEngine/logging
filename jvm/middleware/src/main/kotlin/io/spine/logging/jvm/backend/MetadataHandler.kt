@@ -61,7 +61,7 @@ public abstract class MetadataHandler<C : Any> {
      * @param context An arbitrary context object supplied to the process method.
      * @param T The key/value type.
      */
-    protected abstract fun <T : Any> handle(key: MetadataKey<T>, value: T, context: C)
+    public abstract fun <T : Any> handle(key: MetadataKey<T>, value: T, context: C)
 
     /**
      * Handles values for a repeatable metadata key. The method is called for
@@ -77,7 +77,7 @@ public abstract class MetadataHandler<C : Any> {
      * @param context An arbitrary context object supplied to the process method.
      * @param T The key/value type.
      */
-    protected open fun <T : Any> handleRepeated(
+    public open fun <T : Any> handleRepeated(
         key: MetadataKey<T>,
         values: Iterator<T>,
         context: C

@@ -65,7 +65,7 @@ public abstract class Metadata {
 
         override fun size(): Int = 0
 
-        override fun getKey(n: Int): MetadataKey<*> {
+        override fun getKey(n: Int): MetadataKey<Any> {
             throw cannotReadFromEmpty()
         }
 
@@ -89,7 +89,7 @@ public abstract class Metadata {
      * @throws IndexOutOfBoundsException if either `n` is negative or `n` is greater
      *  or equal to `getCount()`.
      */
-    public abstract fun getKey(n: Int): MetadataKey<*>
+    public abstract fun getKey(n: Int): MetadataKey<Any>
 
     /**
      * Returns the non-null value for the Nth piece of metadata.
