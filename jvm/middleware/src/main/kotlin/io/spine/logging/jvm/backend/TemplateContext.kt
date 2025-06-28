@@ -29,15 +29,18 @@ package io.spine.logging.jvm.backend
 import io.spine.logging.jvm.parser.MessageParser
 
 /**
- * A context object for templates that allows caches to validate existing templates or create new
- * ones. If two template contexts are equal (via [equals]) then the templates they produce
- * are interchangeable.
+ * A context object for templates that allows caches to validate existing
+ * templates or create new ones.
  *
- * Template contexts are created by the frontend and passed through to backend implementations via
- * the [LogData] interface.
+ * If two template contexts are equal (via [equals]) then the templates
+ * they produce are interchangeable.
+ *
+ * Template contexts are created by the frontend and passed through to backend
+ * implementations via the [LogData] interface.
  *
  * @property parser The message parser for the log statement.
  * @property message The message for the log statement.
+ * 
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/TemplateContext.java">
  *     Original Java code of Google Flogger</a> for historical context.
  */

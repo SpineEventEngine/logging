@@ -32,7 +32,7 @@ package io.spine.logging.jvm.backend
  * This is implemented as an abstract class (rather than an interface) to reduce
  * the risk of breaking existing implementations if the API changes.
  *
- * ## Essential Implementation Restrictions
+ * ### Essential Implementation Restrictions
  *
  * Any implementation of this API **MUST** follow the rules listed below to avoid any risk of
  * re-entrant code calling during logger initialization. Failure to do so risks creating complex,
@@ -43,37 +43,40 @@ package io.spine.logging.jvm.backend
  * 3. Implementations **MUST NOT** depend on any unknown code in constructors.
  *
  * Note that logging and calling arbitrary unknown code (which might log) are permitted inside
- * the instance methods of this API, since they are not called during platform initialization. The
- * easiest way to achieve this is to simply avoid having any non-trivial static fields or any
- * instance fields at all in the implementation.
+ * the instance methods of this API, since they are not called during platform initialization.
+ * The easiest way to achieve this is to simply avoid having any non-trivial static fields or
+ * any instance fields at all in the implementation.
  *
- * While this sounds onerous it's not difficult to achieve because this API is a singleton, and
- * can delay any actual work until its methods are called. For example if any additional state is
- * required in the implementation, it can be held via a "lazy holder" to defer initialization.
+ * While this sounds onerous it is not difficult to achieve because this API is a singleton, and
+ * can delay any actual work until its methods are called. For example if any additional state
+ * is required in the implementation, it can be held via a "lazy holder" to defer initialization.
  *
- * ## This is a service type
+ * ### This is a service type
  *
  * This type is considered a *service type* and implementations may be loaded from the
  * classpath via [java.util.ServiceLoader] provided the proper service metadata is included in
- * the jar file containing the implementation. When creating an implementation of this class, you
- * can provide service metadata (and thereby allow users to get your implementation just by
- * including your jar file) by either manually including a `META-INF/services/io.spine.logging.jvm.backend.BackendFactory` file containing the
- * name of your implementation class or by annotating your implementation class using [AutoService(BackendFactory::class)](https://github.com/google/auto/tree/master/service).
- * See the documentation of both [java.util.ServiceLoader] and `DefaultPlatform` for more information.
+ * the jar file containing the implementation. When creating an implementation of this class,
+ * you can provide service metadata (and thereby allow users to get your implementation just by
+ * including your jar file) by either manually including a
+ * `META-INF/services/io.spine.logging.jvm.backend.BackendFactory` file containing the name of
+ * your implementation class or by annotating your implementation class using
+ * [AutoService(BackendFactory::class)](https://github.com/google/auto/tree/master/service).
+ * See the documentation of both [java.util.ServiceLoader] and `DefaultPlatform`
+ * for more information.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/BackendFactory.java">
  *     Original Java code of Google Flogger</a> for historical context.
  */
 public abstract class BackendFactory {
-    
+
     /**
-     * Creates a logger backend of the given class name for use by a Fluent Logger. Note that the
-     * returned backend need not be unique; one backend could be used by multiple loggers. The given
-     * class name must be in the normal dot-separated form (e.g., "com.example.Foo$Bar") rather than
-     * the internal binary format "com/example/Foo$Bar").
+     * Creates a logger backend of the given class name for use by a Fluent Logger. Note that
+     * the returned backend need not be unique; one backend could be used by multiple loggers.
+     * The given class name must be in the normal dot-separated form (e.g., "com.example.Foo$Bar")
+     * rather than the internal binary format "com/example/Foo$Bar").
      *
-     * @param loggingClass the fully-qualified name of the Java class to which the logger is
-     *     associated. The logger name is derived from this string in a backend specific way.
+     * @param loggingClass The fully-qualified name of the Java class to which the logger is
+     *        associated. The logger name is derived from this string in a backend-specific way.
      */
     public abstract fun create(loggingClass: String): LoggerBackend
 }

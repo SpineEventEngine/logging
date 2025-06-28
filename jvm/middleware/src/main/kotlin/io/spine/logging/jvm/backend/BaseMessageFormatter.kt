@@ -27,6 +27,8 @@
 package io.spine.logging.jvm.backend
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
+import io.spine.logging.jvm.backend.MessageUtils.FORMAT_LOCALE
+import io.spine.logging.jvm.backend.MessageUtils.safeToString
 import io.spine.logging.jvm.parameter.DateTimeFormat
 import io.spine.logging.jvm.parameter.Parameter
 import io.spine.logging.jvm.parameter.ParameterVisitor
@@ -40,18 +42,20 @@ import java.util.Formattable
  * The default formatter for log messages and arguments.
  *
  * This formatter can be overridden to modify the behaviour of the [ParameterVisitor]
- * methods, but this is not expected to be common. Most logger backends will only ever need to use
- * `[appendFormattedMessage]`.
+ * methods, but this is not expected to be common. Most logger backends will only ever need 
+ * to use `[appendFormattedMessage]`.
  *
+ * @param context The template context containing the message pattern and metadata.
+ * @param args The arguments to be formatted into the message.
+ * @param out The buffer into which the formatted message is written.
+ * 
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/BaseMessageFormatter.java">
  *   Original Java code of Google Flogger</a> for historical context.
  */
 public open class BaseMessageFormatter
 protected constructor(
     context: TemplateContext,
-    // Input argument array reference (not copied).
     protected val args: Array<Any?>,
-    // Buffer into which the message is formatted.
     protected val out: StringBuilder
 ) : MessageBuilder<StringBuilder>(context), ParameterVisitor {
 
@@ -89,7 +93,7 @@ protected constructor(
                 .append(if (options.shouldUpperCase()) 'T' else 't')
                 .append(format.char)
                 .toString()
-            out.append(String.format(MessageUtils.FORMAT_LOCALE, formatString, value))
+            out.append(String.format(FORMAT_LOCALE, formatString, value))
         } else {
             appendInvalid(out, value, "%t" + format.char)
         }
@@ -133,7 +137,7 @@ protected constructor(
          *
          * @param data The log data with the message to be appended.
          * @param out A buffer to append to.
-         * @return the given buffer (for method chaining).
+         * @return The given buffer (for method chaining).
          */
         @JvmStatic
         @CanIgnoreReturnValue
@@ -147,7 +151,7 @@ protected constructor(
                 }
                 return result
             } else {
-                out.append(MessageUtils.safeToString(data.literalArgument))
+                out.append(safeToString(data.literalArgument))
             }
             return out
         }
@@ -173,7 +177,7 @@ protected constructor(
                     .append(chr)
                     .toString()
             }
-            out.append(String.format(MessageUtils.FORMAT_LOCALE, formatString, value))
+            out.append(String.format(FORMAT_LOCALE, formatString, value))
         }
 
         private fun handleCommonCases(
@@ -197,7 +201,7 @@ protected constructor(
             var handled = false
             if (value !is Formattable) {
                 if (options.isDefault) {
-                    out.append(MessageUtils.safeToString(value))
+                    out.append(safeToString(value))
                     handled = true
                 }
             } else {
@@ -254,7 +258,7 @@ protected constructor(
                 .append(", type=")
                 .append(value?.javaClass?.canonicalName)
                 .append(", value=")
-                .append(MessageUtils.safeToString(value))
+                .append(safeToString(value))
                 .append(']')
         }
     }
