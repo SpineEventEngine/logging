@@ -161,7 +161,7 @@ public enum class FormatChar(
      */
     public val defaultFormatString: String = "%$char"
 
-    private fun hasUpperCaseVariant(): Boolean =
+    private val hasUpperCaseVariant: Boolean =
         (allowedFlags and FormatOptions.FLAG_UPPER_CASE) != 0
 
     public companion object {
@@ -221,7 +221,7 @@ public enum class FormatChar(
             }
             // Otherwise handle the case where we found a lower-case format char
             // but no upper-case one.
-            return if (fc != null && fc.hasUpperCaseVariant()) fc else null
+            return if (fc != null && fc.hasUpperCaseVariant) fc else null
         }
     }
 }
