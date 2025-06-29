@@ -29,7 +29,7 @@ package io.spine.logging.jvm;
 import io.spine.logging.jvm.backend.LogData;
 import io.spine.logging.jvm.backend.LoggerBackend;
 import io.spine.logging.jvm.backend.LoggingException;
-import io.spine.logging.jvm.backend.MessageUtils;
+import io.spine.logging.jvm.backend.StringBuilders;
 import io.spine.logging.jvm.util.RecursionDepth;
 
 import java.time.Instant;
@@ -200,6 +200,7 @@ public abstract class AbstractLogger<API extends MiddlemanApi<API>> {
     }
 
     /** Only allow LoggingException and Errors to escape this method. */
+    @SuppressWarnings("UseOfSystemOutOrSystemErr")
     private void handleErrorRobustly(RuntimeException logError, LogData data) {
         try {
             backend.handleError(logError, data);
@@ -221,11 +222,12 @@ public abstract class AbstractLogger<API extends MiddlemanApi<API>> {
 
     // It is important that this code never risk calling back to a user supplied value (e.g. logged
     // arguments or metadata) since that could trigger a recursive error state.
+    @SuppressWarnings("UseOfSystemOutOrSystemErr")
     private static void reportError(String message, LogData data) {
         StringBuilder out = new StringBuilder();
         out.append(formatTimestampIso8601(data))
            .append(": logging error [");
-        MessageUtils.appendLogSite(data.getLogSite(), out);
+        StringBuilders.appendLogSite(out, data.getLogSite());
         out.append("]: ")
            .append(message);
         System.err.println(out);

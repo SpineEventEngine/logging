@@ -61,25 +61,6 @@ public object MessageUtils {
     @JvmField
     public val FORMAT_LOCALE: Locale = Locale.ROOT
 
-    /**
-     * Appends log-site information in the default format, including a trailing space.
-     *
-     * @param logSite The log site to be appended (ignored if [JvmLogSite.INVALID]).
-     * @param out The destination buffer.
-     * @return whether the log-site was appended.
-     */
-    @JvmStatic
-    public fun appendLogSite(logSite: JvmLogSite, out: StringBuilder): Boolean {
-        if (logSite == JvmLogSite.INVALID) {
-            return false
-        }
-        out.append(logSite.className)
-            .append('.')
-            .append(logSite.methodName)
-            .append(':')
-            .append(logSite.lineNumber)
-        return true
-    }
 
     /**
      * Returns a string representation of the user-supplied value
@@ -141,89 +122,7 @@ public object MessageUtils {
         }
     }
 
-    /**
-     * Returns a string representation of the user supplied [Formattable], accounting for any
-     * possible runtime exceptions.
-     *
-     * @param value The value to be formatted.
-     * @param out The buffer into which to format it.
-     * @param options the format options (extracted from a printf placeholder in the log message).
-     */
-    @JvmStatic
-    @Suppress("TooGenericExceptionCaught")
-    public fun safeFormatTo(value: Formattable, out: StringBuilder, options: FormatOptions) {
-        // Only care about 3 specific flags for Formattable.
-        var formatFlags =
-            options.flags and (FLAG_LEFT_ALIGN or FLAG_UPPER_CASE or FLAG_SHOW_ALT_FORM)
-        if (formatFlags != 0) {
-            // TODO: Re-order the options flags to make this step easier or use a lookup table?
-            // Note that reordering flags would require a rethink of how they are parsed.
-            formatFlags =
-                (if (formatFlags and FLAG_LEFT_ALIGN != 0) LEFT_JUSTIFY else 0) or
-                        (if (formatFlags and FLAG_UPPER_CASE != 0) UPPERCASE else 0) or
-                        (if (formatFlags and FLAG_SHOW_ALT_FORM != 0) ALTERNATE else 0)
-        }
-        // We may need to undo an arbitrary amount of appending if there is an error.
-        val originalLength = out.length
-        val formatter = Formatter(out, FORMAT_LOCALE)
-        try {
-            value.formatTo(formatter, formatFlags, options.width, options.precision)
-        } catch (e: RuntimeException) {
-            // Roll-back any partial changes on error, and
-            // instead append an error string for the value.
-            out.setLength(originalLength)
-            // We only use a StringBuilder to create the Formatter instance, which never throws.
-            try {
-                formatter.out().append(getErrorString(value, e))
-            } catch (_: IOException) {
-                /* impossible */
-            }
-        }
-    }
 
-    // Visible for testing
-    @JvmStatic
-    @Suppress("MagicNumber")
-    public fun appendHex(out: StringBuilder, number: Number, options: FormatOptions) {
-        // We know there are no unexpected formatting flags
-        // (currently only upper-casing is supported).
-        val isUpper = options.shouldUpperCase()
-        // We cannot just call Long.toHexString() as that would get negative values wrong.
-        val n = number.toLong()
-        // Roughly, in order of expected usage.
-        when (number) {
-            is Long -> appendHex(out, n, isUpper)
-            is Int -> appendHex(out, n and 0xFFFFFFFFL, isUpper)
-            is Byte -> appendHex(out, n and 0xFFL, isUpper)
-            is Short -> appendHex(out, n and 0xFFFFL, isUpper)
-            is BigInteger -> {
-                val hex = number.toString(16)
-                out.append(if (isUpper) hex.uppercase(FORMAT_LOCALE) else hex)
-            }
-
-            else -> {
-                // This will be caught and handled by the logger, but it should never happen.
-                error("Unsupported number type: `${number::class.simpleName}`")
-            }
-        }
-    }
-
-    @Suppress("MagicNumber")
-    internal fun appendHex(out: StringBuilder, n: Long, isUpper: Boolean) {
-        if (n == 0L) {
-            out.append("0")
-        } else {
-            val hexChars = if (isUpper) "0123456789ABCDEF" else "0123456789abcdef"
-            // Shift with a value in the range 0..60 and count down in steps of 4.
-            // You could unroll this into a switch statement, and it might be faster,
-            // but it is likely not worth it.
-            var shift = (63 - java.lang.Long.numberOfLeadingZeros(n)) and 3.inv()
-            while (shift >= 0) {
-                out.append(hexChars[((n ushr shift) and 0xF).toInt()])
-                shift -= 4
-            }
-        }
-    }
 
     @Suppress("TooGenericExceptionCaught")
     private fun getErrorString(value: Any?, e: RuntimeException): String {

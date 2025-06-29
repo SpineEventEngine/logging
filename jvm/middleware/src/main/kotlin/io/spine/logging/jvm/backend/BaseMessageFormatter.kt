@@ -35,8 +35,9 @@ import io.spine.logging.jvm.backend.FormatChar.HEX
 import io.spine.logging.jvm.backend.FormatChar.STRING
 import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_UPPER_CASE
 import io.spine.logging.jvm.backend.MessageUtils.FORMAT_LOCALE
-import io.spine.logging.jvm.backend.MessageUtils.appendHex
 import io.spine.logging.jvm.backend.MessageUtils.safeToString
+import io.spine.logging.jvm.backend.appendHex
+import io.spine.logging.jvm.backend.safeFormatTo
 import io.spine.logging.jvm.parameter.DateTimeFormat
 import io.spine.logging.jvm.parameter.Parameter
 import io.spine.logging.jvm.parameter.ParameterVisitor
@@ -210,7 +211,7 @@ protected constructor(
                     handled = true
                 }
             } else {
-                MessageUtils.safeFormatTo(value, out, options)
+                out.safeFormatTo(value as Formattable, options)
                 handled = true
             }
             return handled
@@ -235,7 +236,7 @@ protected constructor(
                     allowPrecision = false
                 ) == options
             ) {
-                appendHex(out, value as Number, options)
+                out.appendHex(value as Number, options)
                 return true
             }
             return false
