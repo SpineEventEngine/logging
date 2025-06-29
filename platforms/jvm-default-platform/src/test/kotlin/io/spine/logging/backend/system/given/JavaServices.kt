@@ -47,7 +47,7 @@ private val about = ""
 @AutoService(BackendFactory::class)
 internal class StubBackendFactoryService : BackendFactory() {
 
-    override fun create(loggingClassName: String): LoggerBackend =
+    override fun create(loggingClass: String): LoggerBackend =
         throw UnsupportedOperationException()
 
     override fun toString(): String = this::class.qualifiedName!!

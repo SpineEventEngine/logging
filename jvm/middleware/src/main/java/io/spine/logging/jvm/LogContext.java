@@ -26,7 +26,6 @@
 
 package io.spine.logging.jvm;
 
-import io.spine.logging.jvm.DurationRateLimiter.RateLimitPeriod;
 import io.spine.logging.jvm.backend.LogData;
 import io.spine.logging.jvm.backend.Metadata;
 import io.spine.logging.jvm.backend.Platform;
@@ -48,12 +47,14 @@ import static io.spine.reflect.CallerFinder.stackForCallerOf;
 /**
  * The base context for a logging statement, which implements the base logging API.
  *
- * <p>This class is an implementation of the base {@link MiddlemanApi} interface and acts as a holder
+ * <p>This class is an implementation of the base {@link MiddlemanApi} interface and acts as a
+ * holder
  * for any state applied to the log statement during the fluent call sequence. The lifecycle of a
  * logging context is very short; it is created by a logger, usually in response to a call to the
  * {@link AbstractLogger#at(Level)} method, and normally lasts only as long as the log statement.
  *
- * <p>This class should not be visible to normal users of the logging API and it is only needed when
+ * <p>This class should not be visible to normal users of the logging API and it is only needed
+ * when
  * extending the API to add more functionality. In order to extend the logging API and add methods
  * to the fluent call chain, the {@code LoggingApi} interface should be extended to add any new
  * methods, and this class should be extended to implement them. A new logger class will then be
@@ -61,11 +62,17 @@ import static io.spine.reflect.CallerFinder.stackForCallerOf;
  *
  * <p>Logging contexts are not thread-safe.
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogContext.java">
- *      Original Java code of Google Flogger</a> for historical context.
+ * @see <a
+ *         href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogContext.java">
+ *         Original Java code of Google Flogger</a> for historical context.
  */
 public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends MiddlemanApi<API>>
         implements MiddlemanApi<API>, LogData {
+
+    /**
+     * The text logged when both message and parameters are {@code null}.
+     */
+    private static final String NULL_MESSAGE = "<null>";
 
     /**
      * The predefined metadata keys used by the default logging API. Backend implementations can use
@@ -100,7 +107,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
                 MetadataKey.single("sampling_count", Integer.class);
 
         /**
-         * The key associated with a rate limiting period for "at most once every N" rate limiting.
+         * The key associated with a rate-limiting period for "at most once every N" rate limiting.
          * The value is set by {@link MiddlemanApi#atMostEvery(int, TimeUnit)}.
          */
         public static final MetadataKey<RateLimitPeriod> LOG_AT_MOST_EVERY =
@@ -233,7 +240,6 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      *
      * @param level
      *         the log level for this log statement.
- *
      * @param isForced
      *         whether to force this log statement (see {@link #wasForced()} for details).
      */
@@ -253,10 +259,8 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      *
      * @param level
      *         the log level for this log statement.
- *
      * @param isForced
      *         whether to force this log statement (see {@link #wasForced()} for details).
- *
      * @param timestampNanos
      *         the nanosecond timestamp for this log statement.
      */
@@ -337,7 +341,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
     public final Object getLiteralArgument() {
         if (templateContext != null) {
             throw new IllegalStateException(
-                    "cannot get literal argument if a template context exists");
+                    "Cannot get literal argument if a template context exists: " + templateContext);
         }
         return args[0];
     }
@@ -373,7 +377,6 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      *
      * @param key
      *         the metadata key (see {@link LogData}).
- *
      * @param value
      *         the metadata value.
      */
@@ -478,7 +481,6 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      *
      * @param logSiteKey
      *         used to lookup persistent, per log statement, state.
- *
      * @return true if logging should be attempted (usually based on rate limiter state).
      */
     protected boolean postProcess(@Nullable LogSiteKey logSiteKey) {
@@ -554,7 +556,6 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      *
      * @param status
      *         a rate limiting status, or {@code null} if the rate limiter was not active.
- *
      * @return whether logging will occur based on the current combined state of
      *         active rate limiters.
      */
@@ -655,7 +656,8 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
         // DO NOT replace this with a string instance which can be interned, or use equals() here,
         // since that could mistakenly treat other calls to log(String, Object...) incorrectly.
         if (message != LITERAL_VALUE_MESSAGE) {
-            this.templateContext = new TemplateContext(getMessageParser(), message);
+            var msg = message == null ? NULL_MESSAGE : message;
+            this.templateContext = new TemplateContext(getMessageParser(), msg);
         }
         // Right at the end of processing add any tags injected by the platform. Any tags supplied at
         // the log site are merged with the injected tags (though this should be very rare).

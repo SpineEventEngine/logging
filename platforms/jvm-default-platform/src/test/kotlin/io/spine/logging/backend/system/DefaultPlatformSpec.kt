@@ -69,7 +69,7 @@ internal class DefaultPlatformSpec {
 
     @Test
     fun `return the configured context provider`() {
-        val contextProvider = platform.contextDataProviderImpl
+        val contextProvider = platform.getContextDataProviderImpl()
         contextProvider shouldBeSameInstanceAs context
     }
 
@@ -77,19 +77,19 @@ internal class DefaultPlatformSpec {
     fun `use the given clock to provide the current time`() {
         val randomTimestamp = Math.random().toLong()
         clock.returnedTimestamp = randomTimestamp
-        val timestamp = platform.currentTimeNanosImpl
+        val timestamp = platform.getCurrentTimeNanosImpl()
         timestamp shouldBe randomTimestamp
     }
 
     @Test
     fun `return the configured caller finder`() {
-        val callerFinder = platform.callerFinderImpl
+        val callerFinder = platform.getCallerFinderImpl()
         callerFinder shouldBeSameInstanceAs caller
     }
 
     @Test
     fun `return a human-readable string describing the platform configuration`() {
-        val configInfo = platform.configInfoImpl.trimEnd()
+        val configInfo = platform.getConfigInfoImpl().trimEnd()
         val expectedConfig = """
             Platform: ${platform.javaClass.name}
             BackendFactory: $factory
@@ -103,7 +103,7 @@ internal class DefaultPlatformSpec {
     @Test
     fun `load services from the classpath`() {
         val platform = DefaultPlatform()
-        val configInfo = platform.configInfoImpl.trimEnd()
+        val configInfo = platform.getConfigInfoImpl().trimEnd()
         val expectedServices = setOf(
             "BackendFactory: ${StubBackendFactoryService::class.java.name}",
             "Clock: ${StubClockService::class.java.name}",

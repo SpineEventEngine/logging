@@ -37,6 +37,7 @@ import java.util.*
 /**
  * Utilities for working with processes from Gradle code.
  */
+@Suppress("unused")
 private const val ABOUT = ""
 
 /**
@@ -47,11 +48,12 @@ private const val ABOUT = ""
 class Cli(private val workingFolder: File) {
 
     /**
-     * Executes the given terminal command and returns its output.
+     * Executes the given terminal command and retrieves the command output.
      *
-     * <p>Internally calls {@link Runtime#exec(String[], String[], File)} to run the given
-     * {@code String} array as a CLI command. If the execution is successful, the command output
-     * is returned; otherwise an {@link IllegalStateException} is thrown.
+     * [Executes][Runtime.exec] the given `String` array as a CLI command.
+     *
+     * If the execution is successful, returns the command output.
+     * Throws an {@link IllegalStateException} otherwise.
      *
      * @param command the command to execute.
      * @return the command line output.

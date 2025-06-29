@@ -49,10 +49,10 @@ public final class Log4j2BackendFactory extends BackendFactory {
   public Log4j2BackendFactory() {}
 
   @Override
-  public LoggerBackend create(String loggingClassName) {
+  public LoggerBackend create(String loggingClass) {
 
     // Compute the logger name the same way as in `SimpleBackendFactory`.
-    var name = loggingClassName.replace('$', '.');
+    var name = loggingClass.replace('$', '.');
 
     // There is `log4j.Logger` interface and `log4j.core.Logger` implementation.
     // Implementation exposes more methods that are needed by the backend.

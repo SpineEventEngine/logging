@@ -36,8 +36,8 @@ import io.spine.logging.jvm.backend.FormatChar.GENERAL
 import io.spine.logging.jvm.backend.FormatChar.HEX
 import io.spine.logging.jvm.backend.FormatChar.OCTAL
 import io.spine.logging.jvm.backend.FormatChar.STRING
-import io.spine.logging.jvm.backend.FormatOptions.parse
-import io.spine.logging.jvm.backend.FormatOptions.parseValidFlags
+import io.spine.logging.jvm.backend.FormatOptions.Companion.parse
+import io.spine.logging.jvm.backend.FormatOptions.Companion.parseValidFlags
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import org.junit.jupiter.api.DisplayName

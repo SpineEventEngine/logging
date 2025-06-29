@@ -39,8 +39,8 @@ import io.spine.logging.jvm.backend.given.MemoizingLoggerBackend
  */
 internal class MemoizingLoggerBackendFactory : BackendFactory() {
 
-    override fun create(loggingClassName: String): LoggerBackend =
-        MemoizingLoggerBackend(loggingClassName)
+    override fun create(loggingClass: String): LoggerBackend =
+        MemoizingLoggerBackend(loggingClass)
 
     override fun toString(): String = javaClass.name
 }
@@ -66,12 +66,12 @@ internal class NoOpCallerFinder : Platform.LogCallerFinder() {
     /**
      * Throws [IllegalStateException].
      */
-    override fun findLoggingClass(loggerClass: Class<out AbstractLogger<*>>?): String =
+    override fun findLoggingClass(loggerClass: Class<out AbstractLogger<*>>): String =
         throw UnsupportedOperationException()
 
     /**
      * Throws [IllegalStateException].
      */
-    override fun findLogSite(loggerApi: Class<*>?, stackFramesToSkip: Int): JvmLogSite =
+    override fun findLogSite(loggerApi: Class<*>, stackFramesToSkip: Int): JvmLogSite =
         throw UnsupportedOperationException()
 }

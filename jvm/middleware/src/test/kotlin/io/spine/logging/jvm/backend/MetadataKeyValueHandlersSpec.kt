@@ -26,13 +26,13 @@
 
 package io.spine.logging.jvm.backend
 
+import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.spine.logging.jvm.backend.MetadataKeyValueHandlers.getDefaultHandler
 import io.spine.logging.jvm.backend.MetadataKeyValueHandlers.getDefaultRepeatedValueHandler
 import io.spine.logging.jvm.backend.MetadataKeyValueHandlers.getDefaultValueHandler
 import io.spine.logging.jvm.given.MemoizingKvHandler
 import io.spine.logging.jvm.given.iterate
-import io.kotest.matchers.collections.shouldContainExactly
-import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.spine.logging.jvm.repeatedKey
 import io.spine.logging.jvm.singleKey
 import org.junit.jupiter.api.DisplayName

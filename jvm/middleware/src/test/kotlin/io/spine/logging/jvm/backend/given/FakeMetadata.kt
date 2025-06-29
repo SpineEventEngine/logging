@@ -53,7 +53,7 @@ class FakeMetadata : Metadata() {
 
     override fun size(): Int = entries.size
 
-    override fun getKey(n: Int): MetadataKey<*> = entries[n].key
+    override fun getKey(n: Int): MetadataKey<Any> = entries[n].key as MetadataKey<Any>
 
     override fun getValue(n: Int): Any = entries[n].value
 

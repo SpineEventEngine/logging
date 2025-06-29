@@ -39,11 +39,11 @@ import io.kotest.matchers.shouldBe
  * or template message.
  *
  * The message is literal when it is passed to the logger without
- * any formatting arguments, otherwise it is part of [LogData.getTemplateContext].
+ * any formatting arguments, otherwise it is part of [LogData.templateContext].
  */
 internal infix fun LogData.shouldHaveMessage(value: String?) {
     if (templateContext != null) {
-        templateContext.message shouldBe value
+        templateContext!!.message shouldBe value
     } else {
         literalArgument shouldBe value
     }

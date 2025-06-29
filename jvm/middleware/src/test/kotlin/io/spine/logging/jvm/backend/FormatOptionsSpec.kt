@@ -26,16 +26,16 @@
 
 package io.spine.logging.jvm.backend
 
-import io.spine.logging.jvm.backend.FormatOptions.ALL_FLAGS
-import io.spine.logging.jvm.backend.FormatOptions.FLAG_LEFT_ALIGN
-import io.spine.logging.jvm.backend.FormatOptions.FLAG_PREFIX_PLUS_FOR_POSITIVE_VALUES
-import io.spine.logging.jvm.backend.FormatOptions.FLAG_PREFIX_SPACE_FOR_POSITIVE_VALUES
-import io.spine.logging.jvm.backend.FormatOptions.FLAG_SHOW_ALT_FORM
-import io.spine.logging.jvm.backend.FormatOptions.FLAG_SHOW_GROUPING
-import io.spine.logging.jvm.backend.FormatOptions.FLAG_SHOW_LEADING_ZEROS
-import io.spine.logging.jvm.backend.FormatOptions.FLAG_UPPER_CASE
-import io.spine.logging.jvm.backend.FormatOptions.UNSET
-import io.spine.logging.jvm.backend.FormatOptions.parse
+import io.spine.logging.jvm.backend.FormatOptions.Companion.ALL_FLAGS
+import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_LEFT_ALIGN
+import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_PREFIX_PLUS_FOR_POSITIVE_VALUES
+import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_PREFIX_SPACE_FOR_POSITIVE_VALUES
+import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_SHOW_ALT_FORM
+import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_SHOW_GROUPING
+import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_SHOW_LEADING_ZEROS
+import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_UPPER_CASE
+import io.spine.logging.jvm.backend.FormatOptions.Companion.UNSET
+import io.spine.logging.jvm.backend.FormatOptions.Companion.parse
 import io.spine.logging.jvm.parser.ParseException
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
