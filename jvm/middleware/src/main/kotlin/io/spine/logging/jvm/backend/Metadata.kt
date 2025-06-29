@@ -29,65 +29,46 @@ package io.spine.logging.jvm.backend
 import io.spine.logging.jvm.MetadataKey
 
 /**
- * A sequence of metadata key/value pairs which can be associated to a log statement, either
- * directly via methods in the fluent API, of as part of a scoped logging context.
+ * A sequence of metadata key/value pairs which can be associated to a log statement,
+ * either directly via methods in the fluent API, of as part of a scoped logging context.
  *
- * Metadata keys can be "single valued" or "repeating" based on
- * [MetadataKey.canRepeat], but it is permitted for
- * a `Metadata` implementation to retain multiple single valued keys, and in that situation
- * the key at the largest index is the one that should be used.
+ * Metadata keys can be "single valued" or "repeating" based on [MetadataKey.canRepeat],
+ * but it is permitted for a `Metadata` implementation to retain multiple single valued
+ * keys, and in that situation the key at the largest index is the one that should be used.
  *
  * Multiple `Metadata` instances can be merged, in order, to provide a final sequence for
  * a log statement. When `Metadata` instance are merged, the result is just the concatenation
- * of the sequence of key/value pairs, and this is what results in the potential for multiple single
- * valued keys to exist.
+ * of the sequence of key/value pairs, and this is what results in the potential for multiple
+ * single valued keys to exist.
  *
- * If the value of a single valued key is required, the [findValue]
- * method should be used to look it up. For all other metadata processing, a [MetadataProcessor]
+ * If the value of a single valued key is required, the [findValue] method should
+ * be used to look it up. For all other metadata processing, a [MetadataProcessor]
  * should be created to ensure that scope and log site metadata can be merged correctly.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/Metadata.java">
- *     Original Java code of Google Flogger</a> for historical context.
+ *   Original Java code of Google Flogger</a> for historical context.
  */
 public abstract class Metadata {
 
     public companion object {
-        /** Returns an immutable `Metadata` that has no items. */
+        
+        /** 
+         * Returns an immutable `Metadata` that has no items. 
+         */
         @JvmStatic
-        public fun empty(): Metadata = Empty
+        public fun empty(): Metadata = EmptyMetadata
     }
-
-    // This is a static nested class as opposed to an anonymous class assigned to a constant field in
-    // order to decouple it's classload when Metadata is loaded. Android users are particularly
-    // careful about unnecessary class loading, and we've used similar mechanisms in Guava (see
-    // CharMatchers)
-    private object Empty : Metadata() {
-
-        override fun size(): Int = 0
-
-        override fun getKey(n: Int): MetadataKey<Any> {
-            throw cannotReadFromEmpty()
-        }
-
-        override fun getValue(n: Int): Any {
-            throw cannotReadFromEmpty()
-        }
-
-        private fun cannotReadFromEmpty(): IndexOutOfBoundsException {
-            throw IndexOutOfBoundsException("cannot read from empty metadata")
-        }
-
-        override fun <T : Any> findValue(key: MetadataKey<T>): T? = null
-    }
-
-    /** Returns the number of key/value pairs for this instance. */
+    
+    /**
+     * Returns the number of key/value pairs for this instance. 
+     */
     public abstract fun size(): Int
 
     /**
      * Returns the key for the Nth piece of metadata.
      *
      * @throws IndexOutOfBoundsException if either `n` is negative or `n` is greater
-     *  or equal to `getCount()`.
+     *   or equal to `getCount()`.
      */
     public abstract fun getKey(n: Int): MetadataKey<Any>
 
@@ -106,4 +87,18 @@ public abstract class Metadata {
      */
     // TODO(dbeaumont): Make this throw an exception for repeated keys.
     public abstract fun <T : Any> findValue(key: MetadataKey<T>): T?
+}
+
+/**
+ * Implementation of empty metadata as a Kotlin object to optimize class loading.
+ * This decoupled approach helps avoid unnecessary class loading, which is especially
+ * important for Android applications.
+ */
+private object EmptyMetadata : Metadata() {
+    override fun size(): Int = 0
+    override fun getKey(n: Int): MetadataKey<Any> = throw cannotReadFromEmpty()
+    override fun getValue(n: Int): Any = throw cannotReadFromEmpty()
+    private fun cannotReadFromEmpty(): IndexOutOfBoundsException = 
+        throw IndexOutOfBoundsException("cannot read from empty metadata")
+    override fun <T : Any> findValue(key: MetadataKey<T>): T? = null
 }
