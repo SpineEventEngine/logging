@@ -44,7 +44,7 @@ import java.util.*
  *
  * 1. The logger backend creates one or more stateless [MetadataHandler] instances as
  *    static constants. These should be immutable and thread-safe since they include only code.
- * 2. When handling a log statement, the logger backend generates a [MetadataProcessor] in
+ * 2. When handling a log statement, the logger backend generates a `MetadataProcessor` in
  *    the logging thread for the current scope and log-site metadata.
  * 3. The processor can then be repeatedly used to dispatch calls to one or more of the handlers,
  *    potentially with different mutable context instances.
@@ -52,7 +52,7 @@ import java.util.*
  * By splitting the various life-cycles (handler, processor, contexts) this approach should help
  * minimize the cost of processing metadata per log statement.
  *
- * Instances of MetadataProcessor are reusable, but not thread-safe.
+ * Instances of `MetadataProcessor` are reusable, but not thread-safe.
  * All metadata processing must be done in the logging thread.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/MetadataProcessor.java">
@@ -108,9 +108,10 @@ public abstract class MetadataProcessor {
     }
 
     /**
-     * Processes a combined view of the scope and log-site metadata in this processor by invoking
-     * the given handler for each distinct metadata key. The handler method invoked depends on whether
-     * the key is single valued or repeated.
+     * Processes a combined view of the scope and log-site metadata in this processor by
+     * invoking the given handler for each distinct metadata key.
+     *
+     * The handler method invoked depends on whether the key is single valued or repeated.
      *
      * Rules for merging scope and log-site metadata are as follows:
      *
@@ -152,15 +153,18 @@ public abstract class MetadataProcessor {
     public abstract fun <T : Any> getSingleValue(key: MetadataKey<T>): T?
 
     /**
-     * Returns the number of unique keys represented by this processor. This is the same as the
-     * size of [keySet], but a separate method to avoid needing to allocate anything just to
-     * know the number of keys.
+     * Returns the number of unique keys represented by this processor.
+     *
+     * This is the same as the size of [keySet], but a separate method to avoid needing
+     * to allocate anything just to know the number of keys.
      */
     public abstract fun keyCount(): Int
 
     /**
-     * Returns the set of [MetadataKey]s known to this processor, in the order in which
-     * they will be processed. Note that this implementation is lightweight, but not necessarily
+     * Returns the set of [MetadataKey]s known to this processor, in the order in
+     * which they will be processed.
+     *
+     * Note that this implementation is lightweight, but not necessarily
      * performant for things like containment testing.
      */
     public abstract fun keySet(): Set<MetadataKey<*>>
@@ -189,13 +193,13 @@ private class NoOpProcessor: MetadataProcessor() {
  *     [ bits 31-5 : bitmap of additional repeated indices | bits 4-0 first value index ]
  *  ```
  * There are 27 additional bits for the mask, but since index 0 could never be an "additional"
- * value, the bit-mask indices only need to start from 1, giving a maximum of:
+ * value, the bit-mask indexes only need to start from 1, giving a maximum of:
  * ```
  *    1 (first value index) + 27 (additional repeated indices in mask)
  * ```
- * indices in total.
+ * indexes in total.
  *
- * Obviously this could be extended to a `long`, but the bloom filter is only efficient up to
+ * Obviously, this could be extended to a `long`, but the bloom filter is only efficient up to
  * about 10-15 elements (and that's a super rare case anyway).
  *
  * At some point it is just not worth trying to squeeze anymore value from this class, and
@@ -223,10 +227,11 @@ private class LightweightProcessor(
     private val keyCount: Int
 
     init {
-        // We can never have more distinct keys, so this never needs resizing. This should be the
-        // only variable sized allocation required by this algorithm. When duplicate keys exist some
-        // elements at the end of the array will be unused, but the array is typically small and it is
-        // common for all keys to be distinct, so "right sizing" the array wouldn't be worth it.
+        // We can never have more distinct keys, so this never needs resizing.
+        // This should be the only variable sized allocation required by this algorithm.
+        // When duplicate keys exist some elements at the end of the array will be unused,
+        // but the array is typically small and it is common for all keys to be distinct,
+        // so "right sizing" the array wouldn't be worth it.
         val maxKeyCount = scope.size() + logged.size()
         // This should be impossible (outside of tests).
         checkArgument(maxKeyCount <= MAX_LIGHTWEIGHT_ELEMENTS, "metadata size too large")

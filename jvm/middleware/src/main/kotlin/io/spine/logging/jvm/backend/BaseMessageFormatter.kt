@@ -45,7 +45,7 @@ import java.util.*
  *
  * This formatter can be overridden to modify the behaviour of the [ParameterVisitor]
  * methods, but this is not expected to be common. Most logger backends will only ever need
- * to use `[appendFormattedMessage]`.
+ * to use [appendFormattedMessage].
  *
  * @param context The template context containing the message pattern and metadata.
  * @param args The arguments to be formatted into the message.

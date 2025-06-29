@@ -33,14 +33,16 @@ import io.spine.logging.jvm.LogContext
 import java.util.Collections
 
 /**
- * Helper class for formatting LogData as text. This class is useful for any logging backend which
- * performs unstructured, text only, logging. Note however that it makes several assumptions
- * regarding metadata and formatting, which may not apply to every text based logging backend.
+ * Helper class for formatting [LogData] as text.
+ *
+ * This class is useful for any logging backend, which performs unstructured, text-only, logging.
+ * Note, however, that it makes several assumptions regarding metadata and formatting,
+ * which may not apply to every text-based logging backend.
  *
  * This primarily exists to support both the JDK logging classes and text only Android backends.
- * Code in here may be factored out as necessary to support other use cases in future.
+ * Code in here may be factored out as necessary to support other use cases in the future.
  *
- * If a text based logger backend is not performance critical, then it should just append the log
+ * If a text-based logger backend is not performance critical, then it should just append the log
  * message and metadata to a local buffer. For example:
  *
  * ```kotlin
@@ -57,9 +59,8 @@ import java.util.Collections
  * [getSimpleFormatterIgnoring] can be used to obtain a static formatter,
  * instead of using the default.
  *
- * @see <a
- *         href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/SimpleMessageFormatter.java">
- *         Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/SimpleMessageFormatter.java">
+ *    Original Java code of Google Flogger</a> for historical context.
  */
 public object SimpleMessageFormatter {
 
