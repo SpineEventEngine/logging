@@ -31,7 +31,6 @@ import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.MetadataKey.KeyValueHandler
 import io.spine.logging.jvm.LogContext
 import java.util.Collections
-import java.util.logging.Level
 
 /**
  * Helper class for formatting LogData as text. This class is useful for any logging backend which
@@ -232,33 +231,5 @@ public object SimpleMessageFormatter {
                 }
             }
         }
-    }
-
-    // ---- Everything below this point is deprecated and will be removed. ----
-
-    /** @deprecated Use a [LogMessageFormatter] and obtain the level and cause separately. */
-    @Deprecated("Use a `LogMessageFormatter` and obtain the level and cause separately.")
-    public fun format(logData: LogData, receiver: SimpleLogHandler) {
-        // Deliberately, don't support `ScopedLoggingContext` here (no injected metadata).
-        // This is as a forcing function to make users of this API migrate away from
-        // it if they need scoped metadata.
-        val metadata =
-            MetadataProcessor.forScopeAndLogSite(Metadata.empty(), logData.metadata)
-        receiver.handleFormattedLogMessage(
-            logData.level,
-            getDefaultFormatter().format(logData, metadata),
-            metadata.getSingleValue(LogContext.Key.LOG_CAUSE)
-        )
-    }
-
-    /** @deprecated Use a [LogMessageFormatter] and obtain the level and cause separately. */
-    @Deprecated("Use a LogMessageFormatter and obtain the level and cause separately.")
-    public fun interface SimpleLogHandler {
-
-        /**
-         * Handles a single formatted log statement with the given level, message and "cause". This
-         * is called back exactly once, from the same thread, for every call made to [format].
-         */
-        public fun handleFormattedLogMessage(level: Level, message: String, thrown: Throwable?)
     }
 }
