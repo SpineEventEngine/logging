@@ -82,12 +82,13 @@ public object MessageUtils {
     }
 
     /**
-     * Returns a string representation of the user supplied value accounting for any
-     * possible runtime exceptions.
-     * This code will never fail, but may return a synthetic error string if exceptions
-     * were thrown.
+     * Returns a string representation of the user-supplied value
+     * accounting for any possible runtime exceptions.
      *
-     * @param value the value to be formatted.
+     * This code will never fail but may return a synthetic error
+     * string if exceptions were thrown.
+     *
+     * @param value The value to be formatted.
      * @return a best-effort string representation of the given value,
      *   even if exceptions were thrown.
      */
@@ -102,12 +103,13 @@ public object MessageUtils {
     }
 
     /**
-     * Returns a string representation of the user supplied value. This method should try hard to
-     * return a human readable representation, possibly going beyond the default [toString]
-     * representation for some well defined types.
+     * Returns a string representation of the user-supplied value.
      *
-     * @param value the value to be formatted (possibly null).
-     * @return a non-null string representation of the given value (possibly "null").
+     * This method should try hard to return a human-readable representation, possibly
+     * going beyond the default [toString] representation for some well-defined types.
+     *
+     * @param value The value to be formatted (possibly `null`).
+     * @return a non-null string representation of the given value (possibly `null`).
      */
     @Suppress("ReturnCount")
     private fun toNonNullString(value: Any?): String {
@@ -143,8 +145,8 @@ public object MessageUtils {
      * Returns a string representation of the user supplied [Formattable], accounting for any
      * possible runtime exceptions.
      *
-     * @param value the value to be formatted.
-     * @param out the buffer into which to format it.
+     * @param value The value to be formatted.
+     * @param out The buffer into which to format it.
      * @param options the format options (extracted from a printf placeholder in the log message).
      */
     @JvmStatic
@@ -188,7 +190,7 @@ public object MessageUtils {
         val isUpper = options.shouldUpperCase()
         // We cannot just call Long.toHexString() as that would get negative values wrong.
         val n = number.toLong()
-        // Roughly in order of expected usage.
+        // Roughly, in order of expected usage.
         when (number) {
             is Long -> appendHex(out, n, isUpper)
             is Int -> appendHex(out, n and 0xFFFFFFFFL, isUpper)
@@ -201,7 +203,7 @@ public object MessageUtils {
 
             else -> {
                 // This will be caught and handled by the logger, but it should never happen.
-                error("Unsupported number type: `${number.javaClass}`")
+                error("Unsupported number type: `${number::class.simpleName}`")
             }
         }
     }
