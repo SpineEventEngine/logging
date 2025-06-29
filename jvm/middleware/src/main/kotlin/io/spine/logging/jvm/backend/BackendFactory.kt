@@ -48,7 +48,7 @@ package io.spine.logging.jvm.backend
  * any instance fields at all in the implementation.
  *
  * While this sounds onerous, it is not difficult to achieve because this API is a singleton, and
- * can delay any actual work until its methods are called. For example if any additional state
+ * can delay any actual work until its methods are called. For example, if any additional state
  * is required in the implementation, it can be held via a "lazy holder" to defer initialization.
  *
  * ### This is a service type
@@ -61,7 +61,7 @@ package io.spine.logging.jvm.backend
  * allow users to get your implementation just by including your jar file) by either manually
  * including a `META-INF/services/io.spine.logging.jvm.backend.BackendFactory` file containing
  * the name of your implementation class or by annotating your implementation class using
- * [@AutoService(BackendFactory::class)] (https://github.com/google/auto/tree/master/service).
+ * [@AutoService(BackendFactory::class)](https://github.com/google/auto/tree/master/service).
  * See the documentation of both `ServiceLoader` and `DefaultPlatform` for more information.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/BackendFactory.java">
@@ -72,8 +72,8 @@ public abstract class BackendFactory {
     /**
      * Creates a logger backend of the given class name for use by a Fluent Logger. Note that
      * the returned backend need not be unique; one backend could be used by multiple loggers.
-     * The given class name must be in the normal dot-separated form (e.g., "com.example.Foo$Bar")
-     * rather than the internal binary format "com/example/Foo$Bar").
+     * The given class name must be in the normal dot-separated form (e.g., `"com.example.Foo$Bar"`)
+     * rather than the internal binary format `"com/example/Foo$Bar"`).
      *
      * @param loggingClass The fully-qualified name of the Java class to which the logger is
      *        associated. The logger name is derived from this string in a backend-specific way.

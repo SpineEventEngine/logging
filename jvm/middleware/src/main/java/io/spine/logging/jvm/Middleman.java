@@ -88,7 +88,7 @@ public final class Middleman extends AbstractLogger<Middleman.Api> {
   }
 
   /**
-   * Creates a new fluent logger instance with the specified backend.
+   * Creates a new logger instance with the specified backend.
    *
    * @apiNote This constructor used to be package-private in the original Flogger implementation.
    *         This, in turn, required reflection-based creation of new instances of this class in
