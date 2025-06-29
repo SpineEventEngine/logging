@@ -69,7 +69,9 @@ public fun StringBuilder.appendLogSite(logSite: JvmLogSite): Boolean {
 public fun StringBuilder.safeFormatTo(value: Formattable, options: FormatOptions) {
     // Only care about 3 specific flags for Formattable.
     var formatFlags =
-        options.flags and (FormatOptions.FLAG_LEFT_ALIGN or FormatOptions.FLAG_UPPER_CASE or FormatOptions.FLAG_SHOW_ALT_FORM)
+        options.flags and (FormatOptions.FLAG_LEFT_ALIGN
+                or FormatOptions.FLAG_UPPER_CASE
+                or FormatOptions.FLAG_SHOW_ALT_FORM)
     if (formatFlags != 0) {
         // TODO: Re-order the options flags to make this step easier or use a lookup table?
         // Note that reordering flags would require a rethink of how they are parsed.
