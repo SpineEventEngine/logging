@@ -147,8 +147,7 @@ public abstract class MetadataProcessor {
     /**
      * Returns the unique value for a single valued key, or `null` if not present.
      *
-     * @throws IllegalArgumentException
-     *         if passed a repeatable key (even if that key has one value).
+     * @throws IllegalArgumentException if passed a repeatable key (even if that key has one value).
      */
     public abstract fun <T : Any> getSingleValue(key: MetadataKey<T>): T?
 
@@ -181,19 +180,27 @@ private class NoOpProcessor: MetadataProcessor() {
     override fun keySet(): Set<MetadataKey<*>> = Collections.emptySet()
 }
 
-/*
- * The values in the keyMap array are structured as:
- *     [ bits 31-5 : bitmap of additional repeated indices | bits 4-0 first value index ]
+/**
+ * The metadata processor involved when the number of metadata elements is less or
+ * equal to [MAX_LIGHTWEIGHT_ELEMENTS].
  *
+ * The values in the [keyMap] array are structured as:
+ * ```
+ *     [ bits 31-5 : bitmap of additional repeated indices | bits 4-0 first value index ]
+ *  ```
  * There are 27 additional bits for the mask, but since index 0 could never be an "additional"
  * value, the bit-mask indices only need to start from 1, giving a maximum of:
+ * ```
  *    1 (first value index) + 27 (additional repeated indices in mask)
+ * ```
  * indices in total.
  *
- * Obviously this could be extended to a "long", but the bloom filter is only efficient up to
- * about 10-15 elements (and that's a super rare case anyway). At some point it's just not worth
- * trying to squeeze anymore value from this class and the "SimpleProcessor" should be used
- * instead (we might even want to switch before hitting 28 elements depending on performance).
+ * Obviously this could be extended to a `long`, but the bloom filter is only efficient up to
+ * about 10-15 elements (and that's a super rare case anyway).
+ *
+ * At some point it is just not worth trying to squeeze anymore value from this class, and
+ * the [SimpleProcessor] should be used instead (we might even want to switch before hitting
+ * 28 elements depending on performance).
  */
 @Suppress("TooManyFunctions")
 private class LightweightProcessor(
@@ -205,10 +212,14 @@ private class LightweightProcessor(
         const val MAX_LIGHTWEIGHT_ELEMENTS = 28
     }
 
-    // Mapping of key/value indexes for distinct keys (kept in key "encounter" order).
+    /**
+     * Mapping of key/value indexes for distinct keys (kept in key "encounter" order).
+     */
     private val keyMap: IntArray
 
-    // Count of unique keys in the keyMap.
+    /**
+     * Count of unique keys in the [keyMap].
+     */
     private val keyCount: Int
 
     init {
@@ -281,28 +292,27 @@ private class LightweightProcessor(
 
     override fun keySet(): Set<MetadataKey<*>> {
 
-        // We may want to cache this, since it's effectively immutable, but it's also a small and
-        // likely short lived instance, so quite possibly not worth it for the cost of another field.
+        // We may want to cache this, since it's effectively immutable,
+        // but it's also a small and likely short lived instance,
+        // so quite possibly not worth it for the cost of another field.
         return object : AbstractSet<MetadataKey<*>>() {
 
             override val size: Int
                 get() = keyCount
 
             override fun iterator(): MutableIterator<MetadataKey<*>> {
+
                 return object : MutableIterator<MetadataKey<*>> {
                     private var i = 0
 
-                    override fun hasNext(): Boolean {
-                        return i < keyCount
-                    }
+                    override fun hasNext(): Boolean =
+                        i < keyCount
 
-                    override fun next(): MetadataKey<*> {
-                        return getKey(keyMap[i++] and 0x1F)
-                    }
+                    override fun next(): MetadataKey<*> =
+                        getKey(keyMap[i++] and 0x1F)
 
-                    override fun remove() {
+                    override fun remove(): Unit =
                         throw UnsupportedOperationException()
-                    }
                 }
             }
         }
@@ -395,11 +405,14 @@ private class LightweightProcessor(
         return if (n >= scopeSize) logged.getValue(n - scopeSize) else scope.getValue(n)
     }
 
-    // Note that this could be made a reusable instance (reset between callbacks) if we wanted to
-    // same a little on allocations.
-    //
-    // However this is a fixed size instance and repeated keys are a fairly unusual use case.
-    //
+    /**
+     * Mutable iterator over the values.
+     *
+     * ### Implementation note
+     * This could be made a reusable instance (reset between callbacks) if we wanted to
+     * same a little on allocations. However, this is a fixed size instance, and repeated
+     * keys are a fairly unusual use case.
+     */
     @Suppress("MagicNumber")
     private inner class ValueIterator<T : Any>(
         private val key: MetadataKey<T>,
@@ -446,10 +459,11 @@ private class LightweightProcessor(
 }
 
 /**
- * Simple version of a metadata processor which allocates "large" data structures. This is
- * needed when a large number of metadata elements need processing. It should behave exactly the same
- * as the "lightweight" processor if the supplied Metadata is correctly behaved and not modified
- * during processing.
+ * A simple version of a metadata processor which allocates "large" data structures.
+ *
+ * This is needed when a large number of metadata elements need processing.
+ * It should behave exactly the same as the [LightweightProcessor] if
+ * the supplied [Metadata] is correctly behaved and not modified during processing.
  */
 private class SimpleProcessor(scope: Metadata, logged: Metadata) : MetadataProcessor() {
 
@@ -497,7 +511,6 @@ private class SimpleProcessor(scope: Metadata, logged: Metadata) : MetadataProce
     override fun keySet(): Set<MetadataKey<*>> {
         return map.keys
     }
-
 }
 
 // Unlike the LightweightProcessor, we copy references from the Metadata eagerly, so can "cast"
