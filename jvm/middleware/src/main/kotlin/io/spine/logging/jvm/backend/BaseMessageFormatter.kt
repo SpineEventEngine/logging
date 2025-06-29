@@ -36,27 +36,23 @@ import io.spine.logging.jvm.backend.FormatChar.STRING
 import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_UPPER_CASE
 import io.spine.logging.jvm.backend.MessageUtils.FORMAT_LOCALE
 import io.spine.logging.jvm.backend.MessageUtils.safeToString
-import io.spine.logging.jvm.backend.appendHex
-import io.spine.logging.jvm.backend.safeFormatTo
 import io.spine.logging.jvm.parameter.DateTimeFormat
 import io.spine.logging.jvm.parameter.Parameter
 import io.spine.logging.jvm.parameter.ParameterVisitor
 import io.spine.logging.jvm.parser.MessageBuilder
-import java.util.Calendar
-import java.util.Date
-import java.util.Formattable
+import java.util.*
 
 /**
  * The default formatter for log messages and arguments.
  *
  * This formatter can be overridden to modify the behaviour of the [ParameterVisitor]
- * methods, but this is not expected to be common. Most logger backends will only ever need 
+ * methods, but this is not expected to be common. Most logger backends will only ever need
  * to use `[appendFormattedMessage]`.
  *
  * @param context The template context containing the message pattern and metadata.
  * @param args The arguments to be formatted into the message.
  * @param out The buffer into which the formatted message is written.
- * 
+ *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/BaseMessageFormatter.java">
  *   Original Java code of Google Flogger</a> for historical context.
  */
@@ -85,9 +81,9 @@ protected constructor(
 
     override fun visit(value: Any?, format: FormatChar, options: FormatOptions) {
         if (format.type.canFormat(value)) {
-            appendFormatted(out, value, format, options)
+            out.appendFormatted(value, format, options)
         } else {
-            appendInvalid(out, value, format.defaultFormatString)
+            out.appendInvalid(value, format.defaultFormatString)
         }
     }
 
@@ -100,7 +96,7 @@ protected constructor(
                 .toString()
             out.append(String.format(FORMAT_LOCALE, formatString, value))
         } else {
-            appendInvalid(out, value, "%t" + format.char)
+            out.appendInvalid(value, "%t" + format.char)
         }
     }
 
@@ -130,11 +126,6 @@ protected constructor(
         private const val EXTRA_ARGUMENT_MESSAGE = " [ERROR: UNUSED LOG ARGUMENTS]"
 
         /**
-         * The number of bits in `char` type.
-         */
-        private const val BITS_IN_CHAR = 16
-
-        /**
          * Appends the formatted log message of the given log data to the given buffer.
          *
          * Note that the [LogData] need not have a template context or arguments, it might just
@@ -161,116 +152,166 @@ protected constructor(
             }
             return out
         }
-
-        private fun appendFormatted(
-            out: StringBuilder,
-            value: Any?,
-            format: FormatChar,
-            options: FormatOptions
-        ) {
-            if (handleCommonCases(out, value, format, options)) {
-                return
-            }
-            // Default handle for rare cases that need non-trivial formatting.
-            var formatString = format.defaultFormatString
-            if (!options.isDefault) {
-                var chr = format.char
-                if (options.shouldUpperCase()) {
-                    // Clear 6th bit to convert lower case ASCII to upper case.
-                    chr = chr.uppercaseChar()
-                }
-                formatString = options.appendPrintfOptions(StringBuilder("%"))
-                    .append(chr)
-                    .toString()
-            }
-            out.append(String.format(FORMAT_LOCALE, formatString, value))
-        }
-
-        private fun handleCommonCases(
-            out: StringBuilder,
-            value: Any?,
-            format: FormatChar,
-            options: FormatOptions
-        ): Boolean {
-            return when (format) {
-                STRING -> handleString(out, value, options)
-                DECIMAL, BOOLEAN -> {
-                    handleDecimalOrBoolean(out, value, options)
-                }
-                HEX -> handleHex(out, value, options)
-                CHAR -> handleChar(out, value, options)
-                else -> false
-            }
-        }
-
-        private fun handleString(out: StringBuilder, value: Any?, options: FormatOptions): Boolean {
-            var handled = false
-            if (value !is Formattable) {
-                if (options.isDefault) {
-                    out.append(safeToString(value))
-                    handled = true
-                }
-            } else {
-                out.safeFormatTo(value as Formattable, options)
-                handled = true
-            }
-            return handled
-        }
-
-        private fun handleDecimalOrBoolean(
-            out: StringBuilder, 
-            value: Any?, 
-            options: FormatOptions
-        ): Boolean {
-            if (options.isDefault) {
-                out.append(value)
-                return true
-            }
-            return false
-        }
-
-        private fun handleHex(out: StringBuilder, value: Any?, options: FormatOptions): Boolean {
-            if (options.filter(
-                    FLAG_UPPER_CASE,
-                    allowWidth = false,
-                    allowPrecision = false
-                ) == options
-            ) {
-                out.appendHex(value as Number, options)
-                return true
-            }
-            return false
-        }
-
-        private fun handleChar(
-            out: StringBuilder, 
-            value: Any?, 
-            options: FormatOptions
-        ): Boolean {
-            if (options.isDefault) {
-                if (value is Char) {
-                    out.append(value)
-                } else {
-                    val codePoint = (value as Number).toInt()
-                    if (codePoint ushr BITS_IN_CHAR == 0) {
-                        out.append(codePoint.toChar())
-                    } else {
-                        out.append(Character.toChars(codePoint))
-                    }
-                }
-                return true
-            }
-            return false
-        }
-
-        private fun appendInvalid(out: StringBuilder, value: Any?, formatString: String) {
-            out.append("[INVALID: format=")
-                .append(formatString)
-                .append(", type=")
-                .append(value?.javaClass?.canonicalName)
-                .append(", value=")
-                .append(safeToString(value))
-                .append(']')
-        }
     }
+}
+
+/**
+ * The number of bits in `char` type.
+ */
+private const val BITS_IN_CHAR = 16
+
+/**
+ * Appends formatted value to this StringBuilder.
+ *
+ * @param value The value to format.
+ * @param format The format character to use.
+ * @param options The format options to apply.
+ */
+private fun StringBuilder.appendFormatted(
+    value: Any?,
+    format: FormatChar,
+    options: FormatOptions
+) {
+    if (handleCommonCases(value, format, options)) {
+        return
+    }
+    // Default handle for rare cases that need non-trivial formatting.
+    var formatString = format.defaultFormatString
+    if (!options.isDefault) {
+        var chr = format.char
+        if (options.shouldUpperCase()) {
+            // Clear 6th bit to convert lower case ASCII to upper case.
+            chr = chr.uppercaseChar()
+        }
+        formatString = options.appendPrintfOptions(StringBuilder("%"))
+            .append(chr)
+            .toString()
+    }
+    append(String.format(FORMAT_LOCALE, formatString, value))
+}
+
+/**
+ * Handles common formatting cases.
+ *
+ * @param value The value to format.
+ * @param format The format character to use.
+ * @param options The format options to apply.
+ * @return Whether the value was handled.
+ */
+private fun StringBuilder.handleCommonCases(
+    value: Any?,
+    format: FormatChar,
+    options: FormatOptions
+): Boolean {
+    return when (format) {
+        STRING -> handleString(value, options)
+        DECIMAL, BOOLEAN -> {
+            handleDecimalOrBoolean(value, options)
+        }
+        HEX -> handleHex(value, options)
+        CHAR -> handleChar(value, options)
+        else -> false
+    }
+}
+
+/**
+ * Handles string formatting.
+ *
+ * @param value The value to format.
+ * @param options The format options to apply.
+ * @return Whether the value was handled.
+ */
+private fun StringBuilder.handleString(value: Any?, options: FormatOptions): Boolean {
+    var handled = false
+    if (value !is Formattable) {
+        if (options.isDefault) {
+            append(safeToString(value))
+            handled = true
+        }
+    } else {
+        safeFormatTo(value, options)
+        handled = true
+    }
+    return handled
+}
+
+/**
+ * Handles decimal or boolean formatting.
+ *
+ * @param value The value to format.
+ * @param options The format options to apply.
+ * @return Whether the value was handled.
+ */
+private fun StringBuilder.handleDecimalOrBoolean(
+    value: Any?,
+    options: FormatOptions
+): Boolean {
+    if (options.isDefault) {
+        append(value)
+        return true
+    }
+    return false
+}
+
+/**
+ * Handles hexadecimal formatting.
+ *
+ * @param value The value to format.
+ * @param options The format options to apply.
+ * @return Whether the value was handled.
+ */
+private fun StringBuilder.handleHex(value: Any?, options: FormatOptions): Boolean {
+    if (options.filter(
+            FLAG_UPPER_CASE,
+            allowWidth = false,
+            allowPrecision = false
+        ) == options
+    ) {
+        appendHex(value as Number, options)
+        return true
+    }
+    return false
+}
+
+/**
+ * Handles character formatting.
+ *
+ * @param value The value to format.
+ * @param options The format options to apply.
+ * @return Whether the value was handled.
+ */
+private fun StringBuilder.handleChar(
+    value: Any?,
+    options: FormatOptions
+): Boolean {
+    if (options.isDefault) {
+        if (value is Char) {
+            append(value)
+        } else {
+            val codePoint = (value as Number).toInt()
+            if (codePoint ushr BITS_IN_CHAR == 0) {
+                append(codePoint.toChar())
+            } else {
+                append(Character.toChars(codePoint))
+            }
+        }
+        return true
+    }
+    return false
+}
+
+/**
+ * Appends an invalid format message to this StringBuilder.
+ *
+ * @param value The value that couldn't be formatted.
+ * @param formatString The format string that was used.
+ */
+private fun StringBuilder.appendInvalid(value: Any?, formatString: String) {
+    append("[INVALID: format=")
+        .append(formatString)
+        .append(", type=")
+        .append(value?.javaClass?.canonicalName)
+        .append(", value=")
+        .append(safeToString(value))
+        .append(']')
 }

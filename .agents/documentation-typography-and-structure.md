@@ -131,6 +131,7 @@ When generating or modifying Kotlin code with KDoc:
 - **Infer tag content** when possible, based on function signature.
 - **Avoid duplication** between summary and detailed description.
 - **Omit boilerplate** such as “This function...” in summaries.
+- **ALWAYS WRAP the modified Kotlin code at 100 characters** or `detekt` build error will occur. 
 
 ---
 
