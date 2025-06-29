@@ -434,7 +434,7 @@ public class FormatOptions private constructor(
      * @return `true` if these options are valid for the given format.
      */
     public fun areValidFor(fc: FormatChar): Boolean =
-        validate(fc.allowedFlags, fc.type.supportsPrecision())
+        validate(fc.allowedFlags, fc.type.supportsPrecision)
 
     /**
      * Corresponds to `printf` flag `'-'` (incompatible with `'0'`).
