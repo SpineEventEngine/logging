@@ -471,8 +471,8 @@ private class SimpleProcessor(scope: Metadata, logged: Metadata) : MetadataProce
 
     init {
         val map = LinkedHashMap<MetadataKey<Any>, Any>()
-        addTo(map, scope)
-        addTo(map, logged)
+        map.addTo(scope)
+        map.addTo(logged)
         // Wrap any repeated value lists to make them unmodifiable (required for correctness).
         for (e in map.entries) {
             if (e.key.canRepeat()) {
@@ -485,14 +485,14 @@ private class SimpleProcessor(scope: Metadata, logged: Metadata) : MetadataProce
 
     override fun <C : Any> process(handler: MetadataHandler<C>, context: C) {
         for (e in map.entries) {
-            dispatch(e.key, e.value, handler, context)
+            handler.dispatch(e.key, e.value, context)
         }
     }
 
     override fun <C : Any> handle(key: MetadataKey<Any>, handler: MetadataHandler<C>, context: C) {
         val value: Any? = map[key]
         if (value != null) {
-            dispatch(key, value, handler, context)
+            handler.dispatch(key, value, context)
         }
     }
 
@@ -513,36 +513,65 @@ private class SimpleProcessor(scope: Metadata, logged: Metadata) : MetadataProce
     }
 }
 
-// Unlike the LightweightProcessor, we copy references from the Metadata eagerly, so can "cast"
-// values to their key-types early, ensuring safe casting when dispatching.
-private fun addTo(map: MutableMap<MetadataKey<Any>, Any>, metadata: Metadata) {
+/**
+ * Adds all key-value pairs from the given [metadata] into the [map].
+ *
+ * Unlike [LightweightProcessor], this function eagerly copies references from
+ * the [Metadata] and casts values to their key-types early, ensuring safe casting
+ * when dispatching.
+ *
+ * For repeatable keys, values are collected into mutable lists. For singleton keys,
+ * any existing value is replaced with the new value.
+ *
+ * @param map The mutable map to add metadata entries to.
+ * @param metadata The metadata entries to add.
+ */
+private fun MutableMap<MetadataKey<Any>, Any>.addTo(metadata: Metadata) {
     for (i in 0 until metadata.size()) {
         val key = metadata.getKey(i)
-        val value = map[key]
+        val value = this[key]
         if (key.canRepeat()) {
             @Suppress("UNCHECKED_CAST")
             val list = value as? MutableList<Any?>
-                ?: ArrayList<Any?>().also { map[key] = it }
+                ?: ArrayList<Any?>().also { this[key] = it }
 
             // Cast value to ensure that "repeated key is MetadataKey<T>" implies "value is List<T>"
             list.add(key.cast(metadata.getValue(i)))
         } else {
             // Cast value to ensure that "singleton key is MetadataKey<T>" implies "value is T".
-            map[key] = key.cast(metadata.getValue(i))!!
+            this[key] = key.cast(metadata.getValue(i))!!
         }
     }
 }
 
-// It's safe to ignore warnings here since we know that repeated keys only ever get 'List<T>'
-// and single keys are only ever 'T' when added to the map.
-private fun <T : Any, C : Any> dispatch(
-    key: MetadataKey<T>, value: Any?, handler: MetadataHandler<C>, context: C
+/**
+ * Dispatches metadata key-value pairs to the appropriate handler method based on the key type.
+ *
+ * This extension function routes metadata entries to either [MetadataHandler.handle] for single
+ * values or [MetadataHandler.handleRepeated] for repeated values.
+ * It performs the necessary type casting based on whether the key is repeatable or not.
+ *
+ * The function assumes that:
+ * - For repeatable keys, the value is always a `List<T>`
+ * - For single keys, the value is always of type `T`
+ * These invariants are maintained by [MutableMap.addTo].
+ *
+ * @param T The type of values associated with the metadata key
+ * @param C The context type used by the metadata handler.
+ * @param key The metadata key being processed.
+ * @param value The value associated with the key (may be `null`).
+ * @param context The handler context.
+ */
+private fun <T : Any, C : Any> MetadataHandler<C>.dispatch(
+    key: MetadataKey<T>,
+    value: Any?,
+    context: C
 ) {
     if (key.canRepeat()) {
         @Suppress("UNCHECKED_CAST")
-        handler.handleRepeated(key, (value as MutableList<T>).iterator(), context)
+        handleRepeated(key, (value as MutableList<T>).iterator(), context)
     } else {
         @Suppress("UNCHECKED_CAST")
-        handler.handle(key, (value as T), context)
+        handle(key, (value as T), context)
     }
 }
