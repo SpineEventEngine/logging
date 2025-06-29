@@ -1,6 +1,6 @@
 
 
-# Dependencies of `io.spine:spine-logging-fixtures:2.0.0-SNAPSHOT.252`
+# Dependencies of `io.spine:spine-logging-fixtures:2.0.0-SNAPSHOT.253`
 
 ## Runtime
 ## Compile, tests, and tooling
@@ -729,7 +729,7 @@ This report was generated on **Thu Jun 26 20:09:48 WEST 2025** using [Gradle-Lic
 
 
 
-# Dependencies of `io.spine:spine-logging-grpc-context:2.0.0-SNAPSHOT.252`
+# Dependencies of `io.spine:spine-logging-grpc-context:2.0.0-SNAPSHOT.253`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -1558,7 +1558,7 @@ This report was generated on **Thu Jun 26 20:09:48 WEST 2025** using [Gradle-Lic
 
 
 
-# Dependencies of `io.spine:spine-logging-jul-backend:2.0.0-SNAPSHOT.252`
+# Dependencies of `io.spine:spine-logging-jul-backend:2.0.0-SNAPSHOT.253`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -2371,7 +2371,7 @@ This report was generated on **Thu Jun 26 20:09:48 WEST 2025** using [Gradle-Lic
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-default-platform:2.0.0-SNAPSHOT.252`
+# Dependencies of `io.spine:spine-logging-jvm-default-platform:2.0.0-SNAPSHOT.253`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -3192,7 +3192,7 @@ This report was generated on **Thu Jun 26 20:09:48 WEST 2025** using [Gradle-Lic
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-jul-backend-grpc-context:2.0.0-SNAPSHOT.252`
+# Dependencies of `io.spine:spine-logging-jvm-jul-backend-grpc-context:2.0.0-SNAPSHOT.253`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -4040,7 +4040,7 @@ This report was generated on **Thu Jun 26 20:09:48 WEST 2025** using [Gradle-Lic
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-jul-backend-std-context:2.0.0-SNAPSHOT.252`
+# Dependencies of `io.spine:spine-logging-jvm-jul-backend-std-context:2.0.0-SNAPSHOT.253`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -4880,7 +4880,7 @@ This report was generated on **Thu Jun 26 20:09:48 WEST 2025** using [Gradle-Lic
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-log4j2-backend-std-context:2.0.0-SNAPSHOT.252`
+# Dependencies of `io.spine:spine-logging-jvm-log4j2-backend-std-context:2.0.0-SNAPSHOT.253`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -5720,7 +5720,7 @@ This report was generated on **Thu Jun 26 20:09:48 WEST 2025** using [Gradle-Lic
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-slf4j-jdk14-backend-std-context:2.0.0-SNAPSHOT.252`
+# Dependencies of `io.spine:spine-logging-jvm-slf4j-jdk14-backend-std-context:2.0.0-SNAPSHOT.253`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -6568,7 +6568,7 @@ This report was generated on **Thu Jun 26 20:09:48 WEST 2025** using [Gradle-Lic
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-slf4j-reload4j-backend-std-context:2.0.0-SNAPSHOT.252`
+# Dependencies of `io.spine:spine-logging-jvm-slf4j-reload4j-backend-std-context:2.0.0-SNAPSHOT.253`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -7420,7 +7420,7 @@ This report was generated on **Thu Jun 26 20:09:48 WEST 2025** using [Gradle-Lic
 
 
 
-# Dependencies of `io.spine:spine-logging-log4j2-backend:2.0.0-SNAPSHOT.252`
+# Dependencies of `io.spine:spine-logging-log4j2-backend:2.0.0-SNAPSHOT.253`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -8249,7 +8249,7 @@ This report was generated on **Thu Jun 26 20:09:48 WEST 2025** using [Gradle-Lic
 
 
 
-# Dependencies of `io.spine:spine-logging:2.0.0-SNAPSHOT.252`
+# Dependencies of `io.spine:spine-logging:2.0.0-SNAPSHOT.253`
 
 ## Runtime
 ## Compile, tests, and tooling
@@ -8986,7 +8986,7 @@ This report was generated on **Thu Jun 26 20:09:47 WEST 2025** using [Gradle-Lic
 
 
 
-# Dependencies of `io.spine.tools:spine-logging-testlib:2.0.0-SNAPSHOT.252`
+# Dependencies of `io.spine.tools:spine-logging-testlib:2.0.0-SNAPSHOT.253`
 
 ## Runtime
 ## Compile, tests, and tooling
@@ -9711,7 +9711,7 @@ This report was generated on **Thu Jun 26 20:09:48 WEST 2025** using [Gradle-Lic
 
 
 
-# Dependencies of `io.spine:spine-logging-middleware:2.0.0-SNAPSHOT.252`
+# Dependencies of `io.spine:spine-logging-middleware:2.0.0-SNAPSHOT.253`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -10524,7 +10524,7 @@ This report was generated on **Thu Jun 26 20:09:48 WEST 2025** using [Gradle-Lic
 
 
 
-# Dependencies of `io.spine:spine-logging-platform-generator:2.0.0-SNAPSHOT.252`
+# Dependencies of `io.spine:spine-logging-platform-generator:2.0.0-SNAPSHOT.253`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -11313,7 +11313,7 @@ This report was generated on **Thu Jun 26 20:09:47 WEST 2025** using [Gradle-Lic
 
 
 
-# Dependencies of `io.spine:spine-logging-probe-backend:2.0.0-SNAPSHOT.252`
+# Dependencies of `io.spine:spine-logging-probe-backend:2.0.0-SNAPSHOT.253`
 
 ## Runtime
 1.  **Group** : com.google.auto.service. **Name** : auto-service-annotations. **Version** : 1.1.1.
@@ -12301,7 +12301,7 @@ This report was generated on **Thu Jun 26 20:09:48 WEST 2025** using [Gradle-Lic
 
 
 
-# Dependencies of `io.spine:spine-logging-smoke-test:2.0.0-SNAPSHOT.252`
+# Dependencies of `io.spine:spine-logging-smoke-test:2.0.0-SNAPSHOT.253`
 
 ## Runtime
 1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.18.3.
@@ -13174,7 +13174,7 @@ This report was generated on **Thu Jun 26 20:09:48 WEST 2025** using [Gradle-Lic
 
 
 
-# Dependencies of `io.spine:spine-logging-std-context:2.0.0-SNAPSHOT.252`
+# Dependencies of `io.spine:spine-logging-std-context:2.0.0-SNAPSHOT.253`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
