@@ -70,12 +70,12 @@ public abstract class MetadataHandler<C : Any> {
      * The default implementation makes repeated callbacks to the [handle] method,
      * in order, for each value.
      *
+     * @param T The key/value type.
      * @param key The repeatable metadata key.
      * @param values A lightweight iterator over all values associated with the key.
      *        Note that this instance is read-only and must not be held beyond
      *        the scope of this callback.
      * @param context An arbitrary context object supplied to the process method.
-     * @param T The key/value type.
      */
     public open fun <T : Any> handleRepeated(
         key: MetadataKey<T>,
@@ -85,44 +85,6 @@ public abstract class MetadataHandler<C : Any> {
         while (values.hasNext()) {
             handle(key, values.next(), context)
         }
-    }
-
-    /**
-     * API for handling metadata key/value pairs individually.
-     *
-     * @param T The key/value type.
-     * @param C The type of the context passed to the callbacks.
-     */
-    public fun interface ValueHandler<T : Any, C> {
-
-        /**
-         * Handles metadata values individually.
-         *
-         * @param key The metadata key (not necessarily a "singleton" key).
-         * @param value The associated metadata value.
-         * @param context An arbitrary context object supplied to the process method.
-         */
-        public fun handle(key: MetadataKey<T>, value: T, context: C)
-    }
-
-    /**
-     * API for handling repeated metadata key/values in a single callback.
-     *
-     * @param T The key/value type.
-     * @param C The type of the context passed to the callbacks.
-     */
-    public fun interface RepeatedValueHandler<T : Any, C> {
-        /**
-         * Handles all repeated metadata values for a given key.
-         *
-         * @param key The repeatable metadata key for which this handler was registered,
-         *        or an unknown key if this is the default handler.
-         * @param values A lightweight iterator over all values associated with the key.
-         *        Note that this instance is read-only and must not be held beyond
-         *        the scope of this callback.
-         * @param context An arbitrary context object supplied to the process method.
-         */
-        public fun handle(key: MetadataKey<T>, values: Iterator<T>, context: C)
     }
 
     /**

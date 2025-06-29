@@ -28,8 +28,6 @@ package io.spine.logging.jvm.backend
 
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.MetadataKey.KeyValueHandler
-import io.spine.logging.jvm.backend.MetadataHandler.RepeatedValueHandler
-import io.spine.logging.jvm.backend.MetadataHandler.ValueHandler
 
 /**
  * A helper class providing the default callbacks and handlers for processing
@@ -67,9 +65,11 @@ public object MetadataKeyValueHandlers {
         EMIT_REPEATED_METADATA
 
     /**
-     * Returns a new [MetadataHandler.Builder] which handles all non-ignored metadata keys by
-     * dispatching their values to the key itself. This is convenient for generic metadata
-     * processing when used in conjunction with something like [KeyValueFormatter].
+     * Returns a new [MetadataHandler.Builder] which handles all non-ignored
+     * metadata keys by dispatching their values to the key itself.
+     *
+     * This is convenient for generic metadata processing when used in conjunction with
+     * something like [KeyValueFormatter].
      *
      * The returned builder can be built immediately or customized further to handler some keys
      * specially (e.g., allowing keys/values to modify logging behaviour).
