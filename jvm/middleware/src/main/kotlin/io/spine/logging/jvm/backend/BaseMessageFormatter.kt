@@ -27,6 +27,7 @@
 package io.spine.logging.jvm.backend
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
+import io.spine.logging.jvm.backend.BaseMessageFormatter.Companion.appendFormattedMessage
 import io.spine.logging.jvm.backend.FormatChar.BOOLEAN
 import io.spine.logging.jvm.backend.FormatChar.CHAR
 import io.spine.logging.jvm.backend.FormatChar.DECIMAL
@@ -40,7 +41,6 @@ import io.spine.logging.jvm.parameter.DateTimeFormat
 import io.spine.logging.jvm.parameter.Parameter
 import io.spine.logging.jvm.parameter.ParameterVisitor
 import io.spine.logging.jvm.parser.MessageBuilder
-import io.spine.logging.jvm.util.Checks.checkNotNull
 import java.util.Calendar
 import java.util.Date
 import java.util.Formattable
@@ -66,13 +66,10 @@ protected constructor(
     protected val out: StringBuilder
 ) : MessageBuilder<StringBuilder>(context), ParameterVisitor {
 
-    // The start of the next literal subsection of the message that needs processing.
+    /**
+     * The start of the next literal subsection of the message that needs processing.
+     */
     private var literalStart = 0
-
-    init {
-        checkNotNull(args, "arguments")
-        checkNotNull(out, "buffer")
-    }
 
     override fun addParameterImpl(termStart: Int, termEnd: Int, param: Parameter) {
         parser.unescape(out, message, literalStart, termStart)
@@ -153,7 +150,8 @@ protected constructor(
                 val formatter = BaseMessageFormatter(data.templateContext!!, data.arguments, out)
                 val result = formatter.build()
                 if (data.arguments.size > formatter.expectedArgumentCount) {
-                    // TODO(dbeaumont): Do better and look at adding formatted values or maybe just a count?
+                    // TODO(dbeaumont): Do better and look at adding formatted values or
+                    //  maybe just a count?
                     result.append(EXTRA_ARGUMENT_MESSAGE)
                 }
                 return result
@@ -231,7 +229,12 @@ protected constructor(
         }
 
         private fun handleHex(out: StringBuilder, value: Any?, options: FormatOptions): Boolean {
-            if (options.filter(FLAG_UPPER_CASE, false, false) == options) {
+            if (options.filter(
+                    FLAG_UPPER_CASE,
+                    allowWidth = false,
+                    allowPrecision = false
+                ) == options
+            ) {
                 appendHex(out, value as Number, options)
                 return true
             }
