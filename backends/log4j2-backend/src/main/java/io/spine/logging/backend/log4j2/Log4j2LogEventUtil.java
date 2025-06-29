@@ -26,33 +26,17 @@
 
 package io.spine.logging.backend.log4j2;
 
-import static io.spine.logging.jvm.backend.BaseMessageFormatter.appendFormattedMessage;
-import static io.spine.logging.jvm.backend.MetadataProcessor.forScopeAndLogSite;
-import static java.util.Objects.requireNonNull;
-import static java.util.concurrent.TimeUnit.NANOSECONDS;
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static java.util.logging.Level.WARNING;
-
 import io.spine.logging.jvm.LogContext;
-import io.spine.logging.jvm.JvmLogSite;
 import io.spine.logging.jvm.MetadataKey;
-import io.spine.logging.jvm.backend.BaseMessageFormatter;
+import io.spine.logging.jvm.backend.AnyMessages;
 import io.spine.logging.jvm.backend.LogData;
-import io.spine.logging.jvm.backend.MessageUtils;
-import io.spine.logging.jvm.backend.Metadata;
 import io.spine.logging.jvm.backend.MetadataHandler;
 import io.spine.logging.jvm.backend.Platform;
 import io.spine.logging.jvm.backend.SimpleMessageFormatter;
 import io.spine.logging.jvm.context.ScopedLoggingContext;
 import io.spine.logging.jvm.context.Tags;
-
-import java.util.logging.Level;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.LoggerContext;
-import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.DefaultConfiguration;
 import org.apache.logging.log4j.core.impl.ContextDataFactory;
 import org.apache.logging.log4j.core.impl.Log4jLogEvent;
@@ -61,6 +45,16 @@ import org.apache.logging.log4j.core.time.MutableInstant;
 import org.apache.logging.log4j.core.util.Throwables;
 import org.apache.logging.log4j.message.SimpleMessage;
 import org.apache.logging.log4j.util.StringMap;
+
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static io.spine.logging.jvm.backend.BaseMessageFormatter.appendFormattedMessage;
+import static io.spine.logging.jvm.backend.MetadataProcessor.forScopeAndLogSite;
+import static java.util.Objects.requireNonNull;
+import static java.util.concurrent.TimeUnit.NANOSECONDS;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static java.util.logging.Level.WARNING;
 
 /**
  * Helper to format {@link LogData}.
@@ -151,7 +145,9 @@ final class Log4j2LogEventUtil {
         return instant;
     }
 
-    /** Converts java.util.logging.Level to org.apache.log4j.Level. */
+    /**
+     * Converts {@code java.util.logging.Leve}l to {@code org.apache.log4j.Level}.
+     */
     static org.apache.logging.log4j.Level toLog4jLevel(java.util.logging.Level level) {
         var logLevel = level.intValue();
         if (logLevel < java.util.logging.Level.FINE.intValue()) {
@@ -167,10 +163,11 @@ final class Log4j2LogEventUtil {
     }
 
     /**
-     * Formats the log message in response to an exception during a previous logging attempt. A
-     * synthetic error message is generated from the original log data and the given exception is
-     * set
-     * as the cause. The level of this record is the maximum of WARNING or the original level.
+     * Formats the log message in response to an exception during a previous logging attempt.
+     *
+     * <p>A synthetic error message is generated from the original log data and the given
+     * exception is set as the cause. The level of this record is the maximum of WARNING or
+     * the original level.
      */
     private static String formatBadLogData(RuntimeException error, LogData badLogData) {
         var errorMsg =
@@ -188,7 +185,10 @@ final class Log4j2LogEventUtil {
         return errorMsg.toString();
     }
 
-    /** Appends the given {@link LogData} to the given {@link StringBuilder}. */
+    /**
+     * Appends the given {@link LogData} to the given {@link StringBuilder}.
+     */
+    @SuppressWarnings({"HardcodedLineSeparator", "MethodWithMultipleLoops"})
     private static void appendLogData(LogData data, StringBuilder out) {
         out.append("  original message: ");
         if (data.getTemplateContext() == null) {
@@ -200,7 +200,7 @@ final class Log4j2LogEventUtil {
             out.append("\n  original arguments:");
             for (var arg : data.getArguments()) {
                 out.append("\n    ")
-                   .append(MessageUtils.safeToString(arg));
+                   .append(AnyMessages.safeToString(arg));
             }
         }
         var metadata = data.getMetadata();
@@ -268,13 +268,11 @@ final class Log4j2LogEventUtil {
     /**
      * We do not support {@code MDC.getContext()} and {@code NDC.getStack()} and we do not make any
      * attempt to merge Log4j2 context data with Flogger's context data. Instead, users should use
-     * the
-     * {@link ScopedLoggingContext}.
+     * the {@link ScopedLoggingContext}.
      *
      * <p>Flogger's {@link ScopedLoggingContext} allows to include additional metadata and tags
-     * into
-     * logs which are written from current thread. This context data will be added to the log4j2
-     * event.
+     * into logs which are written from current thread.
+     * This context data will be added to the log4j2 event.
      */
     private static StringMap createContextMap(LogData logData) {
         var metadataProcessor = forScopeAndLogSite(Platform.getInjectedMetadata(),

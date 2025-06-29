@@ -150,67 +150,65 @@ public object SimpleMessageFormatter {
     }
 
     /**
-     * Returns the single literal value as a string. This method must never be called if the log
-     * data has arguments to be formatted.
+     * Returns the single literal value as a string.
+     *
+     * This method must never be called if the log data has arguments to be formatted.
      *
      * This method is designed to be paired with
      * [mustBeFormatted] and can always be safely called if that
      * method returned `false` for the same log data.
      *
-     * @param logData
-     *         the log statement data.
+     * @param logData The log statement data.
      *
      * @return the single logged value as a string.
      * @throws IllegalStateException
-     *         if the log data had arguments to be formatted (i.e. there was a
-     *         template context).
+     *         if the log data had arguments to be formatted
+     *         (i.e., there was a template context).
      */
     public fun getLiteralLogMessage(logData: LogData): String =
-        MessageUtils.safeToString(logData.literalArgument)
+        logData.literalArgument.safeToString()
 
     /**
      * An internal helper method for logger backends which are aggressively optimized for
      * performance.
+     *
      * This method is a best-effort optimization and should not be necessary for most
-     * implementations.
-     * It is not a stable API and may be removed at some point in the future.
+     * implementations. It is not a stable API and may be removed at some point in the future.
      *
      * This method attempts to determine, for the given log data and log metadata, if the
-     * default message formatting performed by the other methods in this class would just result in the
-     * literal log message being used, with no additional formatting.
+     * default message formatting performed by the other methods in this class would just
+     * result in the literal log message being used, with no additional formatting.
      *
      * If this method returns `false` then the literal log message can be obtained via
      * [getLiteralLogMessage], otherwise it must be formatted manually.
      *
      * By calling this class it is possible to more easily detect cases where using buffers to
-     * format the log message is not required. Obviously a logger backend my have its own reasons
-     * for needing buffering (e.g. prepending log site data) and those must also be taken into account.
+     * format the log message is not required. Obviously, a logger backend may have its own reasons
+     * for needing buffering (e.g., prepending log site data), and those must also be taken
+     * into account.
      *
-     * @param logData
-     *         the log statement data.
-     *
-     * @param metadata
-     *         the metadata intended to be formatted with the log statement.
-     *
-     * @param keysToIgnore
-     *         a set of metadata keys which are known not to appear in the final formatted
-     *         message.
+     * @param logData The log statement data.
+     * @param metadata The metadata intended to be formatted with the log statement.
+     * @param keysToIgnore A set of metadata keys which are known not to appear in
+     *        the final formatted message.
      */
     public fun mustBeFormatted(
         logData: LogData,
         metadata: MetadataProcessor,
         keysToIgnore: Set<MetadataKey<*>>
     ): Boolean {
-        // If there are logged arguments or more metadata keys than can be ignored, we fail immediately
-        // which avoids the cost of creating the metadata key set (so don't remove the size check).
+        // If there are logged arguments or more metadata keys than can be ignored,
+        // we fail immediately, which avoids the cost of creating the metadata key set
+        // (so don't remove the size check).
         return logData.templateContext != null ||
                 metadata.keyCount() > keysToIgnore.size ||
                 !keysToIgnore.containsAll(metadata.keySet())
     }
 
     /**
-     * Returns a new "simple" formatter which ignores the given set of metadata keys. The caller
-     * must ensure that the given set is effectively immutable.
+     * Returns a new "simple" formatter which ignores the given set of metadata keys.
+     *
+     * The caller must ensure that the given set is effectively immutable.
      */
     private fun newFormatter(keysToIgnore: Set<MetadataKey<*>>): LogMessageFormatter {
         return object : LogMessageFormatter() {

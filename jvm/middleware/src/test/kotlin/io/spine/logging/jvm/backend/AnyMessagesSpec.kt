@@ -30,19 +30,18 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.backend.given.BadToString
-import io.spine.logging.jvm.backend.MessageUtils.safeToString
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for [MessageUtils].
+ * Tests for extensions of `Any?` declared in the `AnyExts.kt` file.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/backend/MessageUtilsTest.java">
- *     Original Java code of Google Flogger</a> for historical context.
+ *   Original Java code of Google Flogger</a> for historical context.
  */
-@DisplayName("`MessageUtils` should")
-internal class MessageUtilsSpec {
+@DisplayName("`Any?` extensions should")
+internal class AnyMessagesSpec {
 
     @Nested
     inner class
@@ -50,21 +49,21 @@ internal class MessageUtilsSpec {
 
         @Test
         fun `literals and arrays`() {
-            safeToString("Hello World") shouldBeSameInstanceAs "Hello World"
-            safeToString(10) shouldBe "10"
-            safeToString(false) shouldBe "false"
+            "Hello World".safeToString() shouldBeSameInstanceAs "Hello World"
+            10.safeToString() shouldBe "10"
+            false.safeToString() shouldBe "false"
 
             // Not what you would normally get from `Any.toString()` ...
-            safeToString(arrayOf("Foo", "Bar")) shouldBe "[Foo, Bar]"
-            safeToString(arrayOf(1, 2, 3)) shouldBe "[1, 2, 3]"
-            safeToString(null) shouldBe "null"
+            arrayOf("Foo", "Bar").safeToString() shouldBe "[Foo, Bar]"
+            arrayOf(1, 2, 3).safeToString() shouldBe "[1, 2, 3]"
+            null.safeToString() shouldBe "null"
         }
 
         @Test
         fun `objects that return 'null' on 'toString()'`() {
             val badToString = BadToString()
-            safeToString(badToString) shouldContain badToString::class.simpleName!!
-            safeToString(badToString) shouldContain "toString() returned null"
+            badToString.safeToString() shouldContain badToString::class.simpleName!!
+            badToString.safeToString() shouldContain "toString() returned null"
         }
 
         @Test
@@ -72,7 +71,7 @@ internal class MessageUtilsSpec {
             val any = object {
                 override fun toString(): String = throw IllegalArgumentException("Badness")
             }
-            safeToString(any) shouldContain "java.lang.IllegalArgumentException: Badness"
+            any.safeToString() shouldContain "java.lang.IllegalArgumentException: Badness"
         }
     }
 }

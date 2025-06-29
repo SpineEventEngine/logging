@@ -82,7 +82,7 @@ public fun StringBuilder.safeFormatTo(value: Formattable, options: FormatOptions
     }
     // We may need to undo an arbitrary amount of appending if there is an error.
     val originalLength = this.length
-    val formatter = Formatter(this, MessageUtils.FORMAT_LOCALE)
+    val formatter = Formatter(this, FORMAT_LOCALE)
     try {
         value.formatTo(formatter, formatFlags, options.width, options.precision)
     } catch (e: RuntimeException) {
@@ -119,7 +119,7 @@ public fun StringBuilder.appendHex(number: Number, options: FormatOptions) {
         is Short -> this.appendHex(n and 0xFFFFL, isUpper)
         is BigInteger -> {
             val hex = number.toString(16)
-            this.append(if (isUpper) hex.uppercase(MessageUtils.FORMAT_LOCALE) else hex)
+            this.append(if (isUpper) hex.uppercase(FORMAT_LOCALE) else hex)
         }
 
         else -> {

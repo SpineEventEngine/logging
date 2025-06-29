@@ -34,8 +34,6 @@ import io.spine.logging.jvm.backend.FormatChar.DECIMAL
 import io.spine.logging.jvm.backend.FormatChar.HEX
 import io.spine.logging.jvm.backend.FormatChar.STRING
 import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_UPPER_CASE
-import io.spine.logging.jvm.backend.MessageUtils.FORMAT_LOCALE
-import io.spine.logging.jvm.backend.MessageUtils.safeToString
 import io.spine.logging.jvm.parameter.DateTimeFormat
 import io.spine.logging.jvm.parameter.Parameter
 import io.spine.logging.jvm.parameter.ParameterVisitor
@@ -148,7 +146,7 @@ protected constructor(
                 }
                 return result
             } else {
-                out.append(safeToString(data.literalArgument))
+                out.append(data.literalArgument.safeToString())
             }
             return out
         }
@@ -225,7 +223,7 @@ private fun StringBuilder.handleString(value: Any?, options: FormatOptions): Boo
     var handled = false
     if (value !is Formattable) {
         if (options.isDefault) {
-            append(safeToString(value))
+            append(value.safeToString())
             handled = true
         }
     } else {
@@ -312,6 +310,6 @@ private fun StringBuilder.appendInvalid(value: Any?, formatString: String) {
         .append(", type=")
         .append(value?.javaClass?.canonicalName)
         .append(", value=")
-        .append(safeToString(value))
+        .append(value.safeToString())
         .append(']')
 }
