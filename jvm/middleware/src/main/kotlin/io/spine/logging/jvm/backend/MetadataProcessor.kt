@@ -286,9 +286,7 @@ private class LightweightProcessor(
         return if (index >= 0) key.cast(getValue(keyMap[index])) else null
     }
 
-    override fun keyCount(): Int {
-        return keyCount
-    }
+    override fun keyCount(): Int = keyCount
 
     override fun keySet(): Set<MetadataKey<*>> {
 
@@ -504,13 +502,8 @@ private class SimpleProcessor(scope: Metadata, logged: Metadata) : MetadataProce
         return if (value != null) value as T else null
     }
 
-    override fun keyCount(): Int {
-        return map.size
-    }
-
-    override fun keySet(): Set<MetadataKey<*>> {
-        return map.keys
-    }
+    override fun keyCount(): Int = map.size
+    override fun keySet(): Set<MetadataKey<*>> = map.keys
 }
 
 /**
