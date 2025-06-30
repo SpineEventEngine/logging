@@ -32,34 +32,29 @@ import io.spine.logging.jvm.backend.Metadata
 import io.spine.logging.jvm.util.Checks.checkArgument
 import io.spine.logging.jvm.util.Checks.checkNotNull
 import org.jetbrains.annotations.NotNull
-import java.util.ArrayList
-import java.util.Arrays
 
 /**
- * Immutable [Metadata] implementation intended for use in nested contexts. Scope metadata can
- * be concatenated to inherit metadata from a parent context. This class is only expected to be
- * needed by implementations of [ScopedLoggingContext] and should not be considered a stable
- * API.
+ * Immutable [Metadata] implementation intended for use in nested contexts.
  *
- * @see [Original Java code of Google Flogger](https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/ContextMetadata.java)
- * for historical context.
+ * Scope metadata can be concatenated to inherit metadata from a parent context.
+ * This class is only expected to be needed by implementations of [ScopedLoggingContext] and
+ * should not be considered a stable API.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/ContextMetadata.java">
+ *   Original Java code of Google Flogger</a>> for historical context.
  */
 public abstract class ContextMetadata protected constructor() : Metadata() {
 
-    internal class Entry<T : Any>(
+    internal data class Entry<T : Any>(
         val key: MetadataKey<T>,
         val value: T
-    ) {
-        init {
-            checkNotNull(key, "key")
-            checkNotNull(value, "value")
-        }
-    }
+    )
 
     /**
-     * A builder to collect metadata key/values pairs in order. This class is only expected to be
-     * needed by implementations of [ScopedLoggingContext] and should not be considered a stable
-     * API.
+     * A builder to collect metadata key/values pairs in order.
+     *
+     * This class is only expected to be needed by implementations of [ScopedLoggingContext] and
+     * should not be considered a stable API.
      */
     public class Builder {
 
@@ -80,7 +75,7 @@ public abstract class ContextMetadata protected constructor() : Metadata() {
         }
 
         public fun build(): ContextMetadata {
-            // Analysis shows it's quicker to pass an empty array here and let the JVM optimize to
+            // Analysis shows it is quicker to pass an empty array here and let the JVM optimize to
             // avoid creating an empty array just to overwrite all its elements.
             return ImmutableScopeMetadata(entries.toArray(EMPTY_ARRAY))
         }
@@ -117,113 +112,8 @@ public abstract class ContextMetadata protected constructor() : Metadata() {
         return get(n).value
     }
 
-    private class ImmutableScopeMetadata(private val entries: Array<Entry<*>?>) : ContextMetadata() {
-
-        override fun size(): Int {
-            return entries.size
-        }
-
-        override fun get(n: Int): Entry<*> {
-            return entries[n]!!
-        }
-
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : Any> findValue(key: MetadataKey<T>): T? {
-            checkCannotRepeat(key)
-            for (n in entries.indices.reversed()) {
-                val e = entries[n]!!
-                if (e.key == key) {
-                    return e.value as T
-                }
-            }
-            return null
-        }
-
-        override fun concatenate(metadata: ContextMetadata): ContextMetadata {
-            val extraSize = metadata.size()
-            if (extraSize == 0) {
-                return this
-            }
-            if (entries.isEmpty()) {
-                return metadata
-            }
-            val merged = Arrays.copyOf(entries, entries.size + extraSize)
-            for (i in 0 until extraSize) {
-                merged[i + entries.size] = metadata.get(i)
-            }
-            return ImmutableScopeMetadata(merged)
-        }
-    }
-
-    private class SingletonMetadata<T : Any>(key: MetadataKey<T>, value: T) : ContextMetadata() {
-
-        private val entry = Entry(key, value)
-
-        override fun size(): Int {
-            return 1
-        }
-
-        override fun get(n: Int): Entry<*> {
-            if (n == 0) {
-                return entry
-            }
-            throw IndexOutOfBoundsException(n.toString())
-        }
-
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : Any> findValue(key: MetadataKey<T>): T? {
-            checkCannotRepeat(key)
-            return if (entry.key == key) entry.value as T else null
-        }
-
-        override fun concatenate(metadata: ContextMetadata): ContextMetadata {
-            // No check for size() == 0 since this instance always has one value.
-            val extraSize = metadata.size()
-            if (extraSize == 0) {
-                return this
-            }
-            val merged = arrayOfNulls<Entry<*>>(extraSize + 1)
-            merged[0] = entry
-            for (i in 0 until extraSize) {
-                merged[i + 1] = metadata.get(i)
-            }
-            return ImmutableScopeMetadata(merged)
-        }
-    }
-
-    /**
-     * This is a static nested class as opposed to an anonymous class assigned to a constant field
-     * to decouple its classloading when Metadata is loaded.
-     *
-     * Android users are particularly careful about unnecessary class loading,
-     * and we've used similar mechanisms in Guava (see CharMatchers).
-     */
-    private class EmptyMetadata private constructor() : ContextMetadata() {
-
-        override fun size(): Int {
-            return 0
-        }
-
-        override fun get(n: Int): Entry<*> {
-            throw IndexOutOfBoundsException(n.toString())
-        }
-
-        override fun <T : Any> findValue(key: MetadataKey<T>): T? {
-            // For consistency, do the same checks as for non-empty instances.
-            checkCannotRepeat(key)
-            return null
-        }
-
-        override fun concatenate(metadata: ContextMetadata): ContextMetadata {
-            return metadata
-        }
-
-        companion object {
-            val INSTANCE = EmptyMetadata()
-        }
-    }
-
     public companion object {
+
         /** Returns a new [ContextMetadata] builder. */
         @JvmStatic
         public fun builder(): Builder {
@@ -242,9 +132,118 @@ public abstract class ContextMetadata protected constructor() : Metadata() {
         public fun none(): ContextMetadata {
             return EmptyMetadata.INSTANCE
         }
+    }
+}
 
-        private fun <T : Any> checkCannotRepeat(key: MetadataKey<T>) {
-            checkArgument(!key.canRepeat(), "metadata key must be single valued")
+private fun <T : Any> checkCannotRepeat(key: MetadataKey<T>) {
+    checkArgument(!key.canRepeat(), "metadata key must be single valued")
+}
+
+
+private class ImmutableScopeMetadata(private val entries: Array<Entry<*>?>) :
+    ContextMetadata() {
+
+    override fun size(): Int {
+        return entries.size
+    }
+
+    override fun get(n: Int): Entry<*> {
+        return entries[n]!!
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : Any> findValue(key: MetadataKey<T>): T? {
+        checkCannotRepeat(key)
+        for (n in entries.indices.reversed()) {
+            val e = entries[n]!!
+            if (e.key == key) {
+                return e.value as T
+            }
         }
+        return null
+    }
+
+    @Suppress("ReturnCount")
+    override fun concatenate(metadata: ContextMetadata): ContextMetadata {
+        val extraSize = metadata.size()
+        if (extraSize == 0) {
+            return this
+        }
+        if (entries.isEmpty()) {
+            return metadata
+        }
+        val merged = entries.copyOf(entries.size + extraSize)
+        for (i in 0 until extraSize) {
+            merged[i + entries.size] = metadata.get(i)
+        }
+        return ImmutableScopeMetadata(merged)
+    }
+}
+
+private class SingletonMetadata<T : Any>(key: MetadataKey<T>, value: T) : ContextMetadata() {
+
+    private val entry = Entry(key, value)
+
+    override fun size(): Int {
+        return 1
+    }
+
+    override fun get(n: Int): Entry<*> {
+        if (n == 0) {
+            return entry
+        }
+        throw IndexOutOfBoundsException(n.toString())
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : Any> findValue(key: MetadataKey<T>): T? {
+        checkCannotRepeat(key)
+        return if (entry.key == key) entry.value as T else null
+    }
+
+    override fun concatenate(metadata: ContextMetadata): ContextMetadata {
+        // No check for size() == 0 since this instance always has one value.
+        val extraSize = metadata.size()
+        if (extraSize == 0) {
+            return this
+        }
+        val merged = arrayOfNulls<Entry<*>>(extraSize + 1)
+        merged[0] = entry
+        for (i in 0 until extraSize) {
+            merged[i + 1] = metadata.get(i)
+        }
+        return ImmutableScopeMetadata(merged)
+    }
+}
+
+/**
+ * This is a static nested class as opposed to an anonymous class assigned to a constant field
+ * to decouple its classloading when Metadata is loaded.
+ *
+ * Android users are particularly careful about unnecessary class loading,
+ * and we've used similar mechanisms in Guava (see CharMatchers).
+ */
+private class EmptyMetadata private constructor() : ContextMetadata() {
+
+    override fun size(): Int {
+        return 0
+    }
+
+    override fun get(n: Int): Entry<*> {
+        throw IndexOutOfBoundsException(n.toString())
+    }
+
+    override fun <T : Any> findValue(key: MetadataKey<T>): T? {
+        // For consistency, do the same checks as for non-empty instances.
+        checkCannotRepeat(key)
+        return null
+    }
+
+    override fun concatenate(metadata: ContextMetadata): ContextMetadata {
+        return metadata
+    }
+
+    companion object {
+        val INSTANCE = EmptyMetadata()
     }
 }

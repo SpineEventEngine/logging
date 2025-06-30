@@ -102,32 +102,32 @@ public abstract class ContextDataProvider {
      * @param level the level of the log statement being invoked
      * @param isEnabledByLevel whether the logger is enabled at the given level
      */
-    public open fun shouldForceLogging(loggerName: String, level: Level, isEnabledByLevel: Boolean): Boolean {
-        return false
-    }
+    public open fun shouldForceLogging(
+        loggerName: String,
+        level: Level,
+        isEnabledByLevel: Boolean
+    ): Boolean = false
 
     /**
      * Obtains a custom logging level set for the logger with the given name.
      *
      * The default implementation always returns `null`.
      *
-     * @param loggerName the name of the logger
-     * @return the custom level set for the logger or `null` if the level is not set
+     * @param loggerName The name of the logger.
+     * @return the custom level set for the logger or `null` if the level is not set.
      */
-    public open fun getMappedLevel(loggerName: String): Level? {
-        return null
-    }
+    public open fun getMappedLevel(loggerName: String): Level? = null
 
     /**
-     * Returns a set of tags to be added to a log statement. These tags can be used to provide
-     * additional contextual metadata to log statements (e.g., request IDs).
+     * Returns a set of tags to be added to a log statement.
+     *
+     * These tags can be used to provide additional contextual metadata
+     * to log statements (e.g., request IDs).
      *
      * Implementations which do not support scoped [Tags] should not override this method;
      * the default implementation returns [Tags.empty].
      */
-    public open fun getTags(): Tags {
-        return Tags.empty()
-    }
+    public open fun getTags(): Tags = Tags.empty()
 
     /**
      * Returns metadata to be applied to a log statement. Scoped metadata can be used to provide
@@ -137,9 +137,7 @@ public abstract class ContextDataProvider {
      * Implementations which do not support scoped [Metadata] should not override this
      * method; the default implementation returns [Metadata.empty].
      */
-    public open fun getMetadata(): Metadata {
-        return Metadata.empty()
-    }
+    public open fun getMetadata(): Metadata = Metadata.empty()
 
     /**
      * Returns the scope instance of the specified type for this context, or `null` if no such
@@ -148,32 +146,32 @@ public abstract class ContextDataProvider {
      * Implementations which do not support scope types should return `null`, which can be
      * achieved by using the default method.
      */
-    public open fun getScope(type: ScopeType): LoggingScope? {
-        return null
-    }
+    public open fun getScope(type: ScopeType): LoggingScope? = null
 
     public companion object {
         /**
          * Returns the singleton instance of the context data provider for use by logging platform
-         * implementations. This method should not be called by general application code, and the
-         * `ContextDataProvider` class should never need to be used directly outside of the logger
-         * platform implementations.
+         * implementations.
+         *
+         * This method should not be called by general application code, and
+         * the `ContextDataProvider` class should never need to be used directly
+         * outside of the logger platform implementations.
          */
         @JvmStatic
-        public fun getInstance(): ContextDataProvider {
-            return Platform.getContextDataProvider()
-        }
+        public fun getInstance(): ContextDataProvider =
+            Platform.getContextDataProvider()
 
         /**
          * Returns the singleton no-op context data provider, which can be used by platform
-         * implementations which don't support `ScopedLoggingContext` for some reason. The returned
-         * provider has no effect and returns empty/default data in all cases.
+         * implementations which don't support `ScopedLoggingContext` for some reason.
          *
-         * In general this method should never need to be called outside the core Flogger libraries.
+         * The returned provider has no effect and returns empty/default data in all cases.
+         *
+         * In general, this method should never need to be called outside
+         * the core of the Logging library.
          */
         @JvmStatic
-        public fun getNoOpProvider(): ContextDataProvider {
-            return NoOpContextDataProvider.getNoOpInstance()
-        }
+        public fun getNoOpProvider(): ContextDataProvider =
+            NoOpContextDataProvider.Companion.noOpInstance
     }
 }

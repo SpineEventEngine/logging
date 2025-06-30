@@ -90,14 +90,9 @@ import java.util.concurrent.Callable
  */
 public abstract class ScopedLoggingContext protected constructor() {
 
-    /** A logging context which must be closed in the reverse order to which it was created. */
-    // If Flogger is bumped to JDK 1.7, this should be switched to AutoCloseable.
-    public interface LoggingContextCloseable : Closeable {
-        // Overridden to remove the throws clause allowing simple try-with-resources use.
-        override fun close()
-    }
-
-    /** Lightweight internal helper class for context implementations to manage a list of scopes. */
+    /**
+     * Lightweight internal helper class for context implementations to manage a list of scopes.
+     */
     public class ScopeList(
         private val key: ScopeType,
         private val scope: LoggingScope,
@@ -189,17 +184,20 @@ public abstract class ScopedLoggingContext protected constructor() {
         }
 
         /**
-         * Wraps a runnable so it will execute within a new context based on the state of the
-         * builder. Note that each time this runnable is executed, a new context will be installed extending
-         * from the currently installed context at the time of execution.
+         * Wraps a runnable so it will execute within a new context based on
+         * the state of the builder.
+         *
+         * Note that each time this runnable is executed, a new context will be
+         * installed extending from the currently installed context at the time of execution.
          *
          * @throws InvalidLoggingContextStateException
          *         if the context created during this method cannot
-         *         be closed correctly (e.g., if a nested context has also been opened, but not
-         *         closed).
+         *         be closed correctly (e.g., if a nested context has also been opened,
+         *         but not closed).
          */
         public fun wrap(r: Runnable): Runnable {
             return Runnable {
+                //TODO:2025-06-30:alexander.yevsyukov: Migrate to `use { }`.
                 // JDK 1.6 does not have "try-with-resources"
                 val context = install()
                 var hasError = true
@@ -213,8 +211,10 @@ public abstract class ScopedLoggingContext protected constructor() {
         }
 
         /**
-         * Wraps a callable so it will execute within a new context based on the state of the
-         * builder. Note that each time this runnable is executed, a new context will be installed extending
+         * Wraps a callable so it will execute within a new context based on
+         * the state of the builder.
+         *
+         * Note that each time this runnable is executed, a new context will be installed extending
          * from the currently installed context at the time of execution.
          *
          * @throws InvalidLoggingContextStateException
@@ -261,13 +261,13 @@ public abstract class ScopedLoggingContext protected constructor() {
         } catch (e: RuntimeException) {
             throw e
         } catch (e: Exception) {
-            throw RuntimeException("checked exception caught during context call", e)
+            throw IllegalStateException("Checked exception caught during context call. ", e)
         }
 
         /**
          * Installs a new context based on the state of the builder.
          *
-         * The caller is *required* to invoke [LoggingContextCloseable.close] on
+         * The caller is *required* to invoke [AutoCloseable.close] on
          * the returned instances in the reverse order to which they were obtained:
          *
          * ```kotlin
@@ -287,37 +287,34 @@ public abstract class ScopedLoggingContext protected constructor() {
          * An implementation of scoped contexts must preserve any existing metadata when a
          * context is opened, and restore the previous state when it terminates.
          *
-         * Note that the returned [LoggingContextCloseable] is not required to enforce the
+         * Note that the returned [AutoCloseable] is not required to enforce the
          * correct closure of nested contexts, and while it is permitted to throw a
          * [InvalidLoggingContextStateException] in the face of mismatched or invalid usage,
          * it is not required.
          */
         @MustBeClosed
-        public abstract fun install(): LoggingContextCloseable
+        public abstract fun install(): AutoCloseable
 
         /**
-         * Returns the configured tags, or null. This method may do work and results should be
-         * cached by context implementations.
+         * Returns the configured tags, or null.
+         *
+         * This method may do work and results should be cached by context implementations.
          */
-        protected fun getTags(): Tags? {
-            return tags
-        }
+        protected fun getTags(): Tags? = tags
 
         /**
-         * Returns the configured context metadata, or null. This method may do work and results
-         * should be cached by context implementations.
+         * Returns the configured context metadata, or null.
+         *
+         * This method may do work and results should be cached by context implementations.
          */
-        protected fun getMetadata(): ContextMetadata? {
-            return metadata?.build()
-        }
+        protected fun getMetadata(): ContextMetadata? = metadata?.build()
 
         /**
-         * Returns the configured log level map, or null. This method may do work and results should
-         * be cached by context implementations.
+         * Returns the configured log level map, or null.
+         *
+         * This method may do work and results should be cached by context implementations.
          */
-        protected fun getLogLevelMap(): LogLevelMap? {
-            return logLevelMap
-        }
+        protected fun getLogLevelMap(): LogLevelMap? = logLevelMap
     }
 
     /**
@@ -389,6 +386,8 @@ public abstract class ScopedLoggingContext protected constructor() {
     @CanIgnoreReturnValue
     public open fun addTags(tags: Tags): Boolean {
         checkNotNull(tags, "tags")
+        //TODO:2025-06-30:alexander.yevsyukov: Investigate why this method does nothing despite
+        // the documentation.
         return false
     }
 
@@ -407,6 +406,8 @@ public abstract class ScopedLoggingContext protected constructor() {
     public open fun <T : Any> addMetadata(key: MetadataKey<T>, value: T): Boolean {
         checkNotNull(key, "key")
         checkNotNull(value, "value")
+        //TODO:2025-06-30:alexander.yevsyukov: Investigate why this method does nothing despite
+        // the documentation.
         return false
     }
 
@@ -421,38 +422,39 @@ public abstract class ScopedLoggingContext protected constructor() {
      *
      * The effects of this call will be undone only when the current context terminates.
      *
-     * @return false if there is no current context, or scoped contexts are not supported.
+     * @return `false` if there is no current context, or scoped contexts are not supported.
      */
     @CanIgnoreReturnValue
     public open fun applyLogLevelMap(logLevelMap: LogLevelMap): Boolean {
         checkNotNull(logLevelMap, "log level map")
+        //TODO:2025-06-30:alexander.yevsyukov: Investigate why this method does nothing despite
+        // the documentation.
         return false
     }
 
-    /** Package-private checker to help avoid unhelpful debug logs. */
-    internal open fun isNoOp(): Boolean {
-        return false
-    }
+    /**
+     * Package-private checker to help avoid unhelpful debug logs.
+     */
+    public open fun isNoOp(): Boolean = false
 
     public companion object {
         /**
-         * Returns the platform/framework specific implementation of the logging context API.
+         * Returns the platform/framework-specific implementation of the logging context API.
          *
          * This is a singleton value and need not be cached by callers.
          * If logging contexts are not supported, this method will return
          * an empty context implementation which has no effect.
          */
         @JvmStatic
-        public fun getInstance(): ScopedLoggingContext {
-            return ContextDataProvider.getInstance().getContextApiSingleton()
-        }
+        public fun getInstance(): ScopedLoggingContext =
+            ContextDataProvider.getInstance().getContextApiSingleton()
 
         @Suppress("TooGenericExceptionCaught")
         private fun closeAndMaybePropagateError(
-            context: LoggingContextCloseable,
+            context: AutoCloseable,
             callerHasError: Boolean
         ) {
-            // Because LoggingContextCloseable is not just a `Closeable`, there's no risk of it
+            // Because AutoCloseable is not just a `Closeable`, there's no risk of it
             // throwing any checked exceptions.
             // In particular, when this is switched to use `AutoCloseable`, there's no risk of
             // having to deal with InterruptedException.
@@ -465,8 +467,8 @@ public abstract class ScopedLoggingContext protected constructor() {
                 // be about to rethrow a user exception, so ignore any errors
                 // during `close()` if that's the case.
                 if (!callerHasError) {
-                    throw if (e is InvalidLoggingContextStateException) e
-                    else InvalidLoggingContextStateException("Invalid logging context state", e)
+                    throw e as? InvalidLoggingContextStateException
+                        ?: InvalidLoggingContextStateException("Invalid logging context state.", e)
                 }
             }
         }

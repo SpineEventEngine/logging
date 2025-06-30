@@ -71,9 +71,9 @@ abstract class AbstractContextDataProviderSpec {
     private lateinit var context: ScopedLoggingContext
 
     private val contextTags: Map<String?, Set<Any?>?>
-        get() = contextData.tags.asMap()
+        get() = contextData.getTags().asMap()
     private val contextMetadata: Metadata
-        get() = contextData.metadata
+        get() = contextData.getMetadata()
 
     /**
      * A flag to be set inside an innermost callback to prove it was executed.

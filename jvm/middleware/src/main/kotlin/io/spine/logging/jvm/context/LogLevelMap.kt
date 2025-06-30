@@ -38,12 +38,12 @@ import java.util.logging.Level
  * level during debugging. This class is designed to allow efficient (i.e., zero-allocation)
  * resolution of the log level for a given logger.
  *
- * This class is immutable and thread safe.
+ * This class is immutable and thread-safe.
  *
  * @see [Original Java code of Google Flogger](https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/LogLevelMap.java)
  * for historical context.
  */
-public class LogLevelMap private constructor(map: Map<String, out Level>, defaultLevel: Level) {
+public class LogLevelMap private constructor(map: Map<String, Level>, defaultLevel: Level) {
 
     private val trie: SegmentTrie<Level> = SegmentTrie.create(map, '.', defaultLevel)
 
@@ -91,12 +91,14 @@ public class LogLevelMap private constructor(map: Map<String, out Level>, defaul
         private var defaultLevel = Level.OFF
 
         private fun put(name: String, level: Level) {
-            if (map.put(name, level) != null) {
-                throw IllegalArgumentException("duplicate entry for class/package: $name")
+            require (map.put(name, level) == null) {
+                "Duplicate entry for class/package: `$name`."
             }
         }
 
-        /** Adds the given classes at the specified log level. */
+        /**
+         * Adds the given classes at the specified log level.
+         */
         @CanIgnoreReturnValue
         public fun add(level: Level, vararg classes: Class<*>): Builder {
             for (cls in classes) {
@@ -105,7 +107,9 @@ public class LogLevelMap private constructor(map: Map<String, out Level>, defaul
             return this
         }
 
-        /** Adds the given packages at the specified log level. */
+        /**
+         * Adds the given packages at the specified log level.
+         */
         @CanIgnoreReturnValue
         public fun add(level: Level, vararg packages: Package): Builder {
             for (pkg in packages) {
@@ -114,7 +118,9 @@ public class LogLevelMap private constructor(map: Map<String, out Level>, defaul
             return this
         }
 
-        /** Sets the default log level (use [Level.OFF] to disable. */
+        /**
+         * Sets the default log level (use [Level.OFF] to disable).
+         */
         @CanIgnoreReturnValue
         public fun setDefault(level: Level): Builder {
             checkNotNull(defaultLevel, "default log level must not be null")
@@ -128,20 +134,20 @@ public class LogLevelMap private constructor(map: Map<String, out Level>, defaul
     }
 
     public companion object {
-        /** Returns a new builder for constructing a [LogLevelMap]. */
-        @JvmStatic
-        public fun builder(): Builder {
-            return Builder()
-        }
 
         /**
-         * Returns an empty [LogLevelMap] with a single default level which will apply to all
-         * loggers.
+         * Returns a new builder for constructing a [LogLevelMap].
          */
         @JvmStatic
-        public fun create(level: Level): LogLevelMap {
-            return create(Collections.emptyMap<String, Level>(), level)
-        }
+        public fun builder(): Builder = Builder()
+
+        /**
+         * Returns an empty [LogLevelMap] with a single default level which
+         * will apply to all loggers.
+         */
+        @JvmStatic
+        public fun create(level: Level): LogLevelMap =
+            create(Collections.emptyMap(), level)
 
         /**
          * Returns a [LogLevelMap] whose entries correspond to the given map, and with the default
@@ -149,17 +155,18 @@ public class LogLevelMap private constructor(map: Map<String, out Level>, defaul
          * and the values cannot be `null`.
          */
         @JvmStatic
-        public fun create(map: Map<String, out Level>): LogLevelMap {
-            return create(map, Level.OFF)
-        }
+        public fun create(map: Map<String, Level>): LogLevelMap =
+            create(map, Level.OFF)
 
         /**
-         * Returns a [LogLevelMap] whose entries correspond to the given map. The keys of the map
-         * must all be valid dot-separated logger names, and neither the values, nor the default value,
-         * can be `null`.
+         * Returns a [LogLevelMap] whose entries correspond to the given map.
+         *
+         * The keys of the map must all be valid dot-separated logger names, and
+         * neither the values, nor the default value, can be `null`.
          */
         @JvmStatic
-        public fun create(map: Map<String, out Level>, defaultLevel: Level): LogLevelMap {
+        @Suppress("UseRequire")
+        public fun create(map: Map<String, Level>, defaultLevel: Level): LogLevelMap {
             checkNotNull(defaultLevel, "default log level must not be null")
             for (e in map.entries) {
                 val name = e.key
@@ -172,9 +179,8 @@ public class LogLevelMap private constructor(map: Map<String, out Level>, defaul
             }
             return LogLevelMap(map, defaultLevel)
         }
-
-        private fun min(a: Level, b: Level): Level {
-            return if (a.intValue() <= b.intValue()) a else b
-        }
     }
 }
+
+private fun min(a: Level, b: Level): Level =
+    if (a.intValue() <= b.intValue()) a else b

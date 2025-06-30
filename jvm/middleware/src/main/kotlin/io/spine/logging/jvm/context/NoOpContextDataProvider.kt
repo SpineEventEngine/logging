@@ -29,102 +29,94 @@ package io.spine.logging.jvm.context
 import io.spine.logging.jvm.Middleman
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.StackSize
-import io.spine.logging.jvm.context.ScopedLoggingContext.LoggingContextCloseable
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * Fallback context data provider used when no other implementations are available for a platform.
  *
- * @see [Original Java code of Google Flogger](https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/NoOpContextDataProvider.java)
- * for historical context.
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/NoOpContextDataProvider.java">
+ *   Original Java code of Google Flogger</a> for historical context.
  */
 internal class NoOpContextDataProvider private constructor() : ContextDataProvider() {
 
     private val noOpContext = NoOpScopedLoggingContext()
 
-    override fun getContextApiSingleton(): ScopedLoggingContext {
-        return noOpContext
-    }
+    override fun getContextApiSingleton(): ScopedLoggingContext = noOpContext
+    override fun toString(): String = "No-op Provider"
 
-    override fun toString(): String {
-        return "No-op Provider"
-    }
+    companion object {
 
-    private class NoOpScopedLoggingContext : ScopedLoggingContext(), LoggingContextCloseable {
-
-        // Since the ContextDataProvider class is loaded during Platform initialization we must be very
-        // careful to avoid any attempt to obtain a logger instance until we can be sure logging config
-        // is complete.
-        private object LazyLogger {
-            val logger: Middleman = Middleman.forEnclosingClass()
+        /**
+         * Returns a singleton "no op" instance of the context data provider
+         * API which logs a warning if used in code which attempts to set context
+         * information or modify scopes.
+         *
+         * This is intended for use by platform implementations in cases
+         * where no context is configured.
+         */
+        @get:JvmName("getNoOpInstance")
+        @JvmStatic
+        val noOpInstance by lazy {
+            NoOpContextDataProvider()
         }
+    }
+}
 
-        private val haveWarned = AtomicBoolean()
+private class NoOpScopedLoggingContext : ScopedLoggingContext(), AutoCloseable {
 
-        private fun logWarningOnceOnly() {
-            if (haveWarned.compareAndSet(false, true)) {
-                val defaultPlatform = "io.spine.logging.backend.system.DefaultPlatform"
-                LazyLogger.logger
-                    .atWarning()
-                    .withStackTrace(StackSize.SMALL)
-                    .log("""
+    // Since the ContextDataProvider class is loaded during Platform initialization we must be very
+    // careful to avoid any attempt to obtain a logger instance until we can be sure logging config
+    // is complete.
+    private object LazyLogger {
+        val logger: Middleman = Middleman.forEnclosingClass()
+    }
+
+    private val haveWarned = AtomicBoolean()
+
+    private fun logWarningOnceOnly() {
+        if (haveWarned.compareAndSet(false, true)) {
+            val defaultPlatform = "io.spine.logging.backend.system.DefaultPlatform"
+            LazyLogger.logger
+                .atWarning()
+                .withStackTrace(StackSize.SMALL)
+                .log("""
                         Scoped logging contexts are disabled; no context data provider was installed.
                         To enable scoped logging contexts in your application, see the site-specific Platform class used to configure logging behaviour.
                         Default Platform: `$defaultPlatform`.
                         """.trimIndent())
-            }
-        }
-
-        override fun newContext(): ScopedLoggingContext.Builder {
-            return object : ScopedLoggingContext.Builder() {
-                override fun install(): LoggingContextCloseable {
-                    logWarningOnceOnly()
-                    return this@NoOpScopedLoggingContext
-                }
-            }
-        }
-
-        override fun newContext(scopeType: ScopeType?): ScopedLoggingContext.Builder {
-            // Ignore scope bindings when there's no way to propagate them.
-            return newContext()
-        }
-
-        override fun addTags(tags: Tags): Boolean {
-            logWarningOnceOnly()
-            // Superclass methods still do argument checking, which is important for consistent behaviour.
-            return super.addTags(tags)
-        }
-
-        override fun <T : Any> addMetadata(key: MetadataKey<T>, value: T): Boolean {
-            logWarningOnceOnly()
-            return super.addMetadata(key, value)
-        }
-
-        override fun applyLogLevelMap(logLevelMap: LogLevelMap): Boolean {
-            logWarningOnceOnly()
-            return super.applyLogLevelMap(logLevelMap)
-        }
-
-        override fun close() {
-            // No-op
-        }
-
-        override fun isNoOp(): Boolean {
-            return true
         }
     }
 
-    companion object {
-        private val NO_OP_INSTANCE = NoOpContextDataProvider()
+    override fun newContext(): Builder {
 
-        /**
-         * Returns a singleton "no op" instance of the context data provider API which logs a warning if
-         * used in code which attempts to set context information or modify scopes.
-         * This is intended for use by platform implementations in cases where no context is configured.
-         */
-        @JvmStatic
-        fun getNoOpInstance(): ContextDataProvider {
-            return NO_OP_INSTANCE
+        return object : Builder() {
+            override fun install(): AutoCloseable {
+                logWarningOnceOnly()
+                return this@NoOpScopedLoggingContext
+            }
         }
     }
+
+    override fun newContext(scopeType: ScopeType?): Builder =
+        // Ignore scope bindings when there's no way to propagate them.
+        newContext()
+
+    override fun addTags(tags: Tags): Boolean {
+        logWarningOnceOnly()
+        // Superclass methods still do argument checking, which is important for consistent behaviour.
+        return super.addTags(tags)
+    }
+
+    override fun <T : Any> addMetadata(key: MetadataKey<T>, value: T): Boolean {
+        logWarningOnceOnly()
+        return super.addMetadata(key, value)
+    }
+
+    override fun applyLogLevelMap(logLevelMap: LogLevelMap): Boolean {
+        logWarningOnceOnly()
+        return super.applyLogLevelMap(logLevelMap)
+    }
+
+    override fun close() = Unit
+    override fun isNoOp(): Boolean = true
 }

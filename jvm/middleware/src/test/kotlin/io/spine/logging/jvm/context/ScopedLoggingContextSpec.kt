@@ -74,14 +74,14 @@ internal class ScopedLoggingContextSpec {
 private object ErrorContext : ScopedLoggingContext() {
 
     override fun newContext(): Builder = object : Builder() {
-        override fun install(): LoggingContextCloseable {
-            return LoggingContextCloseable { throw IllegalArgumentException("BAD CONTEXT") }
+        override fun install(): AutoCloseable {
+            return AutoCloseable { throw IllegalArgumentException("BAD CONTEXT") }
         }
     }
 
     override fun newContext(scopeType: ScopeType?): Builder = newContext()
 
-    override fun addTags(tags: Tags?): Boolean = false
+    override fun addTags(tags: Tags): Boolean = false
 
-    override fun applyLogLevelMap(logLevelMap: LogLevelMap?): Boolean = false
+    override fun applyLogLevelMap(logLevelMap: LogLevelMap): Boolean = false
 }
