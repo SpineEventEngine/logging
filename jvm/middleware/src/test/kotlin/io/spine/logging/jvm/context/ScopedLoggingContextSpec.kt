@@ -26,8 +26,6 @@
 
 package io.spine.logging.jvm.context
 
-import io.spine.logging.jvm.context.ScopedLoggingContext.InvalidLoggingContextStateException
-import io.spine.logging.jvm.context.ScopedLoggingContext.LoggingContextCloseable
 import io.kotest.matchers.throwable.shouldHaveMessage
 import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.DisplayName

@@ -29,13 +29,11 @@ package io.spine.logging.jvm.context
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import com.google.errorprone.annotations.MustBeClosed
 import io.spine.logging.jvm.LoggingScope
-import io.spine.logging.jvm.LoggingScopeProvider
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.MiddlemanApi
 import io.spine.logging.jvm.util.Checks.checkNotNull
 import io.spine.logging.jvm.util.Checks.checkState
 import java.io.Closeable
-import java.io.Serial
 import java.util.concurrent.Callable
 
 /**
@@ -146,6 +144,7 @@ public abstract class ScopedLoggingContext protected constructor() {
      * This class is intended to be used only as part of a fluent statement, and retaining a
      * reference to a builder instance for any length of time is not recommended.
      */
+    @Suppress("TooManyFunctions")
     public abstract class Builder protected constructor() {
 
         private var tags: Tags? = null
@@ -237,44 +236,46 @@ public abstract class ScopedLoggingContext protected constructor() {
             }
         }
 
-        /** Runs a runnable directly within a new context installed from this builder. */
-        public fun run(r: Runnable) {
+        /**
+         * Runs a runnable directly within a new context installed from this builder.
+         */
+        public fun run(r: Runnable): Unit =
             wrap(r).run()
-        }
 
-        /** Calls a [Callable] directly within a new context installed from this builder. */
+        /**
+         * Calls a [Callable] directly within a new context installed from this builder.
+         */
         @CanIgnoreReturnValue
         @Throws(Exception::class)
-        public fun <R> call(c: Callable<R>): R {
-            return wrap(c).call()
-        }
+        public fun <R> call(c: Callable<R>): R =
+            wrap(c).call()
 
         /**
          * Calls a [Callable] directly within a new context installed from this builder,
          * wrapping any checked exceptions with a [RuntimeException].
          */
         @CanIgnoreReturnValue
-        public fun <R> callUnchecked(c: Callable<R>): R {
-            return try {
-                call(c)
-            } catch (e: RuntimeException) {
-                throw e
-            } catch (e: Exception) {
-                throw RuntimeException("checked exception caught during context call", e)
-            }
+        @Suppress("TooGenericExceptionCaught")
+        public fun <R> callUnchecked(c: Callable<R>): R = try {
+            call(c)
+        } catch (e: RuntimeException) {
+            throw e
+        } catch (e: Exception) {
+            throw RuntimeException("checked exception caught during context call", e)
         }
 
         /**
-         * Installs a new context based on the state of the builder. The caller is *required*
-         * to invoke [LoggingContextCloseable.close] on the returned instances in the
-         * reverse order to which they were obtained. For JDK 1.7 and above, this is best achieved
-         * by using a try-with-resources construction in the calling code.
+         * Installs a new context based on the state of the builder.
          *
-         * ```
-         * try (LoggingContextCloseable ctx = ScopedLoggingContext.getInstance()
-         *     .newContext().withTags(Tags.of("my_tag", someValue).install()) {
-         *   // Logging by code called from within this context will contain the additional metadata.
-         *   logger.atInfo().log("Log message should contain tag value...");
+         * The caller is *required* to invoke [LoggingContextCloseable.close] on
+         * the returned instances in the reverse order to which they were obtained:
+         *
+         * ```kotlin
+         * ScopedLoggingContext.getInstance().newContext()
+         *     .withTags(Tags.of("my_tag", someValue).install().use {
+         *     // Logging by code called from within this context will
+         *     // contain the additional metadata.
+         *     logger.atInfo().log("Log message should contain tag value...");
          * }
          * ```
          *
@@ -287,9 +288,9 @@ public abstract class ScopedLoggingContext protected constructor() {
          * context is opened, and restore the previous state when it terminates.
          *
          * Note that the returned [LoggingContextCloseable] is not required to enforce the
-         * correct closure of nested contexts, and while it is permitted to throw a [
-         * InvalidLoggingContextStateException] in the face of mismatched or invalid usage, it is
-         * not required.
+         * correct closure of nested contexts, and while it is permitted to throw a
+         * [InvalidLoggingContextStateException] in the face of mismatched or invalid usage,
+         * it is not required.
          */
         @MustBeClosed
         public abstract fun install(): LoggingContextCloseable
@@ -323,7 +324,7 @@ public abstract class ScopedLoggingContext protected constructor() {
      * Creates a new context builder to which additional logging metadata can be attached before
      * being installed or used to wrap some existing code.
      *
-     * ```
+     * ```kotlin
      * val ctx = ScopedLoggingContext.getInstance()
      * val result = ctx.newContext().withTags(Tags.of("my_tag", someValue)).call { MyClass.doFoo() }
      * ```
@@ -335,7 +336,7 @@ public abstract class ScopedLoggingContext protected constructor() {
      * reason such as testability (injecting it, for example), consider using the static methods in
      * [ScopedLoggingContexts] instead to avoid the need to call [getInstance]:
      *
-     * ```
+     * ```kotlin
      * val result = ScopedLoggingContexts.newContext()
      *     .withTags(Tags.of("my_tag", someValue))
      *     .call { MyClass.doFoo() }
@@ -370,16 +371,18 @@ public abstract class ScopedLoggingContext protected constructor() {
     }
 
     /**
-     * Adds tags to the current set of log tags for the current context. Tags are merged together
-     * and existing tags cannot be modified. This is deliberate since two pieces of code may not know
-     * about each other and could accidentally use the same tag name; in that situation it's
-     * important that both tag values are preserved.
+     * Adds tags to the current set of log tags for the current context.
      *
-     * Furthermore, the types of data allowed for tag values are strictly controlled. This is
-     * also very deliberate since these tags must be efficiently added to every log statement and so
-     * it's important that they resulting string representation is reliably cacheable and can be
-     * calculated without invoking arbitrary code (e.g. the `toString()` method of some unknown user
-     * type).
+     * Tags are merged together and existing tags cannot be modified.
+     * This is deliberate since two pieces of code may not know about each other and
+     * could accidentally use the same tag name; in that situation it is important
+     * that both tag values are preserved.
+     *
+     * Furthermore, the types of data allowed for tag values are strictly controlled.
+     * This is also very deliberate since these tags must be efficiently added to every
+     * log statement and so it is important that their resulting string representation is
+     * reliably cacheable and can be calculated without invoking arbitrary code
+     * (e.g., the `toString()` method of some unknown user type).
      *
      * @return false if there is no current context, or scoped contexts are not supported.
      */
@@ -393,9 +396,11 @@ public abstract class ScopedLoggingContext protected constructor() {
      * Adds a single metadata key/value pair to the current context.
      *
      * Unlike [Tags], which have a well defined value ordering, independent of the order
-     * in which values were added, context metadata preserves the order of addition. As such, it is
-     * not advised to add values for the same metadata key from multiple threads, since that may create
-     * non-deterministic ordering. It is recommended (where possible) to add metadata when building
+     * in which values were added, context metadata preserves the order of addition.
+     * As such, it is not advised to add values for the same metadata key from multiple threads,
+     * since that may create non-deterministic ordering.
+     * 
+     * It is recommended (where possible) to add metadata when building
      * a new context, rather than adding it to context visible to multiple threads.
      */
     @CanIgnoreReturnValue
@@ -406,9 +411,10 @@ public abstract class ScopedLoggingContext protected constructor() {
     }
 
     /**
-     * Applies the given log level map to the current context. Log level settings are merged with
-     * any existing setting from the current (or parent) contexts such that logging will be enabled for
-     * a log statement if:
+     * Applies the given log level map to the current context.
+     *
+     * Log level settings are merged with any existing setting from the current (or parent)
+     * contexts such that logging will be enabled for a log statement if:
      *
      * - It was enabled by the given map.
      * - It was already enabled by the current context.
@@ -428,46 +434,39 @@ public abstract class ScopedLoggingContext protected constructor() {
         return false
     }
 
-    /**
-     * Thrown if it can be determined that contexts have been closed incorrectly. Note that the
-     * point at which this exception is thrown may not itself be the point where the mishandling
-     * occurred, but simply where it was first detected.
-     */
-    public class InvalidLoggingContextStateException(message: String, cause: Throwable) : IllegalStateException(message, cause) {
-        private companion object {
-            @Serial
-            private const val serialVersionUID = 0L
-        }
-    }
-
     public companion object {
         /**
-         * Returns the platform/framework specific implementation of the logging context API. This is a
-         * singleton value and need not be cached by callers. If logging contexts are not supported,
-         * this method will return an empty context implementation which has no effect.
+         * Returns the platform/framework specific implementation of the logging context API.
+         *
+         * This is a singleton value and need not be cached by callers.
+         * If logging contexts are not supported, this method will return
+         * an empty context implementation which has no effect.
          */
         @JvmStatic
         public fun getInstance(): ScopedLoggingContext {
             return ContextDataProvider.getInstance().getContextApiSingleton()
         }
 
+        @Suppress("TooGenericExceptionCaught")
         private fun closeAndMaybePropagateError(
             context: LoggingContextCloseable,
             callerHasError: Boolean
         ) {
             // Because LoggingContextCloseable is not just a `Closeable`, there's no risk of it
             // throwing any checked exceptions.
-            // In particular, when this is switched to use AutoCloseable, there's no risk of
-            // having to deal with InterruptedException. That's why having an extended interface is always
-            // better than using [Auto]Closeable directly.
+            // In particular, when this is switched to use `AutoCloseable`, there's no risk of
+            // having to deal with InterruptedException.
+            // That's why having an extended interface is always better than
+            // using [Auto]Closeable directly.
             try {
                 context.close()
             } catch (e: RuntimeException) {
-                // This method is always called from a `finally` block which may be about to rethrow a user
-                // exception, so ignore any errors during close() if that's the case.
+                // This method is always called from a `finally` block which may
+                // be about to rethrow a user exception, so ignore any errors
+                // during `close()` if that's the case.
                 if (!callerHasError) {
                     throw if (e is InvalidLoggingContextStateException) e
-                    else InvalidLoggingContextStateException("invalid logging context state", e)
+                    else InvalidLoggingContextStateException("Invalid logging context state", e)
                 }
             }
         }
