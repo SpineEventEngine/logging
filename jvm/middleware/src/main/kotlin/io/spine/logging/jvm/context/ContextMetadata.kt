@@ -44,6 +44,9 @@ import org.jetbrains.annotations.NotNull
  */
 public abstract class ContextMetadata protected constructor() : Metadata() {
 
+    /**
+     * An entry in the metadata, consisting of a [MetadataKey] and its associated value.
+     */
     internal data class Entry<T : Any>(
         val key: MetadataKey<T>,
         val value: T
