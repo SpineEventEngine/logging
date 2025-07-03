@@ -30,8 +30,6 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.logging.jvm.util.Checks.checkMetadataIdentifier
 import java.util.AbstractMap.SimpleImmutableEntry
 import java.util.Arrays
-import java.util.Collections
-
 
 /**
  * Immutable tags which can be attached to log statements via
@@ -266,7 +264,7 @@ private data class KeyValuePair(
         if (signum == 0) {
             signum = when {
                 value != null && other.value != null ->
-                    Type.compareValues(value, other.value)
+                    ValueComparator.compare(value, other.value)
                 value != null -> 1
                 other.value != null -> -1
                 else -> 0
@@ -323,15 +321,21 @@ private enum class Type {
                 }
             }
         }
+    }
+}
 
-        fun compareValues(left: Any, right: Any): Int {
-            val ltype = of(left)
-            val rtype = of(right)
-            return if (ltype == rtype) {
-                ltype.compare(left, right)
-            } else {
-                ltype.compareTo(rtype)
-            }
+/**
+ * Compares two values by their type, and then by values themselves.
+ */
+private object ValueComparator : Comparator<Any> {
+
+    override fun compare(left: Any, right: Any): Int {
+        val ltype = Type.of(left)
+        val rtype = Type.of(right)
+        return if (ltype == rtype) {
+            ltype.compare(left, right)
+        } else {
+            ltype.compareTo(rtype)
         }
     }
 }
@@ -596,7 +600,7 @@ private class LightweightTagMap : AbstractMap<String, Set<Any?>> {
                 else -> 0
             }
             if (signum == 0) {
-                signum = valueComparator.compare(lhs.getValue(lhsIndex), rhs.getValue(rhsIndex))
+                signum = ValueComparator.compare(lhs.getValue(lhsIndex), rhs.getValue(rhsIndex))
             }
             // Signum can be zero here for duplicate values
             // (unlike the entry processing loop above).
@@ -753,7 +757,7 @@ private class LightweightTagMap : AbstractMap<String, Set<Any?>> {
             offsets[index + 1]
 
         private fun getComparator(): Comparator<Any> =
-            if (index == -1) entryCoparator else valueComparator
+            if (index == -1) entryCoparator else ValueComparator
 
         override val size: Int
             get() = getEnd() - getStart()
