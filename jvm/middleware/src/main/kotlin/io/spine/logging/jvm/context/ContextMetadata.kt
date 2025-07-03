@@ -30,7 +30,6 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.backend.Metadata
 import io.spine.logging.jvm.util.Checks.checkArgument
-import io.spine.logging.jvm.util.Checks.checkNotNull
 import org.jetbrains.annotations.NotNull
 
 /**

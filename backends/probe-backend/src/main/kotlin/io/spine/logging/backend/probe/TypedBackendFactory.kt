@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ package io.spine.logging.backend.probe
 import io.spine.logging.jvm.backend.LoggerBackend
 
 /**
- * A typed [BackendFactory][io.spine.logging.backend.system.BackendFactory].
+ * A typed [BackendFactory][io.spine.logging.jvm.backend.BackendFactory].
  *
  * This interface can't extend the original factory because it is an abstract class.
  *

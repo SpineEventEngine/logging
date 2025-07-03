@@ -31,9 +31,9 @@ import com.google.errorprone.annotations.MustBeClosed
 import io.spine.logging.jvm.LoggingScope
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.MiddlemanApi
+import io.spine.logging.jvm.context.ScopedLoggingContext.Companion.getInstance
 import io.spine.logging.jvm.util.Checks.checkNotNull
 import io.spine.logging.jvm.util.Checks.checkState
-import java.io.Closeable
 import java.util.concurrent.Callable
 
 /**
