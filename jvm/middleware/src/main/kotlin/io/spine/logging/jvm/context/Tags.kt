@@ -201,7 +201,7 @@ public class Tags private constructor(private val map: LightweightTagMap) {
             // about the original value order.
             // We/ could deduplicate here to guard against pathological use,
             // but it should never matter.
-            Collections.sort(keyValuePairs, ketValueComparator)
+            Collections.sort(keyValuePairs, keyValueComparator)
             return Tags(LightweightTagMap(keyValuePairs))
         }
 
@@ -277,7 +277,7 @@ private val valueComparator = Comparator<Any> { lhs, rhs ->
     if (ltype == rtype) ltype.compare(lhs, rhs) else ltype.compareTo(rtype)
 }
 
-private val ketValueComparator = Comparator<KeyValuePair> { lhs, rhs ->
+private val keyValueComparator = Comparator<KeyValuePair> { lhs, rhs ->
     var signum = lhs.key.compareTo(rhs.key)
     if (signum == 0) {
         signum = when {
