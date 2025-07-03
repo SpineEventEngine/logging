@@ -146,16 +146,11 @@ private fun <T : Any> checkCannotRepeat(key: MetadataKey<T>) =
     checkArgument(!key.canRepeat(), "metadata key must be single valued")
 
 
-private class ImmutableScopeMetadata(private val entries: Array<Entry<*>?>) :
-    ContextMetadata() {
+private class ImmutableScopeMetadata(private val entries: Array<Entry<*>?>) : ContextMetadata() {
 
-    override fun size(): Int {
-        return entries.size
-    }
+    override fun size(): Int = entries.size
 
-    override fun get(n: Int): Entry<*> {
-        return entries[n]!!
-    }
+    override operator fun get(n: Int): Entry<*> = entries[n]!!
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : Any> findValue(key: MetadataKey<T>): T? {
@@ -190,9 +185,7 @@ private class SingletonMetadata<T : Any>(key: MetadataKey<T>, value: T) : Contex
 
     private val entry = Entry(key, value)
 
-    override fun size(): Int {
-        return 1
-    }
+    override fun size(): Int = 1
 
     override fun get(n: Int): Entry<*> {
         if (n == 0) {
@@ -223,19 +216,17 @@ private class SingletonMetadata<T : Any>(key: MetadataKey<T>, value: T) : Contex
 }
 
 /**
- * This is a static nested class as opposed to an anonymous class assigned to a constant field
- * to decouple its classloading when Metadata is loaded.
+ * This is a static nested class as opposed to an anonymous class assigned to
+ * a constant field to decouple its classloading when Metadata is loaded.
  *
  * Android users are particularly careful about unnecessary class loading,
- * and we've used similar mechanisms in Guava (see CharMatchers).
+ * and we've used similar mechanisms in Guava (see `CharMatchers`).
  */
 private object EmptyMetadata : ContextMetadata() {
 
     override fun size(): Int = 0
 
-    override fun get(n: Int): Entry<*> {
-        throw IndexOutOfBoundsException(n.toString())
-    }
+    override fun get(n: Int): Entry<*> = throw IndexOutOfBoundsException(n.toString())
 
     override fun <T : Any> findValue(key: MetadataKey<T>): T? {
         // For consistency, do the same checks as for non-empty instances.
