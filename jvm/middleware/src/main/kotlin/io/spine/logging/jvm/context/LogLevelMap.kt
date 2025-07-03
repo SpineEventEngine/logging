@@ -123,14 +123,11 @@ public class LogLevelMap private constructor(map: Map<String, Level>, defaultLev
          */
         @CanIgnoreReturnValue
         public fun setDefault(level: Level): Builder {
-            checkNotNull(defaultLevel, "default log level must not be null")
             this.defaultLevel = level
             return this
         }
 
-        public fun build(): LogLevelMap {
-            return create(map, defaultLevel)
-        }
+        public fun build(): LogLevelMap = create(map, defaultLevel)
     }
 
     public companion object {
@@ -169,7 +166,12 @@ public class LogLevelMap private constructor(map: Map<String, Level>, defaultLev
         public fun create(map: Map<String, Level>, defaultLevel: Level): LogLevelMap {
             for (e in map.entries) {
                 val name = e.key
-                require((name.startsWith(".") || name.endsWith(".") || name.contains("..")).not()) {
+                require(
+                    (name.startsWith(".")
+                            || name.endsWith(".")
+                            || name.contains(".."))
+                        .not()
+                ) {
                     "Invalid logger name: `$name`."
                 }
             }
