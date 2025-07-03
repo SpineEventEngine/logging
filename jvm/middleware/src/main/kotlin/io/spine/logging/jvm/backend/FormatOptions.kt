@@ -272,9 +272,7 @@ public class FormatOptions private constructor(
                 val n = c.code - '0'.code
                 if (n >= 10) {
                     throw ParseException.atPosition(
-                        "invalid width character",
-                        message,
-                        currentPos - 1
+                        "invalid width character", message, currentPos - 1
                     )
                 }
                 width = (width * 10) + n
@@ -349,12 +347,14 @@ public class FormatOptions private constructor(
     }
 
     /**
-     * Returns a possibly new FormatOptions instance possibly containing a subset of the formatting
-     * information. This is useful if a backend implementation wishes to create formatting options
-     * that ignore some of the specified formatting information.
+     * Returns a possibly new FormatOptions instance possibly containing
+     * a subset of the formatting information.
      *
-     * @param allowedFlags A mask of flag values to be retained in the returned instance. Use
-     *         [ALL_FLAGS] to retain all flag values, or `0` to suppress all flags.
+     * This is useful if a backend implementation wishes to create formatting
+     * options that ignore some of the specified formatting information.
+     *
+     * @param allowedFlags A mask of flag values to be retained in the returned instance.
+     *   Use [ALL_FLAGS] to retain all flag values, or `0` to suppress all flags.
      * @param allowWidth specifies whether to include width in the returned instance.
      * @param allowPrecision specifies whether to include precision in the returned instance.
      */
@@ -374,10 +374,11 @@ public class FormatOptions private constructor(
         if (newFlags == 0 && newWidth == UNSET && newPrecision == UNSET) {
             return DEFAULT
         }
-        // This check would be faster if we encoded the entire state into a long value. It's also
-        // entirely possible we should just allocate a new instance and be damned (especially as
-        // having anything other than the default instance is rare).
-        // TODO(dbeaumont): Measure performance and see about removing this code, almost certainly fine.
+        // This check would be faster if we encoded the entire state into a long value.
+        // It's also entirely possible we should just allocate a new instance and be damned
+        // (especially as having anything other than the default instance is rare).
+        // TODO(dbeaumont): Measure performance and see about removing this code,
+        //  almost certainly fine.
         if (newFlags == flags && newWidth == width && newPrecision == precision) {
             return this
         }
@@ -399,10 +400,10 @@ public class FormatOptions private constructor(
      * be validated, but any format options passed through the `ParameterVisitor` interface must
      * be valid with respect to the associated [FormatChar] instance.
      *
-     * @param allowedFlags A bit mask specifying a subset of the printf flags that are allowed for
-     *   these options.
+     * @param allowedFlags A bit mask specifying a subset of the printf flags that
+     *        are allowed for these options.
      * @param allowPrecision `true` if these options are allowed to have
-     *   a precision value specified, `false` otherwise.
+     *        a precision value specified, `false` otherwise.
      * @return `true` if these options are valid given the specified constraints.
      */
     @Suppress("ReturnCount")
@@ -423,23 +424,22 @@ public class FormatOptions private constructor(
     }
 
     /**
-     * Validates these options as if they were being applied to the given [FormatChar] and
-     * checks for inconsistencies in flag values.
+     * Validates these options as if they were being applied to
+     * the given [FormatChar] and checks for inconsistencies in flag values.
      *
-     * Note that there is not requirement for options used internally in custom message parsers to
-     * be validated, but any format options passed through the
-     * `ParameterVisitor` interface must
-     * be valid with respect to the associated [FormatChar] instance.
+     * Note that there is not requirement for options used internally in
+     * custom message parsers to be validated, but any format options passed
+     * through the `ParameterVisitor` interface must be valid with respect to
+     * the associated [FormatChar] instance.
      *
-     * @param formatChar the formatting rule to check these options against.
-     * @return true if these options are valid for the given format.
+     * @param fc the formatting rule to check these options against.
+     * @return `true` if these options are valid for the given format.
      */
-    public fun areValidFor(formatChar: FormatChar): Boolean {
-        return validate(formatChar.allowedFlags, formatChar.type.supportsPrecision())
-    }
+    public fun areValidFor(fc: FormatChar): Boolean =
+        validate(fc.allowedFlags, fc.type.supportsPrecision)
 
     /**
-     * Corresponds to `printf` flag '-' (incompatible with '0').
+     * Corresponds to `printf` flag `'-'` (incompatible with `'0'`).
      *
      * Logging backends may ignore this flag, though it does provide some visual
      * clarity when aligning values.
@@ -447,7 +447,7 @@ public class FormatOptions private constructor(
     public fun shouldLeftAlign(): Boolean = (flags and FLAG_LEFT_ALIGN) != 0
 
     /**
-     * Corresponds to printf flag '#'.
+     * Corresponds to printf flag `'#'`.
      *
      * Logging backends should honor this flag for hex or octal, as it is a common
      * way to avoid ambiguity when formatting non-decimal values.
@@ -455,18 +455,18 @@ public class FormatOptions private constructor(
     public fun shouldShowAltForm(): Boolean = (flags and FLAG_SHOW_ALT_FORM) != 0
 
     /**
-     * Corresponds to printf flag '0'.
+     * Corresponds to printf flag `'0'`.
      *
-     * Logging backends should honor this flag, as it is very commonly used to format hexadecimal or
-     * octal values to allow specific bit values to be calculated.
+     * Logging backends should honor this flag, as it is very commonly used to
+     * format hexadecimal or octal values to allow specific bit values to be calculated.
      */
     public fun shouldShowLeadingZeros(): Boolean = (flags and FLAG_SHOW_LEADING_ZEROS) != 0
 
     /**
      * Corresponds to `printf` flag `'+'`.
      *
-     * Logging backends are free to ignore this flag, though it does provide some visual clarity
-     * when tabulating certain types of values.
+     * Logging backends are free to ignore this flag, though it does provide
+     * some visual clarity when tabulating certain types of values.
      */
     public fun shouldPrefixPlusForPositiveValues(): Boolean =
         (flags and FLAG_PREFIX_PLUS_FOR_POSITIVE_VALUES) != 0
@@ -483,8 +483,8 @@ public class FormatOptions private constructor(
     /**
      * Corresponds to `printf` flag `','`.
      *
-     * Logging backends are free to select the locale in which the formatting will occur or ignore
-     * this flag altogether.
+     * Logging backends are free to select the locale in which the formatting
+     * will occur or ignore this flag altogether.
      */
     public fun shouldShowGrouping(): Boolean = (flags and FLAG_SHOW_GROUPING) != 0
 
@@ -497,7 +497,8 @@ public class FormatOptions private constructor(
 
     /**
      * Appends the data for this options instance in a printf compatible form to the given buffer.
-     * This method neither appends the leading ``%`` symbol, nor a format type character.
+     *
+     * This method neither appends the leading `'%'` symbol, nor a format type character.
      * Output is written in the form `[width][.precision][flags]` and for the default instance,
      * nothing is appended.
      *

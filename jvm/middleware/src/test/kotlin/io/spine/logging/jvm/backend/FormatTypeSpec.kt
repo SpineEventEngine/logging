@@ -121,6 +121,6 @@ private infix fun FormatType.shouldFormat(any: Any) = canFormat(any).shouldBeTru
 
 private infix fun FormatType.shouldNotFormat(any: Any) = canFormat(any).shouldBeFalse()
 
-private fun FormatType.shouldNotBeNumeric() = isNumeric().shouldBeFalse()
+private fun FormatType.shouldNotBeNumeric() = isNumeric.shouldBeFalse()
 
-private fun FormatType.shouldBeNumeric() = isNumeric().shouldBeTrue()
+private fun FormatType.shouldBeNumeric() = isNumeric.shouldBeTrue()

@@ -33,11 +33,19 @@
 * Ensure proper handling of Java static initialization blocks in Kotlin companion objects.
 * Verify that Java overloaded methods convert correctly with appropriate default parameter values in Kotlin.
 * Remember that Kotlin has smart casts which can eliminate explicit type casting needed in Java.
+* Suppress `detekt` build errors using this format: `[Error]` with `@Suppress("Error")`.
 
 ## Documentation Conversion
 
-* Convert `@param` to `@param` with the same description.
+* Convert `@param` to `@param` with the same description: 
+  - Start the description on the same line with the `@param` tag 
+  - Break at 90 chars
+  - Continue with the margin of 7 space chars.
+
 * Convert `@return` to `@return` with the same description.
 * Convert `@throws` to `@throws` with the same description.
 * Convert `{@link}` to `[name][fully.qualified.Name]` format.
 * Convert `{@code}` to inline code with backticks (`).
+
+## Conversion tasks
+ * Convert end-line comments above methods and fields to KDoc.

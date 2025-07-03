@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,13 +24,27 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/**
- * Introduces a logging backend and dependent entities.
- *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/package-info.java">
- *     Original Java code of Google Flogger</a> for historical context.
- */
-@CheckReturnValue
-package io.spine.logging.jvm.backend;
+package io.spine.logging.jvm.backend
 
-import com.google.errorprone.annotations.CheckReturnValue;
+import io.spine.logging.jvm.MetadataKey
+
+/**
+ * API for handling repeated metadata key/values in a single callback.
+ *
+ * @param T The key/value type.
+ * @param C The type of the context passed to the callbacks.
+ */
+public fun interface RepeatedValueHandler<T : Any, C> {
+
+    /**
+     * Handles all repeated metadata values for a given key.
+     *
+     * @param key The repeatable metadata key for which this handler was registered,
+     *        or an unknown key if this is the default handler.
+     * @param values A lightweight iterator over all values associated with the key.
+     *        Note that this instance is read-only and must not be held beyond
+     *        the scope of this callback.
+     * @param context An arbitrary context object supplied to the process method.
+     */
+    public fun handle(key: MetadataKey<T>, values: Iterator<T>, context: C)
+}

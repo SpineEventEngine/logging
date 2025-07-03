@@ -1,10 +1,8 @@
 # 🧠 Purpose
 
-> **EXECUTIVE SUMMARY**: This guide outlines how AI agents (ChatGPT, Codex, GPT-4o)
+> **EXECUTIVE SUMMARY**: This guide outlines how AI agents (ChatGPT, Codex, Junie, Claude, Gemeni)
 > collaborate on our Kotlin/Java project. It defines responsibilities, coding standards,
 > and workflows to maintain high code quality and architectural integrity.
-
-This document explains how to use **ChatGPT** and **Codex** in this Kotlin/Java project.
 
 It outlines:
 

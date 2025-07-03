@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * The basic logging API. An implementation of this API (or an extension of it) will be
- * returned by any fluent logger and forms the basis of the fluent call chain.
+ * returned by any logger and forms the basis of the fluent call chain.
  *
  * <p>
  * In typical usage each method in the API, with the exception of the terminal {@code log()}

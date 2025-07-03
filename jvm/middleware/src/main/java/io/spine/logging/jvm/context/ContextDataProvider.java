@@ -65,7 +65,7 @@ public abstract class ContextDataProvider {
   /**
    * Returns the singleton instance of the context data provider for use by logging platform
    * implementations. This method should not be called by general application code, and the {@code
-   * ContextDataProvider} class should never need to be used directly outside of fluent logger
+   * ContextDataProvider} class should never need to be used directly outside of the logger
    * platform implementations.
    */
   public static ContextDataProvider getInstance() {

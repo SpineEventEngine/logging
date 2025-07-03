@@ -40,7 +40,7 @@ import static io.spine.logging.jvm.util.Checks.checkNotNull;
  * <p>>Unlike the metadata for {@code every(N)}, we need to use a wrapper
  * class here to preserve the time unit information.
  */
-public final class RateLimitPeriod {
+final class RateLimitPeriod {
 
     @SuppressWarnings("FieldNamingConvention")
     private final int n;

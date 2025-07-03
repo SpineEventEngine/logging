@@ -24,42 +24,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.backend.given
+package io.spine.logging.jvm.backend
 
-import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.backend.Metadata
 
 /**
- * A mutable [Metadata] implementation for testing logging backends
- * and other log handling code.
+ * API for handling metadata key/value pairs individually.
  *
- * @see <a href="http://rb.gy/h75mb">Original Java code of Google Flogger</a> for historical context.
+ * @param T The key/value type.
+ * @param C The type of the context passed to the callbacks.
  */
-class FakeMetadata : Metadata() {
-
-    private class KeyValuePair<T : Any>(val key: MetadataKey<T>, val value: T)
-
-    private val entries = mutableListOf<KeyValuePair<*>>()
+public fun interface ValueHandler<T : Any, C> {
 
     /**
-     * Adds a key/value pair to this [Metadata].
+     * Handles metadata values individually.
+     *
+     * @param key The metadata key (not necessarily a "singleton" key).
+     * @param value The associated metadata value.
+     * @param context An arbitrary context object supplied to the process method.
      */
-    @CanIgnoreReturnValue
-    fun <T : Any> add(key: MetadataKey<T>, value: T): FakeMetadata {
-        entries.add(KeyValuePair(key, value))
-        return this
-    }
-
-    override fun size(): Int = entries.size
-
-    override fun getKey(n: Int): MetadataKey<Any> = entries[n].key as MetadataKey<Any>
-
-    override fun getValue(n: Int): Any = entries[n].value
-
-    override fun <T : Any> findValue(key: MetadataKey<T>): T? {
-        val entry = entries.firstOrNull { it.key == key }
-        val casted = key.cast(entry?.value) // It is safe to pass `null` here.
-        return casted
-    }
+    public fun handle(key: MetadataKey<T>, value: T, context: C)
 }

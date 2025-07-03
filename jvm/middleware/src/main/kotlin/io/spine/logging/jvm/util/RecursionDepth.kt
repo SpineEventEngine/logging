@@ -29,15 +29,16 @@ package io.spine.logging.jvm.util
 import java.io.Closeable
 
 /**
- * A thread local counter, incremented whenever a log statement is being
- * processed by the backend. If this value is greater than 1, then reentrant
- * logging has occurred, and some code may behave differently to avoid issues
- * such as unbounded recursion. Logging may even be disabled completely if the
- * depth gets too high.
+ * A thread local counter, incremented whenever a log statement is being processed by the backend.
  *
- * This class is an internal detail and must not be used outside the core
- * Flogger library. Backends which need to know the recursion depth should call
- * `Platform.getCurrentRecursionDepth()`.
+ * If this value is greater than 1, then reentrant logging has occurred, and some code may behave
+ * differently to avoid issues such as unbounded recursion. Logging may even be disabled completely
+ * if the depth gets too high.
+ *
+ * #### API Note
+ * This class is an internal detail and must not be used outside the core of the Logging library.
+ * Backends which need to know the recursion depth should call
+ * [io.spine.logging.jvm.backend.Platform.getCurrentRecursionDepth].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/util/RecursionDepth.java">
  *   Original Java code of Google Flogger</a> for historical context.

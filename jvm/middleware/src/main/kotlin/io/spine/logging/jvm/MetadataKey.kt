@@ -40,14 +40,14 @@ import org.jetbrains.annotations.VisibleForTesting
  *
  * Examples of where using `MetadataKey` is suitable are:
  *
- * * Logging a value with special semantics (e.g. values that are handled specially by the
+ * * Logging a value with special semantics (e.g., values that are handled specially by the
  *   logger backend).
  * * Passing configuration to a specific logger backend to modify behaviour for individual log
  *   statements or all log statements in a `ScopedLoggingContext`.
  * * Logging a structured value in many places with consistent formatting (e.g., so it can later
  *   be re-parsed by logs related tools).
  *
- * If you just want to log an general "key value pair" in a small number of log statements, it is
+ * If you just want to log a general "key value pair" in a small number of log statements, it is
  * still better to just do something like `log("key=%s", value)`.
  *
  * Metadata keys are expected to be singleton constants, and should never be allocated at the log
@@ -89,8 +89,8 @@ import org.jetbrains.annotations.VisibleForTesting
  * @param T The type of values associated with this key.
  * @property label A short human-readable text label.
  * @property clazz The class representing the type [T].
- * @property canRepeat whether this key supports multiple values.
- * @property isCustom whether this is a custom key with overridden emit methods.
+ * @property canRepeat Whether this key supports multiple values.
+ * @property isCustom Whether this is a custom key with overridden emit methods.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/MetadataKey.java">
  *   Original Java code of Google Flogger</a> for historical context.
@@ -101,7 +101,7 @@ public open class MetadataKey<T : Any> private constructor(
     private val canRepeat: Boolean,
     private val isCustom: Boolean
 ) {
-    
+
     /**
      * Callback interface to handle additional contextual `Metadata` in log statements. This
      * interface is only intended to be implemented by logger backend classes as part of handling
@@ -109,11 +109,11 @@ public open class MetadataKey<T : Any> private constructor(
      * [MetadataKey.emit] method in this class.
      */
     public fun interface KeyValueHandler {
-        
+
         /** 
          * Handle a single key/value a pair of contextual metadata for a log statement.  
          */
-        public fun handle(key: String, value: Any)
+        public fun handle(key: String, value: Any?)
     }
 
     /**
@@ -141,7 +141,7 @@ public open class MetadataKey<T : Any> private constructor(
      *
      * @param label A short human-readable text label.
      * @param clazz The class representing the type [T].
-     * @param canRepeat whether this key supports multiple values.
+     * @param canRepeat Whether this key supports multiple values.
      */
     protected constructor(label: String, clazz: Class<out T>, canRepeat: Boolean) :
             this(label, clazz, canRepeat, true)
@@ -218,8 +218,8 @@ public open class MetadataKey<T : Any> private constructor(
      *
      * * Calling any code which could log using the same `MetadataKey` instance (unless you
      *   implement protection against reentrant calling in this method).
-     * * Calling code which might block (e.g. performing file I/O or acquiring locks).
-     * * Allocating non-trivial amounts of memory (e.g. recording values in an unbounded data
+     * * Calling code which might block (e.g., performing file I/O or acquiring locks).
+     * * * Allocating non-trivial amounts of memory (e.g., recording values in an unbounded data
      *   structure).
      *
      * If you do implement a `MetadataKey` with non-trivial value processing,
@@ -232,9 +232,10 @@ public open class MetadataKey<T : Any> private constructor(
         kvh.handle(this.label, value)
 
     /**
-     * Override this method to provide custom logic for emitting one or more key/value pairs for a
-     * sequence of metadata values (call [.safeEmitRepeated] from logging code to actually emit
-     * values).
+     * Override this method to provide custom logic for emitting one or more
+     * key/value pairs for a sequence of metadata values.
+     *
+     * Call [safeEmitRepeated] from logging code to actually emit values.
      *
      * Emits one or more key/value pairs for a sequence of repeated metadata values.
      * By default, this method simply calls [.emit] once for each value, in order.
@@ -316,7 +317,7 @@ public open class MetadataKey<T : Any> private constructor(
          */
         public inline fun <reified T : Any> single(label: String): MetadataKey<T> =
             single(label, T::class.java)
-            
+
         /**
          * Creates a key for a repeated piece of metadata. 
          * 

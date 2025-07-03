@@ -32,17 +32,11 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldBeEmpty
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldNotContain
-import io.kotest.matchers.types.shouldBeSameInstanceAs
-import io.spine.logging.backend.given.BadToString
 import io.spine.logging.jvm.JvmLogSite
 import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_SHOW_ALT_FORM
 import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_SHOW_LEADING_ZEROS
 import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_UPPER_CASE
 import io.spine.logging.jvm.backend.FormatOptions.Companion.UNSET
-import io.spine.logging.jvm.backend.MessageUtils.appendHex
-import io.spine.logging.jvm.backend.MessageUtils.appendLogSite
-import io.spine.logging.jvm.backend.MessageUtils.safeFormatTo
-import io.spine.logging.jvm.backend.MessageUtils.safeToString
 import io.spine.logging.jvm.given.FakeLogSite
 import java.util.*
 import org.junit.jupiter.api.DisplayName
@@ -50,49 +44,14 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for [MessageUtils].
- *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/backend/MessageUtilsTest.java">
- *     Original Java code of Google Flogger</a> for historical context.
+ * Tests for [StringBuilder] extensions.
  */
-@DisplayName("`MessageUtils` should")
-internal class MessageUtilsSpec {
+@DisplayName("`StringBuilder` extensions should")
+internal class StringBuilderExtsSpec {
 
     companion object {
         private val NO_OPTIONS = FormatOptions.getDefault()
         private val UPPER_CASE = FormatOptions.of(FLAG_UPPER_CASE, UNSET, UNSET)
-    }
-
-    @Nested
-    inner class
-    `safely convert to string` {
-
-        @Test
-        fun `literals and arrays`() {
-            safeToString("Hello World") shouldBeSameInstanceAs "Hello World"
-            safeToString(10) shouldBe "10"
-            safeToString(false) shouldBe "false"
-
-            // Not what you would normally get from `Any.toString()` ...
-            safeToString(arrayOf("Foo", "Bar")) shouldBe "[Foo, Bar]"
-            safeToString(arrayOf(1, 2, 3)) shouldBe "[1, 2, 3]"
-            safeToString(null) shouldBe "null"
-        }
-
-        @Test
-        fun `objects that return 'null' on 'toString()'`() {
-            val badToString = BadToString()
-            safeToString(badToString) shouldContain badToString::class.simpleName!!
-            safeToString(badToString) shouldContain "toString() returned null"
-        }
-
-        @Test
-        fun `objects that throw on 'toString()'`() {
-            val any = object {
-                override fun toString(): String = throw IllegalArgumentException("Badness")
-            }
-            safeToString(any) shouldContain "java.lang.IllegalArgumentException: Badness"
-        }
     }
 
     @Nested
@@ -109,13 +68,13 @@ internal class MessageUtilsSpec {
             // FormattableFlags.LEFT_JUSTIFY == 1 << 0 = 1
             // FormattableFlags.UPPERCASE == 1 << 1 = 2
             // FormattableFlags.ALTERNATE == 1 << 2 = 4
-            safeFormatTo(arg, out, FormatOptions.of(FLAG_UPPER_CASE, 4, 2))
+            out.safeFormatTo(arg, FormatOptions.of(FLAG_UPPER_CASE, 4, 2))
             "$out" shouldBe "[f=2,w=4,p=2]"
 
             // Not all flags are passed into the callback.
             val options = FormatOptions.of(FLAG_SHOW_LEADING_ZEROS + FLAG_SHOW_ALT_FORM, 1, 0)
             out.setLength(0)
-            safeFormatTo(arg, out, options)
+            out.safeFormatTo(arg, options)
             "$out" shouldBe "[f=4,w=1,p=0]"
         }
 
@@ -126,7 +85,7 @@ internal class MessageUtilsSpec {
                 throw IllegalArgumentException("Badness")
             }
             val out = StringBuilder()
-            safeFormatTo(badFormattable, out, FormatOptions.getDefault())
+            out.safeFormatTo(badFormattable, FormatOptions.getDefault())
             "$out" shouldContain "java.lang.IllegalArgumentException: Badness"
             "$out" shouldNotContain "DISCARDED"
         }
@@ -137,11 +96,11 @@ internal class MessageUtilsSpec {
         val out = StringBuilder()
         val logSite = FakeLogSite("<class>", "<method>", 32, "Ignored.java")
 
-        appendLogSite(logSite, out).shouldBeTrue()
+        out.appendLogSite(logSite).shouldBeTrue()
         "$out" shouldBe "<class>.<method>:32"
 
         out.setLength(0)
-        appendLogSite(JvmLogSite.INVALID, out).shouldBeFalse()
+        out.appendLogSite(JvmLogSite.INVALID).shouldBeFalse()
         "$out".shouldBeEmpty()
     }
 
@@ -159,6 +118,6 @@ internal class MessageUtilsSpec {
 
 private fun formatHex(n: Number, options: FormatOptions): String {
     val out = StringBuilder()
-    appendHex(out, n, options)
+    out.appendHex(n, options)
     return "$out"
 }

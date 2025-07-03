@@ -42,7 +42,7 @@ fun KotlinJvmProjectExtension.applyJvmToolchain(version: Int) {
 
 /**
  * Sets [Java toolchain](https://kotlinlang.org/docs/gradle.html#gradle-java-toolchains-support)
- * to the specified version (e.g. "11" or "8").
+ * to the specified version (e.g., "11" or "8").
  */
 @Suppress("unused")
 fun KotlinJvmProjectExtension.applyJvmToolchain(version: String) =

@@ -29,7 +29,7 @@ package io.spine.logging.jvm;
 import io.spine.logging.jvm.backend.LogData;
 import io.spine.logging.jvm.backend.LoggerBackend;
 import io.spine.logging.jvm.backend.LoggingException;
-import io.spine.logging.jvm.backend.MessageUtils;
+import io.spine.logging.jvm.backend.StringBuilders;
 import io.spine.logging.jvm.util.RecursionDepth;
 
 import java.time.Instant;
@@ -41,14 +41,15 @@ import static io.spine.logging.jvm.util.Checks.checkNotNull;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 /**
- * Base class for the fluent logger API. This class is a factory for instances of a fluent logging
- * API, used to build log statements via method chaining.
+ * Base class for the fluent logging API.
  *
- * @param <API>
- *         the logging API provided by this logger.
+ * <p>This class is a factory for instances of a logging API, used to build
+ * log statements via method chaining.
+ *
+ * @param <API> The logging API provided by this logger.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/AbstractLogger.java">
- *      Original Java code of Google Flogger</a> for historical context.
+ *    Original Java code of Google Flogger</a> for historical context.
  */
 public abstract class AbstractLogger<API extends MiddlemanApi<API>> {
 
@@ -200,6 +201,7 @@ public abstract class AbstractLogger<API extends MiddlemanApi<API>> {
     }
 
     /** Only allow LoggingException and Errors to escape this method. */
+    @SuppressWarnings("UseOfSystemOutOrSystemErr")
     private void handleErrorRobustly(RuntimeException logError, LogData data) {
         try {
             backend.handleError(logError, data);
@@ -221,11 +223,12 @@ public abstract class AbstractLogger<API extends MiddlemanApi<API>> {
 
     // It is important that this code never risk calling back to a user supplied value (e.g. logged
     // arguments or metadata) since that could trigger a recursive error state.
+    @SuppressWarnings("UseOfSystemOutOrSystemErr")
     private static void reportError(String message, LogData data) {
         StringBuilder out = new StringBuilder();
         out.append(formatTimestampIso8601(data))
            .append(": logging error [");
-        MessageUtils.appendLogSite(data.getLogSite(), out);
+        StringBuilders.appendLogSite(out, data.getLogSite());
         out.append("]: ")
            .append(message);
         System.err.println(out);
