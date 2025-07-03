@@ -62,17 +62,20 @@ import java.util.logging.Level
 public abstract class ContextDataProvider {
 
     /**
-     * Returns the context API with which users can create and modify the state of logging contexts
-     * within an application. This method should be overridden by subclasses to provide the specific
-     * implementation of the API.
+     * Returns the context API with which users can create and modify
+     * the state of logging contexts within an application.
      *
-     * This method should never be called directly (other than in tests), and users should
-     * always go via [ScopedLoggingContext.getInstance], without needing to reference
-     * this class at all.
+     * This method should be overridden by subclasses to provide
+     * the specific implementation of the API.
      *
-     * If an implementation wishes to allow logging from the context API class, that class must be
-     * lazily loaded when this method is called (e.g., using a "lazy holder"). Failure to do so is
-     * likely to result in errors during the initialization of the logging platform classes.
+     * This method should never be called directly (other than in tests), and
+     * users should always go via [ScopedLoggingContext.getInstance],
+     * without needing to reference this class at all.
+     *
+     * If an implementation wishes to allow logging from the context API class,
+     * that class must be lazily loaded when this method is called (e.g., using a "lazy holder").
+     * Failure to do so is likely to result in errors during the initialization of
+     * the logging platform classes.
      */
     public abstract fun getContextApiSingleton(): ScopedLoggingContext
 
