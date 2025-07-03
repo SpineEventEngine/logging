@@ -167,14 +167,10 @@ public class LogLevelMap private constructor(map: Map<String, Level>, defaultLev
         @JvmStatic
         @Suppress("UseRequire")
         public fun create(map: Map<String, Level>, defaultLevel: Level): LogLevelMap {
-            checkNotNull(defaultLevel, "default log level must not be null")
             for (e in map.entries) {
                 val name = e.key
-                if (name.startsWith(".") || name.endsWith(".") || name.contains("..")) {
-                    throw IllegalArgumentException("invalid logger name: $name")
-                }
-                if (e.value == null) {
-                    throw IllegalArgumentException("log levels must not be null; logger=$name")
+                require((name.startsWith(".") || name.endsWith(".") || name.contains("..")).not()) {
+                    "Invalid logger name: `$name`."
                 }
             }
             return LogLevelMap(map, defaultLevel)
