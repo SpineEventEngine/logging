@@ -28,8 +28,11 @@ package io.spine.logging.jvm.context
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.logging.jvm.util.Checks.checkMetadataIdentifier
-import java.util.AbstractMap.SimpleImmutableEntry
-import java.util.Arrays
+
+/**
+ * A simple immutable implementation of [Map.Entry].
+ */
+private data class SimpleEntry<K, V>(override val key: K, override val value: V) : Map.Entry<K, V>
 
 /**
  * Immutable tags which can be attached to log statements via
@@ -364,13 +367,6 @@ private class LightweightTagMap : AbstractMap<String, Set<Any?>> {
 
     companion object {
 
-        // Note if we weren't using binary search for lookup, none of this would be necessary.
-        @Suppress("UNCHECKED_CAST")
-        private val entryCoparator = Comparator<Any> { s1, s2 ->
-            // Casting can fail if call passes in unexpected values via Set::contains(entry).
-            (s1 as Map.Entry<String, *>).key.compareTo((s2 as Map.Entry<String, *>).key)
-        }
-
         /**
          * A heuristic used when deciding to resize element or offset arrays.
          *
@@ -385,7 +381,6 @@ private class LightweightTagMap : AbstractMap<String, Set<Any?>> {
         */
         private val singletonOffsets = intArrayOf(1, 2)
     }
-
 
     /**
      * This array holds ordered entries followed by values for each entry (grouped by key in order).
@@ -421,8 +416,8 @@ private class LightweightTagMap : AbstractMap<String, Set<Any?>> {
     /**
      * Cache these if anyone needs them (not likely in normal usage).
      */
-    private var hashCodeCache: Int? = null
-    private var toStringCache: String? = null
+    private var hashCode: Int? = null
+    private var toString: String? = null
 
     /**
      * Singleton constructor
@@ -676,7 +671,7 @@ private class LightweightTagMap : AbstractMap<String, Set<Any?>> {
      */
     private fun maybeResizeElementArray(array: Array<Any?>, bestLength: Int): Array<Any?> {
         return if (mustResize(array.size, bestLength)) {
-            Arrays.copyOf(array, bestLength)
+            array.copyOf(bestLength)
         } else {
             array
         }
@@ -689,7 +684,7 @@ private class LightweightTagMap : AbstractMap<String, Set<Any?>> {
         // Remember we must account for the extra final offset (the end of the final segment).
         val bestLength = offsets[0] + 1
         return if (mustResize(offsets.size, bestLength)) {
-            Arrays.copyOf(offsets, bestLength)
+            offsets.copyOf(bestLength)
         } else {
             offsets
         }
@@ -709,7 +704,7 @@ private class LightweightTagMap : AbstractMap<String, Set<Any?>> {
      * specified offset index (see SortedArraySet).
      */
     private fun newEntry(key: String, index: Int): Map.Entry<String, SortedArraySet<Any?>> =
-        SimpleImmutableEntry(key, SortedArraySet(index))
+        SimpleEntry(key, SortedArraySet(index))
 
     @Suppress("UNCHECKED_CAST") // Safe when the index is in range.
     private fun getEntryOrNull(index: Int): Map.Entry<String, SortedArraySet<Any?>>? =
@@ -756,16 +751,11 @@ private class LightweightTagMap : AbstractMap<String, Set<Any?>> {
         fun getEnd(): Int =
             offsets[index + 1]
 
-        private fun getComparator(): Comparator<Any> =
-            if (index == -1) entryCoparator else ValueComparator
-
         override val size: Int
             get() = getEnd() - getStart()
 
-        // Optional, but potentially faster to binary search for elements.
-        // TODO(dbeaumont): Benchmark for realistic tag usage and consider removing.
         override fun contains(element: T): Boolean =
-            Arrays.binarySearch(array, getStart(), getEnd(), element, getComparator()) >= 0
+            array.contains(element)
 
         override fun iterator(): MutableIterator<T> {
 
@@ -802,17 +792,17 @@ private class LightweightTagMap : AbstractMap<String, Set<Any?>> {
 
     override fun hashCode(): Int {
         // Abstract maps cannot cache their hash codes, but we know we're immutable, so we can.
-        if (hashCodeCache == null) {
-            hashCodeCache = super.hashCode()
+        if (hashCode == null) {
+            hashCode = super.hashCode()
         }
-        return hashCodeCache!!
+        return hashCode!!
     }
 
     override fun toString(): String {
-        if (toStringCache == null) {
-            toStringCache = super.toString()
+        if (toString == null) {
+            toString = super.toString()
         }
-        return toStringCache!!
+        return toString!!
     }
 
     override fun equals(other: Any?): Boolean {
@@ -822,11 +812,11 @@ private class LightweightTagMap : AbstractMap<String, Set<Any?>> {
 
         other as LightweightTagMap
 
-        if (hashCodeCache != other.hashCodeCache) return false
+        if (hashCode != other.hashCode) return false
         if (!array.contentEquals(other.array)) return false
         if (!offsets.contentEquals(other.offsets)) return false
         if (entrySet != other.entrySet) return false
-        if (toStringCache != other.toStringCache) return false
+        if (toString != other.toString) return false
         if (entries != other.entries) return false
 
         return true
