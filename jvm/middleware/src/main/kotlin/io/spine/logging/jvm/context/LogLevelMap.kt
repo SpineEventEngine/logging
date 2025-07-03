@@ -88,8 +88,9 @@ public class LogLevelMap private constructor(map: Map<String, Level>, defaultLev
         private var defaultLevel = Level.OFF
 
         private fun put(name: String, level: Level) {
-            require (map.put(name, level) == null) {
-                "Duplicate entry for class/package: `$name`."
+            val alreadyMapped = map.put(name, level)
+            require (alreadyMapped == null) {
+                "Duplicate entry for class/package: `$name`, level: `$alreadyMapped`."
             }
         }
 
