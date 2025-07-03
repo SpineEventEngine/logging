@@ -107,17 +107,16 @@ public abstract class ContextMetadata protected constructor() : Metadata() {
      */
     public abstract fun concatenate(metadata: ContextMetadata): ContextMetadata
 
-    // Internal method to deal in entries directly during concatenation.
+    /**
+     * Internal method to deal with entries directly during concatenation.
+     */
     internal abstract fun get(n: Int): Entry<*>
 
     @Suppress("UNCHECKED_CAST")
-    override fun getKey(n: Int): @NotNull MetadataKey<@NotNull Any> {
-        return get(n).key as MetadataKey<Any>
-    }
+    override fun getKey(n: Int): @NotNull MetadataKey<@NotNull Any> =
+        get(n).key as MetadataKey<Any>
 
-    override fun getValue(n: Int): Any {
-        return get(n).value
-    }
+    override fun getValue(n: Int): Any = get(n).value
 
     public companion object {
 
