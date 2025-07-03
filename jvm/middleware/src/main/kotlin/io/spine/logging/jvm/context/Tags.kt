@@ -201,7 +201,7 @@ public class Tags private constructor(private val map: LightweightTagMap) {
             // about the original value order.
             // We/ could deduplicate here to guard against pathological use,
             // but it should never matter.
-            Collections.sort(keyValuePairs, keyValueComparator)
+            keyValuePairs.sort()
             return Tags(LightweightTagMap(keyValuePairs))
         }
 
@@ -256,49 +256,37 @@ public class Tags private constructor(private val map: LightweightTagMap) {
         map.toString()
 }
 
-//TODO(ChatGPT): Make `KeyValuePair` implement `Comparable` using the logic from
-// `ketValueComparator` and `valueComparator` below. After that, migrate the code
-// from `ketValueComparator` and `valueComparator` to the `KeyValuePair` class.
 private data class KeyValuePair(
     val key: String,
     val value: Any?
-)
+) : Comparable<KeyValuePair> {
 
-/**
- * A stylistic choice to make the comparator separate, rather than have `KeyValuePair`
- * implement `Comparable`, because a class which implements `Comparable` is usually
- * implicitly expected to also have sensible `equals`/`hashCode` methods, but we
- * do not need those.
- */
-private val valueComparator = Comparator<Any> { lhs, rhs ->
-    // By API, we only get known types here, all of which are final and comparable.
-    val ltype = Type.of(lhs)
-    val rtype = Type.of(rhs)
-    if (ltype == rtype) ltype.compare(lhs, rhs) else ltype.compareTo(rtype)
-}
-
-private val keyValueComparator = Comparator<KeyValuePair> { lhs, rhs ->
-    var signum = lhs.key.compareTo(rhs.key)
-    if (signum == 0) {
-        signum = when {
-            lhs.value != null && rhs.value != null ->
-                valueComparator.compare(lhs.value, rhs.value)
-            lhs.value != null -> 1
-            rhs.value != null -> -1
-            else -> 0
+    override fun compareTo(other: KeyValuePair): Int {
+        var signum = key.compareTo(other.key)
+        if (signum == 0) {
+            signum = when {
+                value != null && other.value != null ->
+                    Type.compareValues(value, other.value)
+                value != null -> 1
+                other.value != null -> -1
+                else -> 0
+            }
         }
+        return signum
     }
-    signum
 }
 
 /**
- * Allowed types of tag values. This ensures that tag values have well known semantics and can
+ * Allowed types of tag values.
+ *
+ * This ensures that tag values have well-known semantics and can
  * always be formatted in a clearly and unambiguously.
  *
  * The ordering of elements in this enum should not change as it defines the sort order between
  * values of different types. New elements need not be added at the end though.
  */
 private enum class Type {
+
     BOOLEAN {
         override fun compare(lhs: Any, rhs: Any): Int =
             (lhs as Boolean).compareTo(rhs as Boolean)
@@ -319,17 +307,30 @@ private enum class Type {
     abstract fun compare(lhs: Any, rhs: Any): Int
 
     companion object {
+
         fun of(tag: Any): Type {
-            // There should be exactly as many public methods to set tag values as there are cases here.
+            // There should be exactly as many public methods to set tag values as
+            // there are cases here.
             return when (tag) {
                 is String -> STRING
                 is Boolean -> BOOLEAN
                 is Long -> LONG
                 is Double -> DOUBLE
                 else -> {
-                    // Should never happen because only known types can be passed via public methods.
+                    // Should never happen because only known types can be
+                    // passed via public methods.
                     throw AssertionError("invalid tag type: ${tag.javaClass}")
                 }
+            }
+        }
+
+        fun compareValues(left: Any, right: Any): Int {
+            val ltype = of(left)
+            val rtype = of(right)
+            return if (ltype == rtype) {
+                ltype.compare(left, right)
+            } else {
+                ltype.compareTo(rtype)
             }
         }
     }
