@@ -60,13 +60,18 @@ public abstract class ContextMetadata protected constructor() : Metadata() {
      */
     public class Builder {
 
-        // Set an explicitly small initial capacity to avoid excessive allocations when we only ever
-        // expect one or two keys to be added per context.
-        // We do not optimize for the case of zero keys, since the scoped context builder
-        // shouldn't create a builder until the first key is added.
+        /**
+         * Set an explicitly small initial capacity to avoid excessive allocations
+         * when we only ever expect one or two keys to be added per context.
+         *
+         * We do not optimize for the case of zero keys, since the scoped context builder
+         * shouldn't create a builder until the first key is added.
+        */
         private val entries = ArrayList<Entry<*>>(2)
 
-        /** Add a single metadata key/value pair to the builder. */
+        /**
+         * Add a single metadata key/value pair to the builder.
+         */
         @CanIgnoreReturnValue
         public fun <T : Any> add(key: MetadataKey<T>, value: T): Builder {
             // Entries are immutable and get moved into the metadata when it is built,
@@ -76,29 +81,29 @@ public abstract class ContextMetadata protected constructor() : Metadata() {
             return this
         }
 
-        public fun build(): ContextMetadata {
+        public fun build(): ContextMetadata =
             // Analysis shows it is quicker to pass an empty array here and let the JVM optimize to
             // avoid creating an empty array just to overwrite all its elements.
-            return ImmutableScopeMetadata(entries.toArray(EMPTY_ARRAY))
-        }
+            ImmutableScopeMetadata(entries.toArray(emptyArray))
 
         private companion object {
-            private val EMPTY_ARRAY = arrayOfNulls<Entry<*>>(0)
+            private val emptyArray = arrayOfNulls<Entry<*>>(0)
         }
     }
 
     /**
-     * Concatenates the given context metadata *after* this instance. Key value pairs are
-     * simply concatenated (rather than being merged) which may result in multiple single valued
-     * keys existing in the resulting sequence.
+     * Concatenates the given context metadata *after* this instance.
      *
-     * Whether this is achieved via copying or chaining of instances is an implementation
-     * detail.
+     * Key value pairs are simply concatenated (rather than being merged) which
+     * may result in multiple single valued keys existing in the resulting sequence.
+     *
+     * Whether this is achieved via copying or chaining of instances is
+     * an implementation detail.
      *
      * Use [io.spine.logging.jvm.backend.MetadataProcessor] to process
-     * metadata consistently with respect to single valued and repeated keys, and use
-     * [Metadata.findValue] to look up the "most recent" value for a single
-     * valued key.
+     * metadata consistently with respect to single valued and repeated keys,
+     * and use [Metadata.findValue] to look up the "most recent"
+     * value for a single valued key.
      */
     public abstract fun concatenate(metadata: ContextMetadata): ContextMetadata
 
@@ -116,30 +121,29 @@ public abstract class ContextMetadata protected constructor() : Metadata() {
 
     public companion object {
 
-        /** Returns a new [ContextMetadata] builder. */
+        /**
+         * Returns a new [ContextMetadata] builder.
+         */
         @JvmStatic
-        public fun builder(): Builder {
-            return Builder()
-        }
+        public fun builder(): Builder = Builder()
 
-        /** Returns a space efficient [ContextMetadata] containing a single value. */
+        /**
+         * Returns a space efficient [ContextMetadata] containing a single value.
+         */
         @JvmStatic
-        public fun <T : Any> singleton(key: MetadataKey<T>, value: T): ContextMetadata {
-            return SingletonMetadata(key, value)
-        }
+        public fun <T : Any> singleton(key: MetadataKey<T>, value: T): ContextMetadata =
+            SingletonMetadata(key, value)
 
-        /** Returns the empty [ContextMetadata]. */
-        // We can't use empty() here as that's already taken by Metadata.
+        /**
+         * Returns the empty [ContextMetadata].
+         */
         @JvmStatic
-        public fun none(): ContextMetadata {
-            return EmptyMetadata.INSTANCE
-        }
+        public fun empty(): ContextMetadata = EmptyMetadata
     }
 }
 
-private fun <T : Any> checkCannotRepeat(key: MetadataKey<T>) {
+private fun <T : Any> checkCannotRepeat(key: MetadataKey<T>) =
     checkArgument(!key.canRepeat(), "metadata key must be single valued")
-}
 
 
 private class ImmutableScopeMetadata(private val entries: Array<Entry<*>?>) :
@@ -225,11 +229,9 @@ private class SingletonMetadata<T : Any>(key: MetadataKey<T>, value: T) : Contex
  * Android users are particularly careful about unnecessary class loading,
  * and we've used similar mechanisms in Guava (see CharMatchers).
  */
-private class EmptyMetadata private constructor() : ContextMetadata() {
+private object EmptyMetadata : ContextMetadata() {
 
-    override fun size(): Int {
-        return 0
-    }
+    override fun size(): Int = 0
 
     override fun get(n: Int): Entry<*> {
         throw IndexOutOfBoundsException(n.toString())
@@ -241,11 +243,5 @@ private class EmptyMetadata private constructor() : ContextMetadata() {
         return null
     }
 
-    override fun concatenate(metadata: ContextMetadata): ContextMetadata {
-        return metadata
-    }
-
-    companion object {
-        val INSTANCE = EmptyMetadata()
-    }
+    override fun concatenate(metadata: ContextMetadata): ContextMetadata = metadata
 }
