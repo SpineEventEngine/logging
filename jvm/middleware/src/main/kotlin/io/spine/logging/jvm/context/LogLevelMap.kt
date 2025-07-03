@@ -27,10 +27,7 @@
 package io.spine.logging.jvm.context
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
-import io.spine.logging.jvm.util.Checks.checkNotNull
-import java.util.Collections
-import java.util.HashMap
-import java.util.HashSet
+import java.util.*
 import java.util.logging.Level
 
 /**
