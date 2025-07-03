@@ -68,7 +68,7 @@ internal open class FormattingBackend : LoggerBackend() {
         }
     }
 
-    // Don't handle any errors in the backend, so we can test
+    // Do not handle any errors in the backend, so we can test
     // “last resort” error handling.
     override fun handleError(error: RuntimeException, badData: LogData) = throw error
 }

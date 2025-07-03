@@ -329,7 +329,7 @@ public abstract class ScopedLoggingContext protected constructor() {
      * Implementations of this API must return a subclass of [Builder] which can install
      * all necessary metadata into a new context from the builder's current state.
      *
-     * Note for users: if you don't need an instance of `ScopedLoggingContext` for some
+     * Note for users: if you do not need an instance of `ScopedLoggingContext` for some
      * reason such as testability (injecting it, for example), consider using the static methods in
      * [ScopedLoggingContexts] instead to avoid the need to call [getInstance]:
      *
@@ -350,7 +350,7 @@ public abstract class ScopedLoggingContext protected constructor() {
      * This allows log statements to control stateful logging operations (e.g., rate limiting)
      * using [MiddlemanApi.per] method.
      *
-     * Note for users: if you don't need an instance of `ScopedLoggingContext` for some
+     * Note for users: if you do not need an instance of `ScopedLoggingContext` for some
      * reason such as testability (injecting it, for example), consider using the static methods in
      * [ScopedLoggingContexts] instead to avoid the need to call [getInstance].
      */

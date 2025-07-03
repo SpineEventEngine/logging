@@ -199,7 +199,7 @@ public object SimpleMessageFormatter {
     ): Boolean {
         // If there are logged arguments or more metadata keys than can be ignored,
         // we fail immediately, which avoids the cost of creating the metadata key set
-        // (so don't remove the size check).
+        // (so do not remove the size check).
         return logData.templateContext != null ||
                 metadata.keyCount() > keysToIgnore.size ||
                 !keysToIgnore.containsAll(metadata.keySet())

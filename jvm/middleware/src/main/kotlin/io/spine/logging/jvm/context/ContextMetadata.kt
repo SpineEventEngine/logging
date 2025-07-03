@@ -60,7 +60,7 @@ public abstract class ContextMetadata protected constructor() : Metadata() {
 
         // Set an explicitly small initial capacity to avoid excessive allocations when we only ever
         // expect one or two keys to be added per context.
-        // We don't optimize for the case of zero keys, since the scoped context builder
+        // We do not optimize for the case of zero keys, since the scoped context builder
         // shouldn't create a builder until the first key is added.
         private val entries = ArrayList<Entry<*>>(2)
 

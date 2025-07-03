@@ -233,7 +233,7 @@ public class Tags private constructor(private val map: LightweightTagMap) {
             return other
         }
         // We could check if they are equal or one is a subset of the other,
-        // but we *really* don't expect that to be a common situation and
+        // but we *really* do not expect that to be a common situation and
         // merging should be fast enough.
         return Tags(LightweightTagMap(map, other.map))
     }

@@ -112,7 +112,7 @@ abstract class AbstractContextDataProviderSpec {
      * To make this method work, call [markCallbackExecuted] at the end
      * of the innermost callback.
      *
-     * Don't use `@AfterEach` here because the subclass may not use this in
+     * Do not use `@AfterEach` here because the subclass may not use this in
      * its own tests. Just put it at the end of tests with a nested callback.
      */
     private fun checkCallbackWasExecuted() {

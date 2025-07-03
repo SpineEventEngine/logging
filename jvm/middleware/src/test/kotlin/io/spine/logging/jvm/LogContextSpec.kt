@@ -861,7 +861,7 @@ internal class LogContextSpec {
     fun `explicitly inject the log site`() {
         // Tests if it is the log site instance that controls rate limiting,
         // even over different calls.
-        // We don't expect this to ever happen in real code though.
+        // We do not expect this to ever happen in real code though.
         for (i in 0..6) {
             // Log every 2nd (0, 2, 4, 6)
             logHelper(logger, JvmLogSites.logSite(), 2, "Foo: $i")
@@ -963,7 +963,7 @@ internal class LogContextSpec {
             value shouldBe "foo"
         }
 
-        // We don't care too much about the case with multiple keys
+        // We do not care too much about the case with multiple keys
         // because it is so rare, but it should be vaguely sensible.
         val multipleKeys = iterate("foo", "bar")
         Key.LOG_SITE_GROUPING_KEY.emitRepeatedForTests(multipleKeys) { k: String, v: Any? ->

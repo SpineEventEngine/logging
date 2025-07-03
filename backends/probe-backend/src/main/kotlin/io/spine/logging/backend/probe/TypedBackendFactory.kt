@@ -35,7 +35,7 @@ import io.spine.logging.jvm.backend.LoggerBackend
  *
  * Knowing a type of the returned backend is useful when it is used in a pair with
  * [DynamicBackendFactory] to perform test assertions. With a captured type,
- * we don't lose the API of stub backends. For example, allowing to retrieve
+ * we do not lose the API of stub backends. For example, allowing to retrieve
  * the remembered log data from `FakeLoggerBackend`.
  *
  * The type is public because it is used in a public inline method.

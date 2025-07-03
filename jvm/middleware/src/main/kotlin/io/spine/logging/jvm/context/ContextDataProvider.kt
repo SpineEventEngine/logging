@@ -80,30 +80,34 @@ public abstract class ContextDataProvider {
     public abstract fun getContextApiSingleton(): ScopedLoggingContext
 
     /**
-     * Returns whether the given logger should have logging forced at the specified level. When
-     * logging is forced for a log statement, it will be emitted regardless or the normal log level
-     * configuration of the logger and ignoring any rate limiting or other filtering.
+     * Returns whether the given logger should have logging forced at the specified level.
      *
-     * Implementations which do not support forced logging should not override this method; the
-     * default implementation returns `false`.
+     * When logging is forced for a log statement, it will be emitted regardless or
+     * the normal log level configuration of the logger and ignoring any rate limiting or
+     * other filtering.
      *
-     * `loggerName` can be used to look up specific configuration, such as log level, for the
-     * logger, to decide if a log statement should be forced. This information might vary depending on
-     * the context in which this call is made, so the result should not be cached.
+     * Implementations which do not support forced logging should not override this method;
+     * the default implementation returns `false`.
+     *
+     * `loggerName` can be used to look up specific configuration, such as log level,
+     * for the logger, to decide if a log statement should be forced.
+     * This information might vary depending on the context in which this call is made,
+     * so the result should not be cached.
      *
      * `isEnabledByLevel` indicates that the log statement is enabled according to its log
      * level, but a `true` value does not necessarily indicate that logging will occur, due to
-     * rate limiting or other conditional logging mechanisms. To bypass conditional logging and ensure
-     * that an enabled log statement will be emitted, this method should return `true` if
-     * `isEnabledByLevel` was `true`.
+     * rate limiting or other conditional logging mechanisms.
      *
-     * WARNING: This method MUST complete quickly and without allocating any memory. It is invoked
-     * for every log statement regardless of logging configuration, so any implementation must go to
-     * every possible length to be efficient.
+     * To bypass conditional logging and ensure that an enabled log statement will be emitted,
+     * this method should return `true` if `isEnabledByLevel` was `true`.
      *
-     * @param loggerName the fully qualified logger name (e.g. "com.example.SomeClass")
-     * @param level the level of the log statement being invoked
-     * @param isEnabledByLevel whether the logger is enabled at the given level
+     * WARNING: This method MUST complete quickly and without allocating any memory.
+     * It is invoked for every log statement regardless of logging configuration,
+     * so any implementation must go to every possible length to be efficient.
+     *
+     * @param loggerName The fully qualified logger name (e.g., `"com.example.SomeClass"`)
+     * @param level The level of the log statement being invoked.
+     * @param isEnabledByLevel Whether the logger is enabled at the given level.
      */
     public open fun shouldForceLogging(
         loggerName: String,
@@ -133,9 +137,10 @@ public abstract class ContextDataProvider {
     public open fun getTags(): Tags = Tags.empty()
 
     /**
-     * Returns metadata to be applied to a log statement. Scoped metadata can be used to provide
-     * structured data to log statements or control logging behaviour (in conjunction with a custom
-     * logger backend).
+     * Returns metadata to be applied to a log statement.
+     *
+     * Scoped metadata can be used to provide structured data to log statements or
+     * control logging behaviour (in conjunction with a custom logger backend).
      *
      * Implementations which do not support scoped [Metadata] should not override this
      * method; the default implementation returns [Metadata.empty].
@@ -143,18 +148,21 @@ public abstract class ContextDataProvider {
     public open fun getMetadata(): Metadata = Metadata.empty()
 
     /**
-     * Returns the scope instance of the specified type for this context, or `null` if no such
-     * scope was bound to this context. This method searches parent contexts as well.
+     * Returns the scope instance of the specified type for this context, or `null`
+     * if no such scope was bound to this context.
      *
-     * Implementations which do not support scope types should return `null`, which can be
-     * achieved by using the default method.
+     * This method searches parent contexts as well.
+     *
+     * Implementations which do not support scope types should return `null`,
+     * which can be achieved by using the default method.
      */
     public open fun getScope(type: ScopeType): LoggingScope? = null
 
     public companion object {
+
         /**
-         * Returns the singleton instance of the context data provider for use by logging platform
-         * implementations.
+         * Returns the singleton instance of the context data provider for use by
+         * logging platform implementations.
          *
          * This method should not be called by general application code, and
          * the `ContextDataProvider` class should never need to be used directly
@@ -166,7 +174,7 @@ public abstract class ContextDataProvider {
 
         /**
          * Returns the singleton no-op context data provider, which can be used by platform
-         * implementations which don't support `ScopedLoggingContext` for some reason.
+         * implementations which do not support `ScopedLoggingContext` for some reason.
          *
          * The returned provider has no effect and returns empty/default data in all cases.
          *
