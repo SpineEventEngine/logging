@@ -70,8 +70,9 @@ abstract class AbstractContextDataProviderSpec {
     private lateinit var contextData: ContextDataProvider
     private lateinit var context: ScopedLoggingContext
 
-    private val contextTags: Map<String?, Set<Any?>?>
+    private val contextTags: Map<String, Set<Any?>>
         get() = contextData.getTags().asMap()
+
     private val contextMetadata: Metadata
         get() = contextData.getMetadata()
 
