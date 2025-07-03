@@ -26,13 +26,12 @@
 
 package io.spine.logging.jvm.context
 
-import io.spine.logging.jvm.context.SegmentTrie.Companion.create
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.spine.logging.jvm.context.SegmentTrie.Companion.create
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 /**
  * Tests for [SegmentTrie].
