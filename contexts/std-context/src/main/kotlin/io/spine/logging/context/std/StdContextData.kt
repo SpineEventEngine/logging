@@ -131,7 +131,7 @@ internal object CurrentStdContext {
     }
 
     /**
-     * Obtains metadata of the current context or [ContextMetadata.none]
+     * Obtains metadata of the current context or [ContextMetadata.empty]
      * if no context is installed.
      */
     fun metadata(): ContextMetadata {
@@ -140,7 +140,7 @@ internal object CurrentStdContext {
                 return metadata
             }
         }
-        return ContextMetadata.none()
+        return ContextMetadata.empty()
     }
 
     /**

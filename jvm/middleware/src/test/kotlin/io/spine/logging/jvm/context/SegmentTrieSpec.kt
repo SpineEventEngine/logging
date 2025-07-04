@@ -26,13 +26,12 @@
 
 package io.spine.logging.jvm.context
 
-import io.spine.logging.jvm.context.SegmentTrie.create
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.spine.logging.jvm.context.SegmentTrie.Companion.create
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 /**
  * Tests for [SegmentTrie].
@@ -109,14 +108,6 @@ internal class SegmentTrieSpec {
         }
 
         @Test
-        fun `when given a mapping with only a 'null' key`() {
-            val map = mapOf<String?, String>(null to "BAD")
-            assertThrows<IllegalStateException> {
-                create(map, '.', DEFAULT)
-            }
-        }
-
-        @Test
         fun `when given a mapping with only a 'null' value`() {
             val map = mapOf<String, String?>("com.foo" to null)
             val trie = create(map, '.', DEFAULT)
@@ -173,17 +164,6 @@ internal class SegmentTrieSpec {
 
             trie["foo"] shouldBe DEFAULT
             trie["foo.bar"] shouldBe DEFAULT
-        }
-
-        @Test
-        fun `when given a general case mapping with a 'null' key`() {
-            val map = mapOf(
-                "foo" to "FOO",
-                null to "BAD"
-            )
-            assertThrows<NullPointerException> {
-                create(map, '.', DEFAULT)
-            }
         }
 
         @Test

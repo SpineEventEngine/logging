@@ -91,7 +91,7 @@ public final class GrpcContextDataProvider extends ContextDataProvider {
 
   @Override
   public ScopedLoggingContext getContextApiSingleton() {
-    GrpcScopedLoggingContext result = configInstance;
+      var result = configInstance;
     if (result == null) {
       // GrpcScopedLoggingContext is stateless, so we shouldn't need double-checked locking here to
       // ensure we don't make more than one.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,13 +24,20 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/**
- * Contains implementation of the context metadata.
- *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/package-info.java">
- *     Original Java code of Google Flogger</a> for historical context.
- */
-@CheckReturnValue
-package io.spine.logging.jvm.context;
+package io.spine.logging.jvm.context
 
-import com.google.errorprone.annotations.CheckReturnValue;
+import java.io.Serial
+
+/**
+ * Thrown if it can be determined that contexts have been closed incorrectly.
+ *
+ * Note that the point at which this exception is thrown may not itself be
+ * the point where the mishandling occurred, but simply where it was first detected.
+ */
+public class InvalidLoggingContextStateException(message: String, cause: Throwable) :
+    IllegalStateException(message, cause) {
+    private companion object {
+        @Serial
+        private const val serialVersionUID = 0L
+    }
+}

@@ -67,8 +67,8 @@ final class GrpcScopedLoggingContext extends ScopedLoggingContext {
   private ScopedLoggingContext.Builder newBuilder(@Nullable ScopeType scopeType) {
     return new ScopedLoggingContext.Builder() {
       @Override
-      public LoggingContextCloseable install() {
-        GrpcContextData newContextData =
+      public AutoCloseable install() {
+          var newContextData =
             new GrpcContextData(GrpcContextDataProvider.currentContext(), scopeType, provider);
         newContextData.addTags(getTags());
         newContextData.addMetadata(getMetadata());
@@ -78,19 +78,19 @@ final class GrpcScopedLoggingContext extends ScopedLoggingContext {
     };
   }
 
-  private static LoggingContextCloseable installContextData(GrpcContextData newContextData) {
+  private static AutoCloseable installContextData(GrpcContextData newContextData) {
     // Capture these variables outside the lambda.
-    Context newGrpcContext =
+      var newGrpcContext =
         Context.current().withValue(GrpcContextDataProvider.getContextKey(), newContextData);
     @SuppressWarnings("MustBeClosedChecker")
-    Context prev = newGrpcContext.attach();
+    var prev = newGrpcContext.attach();
     return () -> newGrpcContext.detach(prev);
   }
 
   @Override
   public boolean addTags(Tags tags) {
     checkNotNull(tags, "tags");
-    GrpcContextData context = GrpcContextDataProvider.currentContext();
+      var context = GrpcContextDataProvider.currentContext();
     if (context != null) {
       context.addTags(tags);
       return true;
@@ -102,8 +102,8 @@ final class GrpcScopedLoggingContext extends ScopedLoggingContext {
   public <T> boolean addMetadata(MetadataKey<T> key, T value) {
     // Serves as the null pointer check, and we don't care much about the extra allocation in the
     // case where there's no context, because that should be very rare (and the singleton is small).
-    ContextMetadata metadata = ContextMetadata.singleton(key, value);
-    GrpcContextData context = GrpcContextDataProvider.currentContext();
+      var metadata = ContextMetadata.singleton(key, value);
+      var context = GrpcContextDataProvider.currentContext();
     if (context != null) {
       context.addMetadata(metadata);
       return true;
@@ -114,7 +114,7 @@ final class GrpcScopedLoggingContext extends ScopedLoggingContext {
   @Override
   public boolean applyLogLevelMap(LogLevelMap logLevelMap) {
     checkNotNull(logLevelMap, "log level map");
-    GrpcContextData context = GrpcContextDataProvider.currentContext();
+      var context = GrpcContextDataProvider.currentContext();
     if (context != null) {
       context.applyLogLevelMap(logLevelMap);
       return true;

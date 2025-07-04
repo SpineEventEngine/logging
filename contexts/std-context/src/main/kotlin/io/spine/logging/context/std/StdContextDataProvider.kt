@@ -32,7 +32,6 @@ import io.spine.logging.jvm.backend.Metadata
 import io.spine.logging.jvm.context.ContextDataProvider
 import io.spine.logging.jvm.context.ScopeType
 import io.spine.logging.jvm.context.ScopedLoggingContext
-import io.spine.logging.jvm.context.ScopedLoggingContext.LoggingContextCloseable
 import io.spine.logging.jvm.context.Tags
 import io.spine.logging.toJavaLogging
 import io.spine.logging.toLevel
@@ -56,7 +55,7 @@ public class StdContextDataProvider: ContextDataProvider() {
 
     override fun shouldForceLogging(
         loggerName: String,
-        jLevel: JLevel,
+        level: JLevel,
         isEnabledByLevel: Boolean
     ): Boolean {
 
@@ -64,8 +63,8 @@ public class StdContextDataProvider: ContextDataProvider() {
             return false
         }
 
-        val level = jLevel.toLevel()
-        return CurrentStdContext.shouldForceLoggingFor(loggerName, level)
+        val l = level.toLevel()
+        return CurrentStdContext.shouldForceLoggingFor(loggerName, l)
     }
 
     override fun getMappedLevel(loggerName: String): Level? {
@@ -83,16 +82,16 @@ public class StdContextDataProvider: ContextDataProvider() {
 }
 
 /**
- * A [ScopedLoggingContext] singleton, which creates [LoggingContextCloseable]
+ * A [ScopedLoggingContext] singleton, which creates [AutoCloseable]
  * based on [StdContextData].
  */
 private object StdScopedLoggingContext: ScopedLoggingContext() {
 
     override fun newContext(): Builder = BuilderImpl(null)
 
-    override fun newContext(scopeType: ScopeType): Builder = BuilderImpl(scopeType)
+    override fun newContext(scopeType: ScopeType?): Builder = BuilderImpl(scopeType)
 
-    override fun addTags(tags: Tags?): Boolean {
+    override fun addTags(tags: Tags): Boolean {
         CurrentStdContext.data?.addTags(tags)
         return true
     }
@@ -103,20 +102,20 @@ private object StdScopedLoggingContext: ScopedLoggingContext() {
      */
     class BuilderImpl(private val scopeType: ScopeType?) : Builder() {
 
-        override fun install(): LoggingContextCloseable {
+        override fun install(): AutoCloseable {
             val newContextData = StdContextData(scopeType)
             newContextData.apply {
-                addTags(tags)
-                addMetadata(metadata)
-                applyLogLevelMap(logLevelMap.toMap())
+                addTags(getTags())
+                addMetadata(getMetadata())
+                applyLogLevelMap(getLogLevelMap().toMap())
             }
             return install(newContextData)
         }
 
-        private fun install(newData: StdContextData): LoggingContextCloseable {
+        private fun install(newData: StdContextData): AutoCloseable {
             val previousData = CurrentStdContext.data
             CurrentStdContext.attach(newData)
-            return LoggingContextCloseable { CurrentStdContext.attach(previousData) }
+            return AutoCloseable { CurrentStdContext.attach(previousData) }
         }
     }
 }

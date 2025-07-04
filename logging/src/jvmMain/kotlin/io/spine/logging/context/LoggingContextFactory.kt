@@ -54,7 +54,7 @@ internal actual object LoggingContextFactory {
         MapImpl(map, defaultLevel)
 
     actual fun newContext(): ScopedLoggingContext.Builder {
-        val context = JContextDataProvider.getInstance().contextApiSingleton.newContext()
+        val context = JContextDataProvider.getInstance().getContextApiSingleton().newContext()
         return DelegatingContextBuilder(context)
     }
 }

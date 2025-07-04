@@ -277,7 +277,7 @@ internal class JulRecordSpec {
         var stringifiedRecord = record.toString()
 
         // From the `SimpleLogRecord`'s point of view,
-        // we don't have arguments after formatting.
+        // we do not have arguments after formatting.
         stringifiedRecord shouldContain "  message: Answer=42"
         stringifiedRecord shouldContain "  arguments: []"
         stringifiedRecord shouldContain "  original message: Answer=%d"

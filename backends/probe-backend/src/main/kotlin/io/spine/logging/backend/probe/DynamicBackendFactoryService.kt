@@ -36,7 +36,7 @@ import io.spine.logging.jvm.backend.BackendFactory
  *
  * Each service should have a public no-args constructor to be used
  * by the loader. Which is not a case for object declarations, as they
- * don't have any constructors at all.
+ * do not have any constructors at all.
  *
  * Until [KT-25892](https://youtrack.jetbrains.com/issue/KT-25892/Allow-objects-to-be-loaded-via-ServiceLoader-or-similar-API)
  * is implemented, we need an adapter for object services.

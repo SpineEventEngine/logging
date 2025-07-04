@@ -183,7 +183,7 @@ public abstract class Platform {
         public fun getInjectedMetadata(): Metadata =
             // TODO(dbeaumont): Make this return either an extensible MetadataProcessor or
             //  ScopeMetadata.
-            getContextDataProvider().metadata
+            getContextDataProvider().getMetadata()
 
         /**
          * Returns the current time from the epoch (`00:00 1st Jan, 1970`)

@@ -60,7 +60,7 @@ final class GrpcContextData {
         return metadata;
       }
     }
-    return ContextMetadata.none();
+    return ContextMetadata.empty();
   }
 
   static boolean shouldForceLoggingFor(

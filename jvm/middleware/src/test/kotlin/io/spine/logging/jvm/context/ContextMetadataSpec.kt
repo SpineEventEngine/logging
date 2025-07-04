@@ -56,7 +56,7 @@ internal class ContextMetadataSpec {
 
     @Test
     fun `provide an empty instance`() {
-        val metadata = ContextMetadata.none()
+        val metadata = ContextMetadata.empty()
         metadata.shouldBeEmpty()
     }
 
@@ -114,7 +114,7 @@ internal class ContextMetadataSpec {
         @Test
         fun `an empty instance`() {
             val fooMetadata = ContextMetadata.singleton(FOO_KEY, "foo")
-            val emptyMetadata = ContextMetadata.none()
+            val emptyMetadata = ContextMetadata.empty()
             emptyMetadata.concatenate(fooMetadata) shouldBeSameInstanceAs fooMetadata
             fooMetadata.concatenate(emptyMetadata) shouldBeSameInstanceAs fooMetadata
         }

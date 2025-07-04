@@ -26,8 +26,6 @@
 
 package io.spine.logging.jvm.context
 
-import io.spine.logging.jvm.context.ScopedLoggingContext.InvalidLoggingContextStateException
-import io.spine.logging.jvm.context.ScopedLoggingContext.LoggingContextCloseable
 import io.kotest.matchers.throwable.shouldHaveMessage
 import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.DisplayName
@@ -76,14 +74,14 @@ internal class ScopedLoggingContextSpec {
 private object ErrorContext : ScopedLoggingContext() {
 
     override fun newContext(): Builder = object : Builder() {
-        override fun install(): LoggingContextCloseable {
-            return LoggingContextCloseable { throw IllegalArgumentException("BAD CONTEXT") }
+        override fun install(): AutoCloseable {
+            return AutoCloseable { throw IllegalArgumentException("BAD CONTEXT") }
         }
     }
 
     override fun newContext(scopeType: ScopeType?): Builder = newContext()
 
-    override fun addTags(tags: Tags?): Boolean = false
+    override fun addTags(tags: Tags): Boolean = false
 
-    override fun applyLogLevelMap(logLevelMap: LogLevelMap?): Boolean = false
+    override fun applyLogLevelMap(logLevelMap: LogLevelMap): Boolean = false
 }
