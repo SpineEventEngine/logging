@@ -37,6 +37,6 @@ apply<BomsPlugin>()
 dependencies {
     implementation(project(":logging"))
     implementation(Kotest.assertions)
-    implementation(enforcedPlatform(Jackson.bom))
+    implementation(platform(Jackson.bom))
     implementation(JUnit.Jupiter.api)
 }
