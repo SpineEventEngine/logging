@@ -58,7 +58,7 @@ public abstract class MessageParser {
      * parameter place-holder in the message.
      */
     @Throws(ParseException::class)
-    public abstract fun <T> parseImpl(builder: MessageBuilder<T>)
+    protected abstract fun <T> parseImpl(builder: MessageBuilder<T>)
 
     /**
      * Appends the unescaped literal representation of the given message string (assumed to be escaped

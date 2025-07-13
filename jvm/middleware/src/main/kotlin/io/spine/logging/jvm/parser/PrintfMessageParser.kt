@@ -28,8 +28,23 @@ package io.spine.logging.jvm.parser
 
 import io.spine.logging.jvm.backend.FormatChar
 import io.spine.logging.jvm.backend.FormatOptions
-import io.spine.logging.jvm.parameter.Parameter
 import io.spine.logging.jvm.parameter.SimpleParameter
+
+/**
+ * Returns the index of the format character in a printf term.
+ */
+private fun findFormatChar(message: String, pos: Int): Int {
+    var index = pos
+    while (index < message.length) {
+        val c = message[index]
+        if (c.isLetter() || c == '%') {
+            return index
+        }
+        index++
+    }
+    // We hit the end of the message without finding a format character.
+    return index
+}
 
 /**
  * A message parser for printf-like formatting. This parser handles format specifiers of the form
@@ -40,53 +55,76 @@ import io.spine.logging.jvm.parameter.SimpleParameter
  */
 public abstract class PrintfMessageParser : MessageParser() {
 
+    public companion object {
+        // Assume that anything outside this set of chars is suspicious and not safe.
+        private  const val ALLOWED_NEWLINE_PATTERN: String = "\\n|\\r(?:\\n)?"
+
+        /**
+         * Returns the system newline separator avoiding any issues with security exceptions or
+         * "suspicious" values. The only allowed return values are "\n" (default), "\r" or "\r\n".
+         */
+        public val SYSTEM_NEWLINE: String by lazy {
+            getSafeSystemNewline()
+        }
+
+        private fun getSafeSystemNewline(): String {
+            try {
+                val unsafeNewline = System.lineSeparator()
+                if (unsafeNewline.matches(ALLOWED_NEWLINE_PATTERN.toRegex())) {
+                    return unsafeNewline
+                }
+            } catch (_: SecurityException) {
+                // Fall through to default value;
+            }
+            return "\n"
+        }
+    }
+
     /**
-     * Parses a printf term of the form "%\[flags\]\[width\]\[.precision\]conversion".
+     * Parses a single printf-like term from a log message into a message template builder.
      *
-     * @param builder The message builder
-     * @param index The argument index for the parsed term
-     * @param message The message being parsed
-     * @param termStart The start of the term (the index of the '%' character)
-     * @param specStart The start of the format specification (after any argument index)
-     * @param formatStart The index of the format character
-     * @return the index after the end of the term
+     * A simple example of an implicit parameter (the argument index is not specified):
+     * ```
+     * message: "Hello %s World"
+     * termStart: 6 ───┚╿╿
+     * specStart: 7 ────┤│
+     * formatStart: 7 ──╯│
+     * return: 8 ────────╯
+     * ```
+     * If this case there is no format specification, so `specStart == formatStart`.
+     *
+     *
+     *
+     * A complex example with an explicit index:
+     * ```
+     * message: "Hello %2$10d World"
+     * termStart: 6 ───┚  ╿ ╿╿
+     * specStart: 9 ──────╯ ││
+     * formatStart: 11 ─────╯│
+     * return: 12 ───────────╯
+     * ```
+     * Note that in this example the given index will be 1 (rather than 2) because printf specifies
+     * indices using a 1-based scheme, but internally they are 0-based.
+     *
+     * @param builder The message template builder.
+     * @param index The zero-based argument index for the parameter.
+     * @param message The complete log message string.
+     * @param termStart The index of the initial '%' character that starts the term.
+     * @param specStart The index of the first format specification character (after any optional
+     *   index specification).
+     *
+     * @param formatStart The index of the (first) format character in the term.
+     * @return The index after the last character of the term.
      */
-    @Suppress("ReturnCount", "LongParameterList")
-    protected fun parsePrintfTerm(
+    @Suppress("LongParameterList")
+    internal abstract fun parsePrintfTerm(
         builder: MessageBuilder<*>,
         index: Int,
         message: String,
         termStart: Int,
         specStart: Int,
         formatStart: Int
-    ): Int {
-        if (formatStart >= message.length) {
-            throw ParseException.withStartPosition(
-                "missing format specifier", message, termStart
-            )
-        }
-        val formatChar = message[formatStart]
-        if (formatChar == '%') {
-            // Literal '%' which doesn't consume any arguments.
-            builder.addParameter(
-                termStart, formatStart + 1,
-                SimpleParameter.of(FormatChar.STRING, FormatOptions.getDefault(), -1)
-            )
-            return formatStart + 1
-        }
-        if (formatChar == 'n') {
-            // System newline which doesn't consume any arguments.
-            builder.addParameter(
-                termStart, formatStart + 1,
-                SimpleParameter.of(FormatChar.STRING, FormatOptions.getDefault(), -1)
-            )
-            return formatStart + 1
-        }
-        val options = FormatOptions.parse(message, specStart, formatStart, formatChar.isUpperCase())
-        val param = getParameter(index, formatChar, options)
-        builder.addParameter(termStart, formatStart + 1, param)
-        return formatStart + 1
-    }
+    ): Int
 
     override fun unescape(out: StringBuilder, message: String, start: Int, end: Int) {
         unescapePrintf(out, message, start, end)
@@ -95,7 +133,7 @@ public abstract class PrintfMessageParser : MessageParser() {
     @Suppress("NestedBlockDepth")
     @Throws(ParseException::class)
     override fun <T> parseImpl(builder: MessageBuilder<T>) {
-        val message = builder.getMessage()
+        val message = builder.message
         var pos = 0
         var index = 0
         while (pos < message.length) {
@@ -150,85 +188,56 @@ public abstract class PrintfMessageParser : MessageParser() {
             )
         }
     }
+}
 
-    /**
-     * Returns the index of the next printf term in a message or -1 if not found.
-     */
-    @Suppress("ReturnCount")
-    public fun nextPrintfTerm(message: String, pos: Int): Int {
-        var index = pos
-        while (index < message.length) {
-            if (message[index] == '%') {
-                // Check if we have "%%" in which case we need to skip over the first one.
-                if (index + 1 < message.length && message[index + 1] == '%') {
-                    index += 2
-                    continue
-                }
-                return index
-            }
-            index++
+/**
+ * Unescapes a printf style message, which just means replacing %% with %.
+ */
+@Suppress("ReturnCount", "LoopWithTooManyJumpStatements")
+internal fun unescapePrintf(out: StringBuilder, message: String, start: Int, end: Int) {
+    var pos = start
+    while (pos < end) {
+        val termStart = nextPrintfTerm(message, pos)
+        if (termStart == -1 || termStart >= end) {
+            break
         }
-        return -1
-    }
-
-    /**
-     * Returns the index of the format character in a printf term.
-     */
-    private fun findFormatChar(message: String, pos: Int): Int {
-        var index = pos
-        while (index < message.length) {
-            val c = message[index]
-            if (c.isLetter() || c == '%') {
-                return index
-            }
-            index++
+        // Append everything from the current position up to the term start.
+        if (termStart > pos) {
+            out.append(message, pos, termStart)
         }
-        // We hit the end of the message without finding a format character.
-        return index
+        // Skip over the '%' character.
+        pos = termStart + 1
+        // If we have "%%" we need to output a single '%' and continue.
+        if (pos < end && message[pos] == '%') {
+            out.append('%')
+            pos++
+            continue
+        }
+        // Otherwise we have a real format specifier, which we don't want to unescape.
+        out.append('%')
     }
+    // Final part (will do nothing if pos >= end).
+    if (pos < end) {
+        out.append(message, pos, end)
+    }
+}
 
-    /**
-     * Unescapes a printf style message, which just means replacing %% with %.
-     */
-    @Suppress("ReturnCount", "LoopWithTooManyJumpStatements")
-    private fun unescapePrintf(out: StringBuilder, message: String, start: Int, end: Int) {
-        var pos = start
-        while (pos < end) {
-            val termStart = nextPrintfTerm(message, pos)
-            if (termStart == -1 || termStart >= end) {
-                break
-            }
-            // Append everything from the current position up to the term start.
-            if (termStart > pos) {
-                out.append(message, pos, termStart)
-            }
-            // Skip over the '%' character.
-            pos = termStart + 1
-            // If we have "%%" we need to output a single '%' and continue.
-            if (pos < end && message[pos] == '%') {
-                out.append('%')
-                pos++
+/**
+ * Returns the index of the next printf term in a message or -1 if not found.
+ */
+@Suppress("ReturnCount")
+public fun nextPrintfTerm(message: String, pos: Int): Int {
+    var index = pos
+    while (index < message.length) {
+        if (message[index] == '%') {
+            // Check if we have "%%" in which case we need to skip over the first one.
+            if (index + 1 < message.length && message[index + 1] == '%') {
+                index += 2
                 continue
             }
-            // Otherwise we have a real format specifier, which we don't want to unescape.
-            out.append('%')
+            return index
         }
-        // Final part (will do nothing if pos >= end).
-        if (pos < end) {
-            out.append(message, pos, end)
-        }
+        index++
     }
-
-    /**
-     * Returns a parameter instance for the given printf format specification.
-     *
-     * @param index the argument index for the parameter
-     * @param formatChar the format character (e.g. 'd' or 's')
-     * @param options the parsed format options
-     */
-    protected abstract fun getParameter(
-        index: Int,
-        formatChar: Char,
-        options: FormatOptions
-    ): Parameter
+    return -1
 }

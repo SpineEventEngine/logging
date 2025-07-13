@@ -44,12 +44,17 @@ public abstract class MessageBuilder<T>(context: TemplateContext) {
 
     private val context: TemplateContext = Checks.checkNotNull(context, "context")
 
-    // Mask of parameter indexes seen during parsing, used to determine if there are gaps in the
-    // specified parameters (which is a parsing error).
-    // This could be a long if we cared about tracking up to 64 parameters, but I suspect we don't.
+    /**
+     *  Mask of parameter indexes seen during parsing, used to determine if there are gaps in the
+     *  specified parameters (which is a parsing error).
+     *
+     * This could be a long if we cared about tracking up to 64 parameters, but I suspect we don't.
+     */
     private var pmask: Int = 0
 
-    // The maximum argument index referenced by the formatted message (only valid after parsing).
+    /**
+     * The maximum argument index referenced by the formatted message (only valid after parsing).
+     */
     private var maxIndex: Int = -1
 
     /** Returns the parser used to process the log format message in this builder. */
@@ -64,9 +69,9 @@ public abstract class MessageBuilder<T>(context: TemplateContext) {
      * Returns the expected number of arguments to be formatted by this message. This is only valid
      * once parsing has completed successfully.
      */
-    public fun getExpectedArgumentCount(): Int {
-        return maxIndex + 1
-    }
+    public val expectedArgumentCount: Int
+        get() = maxIndex + 1
+
 
     /**
      * Called by parser implementations to signify that the parsing of the next parameter is
@@ -125,7 +130,7 @@ public abstract class MessageBuilder<T>(context: TemplateContext) {
         val parseImplMethod =
             MessageParser::class.java.getDeclaredMethod("parseImpl", MessageBuilder::class.java)
         parseImplMethod.isAccessible = true
-        parseImplMethod.invoke(getParser(), this)
+        parseImplMethod.invoke(parser, this)
         
         // There was a gap in the parameters if either:
         // 1) the mask had a gap, e.g., `..00110111`

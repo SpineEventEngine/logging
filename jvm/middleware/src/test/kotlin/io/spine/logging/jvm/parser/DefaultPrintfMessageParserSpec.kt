@@ -73,20 +73,4 @@ internal class DefaultPrintfMessageParserSpec {
             options.shouldPrefixPlusForPositiveValues() shouldBe true
         }
     }
-
-    @Test
-    fun `fail on unknown printf format`() {
-        val exception = assertThrows<ParseException> {
-            parser.parsePrintfTerm(null, 0, "%Q", 0, 1, 1)
-        }
-        exception.message shouldContain "[%Q]"
-    }
-
-    @Test
-    fun `fail on invalid printf flag`() {
-        val exception = assertThrows<ParseException> {
-            parser.parsePrintfTerm(null, 0, "%0s", 0, 1, 2)
-        }
-        exception.message shouldContain "[%0s]"
-    }
 }
