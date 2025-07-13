@@ -5,7 +5,7 @@
    ./gradlew build
    ```
 
-2. If Protobuf (`.proto`) files are modified run:
+2. If Protobuf (`.proto`) files are modified, run:
    ```bash
    ./gradlew clean build
    ```
