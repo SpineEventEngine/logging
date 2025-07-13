@@ -178,7 +178,7 @@ private fun StringBuilder.appendFormatted(
     if (!options.isDefault) {
         var chr = format.char
         if (options.shouldUpperCase()) {
-            // Clear 6th bit to convert lower case ASCII to upper case.
+            // Clear the 6th bit to convert lower case ASCII to upper case.
             chr = chr.uppercaseChar()
         }
         formatString = options.appendPrintfOptions(StringBuilder("%"))
