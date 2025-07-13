@@ -31,7 +31,7 @@ import io.spine.logging.jvm.backend.FormatOptions
 import io.spine.logging.jvm.backend.TemplateContext
 import io.spine.logging.jvm.parameter.DateTimeFormat
 import io.spine.logging.jvm.parameter.Parameter
-import io.spine.logging.jvm.parameter.ParameterVisitor
+import io.spine.logging.jvm.parameter.ArgumentVisitor
 import io.spine.logging.jvm.parser.MessageBuilder
 import io.spine.logging.jvm.parser.MessageParser
 import io.spine.logging.jvm.parser.ParseException
@@ -56,10 +56,11 @@ import org.junit.jupiter.api.assertThrows
 internal class FakeParameter(index: Int, private val details: String) :
     Parameter(FormatOptions.getDefault(), index) {
 
-    override fun accept(visitor: ParameterVisitor, value: Any) =
+    override fun accept(visitor: ArgumentVisitor, value: Any) =
         throw UnsupportedOperationException("not used in test")
 
-    override fun getFormat(): String = throw UnsupportedOperationException("not used in test")
+    override val format: String
+            get() = throw UnsupportedOperationException("not used in test")
 
     override fun toString(): String = if (details.isEmpty()) "$index" else "$index:$details"
 }
@@ -123,7 +124,7 @@ internal class MemoizingMessageBuilder(parser: MessageParser) :
 /**
  * Remembers arguments of [visit] method's last invocation.
  */
-internal class MemoizingParameterVisitor : ParameterVisitor {
+internal class MemoizingArgumentVisitor : ArgumentVisitor {
 
     lateinit var value: Any
     lateinit var format: FormatChar
@@ -135,9 +136,9 @@ internal class MemoizingParameterVisitor : ParameterVisitor {
         this.options = options
     }
 
-    override fun visitDateTime(value: Any?, format: DateTimeFormat?, options: FormatOptions?) = Unit
+    override fun visitDateTime(value: Any, format: DateTimeFormat, options: FormatOptions) = Unit
 
-    override fun visitPreformatted(value: Any?, formatted: String?) = Unit
+    override fun visitPreformatted(value: Any, formatted: String) = Unit
 
     override fun visitMissing() = Unit
 

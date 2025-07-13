@@ -43,13 +43,6 @@ import org.junit.jupiter.api.assertThrows
 internal class ParameterSpec {
 
     @Test
-    fun `not accept nullable options`() {
-        assertThrows<IllegalArgumentException> {
-            TestParameter(null, 0)
-        }
-    }
-
-    @Test
     fun `not accept a negative index`() {
         assertThrows<IllegalArgumentException> {
             val options = FormatOptions.getDefault()
@@ -72,13 +65,12 @@ internal class ParameterSpec {
     }
 }
 
-private class TestParameter(options: FormatOptions?, index: Int) : Parameter(options, index) {
+private class TestParameter(options: FormatOptions, index: Int) : Parameter(options, index) {
 
-    override fun accept(visitor: ParameterVisitor?, value: Any?) {
+    override fun accept(visitor: ArgumentVisitor, value: Any) {
         throw UnsupportedOperationException()
     }
 
-    override fun getFormat(): String {
-        throw UnsupportedOperationException()
-    }
+    override val format: String
+        get() = throw UnsupportedOperationException()
 }

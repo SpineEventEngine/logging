@@ -31,7 +31,7 @@ import io.spine.logging.jvm.backend.FormatOptions;
 import io.spine.logging.jvm.parameter.DateTimeFormat;
 import io.spine.logging.jvm.parameter.DateTimeParameter;
 import io.spine.logging.jvm.parameter.Parameter;
-import io.spine.logging.jvm.parameter.ParameterVisitor;
+import io.spine.logging.jvm.parameter.ArgumentVisitor;
 import io.spine.logging.jvm.parameter.SimpleParameter;
 
 import static io.spine.logging.jvm.backend.FormatOptions.FLAG_LEFT_ALIGN;
@@ -84,7 +84,7 @@ public class DefaultPrintfMessageParser extends PrintfMessageParser {
                 throw ParseException.withBounds("invalid format specifier", message, termStart,
                                                 termEnd);
             }
-            parameter = SimpleParameter.of(index, formatChar, options);
+            parameter = SimpleParameter.of(formatChar, options, index);
         } else if (typeChar == 't' || typeChar == 'T') {
             if (!options.validate(FLAG_LEFT_ALIGN | FLAG_UPPER_CASE, false)) {
                 throw ParseException.withBounds(
@@ -122,7 +122,7 @@ public class DefaultPrintfMessageParser extends PrintfMessageParser {
         // %h / %H is really just %x / %X on the hashcode.
         return new Parameter(options, index) {
             @Override
-            protected void accept(ParameterVisitor visitor, Object value) {
+            protected void accept(ArgumentVisitor visitor, Object value) {
                 visitor.visit(value.hashCode(), FormatChar.HEX, getFormatOptions());
             }
 

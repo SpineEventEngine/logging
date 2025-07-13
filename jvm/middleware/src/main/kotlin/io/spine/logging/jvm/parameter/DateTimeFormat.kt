@@ -34,7 +34,7 @@ import java.util.Date
  * Supported date/time sub-format characters for the `%t/%T` formatting pattern.
  *
  * **WARNING:** Many date/time format specifiers use the system default time-zone for formatting
- * [Date] or [Long] arguments. This makes it non system-portable, and its use is heavily
+ * [Date] or [Long] arguments. This makes it non-system-portable, and its use is heavily
  * discouraged with non-[Calendar] arguments.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a783099ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parameter/DateTimeFormat.java">

@@ -1,5 +1,7 @@
 package io.spine.logging.jvm.context
 
+import com.google.errorprone.annotations.Immutable
+import com.google.errorprone.annotations.ThreadSafe
 import java.util.*
 import kotlin.math.min
 
@@ -23,6 +25,8 @@ import kotlin.math.min
  * - Allows `null` values, but `null` stops parent matching.
  * - Immutable and thread-safe after creation.
  */
+@Immutable
+@ThreadSafe
 internal abstract class SegmentTrie<T>(private val defaultValue: T) {
 
     /**

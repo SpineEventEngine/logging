@@ -36,14 +36,14 @@ import io.spine.logging.jvm.backend.FormatChar.STRING
 import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_UPPER_CASE
 import io.spine.logging.jvm.parameter.DateTimeFormat
 import io.spine.logging.jvm.parameter.Parameter
-import io.spine.logging.jvm.parameter.ParameterVisitor
+import io.spine.logging.jvm.parameter.ArgumentVisitor
 import io.spine.logging.jvm.parser.MessageBuilder
 import java.util.*
 
 /**
  * The default formatter for log messages and arguments.
  *
- * This formatter can be overridden to modify the behaviour of the [ParameterVisitor]
+ * This formatter can be overridden to modify the behaviour of the [ArgumentVisitor]
  * methods, but this is not expected to be common. Most logger backends will only ever need
  * to use [appendFormattedMessage].
  *
@@ -59,7 +59,7 @@ protected constructor(
     context: TemplateContext,
     protected val args: Array<Any?>,
     protected val out: StringBuilder
-) : MessageBuilder<StringBuilder>(context), ParameterVisitor {
+) : MessageBuilder<StringBuilder>(context), ArgumentVisitor {
 
     /**
      * The start of the next literal subsection of the message that needs processing.
@@ -77,7 +77,7 @@ protected constructor(
         return out
     }
 
-    override fun visit(value: Any?, format: FormatChar, options: FormatOptions) {
+    override fun visit(value: Any, format: FormatChar, options: FormatOptions) {
         if (format.type.canFormat(value)) {
             out.appendFormatted(value, format, options)
         } else {
@@ -85,7 +85,7 @@ protected constructor(
         }
     }
 
-    override fun visitDateTime(value: Any?, format: DateTimeFormat, options: FormatOptions) {
+    override fun visitDateTime(value: Any, format: DateTimeFormat, options: FormatOptions) {
         if (value is Date || value is Calendar || value is Long) {
             val formatString = options
                 .appendPrintfOptions(StringBuilder("%"))
@@ -98,7 +98,7 @@ protected constructor(
         }
     }
 
-    override fun visitPreformatted(value: Any?, formatted: String) {
+    override fun visitPreformatted(value: Any, formatted: String) {
         // For unstructured logging we just use the pre-formatted string.
         out.append(formatted)
     }
@@ -178,7 +178,7 @@ private fun StringBuilder.appendFormatted(
     if (!options.isDefault) {
         var chr = format.char
         if (options.shouldUpperCase()) {
-            // Clear 6th bit to convert lower case ASCII to upper case.
+            // Clear the 6th bit to convert lower case ASCII to upper case.
             chr = chr.uppercaseChar()
         }
         formatString = options.appendPrintfOptions(StringBuilder("%"))

@@ -31,7 +31,7 @@ import io.spine.logging.jvm.backend.FormatOptions
 import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_SHOW_GROUPING
 import io.spine.logging.jvm.backend.FormatOptions.Companion.UNSET
 import io.spine.logging.jvm.parser.given.MemoizingMessageBuilder
-import io.spine.logging.jvm.parser.given.MemoizingParameterVisitor
+import io.spine.logging.jvm.parser.given.MemoizingArgumentVisitor
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import org.junit.jupiter.api.DisplayName
@@ -68,7 +68,7 @@ internal class DefaultBraceStyleMessageParserSpec {
 
         // Now visit the parameter and verify the expected callback occurred.
         val param = memoizingBuilder.param
-        val memoizingVisitor = MemoizingParameterVisitor()
+        val memoizingVisitor = MemoizingArgumentVisitor()
         param.accept(memoizingVisitor, arrayOf<Any>("Answer: ", 42))
 
         with(memoizingVisitor) {
