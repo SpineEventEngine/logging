@@ -55,7 +55,9 @@ public class SimpleParameter private constructor(
 
     private val formatString: String = if (formatOptions.isDefault) {
         formatChar.defaultFormatString
-    } else buildFormatString(formatOptions, formatChar)
+    } else {
+        buildFormatString(formatOptions, formatChar)
+    }
 
     override fun accept(visitor: ArgumentVisitor, value: Any) {
         visitor.visit(value, formatChar, formatOptions)
