@@ -86,11 +86,7 @@ public class SimpleParameter private constructor(
 
         private fun createParameterArray(formatChar: FormatChar): Array<SimpleParameter> =
             Array(MAX_CACHED_PARAMETERS) {
-                SimpleParameter(
-                    formatChar,
-                    FormatOptions.getDefault(),
-                    it
-                )
+                SimpleParameter(formatChar, FormatOptions.getDefault(), it)
             }
 
         /**
