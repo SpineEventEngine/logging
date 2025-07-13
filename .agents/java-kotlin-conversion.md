@@ -52,3 +52,5 @@
  * Preserve the content of original comments but convert the format and markup.
  * Always use braces `{}` for `if`, `for`, and `while` statements.
  * If the converted function has more than two `return` statements, annotate it with `@Suppress("ReturnCount")`.
+ * Keep inline comments from the original code.
+ 
