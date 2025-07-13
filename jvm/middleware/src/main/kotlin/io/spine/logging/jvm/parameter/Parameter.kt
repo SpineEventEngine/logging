@@ -4,24 +4,18 @@ import io.spine.logging.jvm.backend.FormatOptions
 
 /**
  * An abstract representation of a parameter for a message template.
- * All subclasses must be immutable and thread safe.
+ *
+ * All subclasses must be immutable and thread-safe.
  */
-abstract class Parameter protected constructor(
-    options: FormatOptions?,
-    index: Int
+public abstract class Parameter protected constructor(
+    public val formatOptions: FormatOptions,
+    public val index: Int
 ) {
-
-    val index: Int
-    protected val formatOptions: FormatOptions
-
     init {
-        requireNotNull(options) { "format options cannot be null" }
-        require(index >= 0) { "invalid index: $index" }
-        this.index = index
-        this.formatOptions = options
+        require(index >= 0) { "Invalid index: $index" }
     }
 
-    fun accept(visitor: ParameterVisitor, args: Array<out Any?>) {
+    public fun accept(visitor: ParameterVisitor, args: Array<out Any?>) {
         if (index < args.size) {
             val value = args[index]
             if (value != null) {
@@ -36,5 +30,5 @@ abstract class Parameter protected constructor(
 
     protected abstract fun accept(visitor: ParameterVisitor, value: Any)
 
-    abstract fun getFormat(): String
+    public abstract fun getFormat(): String
 }

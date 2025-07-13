@@ -3,8 +3,10 @@ package io.spine.logging.jvm.parameter
 import io.spine.logging.jvm.backend.FormatChar
 import io.spine.logging.jvm.backend.FormatOptions
 
-/** Parameter which formats arguments according to [FormatChar]. */
-class SimpleParameter private constructor(
+/**
+ * Parameter which formats arguments according to [FormatChar].
+ */
+public class SimpleParameter private constructor(
     index: Int,
     private val formatChar: FormatChar,
     options: FormatOptions
@@ -20,31 +22,39 @@ class SimpleParameter private constructor(
 
     override fun getFormat(): String = formatString
 
-    companion object {
+    public companion object {
+
         private const val MAX_CACHED_PARAMETERS = 10
-        private val DEFAULT_PARAMETERS: Map<FormatChar, Array<SimpleParameter>>
+        private val defaultParameters: Map<FormatChar, Array<SimpleParameter>>
 
         init {
             val map = mutableMapOf<FormatChar, Array<SimpleParameter>>()
-            for (fc in FormatChar.values()) {
+            for (fc in FormatChar.entries) {
                 map[fc] = createParameterArray(fc)
             }
-            DEFAULT_PARAMETERS = map
+            defaultParameters = map
         }
 
         private fun createParameterArray(formatChar: FormatChar): Array<SimpleParameter> =
-            Array(MAX_CACHED_PARAMETERS) { SimpleParameter(it, formatChar, FormatOptions.getDefault()) }
+            Array(MAX_CACHED_PARAMETERS) {
+                SimpleParameter(
+                    it,
+                    formatChar,
+                    FormatOptions.getDefault()
+                )
+            }
 
         @JvmStatic
-        fun of(index: Int, formatChar: FormatChar, options: FormatOptions): SimpleParameter {
+        public fun of(index: Int, formatChar: FormatChar, options: FormatOptions): SimpleParameter {
             return if (index < MAX_CACHED_PARAMETERS && options.isDefault) {
-                DEFAULT_PARAMETERS[formatChar]!![index]
+                defaultParameters[formatChar]!![index]
             } else {
                 SimpleParameter(index, formatChar, options)
             }
         }
 
         @JvmStatic
+        @Suppress("MagicNumber")
         internal fun buildFormatString(options: FormatOptions, formatChar: FormatChar): String {
             var c = formatChar.char
             if (options.shouldUpperCase()) {

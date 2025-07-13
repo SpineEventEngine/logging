@@ -2,8 +2,10 @@ package io.spine.logging.jvm.parameter
 
 import io.spine.logging.jvm.backend.FormatOptions
 
-/** Parameter for formatting date/time arguments. */
-class DateTimeParameter private constructor(
+/**
+ * Parameter for formatting date/time arguments.
+ */
+public class DateTimeParameter private constructor(
     options: FormatOptions,
     index: Int,
     private val format: DateTimeFormat
@@ -22,9 +24,10 @@ class DateTimeParameter private constructor(
 
     override fun getFormat(): String = formatString
 
-    companion object {
+    public companion object {
+
         @JvmStatic
-        fun of(format: DateTimeFormat, options: FormatOptions, index: Int): Parameter =
+        public fun of(format: DateTimeFormat, options: FormatOptions, index: Int): Parameter =
             DateTimeParameter(options, index, format)
     }
 }

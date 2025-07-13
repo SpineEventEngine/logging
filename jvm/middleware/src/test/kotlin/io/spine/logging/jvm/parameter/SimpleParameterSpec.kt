@@ -34,7 +34,7 @@ import io.spine.logging.jvm.backend.FormatChar.DECIMAL
 import io.spine.logging.jvm.backend.FormatChar.FLOAT
 import io.spine.logging.jvm.backend.FormatChar.HEX
 import io.spine.logging.jvm.backend.FormatChar.STRING
-import io.spine.logging.jvm.parameter.SimpleParameter.buildFormatString
+import io.spine.logging.jvm.parameter.SimpleParameter.Companion.buildFormatString
 import io.spine.logging.jvm.parser.ParseException
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
@@ -55,7 +55,7 @@ internal class SimpleParameterSpec {
 
     @Test
     fun `return the same instance for the same chars without options up to first 10 indices`() {
-        for (char: FormatChar in FormatChar.values()) {
+        for (char: FormatChar in FormatChar.entries) {
             repeat(10) { index ->
                 val instance1 = SimpleParameter.of(index, char, options)
                 val instance2 = SimpleParameter.of(index, char, options)

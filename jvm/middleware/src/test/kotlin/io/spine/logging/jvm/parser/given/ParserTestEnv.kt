@@ -135,9 +135,9 @@ internal class MemoizingParameterVisitor : ParameterVisitor {
         this.options = options
     }
 
-    override fun visitDateTime(value: Any?, format: DateTimeFormat?, options: FormatOptions?) = Unit
+    override fun visitDateTime(value: Any, format: DateTimeFormat, options: FormatOptions) = Unit
 
-    override fun visitPreformatted(value: Any?, formatted: String?) = Unit
+    override fun visitPreformatted(value: Any, formatted: String) = Unit
 
     override fun visitMissing() = Unit
 

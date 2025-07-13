@@ -1,7 +1,10 @@
 package io.spine.logging.jvm.parameter
 
-/** Supported date/time sub-format characters for `%t`/`%T` patterns. */
-enum class DateTimeFormat(val char: Char) {
+/**
+ *  Supported date/time sub-format characters for `%t`/`%T` patterns.
+ */
+public enum class DateTimeFormat(public val char: Char) {
+
     TIME_HOUR_OF_DAY_PADDED('H'),
     TIME_HOUR_OF_DAY('k'),
     TIME_HOUR_12H_PADDED('I'),
@@ -34,8 +37,11 @@ enum class DateTimeFormat(val char: Char) {
     DATETIME_YEAR_MONTH_DAY('F'),
     DATETIME_FULL('c');
 
-    companion object {
-        private val MAP: Map<Char, DateTimeFormat> = values().associateBy { it.char }
-        fun of(c: Char): DateTimeFormat? = MAP[c]
+    public companion object {
+
+        private val MAP: Map<Char, DateTimeFormat> = entries.associateBy { it.char }
+
+        @JvmStatic
+        public fun of(c: Char): DateTimeFormat? = MAP[c]
     }
 }

@@ -8,15 +8,18 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-/** Parameter implementation for brace style placeholders `{n}`. */
-class BraceStyleParameter private constructor(index: Int) : Parameter(FormatOptions.getDefault(), index) {
+/**
+ * Parameter implementation for brace style placeholders `{n}`.
+ */
+public class BraceStyleParameter private constructor(index: Int) :
+    Parameter(FormatOptions.getDefault(), index) {
 
     override fun accept(visitor: ParameterVisitor, value: Any) {
         when {
             FormatType.INTEGRAL.canFormat(value) ->
-                visitor.visit(value, FormatChar.DECIMAL, WITH_GROUPING)
+                visitor.visit(value, FormatChar.DECIMAL, withGroupings)
             FormatType.FLOAT.canFormat(value) ->
-                visitor.visit(value, FormatChar.FLOAT, WITH_GROUPING)
+                visitor.visit(value, FormatChar.FLOAT, withGroupings)
             value is Date -> {
                 val formatted = (prototypeMessageFormatter.clone() as MessageFormat)
                     .format(arrayOf(value), StringBuffer(), null)
@@ -32,18 +35,24 @@ class BraceStyleParameter private constructor(index: Int) : Parameter(FormatOpti
 
     override fun getFormat(): String = "%s"
 
-    companion object {
+    public companion object {
+
         private const val MAX_CACHED_PARAMETERS = 10
-        private val WITH_GROUPING = FormatOptions.of(
+        private val defaultParameters = Array(MAX_CACHED_PARAMETERS) { BraceStyleParameter(it) }
+
+        private val withGroupings = FormatOptions.of(
             FormatOptions.FLAG_SHOW_GROUPING,
             FormatOptions.UNSET,
             FormatOptions.UNSET
         )
         private val prototypeMessageFormatter = MessageFormat("{0}", Locale.ROOT)
-        private val DEFAULT_PARAMETERS = Array(MAX_CACHED_PARAMETERS) { BraceStyleParameter(it) }
 
         @JvmStatic
-        fun of(index: Int): BraceStyleParameter =
-            if (index < MAX_CACHED_PARAMETERS) DEFAULT_PARAMETERS[index] else BraceStyleParameter(index)
+        public fun of(index: Int): BraceStyleParameter =
+            if (index < MAX_CACHED_PARAMETERS) {
+                defaultParameters[index]
+            } else {
+                BraceStyleParameter(index)
+            }
     }
 }
