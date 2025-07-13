@@ -34,6 +34,8 @@ import io.spine.logging.jvm.util.RecursionDepth
 import java.util.logging.Level
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import com.google.common.base.Preconditions.checkNotNull
+import com.google.errorprone.annotations.Immutable
+import com.google.errorprone.annotations.ThreadSafe
 import java.lang.reflect.InvocationTargetException
 import kotlin.time.ExperimentalTime
 
@@ -224,6 +226,7 @@ public abstract class Platform {
 
     /**
      * API for determining the logging class and log statement sites, return from [getCallerFinder].
+     *
      * These classes are immutable and thread-safe.
      *
      * This functionality is not provided directly by the `Platform` API because doing so would
@@ -252,6 +255,8 @@ public abstract class Platform {
      * can delay any actual work until its methods are called. For example, if any additional state is
      * required in the implementation, it can be held via a "lazy holder" to defer initialization.
      */
+    @Immutable
+    @ThreadSafe
     public abstract class LogCallerFinder {
 
         /**

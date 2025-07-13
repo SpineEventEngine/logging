@@ -27,6 +27,8 @@
 package io.spine.logging.jvm.context
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
+import com.google.errorprone.annotations.Immutable
+import com.google.errorprone.annotations.ThreadSafe
 import java.util.*
 import java.util.logging.Level
 
@@ -40,6 +42,8 @@ import java.util.logging.Level
  * @see [Original Java code of Google Flogger](https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/LogLevelMap.java)
  * for historical context.
  */
+@Immutable
+@ThreadSafe
 public class LogLevelMap private constructor(map: Map<String, Level>, defaultLevel: Level) {
 
     private val trie: SegmentTrie<Level> = SegmentTrie.create(map, '.', defaultLevel)

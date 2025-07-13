@@ -26,6 +26,8 @@
 
 package io.spine.logging.backend.system;
 
+import com.google.errorprone.annotations.Immutable;
+import com.google.errorprone.annotations.ThreadSafe;
 import io.spine.logging.jvm.AbstractLogger;
 import io.spine.logging.jvm.JvmLogSite;
 import io.spine.logging.jvm.JvmLogSites;
@@ -41,6 +43,8 @@ import static io.spine.reflect.CallerFinder.findCallerOf;
  *
  * @see <a href="https://rb.gy/qozq3">Original Java code of Google Flogger</a> for historical context.
  */
+@Immutable
+@ThreadSafe
 public final class StackBasedCallerFinder extends LogCallerFinder {
   private static final LogCallerFinder INSTANCE = new StackBasedCallerFinder();
 

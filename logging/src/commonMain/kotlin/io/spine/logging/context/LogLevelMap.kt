@@ -26,6 +26,8 @@
 
 package io.spine.logging.context
 
+import com.google.errorprone.annotations.Immutable
+import com.google.errorprone.annotations.ThreadSafe
 import io.spine.logging.Level
 import io.spine.logging.toLoggerName
 import kotlin.reflect.KClass
@@ -38,6 +40,8 @@ import kotlin.reflect.KClass
  *
  * Implementing classes are expected to be immutable and thread-safe.
  */
+@Immutable
+@ThreadSafe
 public interface LogLevelMap {
 
     /**

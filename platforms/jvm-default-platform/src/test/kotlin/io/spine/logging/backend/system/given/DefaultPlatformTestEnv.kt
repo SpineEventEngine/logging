@@ -26,6 +26,8 @@
 
 package io.spine.logging.backend.system.given
 
+import com.google.errorprone.annotations.Immutable
+import com.google.errorprone.annotations.ThreadSafe
 import io.spine.logging.jvm.backend.BackendFactory
 import io.spine.logging.jvm.backend.Clock
 import io.spine.logging.jvm.AbstractLogger
@@ -61,6 +63,8 @@ internal class FixedTime : Clock() {
 /**
  * No-op implementation of [Platform.LogCallerFinder].
  */
+@Immutable
+@ThreadSafe
 internal class NoOpCallerFinder : Platform.LogCallerFinder() {
 
     /**

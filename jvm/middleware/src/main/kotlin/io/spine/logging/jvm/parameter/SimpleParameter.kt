@@ -16,11 +16,11 @@ public class SimpleParameter private constructor(
         formatChar.defaultFormatString
     } else buildFormatString(formatOptions, formatChar)
 
-    override fun accept(visitor: ParameterVisitor, value: Any) {
+    override fun accept(visitor: ArgumentVisitor, value: Any) {
         visitor.visit(value, formatChar, formatOptions)
     }
 
-    override fun getFormat(): String = formatString
+    override val format: String = formatString
 
     public companion object {
 

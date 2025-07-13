@@ -28,7 +28,7 @@ package io.spine.logging.jvm.parser
 
 import io.spine.logging.jvm.backend.FormatChar
 import io.spine.logging.jvm.parser.given.MemoizingMessageBuilder
-import io.spine.logging.jvm.parser.given.MemoizingParameterVisitor
+import io.spine.logging.jvm.parser.given.MemoizingArgumentVisitor
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import org.junit.jupiter.api.DisplayName
@@ -60,7 +60,7 @@ internal class DefaultPrintfMessageParserSpec {
 
         // Now visit the parameter and remember its state.
         val param = memoizingBuilder.param
-        val memoizingVisitor = MemoizingParameterVisitor()
+        val memoizingVisitor = MemoizingArgumentVisitor()
         param.accept(memoizingVisitor, arrayOf<Any>("Answer: ", 42.0))
 
         // Recover the remembered arguments and check that the right formatting was done.

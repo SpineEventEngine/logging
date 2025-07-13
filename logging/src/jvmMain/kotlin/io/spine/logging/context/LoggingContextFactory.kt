@@ -28,6 +28,7 @@ package io.spine.logging.context
 
 import com.google.errorprone.annotations.CheckReturnValue
 import com.google.errorprone.annotations.Immutable
+import com.google.errorprone.annotations.ThreadSafe
 import io.spine.logging.JvmMetadataKey
 import io.spine.logging.Level
 import io.spine.logging.MetadataKey
@@ -45,6 +46,7 @@ import io.spine.logging.jvm.context.ScopedLoggingContext as JScopedLoggingContex
  * The class is immutable and thread-safe.
  */
 @Immutable
+@ThreadSafe
 @CheckReturnValue
 internal actual object LoggingContextFactory {
 

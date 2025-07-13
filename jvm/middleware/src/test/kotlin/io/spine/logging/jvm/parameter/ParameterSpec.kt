@@ -67,11 +67,10 @@ internal class ParameterSpec {
 
 private class TestParameter(options: FormatOptions, index: Int) : Parameter(options, index) {
 
-    override fun accept(visitor: ParameterVisitor, value: Any) {
+    override fun accept(visitor: ArgumentVisitor, value: Any) {
         throw UnsupportedOperationException()
     }
 
-    override fun getFormat(): String {
-        throw UnsupportedOperationException()
-    }
+    override val format: String
+        get() = throw UnsupportedOperationException()
 }
