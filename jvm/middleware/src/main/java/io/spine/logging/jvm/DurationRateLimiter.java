@@ -26,7 +26,6 @@
 
 package io.spine.logging.jvm;
 
-import io.spine.logging.jvm.backend.LogData;
 import io.spine.logging.jvm.backend.Metadata;
 import org.jspecify.annotations.Nullable;
 
@@ -35,7 +34,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import static io.spine.logging.jvm.LogContext.Key.LOG_AT_MOST_EVERY;
 import static io.spine.logging.jvm.util.Checks.checkArgument;
-import static io.spine.logging.jvm.util.Checks.checkNotNull;
 import static java.lang.Math.max;
 
 /**
@@ -75,62 +73,13 @@ final class DurationRateLimiter extends RateLimitStatus {
      */
     @Nullable
     static RateLimitStatus check(Metadata metadata, LogSiteKey logSiteKey, long timestampNanos) {
-        RateLimitPeriod rateLimitPeriod = metadata.findValue(LOG_AT_MOST_EVERY);
+        var rateLimitPeriod = metadata.findValue(LOG_AT_MOST_EVERY);
         if (rateLimitPeriod == null) {
             // Without rate limiter specific metadata, this limiter has no effect.
             return null;
         }
         return map.get(logSiteKey, metadata)
                   .checkLastTimestamp(timestampNanos, rateLimitPeriod);
-    }
-
-    /**
-     * Immutable metadata for rate limiting based on a fixed count. This corresponds to the
-     * LOG_AT_MOST_EVERY metadata key in {@link LogData}. Unlike the metadata for {@code every(N)},
-     * we
-     * need to use a wrapper class here to preserve the time unit information.
-     */
-    static final class RateLimitPeriod {
-
-        private final int n;
-        private final TimeUnit unit;
-
-        private RateLimitPeriod(int n, TimeUnit unit) {
-            // This code will work with a zero length time period, but it's nonsensical to try.
-            if (n <= 0) {
-                throw new IllegalArgumentException("time period must be positive: " + n);
-            }
-            this.n = n;
-            this.unit = checkNotNull(unit, "time unit");
-        }
-
-        private long toNanos() {
-            // Since nanoseconds are the smallest level of precision a TimeUnit can express, we are
-            // guaranteed that "unit.toNanos(n) >= n > 0". This is important for correctness (see comment
-            // in checkLastTimestamp()) because it ensures the new timestamp that indicates when logging
-            // should occur always differs from the previous timestamp.
-            return unit.toNanos(n);
-        }
-
-        @Override
-        public String toString() {
-            return n + " " + unit;
-        }
-
-        @Override
-        public int hashCode() {
-            // Rough and ready. We don't expect this be be needed much at all.
-            return (n * 37) ^ unit.hashCode();
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (obj instanceof RateLimitPeriod) {
-                RateLimitPeriod that = (RateLimitPeriod) obj;
-                return this.n == that.n && this.unit == that.unit;
-            }
-            return false;
-        }
     }
 
     private final AtomicLong lastTimestampNanos = new AtomicLong(-1L);
@@ -152,9 +101,9 @@ final class DurationRateLimiter extends RateLimitStatus {
         // If this is negative, we are in the pending state and will return "allow" until we are reset.
         // The value held here is updated to be the most recent negated timestamp, and is negated again
         // (making it positive and setting us into the rate limiting state) when we are reset.
-        long lastNanos = lastTimestampNanos.get();
+        var lastNanos = lastTimestampNanos.get();
         if (lastNanos >= 0) {
-            long deadlineNanos = lastNanos + period.toNanos();
+            var deadlineNanos = lastNanos + period.toNanos();
             // Check for negative deadline to avoid overflow for ridiculous durations. Assume overflow
             // always means "no logging".
             if (deadlineNanos < 0 || timestampNanos < deadlineNanos) {

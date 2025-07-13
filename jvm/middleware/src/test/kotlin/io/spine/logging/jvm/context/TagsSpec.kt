@@ -119,16 +119,6 @@ internal class TagsSpec {
     }
 
     @Test
-    fun `fail on attempt to merge with 'null'`() {
-        val tags = Tags.builder()
-            .addTag("foo")
-            .build()
-        assertThrows<NullPointerException> {
-            tags.merge(null)
-        }
-    }
-
-    @Test
     fun `not create new instances when merging`() {
         val tags = Tags.builder()
             .addTag("foo")

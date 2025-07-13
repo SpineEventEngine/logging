@@ -157,7 +157,7 @@ internal class LogContextSpec {
         // Cannot ask for format arguments as none exist.
         backend.lastLogged.templateContext.shouldBeNull()
         shouldThrow<IllegalStateException> {
-            backend.lastLogged.getArguments()
+            backend.lastLogged.arguments
         }
     }
 
@@ -651,25 +651,18 @@ internal class LogContextSpec {
     @Test
     fun `accept a nullable argument`() {
         logger.atInfo().log(MESSAGE_PATTERN, null)
-        backend.lastLogged.shouldHaveMessage(MESSAGE_PATTERN)
-        backend.lastLogged.shouldHaveArguments(null)
+        backend.lastLogged.let {
+            it shouldHaveMessage (MESSAGE_PATTERN)
+            it.shouldHaveArguments(null)
+        }
     }
 
-    /**
-     * Currently having a `null` message and a `null` argument will throw a runtime exception,
-     * but perhaps it shouldn't (it could come from data).
-     *
-     * In general, it is expected that when there are arguments to a log statement,
-     * the message is a literal, which makes this situation very unlikely and probably
-     * a code bug. But even then, throwing an exception is something that will only
-     * happen when the log statement is enabled.
-     *
-     * Consider allowing this case to work without throwing a runtime exception.
-     */
     @Test
-    fun `throw when 'null' is passed for message and argument simultaneously`() {
-        shouldThrow<IllegalStateException> {
-            logger.atInfo().log(null, null)
+    fun `log 'null' if given message and argument are 'null' simultaneously`() {
+        logger.atInfo().log(null, null)
+        backend.lastLogged.let {
+            it shouldHaveMessage ("<null>")
+            it.shouldHaveArguments(null)
         }
     }
 
@@ -868,7 +861,7 @@ internal class LogContextSpec {
     fun `explicitly inject the log site`() {
         // Tests if it is the log site instance that controls rate limiting,
         // even over different calls.
-        // We don't expect this to ever happen in real code though.
+        // We do not expect this to ever happen in real code though.
         for (i in 0..6) {
             // Log every 2nd (0, 2, 4, 6)
             logHelper(logger, JvmLogSites.logSite(), 2, "Foo: $i")
@@ -906,7 +899,7 @@ internal class LogContextSpec {
     }
 
     @Nested inner class
-    specialize {
+    Specialize {
 
         @Test
         fun `log site key from a singleton key`() {
@@ -965,15 +958,15 @@ internal class LogContextSpec {
     @Test
     fun `provide a grouping key for specialization`() {
         val singletonKey = iterate("foo")
-        Key.LOG_SITE_GROUPING_KEY.emitRepeatedForTests(singletonKey) { key: String, value: Any ->
+        Key.LOG_SITE_GROUPING_KEY.emitRepeatedForTests(singletonKey) { key: String, value: Any? ->
             key shouldBe "group_by"
             value shouldBe "foo"
         }
 
-        // We don't care too much about the case with multiple keys
+        // We do not care too much about the case with multiple keys
         // because it is so rare, but it should be vaguely sensible.
         val multipleKeys = iterate("foo", "bar")
-        Key.LOG_SITE_GROUPING_KEY.emitRepeatedForTests(multipleKeys) { k: String, v: Any ->
+        Key.LOG_SITE_GROUPING_KEY.emitRepeatedForTests(multipleKeys) { k: String, v: Any? ->
             k shouldBe "group_by"
             v shouldBe "[foo,bar]"
         }

@@ -1,11 +1,11 @@
 ## Spine Probe Backend for JVM
 
-**Note:** This is a specific backend implementation that is designed 
-to be used in tests.
+**Note:** This is a specific backend implementation that is designed to be used in tests.
 
-Probe backend provides a backend factory that can switch the currently 
-used backend implementation in runtime. The logging facade doesn't provide 
-such functionality. Take a look on `DynamicBackendFactory` for details.
+The probe backend provides a backend factory that can switch
+the current backend implementation on runtime.
+The logging facade does not provide such a capability.
+Take a look at `DynamicBackendFactory` for details.
 
 This feature is quite helpful in tests. For example, to test a sole backend
 instance or intercept the logged statements.

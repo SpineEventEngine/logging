@@ -60,7 +60,7 @@ import org.junit.jupiter.api.Test
 @DisplayName("With Log4j backend, `ScopedLoggingContext` should")
 internal class Log4j2ScopedLoggingSpec {
 
-    private val context = ContextDataProvider.getInstance().contextApiSingleton
+    private val context = ContextDataProvider.getInstance().getContextApiSingleton()
     private lateinit var logger: ConfigurableLogger
     private lateinit var logged: List<LogEvent>
     private val lastLogged get() = logged.last()

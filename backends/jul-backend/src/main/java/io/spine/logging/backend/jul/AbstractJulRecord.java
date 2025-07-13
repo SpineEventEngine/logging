@@ -28,7 +28,7 @@ package io.spine.logging.backend.jul;
 
 import io.spine.logging.jvm.backend.LogData;
 import io.spine.logging.jvm.backend.LogMessageFormatter;
-import io.spine.logging.jvm.backend.MessageUtils;
+import io.spine.logging.jvm.backend.AnyMessages;
 import io.spine.logging.jvm.backend.Metadata;
 import io.spine.logging.jvm.backend.MetadataProcessor;
 import io.spine.logging.jvm.backend.SimpleMessageFormatter;
@@ -108,6 +108,7 @@ import static java.util.logging.Level.WARNING;
  *
  * @see <a href="https://rb.gy/yrrs4">Original Java code of Google Flogger</a> for historical context.
  */
+@SuppressWarnings("HardcodedLineSeparator")
 public abstract class AbstractJulRecord extends LogRecord {
 
     /**
@@ -172,7 +173,7 @@ public abstract class AbstractJulRecord extends LogRecord {
         setLevel(data.getLevel()
                      .intValue() < WARNING.intValue() ? WARNING : data.getLevel());
         setThrown(error);
-        StringBuilder errorMsg =
+        var errorMsg =
                 new StringBuilder("LOGGING ERROR: ").append(error.getMessage())
                                                     .append('\n');
         safeAppend(data, errorMsg);
@@ -193,7 +194,7 @@ public abstract class AbstractJulRecord extends LogRecord {
         // IMPORTANT: We call getMessage() to cache the internal formatted message if someone indicates
         // they want to change the parameters. This is to avoid a situation in which parameters are set,
         // but the underlying message is still null. Do this first to switch internal states.
-        String unused = getMessage();
+        var unused = getMessage();
         // Now handle setting parameters as normal.
         if (parameters == null) {
             parameters = NO_PARAMETERS;
@@ -211,11 +212,11 @@ public abstract class AbstractJulRecord extends LogRecord {
 
     @Override
     public final String getMessage() {
-        String cachedMessage = super.getMessage();
+        var cachedMessage = super.getMessage();
         if (cachedMessage != null) {
             return cachedMessage;
         }
-        String formattedMessage = getLogMessageFormatter().format(data, metadata);
+        var formattedMessage = getLogMessageFormatter().format(data, metadata);
         super.setMessage(formattedMessage);
         return formattedMessage;
     }
@@ -238,7 +239,7 @@ public abstract class AbstractJulRecord extends LogRecord {
      */
     @CanIgnoreReturnValue
     public final StringBuilder appendFormattedMessageTo(StringBuilder buffer) {
-        String cachedMessage = super.getMessage();
+        var cachedMessage = super.getMessage();
         if (cachedMessage == null) {
             // This code path is critical for optimized use of AbstractLogRecord. If the log message was
             // not reset at any point up to now, we can append the formatted message directly to an output
@@ -332,7 +333,7 @@ public abstract class AbstractJulRecord extends LogRecord {
     @Override
     public String toString() {
         // Note that this toString() method is _not_ safe against exceptions thrown by user toString().
-        StringBuilder out = new StringBuilder();
+        var out = new StringBuilder();
         out.append(getClass().getSimpleName())
            .append(" {\n  message: ")
            .append(getMessage())
@@ -344,33 +345,34 @@ public abstract class AbstractJulRecord extends LogRecord {
         return out.toString();
     }
 
+    @SuppressWarnings("MethodWithMultipleLoops")
     private static void safeAppend(LogData data, StringBuilder out) {
         out.append("  original message: ");
         if (data.getTemplateContext() == null) {
-            out.append(MessageUtils.safeToString(data.getLiteralArgument()));
+            out.append(AnyMessages.safeToString(data.getLiteralArgument()));
         } else {
             // We know that there's at least one argument to display here.
             out.append(data.getTemplateContext()
                            .getMessage());
             out.append("\n  original arguments:");
-            for (Object arg : data.getArguments()) {
+            for (var arg : data.getArguments()) {
                 out.append("\n    ")
-                   .append(MessageUtils.safeToString(arg));
+                   .append(AnyMessages.safeToString(arg));
             }
         }
-        Metadata metadata = data.getMetadata();
+        var metadata = data.getMetadata();
         if (metadata.size() > 0) {
             out.append("\n  metadata:");
-            for (int n = 0; n < metadata.size(); n++) {
+            for (var n = 0; n < metadata.size(); n++) {
                 out.append("\n    ")
                    .append(metadata.getKey(n)
                                    .getLabel())
                    .append(": ")
-                   .append(MessageUtils.safeToString(metadata.getValue(n)));
+                   .append(AnyMessages.safeToString(metadata.getValue(n)));
             }
         }
         out.append("\n  level: ")
-           .append(MessageUtils.safeToString(data.getLevel()));
+           .append(AnyMessages.safeToString(data.getLevel()));
         out.append("\n  timestamp (nanos): ")
            .append(data.getTimestampNanos());
         out.append("\n  class: ")

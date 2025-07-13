@@ -72,8 +72,8 @@ public object DynamicBackendFactory : BackendFactory() {
      *
      * Otherwise, uses [JulBackendFactory] to create a backend.
      */
-    override fun create(loggingClassName: String): LoggerBackend =
-        delegate?.create(loggingClassName) ?: julBackends.create(loggingClassName)
+    override fun create(loggingClass: String): LoggerBackend =
+        delegate?.create(loggingClass) ?: julBackends.create(loggingClass)
 
     /**
      * Returns a fully qualified name of this class.

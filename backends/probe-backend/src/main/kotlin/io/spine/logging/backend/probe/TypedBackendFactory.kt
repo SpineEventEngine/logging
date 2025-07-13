@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,13 +29,13 @@ package io.spine.logging.backend.probe
 import io.spine.logging.jvm.backend.LoggerBackend
 
 /**
- * A typed [BackendFactory][io.spine.logging.backend.system.BackendFactory].
+ * A typed [BackendFactory][io.spine.logging.jvm.backend.BackendFactory].
  *
  * This interface can't extend the original factory because it is an abstract class.
  *
  * Knowing a type of the returned backend is useful when it is used in a pair with
  * [DynamicBackendFactory] to perform test assertions. With a captured type,
- * we don't lose the API of stub backends. For example, allowing to retrieve
+ * we do not lose the API of stub backends. For example, allowing to retrieve
  * the remembered log data from `FakeLoggerBackend`.
  *
  * The type is public because it is used in a public inline method.

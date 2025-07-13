@@ -69,8 +69,8 @@ final class InjectedJvmLogSite extends JvmLogSite {
      * @implNote We have to do the conversion from internal to public class name somewhere,
      * and doing it earlier could cost work in cases where the log statement is dropped.
      *
-     * <p>We could cache the result somewhere, but in the default Fluent Logger backend,
-     * this method is actually onl called once anyway when constructing the LogRecord instance.
+     * <p>We could cache the result somewhere, but in the default logger backend,
+     * this method is actually onl called once anyway when constructing the {@code LogRecord} instance.
      */
     @Override
     public String getClassName() {

@@ -70,10 +70,11 @@ abstract class AbstractContextDataProviderSpec {
     private lateinit var contextData: ContextDataProvider
     private lateinit var context: ScopedLoggingContext
 
-    private val contextTags: Map<String?, Set<Any?>?>
-        get() = contextData.tags.asMap()
+    private val contextTags: Map<String, Set<Any?>>
+        get() = contextData.getTags().asMap()
+
     private val contextMetadata: Metadata
-        get() = contextData.metadata
+        get() = contextData.getMetadata()
 
     /**
      * A flag to be set inside an innermost callback to prove it was executed.
@@ -111,7 +112,7 @@ abstract class AbstractContextDataProviderSpec {
      * To make this method work, call [markCallbackExecuted] at the end
      * of the innermost callback.
      *
-     * Don't use `@AfterEach` here because the subclass may not use this in
+     * Do not use `@AfterEach` here because the subclass may not use this in
      * its own tests. Just put it at the end of tests with a nested callback.
      */
     private fun checkCallbackWasExecuted() {

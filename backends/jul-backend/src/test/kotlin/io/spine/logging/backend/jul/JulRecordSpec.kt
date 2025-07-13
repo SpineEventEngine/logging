@@ -63,9 +63,9 @@ internal class JulRecordSpec {
         private val STR_KEY = singleKey<String>("str")
         private val PATH_KEY =
             object : MetadataKey<String>("path", String::class.java, true) {
-                override fun emitRepeated(values: Iterator<String>, out: KeyValueHandler) {
+                override fun emitRepeated(values: Iterator<String>, kvh: KeyValueHandler) {
                     val joined = values.asSequence().joinToString("/")
-                    out.handle(label, joined)
+                    kvh.handle(label, joined)
                 }
             }
         private const val LITERAL = "literal message"
@@ -223,6 +223,7 @@ internal class JulRecordSpec {
         record.message shouldEndWith "[ERROR: MISSING LOG ARGUMENT]"
     }
 
+
     @Test
     fun `report an unused argument`() {
         val pattern = "%2\$s %s %<s %s"
@@ -276,7 +277,7 @@ internal class JulRecordSpec {
         var stringifiedRecord = record.toString()
 
         // From the `SimpleLogRecord`'s point of view,
-        // we don't have arguments after formatting.
+        // we do not have arguments after formatting.
         stringifiedRecord shouldContain "  message: Answer=42"
         stringifiedRecord shouldContain "  arguments: []"
         stringifiedRecord shouldContain "  original message: Answer=%d"

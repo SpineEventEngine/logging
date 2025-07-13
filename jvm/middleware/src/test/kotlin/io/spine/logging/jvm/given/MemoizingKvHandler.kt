@@ -35,7 +35,7 @@ internal class MemoizingKvHandler : MetadataKey.KeyValueHandler {
 
     val entries = ArrayList<String>()
 
-    override fun handle(key: String, value: Any) {
+    override fun handle(key: String, value: Any?) {
         entries.add("$key=$value")
     }
 }

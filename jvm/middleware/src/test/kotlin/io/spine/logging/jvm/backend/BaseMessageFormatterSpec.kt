@@ -51,7 +51,7 @@ internal class BaseMessageFormatterSpec {
         formatPrintf("Hello %s", "World") shouldBe "Hello World"
         formatPrintf("Hello %s", null) shouldBe "Hello null"
         formatPrintf("Hello %%s") shouldBe "Hello %s"
-        // With no arguments, log statements treat the value as a literal and don't escape.
+        // With no arguments, log statements treat the value as a literal and do not escape.
         formatLiteral("Hello %s") shouldBe "Hello %s"
     }
 

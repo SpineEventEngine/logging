@@ -46,7 +46,7 @@ public abstract class MessageBuilder<T> {
 
     private final TemplateContext context;
 
-    // Mask of parameter indices seen during parsing, used to determine if there are gaps in the
+    // Mask of parameter indexes seen during parsing, used to determine if there are gaps in the
     // specified parameters (which is a parsing error).
     // This could be a long if we cared about tracking up to 64 parameters, but I suspect we don't.
     private int pmask = 0;
@@ -94,6 +94,7 @@ public abstract class MessageBuilder<T> {
      *         a parameter representing the format specified by the substring of the log message
      *         in the range {@code [termStart, termEnd)}.
      */
+    @SuppressWarnings("MagicNumber")
     public final void addParameter(int termStart, int termEnd, Parameter param) {
         // Set a bit in the parameter mask according to which parameter was referenced.
         // Shifting wraps, so we must do a check here.
@@ -128,19 +129,21 @@ public abstract class MessageBuilder<T> {
      */
     protected abstract void addParameterImpl(int termStart, int termEnd, Parameter param);
 
-    /** Returns the implementation specific result of parsing the current log message. */
+    /**
+     * Returns the implementation-specific result of parsing the current log message.
+     */
     protected abstract T buildImpl();
 
     /**
      * Builds a log message using the current message context.
      *
-     * @return the implementation specific result of parsing the current log message.
+     * @return the implementation-specific result of parsing the current log message.
      */
     public final T build() {
         getParser().parseImpl(this);
         // There was a gap in the parameters if either:
-        // 1) the mask had a gap, e.g., ..00110111
-        // 2) there were more than 32 parameters and the mask wasn't full.
+        // 1) the mask had a gap, e.g., `..00110111`
+        // 2) there were more than 32 parameters, and the mask was not full.
         // Gaps above the 32nd parameter are not detected.
         if ((pmask & (pmask + 1)) != 0 || (maxIndex > 31 && pmask != -1)) {
             int firstMissing = Integer.numberOfTrailingZeros(~pmask);

@@ -26,7 +26,7 @@
 
 package io.spine.logging.jvm.context
 
-import io.spine.logging.jvm.context.LogLevelMap.create
+import io.spine.logging.jvm.context.LogLevelMap.Companion.create
 import io.kotest.matchers.shouldBe
 import java.util.logging.Level
 
