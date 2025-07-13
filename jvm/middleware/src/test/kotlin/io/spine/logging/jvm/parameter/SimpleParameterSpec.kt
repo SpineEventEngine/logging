@@ -57,8 +57,8 @@ internal class SimpleParameterSpec {
     fun `return the same instance for the same chars without options up to first 10 indices`() {
         for (char: FormatChar in FormatChar.entries) {
             repeat(10) { index ->
-                val instance1 = SimpleParameter.of(index, char, options)
-                val instance2 = SimpleParameter.of(index, char, options)
+                val instance1 = SimpleParameter.of(char, options, index)
+                val instance2 = SimpleParameter.of(char, options, index)
                 instance1 shouldBeSameInstanceAs instance2
             }
         }
@@ -69,23 +69,23 @@ internal class SimpleParameterSpec {
 
         @Test
         fun `for different indices`() {
-            val zeroIndex = SimpleParameter.of(0, DECIMAL, options)
-            val firstIndex = SimpleParameter.of(1, DECIMAL, options)
+            val zeroIndex = SimpleParameter.of(DECIMAL, options, 0)
+            val firstIndex = SimpleParameter.of(DECIMAL, options, 1)
             zeroIndex shouldNotBeSameInstanceAs firstIndex
         }
 
         @Test
         fun `for different format chars`() {
-            val decimalChar = SimpleParameter.of(0, DECIMAL, options)
-            val floatChar = SimpleParameter.of(0, FLOAT, options)
+            val decimalChar = SimpleParameter.of(DECIMAL, options, 0)
+            val floatChar = SimpleParameter.of(FLOAT, options, 0)
             decimalChar shouldNotBeSameInstanceAs floatChar
         }
 
         @Test
         fun `for different formatting options`() {
             val customOptions = FormatOptions.parse("-10", 0, 3, false)
-            val withCustomOptions = SimpleParameter.of(0, FLOAT, customOptions)
-            val withDefaultOptions = SimpleParameter.of(0, DECIMAL, options)
+            val withCustomOptions = SimpleParameter.of(FLOAT, customOptions, 0)
+            val withDefaultOptions = SimpleParameter.of(DECIMAL, options, 0)
             withCustomOptions shouldNotBeSameInstanceAs withDefaultOptions
         }
     }

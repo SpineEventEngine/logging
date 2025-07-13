@@ -84,7 +84,7 @@ public class DefaultPrintfMessageParser extends PrintfMessageParser {
                 throw ParseException.withBounds("invalid format specifier", message, termStart,
                                                 termEnd);
             }
-            parameter = SimpleParameter.of(index, formatChar, options);
+            parameter = SimpleParameter.of(formatChar, options, index);
         } else if (typeChar == 't' || typeChar == 'T') {
             if (!options.validate(FLAG_LEFT_ALIGN | FLAG_UPPER_CASE, false)) {
                 throw ParseException.withBounds(
