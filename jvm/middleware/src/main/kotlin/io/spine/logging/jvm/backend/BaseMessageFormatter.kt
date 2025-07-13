@@ -77,7 +77,7 @@ protected constructor(
         return out
     }
 
-    override fun visit(value: Any?, format: FormatChar, options: FormatOptions) {
+    override fun visit(value: Any, format: FormatChar, options: FormatOptions) {
         if (format.type.canFormat(value)) {
             out.appendFormatted(value, format, options)
         } else {
@@ -85,7 +85,7 @@ protected constructor(
         }
     }
 
-    override fun visitDateTime(value: Any?, format: DateTimeFormat, options: FormatOptions) {
+    override fun visitDateTime(value: Any, format: DateTimeFormat, options: FormatOptions) {
         if (value is Date || value is Calendar || value is Long) {
             val formatString = options
                 .appendPrintfOptions(StringBuilder("%"))
@@ -98,7 +98,7 @@ protected constructor(
         }
     }
 
-    override fun visitPreformatted(value: Any?, formatted: String) {
+    override fun visitPreformatted(value: Any, formatted: String) {
         // For unstructured logging we just use the pre-formatted string.
         out.append(formatted)
     }
