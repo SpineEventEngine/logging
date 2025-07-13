@@ -1,6 +1,6 @@
 
 
-# Dependencies of `io.spine:spine-logging-fixtures:2.0.0-SNAPSHOT.258`
+# Dependencies of `io.spine:spine-logging-fixtures:2.0.0-SNAPSHOT.259`
 
 ## Runtime
 ## Compile, tests, and tooling
