@@ -38,7 +38,7 @@ public abstract class MessageParser {
     public companion object {
 
         /**
-         * The maximum allowed index (this should correspond to the MAX_ALLOWED_WIDTH
+         * The maximum allowed index (this should correspond to the `MAX_ALLOWED_WIDTH`
          * in [io.spine.logging.jvm.backend.FormatOptions] because at times it is ambiguous as to 
          * which is being parsed).
          */
@@ -50,7 +50,7 @@ public abstract class MessageParser {
      *
      * Note that when extending parsing behavior, it is expected that specific parsers such as
      * [DefaultPrintfMessageParser] or [DefaultBraceStyleMessageParser] will be
-     * sub-classed. Extending this class directly is only necessary when an entirely new type of
+     * subclassed. Extending this class directly is only necessary when an entirely new type of
      * format needs to be supported (which should be extremely rare).
      *
      * Implementations of this method are required to invoke the

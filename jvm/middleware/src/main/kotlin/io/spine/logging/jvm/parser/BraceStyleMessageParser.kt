@@ -164,72 +164,94 @@ public abstract class BraceStyleMessageParser : MessageParser() {
 }
 
 /**
- * Returns the index of the next brace term in a message or -1 if not found.
+ * Returns the index of the next unquoted '{' character in message starting at pos (or -1 if not
+ * found).
  */
 @Suppress("ReturnCount", "LoopWithTooManyJumpStatements")
-public fun nextBraceFormatTerm(message: String, pos: Int): Int {
-    var index = pos
-    while (index < message.length) {
-        if (message[index] == '{') {
-            // Check if we have "{{" in which case we need to skip over the first one.
-            if (index + 1 < message.length && message[index + 1] == '{') {
-                index += 2
-                continue
-            }
-            return index
+@VisibleForTesting
+@Throws(ParseException::class)
+internal fun nextBraceFormatTerm(message: String, pos: Int): Int {
+    // We can assume that we start in unquoted mode.
+    var pos = pos
+    while (pos < message.length) {
+        val c = message.get(pos++)
+        if (c == '{') {
+            // We found an unquoted open bracket. Hurrah!
+            return pos - 1
         }
-        if (message[index] == '}') {
-            // Check if we have "}}" in which case we need to skip over the first one.
-            if (index + 1 < message.length && message[index + 1] == '}') {
-                index += 2
-                continue
-            }
-            throw ParseException.atPosition(
-                "unmatched closing brace", message, index
-            )
+        if (c != '\'') {
+            // Non-special char (common case) means continue.
+            continue
         }
-        index++
+        if (pos == message.length) {
+            throw withStartPosition("trailing single quote", message, pos - 1)
+        }
+        if (message.get(pos++) == '\'') {
+            // A doubled single-quote means continue as normal.
+            continue
+        }
+        // Quoted mode - just scan for terminating quote.
+        val quote = pos - 2
+        do {
+            // If we run out of string it was badly formatted (a non-terminating quote).
+            if (pos == message.length) {
+                throw withStartPosition("unmatched single quote", message, quote)
+            }
+        } while (message.get(pos++) != '\'')
+        // The last character was consumed was a quote, so we are back in unquoted mode.
     }
     return -1
 }
 
 /**
- * Unescapes a brace format message, which just means replacing {{ with { and }} with }.
+ * Unescapes the characters in the sub-string `s.substring(start, end)` according to
+ * brace formatting rules.
  */
 @Suppress("ReturnCount", "NestedBlockDepth", "LoopWithTooManyJumpStatements")
-internal fun unescapeBraceFormat(out: StringBuilder, message: String, start: Int, end: Int) {
+@VisibleForTesting
+internal fun unescapeBraceFormat(
+    out: java.lang.StringBuilder,
+    message: String,
+    start: Int,
+    end: Int
+) {
+    var start = start
     var pos = start
+    var isQuoted = false
     while (pos < end) {
-        val c = message[pos]
-        if (c == '{' || c == '}') {
-            // Check if we have "{{" or "}}" in which case we need to output just one.
-            if (pos + 1 < end && message[pos + 1] == c) {
-                out.append(c)
-                pos += 2
-                continue
-            }
-            // Otherwise we have a real format specifier, which we don't want to unescape.
-            if (c == '{') {
-                val termStart = pos
-                // Skip over the '{' character.
-                pos++
-                // Look for the terminating '}' character.
-                while (pos < end && message[pos] != '}') {
-                    pos++
-                }
-                if (pos >= end) {
-                    throw ParseException.withStartPosition(
-                        "unterminated brace format", message, termStart
-                    )
-                }
-                // Skip over the '}' character.
-                pos++
-                continue
-            }
-            throw ParseException.atPosition("unmatched closing brace", message, pos)
+        var c = message.get(pos++)
+        // We catch single quotes and escaped single quotes.
+        if (c != '\\' && c != '\'') {
+            continue
         }
-        out.append(c)
-        pos++
+        val quoteStart = pos - 1
+        if (c == '\\') {
+            // Shouldn't risk index out of bounds here because that would be a trailing single '\'.
+            c = message.get(pos++)
+            if (c != '\'') {
+                continue
+            }
+        }
+        // Always skip the first single-quote we find.
+        out.append(message, start, quoteStart)
+        start = pos
+        if (pos == end) {
+            break
+        }
+        if (isQuoted) {
+            isQuoted = false
+        } else if (message.get(pos) != '\'') {
+            isQuoted = true
+        } else {
+            // If there are two adjacent single-quotes, advance our position so we don't detect it
+            // when we go back to the top of the loop (this does mean reading that same char twice
+            // if it wasn't a single quote, but this is relatively rare).
+            pos++
+        }
+    }
+    // Append the last section (if it's non empty).
+    if (start < end) {
+        out.append(message, start, end)
     }
 }
 
