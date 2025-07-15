@@ -133,12 +133,8 @@ public abstract class MessageBuilder<T>(context: TemplateContext) {
      */
     @Suppress("UNCHECKED_CAST", "ImplicitDefaultLocale", "MagicNumber")
     public fun build(): T {
-        // We need to use reflection to call the protected parseImpl method.
-        val parseImplMethod =
-            MessageParser::class.java.getDeclaredMethod("parseImpl", MessageBuilder::class.java)
-        parseImplMethod.isAccessible = true
-        parseImplMethod.invoke(parser, this)
-        
+        parser.parseImpl(this)
+
         // There was a gap in the parameters if either:
         // 1) the mask had a gap, e.g., `..00110111`
         // 2) there were more than 32 parameters, and the mask was not full.
