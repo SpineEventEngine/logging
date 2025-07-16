@@ -164,7 +164,7 @@ public abstract class PrintfMessageParser : MessageParser() {
                 if (pos == message.length) {
                     throw withStartPosition("unterminated parameter", message, termStart)
                 }
-                c = message.get(pos++)
+                c = message[pos++]
             } else if (c == '<') {
                 // This is the rare 'relative' indexing mode where
                 // you just re-use the last parameter index.
@@ -180,7 +180,7 @@ public abstract class PrintfMessageParser : MessageParser() {
                 if (pos == message.length) {
                     throw withStartPosition("unterminated parameter", message, termStart)
                 }
-                c = message.get(pos++)
+                c = message[pos++]
             } else {
                 // The parsed value was not an index, so we use the current implicit index.
                 // We do not need to update the format start in this case, and
@@ -276,10 +276,10 @@ internal fun nextPrintfTerm(message: String, pos: Int): Int {
 private fun findFormatChar(message: String, termStart: Int, pos: Int): Int {
     var pos = pos
     while (pos < message.length) {
-        val c = message.get(pos)
+        val c = message[pos]
         // Get the relative offset of the ASCII letter (in the range 0-25) ignoring
-        // whether it's upper or lower case. Using this unsigned value avoids multiple
-        // range checks in a tight loop.
+        // whether it is an upper or lower case.
+        // Using this unsigned value avoids multiple range checks in a tight loop.
         val alpha = ((c.code and 0x20.inv()) - 'A'.code).toChar().code
         if (alpha < 26) {
             return pos
