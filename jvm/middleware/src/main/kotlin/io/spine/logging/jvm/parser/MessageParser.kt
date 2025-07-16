@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,11 +27,11 @@
 package io.spine.logging.jvm.parser
 
 /**
- * Base class from which any specific message parsers are derived (e.g. [PrintfMessageParser]
- * and [BraceStyleMessageParser]).
+ * Base class from which any specific message parsers are derived,
+ * e.g., [PrintfMessageParser] and [BraceStyleMessageParser].
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parser/MessageParser.java">Original Java code of Google Flogger</a>
- * for historical context.
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parser/MessageParser.java">
+ *   Original Java code of Google Flogger</a> for historical context.
  */
 public abstract class MessageParser {
     
@@ -61,14 +61,16 @@ public abstract class MessageParser {
     internal abstract fun <T> parseImpl(builder: MessageBuilder<T>)
 
     /**
-     * Appends the unescaped literal representation of the given message string (assumed to be escaped
-     * according to this parser's escaping rules). This method is designed to be invoked from a
-     * callback method in a [MessageBuilder] instance.
+     * Appends the unescaped literal representation of the given message string
+     * (assumed to be escaped according to this parser's escaping rules).
      *
-     * @param out the destination into which to append characters
-     * @param message the escaped log message
-     * @param start the start index (inclusive) in the log message
-     * @param end the end index (exclusive) in the log message
+     * This function is designed to be invoked from a callback function
+     * in a [MessageBuilder] instance.
+     *
+     * @param out The destination into which to append characters
+     * @param message The escaped log message
+     * @param start The start index (inclusive) in the log message
+     * @param end The end index (exclusive) in the log message
      */
     public abstract fun unescape(out: StringBuilder, message: String, start: Int, end: Int)
 }

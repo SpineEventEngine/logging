@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+* Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,14 +27,12 @@
 package io.spine.logging.jvm.parser
 
 import io.spine.logging.jvm.backend.FormatChar
-import io.spine.logging.jvm.backend.FormatChar.Companion.of
 import io.spine.logging.jvm.backend.FormatOptions
 import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_LEFT_ALIGN
 import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_UPPER_CASE
 import io.spine.logging.jvm.backend.FormatOptions.Companion.parse
 import io.spine.logging.jvm.parameter.ArgumentVisitor
 import io.spine.logging.jvm.parameter.DateTimeFormat
-import io.spine.logging.jvm.parameter.DateTimeFormat.Companion.of
 import io.spine.logging.jvm.parameter.DateTimeParameter
 import io.spine.logging.jvm.parameter.Parameter
 import io.spine.logging.jvm.parameter.SimpleParameter.Companion.of

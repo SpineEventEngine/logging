@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -92,9 +92,9 @@ public class ParseException private constructor(errorMessage: String) :
         /**
          * Creates a new parse exception for situations in which the position of the error is known.
          *
-         * @param errorMessage the user error message.
-         * @param logMessage the original log message.
-         * @param position the index of the invalid character in the log message.
+         * @param errorMessage The user error message.
+         * @param logMessage The original log message.
+         * @param position The index of the invalid character in the log message.
          * @return the parser exception.
          */
         @JvmStatic
@@ -106,12 +106,12 @@ public class ParseException private constructor(errorMessage: String) :
             ParseException(msg(errorMessage, logMessage, position, position + 1))
 
         /**
-         * Creates a new parse exception for situations in which only the start position of the error
-         * is known.
+         * Creates a new parse exception for situations in which only the start
+         * position of the error is known.
          *
-         * @param errorMessage the user error message.
-         * @param logMessage the original log message.
-         * @param start the index of the first character in the invalid section of the log message.
+         * @param errorMessage The user error message.
+         * @param logMessage The original log message.
+         * @param start The index of the first character in the invalid section of the log message.
          * @return the parser exception.
          */
         @JvmStatic

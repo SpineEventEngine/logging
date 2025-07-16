@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,8 +38,8 @@ import io.spine.logging.jvm.util.Checks
  *
  * @param T The message type being built.
  *
- * @see [Original Java code of Google Flogger](https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parser/MessageBuilder.java)
- * for historical context.
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parser/MessageBuilder.java">
+ *   Original Java code of Google Flogger</a> for historical context.
  */
 public abstract class MessageBuilder<T>(context: TemplateContext) {
 
@@ -105,19 +105,20 @@ public abstract class MessageBuilder<T>(context: TemplateContext) {
     }
 
     /**
-     * Adds the specified parameter to the format instance currently being built. This method is to
-     * signify that the parsing of the next parameter is complete.
+     * Adds the specified parameter to the format instance currently being built.
      *
-     * Note that each successive call to this method during parsing will specify a disjoint ranges of
-     * characters from the log message and that each range will be higher that the previously
-     * specified one.
+     * This function is to signify that the parsing of the next parameter is complete.
      *
-     * @param termStart The index of the first character in the log message string that was parsed to
-     *        form the given parameter.
-     * @param termEnd The index after the last character in the log message string that was parsed to
-     *        form the given parameter.
-     * @param param A parameter representing the format specified by the substring of the log message
-     *        in the range `[termStart, termEnd)`.
+     * Note that each successive call to this method during parsing will specify disjoint
+     * ranges of characters from the log message and that each range will be higher
+     * that the previously specified one.
+     *
+     * @param termStart The index of the first character in the log message string that
+     *        was parsed to form the given parameter.
+     * @param termEnd The index after the last character in the log message string that
+     *        was parsed to form the given parameter.
+     * @param param A parameter representing the format specified by the substring of
+     *        the log message in the range `[termStart, termEnd)`.
      */
     protected abstract fun addParameterImpl(termStart: Int, termEnd: Int, param: Parameter)
 
@@ -129,7 +130,7 @@ public abstract class MessageBuilder<T>(context: TemplateContext) {
     /**
      * Builds a log message using the current message context.
      *
-     * @return the implementation-specific result of parsing the current log message.
+     * @return The implementation-specific result of parsing the current log message.
      */
     @Suppress("UNCHECKED_CAST", "ImplicitDefaultLocale", "MagicNumber")
     public fun build(): T {
