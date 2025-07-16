@@ -26,12 +26,11 @@
 
 package io.spine.logging.jvm.parser
 
-import io.spine.logging.jvm.parser.BraceStyleMessageParser.nextBraceFormatTerm
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldContain
 import io.spine.logging.jvm.parser.given.FakeParameter
 import io.spine.logging.jvm.parser.given.assertParse
 import io.spine.logging.jvm.parser.given.assertParseError
-import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldContain
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -160,6 +159,6 @@ private val fakeParser = object : BraceStyleMessageParser() {
  */
 private fun unescapeBraceFormat(message: String): String {
     val out = StringBuilder()
-    BraceStyleMessageParser.unescapeBraceFormat(out, message, 0, message.length)
+    unescapeBraceFormat(out, message, 0, message.length)
     return out.toString()
 }

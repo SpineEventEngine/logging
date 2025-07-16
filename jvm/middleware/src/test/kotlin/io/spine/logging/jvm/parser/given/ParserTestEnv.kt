@@ -73,7 +73,7 @@ internal class FakeMessageBuilder(fakeParser: MessageParser, message: String) :
 
     private val details = mutableListOf<String>()
 
-    override fun addParameterImpl(termStart: Int, termEnd: Int, param: Parameter?) {
+    override fun addParameterImpl(termStart: Int, termEnd: Int, param: Parameter) {
         details.add(param.toString())
     }
 

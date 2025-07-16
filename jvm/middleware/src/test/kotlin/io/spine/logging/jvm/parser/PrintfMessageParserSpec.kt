@@ -26,14 +26,12 @@
 
 package io.spine.logging.jvm.parser
 
-import io.spine.logging.jvm.parser.PrintfMessageParser.nextPrintfTerm
-import io.spine.logging.jvm.parser.given.FakeParameter
-import io.spine.logging.jvm.parser.given.assertParse
-import io.spine.logging.jvm.parser.given.assertParseError
-
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
+import io.spine.logging.jvm.parser.given.FakeParameter
+import io.spine.logging.jvm.parser.given.assertParse
+import io.spine.logging.jvm.parser.given.assertParseError
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -105,13 +103,13 @@ internal class PrintfMessageParserSpec {
     @Test
     fun `return the system newline separator`() {
         // This should pass even if "line.separator" is set to something else.
-        val nl = PrintfMessageParser.getSafeSystemNewline()
+        val nl = PrintfMessageParser.safeSystemNewline
         nl shouldBeIn listOf("\n", "\r", "\r\n")
     }
 
     @Test
     fun `unescape printf-supported new line`() {
-        val nl = PrintfMessageParser.getSafeSystemNewline()
+        val nl = PrintfMessageParser.safeSystemNewline
         unescapePrintf("%n") shouldBe nl
         unescapePrintf("Hello %n World") shouldBe "Hello $nl World"
         unescapePrintf("Hello World %n") shouldBe "Hello World $nl"
@@ -164,6 +162,6 @@ private val fakeParser = object : PrintfMessageParser() {
  */
 private fun unescapePrintf(message: String): String {
     val out = StringBuilder()
-    PrintfMessageParser.unescapePrintf(out, message, 0, message.length)
+    unescapePrintf(out, message, 0, message.length)
     return out.toString()
 }

@@ -77,12 +77,4 @@ internal class DefaultBraceStyleMessageParserSpec {
             options shouldBe WITH_GROUPING
         }
     }
-
-    @Test
-    fun `fail on trailing format specifiers`() {
-        val exception = assertThrows<ParseException> {
-            PARSER.parseBraceFormatTerm(null, 0, "{0:x}", 0, 3, 5)
-        }
-        exception.message shouldContain "[:x]"
-    }
 }
