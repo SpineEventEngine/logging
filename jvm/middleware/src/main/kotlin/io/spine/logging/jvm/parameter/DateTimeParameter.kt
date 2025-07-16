@@ -52,8 +52,16 @@ public class DateTimeParameter(
     index: Int
 ) : Parameter(options, index) {
 
-    public constructor(char: Char, options: FormatOptions, index: Int) :
-            this(DateTimeFormat.of(char)!!, options, index)
+
+    /**
+     * Creates a [DateTimeParameter] for a given format character.
+     *
+     * @param formatChar The formatting character indicating the desired date/time format.
+     * @param options The formatting options.
+     * @param index The argument index.
+     */
+    public constructor(formatChar: Char, options: FormatOptions, index: Int) :
+            this(DateTimeFormat.of(formatChar)!!, options, index)
 
     private val formatString: String = buildString {
         append('%')
