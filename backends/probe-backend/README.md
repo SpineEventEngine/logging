@@ -12,7 +12,7 @@ instance or intercept the logged statements.
 
 ### Logging interception
 
-For log statements interception, this module exposes `captureLogData { ... }`. 
+For intercepting log statements, this module exposes `captureLogData { ... }`. 
 This function uses `DynamicBackendFactory` to catch all `LogData` emitted 
 during the execution of the passed `action`.
 

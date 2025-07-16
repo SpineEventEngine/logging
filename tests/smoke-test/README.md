@@ -11,19 +11,19 @@ better to have some real-life check-ups outside the development repository.
 
 ### Applicability
 
-As for now, it is only applicable to JVM modules. It is because testing involves usage 
-of JUL-based backend. This backend is default and allows to easier intercept the logged
+As of now, it is only applicable to JVM modules. It is because testing involves usage 
+of JUL-based backend. This backend is default and allows easier interception of the logged
 text for further assertion.
 
-Take a look on `AbstractLoggingSmokeTest` for usage example.
+Take a look at `AbstractLoggingSmokeTest` for usage example.
 
-Please note, presence of `spine-logging` and `spine-logging-backend` is expected due to 
-Gradle configuration of `jvm-module` script plugin, which is applied to Spine JVM modules.
+Please note, the presence of `spine-logging` and `spine-logging-backend` is expected due to 
+the Gradle configuration of `jvm-module` script plugin, which is applied to Spine JVM modules.
 
 `spine-logging` should be added manually if this smoke test is used in a module without
 `jvm-module` configuration:
 
 ```
 implementation("io.spine:spine-logging:$version")
-runtimeOnly("io.spine:spine-logging-backend:$version)
+runtimeOnly("io.spine:spine-logging-backend:$version")
 ```

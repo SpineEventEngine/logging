@@ -8,11 +8,11 @@
 Spine Logging is a versatile library designed for Kotlin and Java projects, 
 with a potential for multi-platform use. 
 
-As for now, only JVM target is supported, with a JavaScript implementation 
+As of now, only JVM target is supported, with a JavaScript implementation 
 being our priority for future development.
 
 API and implementation are largely inspired by [Google Flogger][flogger],
-and the introduction of fluent logging API in [SLF4J in v2.0.0][fluent-slf4j].
+and the introduction of fluent logging API in [SLF4J v2.0.0][fluent-slf4j].
 
 ## Current status: Experimental
 
