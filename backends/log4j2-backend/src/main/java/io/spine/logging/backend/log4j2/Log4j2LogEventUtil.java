@@ -128,7 +128,7 @@ final class Log4j2LogEventUtil {
                 .setMessage(new SimpleMessage(message))
                 .setThreadName(Thread.currentThread().getName())
                 .setInstant(getInstant(logData.getTimestampNanos()))
-                .setThrown(thrown != null ? Throwables.getRootCause(thrown) : null)
+                .setThrown(thrown)
                 .setIncludeLocation(true)
                 .setSource(locationInfo)
                 .setContextData(createContextMap(logData))
