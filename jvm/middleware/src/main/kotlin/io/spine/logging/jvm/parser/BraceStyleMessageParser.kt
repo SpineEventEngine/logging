@@ -211,7 +211,7 @@ internal fun nextBraceFormatTerm(message: String, pos: Int): Int {
 @Suppress("ReturnCount", "NestedBlockDepth", "LoopWithTooManyJumpStatements")
 @VisibleForTesting
 internal fun unescapeBraceFormat(
-    out: java.lang.StringBuilder,
+    out: StringBuilder,
     message: String,
     start: Int,
     end: Int
