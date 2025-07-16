@@ -40,7 +40,7 @@ import io.spine.logging.jvm.parameter.BraceStyleParameter
  * supported however, this may change. Currently, an unescaped "{}" term in a log message will cause
  * a parse error, so adding support for it should not be an issue.
  *
- @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parser/DefaultBraceStyleMessageParser.java">
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parser/DefaultBraceStyleMessageParser.java">
  *     Original Java code of Google Flogger</a> for historical context.
  */
 public class DefaultBraceStyleMessageParser private constructor() : BraceStyleMessageParser() {
