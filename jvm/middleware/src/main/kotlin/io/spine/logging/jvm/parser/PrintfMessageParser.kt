@@ -164,7 +164,7 @@ public abstract class PrintfMessageParser : MessageParser() {
                 if (pos == message.length) {
                     throw withStartPosition("unterminated parameter", message, termStart)
                 }
-                c = message[pos++]
+                pos++
             } else if (c == '<') {
                 // This is the rare 'relative' indexing mode where
                 // you just re-use the last parameter index.
@@ -180,7 +180,7 @@ public abstract class PrintfMessageParser : MessageParser() {
                 if (pos == message.length) {
                     throw withStartPosition("unterminated parameter", message, termStart)
                 }
-                c = message[pos++]
+                pos++
             } else {
                 // The parsed value was not an index, so we use the current implicit index.
                 // We do not need to update the format start in this case, and
@@ -308,10 +308,10 @@ internal fun unescapePrintf(out: StringBuilder, message: String, start: Int, end
         }
         val chr = message.get(pos)
         if (chr == '%') {
-            // Append the section up to and including the first '%'.
+            // Append the section up to and including the first `'%'`.
             out.append(message, start, pos)
         } else if (chr == 'n') {
-            // %n encountered, rewind one position to not emit leading '%' and emit newline.
+            // `%n` encountered, rewind one position to not emit leading `'%'` and emit a newline.
             out.append(message, start, pos - 1)
             out.append(safeSystemNewline)
         } else {
@@ -321,7 +321,7 @@ internal fun unescapePrintf(out: StringBuilder, message: String, start: Int, end
         // Increment the position and reset the start point after the last processed character.
         start = ++pos
     }
-    // Append the last section (if it's non empty).
+    // Append the last section (if it is non-empty).
     if (start < end) {
         out.append(message, start, end)
     }
