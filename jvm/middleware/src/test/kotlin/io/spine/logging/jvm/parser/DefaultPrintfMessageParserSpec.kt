@@ -76,18 +76,18 @@ internal class DefaultPrintfMessageParserSpec {
 
     @Test
     fun `fail on invalid printf flag`() {
-        val memoizingBuilder = MemoizingMessageBuilder(parser)
+        val builder = MemoizingMessageBuilder(parser)
         val exception = assertThrows<ParseException> {
-            parser.parsePrintfTerm(memoizingBuilder, 0, "%0s", 0, 1, 2)
+            parser.parsePrintfTerm(builder, 0, "%0s", 0, 1, 2)
         }
         exception.message shouldContain "[%0s]"
     }
 
     @Test
     fun `fail on unknown printf format`() {
-        val memoizingBuilder = MemoizingMessageBuilder(parser)
+        val builder = MemoizingMessageBuilder(parser)
         val exception = assertThrows<ParseException> {
-            parser.parsePrintfTerm(memoizingBuilder, 0, "%Q", 0, 1, 1)
+            parser.parsePrintfTerm(builder, 0, "%Q", 0, 1, 1)
         }
         exception.message shouldContain "[%Q]"
     }
