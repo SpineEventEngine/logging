@@ -36,11 +36,11 @@ import io.spine.logging.jvm.parser.PrintfMessageParser.Companion.safeSystemNewli
  * process and extract placeholder terms at a high level, but does not impose its own semantics
  * for place-holder types.
  *
- * Typically you should not subclass this class, but instead subclass
+ * Typically, you should not subclass this class, but instead subclass
  * [DefaultPrintfMessageParser], which provides compatibility with [String.format].
  *
- * @see [
- * Original Java code of Google Flogger](https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parser/PrintfMessageParser.java) for historical context.
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parser/PrintfMessageParser.java">
+ *   Original Java code of Google Flogger</a> for historical context.
  */
 public abstract class PrintfMessageParser : MessageParser() {
 
@@ -126,7 +126,7 @@ public abstract class PrintfMessageParser : MessageParser() {
                 if (pos < message.length) {
                     c = message.get(pos++)
                     // Casting to char makes the result unsigned
-                    // (so we don't need to test "digit < 0" later).
+                    // (so we don't need to test `digit < 0` later).
                     val digit = (c.code - '0'.code).toChar().code
                     if (digit < 10) {
                         index = (10 * index) + digit
@@ -143,12 +143,13 @@ public abstract class PrintfMessageParser : MessageParser() {
 
             // STEP 2: Process the value and determine the parameter's real index.
             if (c == '$') {
-                // If was an index, but we could have got here without parsing any digits (ie, "%$")
+                // If was an index, but we could have got here without parsing any digits
+                // (i.e., `"%$"`)
                 val indexLen = (pos - 1) - optionsStart
                 if (indexLen == 0) {
                     throw withBounds("missing index", message, termStart, pos)
                 }
-                // We also prohibit leading zeros in any index value (printf indices are 1-based,
+                // We also prohibit leading zeros in any index value (`printf` indices are 1-based,
                 // so the first digit should never be zero).
                 if (message.get(optionsStart) == '0') {
                     throw withBounds("index has leading zero", message, termStart, pos)
@@ -188,9 +189,9 @@ public abstract class PrintfMessageParser : MessageParser() {
                 index = implicitIndex++
             }
 
-            // STEP 3: Find the index of the type character that terminates
-            // the format specification. Remember to decrement pos to account for
-            // the fact we were one ahead of the current char.
+            // STEP 3: Find the index of the type character that terminates the format
+            // specification. Remember to decrement pos to account for the fact we were
+            // one ahead of the current char.
             pos = findFormatChar(message, termStart, pos - 1)
 
             // STEP 4: Invoke the term parsing method and reset loop state.
@@ -213,13 +214,15 @@ public abstract class PrintfMessageParser : MessageParser() {
         /**
          * The system newline separator for replacing `%n`.
          */
-        val safeSystemNewline: String by lazy { computeSafeSystemNewline() }
+        val safeSystemNewline: String by lazy {
+            computeSafeSystemNewline()
+        }
 
         /**
          * Returns the system newline separator avoiding any issues with
          * security exceptions or "suspicious" values.
          *
-         * The only allowed return values are "\n" (default), "\r" or "\r\n".
+         * The only allowed return values are `"\n"` (default), `"\r"` or `"\r\n"`.
          */
         @Suppress("SystemGetProperty", "SwallowedException")
         private fun computeSafeSystemNewline(): String {
@@ -257,7 +260,8 @@ internal fun nextPrintfTerm(message: String, pos: Int): Int {
                 pos += 1
                 continue
             }
-            // We were pointing at the character after the '%', so adjust back by one.
+            // We were pointing at the character after the '%',
+            // so adjust back by one.
             return pos - 1
         }
         // We ran off the end while looking for the character after the first '%'.
@@ -273,9 +277,9 @@ private fun findFormatChar(message: String, termStart: Int, pos: Int): Int {
     var pos = pos
     while (pos < message.length) {
         val c = message.get(pos)
-        // Get the relative offset of the ASCII letter (in the range 0-25) ignoring whether it's
-        // upper or lower case. Using this unsigned value avoids multiple range checks in a tight
-        // loop.
+        // Get the relative offset of the ASCII letter (in the range 0-25) ignoring
+        // whether it's upper or lower case. Using this unsigned value avoids multiple
+        // range checks in a tight loop.
         val alpha = ((c.code and 0x20.inv()) - 'A'.code).toChar().code
         if (alpha < 26) {
             return pos

@@ -30,17 +30,17 @@ package io.spine.logging.jvm.parser
  * Base class from which any specific message parsers are derived (e.g. [PrintfMessageParser]
  * and [BraceStyleMessageParser]).
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parser/MessageParser.java">
- *   Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parser/MessageParser.java">Original Java code of Google Flogger</a>
+ * for historical context.
  */
 public abstract class MessageParser {
     
     public companion object {
 
         /**
-         * The maximum allowed index (this should correspond to the `MAX_ALLOWED_WIDTH`
-         * in [io.spine.logging.jvm.backend.FormatOptions] because at times it is ambiguous as to 
-         * which is being parsed).
+         * The maximum allowed index (this should correspond to the `MAX_ALLOWED_WIDTH` in
+         * [io.spine.logging.jvm.backend.FormatOptions] because at times it is ambiguous as to which
+         * is being parsed).
          */
         public const val MAX_ARG_COUNT: Int = 1000000
     }

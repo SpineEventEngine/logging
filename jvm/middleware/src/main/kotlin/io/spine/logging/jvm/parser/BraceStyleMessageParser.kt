@@ -33,8 +33,8 @@ import io.spine.logging.jvm.parser.ParseException.Companion.withStartPosition
 /**
  * A message parser for brace style formatting (e.g. "{0} {1}").
  *
- * @see [Original Java code of Google Flogger](https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parser/BraceStyleMessageParser.java)
- * for historical context.
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parser/BraceStyleMessageParser.java">
+ *   Original Java code of Google Flogger</a> for historical context.
  */
 public abstract class BraceStyleMessageParser : MessageParser() {
 
@@ -51,7 +51,7 @@ public abstract class BraceStyleMessageParser : MessageParser() {
     /**
      * Parses a single brace format term from a log message into a message template builder. Note that
      * the default brace style parser currently does not handle anything other than the simplest "{n}"
-     * forms of parameter specification, and it will treat anything more complezx as a parsing error.
+     * forms of parameter specification, and it will treat anything more complex as a parsing error.
      *
      * A simple example of a positional parameter:
      * ```
@@ -113,7 +113,8 @@ public abstract class BraceStyleMessageParser : MessageParser() {
             var index = 0
             while (true) {
                 if (pos < message.length) {
-                    // Casting to char makes the result unsigned, so we don't need to test "digit < 0" later.
+                    // Casting to char makes the result unsigned,
+                    // so we don't need to test "digit < 0" later.
                     c = message.get(pos++)
                     val digit = (c.code - '0'.code).toChar().code
                     if (digit < 10) {
@@ -164,8 +165,8 @@ public abstract class BraceStyleMessageParser : MessageParser() {
 }
 
 /**
- * Returns the index of the next unquoted '{' character in message starting at pos (or -1 if not
- * found).
+ * Returns the index of the next unquoted '{' character in message starting at pos
+ * (or -1 if not found).
  */
 @Suppress("ReturnCount", "LoopWithTooManyJumpStatements")
 @VisibleForTesting
@@ -243,9 +244,9 @@ internal fun unescapeBraceFormat(
         } else if (message.get(pos) != '\'') {
             isQuoted = true
         } else {
-            // If there are two adjacent single-quotes, advance our position so we don't detect it
-            // when we go back to the top of the loop (this does mean reading that same char twice
-            // if it wasn't a single quote, but this is relatively rare).
+            // If there are two adjacent single-quotes, advance our position so we don't
+            // detect it when we go back to the top of the loop (this does mean reading
+            // that same char twice if it wasn't a single quote, but this is relatively rare).
             pos++
         }
     }
