@@ -103,13 +103,13 @@ internal class PrintfMessageParserSpec {
     @Test
     fun `return the system newline separator`() {
         // This should pass even if "line.separator" is set to something else.
-        val nl = PrintfMessageParser.SYSTEM_NEWLINE
+        val nl = PrintfMessageParser.safeSystemNewline
         nl shouldBeIn listOf("\n", "\r", "\r\n")
     }
 
     @Test
     fun `unescape printf-supported new line`() {
-        val nl = PrintfMessageParser.SYSTEM_NEWLINE
+        val nl = PrintfMessageParser.safeSystemNewline
         unescapePrintf("%n") shouldBe nl
         unescapePrintf("Hello %n World") shouldBe "Hello $nl World"
         unescapePrintf("Hello World %n") shouldBe "Hello World $nl"
