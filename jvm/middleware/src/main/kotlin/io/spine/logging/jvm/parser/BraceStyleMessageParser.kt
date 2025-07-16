@@ -255,4 +255,3 @@ internal fun unescapeBraceFormat(
         out.append(message, start, end)
     }
 }
-
