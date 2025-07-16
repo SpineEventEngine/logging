@@ -28,6 +28,8 @@ package io.spine.logging.jvm.parameter
 
 import io.spine.logging.jvm.backend.FormatChar
 import io.spine.logging.jvm.backend.FormatOptions
+import io.spine.logging.jvm.backend.FormatOptions.Companion.FLAG_SHOW_GROUPING
+import io.spine.logging.jvm.backend.FormatOptions.Companion.UNSET
 import io.spine.logging.jvm.backend.FormatType
 import java.text.MessageFormat
 import java.util.Calendar
@@ -40,7 +42,7 @@ import java.util.Locale
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parameter/BraceStyleParameter.java">
  *   Original Java code of Google Flogger</a> for historical context.
  */
-public class BraceStyleParameter internal constructor(index: Int) :
+public class BraceStyleParameter private constructor(index: Int) :
     Parameter(FormatOptions.getDefault(), index) {
 
     override fun accept(visitor: ArgumentVisitor, value: Any) {
@@ -49,11 +51,13 @@ public class BraceStyleParameter internal constructor(index: Int) :
         when {
             FormatType.INTEGRAL.canFormat(value) ->
                 visitor.visit(value, FormatChar.DECIMAL, withGroupings)
+
             FormatType.FLOAT.canFormat(value) ->
                 // Technically floating point formatting via {0} differs from "%,f", but as "%,f"
                 // results in more precision it seems better to mimic "%,f" rather than discard
                 // both precision and type information by calling visitPreformatted().
                 visitor.visit(value, FormatChar.FLOAT, withGroupings)
+
             value is Date -> {
                 // MessageFormat is not thread safe, so we always `clone()`.
                 val formatted = (prototypeMessageFormatter.clone() as MessageFormat)
@@ -61,8 +65,10 @@ public class BraceStyleParameter internal constructor(index: Int) :
                     .toString()
                 visitor.visitPreformatted(value, formatted)
             }
+
             value is Calendar ->
                 visitor.visitDateTime(value, DateTimeFormat.DATETIME_FULL, formatOptions)
+
             else ->
                 visitor.visit(value, FormatChar.STRING, formatOptions)
         }
@@ -87,9 +93,9 @@ public class BraceStyleParameter internal constructor(index: Int) :
          * (i.e., like `"%,d"` or `"%,f"`).
          */
         private val withGroupings = FormatOptions.of(
-            FormatOptions.FLAG_SHOW_GROUPING,
-            FormatOptions.UNSET,
-            FormatOptions.UNSET
+            flags = FLAG_SHOW_GROUPING,
+            width = UNSET,
+            precision = UNSET
         )
 
         /**
