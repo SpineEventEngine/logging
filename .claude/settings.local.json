@@ -5,7 +5,9 @@
       "Bash(rm:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(./gradlew:*)"
+      "Bash(./gradlew:*)",
+      "Bash(find:*)",
+      "Bash(ls:*)"
     ],
     "deny": []
   }
