@@ -44,13 +44,12 @@ import kotlin.math.max
  * to generate a [JvmLogSite] from a [StackTraceElement], use
  * `JvmLogSites.logSiteFrom(StackTraceElement)` for proper log site creation.
  *
- * @see <a
- *         href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/StackBasedLogSite.java">
- *         Original Java code of Google Flogger</a> for historical context.
+ * @param stackElement The stack trace element to use for the log site.
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/StackBasedLogSite.java">
+ *    Original Java code of Google Flogger</a> for historical context.
  */
 internal class StackBasedLogSite(
-    // StackTraceElement is unmodifiable once created.
-    private val stackElement: StackTraceElement?
+    stackElement: StackTraceElement?
 ) : JvmLogSite() {
 
     private val element: StackTraceElement = checkNotNull(stackElement, "stack element")
@@ -61,11 +60,10 @@ internal class StackBasedLogSite(
     override val methodName: String
         get() = element.methodName
 
-    override val lineNumber: Int
-        get() {
-            // Prohibit negative numbers (which can appear in stack trace elements) from being returned.
-            return max(element.lineNumber, UNKNOWN_LINE)
-        }
+    /**
+     * Prohibits negative numbers (which can appear in stack trace elements) from being returned.
+     */
+    override val lineNumber: Int = max(element.lineNumber, UNKNOWN_LINE)
 
     override val fileName: String?
         get() = element.fileName

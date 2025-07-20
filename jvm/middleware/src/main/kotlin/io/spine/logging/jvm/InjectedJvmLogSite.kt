@@ -26,8 +26,6 @@
 
 package io.spine.logging.jvm
 
-import io.spine.logging.jvm.util.Checks.checkNotNull
-
 /**
  * A log site implementation used for injected logging information during compile-time or
  * via agents.
@@ -40,15 +38,20 @@ import io.spine.logging.jvm.util.Checks.checkNotNull
  *
  * @property internalClassName Internal (slash-separated) fully qualified class
  *           name (e.g., `"com/example/Foo$Bar"`).
- * @property method Bare method name (no signature information).
+ * @param method Bare method name without signature information.
+ * @param encodedLineNumber A line number with additional uniqueness encoded in the upper 16 bits.
+ * @param sourceFileName Name of the source file containing the log statement.
  */
 internal class InjectedJvmLogSite(
     private val internalClassName: String,
     private val method: String,
     private val encodedLineNumber: Int,
-    private val sourceFileName: String?
+    sourceFileName: String?
 ) : JvmLogSite() {
 
+    /**
+     * Cached hash code value for optimized lookups.
+     */
     @Volatile
     private var hashcode = 0
 

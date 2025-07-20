@@ -32,9 +32,7 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.spine.logging.jvm.LogContext.Key
-import io.spine.logging.jvm.RateLimitStatus.DISALLOW
-import io.spine.logging.jvm.RateLimitStatus.checkStatus
-import io.spine.logging.jvm.SamplingRateLimiter.check
+import io.spine.logging.jvm.RateLimitStatus.Companion.DISALLOW
 import io.spine.logging.jvm.backend.Metadata
 import io.spine.logging.jvm.backend.given.FakeMetadata
 import io.spine.logging.jvm.given.FakeLogSite
@@ -53,7 +51,7 @@ internal class SamplingRateLimiterSpec {
     @Test
     fun `ignore an invalid rate limiter`() {
         val metadata: Metadata = FakeMetadata().add(Key.LOG_SAMPLE_EVERY_N, 0)
-        check(metadata, FakeLogSite.unique()).shouldBeNull()
+        SamplingRateLimiter.check(metadata, FakeLogSite.unique()).shouldBeNull()
     }
 
     @Test
@@ -96,8 +94,8 @@ private fun countNSamples(n: Int, metadata: Metadata): Int {
     var sampled = 0
 
     repeat(n) {
-        val status = check(metadata, logSite)
-        val skipped = checkStatus(status, logSite, metadata)
+        val status = SamplingRateLimiter.check(metadata, logSite)
+        val skipped = RateLimitStatus.checkStatus(status!!, logSite, metadata)
         if (skipped >= 0) {
             sampled++
         }

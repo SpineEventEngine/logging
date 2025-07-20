@@ -36,7 +36,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
-import io.spine.logging.jvm.DurationRateLimiter.newRateLimitPeriod
+import io.spine.logging.jvm.DurationRateLimiter.Companion.newRateLimitPeriod
 import io.spine.logging.jvm.LazyArg.Companion.lazy
 import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.jvm.LogContext.specializeLogSiteKeyFromMetadata
