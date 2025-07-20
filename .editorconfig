@@ -1,0 +1,12 @@
+# EditorConfig is awesome: https://editorconfig.org/#supported-properties
+
+# top-most EditorConfig file
+root = true
+
+[*.{kt,kts,java,xml,properties,md,txt}]
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{kt,kts,java}]
+indent_style = space
+tab_width = 4
