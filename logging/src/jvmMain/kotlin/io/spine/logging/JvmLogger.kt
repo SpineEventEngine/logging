@@ -175,9 +175,9 @@ private fun LogSite.toFloggerSite(): JvmLogSite {
             if (other !is JvmLogSite) {
                 return false
             }
-            return lineNumber == other.lineNumber &&
-                    methodName == other.methodName &&
-                    className == other.className
+            return getLineNumber() == other.getLineNumber() &&
+                    getMethodName() == other.getMethodName() &&
+                    getClassName() == other.getClassName()
         }
     }
 }

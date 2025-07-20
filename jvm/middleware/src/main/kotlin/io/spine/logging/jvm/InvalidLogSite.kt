@@ -24,44 +24,29 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm;
-
-import org.jspecify.annotations.Nullable;
+package io.spine.logging.jvm
 
 /**
- * A singleton {@link JvmLogSite} instance used to indicate that valid log site information
+ * A singleton [JvmLogSite] instance used to indicate that valid log site information
  * cannot be determined.
  *
- * <p>This can be used to indicate that log site information is not available by
- * injecting it via {@link MiddlemanApi#withInjectedLogSite} which will suppress any further
- * log site analysis for that log statement. This is also returned if stack trace analysis
- * fails for any reason.
+ * This can be used to indicate that log site information is not available by injecting it
+ * via `MiddlemanApi.withInjectedLogSite` which will suppress any further log site analysis
+ * for that log statement. This is also returned if stack trace analysis fails for any reason.
  *
- * <p>If a log statement does end up with invalid log site information, then any fluent logging
+ * If a log statement does end up with invalid log site information, then any fluent logging
  * methods, which rely on being able to look up site-specific metadata will be disabled and
- * essentially become "no ops".
+ * essentially become "no ops" for proper error handling.
  */
-final class InvalidLogSite extends JvmLogSite {
+internal class InvalidLogSite : JvmLogSite() {
 
-    @Override
-    public String getClassName() {
-        return "<unknown class>";
-    }
+    override fun getClassName(): String = "<unknown class>"
 
-    @Override
-    public String getMethodName() {
-        return "<unknown method>";
-    }
+    override fun getMethodName(): String = "<unknown method>"
 
-    @Override
-    public int getLineNumber() {
-        return UNKNOWN_LINE;
-    }
+    override fun getLineNumber(): Int = UNKNOWN_LINE
 
-    @Override
-    public @Nullable String getFileName() {
-        return null;
-    }
-    
+    override fun getFileName(): String? = null
+
     // No need to implement equals() or hashCode() for a singleton instance.
 }

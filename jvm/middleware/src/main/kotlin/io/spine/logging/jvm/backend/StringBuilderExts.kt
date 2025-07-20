@@ -50,11 +50,11 @@ public fun StringBuilder.appendLogSite(logSite: JvmLogSite): Boolean {
     if (logSite == JvmLogSite.INVALID) {
         return false
     }
-    this.append(logSite.className)
+    this.append(logSite.getClassName())
         .append('.')
-        .append(logSite.methodName)
+        .append(logSite.getMethodName())
         .append(':')
-        .append(logSite.lineNumber)
+        .append(logSite.getLineNumber())
     return true
 }
 

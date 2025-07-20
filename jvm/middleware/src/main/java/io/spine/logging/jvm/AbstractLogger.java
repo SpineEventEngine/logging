@@ -54,11 +54,11 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS;
 public abstract class AbstractLogger<API extends MiddlemanApi<API>> {
 
     /**
-     * An upper bound on the depth of reentrant logging allowed by Flogger. Logger backends may
-     * choose
-     * to react to reentrant logging sooner than this, but once this value is reached, a warning is
-     * is emitted to stderr, which will not include any user provided arguments or metadata (in an
-     * attempt to halt recursion).
+     * An upper bound on the depth of reentrant logging allowed by a looger.
+     *
+     * <p>Logger backends may choose to react to reentrant logging sooner than this,
+     * but once this value is reached, a warning is emitted to stderr, which will not include
+     * any user-provided arguments or metadata (in an attempt to halt recursion).
      */
     private static final int MAX_ALLOWED_RECURSION_DEPTH = 100;
 

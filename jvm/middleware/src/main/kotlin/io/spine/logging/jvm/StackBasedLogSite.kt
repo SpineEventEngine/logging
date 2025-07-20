@@ -24,74 +24,55 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm;
+package io.spine.logging.jvm
 
-import org.jspecify.annotations.Nullable;
-
-import static io.spine.logging.jvm.util.Checks.checkNotNull;
-import static java.lang.Math.max;
+import io.spine.logging.jvm.util.Checks.checkNotNull
+import kotlin.math.max
 
 /**
- * A stack based log site which uses information from a given {@code StackTraceElement}.
+ * A stack based log site which uses information from a given [StackTraceElement].
  *
- * <p>Unlike truly unique injected log sites, StackBasedLogSite falls back to using the class name,
- * method name and line number for {@code equals()} and {@code hashcode()}. This makes it almost as
- * good as a globally unique instance in most cases, except if either of the following is true:
+ * Unlike truly unique injected log sites, StackBasedLogSite falls back to using the class
+ * name, method name and line number for `equals()` and `hashCode()`. This makes it almost
+ * as good as a globally unique instance in most cases, except if either of the following
+ * is true:
  *
- * <ul>
- *   <li>There are two log statements on a single line.
- *   <li>Line number information is stripped from the class.
- * </ul>
+ * - There are two log statements on a single line.
+ * - Line number information is stripped from the class file.
  *
- * <p>This class should not be used directly outside the core Flogger libraries. If you need to
- * generate a {@link JvmLogSite} from a {@link StackTraceElement}, use {@link
- * JvmLogSites#logSiteFrom(StackTraceElement) LogSites.logSiteFrom(myStackTaceElement)}.
+ * This class should not be used directly outside the core Flogger libraries. If you need
+ * to generate a [JvmLogSite] from a [StackTraceElement], use
+ * `JvmLogSites.logSiteFrom(StackTraceElement)` for proper log site creation.
  *
  * @see <a
  *         href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/StackBasedLogSite.java">
  *         Original Java code of Google Flogger</a> for historical context.
  */
-final class StackBasedLogSite extends JvmLogSite {
-
+internal class StackBasedLogSite(
     // StackTraceElement is unmodifiable once created.
-    private final StackTraceElement stackElement;
+    private val stackElement: StackTraceElement?
+) : JvmLogSite() {
 
-    public StackBasedLogSite(StackTraceElement stackElement) {
-        this.stackElement = checkNotNull(stackElement, "stack element");
-    }
+    private val element: StackTraceElement = checkNotNull(stackElement, "stack element")
 
-    @Override
-    public String getClassName() {
-        return stackElement.getClassName();
-    }
+    override fun getClassName(): String = element.className
 
-    @Override
-    public String getMethodName() {
-        return stackElement.getMethodName();
-    }
+    override fun getMethodName(): String = element.methodName
 
-    @Override
-    public int getLineNumber() {
+    override fun getLineNumber(): Int {
         // Prohibit negative numbers (which can appear in stack trace elements) from being returned.
-        return max(stackElement.getLineNumber(), UNKNOWN_LINE);
+        return max(element.lineNumber, UNKNOWN_LINE)
     }
 
-    @Override
-    public String getFileName() {
-        return stackElement.getFileName();
-    }
+    override fun getFileName(): String? = element.fileName
 
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        return (obj instanceof StackBasedLogSite)
-                && stackElement.equals(((StackBasedLogSite) obj).stackElement);
-    }
+    override fun equals(other: Any?): Boolean =
+        (other is StackBasedLogSite) && element == other.element
 
-    @Override
-    public int hashCode() {
+    override fun hashCode(): Int {
         // Note that (unlike other log site implementations) this hash-code appears to include the
         // file name when creating a hashcode, but this should be the same every time a stack trace
         // element is created, so it shouldn't be a problem.
-        return stackElement.hashCode();
+        return element.hashCode()
     }
 }

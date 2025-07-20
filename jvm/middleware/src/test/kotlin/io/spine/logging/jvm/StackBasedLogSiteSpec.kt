@@ -54,14 +54,14 @@ internal class StackBasedLogSiteSpec {
     fun `expose the given log site parameters`() {
         val element = StackTraceElement(CLASS_NAME, METHOD_NAME, FILE_NAME, LINE_NUMBER)
         val logSite = StackBasedLogSite(element)
-        logSite.className shouldBe CLASS_NAME
-        logSite.methodName shouldBe METHOD_NAME
-        logSite.lineNumber shouldBe LINE_NUMBER
-        logSite.fileName shouldBe FILE_NAME
-        logSite.className shouldBe element.className
-        logSite.methodName shouldBe element.methodName
-        logSite.lineNumber shouldBe element.lineNumber
-        logSite.fileName shouldBe element.fileName
+        logSite.getClassName() shouldBe CLASS_NAME
+        logSite.getMethodName() shouldBe METHOD_NAME
+        logSite.getLineNumber() shouldBe LINE_NUMBER
+        logSite.getFileName() shouldBe FILE_NAME
+        logSite.getClassName() shouldBe element.className
+        logSite.getMethodName() shouldBe element.methodName
+        logSite.getLineNumber() shouldBe element.lineNumber
+        logSite.getFileName() shouldBe element.fileName
     }
 
     @Test
@@ -76,8 +76,8 @@ internal class StackBasedLogSiteSpec {
         val fileName = null // Can be unknown, represented with `null`.
         val lineNumber = -3 // Can also be unknown, represented with a negative value.
         val logSite = stackBasedLogSite(CLASS_NAME, METHOD_NAME, fileName, lineNumber)
-        logSite.fileName.shouldBeNull()
-        logSite.lineNumber shouldBe JvmLogSite.UNKNOWN_LINE
+        logSite.getFileName().shouldBeNull()
+        logSite.getLineNumber() shouldBe JvmLogSite.UNKNOWN_LINE
     }
 
     @Test

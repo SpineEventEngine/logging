@@ -24,52 +24,48 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm;
+package io.spine.logging.jvm
 
-import static io.spine.logging.jvm.util.Checks.checkNotNull;
-
-import org.jspecify.annotations.Nullable;
+import io.spine.logging.jvm.util.Checks.checkNotNull
 
 /**
  * Used by Scope/LogSiteMap and in response to "per()" or "perUnique()" (which is an implicitly
- * unbounded scope. This should avoid it needing to be made public assuming it's in the same
- * package.
+ * unbounded scope).
+ *
+ * This should avoid it needing to be made public assuming it's in the same package for
+ * proper encapsulation and access control.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/SpecializedLogSiteKey.java">
  *     Original Java code of Google Flogger</a> for historical context.
  */
-final class SpecializedLogSiteKey implements LogSiteKey {
-  static LogSiteKey of(LogSiteKey key, Object qualifier) {
-    return new SpecializedLogSiteKey(key, qualifier);
-  }
+internal class SpecializedLogSiteKey private constructor(
+    private val delegate: LogSiteKey,
+    private val qualifier: Any
+) : LogSiteKey {
 
-  private final LogSiteKey delegate;
-  private final Object qualifier;
-
-  private SpecializedLogSiteKey(LogSiteKey key, Object qualifier) {
-    this.delegate = checkNotNull(key, "log site key");
-    this.qualifier = checkNotNull(qualifier, "log site qualifier");
-  }
-
-  // Equals is dependent on the order in which specialization occurred, even though conceptually it
-  // needn't be.
-  @Override
-  public boolean equals(@Nullable Object obj) {
-    if (!(obj instanceof SpecializedLogSiteKey)) {
-      return false;
+    init {
+        checkNotNull(delegate, "log site key")
+        checkNotNull(qualifier, "log site qualifier")
     }
-      var other = (SpecializedLogSiteKey) obj;
-    return delegate.equals(other.delegate) && qualifier.equals(other.qualifier);
-  }
 
-  @Override
-  public int hashCode() {
-    // Use XOR (which is symmetric) so hash codes are not dependent on specialization order.
-    return delegate.hashCode() ^ qualifier.hashCode();
-  }
+    companion object {
+        @JvmStatic
+        fun of(key: LogSiteKey, qualifier: Any): LogSiteKey =
+            SpecializedLogSiteKey(key, qualifier)
+    }
 
-  @Override
-  public String toString() {
-    return "SpecializedLogSiteKey{ delegate='" + delegate + "', qualifier='" + qualifier + "' }";
-  }
+    // Equals is dependent on the order in which specialization occurred, even though
+    // conceptually it needn't be.
+    override fun equals(other: Any?): Boolean {
+        if (other !is SpecializedLogSiteKey) return false
+        return delegate == other.delegate && qualifier == other.qualifier
+    }
+
+    override fun hashCode(): Int {
+        // Use XOR (which is symmetric) so hash codes are not dependent on specialization order.
+        return delegate.hashCode() xor qualifier.hashCode()
+    }
+
+    override fun toString(): String =
+        "SpecializedLogSiteKey{ delegate='$delegate', qualifier='$qualifier' }"
 }
