@@ -35,20 +35,21 @@ package io.spine.logging.jvm
  *   emitted for the enum values might change over time, but it can be assumed that
  *   `NONE < SMALL <= MEDIUM <= LARGE <= FULL`.
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/StackSize.java">Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/StackSize.java">
+ *     Original Java code of Google Flogger</a> for historical context.
  */
 @Suppress("MagicNumber")
 public enum class StackSize(public val maxDepth: Int) {
 
     /**
-     * Produces a small stack suitable for finer grained debugging. For performance reasons, this
-     * is the only stack size suitable for log statements at level `INFO` or finer, but it may
-     * also be useful for `WARNING` level log statements in cases where context is not as
-     * important. For `SEVERE` log statements, it is advised to use a stack size of
+     * Produces a small stack suitable for finer grained debugging. For performance reasons,
+     * this is the only stack size suitable for log statements at level `INFO` or finer, but
+     * it may also be useful for `WARNING` level log statements in cases where context is not
+     * as important. For `SEVERE` log statements, it is advised to use a stack size of
      * [MEDIUM] or above.
      *
-     * Requesting a small stack trace for log statements which occur under normal circumstances is
-     * acceptable but may affect performance. Consider using
+     * Requesting a small stack trace for log statements which occur under normal circumstances
+     * is acceptable but may affect performance. Consider using
      * [MiddlemanApi.withStackTrace] in conjunction with rate-limiting methods,
      * such as [MiddlemanApi.atMostEvery], to mitigate
      * performance issues.
@@ -58,12 +59,12 @@ public enum class StackSize(public val maxDepth: Int) {
     SMALL(10),
 
     /**
-     * Produces a medium-sized stack suitable for providing contextual information for most log
-     * statements at `WARNING` or above. There should be enough stack trace elements in a
+     * Produces a medium-sized stack suitable for providing contextual information for most
+     * log statements at `WARNING` or above. There should be enough stack trace elements in a
      * `MEDIUM` stack to provide sufficient debugging context in most cases.
      *
-     * Requesting a medium stack trace for any log statements which can occur regularly under normal
-     * circumstances is not recommended.
+     * Requesting a medium stack trace for any log statements which can occur regularly under
+     * normal circumstances is not recommended.
      *
      * The current maximum size of a `MEDIUM` stack trace is 20 elements, but this may change.
      */
@@ -74,19 +75,19 @@ public enum class StackSize(public val maxDepth: Int) {
      * This is most useful for `SEVERE` log statements which might be processed by external
      * tools and subject to automated analysis.
      *
-     * Requesting a large stack trace for any log statement which can occur under normal circumstances
-     * is not recommended.
+     * Requesting a large stack trace for any log statement which can occur under normal
+     * circumstances is not recommended.
      *
      * The current maximum size of a `LARGE` stack trace is 50 elements, but this may change.
      */
     LARGE(50),
 
     /**
-     * Provides the complete stack trace. This is included for situations in which it is known that
-     * the uppermost elements of the stack are definitely required for analysis.
+     * Provides the complete stack trace. This is included for situations in which it is
+     * known that the uppermost elements of the stack are definitely required for analysis.
      *
-     * Requesting a full stack trace for any log statement which can occur under normal circumstances
-     * is not recommended.
+     * Requesting a full stack trace for any log statement which can occur under normal
+     * circumstances is not recommended.
      */
     FULL(-1),
 
