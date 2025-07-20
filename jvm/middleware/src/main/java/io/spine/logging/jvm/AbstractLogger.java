@@ -152,7 +152,8 @@ public abstract class AbstractLogger<API extends MiddlemanApi<API>> {
     // See b/14878562
     // TODO(dbeaumont): Make anonymous loggers work with the config() method and the LoggerConfig API.
     protected String getName() {
-        return backend.getLoggerName();
+        var loggerName = backend.getLoggerName();
+        return loggerName == null ? "NULL_LOGGER" : loggerName;
     }
 
     /**
@@ -189,7 +190,7 @@ public abstract class AbstractLogger<API extends MiddlemanApi<API>> {
         checkNotNull(data, "data");
         // Note: Recursion checking should not be in the LoggerBackend. There are many backends and they
         // can call into other backends. We only want the counter incremented per log statement.
-        try (RecursionDepth depth = RecursionDepth.enterLogStatement()) {
+        try (var depth = RecursionDepth.enterLogStatement()) {
             if (depth.getValue() <= MAX_ALLOWED_RECURSION_DEPTH) {
                 backend.log(data);
             } else {
@@ -225,7 +226,7 @@ public abstract class AbstractLogger<API extends MiddlemanApi<API>> {
     // arguments or metadata) since that could trigger a recursive error state.
     @SuppressWarnings("UseOfSystemOutOrSystemErr")
     private static void reportError(String message, LogData data) {
-        StringBuilder out = new StringBuilder();
+        var out = new StringBuilder();
         out.append(formatTimestampIso8601(data))
            .append(": logging error [");
         StringBuilders.appendLogSite(out, data.getLogSite());
