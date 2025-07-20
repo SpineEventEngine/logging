@@ -55,16 +55,20 @@ internal class StackBasedLogSite(
 
     private val element: StackTraceElement = checkNotNull(stackElement, "stack element")
 
-    override fun getClassName(): String = element.className
+    override val className: String
+        get() = element.className
 
-    override fun getMethodName(): String = element.methodName
+    override val methodName: String
+        get() = element.methodName
 
-    override fun getLineNumber(): Int {
-        // Prohibit negative numbers (which can appear in stack trace elements) from being returned.
-        return max(element.lineNumber, UNKNOWN_LINE)
-    }
+    override val lineNumber: Int
+        get() {
+            // Prohibit negative numbers (which can appear in stack trace elements) from being returned.
+            return max(element.lineNumber, UNKNOWN_LINE)
+        }
 
-    override fun getFileName(): String? = element.fileName
+    override val fileName: String?
+        get() = element.fileName
 
     override fun equals(other: Any?): Boolean =
         (other is StackBasedLogSite) && element == other.element

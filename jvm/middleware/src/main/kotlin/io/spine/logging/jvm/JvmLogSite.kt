@@ -50,52 +50,52 @@ package io.spine.logging.jvm
 public abstract class JvmLogSite : LogSiteKey {
 
     /**
-     * Returns the name of the class containing the log statement.
+     * The name of the class containing the log statement.
      */
-    public abstract fun getClassName(): String
+    public abstract val className: String
 
     /**
-     * Returns the name of the method containing the log statement.
+     * The name of the method containing the log statement.
      */
-    public abstract fun getMethodName(): String
+    public abstract val methodName: String
 
     /**
-     * Returns a valid line number for the log statement in the range `1` – `65535`, or
+     * A valid line number for the log statement in the range `1 – 65535`, or
      * [UNKNOWN_LINE] if not known.
      *
-     * There is a limit of 16 bits for line numbers in a class. See
-     * <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.7.12">here</a>
+     * There is a limit of 16 bits for line numbers in a class.
+     * See [The LineNumberTable Attribute](http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.7.12)
      * for more details.
      */
-    public abstract fun getLineNumber(): Int
+    public abstract val lineNumber: Int
 
     /**
-     * Returns the name of the class file containing the log statement (or null if not known).
+     * The name of the class file containing the log statement (or `null` if not known).
      *
      * The source file name is optional and strictly for debugging purposes.
      *
      * Normally this value (if present) is extracted from the SourceFile attribute of the
-     * class file (see the <a
-     * href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.7.10">JVM
-     * class file format specification</a> for more details).
+     * class file. See the [JVM class file format specification](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.7.10")
+     * for more details.
      */
-    public abstract fun getFileName(): String?
+    public abstract val fileName: String?
 
-    // Provide a common toString() implementation for only the public attributes.
-    override fun toString(): String {
-        val out = StringBuilder()
-            .append("LogSite{ class=")
-            .append(getClassName())
-            .append(", method=")
-            .append(getMethodName())
-            .append(", line=")
-            .append(getLineNumber())
-        
-        getFileName()?.let { fileName ->
-            out.append(", file=").append(fileName)
+    /**
+     * Provides debug information with only the public attributes.
+     */
+    override fun toString(): String = buildString {
+        append("LogSite{ class=")
+        append(className)
+        append(", method=")
+        append(methodName)
+        append(", line=")
+        append(lineNumber)
+
+        fileName?.let { fileName ->
+            append(", file=").append(fileName)
         }
-        
-        return out.append(" }").toString()
+
+        append(" }")
     }
 
     public companion object {

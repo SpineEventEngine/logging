@@ -40,13 +40,13 @@ package io.spine.logging.jvm
  */
 internal class InvalidLogSite : JvmLogSite() {
 
-    override fun getClassName(): String = "<unknown class>"
+    override val className: String = "<unknown class>"
 
-    override fun getMethodName(): String = "<unknown method>"
+    override val methodName: String = "<unknown method>"
 
-    override fun getLineNumber(): Int = UNKNOWN_LINE
+    override val lineNumber: Int = UNKNOWN_LINE
 
-    override fun getFileName(): String? = null
+    override val fileName: String? = null
 
     // No need to implement equals() or hashCode() for a singleton instance.
 }

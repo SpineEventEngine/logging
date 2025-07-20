@@ -47,14 +47,14 @@ internal class JvmLogSitesSpec {
     @Test
     fun `return log site for the current line of code`() {
         val outerMethod = "return log site for the current line of code"
-        logSite().getMethodName() shouldBe outerMethod
+        logSite().methodName shouldBe outerMethod
     }
 
     @Test
     fun `return log site for the caller of the specified class`() {
         val outerMethod = "return log site for the caller of the specified class"
-        callerLogSite.getMethodName() shouldBe outerMethod
-        callerLogSiteWrapped.getMethodName() shouldBe outerMethod
+        callerLogSite.methodName shouldBe outerMethod
+        callerLogSiteWrapped.methodName shouldBe outerMethod
     }
 
     @Test
@@ -66,10 +66,10 @@ internal class JvmLogSitesSpec {
     fun `detect log site using the given stack trace element`() {
         val element = StackTraceElement("class", "method", "file", 42)
         val logSite = logSiteFrom(element)
-        logSite.getClassName() shouldBe element.className
-        logSite.getMethodName() shouldBe element.methodName
-        logSite.getFileName() shouldBe element.fileName
-        logSite.getLineNumber() shouldBe element.lineNumber
+        logSite.className shouldBe element.className
+        logSite.methodName shouldBe element.methodName
+        logSite.fileName shouldBe element.fileName
+        logSite.lineNumber shouldBe element.lineNumber
     }
 }
 

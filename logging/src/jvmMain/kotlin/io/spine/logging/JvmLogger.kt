@@ -166,18 +166,18 @@ private fun LogSite.toFloggerSite(): JvmLogSite {
         return JvmLogSite.invalid
     }
     return object : JvmLogSite() {
-        override fun getClassName(): String = this@toFloggerSite.className
-        override fun getMethodName(): String = this@toFloggerSite.methodName
-        override fun getLineNumber(): Int = this@toFloggerSite.lineNumber
-        override fun getFileName(): String? = null
+        override val className: String = this@toFloggerSite.className
+        override val methodName: String = this@toFloggerSite.methodName
+        override val lineNumber: Int = this@toFloggerSite.lineNumber
+        override val fileName: String? = null
         override fun hashCode(): Int = this@toFloggerSite.hashCode()
         override fun equals(other: Any?): Boolean {
             if (other !is JvmLogSite) {
                 return false
             }
-            return getLineNumber() == other.getLineNumber() &&
-                    getMethodName() == other.getMethodName() &&
-                    getClassName() == other.getClassName()
+            return lineNumber == other.lineNumber &&
+                    methodName == other.methodName &&
+                    className == other.className
         }
     }
 }

@@ -95,8 +95,8 @@ internal class JulRecordSpec {
             val data = FakeLogData("")
             val record = JulRecord.create(data, Metadata.empty())
             record.loggerName shouldBe data.loggerName
-            record.sourceClassName shouldBe data.logSite.getClassName()
-            record.sourceMethodName shouldBe data.logSite.getMethodName()
+            record.sourceClassName shouldBe data.logSite.className
+            record.sourceMethodName shouldBe data.logSite.methodName
         }
 
         @Test

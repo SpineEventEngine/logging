@@ -40,22 +40,17 @@ import io.spine.logging.jvm.util.Checks.checkNotNull
  *
  * @property internalClassName Internal (slash-separated) fully qualified class
  *           name (e.g., `"com/example/Foo$Bar"`).
- * @property methodName Bare method name (no signature information).
+ * @property method Bare method name (no signature information).
  */
 internal class InjectedJvmLogSite(
     private val internalClassName: String,
-    private val methodName: String,
+    private val method: String,
     private val encodedLineNumber: Int,
     private val sourceFileName: String?
 ) : JvmLogSite() {
 
     @Volatile
     private var hashcode = 0
-
-    init {
-        checkNotNull(internalClassName, "class name")
-        checkNotNull(methodName, "method name")
-    }
 
     /**
      * Obtains dot-separated class name.
@@ -68,24 +63,28 @@ internal class InjectedJvmLogSite(
      * We could cache the result somewhere, but in the default logger backend, this method
      * is actually only called once anyway when constructing the `LogRecord` instance.
      */
-    override fun getClassName(): String = internalClassName.replace('/', '.')
+    override val className: String
+        get() = internalClassName.replace('/', '.')
 
-    override fun getMethodName(): String = methodName
+    override val methodName: String = method
 
-    /** Strips additional "uniqueness" information from the upper 16 bits. */
+    /**
+     * Strips additional "uniqueness" information from the upper 16 bits.
+     */
     @Suppress("MagicNumber")
-    override fun getLineNumber(): Int = encodedLineNumber and 0xFFFF
+    override val lineNumber: Int
+        get() = encodedLineNumber and 0xFFFF
 
-    override fun getFileName(): String? = sourceFileName
+    override val fileName: String? = sourceFileName
 
     override fun equals(other: Any?): Boolean {
         if (other is InjectedJvmLogSite) {
             // Probably not worth optimizing for "this === other" because
             // all strings should be interned.
-            return methodName == other.methodName &&
+            return method == other.method &&
                 encodedLineNumber == other.encodedLineNumber &&
                 // Check classname last because it isn't cached
-                getClassName() == other.getClassName()
+                className == other.className
         }
         return false
     }

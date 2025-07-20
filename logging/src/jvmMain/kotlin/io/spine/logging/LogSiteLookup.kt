@@ -69,8 +69,8 @@ private fun JvmLogSite.toLogSite(): LogSite {
         return LogSite.Invalid
     }
     return InjectedLogSite(
-        className = this@toLogSite.getClassName(),
-        methodName = this@toLogSite.getMethodName(),
-        lineNumber = this@toLogSite.getLineNumber()
+        className = this@toLogSite.className,
+        methodName = this@toLogSite.methodName,
+        lineNumber = this@toLogSite.lineNumber
     )
 }

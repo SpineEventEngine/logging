@@ -181,10 +181,10 @@ internal class Log4j2LoggerBackendSpec {
             backend.log(data)
             val actual = lastLogged.source
             with(actual) {
-                className shouldBe logSite.getClassName()
-                methodName shouldBe logSite.getMethodName()
-                lineNumber shouldBe logSite.getLineNumber()
-                fileName shouldBe logSite.getFileName()
+                className shouldBe logSite.className
+                methodName shouldBe logSite.methodName
+                lineNumber shouldBe logSite.lineNumber
+                fileName shouldBe logSite.fileName
             }
         }
     }
