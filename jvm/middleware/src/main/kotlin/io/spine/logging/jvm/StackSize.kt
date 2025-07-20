@@ -27,15 +27,15 @@
 package io.spine.logging.jvm
 
 /**
- * Enum values to be passed into [MiddlemanApi.withStackTrace] to control
- * the maximum number of stack trace elements created.
+ * Enum values to be passed into [MiddlemanApi.withStackTrace] to control the maximum
+ * number of stack trace elements created.
  *
- * @property maxDepth The maximum stack depth to create when adding contextual stack information
- *   to a log statement. Note that the precise number of stack elements emitted for the enum values
- *   might change over time, but it can be assumed that `NONE < SMALL <= MEDIUM <= LARGE <= FULL`.
+ * @property maxDepth The maximum stack depth to create when adding contextual stack
+ *   information to a log statement. Note that the precise number of stack elements
+ *   emitted for the enum values might change over time, but it can be assumed that
+ *   `NONE < SMALL <= MEDIUM <= LARGE <= FULL`.
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/StackSize.java">
- *     Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/StackSize.java">Original Java code of Google Flogger</a> for historical context.
  */
 @Suppress("MagicNumber")
 public enum class StackSize(public val maxDepth: Int) {
