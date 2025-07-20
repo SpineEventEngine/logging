@@ -42,49 +42,57 @@ package io.spine.logging.jvm
 public enum class StackSize(public val maxDepth: Int) {
 
     /**
-     * Produces a small stack suitable for finer grained debugging. For performance reasons,
-     * this is the only stack size suitable for log statements at level `INFO` or finer, but
-     * it may also be useful for `WARNING` level log statements in cases where context is not
-     * as important. For `SEVERE` log statements, it is advised to use a stack size of
-     * [MEDIUM] or above.
+     * Produces a small stack suitable for finer grained debugging.
      *
-     * Requesting a small stack trace for log statements which occur under normal circumstances
-     * is acceptable but may affect performance. Consider using
+     * For performance reasons, this is the only stack size suitable for log statements at
+     * level `INFO` or finer, but it may also be useful for `WARNING` level log statements
+     * in cases where context is not as important. For `SEVERE` log statements, it is
+     * advised to use a stack size of [MEDIUM] or above.
+     *
+     * Requesting a small stack trace for log statements which occur under normal
+     * circumstances is acceptable but may affect performance. Consider using
      * [MiddlemanApi.withStackTrace] in conjunction with rate-limiting methods,
-     * such as [MiddlemanApi.atMostEvery], to mitigate
-     * performance issues.
+     * such as [MiddlemanApi.atMostEvery], to mitigate performance issues.
      *
-     * The current maximum size of a `SMALL` stack trace is 10 elements, but this may change.
+     * The current maximum size of a `SMALL` stack trace is 10 elements, but this may
+     * change.
      */
     SMALL(10),
 
     /**
-     * Produces a medium-sized stack suitable for providing contextual information for most
-     * log statements at `WARNING` or above. There should be enough stack trace elements in a
-     * `MEDIUM` stack to provide sufficient debugging context in most cases.
+     * Produces a medium-sized stack suitable for providing contextual information.
      *
-     * Requesting a medium stack trace for any log statements which can occur regularly under
-     * normal circumstances is not recommended.
+     * Suitable for most log statements at `WARNING` or above. There should be enough stack
+     * trace elements in a `MEDIUM` stack to provide sufficient debugging context in most
+     * cases.
      *
-     * The current maximum size of a `MEDIUM` stack trace is 20 elements, but this may change.
+     * Requesting a medium stack trace for any log statements which can occur regularly
+     * under normal circumstances is not recommended.
+     *
+     * The current maximum size of a `MEDIUM` stack trace is 20 elements, but this may
+     * change.
      */
     MEDIUM(20),
 
     /**
      * Produces a large stack suitable for providing highly detailed contextual information.
+     *
      * This is most useful for `SEVERE` log statements which might be processed by external
      * tools and subject to automated analysis.
      *
      * Requesting a large stack trace for any log statement which can occur under normal
      * circumstances is not recommended.
      *
-     * The current maximum size of a `LARGE` stack trace is 50 elements, but this may change.
+     * The current maximum size of a `LARGE` stack trace is 50 elements, but this may
+     * change.
      */
     LARGE(50),
 
     /**
-     * Provides the complete stack trace. This is included for situations in which it is
-     * known that the uppermost elements of the stack are definitely required for analysis.
+     * Provides the complete stack trace.
+     *
+     * This is included for situations in which it is known that the uppermost elements of
+     * the stack are definitely required for analysis.
      *
      * Requesting a full stack trace for any log statement which can occur under normal
      * circumstances is not recommended.
@@ -93,6 +101,7 @@ public enum class StackSize(public val maxDepth: Int) {
 
     /**
      * Provides no stack trace, making the `withStackTrace()` method an effective no-op.
+     *
      * This is useful when your stack size is conditional. For example:
      * ```kotlin
      * logger.atWarning()
