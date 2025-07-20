@@ -28,3 +28,4 @@ A branch conflict over the version number should be resolved as described below.
 
 ## When to bump the version?
  - When a new branch is created.
+ - Do NOT bump the version when continuing working on the same branch.
