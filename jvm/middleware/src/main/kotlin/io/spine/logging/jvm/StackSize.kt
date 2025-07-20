@@ -32,8 +32,8 @@ package io.spine.logging.jvm
  *
  * @property maxDepth The maximum stack depth to create when adding contextual stack
  *   information to a log statement. Note that the precise number of stack elements
- *   emitted for the enum values might change over time, but it can be assumed that
- *   `NONE < SMALL <= MEDIUM <= LARGE <= FULL`.
+ *   emitted for the enum values might change over time, but the ordering relationship
+ *   `NONE < SMALL <= MEDIUM <= LARGE <= FULL` will always be maintained.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/StackSize.java">
  *     Original Java code of Google Flogger</a> for historical context.
@@ -54,8 +54,8 @@ public enum class StackSize(public val maxDepth: Int) {
      * [MiddlemanApi.withStackTrace] in conjunction with rate-limiting methods,
      * such as [MiddlemanApi.atMostEvery], to mitigate performance issues.
      *
-     * The current maximum size of a `SMALL` stack trace is 10 elements, but this may
-     * change.
+     * The current maximum size of a `SMALL` stack trace is 10 elements, but this
+     * value may change in future versions.
      */
     SMALL(10),
 
@@ -69,8 +69,8 @@ public enum class StackSize(public val maxDepth: Int) {
      * Requesting a medium stack trace for any log statements which can occur regularly
      * under normal circumstances is not recommended.
      *
-     * The current maximum size of a `MEDIUM` stack trace is 20 elements, but this may
-     * change.
+     * The current maximum size of a `MEDIUM` stack trace is 20 elements, but this
+     * value may change in future versions.
      */
     MEDIUM(20),
 
@@ -83,16 +83,16 @@ public enum class StackSize(public val maxDepth: Int) {
      * Requesting a large stack trace for any log statement which can occur under normal
      * circumstances is not recommended.
      *
-     * The current maximum size of a `LARGE` stack trace is 50 elements, but this may
-     * change.
+     * The current maximum size of a `LARGE` stack trace is 50 elements, but this
+     * value may change in future versions.
      */
     LARGE(50),
 
     /**
      * Provides the complete stack trace.
      *
-     * This is included for situations in which it is known that the uppermost elements of
-     * the stack are definitely required for analysis.
+     * This is included for situations in which it is known that the uppermost elements
+     * of the stack are definitely required for analysis.
      *
      * Requesting a full stack trace for any log statement which can occur under normal
      * circumstances is not recommended.
