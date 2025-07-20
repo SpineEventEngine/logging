@@ -527,7 +527,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
                         new LogSiteStackTrace(
                                 getMetadata().findValue(Key.LOG_CAUSE),
                                 stackSize,
-                                stackForCallerOf(LogContext.class, stackSize.getMaxDepth(), 1));
+                                stackForCallerOf(LogContext.class, stackSize.maxDepth, 1));
                 // The "cause" is a unique metadata key, we must replace any existing value.
                 addMetadata(Key.LOG_CAUSE, context);
             }

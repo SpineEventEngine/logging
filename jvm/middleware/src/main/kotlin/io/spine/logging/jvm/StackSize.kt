@@ -30,14 +30,15 @@ package io.spine.logging.jvm
  * Enum values to be passed into [MiddlemanApi.withStackTrace] to control
  * the maximum number of stack trace elements created.
  *
- * Note that the precise value returned by [getMaxDepth] may change over time,
- * but it can be assumed that `SMALL <= MEDIUM <= LARGE <= FULL`.
+ * @property maxDepth the maximum stack depth to create when adding contextual stack information
+ *   to a log statement. Note that the precise number of stack elements emitted for the enum values
+ *   might change over time, but it can be assumed that `NONE < SMALL <= MEDIUM <= LARGE <= FULL`.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/StackSize.java">
  *     Original Java code of Google Flogger</a> for historical context.
  */
 @Suppress("MagicNumber")
-public enum class StackSize(private val maxDepth: Int) {
+public enum class StackSize(@JvmField public val maxDepth: Int) {
 
     /**
      * Produces a small stack suitable for finer grained debugging. For performance reasons, this
@@ -57,7 +58,7 @@ public enum class StackSize(private val maxDepth: Int) {
     SMALL(10),
 
     /**
-     * Produces a medium sized stack suitable for providing contextual information for most log
+     * Produces a medium-sized stack suitable for providing contextual information for most log
      * statements at `WARNING` or above. There should be enough stack trace elements in a
      * `MEDIUM` stack to provide sufficient debugging context in most cases.
      *
@@ -100,13 +101,5 @@ public enum class StackSize(private val maxDepth: Int) {
      */
     NONE(0);
 
-    /**
-     * Returns the maximum stack depth to create when adding contextual stack information to a log
-     * statement.
-     *
-     * Note that the precise number of stack elements emitted for the enum values might change over
-     * time, but it can be assumed that `NONE < SMALL <= MEDIUM <= LARGE <= FULL`.
-     */
-    public fun getMaxDepth(): Int = maxDepth
 }
 

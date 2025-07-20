@@ -853,7 +853,7 @@ internal class LogContextSpec {
 
         val cause = backend.firstLogged.metadata.findValue(Key.LOG_CAUSE)!!
         cause shouldHaveMessage "SMALL"
-        cause.stackTrace.size shouldBe StackSize.SMALL.getMaxDepth()
+        cause.stackTrace.size shouldBe StackSize.SMALL.maxDepth
         cause.cause shouldBe badness
     }
 
