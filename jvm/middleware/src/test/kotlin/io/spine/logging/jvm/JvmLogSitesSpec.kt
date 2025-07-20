@@ -59,7 +59,7 @@ internal class JvmLogSitesSpec {
 
     @Test
     fun `return 'INVALID' log site if the caller not found`() {
-        callerOf(String::class.java) shouldBe JvmLogSite.INVALID
+        callerOf(String::class.java) shouldBe JvmLogSite.invalid
     }
 
     @Test

@@ -278,7 +278,7 @@ public abstract class Platform {
          * @param loggerApi The class containing the log() methods whose caller we need to find.
          * @param stackFramesToSkip The number of method calls which exist on the stack between the
          *        `log()` method, and the point at which this method is invoked.
-         * @return A log site inferred from the stack, or [JvmLogSite.INVALID] if no log site
+         * @return A log site inferred from the stack, or [JvmLogSite.invalid] if no log site
          *         can be determined.
          */
         public abstract fun findLogSite(loggerApi: Class<*>, stackFramesToSkip: Int): JvmLogSite

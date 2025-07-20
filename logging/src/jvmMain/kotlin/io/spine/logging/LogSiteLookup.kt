@@ -40,7 +40,7 @@ public actual object LogSiteLookup {
      * Returns a [LogSite] for the caller of the specified class.
      *
      * If log site determination is unsupported, this method returns
-     * the [LogSite.INVALID] instance.
+     * the [LogSite.Invalid] instance.
      */
     public actual fun callerOf(loggingApi: KClass<*>): LogSite {
         val floggerSite = JvmLogSites.callerOf(loggingApi.java)
@@ -52,7 +52,7 @@ public actual object LogSiteLookup {
      * Returns a [LogSite] for the current line of code.
      *
      * If log site determination is unsupported, this method returns
-     * the [LogSite.INVALID] instance.
+     * the [LogSite.Invalid] instance.
      */
     public actual fun logSite(): LogSite {
         val floggerSite = Platform.getCallerFinder().findLogSite(
@@ -65,8 +65,8 @@ public actual object LogSiteLookup {
 }
 
 private fun JvmLogSite.toLogSite(): LogSite {
-    if (this == JvmLogSite.INVALID) {
-        return LogSite.INVALID
+    if (this == JvmLogSite.invalid) {
+        return LogSite.Invalid
     }
     return InjectedLogSite(
         className = this@toLogSite.getClassName(),

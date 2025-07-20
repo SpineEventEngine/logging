@@ -162,8 +162,8 @@ public operator fun JLevel.compareTo(other: JLevel): Int =
  * Converts this [LogSite] to the JVM logging counterpart.
  */
 private fun LogSite.toFloggerSite(): JvmLogSite {
-    if (this == LogSite.INVALID) {
-        return JvmLogSite.INVALID
+    if (this == LogSite.Invalid) {
+        return JvmLogSite.invalid
     }
     return object : JvmLogSite() {
         override fun getClassName(): String = this@toFloggerSite.className

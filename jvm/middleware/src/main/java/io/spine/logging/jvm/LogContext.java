@@ -584,7 +584,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
                             "logger backend must not return a null LogSite");
         }
         LogSiteKey logSiteKey = null;
-        if (logSite != JvmLogSite.INVALID) {
+        if (logSite != JvmLogSite.invalid) {
             logSiteKey = logSite;
             // Log site keys are only modified when we have metadata in the log statement.
             if (metadata != null && metadata.size() > 0) {
@@ -603,7 +603,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
             // 2. We passed it an "allow" status, but multiple threads were racing to try and reset the
             //    rate limiters, and this thread lost.
             // Either way we should suppress logging.
-            shouldLog &= (skippedLogs >= 0);
+            shouldLog = shouldLog && (skippedLogs >= 0);
         }
         return shouldLog;
     }

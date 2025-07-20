@@ -43,7 +43,7 @@ public final class JvmLogSites {
    * Returns a {@code LogSite} for the caller of the specified class. This can be used in
  * conjunction with the {@link MiddlemanApi#withInjectedLogSite(JvmLogSite)} method to implement
    * logging helper methods. In some platforms, log site determination may be unsupported, and in
-   * those cases this method will always return the {@link JvmLogSite#INVALID} instance.
+   * those cases this method will always return the {@link JvmLogSite#invalid} instance.
  *
    * <p>
    * For example (in {@code MyLoggingHelper}):
@@ -89,7 +89,7 @@ public final class JvmLogSites {
    *        appear somewhere on the stack above the point at which this method is called).
  *
    * @return the log site of the caller of the specified logging API,
-   *        or {@link JvmLogSite#INVALID} if the logging API was not found.
+   *        or {@link JvmLogSite#invalid} if the logging API was not found.
    */
   public static JvmLogSite callerOf(Class<?> loggingApi) {
     // Can't skip anything here since someone could pass in LogSite.class.
@@ -100,7 +100,7 @@ public final class JvmLogSites {
    * Returns a {@code LogSite} for the current line of code. This can be used in conjunction with
  * the {@link MiddlemanApi#withInjectedLogSite(JvmLogSite)} method to implement logging helper
    * methods. In some platforms, log site determination may be unsupported, and in those cases this
-   * method will always return the {@link JvmLogSite#INVALID} instance.
+   * method will always return the {@link JvmLogSite#invalid} instance.
  *
    * <p>
    * For example (in {@code MyLoggingHelper}):
@@ -147,13 +147,13 @@ public final class JvmLogSites {
 
   /**
    * Returns a new {@code LogSite} which reflects the information in the given {@link
-   * StackTraceElement}, or {@link JvmLogSite#INVALID} if given {@code null}.
+   * StackTraceElement}, or {@link JvmLogSite#invalid} if given {@code null}.
    *
    * <p>This method is useful when log site information is only available via an external API,
    * which returns {@link StackTraceElement}.
    */
   public static JvmLogSite logSiteFrom(@Nullable StackTraceElement e) {
-    return e != null ? new StackBasedLogSite(e) : JvmLogSite.INVALID;
+    return e != null ? new StackBasedLogSite(e) : JvmLogSite.invalid;
   }
 
   private JvmLogSites() {}

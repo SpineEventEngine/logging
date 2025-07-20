@@ -100,7 +100,7 @@ internal class StringBuilderExtsSpec {
         "$out" shouldBe "<class>.<method>:32"
 
         out.setLength(0)
-        out.appendLogSite(JvmLogSite.INVALID).shouldBeFalse()
+        out.appendLogSite(JvmLogSite.invalid).shouldBeFalse()
         "$out".shouldBeEmpty()
     }
 

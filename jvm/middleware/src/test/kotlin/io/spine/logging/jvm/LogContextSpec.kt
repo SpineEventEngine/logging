@@ -885,17 +885,17 @@ internal class LogContextSpec {
     @Test
     fun `suppress an invalid log site analysis`() {
         logger.atInfo()
-            .withInjectedLogSite(JvmLogSite.INVALID)
+            .withInjectedLogSite(JvmLogSite.invalid)
             .log("No log site here")
         logger.atInfo()
             .withInjectedLogSite(null)
             .log("No-op injection")
 
         backend.loggedCount shouldBe 2
-        backend.firstLogged.logSite shouldBe JvmLogSite.INVALID
+        backend.firstLogged.logSite shouldBe JvmLogSite.invalid
 
         backend.logged[1].logSite.shouldNotBeNull()
-        backend.logged[1].logSite shouldNotBe JvmLogSite.INVALID
+        backend.logged[1].logSite shouldNotBe JvmLogSite.invalid
     }
 
     @Nested inner class

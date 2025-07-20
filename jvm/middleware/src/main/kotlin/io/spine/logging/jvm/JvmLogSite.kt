@@ -49,14 +49,18 @@ package io.spine.logging.jvm
  */
 public abstract class JvmLogSite : LogSiteKey {
 
-    /** Returns the name of the class containing the log statement. */
+    /**
+     * Returns the name of the class containing the log statement.
+     */
     public abstract fun getClassName(): String
 
-    /** Returns the name of the method containing the log statement. */
+    /**
+     * Returns the name of the method containing the log statement.
+     */
     public abstract fun getMethodName(): String
 
     /**
-     * Returns a valid line number for the log statement in the range 1 - 65535, or
+     * Returns a valid line number for the log statement in the range `1` – `65535`, or
      * [UNKNOWN_LINE] if not known.
      *
      * There is a limit of 16 bits for line numbers in a class. See
@@ -95,7 +99,10 @@ public abstract class JvmLogSite : LogSiteKey {
     }
 
     public companion object {
-        /** A value used for line numbers when the true information is not available. */
+
+        /**
+         * A value used for line numbers when the true information is not available.
+         */
         public const val UNKNOWN_LINE: Int = 0
 
         /**
@@ -103,28 +110,24 @@ public abstract class JvmLogSite : LogSiteKey {
          * cannot be determined.
          */
         @JvmField
-        public val INVALID: JvmLogSite = InvalidLogSite()
+        public val invalid: JvmLogSite = InvalidLogSite()
 
         /**
          * Creates a log site injected from constants held in a class' constant pool.
          *
          * Used for compile-time log site injection, and by the agent.
          *
-         * @param internalClassName
-         *         Slash separated class name obtained from the class constant pool.
-         * @param methodName
-         *         Method name obtained from the class constant pool.
-         * @param encodedLineNumber
-         *         line number and per-line log statement index encoded as a single
-         *         32-bit value. The low 16-bits is the line number (0 to 0xFFFF inclusive) and
+         * @param internalClassName Slash-separated class name obtained from
+         *        the class constant pool.
+         * @param methodName A method name obtained from the class constant pool.
+         * @param encodedLineNumber The line number and per-line log statement index encoded as
+         *        a single 32-bit value. The low 16-bits is the line number
+         *        (`0` to `0xFFFF` inclusive) and
          *         the high 16 bits is a log statement index to distinguish multiple statements
          *         on the same line (this becomes important if line numbers are stripped from
          *         the class file and everything appears to be on the same line).
-         * @param sourceFileName
-         *         Optional base name of the source file (this value is strictly for
+         * @param sourceFileName Optional base name of the source file (this value is strictly for
          *         debugging and does not contribute to either equals() or hashCode() behavior).
-         * @deprecated this method is only be used for log-site injection and should
-         *         not be called directly.
          */
         @Deprecated(
             "this method is only used for log-site injection and should not be called directly"

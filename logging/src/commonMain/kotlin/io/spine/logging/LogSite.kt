@@ -69,7 +69,7 @@ public interface LogSite {
      * fluent logging methods, which rely on being able to look up site-specific
      * metadata will be disabled and essentially become “no-op.”
      */
-    public object INVALID : LogSite {
+    public object Invalid : LogSite {
         override val className: String = "<unknown class>"
         override val methodName: String = "<unknown method>"
         override val lineNumber: Int = 0
