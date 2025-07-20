@@ -28,6 +28,7 @@ package io.spine.logging.jvm;
 
 import static io.spine.logging.jvm.util.Checks.checkNotNull;
 
+import com.google.common.annotations.VisibleForTesting;
 import io.spine.logging.jvm.backend.Metadata;
 
 import java.lang.ref.ReferenceQueue;
@@ -121,12 +122,11 @@ public abstract class LoggingScope {
         return label;
     }
 
-    // VisibleForTesting
+    @VisibleForTesting
     static final class WeakScope extends LoggingScope {
 
         /**
          * Do NOT reference the Scope directly from a specialized key, use the "key part" to avoid
-         * the key from keeping the Scope instance alive. When the scope becomes unreachable,
          * the key part weak reference is enqueued which triggers tidyup at the next call to
          * {@code specializeForScopesIn()} where scopes are used.
          *
