@@ -83,7 +83,7 @@ public enum class StackSize(public val maxDepth: Int) {
 
     /**
      * Provides the complete stack trace. This is included for situations in which it is known that
-     * the upper-most elements of the stack are definitely required for analysis.
+     * the uppermost elements of the stack are definitely required for analysis.
      *
      * Requesting a full stack trace for any log statement which can occur under normal circumstances
      * is not recommended.
