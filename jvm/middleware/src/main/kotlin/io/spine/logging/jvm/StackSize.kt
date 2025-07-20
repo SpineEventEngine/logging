@@ -41,14 +41,14 @@ public enum class StackSize(private val maxDepth: Int) {
 
     /**
      * Produces a small stack suitable for finer grained debugging. For performance reasons, this
-     * is the only stack size suitable for log statements at level `INFO` or finer, but is may
+     * is the only stack size suitable for log statements at level `INFO` or finer, but it may
      * also be useful for `WARNING` level log statements in cases where context is not as
      * important. For `SEVERE` log statements, it is advised to use a stack size of
      * [MEDIUM] or above.
      *
      * Requesting a small stack trace for log statements which occur under normal circumstances is
-     * acceptable, but may affect performance. Consider using
-     * [MiddlemanApi.withStackTrace] in conjunction with rate limiting methods,
+     * acceptable but may affect performance. Consider using
+     * [MiddlemanApi.withStackTrace] in conjunction with rate-limiting methods,
      * such as [MiddlemanApi.atMostEvery], to mitigate
      * performance issues.
      *
@@ -92,7 +92,7 @@ public enum class StackSize(private val maxDepth: Int) {
     /**
      * Provides no stack trace, making the `withStackTrace()` method an effective no-op.
      * This is useful when your stack size is conditional. For example:
-     * ```
+     * ```kotlin
      * logger.atWarning()
      *     .withStackTrace(if (showTrace) StackSize.MEDIUM else StackSize.NONE)
      *     .log("message")
