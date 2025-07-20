@@ -24,55 +24,47 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm;
-
-import static io.spine.logging.jvm.util.Checks.checkNotNull;
+package io.spine.logging.jvm
 
 /**
- * Static utility methods for lazy argument evaluation in Flogger. The {@link #lazy(LazyArg)} method
- * allows lambda expressions to be "cast" to the {@link LazyArg} interface.
+ * Static utility methods for lazy argument evaluation in Flogger.
  *
- * <p>In cases where the log statement is strongly expected to always be enabled
+ * The [lazy] method allows lambda expressions to be "cast" to the [LazyArg] interface.
+ *
+ * In cases where the log statement is strongly expected to always be enabled
  * (e.g., unconditional logging at warning or above) it may not be worth using lazy
  * evaluation because any work required to evaluate arguments will happen anyway.
  *
- * <p>If lambdas are available, users should prefer using this class rather than explicitly creating
- * {@code LazyArg} instances.
+ * If lambdas are available, users should prefer using this class rather than explicitly
+ * creating `LazyArg` instances.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LazyArgs.java">
  *         Original Java code of Google Flogger</a> for historical context.
  */
 // TODO: Add other generally useful methods here, especially things which help non-lambda users.
-public final class LazyArgs {
+public object LazyArgs {
 
     /**
-     * Coerces a lambda expression or method reference to return a lazily evaluated logging
-     * argument.
+     * Coerces a lambda expression or method reference to return a lazily evaluated
+     * logging argument.
+     *
      * Pass in a compatible, no-argument, lambda expression or method reference to have it
-     * evaluated
-     * only when logging will actually occur.
+     * evaluated only when logging will actually occur.
      *
-     * <pre>{@code
-     * logger.atFine().log("value=%s", lazy(() -> doExpensive()));
-     * logger.atWarning().atMostEvery(5, MINUTES).log("value=%s", lazy(stats::create));
-     * }</pre>
+     * ```kotlin
+     * logger.atFine().log("value=%s", lazy { doExpensive() })
+     * logger.atWarning().atMostEvery(5, MINUTES).log("value=%s", lazy(stats::create))
+     * ```
      *
-     * Evaluation of lazy arguments occurs at most once, and always in the same thread from which
-     * the logging call was made.
+     * Evaluation of lazy arguments occurs at most once, and always in the same thread from
+     * which the logging call was made.
      *
-     * <p>Note also that it is almost never suitable to make a {@code toString()} call "lazy" using
-     * this mechanism and, in general, explicitly calling {@code toString()} on arguments which are
-     * being logged is an error as it precludes the ability to log an argument structurally.
+     * Note also that it is almost never suitable to make a `toString()` call "lazy" using
+     * this mechanism and, in general, explicitly calling `toString()` on arguments which
+     * are being logged is an error as it precludes the ability to log an argument
+     * structurally.
      */
-    public static <T> LazyArg<T> lazy(LazyArg<T> lambdaOrMethodReference) {
-
-        /**
-         * This method is essentially a coercing cast for the functional interface to give
-         * the compiler a target type to convert a lambda expression or method reference into.
-         */
-        return checkNotNull(lambdaOrMethodReference, "lazy arg");
-    }
-
-    private LazyArgs() {
-    }
+    @JvmStatic
+    public fun <T> lazy(lambdaOrMethodReference: LazyArg<T>): LazyArg<T> =
+        LazyArg.lazy(lambdaOrMethodReference)
 }
