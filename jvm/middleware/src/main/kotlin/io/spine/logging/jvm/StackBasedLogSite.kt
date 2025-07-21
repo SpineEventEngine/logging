@@ -42,7 +42,7 @@ import kotlin.math.max
  *
  * This class should not be used directly outside the core Flogger libraries. If you need
  * to generate a [JvmLogSite] from a [StackTraceElement], use
- * `JvmLogSites.logSiteFrom(StackTraceElement)` for proper log site creation.
+ * `JvmLogSite.logSiteFrom(StackTraceElement)` for proper log site creation.
  *
  * @param stackElement The stack trace element to use for the log site.
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/StackBasedLogSite.java">

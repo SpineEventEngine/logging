@@ -30,7 +30,6 @@ import com.google.errorprone.annotations.Immutable;
 import com.google.errorprone.annotations.ThreadSafe;
 import io.spine.logging.jvm.AbstractLogger;
 import io.spine.logging.jvm.JvmLogSite;
-import io.spine.logging.jvm.JvmLogSites;
 import io.spine.logging.jvm.backend.Platform.LogCallerFinder;
 
 import static io.spine.reflect.CallerFinder.findCallerOf;
@@ -71,7 +70,7 @@ public final class StackBasedCallerFinder extends LogCallerFinder {
     // to avoid even constructing the Throwable instance).
     var caller = findCallerOf(loggerApi, stackFramesToSkip + 1);
     // Returns INVALID if "caller" is null (no caller found for given API class).
-    return JvmLogSites.logSiteFrom(caller);
+    return JvmLogSite.logSiteFrom(caller);
   }
 
   @Override

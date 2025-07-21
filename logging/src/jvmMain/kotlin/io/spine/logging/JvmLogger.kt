@@ -27,7 +27,6 @@
 package io.spine.logging
 
 import io.spine.logging.jvm.Middleman
-import io.spine.logging.jvm.JvmLogSites.callerOf
 import com.google.errorprone.annotations.CheckReturnValue
 import io.spine.logging.jvm.JvmLogSite
 import kotlin.reflect.KClass
@@ -106,14 +105,14 @@ private class ApiImpl(private val delegate: Middleman.Api): JvmLogger.Api {
     override fun isEnabled(): Boolean = delegate.isEnabled
 
     override fun log() {
-        delegate.withInjectedLogSite(callerOf(ApiImpl::class.java))
+        delegate.withInjectedLogSite(JvmLogSite.callerOf(ApiImpl::class.java))
             .log()
     }
 
     override fun log(message: () -> String) {
         if (isEnabled()) {
             val prefix = loggingDomain.messagePrefix
-            delegate.withInjectedLogSite(callerOf(ApiImpl::class.java))
+            delegate.withInjectedLogSite(JvmLogSite.callerOf(ApiImpl::class.java))
                 .log(prefix + message.invoke())
         }
     }

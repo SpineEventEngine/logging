@@ -29,7 +29,6 @@ package io.spine.logging
 import io.spine.logging.jvm.backend.Platform
 import kotlin.reflect.KClass
 import io.spine.logging.jvm.JvmLogSite
-import io.spine.logging.jvm.JvmLogSites
 
 /**
  * Determines log sites for the current line of code using Flogger utils.
@@ -43,7 +42,7 @@ public actual object LogSiteLookup {
      * the [LogSite.Invalid] instance.
      */
     public actual fun callerOf(loggingApi: KClass<*>): LogSite {
-        val floggerSite = JvmLogSites.callerOf(loggingApi.java)
+        val floggerSite = JvmLogSite.callerOf(loggingApi.java)
         val logSite = floggerSite.toLogSite()
         return logSite
     }

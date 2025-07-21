@@ -884,9 +884,9 @@ internal class LogContextSpec {
         // We do not expect this to ever happen in real code though.
         for (i in 0..6) {
             // Log every 2nd (0, 2, 4, 6)
-            logHelper(logger, JvmLogSites.logSite(), 2, "Foo: $i")
+            logHelper(logger, JvmLogSite.logSite(), 2, "Foo: $i")
             // Log every 3rd (0, 3, 6)
-            logHelper(logger, JvmLogSites.logSite(), 3, "Bar: $i")
+            logHelper(logger, JvmLogSite.logSite(), 3, "Bar: $i")
         }
         backend.loggedCount shouldBe 7
         backend.firstLogged.shouldHaveArguments("Foo: 0")

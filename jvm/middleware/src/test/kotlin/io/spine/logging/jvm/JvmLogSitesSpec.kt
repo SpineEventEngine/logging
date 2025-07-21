@@ -26,9 +26,9 @@
 
 package io.spine.logging.jvm
 
-import io.spine.logging.jvm.JvmLogSites.callerOf
-import io.spine.logging.jvm.JvmLogSites.logSite
-import io.spine.logging.jvm.JvmLogSites.logSiteFrom
+import io.spine.logging.jvm.JvmLogSite.Companion.callerOf
+import io.spine.logging.jvm.JvmLogSite.Companion.logSite
+import io.spine.logging.jvm.JvmLogSite.Companion.logSiteFrom
 import io.spine.logging.jvm.MyLogUtil.callerLogSite
 import io.spine.logging.jvm.MyLogUtil.callerLogSiteWrapped
 import io.kotest.matchers.shouldBe
@@ -36,12 +36,12 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for [JvmLogSites].
+ * Tests for the utility methods in [JvmLogSite.Companion].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/LogSitesTest.java">
  *     Original Java code of Google Flogger</a> for historical context.
  */
-@DisplayName("`JvmLogSites` should")
+@DisplayName("`JvmLogSite` companion object should")
 internal class JvmLogSitesSpec {
 
     @Test
@@ -75,7 +75,7 @@ internal class JvmLogSitesSpec {
 
 private object MyLogUtil {
     val callerLogSite: JvmLogSite
-        get() = callerOf(MyLogUtil::class.java)
+        get() = JvmLogSite.callerOf(MyLogUtil::class.java)
     val callerLogSiteWrapped: JvmLogSite
         get() = callerLogSite
 }
