@@ -27,17 +27,12 @@
 package io.spine.logging.jvm
 
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNotBe
+import java.lang.reflect.Modifier
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import java.lang.reflect.Modifier
 
 /**
  * Tests for the [LogSiteInjector] annotation.
- *
- * This test verifies that:
- * 1. The annotation interface is non-public (package-private)
- * 2. Documents how ErrorProne rejects calls to `injectedLogSite()` from non-annotated methods.
  */
 @DisplayName("`LogSiteInjector` annotation should")
 internal class LogSiteInjectorSpec {
@@ -47,7 +42,7 @@ internal class LogSiteInjectorSpec {
         val logSiteInjectorClass = LogSiteInjector::class.java
         val modifiers = logSiteInjectorClass.modifiers
 
-        // Verify that the interface is not public
+        // Verify that the interface is not public.
         (Modifier.isPublic(modifiers)) shouldBe false
     }
 }

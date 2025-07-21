@@ -71,6 +71,11 @@ internal class JvmLogSiteSpec {
         logSite.fileName shouldBe element.fileName
         logSite.lineNumber shouldBe element.lineNumber
     }
+
+    @Test
+    fun `prohibit calling from non-annotated function`() {
+        notAllowedCaller()
+    }
 }
 
 private object MyLogUtil {
@@ -80,4 +85,8 @@ private object MyLogUtil {
 
     val callerLogSiteWrapped: JvmLogSite
         get() = callerLogSite
+}
+
+private fun notAllowedCaller(): JvmLogSite {
+    return JvmLogSite.injectedLogSite("foo", "bar", 42, "baz.kt")
 }
