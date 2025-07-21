@@ -26,6 +26,7 @@
 
 package io.spine.logging.jvm;
 
+import com.google.common.annotations.VisibleForTesting;
 import io.spine.logging.jvm.backend.LogData;
 import io.spine.logging.jvm.backend.Metadata;
 import io.spine.logging.jvm.backend.Platform;
@@ -618,7 +619,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
     // TODO: Ignore repeated scopes (e.g. use a Bloom Filter mask on each scope).
     // TODO: Make a proper iterator on Metadata or use MetadataProcessor.
     //
-    // Visible for testing
+    @VisibleForTesting
     static LogSiteKey specializeLogSiteKeyFromMetadata(LogSiteKey logSiteKey, Metadata metadata) {
         checkNotNull(logSiteKey, "logSiteKey"); // For package null checker only.
         for (int n = 0, size = metadata.size(); n < size; n++) {
@@ -694,8 +695,9 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
             String methodName,
             int encodedLineNumber,
             @Nullable String sourceFileName) {
-        var logSite = injectedLogSite(internalClassName, methodName, encodedLineNumber,
-                                      sourceFileName);
+        var logSite = injectedLogSite(
+                internalClassName, methodName, encodedLineNumber, sourceFileName
+        );
         return withInjectedLogSite(logSite);
     }
 

@@ -168,11 +168,11 @@ public abstract class JvmLogSite : LogSiteKey {
          * unsupported, and in those cases this method will always return the [invalid] instance.
          *
          * For example (in `MyLoggingHelper`):
-         * ```
-         * public static void logAndSomethingElse(String message, Object... args) {
+         * ```kotlin
+         * fun logAndSomethingElse(String message, Object... args) {
          *   logger.atInfo()
          *       .withInjectedLogSite(callerOf(MyLoggingHelper.class))
-         *       .logVarargs(message, args);
+         *       .logVarargs(message, args)
          * }
          * ```
          *
@@ -182,7 +182,7 @@ public abstract class JvmLogSite : LogSiteKey {
          * layers, consider using [logSite] instead to avoid too much "magic" in your code.
          *
          * You should also seek to ensure that any API used with this method "looks like a logging
-         * API". It's no good if a log entry contains a class and method name which doesn't
+         * API". It is no good if a log entry contains a class and method name which does not
          * correspond to anything the user can relate to. In particular, the API should probably
          * always accept the log message or at least some of its parameters, and should always
          * have methods with "log" in their names to make the connection clear.
@@ -209,7 +209,7 @@ public abstract class JvmLogSite : LogSiteKey {
          */
         @JvmStatic
         public fun callerOf(loggingApi: Class<*>): JvmLogSite {
-            // Can't skip anything here since someone could pass in LogSite.class.
+            // Can't skip anything here since someone could pass in `LogSite.class`.
             return Platform.getCallerFinder().findLogSite(loggingApi, 0)
         }
 
@@ -221,16 +221,16 @@ public abstract class JvmLogSite : LogSiteKey {
          * unsupported, and in those cases this method will always return the [invalid] instance.
          *
          * For example (in `MyLoggingHelper`):
-         * ```
-         * public static void logAndSomethingElse(LogSite logSite, String message, Object... args) {
+         * ```kotlin
+         * fun logAndSomethingElse(LogSite logSite, String message, Object... args) {
          *   logger.atInfo()
          *       .withInjectedLogSite(logSite)
-         *       .logVarargs(message, args);
+         *       .logVarargs(message, args)
          * }
          * ```
          * where callers would do:
-         * ```
-         * MyLoggingHelper.logAndSomethingElse(logSite(), "message...");
+         * ```kotlin
+         * MyLoggingHelper.logAndSomethingElse(logSite(), "message...")
          * ```
          *
          * Because this method adds an additional parameter and exposes a Flogger specific type
