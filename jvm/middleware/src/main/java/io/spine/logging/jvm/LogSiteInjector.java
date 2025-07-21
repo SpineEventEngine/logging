@@ -24,21 +24,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.dependency.local
+package io.spine.logging.jvm;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Spine Base module.
- *
- * @see <a href="https://github.com/SpineEventEngine/base">spine-base</a>
+ * Annotates a method to indicate that it should be used for injecting log site information.
  */
-@Suppress("ConstPropertyName")
-object Base {
-    const val version = "2.0.0-SNAPSHOT.340"
-    const val versionForBuildScript = "2.0.0-SNAPSHOT.340"
-    const val group = Spine.group
-    const val artifact = "spine-base"
-    const val lib = "$group:$artifact:$version"
-    const val annotations = "$group:spine-annotations:$version"
-    const val format = "$group:spine-format:$version"
-    const val libForBuildScript = "$group:$artifact:$versionForBuildScript"
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+@interface LogSiteInjector {
 }

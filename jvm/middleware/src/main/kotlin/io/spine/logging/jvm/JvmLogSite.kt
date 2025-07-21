@@ -27,6 +27,11 @@
 package io.spine.logging.jvm
 
 import com.google.errorprone.annotations.RestrictedApi
+import io.spine.annotation.Internal
+import io.spine.logging.jvm.JvmLogSite.Companion.UNKNOWN_LINE
+import io.spine.logging.jvm.JvmLogSite.Companion.callerOf
+import io.spine.logging.jvm.JvmLogSite.Companion.invalid
+import io.spine.logging.jvm.JvmLogSite.Companion.logSite
 import io.spine.logging.jvm.backend.Platform
 
 /**
@@ -78,10 +83,11 @@ public abstract class JvmLogSite : LogSiteKey {
      *
      * The source file name is optional and strictly for debugging purposes.
      *
-     * Normally this value (if present) is extracted from the SourceFile attribute of the
-     * class file. See the [JVM class file format specification][source-file-attr] for more details.
+     * Normally this value (if present) is extracted from the `SourceFile` attribute of the
+     * class file.
      *
-     * [source-file-attr]: https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.7.10
+     * See the [JVM class file format specification](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.7.10)
+     * for more details.
      */
     public abstract val fileName: String?
 
@@ -133,14 +139,13 @@ public abstract class JvmLogSite : LogSiteKey {
          *        for debugging and does not contribute to either `equals()` or `hashCode()`
          *        behavior.
          */
-        @Deprecated(
-            "This method is only used for log-site injection and should not be called directly."
-        )
         @JvmStatic
-//        @RestrictedApi(
-//            explanation =
-//                "This method is only used for log-site injection and should not be called directly."
-//        )
+        @Internal
+        @RestrictedApi(
+            explanation = "This method is only used for log-site" +
+                    " injection and should not be called directly.",
+            allowlistAnnotations = [LogSiteInjector::class]
+        )
         public fun injectedLogSite(
             internalClassName: String,
             methodName: String,

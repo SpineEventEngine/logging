@@ -511,7 +511,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
                 // We add this information to the stack trace exception,
                 // so it doesn't need to go here.
                 removeMetadata(Key.CONTEXT_STACK_SIZE);
-                // IMPORTANT: Skipping at least 1 stack frame below is essential for correctness, 
+                // IMPORTANT: Skipping at least 1 stack frame below is essential for correctness,
                 // since postProcess() can be overridden, so the stack could look like:
                 //
                 // ^  UserCode::someMethod       << we want to start here and skip everything below
@@ -687,7 +687,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
         return api();
     }
 
-    @SuppressWarnings("deprecation")
+    @LogSiteInjector
     @Override
     public final API withInjectedLogSite(
             String internalClassName,
@@ -712,11 +712,12 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
 
     @Override
     public final <T> API with(MetadataKey<T> key, @Nullable T value) {
-        // Null keys are always bad (even if the value is also null). This is one of the few places
-        // where the logger API will throw a runtime exception (and as such it's important to ensure
-        // the NoOp implementation also does the check). The reasoning for this is that the metadata
-        // key is never expected to be passed user data, and should always be a static constant.
-        // Because of this it's always going to be an obvious code error if we get a null here.
+        // Null keys are always bad (even if the value is also `null`).
+        // This is one of the few places where the logger API will throw a runtime exception
+        // (and as such it is important to ensure the `NoOp` implementation also does the check).
+        // The reasoning for this is that the metadata key is never expected to be passed user data,
+        // and should always be a static constant.
+        // Because of this it's always going to be an obvious code error if we get a `null` here.
         checkNotNull(key, "metadata key");
         if (value != null) {
             addMetadata(key, value);
