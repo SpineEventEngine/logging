@@ -42,7 +42,7 @@ import org.junit.jupiter.api.Test
  *     Original Java code of Google Flogger</a> for historical context.
  */
 @DisplayName("`JvmLogSite` companion object should")
-internal class JvmLogSitesSpec {
+internal class JvmLogSiteSpec {
 
     @Test
     fun `return log site for the current line of code`() {
@@ -74,8 +74,10 @@ internal class JvmLogSitesSpec {
 }
 
 private object MyLogUtil {
+
     val callerLogSite: JvmLogSite
-        get() = JvmLogSite.callerOf(MyLogUtil::class.java)
+        get() = callerOf(MyLogUtil::class.java)
+
     val callerLogSiteWrapped: JvmLogSite
         get() = callerLogSite
 }

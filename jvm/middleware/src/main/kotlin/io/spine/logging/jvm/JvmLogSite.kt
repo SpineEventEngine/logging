@@ -28,7 +28,6 @@ package io.spine.logging.jvm
 
 import com.google.errorprone.annotations.RestrictedApi
 import io.spine.logging.jvm.backend.Platform
-import org.jspecify.annotations.Nullable
 
 /**
  * A value type which represents the location of a single log statement.
@@ -36,8 +35,8 @@ import org.jspecify.annotations.Nullable
  * This class is similar to the `StackTraceElement` class but differs in one important respect.
  *
  * A LogSite can be associated with a globally unique ID, which can identify a log statement
- * more uniquely than a line number (it is possible to have multiple log statements appear
- * to be on a single line, especially for obfuscated classes).
+ * more uniquely than a line number. It is possible to have multiple log statements appear
+ * to be on a single line, especially for obfuscated classes.
  *
  * Log sites are intended to be injected into code automatically, typically via some form of
  * bytecode rewriting. Each injection mechanism can have its own implementation of `LogSite`
@@ -49,7 +48,7 @@ import org.jspecify.annotations.Nullable
  * on the same line, or if line number information was stripped from the class file.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSite.java">
- *       Original Java code of Google Flogger</a> for historical context.
+ *     Original Java code of Google Flogger</a> for historical context.
  */
 public abstract class JvmLogSite : LogSiteKey {
 
@@ -68,8 +67,9 @@ public abstract class JvmLogSite : LogSiteKey {
      * [UNKNOWN_LINE] if not known.
      *
      * There is a limit of 16 bits for line numbers in a class.
-     * See [The LineNumberTable Attribute](http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.7.12)
-     * for more details.
+     * See [The LineNumberTable Attribute][line-number-table] for more details.
+     *
+     * [line-number-table]: http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.7.12
      */
     public abstract val lineNumber: Int
 
@@ -79,8 +79,9 @@ public abstract class JvmLogSite : LogSiteKey {
      * The source file name is optional and strictly for debugging purposes.
      *
      * Normally this value (if present) is extracted from the SourceFile attribute of the
-     * class file. See the [JVM class file format specification](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.7.10")
-     * for more details.
+     * class file. See the [JVM class file format specification][source-file-attr] for more details.
+     *
+     * [source-file-attr]: https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.7.10
      */
     public abstract val fileName: String?
 
@@ -121,18 +122,16 @@ public abstract class JvmLogSite : LogSiteKey {
          *
          * Used for compile-time log site injection, and by the agent.
          *
-         * @param internalClassName Slash-separated class name obtained from
-         *        the class constant pool.
+         * @param internalClassName Slash-separated class name obtained from the class constant pool.
          * @param methodName A method name obtained from the class constant pool.
          * @param encodedLineNumber The line number and per-line log statement index encoded as
-         *        a single 32-bit value. The low 16-bits is the line number
-         *        (`0` to `0xFFFF` inclusive) and the high 16 bits is a log statement index
-         *        to distinguish multiple statements on the same line.
-         *        This becomes important if line numbers are stripped from
-         *        the class file and everything appears to be on the same line.
-         * @param sourceFileName Optional base name of the source file.
-         *        This value is strictly for debugging and does not contribute to either
-         *        `equals()` or `hashCode()` behavior.
+         *        a single 32-bit value. The low 16-bits is the line number (`0` to `0xFFFF`
+         *        inclusive) and the high 16 bits is a log statement index to distinguish
+         *        multiple statements on the same line. This becomes important if line numbers
+         *        are stripped from the class file and everything appears to be on the same line.
+         * @param sourceFileName Optional base name of the source file. This value is strictly
+         *        for debugging and does not contribute to either `equals()` or `hashCode()`
+         *        behavior.
          */
         @Deprecated(
             "This method is only used for log-site injection and should not be called directly."
@@ -155,10 +154,11 @@ public abstract class JvmLogSite : LogSiteKey {
         )
 
         /**
-         * Returns a [JvmLogSite] for the caller of the specified class. This can be used in
-         * conjunction with the [MiddlemanApi.withInjectedLogSite] method to implement
-         * logging helper methods. In some platforms, log site determination may be unsupported, and in
-         * those cases this method will always return the [invalid] instance.
+         * Returns a [JvmLogSite] for the caller of the specified class.
+         *
+         * This can be used in conjunction with the [MiddlemanApi.withInjectedLogSite] method to
+         * implement logging helper methods. In some platforms, log site determination may be
+         * unsupported, and in those cases this method will always return the [invalid] instance.
          *
          * For example (in `MyLoggingHelper`):
          * ```
@@ -169,36 +169,36 @@ public abstract class JvmLogSite : LogSiteKey {
          * }
          * ```
          *
-         * This method should be used for the simple cases where the class in which the logging occurs is
-         * a public logging API. If the log statement is in a different class (not the public logging API)
-         * and the [JvmLogSite] instance needs to be passed through several layers, consider using
-         * [logSite] instead to avoid too much "magic" in your code.
+         * This method should be used for the simple cases where the class in which the logging
+         * occurs is a public logging API. If the log statement is in a different class (not the
+         * public logging API) and the [JvmLogSite] instance needs to be passed through several
+         * layers, consider using [logSite] instead to avoid too much "magic" in your code.
          *
-         * You should also seek to ensure that any API used with this method "looks like a logging API".
-         * It's no good if a log entry contains a class and method name which doesn't correspond to
-         * anything the user can relate to. In particular, the API should probably always accept the log
-         * message or at least some of its parameters, and should always have methods with "log" in their
-         * names to make the connection clear.
+         * You should also seek to ensure that any API used with this method "looks like a logging
+         * API". It's no good if a log entry contains a class and method name which doesn't
+         * correspond to anything the user can relate to. In particular, the API should probably
+         * always accept the log message or at least some of its parameters, and should always
+         * have methods with "log" in their names to make the connection clear.
          *
-         * It is very important to note that this method can be very slow, since determining the log site
-         * can involve stack trace analysis. It is only recommended that it is used for cases where
-         * logging is expected to occur (e.g. `INFO` level or above). Implementing a helper method
-         * for `FINE` logging is usually unnecessary (it doesn't normally need to follow any
-         * specific "best practice" behavior).
+         * It is very important to note that this method can be very slow, since determining the
+         * log site can involve stack trace analysis. It is only recommended that it is used for
+         * cases where logging is expected to occur (e.g. `INFO` level or above). Implementing a
+         * helper method for `FINE` logging is usually unnecessary (it doesn't normally need to
+         * follow any specific "best practice" behavior).
          *
-         * Note that even when log site determination is supported, it is not defined as to whether two
-         * invocations of this method on the same line of code will produce the same instance, equivalent
-         * instances or distinct instance. Thus you should never invoke this method twice in a single
-         * statement (and you should never need to).
+         * Note that even when log site determination is supported, it is not defined as to
+         * whether two invocations of this method on the same line of code will produce the same
+         * instance, equivalent instances or distinct instance. Thus you should never invoke this
+         * method twice in a single statement (and you should never need to).
          *
-         * Note that this method call may be replaced in compiled applications via bytecode manipulation
-         * or other mechanisms to improve performance.
+         * Note that this method call may be replaced in compiled applications via bytecode
+         * manipulation or other mechanisms to improve performance.
          *
-         * @param loggingApi The logging API to be identified as the source of log statements (this must
-         *        appear somewhere on the stack above the point at which this method is called).
-         *
-         * @return The log site of the caller of the specified logging API,
-         *        or [invalid] if the logging API was not found.
+         * @param loggingApi The logging API to be identified as the source of log statements
+         *        (this must appear somewhere on the stack above the point at which this method
+         *        is called).
+         * @return The log site of the caller of the specified logging API, or [invalid] if the
+         *        logging API was not found.
          */
         @JvmStatic
         public fun callerOf(loggingApi: Class<*>): JvmLogSite {
@@ -209,9 +209,9 @@ public abstract class JvmLogSite : LogSiteKey {
         /**
          * Returns a [JvmLogSite] for the current line of code.
          *
-         * This can be used in conjunction with the [MiddlemanApi.withInjectedLogSite] method to implement logging helper
-         * methods. In some platforms, log site determination may be unsupported, and in those cases this
-         * method will always return the [invalid] instance.
+         * This can be used in conjunction with the [MiddlemanApi.withInjectedLogSite] method to
+         * implement logging helper methods. In some platforms, log site determination may be
+         * unsupported, and in those cases this method will always return the [invalid] instance.
          *
          * For example (in `MyLoggingHelper`):
          * ```
@@ -226,25 +226,24 @@ public abstract class JvmLogSite : LogSiteKey {
          * MyLoggingHelper.logAndSomethingElse(logSite(), "message...");
          * ```
          *
-         * Because this method adds an additional parameter and exposes a Flogger specific type to the
-         * calling code, you should consider using [callerOf] for simple logging
-         * utilities.
+         * Because this method adds an additional parameter and exposes a Flogger specific type
+         * to the calling code, you should consider using [callerOf] for simple logging utilities.
          *
-         * It is very important to note that this method can be very slow, since determining the log site
-         * can involve stack trace analysis. It is only recommended that it is used for cases where
-         * logging is expected to occur (e.g. `INFO` level or above). Implementing a helper method
-         * for `FINE` logging is usually unnecessary (it doesn't normally need to follow any
-         * specific "best practice" behavior).
+         * It is very important to note that this method can be very slow, since determining the
+         * log site can involve stack trace analysis. It is only recommended that it is used for
+         * cases where logging is expected to occur (e.g. `INFO` level or above). Implementing a
+         * helper method for `FINE` logging is usually unnecessary (it doesn't normally need to
+         * follow any specific "best practice" behavior).
          *
-         * Note that even when log site determination is supported, it is not defined as to whether two
-         * invocations of this method on the same line of code will produce the same instance, equivalent
-         * instances or distinct instance. Thus you should never invoke this method twice in a single
-         * statement (and you should never need to).
+         * Note that even when log site determination is supported, it is not defined as to
+         * whether two invocations of this method on the same line of code will produce the same
+         * instance, equivalent instances or distinct instance. Thus you should never invoke this
+         * method twice in a single statement (and you should never need to).
          *
-         * Note that this method call may be replaced in compiled applications via bytecode manipulation
-         * or other mechanisms to improve performance.
+         * Note that this method call may be replaced in compiled applications via bytecode
+         * manipulation or other mechanisms to improve performance.
          *
-         * @return the log site of the caller of this method.
+         * @return The log site of the caller of this method.
          */
         @JvmStatic
         public fun logSite(): JvmLogSite {
@@ -256,7 +255,7 @@ public abstract class JvmLogSite : LogSiteKey {
          * Returns a new [JvmLogSite] which reflects the information in the given [StackTraceElement],
          * or [invalid] if given `null`.
          *
-         * This method is useful when log site information is only available via an external API,
+         * This method is useful when log site information is only available via an external API
          * which returns [StackTraceElement].
          */
         @JvmStatic

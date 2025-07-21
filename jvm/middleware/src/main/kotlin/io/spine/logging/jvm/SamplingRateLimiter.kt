@@ -67,6 +67,7 @@ internal class SamplingRateLimiter : RateLimitStatus() {
     }
 
     companion object {
+
         private val map = object : LogSiteMap<SamplingRateLimiter>() {
             override fun initialValue(): SamplingRateLimiter = SamplingRateLimiter()
         }
@@ -78,7 +79,7 @@ internal class SamplingRateLimiter : RateLimitStatus() {
         private val random = ThreadLocal.withInitial { Random() }
 
         @JvmStatic
-        public fun check(metadata: Metadata, logSiteKey: LogSiteKey): RateLimitStatus? {
+        fun check(metadata: Metadata, logSiteKey: LogSiteKey): RateLimitStatus? {
             val rateLimitCount = metadata.findValue(LOG_SAMPLE_EVERY_N)
             if (rateLimitCount == null || rateLimitCount <= 0) {
                 // Without valid rate limiter specific metadata, this limiter has no effect.

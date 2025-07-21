@@ -26,6 +26,7 @@
 
 package io.spine.logging.jvm
 
+import com.google.errorprone.annotations.ThreadSafe
 import io.spine.logging.jvm.LogContext.Key.LOG_EVERY_N
 import io.spine.logging.jvm.backend.Metadata
 import java.util.concurrent.atomic.AtomicLong
@@ -34,8 +35,8 @@ import java.util.concurrent.atomic.AtomicLong
  * Rate limiter to support `every(N)` capability.
  *
  * Instances of this class are created for each unique [LogSiteKey] for
- * which rate limiting via the `LOG_EVERY_N` metadata key is required.
- * This class implements `RateLimitStatus` as a mechanism for resetting
+ * which rate limiting via the [LOG_EVERY_N] metadata key is required.
+ * This class implements [RateLimitStatus] as a mechanism for resetting
  * the rate limiter state.
  *
  * Instances of this class are thread-safe.
@@ -43,6 +44,7 @@ import java.util.concurrent.atomic.AtomicLong
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/CountingRateLimiter.java">
  *       Original Java code of Google Flogger</a> for historical context.
  */
+@ThreadSafe
 internal class CountingRateLimiter : RateLimitStatus() {
 
     /**
@@ -77,9 +79,9 @@ internal class CountingRateLimiter : RateLimitStatus() {
          * Returns the status of the rate limiter, or `null` if the `LOG_EVERY_N` metadata
          * was not present.
          *
-         * The rate limiter status is [DISALLOW] until the log count exceeds
-         * the specified limit, and then the limiter switches to its pending state and
-         * returns an `allow` status until it is reset.
+         * The rate limiter status is [DISALLOW][RateLimitStatus.DISALLOW] until
+         * the log count exceeds the specified limit, and then the limiter switches to
+         * its pending state and returns an `allow` status until it is reset.
          */
         @JvmStatic
         public fun check(metadata: Metadata, logSiteKey: LogSiteKey): RateLimitStatus? {

@@ -26,6 +26,7 @@
 
 package io.spine.logging.jvm
 
+import com.google.errorprone.annotations.ThreadSafe
 import io.spine.logging.jvm.LogContext.Key.LOG_AT_MOST_EVERY
 import io.spine.logging.jvm.backend.Metadata
 import io.spine.logging.jvm.util.Checks.checkArgument
@@ -36,32 +37,33 @@ import kotlin.math.max
 /**
  * Rate limiter to support `atMostEvery(N, units)` functionality.
  *
- * Instances of this class are created for each unique [LogSiteKey] for which rate limiting
- * via the `LOG_AT_MOST_EVERY` metadata key is required. This class implements
- * `RateLimitStatus` as a mechanism for resetting the rate limiter state.
+ * Instances of this class are created for each unique [LogSiteKey] for which
+ * rate limiting via the [LOG_AT_MOST_EVERY] metadata key is required.
+ * This class implements `RateLimitStatus` as a mechanism for resetting the rate limiter state.
  *
- * Instances of this class are thread safe.
+ * Instances of this class are thread-safe.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/DurationRateLimiter.java">
  *       Original Java code of Google Flogger</a> for historical context.
  */
+@ThreadSafe
 internal class DurationRateLimiter : RateLimitStatus() {
 
     private val lastTimestampNanos = AtomicLong(-1L)
 
     /**
-     * Checks whether the current time stamp is after the rate limiting period and if so, updates
-     * the time stamp and returns true. This is invoked during post-processing if a rate limiting
+     * Checks whether the current time stamp is after the rate-limiting period and if so, updates
+     * the time stamp and returns true. This is invoked during post-processing if a rate-limiting
      * duration was set via [MiddlemanApi.atMostEvery].
      */
     internal fun checkLastTimestamp(
-        timestampNanos: Long, 
+        timestampNanos: Long,
         period: RateLimitPeriod
     ): RateLimitStatus {
         checkArgument(timestampNanos >= 0, "timestamp cannot be negative")
         // If this is negative, we are in the pending state and will return "allow" until we are
         // reset. The value held here is updated to be the most recent negated timestamp, and is
-        // negated again (making it positive and setting us into the rate limiting state) when we
+        // negated again (making it positive and setting us into the rate-limiting state) when we
         // are reset.
         val lastNanos = lastTimestampNanos.get()
         if (lastNanos >= 0) {
@@ -80,9 +82,13 @@ internal class DurationRateLimiter : RateLimitStatus() {
         return this
     }
 
-    // Reset function called to move the limiter out of the "pending" state. We do this by negating
-    // the timestamp (which was already negated when we entered the pending state, so we restore it
-    // to a positive value which moves us back into the "limiting" state).
+    /**
+     * Reset function called to move the limiter out of the "pending" state.
+     *
+     * We do this by negating the timestamp (which was already negated when
+     * we entered the pending state, so we restore it
+     * to a positive value which moves us back into the "limiting" state).
+     */
     override fun reset() {
         // Only one thread at a time can reset a rate limiter, so this can be unconditional. We
         // should only be able to get here if the timestamp was set to a negative value above.
@@ -91,25 +97,27 @@ internal class DurationRateLimiter : RateLimitStatus() {
     }
 
     companion object {
+
         private val map = object : LogSiteMap<DurationRateLimiter>() {
             override fun initialValue(): DurationRateLimiter = DurationRateLimiter()
         }
 
         /**
-         * Creates a period for rate limiting for the specified duration. This is invoked by the
-         * [LogContext.atMostEvery] method to create a metadata value.
+         * Creates a period for rate limiting for the specified duration.
+         *
+         * This is invoked by the [LogContext.atMostEvery] method to create a metadata value.
          */
         @JvmStatic
-        public fun newRateLimitPeriod(n: Int, unit: TimeUnit): RateLimitPeriod =
+        fun newRateLimitPeriod(n: Int, unit: TimeUnit): RateLimitPeriod =
             // We could cache commonly used values here if we wanted.
             RateLimitPeriod(n, unit)
 
         /**
-         * Returns whether the log site should log based on the value of the `LOG_AT_MOST_EVERY`
+         * Returns whether the log site should log based on the value of the [LOG_AT_MOST_EVERY]
          * metadata value and the current log site timestamp.
          */
         @JvmStatic
-        public fun check(
+        fun check(
             metadata: Metadata,
             logSiteKey: LogSiteKey,
             timestampNanos: Long

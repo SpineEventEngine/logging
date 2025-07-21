@@ -27,7 +27,6 @@
 package io.spine.logging.jvm
 
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.matchers.be
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.ints.shouldBeInRange
