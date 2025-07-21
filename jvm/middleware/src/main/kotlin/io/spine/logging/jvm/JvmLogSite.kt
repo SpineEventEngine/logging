@@ -128,16 +128,18 @@ public abstract class JvmLogSite : LogSiteKey {
          *
          * Used for compile-time log site injection, and by the agent.
          *
-         * @param internalClassName Slash-separated class name obtained from the class constant pool.
+         * @param internalClassName Slash-separated class name obtained from
+         *        the class constant pool.
          * @param methodName A method name obtained from the class constant pool.
-         * @param encodedLineNumber The line number and per-line log statement index encoded as
-         *        a single 32-bit value. The low 16-bits is the line number (`0` to `0xFFFF`
-         *        inclusive) and the high 16 bits is a log statement index to distinguish
-         *        multiple statements on the same line. This becomes important if line numbers
+         * @param encodedLineNumber The line number and per-line log statement index
+         *        encoded as a single 32-bit value.
+         *        The low 16-bits is the line number (`0` to `0xFFFF` inclusive), and
+         *        the high 16 bits is a log statement index to distinguish multiple
+         *        statements on the same line. This becomes important if line numbers
          *        are stripped from the class file and everything appears to be on the same line.
-         * @param sourceFileName Optional base name of the source file. This value is strictly
-         *        for debugging and does not contribute to either `equals()` or `hashCode()`
-         *        behavior.
+         * @param sourceFileName Optional base name of the source file.
+         *        This value is strictly for debugging and does not contribute to
+         *        either `equals()` or `hashCode()` behavior.
          */
         @JvmStatic
         @Internal
