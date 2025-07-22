@@ -105,7 +105,6 @@ public class BraceStyleParameter private constructor(index: Int) :
         // TODO: Get the Locale from the Platform class for better i18n support.
         private val prototypeMessageFormatter = MessageFormat("{0}", Locale.ROOT)
 
-
         /**
          * Returns a [Parameter] representing a plain "brace style" placeholder `"{n}"`.
          *

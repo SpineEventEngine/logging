@@ -78,11 +78,10 @@ public abstract class MessageBuilder<T>(context: TemplateContext) {
     public val expectedArgumentCount: Int
         get() = maxIndex + 1
 
-
     /**
      * Called by parser implementations to signify that the parsing of the next
      * parameter is complete.
-     * 
+     *
      * This method will call [addParameterImpl] with exactly the same
      * arguments, but may also do additional work before or after that call.
      *

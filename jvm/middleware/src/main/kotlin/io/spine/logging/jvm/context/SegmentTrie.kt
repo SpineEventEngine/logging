@@ -138,7 +138,6 @@ private class SortedTrie<T>(
         // If rhsPrefix is negative, it is the bitwise-NOT of what we want.
         rhsPrefix = rhsPrefix.inv()
 
-
         // Binary search: At the top of the loop, lhsPrefix & rhsPrefix are positive.
         while (true) {
             // Determine the pivot index.
@@ -180,7 +179,7 @@ private class SortedTrie<T>(
      * @param len The common prefix length between `k` and `keys[idx]`.
      *
      * @return the value of the nearest parent of `k`.
-     */    
+     */
     private fun findParent(k: String, idx: Int, len: Int): T {
         var i = idx
         while (!isParent(keys[i], k, len)) {
@@ -206,7 +205,7 @@ private class SortedTrie<T>(
      * @param k The key whose parent we are looking for.
      * @param len The maximum length of any possible parent of `k`.
      */
-    private fun isParent(p: String, k: String, len: Int): Boolean = 
+    private fun isParent(p: String, k: String, len: Int): Boolean =
         p.length <= len && k[p.length] == separator
 
     /**
@@ -239,8 +238,6 @@ private class SortedTrie<T>(
         }
         return if (len < rhs.length) len.inv() else len
     }
-
-
     /**
      * Builds an index mapping array `pmap` such that `pmap[idx]` is
      * the index of the parent element of `keys[idx]`, or `-1` if no parent exists.

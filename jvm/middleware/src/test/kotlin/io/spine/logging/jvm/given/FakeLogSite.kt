@@ -59,7 +59,6 @@ class FakeLogSite(
         fun unique() = FakeLogSite(LOGGING_CLASS, uniqueMethod(), LINE_NUMBER, SOURCE_FILE)
     }
 
-
     override fun equals(other: Any?): Boolean {
         if (other !is FakeLogSite) {
             return false
@@ -72,4 +71,3 @@ class FakeLogSite(
 
     override fun hashCode(): Int = Objects.hash(className, methodName, lineNumber, sourcePath)
 }
-

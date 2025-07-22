@@ -85,7 +85,6 @@ internal class KeyValueFormatterSpec {
         "$out" shouldBe "Message << foo=23 bar=false >>"
     }
 
-
     @Test
     fun `quote string-like values`() {
         // Safe types are not quoted.

@@ -52,7 +52,6 @@ public class DateTimeParameter(
     index: Int
 ) : Parameter(options, index) {
 
-
     /**
      * Creates a [DateTimeParameter] for a given format character.
      *

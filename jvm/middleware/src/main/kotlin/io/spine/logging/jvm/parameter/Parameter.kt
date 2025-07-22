@@ -42,7 +42,7 @@ import io.spine.logging.jvm.backend.FormatOptions
  * @property formatOptions The format options for this parameter.
  * @property index The index of the argument processed by this parameter.
  * @constructor Constructs a parameter to format an argument using specified formatting options.
- * 
+ *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parameter/Parameter.java">
  *   Original Java code of Google Flogger</a> for historical context.
  */
@@ -80,7 +80,6 @@ public abstract class Parameter protected constructor(
         }
     }
 
-
     /**
      * Processes a non-null argument value using the given visitor.
      *
@@ -95,6 +94,6 @@ public abstract class Parameter protected constructor(
 
     /**
      * The `printf` format string specified for this parameter (e.g., `"%d"` or `"%tc"`).
-     */    
+     */
     public abstract val format: String
 }

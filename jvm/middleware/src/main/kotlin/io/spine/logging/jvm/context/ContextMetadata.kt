@@ -144,7 +144,6 @@ public abstract class ContextMetadata protected constructor() : Metadata() {
 private fun <T : Any> checkCannotRepeat(key: MetadataKey<T>) =
     checkArgument(!key.canRepeat(), "metadata key must be single valued")
 
-
 private class ImmutableScopeMetadata(private val entries: Array<Entry<*>?>) : ContextMetadata() {
 
     override fun size(): Int = entries.size
