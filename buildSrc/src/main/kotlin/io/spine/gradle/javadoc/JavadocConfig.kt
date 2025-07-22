@@ -104,7 +104,7 @@ object JavadocConfig {
         // as they are declared within modules since Java 9.
 
         val discardModulePrefix = """
-            
+
             getURLPrefix = function(ui) {
                 return "";
             };

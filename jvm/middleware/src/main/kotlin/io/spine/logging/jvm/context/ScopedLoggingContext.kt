@@ -398,7 +398,7 @@ public abstract class ScopedLoggingContext protected constructor() {
      * in which values were added, context metadata preserves the order of addition.
      * As such, it is not advised to add values for the same metadata key from multiple threads,
      * since that may create non-deterministic ordering.
-     * 
+     *
      * It is recommended (where possible) to add metadata when building
      * a new context, rather than adding it to context visible to multiple threads.
      */

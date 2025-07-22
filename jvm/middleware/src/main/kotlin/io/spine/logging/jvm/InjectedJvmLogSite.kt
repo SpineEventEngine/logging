@@ -99,7 +99,7 @@ internal class InjectedJvmLogSite(
             // current value. In most cases the hashcode is never needed, but in others it may be used
             // multiple times in different data structures.
             var temp = 157
-            
+
             // Don't include classname since it isn't cached. Other fields should be unique enough.
             temp = 31 * temp + methodName.hashCode()
             temp = 31 * temp + encodedLineNumber

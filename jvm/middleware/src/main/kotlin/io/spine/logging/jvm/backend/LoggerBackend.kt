@@ -58,7 +58,7 @@ import java.util.logging.Level
  *     Original Java code of Google Flogger</a> for historical context.
  */
 public abstract class LoggerBackend {
-    
+
     /**
      * Returns the logger name (which is usually a canonicalized class name) or
      * `null` if not given.
@@ -91,7 +91,7 @@ public abstract class LoggerBackend {
      *
      * 2. A backend optionally choosing not to handle errors from user code during formatting.
      *    This is not recommended (see below) but may be useful in testing or debugging.
-     *    
+     *
      * 3. Runtime errors in the backend itself.
      *
      * It is recommended that backend implementations avoid propagating exceptions in user code

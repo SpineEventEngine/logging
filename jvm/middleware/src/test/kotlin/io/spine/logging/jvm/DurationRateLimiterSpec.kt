@@ -56,8 +56,8 @@ internal class DurationRateLimiterSpec {
     fun `return 'null' if the corresponding metadata key is not present`() {
         // Not supplying the metadata key ignores rate limiting by returning null.
         DurationRateLimiter.check(
-            FakeMetadata(), 
-            FakeLogSite.unique(), 
+            FakeMetadata(),
+            FakeLogSite.unique(),
             FAKE_TIMESTAMP
         ).shouldBeNull()
     }

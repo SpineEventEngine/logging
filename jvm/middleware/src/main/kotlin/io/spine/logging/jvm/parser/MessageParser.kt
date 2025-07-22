@@ -34,7 +34,7 @@ package io.spine.logging.jvm.parser
  *   Original Java code of Google Flogger</a> for historical context.
  */
 public abstract class MessageParser {
-    
+
     public companion object {
 
         /**

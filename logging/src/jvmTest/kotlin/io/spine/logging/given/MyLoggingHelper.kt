@@ -35,7 +35,7 @@ import io.spine.logging.LoggingFactory
 internal object MyLoggingHelper {
 
     private val logger = LoggingFactory.loggerFor(this::class)
-    
+
     fun logWithForwardedLogSite(msg: () -> String) = logger.atInfo()
         .withInjectedLogSite(callerOf(MyLoggingHelper::class))
         .log { msg.invoke() }

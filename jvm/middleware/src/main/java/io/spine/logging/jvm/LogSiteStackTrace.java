@@ -60,7 +60,7 @@ public final class LogSiteStackTrace extends Exception {
      *         the synthetic stack trace starting at the log statement.
      */
     LogSiteStackTrace(
-            @Nullable Throwable cause, 
+            @Nullable Throwable cause,
             StackSize stackSize,
             StackTraceElement[] syntheticStackTrace
     ) {

@@ -46,7 +46,7 @@ import java.io.Closeable
 public class RecursionDepth private constructor() : Closeable {
 
     public companion object {
-        
+
         private val holder = object : ThreadLocal<RecursionDepth>() {
             override fun initialValue(): RecursionDepth = RecursionDepth()
         }

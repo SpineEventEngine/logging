@@ -67,7 +67,7 @@ package io.spine.logging.jvm.backend
  *   Original Java code of Google Flogger</a> for historical context.
  */
 public abstract class Clock {
-    
+
     /**
      * Returns the current time from the epoch (`00:00 1st Jan, 1970`) with nanosecond
      * granularity, though not necessarily nanosecond precision.

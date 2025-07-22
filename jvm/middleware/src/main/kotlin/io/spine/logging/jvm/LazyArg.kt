@@ -74,7 +74,7 @@ public fun interface LazyArg<T> {
          */
         @JvmStatic
         public fun <T> lazy(lambdaOrMethodReference: LazyArg<T>): LazyArg<T> {
-            
+
             /**
              * This method is essentially a coercing cast for the functional interface to give
              * the compiler a target type to convert a lambda expression or method reference into.

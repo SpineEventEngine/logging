@@ -40,21 +40,21 @@ import java.lang.reflect.InvocationTargetException
 import kotlin.time.ExperimentalTime
 
 /**
- * Platform abstraction layer required to allow fluent logger implementations 
+ * Platform abstraction layer required to allow fluent logger implementations
  * to work on differing Java platforms (such as Android or GWT).
  *
- * The `Platform` class is responsible for providing any platform-specific APIs, 
+ * The `Platform` class is responsible for providing any platform-specific APIs,
  * including the mechanism by which logging backends are created.
  *
- * To enable an additional logging platform implementation, the class name 
- * should be added to the list of available platforms before the default platform 
+ * To enable an additional logging platform implementation, the class name
+ * should be added to the list of available platforms before the default platform
  * (which must always be at the end).
  *
- * Platform implementation classes must subclass `Platform` and have a public, 
+ * Platform implementation classes must subclass `Platform` and have a public,
  * no-argument constructor.
  *
- * Platform instances are created on first-use of a fluent logger, and 
- * platform implementors must take care to avoid cycles during initialization 
+ * Platform instances are created on first-use of a fluent logger, and
+ * platform implementors must take care to avoid cycles during initialization
  * and re-entrant behaviour.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/Platform.java">
@@ -73,7 +73,7 @@ public abstract class Platform {
      *   This is the expected state, and the caller should behave normally.
      *
      * - A value greater than 1 means that this thread is performing reentrant logging.
-     *   The caller may choose to change behaviour depending on the value if 
+     *   The caller may choose to change behaviour depending on the value if
      *   there is a risk that reentrant logging is being caused by the caller's code.
      *
      * - A value of zero means that this thread is not logging.
@@ -82,7 +82,7 @@ public abstract class Platform {
      *
      * When the core Logging library detects the depth exceeding a preset threshold,
      * it may start to modify behaviour to mitigate the risk of unbounded reentrant logging.
-     * For example, some or all metadata may be removed from log sites since processing 
+     * For example, some or all metadata may be removed from log sites since processing
      * user-provided metadata can itself trigger reentrant logging.
      */
     public companion object {
@@ -130,8 +130,8 @@ public abstract class Platform {
         /**
          * Returns whether the given logger should have logging forced at the specified level.
          *
-         * When logging is forced for a log statement, it will be emitted regardless 
-         * of the normal log level configuration of the logger and ignoring rate limiting 
+         * When logging is forced for a log statement, it will be emitted regardless
+         * of the normal log level configuration of the logger and ignoring rate limiting
          * or other filtering.
          *
          * This method is intended to be invoked unconditionally from a fluent logger's
@@ -139,7 +139,7 @@ public abstract class Platform {
          *
          * @param loggerName The fully qualified logger name (e.g., "com.example.SomeClass").
          * @param level The level of the log statement being invoked.
-         * @param isEnabled Whether the logger is enabled at the given level 
+         * @param isEnabled Whether the logger is enabled at the given level
          * (i.e., the result of calling `isLoggable()` on the backend instance).
          */
         @JvmStatic

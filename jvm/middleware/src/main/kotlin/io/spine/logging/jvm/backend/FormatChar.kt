@@ -59,7 +59,7 @@ public enum class FormatChar(
 ) {
     /**
      * Formats the argument in a manner specific to the chosen logging backend.
-     * 
+     *
      * In many cases this will be equivalent to using [STRING], but it allows backend
      * implementations to log more structured representations of known types.
      *
@@ -76,10 +76,10 @@ public enum class FormatChar(
 
     /**
      * Formats a Unicode code-point.
-     * 
+     *
      * This formatting rule can be applied to any character or integral numeric value,
      * providing that [Character.isValidCodePoint] returns true.
-     * 
+     *
      * Note that if the argument cannot be represented losslessly as an integer,
      * it must be considered invalid.
      *
@@ -134,13 +134,13 @@ public enum class FormatChar(
     GENERAL('g', FormatType.FLOAT, "-0+ ,(", hasUpperCaseVariant = true),
 
     /**
-     * Formats the argument using hexadecimal exponential form. 
+     * Formats the argument using hexadecimal exponential form.
      *
      * This formatting option is primarily useful when debugging issues with the precise
      * bit-wise representation of doubles because no rounding of the value takes place.
      *
      * This is a numeric format with an upper-case variant.
-     * 
+     *
      * **Note:** This could be optimized with `Double.toHexString()` but this parameter
      * is hardly ever used.
      */
@@ -165,10 +165,10 @@ public enum class FormatChar(
         (allowedFlags and FormatOptions.FLAG_UPPER_CASE) != 0
 
     public companion object {
-        
+
         /**
          *  A direct mapping from character offset to [FormatChar] instance.
-         *  
+         *
          * Have all 26 letters accounted for because we know that the caller has already
          * checked that this is an ASCII letter. This mapping needs to be fast as it
          * is called for every argument in every log message.
@@ -183,7 +183,7 @@ public enum class FormatChar(
 
         /**
          * Returns the numeric index [0-25] of a given ASCII letter (upper or lower case).
-         * 
+         *
          * If the given value is not an ASCII letter, the returned value is not in the range 0-25.
          */
         private val Char.letterIndex: Int
