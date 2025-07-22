@@ -50,7 +50,7 @@ internal class LogPerBucketingStrategySpec {
     fun `passes keys 'as is'`() {
         val anyKey = Any()
         val strategy = LogPerBucketingStrategy.knownBounded()
-        strategy.apply(anyKey) shouldBeSameInstanceAs anyKey
+        strategy.applyForTesting(anyKey) shouldBeSameInstanceAs anyKey
         "$strategy" shouldBe "LogPerBucketingStrategy[KnownBounded]"
     }
 
@@ -58,7 +58,7 @@ internal class LogPerBucketingStrategySpec {
     fun `aggregates keys by class`() {
         val anyKey = Any()
         val strategy = LogPerBucketingStrategy.byClass()
-        strategy.apply(anyKey) shouldBeSameInstanceAs anyKey.javaClass
+        strategy.applyForTesting(anyKey) shouldBeSameInstanceAs anyKey.javaClass
         "$strategy" shouldBe "LogPerBucketingStrategy[ByClass]"
     }
 
@@ -68,17 +68,17 @@ internal class LogPerBucketingStrategySpec {
         val anyKey = NotASystemClass()
         val className = NotASystemClass::class.java.name
         val strategy = LogPerBucketingStrategy.byClassName()
-        strategy.apply(anyKey) shouldBeSameInstanceAs className
+        strategy.applyForTesting(anyKey) shouldBeSameInstanceAs className
         "$strategy" shouldBe "LogPerBucketingStrategy[ByClassName]"
     }
 
     @Test
     fun `maps keys to a pre-defines set of identifiers`() {
         val strategy = LogPerBucketingStrategy.forKnownKeys(mutableListOf("foo", 23))
-        strategy.apply("foo") shouldBe 0
-        strategy.apply("bar").shouldBeNull()
-        strategy.apply(23) shouldBe 1
-        strategy.apply(23.0).shouldBeNull()
+        strategy.applyForTesting("foo") shouldBe 0
+        strategy.applyForTesting("bar").shouldBeNull()
+        strategy.applyForTesting(23) shouldBe 1
+        strategy.applyForTesting(23.0).shouldBeNull()
         "$strategy" shouldBe "LogPerBucketingStrategy[ForKnownKeys(foo, 23)]"
     }
 
@@ -90,13 +90,13 @@ internal class LogPerBucketingStrategySpec {
         val strategy = { maxBuckets: Int -> LogPerBucketingStrategy.byHashCode(maxBuckets) }
         // Show that the strategy choice changes the bucketed value as expected. To maximize
         // Integer caching done by the JVM, the expected value has 128 subtracted from it.
-        strategy(1).apply(key) shouldBeSameInstanceAs -128
-        strategy(30).apply(key) shouldBeSameInstanceAs (29 - 128)
-        strategy(10).apply(key) shouldBeSameInstanceAs (9 - 128)
+        strategy(1).applyForTesting(key) shouldBeSameInstanceAs -128
+        strategy(30).applyForTesting(key) shouldBeSameInstanceAs (29 - 128)
+        strategy(10).applyForTesting(key) shouldBeSameInstanceAs (9 - 128)
         // Max cached value is 127 (corresponding to a modulo of 255).
-        strategy(256).apply(key) shouldBeSameInstanceAs 127
+        strategy(256).applyForTesting(key) shouldBeSameInstanceAs 127
         // Above this we cannot assume singleton semantics.
-        strategy(257).apply(key) shouldBe 128
+        strategy(257).applyForTesting(key) shouldBe 128
         "${strategy(10)}" shouldBe "LogPerBucketingStrategy[ByHashCode(10)]"
     }
 }
