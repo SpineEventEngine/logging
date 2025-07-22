@@ -103,11 +103,14 @@ kotlin {
     // Enables explicit API mode for any Kotlin sources within the module.
     explicitApi()
 
+    compilerOptions {
+        setFreeCompilerArgs()
+    }
+
     // Enables and configures JVM target.
     jvm {
         compilerOptions {
             jvmTarget.set(BuildSettings.jvmTarget)
-            setFreeCompilerArgs()
         }
     }
 

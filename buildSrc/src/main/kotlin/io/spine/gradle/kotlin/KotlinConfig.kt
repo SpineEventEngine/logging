@@ -24,10 +24,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+@file:Suppress("unused", "UNUSED_PARAMETER", "UnusedReceiverParameter")
+
 package io.spine.gradle.kotlin
 
 import org.gradle.jvm.toolchain.JavaLanguageVersion
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompilerOptions
+import org.jetbrains.kotlin.gradle.dsl.KotlinCommonCompilerToolOptions
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 
 /**
@@ -44,15 +46,13 @@ fun KotlinJvmProjectExtension.applyJvmToolchain(version: Int) {
  * Sets [Java toolchain](https://kotlinlang.org/docs/gradle.html#gradle-java-toolchains-support)
  * to the specified version (e.g., "11" or "8").
  */
-@Suppress("unused")
 fun KotlinJvmProjectExtension.applyJvmToolchain(version: String) =
     applyJvmToolchain(version.toInt())
 
 /**
  * Opts-in to experimental features that we use in our codebase.
  */
-@Suppress("unused")
-fun KotlinJvmCompilerOptions.setFreeCompilerArgs() {
+fun KotlinCommonCompilerToolOptions.setFreeCompilerArgs() {
     freeCompilerArgs.addAll(
         listOf(
             "-Xskip-prerelease-check",
