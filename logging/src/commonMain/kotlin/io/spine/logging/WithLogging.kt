@@ -69,5 +69,6 @@ public expect interface WithLogging {
     /**
      * Returns the logger created for this class.
      */
+    @Suppress("RedundantModalityModifier") // `open` is required for the JVM impl. to override.
     public open val logger: Logger<*>
 }
