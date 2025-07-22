@@ -227,7 +227,7 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
     private JvmLogSite logSite = null;
 
     /** Rate limit status (only set if rate limiting occurs). */
-    private RateLimitStatus rateLimitStatus = null;
+    private @Nullable RateLimitStatus rateLimitStatus = null;
 
     /** The template context if formatting is required (set only after post-processing). */
     private TemplateContext templateContext = null;
@@ -552,8 +552,8 @@ public abstract class LogContext<LOGGER extends AbstractLogger<API>, API extends
      *   return shouldLog;
      * }}</pre>
      *
-     * <p>See {@link RateLimitStatus} for more information on how to implement custom rate
-     * limiting in Flogger.
+     * <p>See {@link RateLimitStatus} for more information on how to implement custom
+     * rate limiting.
      *
      * @param status
      *         a rate limiting status, or {@code null} if the rate limiter was not active.
