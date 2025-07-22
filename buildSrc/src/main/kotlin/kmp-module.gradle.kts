@@ -35,8 +35,6 @@ import io.spine.gradle.javac.configureJavac
 import io.spine.gradle.kotlin.setFreeCompilerArgs
 import io.spine.gradle.publish.IncrementGuard
 import io.spine.gradle.report.license.LicenseReporter
-import io.spine.gradle.testing.configureLogging
-import io.spine.gradle.testing.registerTestTasks
 
 /**
  * Configures this [Project] as a Kotlin Multiplatform module.
@@ -98,7 +96,7 @@ fun Project.forceConfigurations() {
  *
  * Please note, this extension DOES NOT configure Kotlin for JVM.
  * It configures KMP, in which Kotlin for JVM is only one of
- * possible targets.
+ * the possible targets.
  */
 @Suppress("UNUSED_VARIABLE") // Avoid warnings for source set vars.
 kotlin {
@@ -115,6 +113,7 @@ kotlin {
 
     // Dependencies are specified per-target.
     // Please note, common sources are implicitly available in all targets.
+    @Suppress("unused")
     sourceSets {
         val commonTest by getting {
             dependencies {
