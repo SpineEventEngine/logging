@@ -27,7 +27,7 @@
 package io.spine.logging.jvm
 
 import io.kotest.matchers.shouldBe
-import java.lang.reflect.Modifier
+import kotlin.reflect.KVisibility
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -39,10 +39,10 @@ internal class LogSiteInjectorSpec {
 
     @Test
     fun `be non-public`() {
-        val logSiteInjectorClass = LogSiteInjector::class.java
-        val modifiers = logSiteInjectorClass.modifiers
+        val logSiteInjectorClass = LogSiteInjector::class
 
-        // Verify that the interface is not public.
-        (Modifier.isPublic(modifiers)) shouldBe false
+        // Verify that the annotation is internal (non-public).
+        // In Kotlin, internal visibility is the closest equivalent to Java's package-private.
+        logSiteInjectorClass.visibility shouldBe KVisibility.INTERNAL
     }
 }

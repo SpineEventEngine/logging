@@ -24,17 +24,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm;
+package io.spine.logging.jvm
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import kotlin.annotation.AnnotationRetention.BINARY
+import kotlin.annotation.AnnotationTarget.FUNCTION
 
 /**
  * Annotates a method to indicate that it should be used for injecting log site information.
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-@interface LogSiteInjector {
-}
+@Retention(BINARY)
+@Target(FUNCTION)
+internal annotation class LogSiteInjector
