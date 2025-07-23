@@ -31,7 +31,7 @@ package io.spine.dependency.local
  *
  * @see <a href="https://github.com/SpineEventEngine/base">spine-base</a>
  */
-@Suppress("ConstPropertyName")
+@Suppress("ConstPropertyName", "unused")
 object Base {
     const val version = "2.0.0-SNAPSHOT.350"
     const val versionForBuildScript = "2.0.0-SNAPSHOT.350"
