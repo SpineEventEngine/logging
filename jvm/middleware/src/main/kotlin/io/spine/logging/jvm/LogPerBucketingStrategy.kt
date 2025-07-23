@@ -26,7 +26,10 @@
 
 package io.spine.logging.jvm
 
-import org.jetbrains.annotations.TestOnly
+import io.spine.annotation.TestOnly
+import io.spine.logging.jvm.LogPerBucketingStrategy.Companion.byClass
+import io.spine.logging.jvm.LogPerBucketingStrategy.Companion.byHashCode
+import io.spine.logging.jvm.LogPerBucketingStrategy.Companion.knownBounded
 
 /**
  * Provides a strategy for "bucketing" a potentially unbounded set of log
