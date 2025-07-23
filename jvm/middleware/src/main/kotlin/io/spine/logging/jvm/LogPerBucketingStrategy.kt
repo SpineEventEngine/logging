@@ -26,7 +26,7 @@
 
 package io.spine.logging.jvm
 
-import com.google.common.annotations.VisibleForTesting
+import org.jetbrains.annotations.TestOnly
 
 /**
  * Provides a strategy for "bucketing" a potentially unbounded set of log
@@ -99,7 +99,7 @@ public abstract class LogPerBucketingStrategy<T> protected constructor(
      *
      * This method is not part of the public API and should not be used by client code.
      */
-    @VisibleForTesting
+    @TestOnly
     internal fun applyForTesting(key: T): Any? = apply(key)
 
     override fun toString(): String =
