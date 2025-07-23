@@ -25,7 +25,7 @@
  */
 package io.spine.logging.jvm.parser
 
-import com.google.common.annotations.VisibleForTesting
+import io.spine.annotation.VisibleForTesting
 import io.spine.logging.jvm.parser.ParseException.Companion.withBounds
 import io.spine.logging.jvm.parser.ParseException.Companion.withStartPosition
 import io.spine.logging.jvm.parser.PrintfMessageParser.Companion.safeSystemNewline

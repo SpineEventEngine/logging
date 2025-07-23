@@ -26,7 +26,7 @@
 
 package io.spine.logging.jvm;
 
-import com.google.common.annotations.VisibleForTesting;
+import io.spine.annotation.VisibleForTesting;
 import io.spine.logging.jvm.backend.LogData;
 import io.spine.logging.jvm.backend.Metadata;
 import io.spine.logging.jvm.backend.Platform;

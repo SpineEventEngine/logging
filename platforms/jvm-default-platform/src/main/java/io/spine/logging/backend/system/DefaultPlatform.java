@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.system;
 
-import com.google.common.annotations.VisibleForTesting;
+import io.spine.annotation.VisibleForTesting;
 import io.spine.logging.backend.jul.JulBackendFactory;
 import io.spine.logging.jvm.backend.BackendFactory;
 import io.spine.logging.jvm.backend.Clock;
@@ -127,6 +127,7 @@ public class DefaultPlatform extends Platform {
      *   <li>If neither is present, returns {@code null}.
      * </ol>
      */
+    @SuppressWarnings("UseOfSystemOutOrSystemErr")
     @Nullable
     private static <S> S loadService(Class<S> serviceType, String systemProperty) {
         // TODO(cgdecker): Throw an exception if configuration is present but invalid?
@@ -140,7 +141,7 @@ public class DefaultPlatform extends Platform {
             return service;
         }
 
-        List<S> loadedServices = new ArrayList<S>();
+        List<S> loadedServices = new ArrayList<>();
         for (var loaded : ServiceLoader.load(serviceType)) {
             loadedServices.add(loaded);
         }

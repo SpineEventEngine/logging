@@ -26,10 +26,10 @@
 
 package io.spine.logging.jvm
 
-import com.google.common.annotations.VisibleForTesting
+import io.spine.annotation.VisibleForTesting
 import java.lang.ref.ReferenceQueue
 import java.lang.ref.WeakReference
-import java.util.*
+import java.util.Queue
 import java.util.concurrent.ConcurrentLinkedQueue
 
 /**
