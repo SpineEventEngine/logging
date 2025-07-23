@@ -34,11 +34,10 @@ import java.io.Serial;
  * A synthetic exception which can be attached to log statements when additional stack trace
  * information is required in log files or via tools such as ECatcher.
  *
- * <p>The name of this class may become relied upon implicitly by tools such as ECatcher. Do not rename
- * or move this class without checking for implicit in logging tools.
+ * <p>The name of this class may become relied upon implicitly by tools such as ECatcher.
+ * Do not rename or move this class without checking for implicit in logging tools.
  *
- * @see <a
- *         href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSiteStackTrace.java">
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSiteStackTrace.java">
  *         Original Java code of Google Flogger</a> for historical context.
  */
 @SuppressWarnings("ExceptionClassNameDoesntEndWithException")
@@ -77,7 +76,7 @@ public final class LogSiteStackTrace extends Exception {
      * We override this because it gets called from the superclass constructor and we don't want it
      * to do any work (we always replace it immediately).
      */
-    @SuppressWarnings("UnsynchronizedOverridesSynchronized")
+    @SuppressWarnings("NonSynchronizedMethodOverridesSynchronizedMethod")
     @Override
     public Throwable fillInStackTrace() {
         return this;
