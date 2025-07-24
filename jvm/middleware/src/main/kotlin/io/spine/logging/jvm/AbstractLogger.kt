@@ -66,7 +66,7 @@ public abstract class AbstractLogger<API : MiddlemanApi<API>> protected construc
 
         @Suppress("SimpleDateFormatWithoutLocale")
         @JvmField
-        public val FORMATTER: DateTimeFormatter = DateTimeFormatter
+        val FORMATTER: DateTimeFormatter = DateTimeFormatter
             .ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
             .withZone(ZoneId.systemDefault())
     }
