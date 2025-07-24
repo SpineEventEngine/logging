@@ -86,13 +86,13 @@ public abstract class LogSiteMap<V> {
      * rate limiting.
      */
     public final V get(LogSiteKey key, Metadata metadata) {
-        V value = concurrentMap.get(key);
+        var value = concurrentMap.get(key);
         if (value != null) {
             return value;
         }
         // Many threads can get here concurrently and attempt to add an initial value.
         value = checkNotNull(initialValue(), "initial map value");
-        V race = concurrentMap.putIfAbsent(key, value);
+        var race = concurrentMap.putIfAbsent(key, value);
         if (race != null) {
             return race;
         }
@@ -107,7 +107,7 @@ public abstract class LogSiteMap<V> {
             if (!LogContext.Key.LOG_SITE_GROUPING_KEY.equals(metadata.getKey(i))) {
                 continue;
             }
-            Object groupByKey = metadata.getValue(i);
+            var groupByKey = metadata.getValue(i);
             if (!(groupByKey instanceof LoggingScope)) {
                 continue;
             }

@@ -55,8 +55,11 @@ import java.util.logging.Level
  *
  * Logging contexts are not thread-safe.
  *
- * @see [Original Java code of Google Flogger](https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogContext.java)
- *         for historical context.
+ * @property level The log level of the log statement that this context was created for.
+ * @param isForced Whether to force this log statement (see [wasForced] for details).
+ * @property timestampNanos The timestamp of the log statement that this context is associated with.
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogContext.java">
+ *     Original Java code of Google Flogger</a> for historical context.
  */
 @Suppress(
     "ReturnCount",
@@ -69,40 +72,47 @@ import java.util.logging.Level
 )
 public abstract class LogContext<LOGGER : AbstractLogger<API>, API : MiddlemanApi<API>>
 protected constructor(
-    /** The log level of the log statement that this context was created for. */
-    private val logLevel: Level,
+    final override val level: Level,
     isForced: Boolean,
-    /** The timestamp of the log statement that this context is associated with. */
-    private val logTimestampNanos: Long
+    final override val timestampNanos: Long
 ) : MiddlemanApi<API>, LogData {
 
-    /** Additional metadata for this log statement (added via fluent API methods). */
-    private var logMetadata: MutableMetadata? = null
+    /**
+     * Additional metadata for this log statement (added via fluent API methods).
+     */
+    private var _metadata: MutableMetadata? = null
 
-    /** The log site information for this log statement (set immediately prior to post-processing). */
+    /**
+     * The log site information for this log statement (set immediately prior to post-processing).
+     */
     private var logSiteInfo: JvmLogSite? = null
 
-    /** Rate limit status (only set if rate limiting occurs). */
+    /**
+     * Rate limit status (only set if rate limiting occurs).
+     */
     private var rateLimitStatus: RateLimitStatus? = null
 
-    /** The template context if formatting is required (set only after post-processing). */
+    /**
+     * The template context if formatting is required (set only after post-processing).
+     */
     private var logTemplateContext: TemplateContext? = null
 
-    /** The log arguments (set only after post-processing). */
+    /**
+     * The log arguments (set only after post-processing).
+     */
     private var args: Array<Any?>? = null
 
     /**
      * Creates a logging context with the specified level, and with a timestamp obtained from the
      * configured logging [Platform].
      *
-     * @param level the log level for this log statement.
-     * @param isForced whether to force this log statement (see [wasForced] for details).
+     * @param level The log level for this log statement.
+     * @param isForced Whether to force this log statement (see [wasForced] for details).
      */
     protected constructor(level: Level, isForced: Boolean) :
             this(level, isForced, Platform.getCurrentTimeNanos())
 
     init {
-        checkNotNull(logLevel, "level")
         if (isForced) {
             addMetadata(Key.WAS_FORCED, true)
         }
@@ -113,8 +123,6 @@ protected constructor(
      * returned by fluent methods to continue the fluent call chain.
      */
     protected abstract fun api(): API
-
-    // ---- Logging Context Constants ----
 
     /**
      * Returns the logger which created this context. This is implemented as an abstract method to
@@ -129,16 +137,10 @@ protected constructor(
      */
     protected abstract fun noOp(): API
 
-    /** Returns the message parser used for all log statements made through this logger. */
+    /**
+     * Returns the message parser used for all log statements made through this logger.
+     */
     protected abstract fun getMessageParser(): MessageParser
-
-    // ---- LogData API ----
-
-    public final override val level: Level
-        get() = logLevel
-
-    public final override val timestampNanos: Long
-        get() = logTimestampNanos
 
     public final override val loggerName: String?
         get() = getLogger().getName()
@@ -171,21 +173,20 @@ protected constructor(
 
     public final override fun wasForced(): Boolean {
         // Check explicit TRUE here because findValue() can return null (which would fail unboxing).
-        return logMetadata != null && true == logMetadata!!.findValue(Key.WAS_FORCED)
+        return _metadata != null && true == _metadata!!.findValue(Key.WAS_FORCED)
     }
 
     /**
      * Returns any additional metadata for this log statement.
      *
      * When called outside of the logging backend, this method may return different values at
-     * different times (ie, it may initially return a shared static "empty" metadata object and
-     * later return a different implementation). As such it is not safe to cache the instance returned by
-     * this method or to attempt to cast it to any particular implementation.
+     * different times (i.e., it may initially return a shared static "empty" metadata object and
+     * later return a different implementation).
+     * As such, it is not safe to cache the instance returned by this method or to attempt to
+     * cast it to any particular implementation.
      */
     public final override val metadata: Metadata
-        get() = logMetadata ?: Metadata.empty()
-
-    // ---- Mutable Metadata ----
+        get() = _metadata ?: Metadata.empty()
 
     /**
      * Adds the given key/value pair to this logging context. If the key cannot be repeated, and
@@ -196,10 +197,10 @@ protected constructor(
      * @param value the metadata value.
      */
     protected fun <T : Any> addMetadata(key: MetadataKey<T>, value: T) {
-        if (logMetadata == null) {
-            logMetadata = MutableMetadata()
+        if (_metadata == null) {
+            _metadata = MutableMetadata()
         }
-        logMetadata!!.addValue(key, value)
+        _metadata!!.addValue(key, value)
     }
 
     /**
@@ -210,10 +211,8 @@ protected constructor(
      * @param key the metadata key (see [LogData]).
      */
     protected fun removeMetadata(key: MetadataKey<*>) {
-        logMetadata?.removeAllValues(key)
+        _metadata?.removeAllValues(key)
     }
-
-    // ---- Post processing ----
 
     /**
      * A callback which can be overridden to implement post processing of logging contexts prior to
@@ -223,7 +222,7 @@ protected constructor(
      *
      * This method is responsible for:
      *
-     * 1. Performing any rate limiting operations specific to the extended API.
+     * 1. Performing any rate-limiting operations specific to the extended API.
      * 2. Updating per log-site information (e.g. for debug metrics).
      * 3. Adding any additional metadata to this context.
      * 4. Returning whether logging should be attempted.
@@ -250,7 +249,8 @@ protected constructor(
      * of a log statement (i.e. a single log statement can have multiple distinct versions of
      * its state). See [per] for more information.
      *
-     * If a log statement cannot be identified uniquely, then `logSiteKey` will be `null`, and this method must behave exactly as if the corresponding fluent method had not been
+     * If a log statement cannot be identified uniquely, then `logSiteKey` will be `null`, and
+     * this method must behave exactly as if the corresponding fluent method had not been
      * invoked. On a system in which log site information is *unavailable*:
      *
      * ```kotlin
@@ -270,8 +270,9 @@ protected constructor(
      * number of "skipped" log statements is recorded correctly and emitted for the next allowed log.
      *
      * If `postProcess()` returns `false` without updating the rate limit status, the
-     * log statement may not be counted as skipped. In some situations this is desired, but either way
-     * the extended logging API should make it clear to the user (via documentation) what will happen.
+     * log statement may not be counted as skipped. In some situations this is desired,
+     * but either way the extended logging API should make it clear to the user
+     * (via documentation) what will happen.
      * However, in most cases `postProcess()` is only expected to return `false` due to
      * rate limiting.
      *
@@ -287,30 +288,32 @@ protected constructor(
      *
      * For example, level selector methods (such as `atInfo()`) return the `NoOp` API
      * for "disabled" log statements, and these have no effect on rate limiter state, and will not
-     * update the "skipped" count. This is fine because controlling logging via log level selection is
-     * not conceptually a form of "rate limiting".
+     * update the "skipped" count. This is fine because controlling logging via log level
+     * selection is not conceptually a form of "rate limiting".
      *
-     * The default implementation of this method enforces the rate limits as set by [every] and [atMostEvery].
+     * The default implementation of this method enforces the rate limits as set
+     * by [every] and [atMostEvery].
      *
      * @param logSiteKey used to lookup persistent, per log statement, state.
      * @return true if logging should be attempted (usually based on rate limiter state).
      */
     protected open fun postProcess(logSiteKey: LogSiteKey?): Boolean {
         // Without metadata there's nothing to post-process.
-        if (logMetadata != null) {
+        if (_metadata != null) {
             // Without a log site we ignore any log-site specific behaviour.
             if (logSiteKey != null) {
-                // Since the base class postProcess() should be invoked before subclass logic, we can set
-                // the initial status here. Subclasses can combine this with other rate limiter statuses by
-                // calling updateRateLimiterStatus() before we get back into shouldLog().
-                var status = DurationRateLimiter.check(logMetadata!!, logSiteKey, logTimestampNanos)
+                // Since the base class postProcess() should be invoked before subclass logic,
+                // we can set the initial status here. Subclasses can combine this with other
+                // rate limiter statuses by calling `updateRateLimiterStatus()` before we get
+                // back into shouldLog().
+                var status = DurationRateLimiter.check(_metadata!!, logSiteKey, timestampNanos)
                 status = RateLimitStatus.combine(
                     status,
-                    CountingRateLimiter.check(logMetadata!!, logSiteKey)
+                    CountingRateLimiter.check(_metadata!!, logSiteKey)
                 )
                 status = RateLimitStatus.combine(
                     status,
-                    SamplingRateLimiter.check(logMetadata!!, logSiteKey)
+                    SamplingRateLimiter.check(_metadata!!, logSiteKey)
                 )
                 this.rateLimitStatus = status
 
@@ -321,8 +324,9 @@ protected constructor(
                 }
             }
 
-            // This does not affect whether logging will occur, only what additional data it contains.
-            val stackSize = logMetadata!!.findValue(Key.CONTEXT_STACK_SIZE)
+            // This does not affect whether logging will occur, only what
+            // additional data it contains.
+            val stackSize = _metadata!!.findValue(Key.CONTEXT_STACK_SIZE)
             if (stackSize != null) {
                 // We add this information to the stack trace exception,
                 // so it doesn't need to go here.
@@ -340,7 +344,7 @@ protected constructor(
                 // By skipping the initial code inside this method, we don't trigger any stack
                 // capture until after the "log" method.
                 val context = LogSiteStackTrace(
-                    logMetadata!!.findValue(Key.LOG_CAUSE),
+                    _metadata!!.findValue(Key.LOG_CAUSE),
                     stackSize,
                     stackForCallerOf(LogContext::class.java, stackSize.maxDepth, 1)
                 )
@@ -372,7 +376,7 @@ protected constructor(
      * See [RateLimitStatus] for more information on how to implement custom
      * rate limiting.
      *
-     * @param status a rate limiting status, or `null` if the rate limiter was not active.
+     * @param status a rate-limiting status, or `null` if the rate limiter was not active.
      * @return whether logging will occur based on the current combined state of
      *         active rate limiters.
      */
@@ -392,8 +396,8 @@ protected constructor(
     private fun shouldLog(): Boolean {
         // The log site may have already been injected via "withInjectedLogSite()" or similar.
         if (logSiteInfo == null) {
-            // From the point at which we call inferLogSite() we can skip 1 additional method (the
-            // shouldLog() method itself) when looking up the stack to find the log() method.
+            // From the point at which we call inferLogSite() we can skip 1 additional method
+            // (the `shouldLog()` method itself) when looking up the stack to find the log() method.
             logSiteInfo = checkNotNull(
                 Platform.getCallerFinder().findLogSite(LogContext::class.java, 1),
                 "logger backend must not return a null LogSite"
@@ -403,8 +407,8 @@ protected constructor(
         if (logSiteInfo != JvmLogSite.invalid) {
             logSiteKey = logSiteInfo
             // Log site keys are only modified when we have metadata in the log statement.
-            if (logMetadata != null && logMetadata!!.size() > 0) {
-                logSiteKey = specializeLogSiteKeyFromMetadata(logSiteKey!!, logMetadata!!)
+            if (_metadata != null && _metadata!!.size() > 0) {
+                logSiteKey = specializeLogSiteKeyFromMetadata(logSiteKey!!, _metadata!!)
             }
         }
         val shouldLog = postProcess(logSiteKey)
@@ -413,17 +417,17 @@ protected constructor(
             val skippedLogs = RateLimitStatus.checkStatus(
                 rateLimitStatus!!,
                 logSiteKey,
-                logMetadata ?: Metadata.empty()
+                _metadata ?: Metadata.empty()
             )
             if (shouldLog && skippedLogs > 0) {
-                if (logMetadata != null) {
-                    logMetadata!!.addValue(Key.SKIPPED_LOG_COUNT, skippedLogs)
+                if (_metadata != null) {
+                    _metadata!!.addValue(Key.SKIPPED_LOG_COUNT, skippedLogs)
                 }
             }
             // checkStatus() returns -1 in two cases:
             // 1. We passed it the DISALLOW status.
-            // 2. We passed it an "allow" status, but multiple threads were racing to try and reset the
-            //    rate limiters, and this thread lost.
+            // 2. We passed it an "allow" status, but multiple threads were racing to try and
+            //    reset the rate limiters, and this thread lost.
             // Either way we should suppress logging.
             return shouldLog && (skippedLogs >= 0)
         }
@@ -436,27 +440,29 @@ protected constructor(
      */
     private fun logImpl(message: String?, vararg args: Any?) {
         this.args = arrayOf(*args)
-        // Evaluate any (rare) LazyArg instances early. This may throw exceptions from user code, but
-        // it seems reasonable to propagate them in this case (they would have been thrown if the
-        // argument was evaluated at the call site anyway).
+        // Evaluate any (rare) LazyArg instances early. This may throw exceptions from user code,
+        // but it seems reasonable to propagate them in this case (they would have been thrown
+        // if the argument was evaluated at the call site anyway).
         for (n in this.args!!.indices) {
             if (this.args!![n] is LazyArg<*>) {
                 this.args!![n] = (this.args!![n] as LazyArg<*>).evaluate()
             }
         }
-        // Using "!=" is fast and sufficient here because the only real case this should be skipping
-        // is when we called log(String) or log(), which should not result in a template being created.
+        // Using "!=" is fast and sufficient here because the only real case this should
+        // be skipping is when we called `log(String)` or `log()`, which should not result in
+        // a template being created.
         // DO NOT replace this with a string instance which can be interned, or use equals() here,
         // since that could mistakenly treat other calls to log(String, Object...) incorrectly.
         if (message !== LITERAL_VALUE_MESSAGE) {
             val msg = message ?: NULL_MESSAGE
             this.logTemplateContext = TemplateContext(getMessageParser(), msg)
         }
-        // Right at the end of processing add any tags injected by the platform. Any tags supplied at
-        // the log site are merged with the injected tags (though this should be very rare).
+        // Right at the end of processing add any tags injected by the platform.
+        // Any tags supplied at the log site are merged with the injected tags
+        // (though this should be very rare).
         val tags = Platform.getInjectedTags()
         if (!tags.isEmpty()) {
-            val logSiteTags = logMetadata?.findValue(Key.TAGS)
+            val logSiteTags = _metadata?.findValue(Key.TAGS)
             val finalTags = if (logSiteTags != null) {
                 tags.merge(logSiteTags)
             } else {
@@ -471,10 +477,11 @@ protected constructor(
     // ---- Log site injection (used by pre-processors and special cases) ----
 
     public final override fun withInjectedLogSite(logSite: JvmLogSite?): API {
-        // First call wins (since auto-injection will typically target the log() method at the end of
-        // the chain and might not check for previous explicit injection). In particular it MUST be
-        // allowed for a caller to specify the "INVALID" log site, and have that set the field here to
-        // disable log site lookup at this log statement (though passing "null" is a no-op).
+        // First call wins (since auto-injection will typically target the `log()` method at
+        // the end of the chain and might not check for previous explicit injection).
+        // In particular it MUST be allowed for a caller to specify the "INVALID" log site, and
+        // have that set the field here to disable log site lookup at this log statement
+        // (though passing "null" is a no-op).
         if (this.logSiteInfo == null && logSite != null) {
             this.logSiteInfo = logSite
         }
@@ -498,10 +505,11 @@ protected constructor(
 
     public final override fun isEnabled(): Boolean {
         // We can't guarantee that all logger implementations will return instances of this class
-        // _only_ when logging is enabled, so if would be potentially unsafe to just return true here.
-        // It's not worth caching this result in the instance because calls to this method should be
-        // rare and they are only going to be made once per instance anyway.
-        return wasForced() || getLogger().doIsLoggable(logLevel)
+        // _only_ when logging is enabled, so if would be potentially unsafe to just return
+        // `true` here.
+        // It's not worth caching this result in the instance because calls to this
+        // method should be rare and they are only going to be made once per instance anyway.
+        return wasForced() || getLogger().doIsLoggable(level)
     }
 
     public final override fun <T : Any> with(key: MetadataKey<T>, value: T?): API {
@@ -1380,14 +1388,14 @@ protected constructor(
             Tags::class.java,
             false
         ) {
-            override fun emit(tags: Tags, out: KeyValueHandler) {
-                for ((key, values) in tags.asMap()) {
+            override fun emit(value: Tags, kvh: KeyValueHandler) {
+                for ((key, values) in value.asMap()) {
                     if (values.isNotEmpty()) {
                         for (v in values) {
-                            out.handle(key, v)
+                            kvh.handle(key, v)
                         }
                     } else {
-                        out.handle(key, null)
+                        kvh.handle(key, null)
                     }
                 }
             }
@@ -1408,9 +1416,11 @@ protected constructor(
         private const val NULL_MESSAGE = "<null>"
 
         /**
-         * A simple token used to identify cases where a single literal value is logged. Note that this
-         * instance must be unique, and it is important not to replace this with `""` or any other
-         * value than might be interned and be accessible to code outside this class.
+         * A simple token used to identify cases where a single literal value is logged.
+         *
+         * Note that this instance must be unique, and it is important not to replace this
+         * with `""` or any other value than might be interned and be accessible to code
+         * outside this class.
          */
         @Suppress("StringOperationCanBeSimplified")
         private val LITERAL_VALUE_MESSAGE = String()
