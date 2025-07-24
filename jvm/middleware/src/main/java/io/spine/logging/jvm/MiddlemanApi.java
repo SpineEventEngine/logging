@@ -206,7 +206,7 @@ public interface MiddlemanApi<API extends MiddlemanApi<API>> {
    * to avoid passing keys from an unbounded space into the {@code per(...)} method (e.g. by
    * mapping cases to an {@code Enum}), this is usually preferable.
    *
-   * When using this method, a bucketing strategy is needed to reduce the risk of leaking memory.
+   * <p>When using this method, a bucketing strategy is needed to reduce the risk of leaking memory.
    * Consider the alternate API:
    *
    * <pre>{@code
@@ -537,7 +537,7 @@ public interface MiddlemanApi<API extends MiddlemanApi<API>> {
    * scrubbed during logging). This recommendation also applies to all the overloaded {@code log()}
    * methods below.
    */
-  void log(String msg);
+  void log(@Nullable String msg);
 
   // ---- Overloads for object arguments (to avoid vararg array creation). ----
 
@@ -554,21 +554,21 @@ public interface MiddlemanApi<API extends MiddlemanApi<API>> {
    *
    * @param msg the message template string containing a single argument placeholder.
    */
-  void log(String msg, @Nullable Object p1);
+  void log(@Nullable String msg, @Nullable Object p1);
   /** Logs a message with formatted arguments (see {@link #log(String, Object)} for details). */
-  void log(String msg, @Nullable Object p1, @Nullable Object p2);
+  void log(@Nullable String msg, @Nullable Object p1, @Nullable Object p2);
   /** Logs a message with formatted arguments (see {@link #log(String, Object)} for details). */
-  void log(String msg, @Nullable Object p1, @Nullable Object p2, @Nullable Object p3);
+  void log(@Nullable String msg, @Nullable Object p1, @Nullable Object p2, @Nullable Object p3);
   /** Logs a message with formatted arguments (see {@link #log(String, Object)} for details). */
   void log(
-      String msg,
+      @Nullable String msg,
       @Nullable Object p1,
       @Nullable Object p2,
       @Nullable Object p3,
       @Nullable Object p4);
   /** Logs a message with formatted arguments (see {@link #log(String, Object)} for details). */
   void log(
-      String msg,
+      @Nullable String msg,
       @Nullable Object p1,
       @Nullable Object p2,
       @Nullable Object p3,
@@ -576,7 +576,7 @@ public interface MiddlemanApi<API extends MiddlemanApi<API>> {
       @Nullable Object p5);
   /** Logs a message with formatted arguments (see {@link #log(String, Object)} for details). */
   void log(
-      String msg,
+      @Nullable String msg,
       @Nullable Object p1,
       @Nullable Object p2,
       @Nullable Object p3,
@@ -585,7 +585,7 @@ public interface MiddlemanApi<API extends MiddlemanApi<API>> {
       @Nullable Object p6);
   /** Logs a message with formatted arguments (see {@link #log(String, Object)} for details). */
   void log(
-      String msg,
+      @Nullable String msg,
       @Nullable Object p1,
       @Nullable Object p2,
       @Nullable Object p3,
@@ -595,7 +595,7 @@ public interface MiddlemanApi<API extends MiddlemanApi<API>> {
       @Nullable Object p7);
   /** Logs a message with formatted arguments (see {@link #log(String, Object)} for details). */
   void log(
-      String msg,
+      @Nullable String msg,
       @Nullable Object p1,
       @Nullable Object p2,
       @Nullable Object p3,
@@ -606,7 +606,7 @@ public interface MiddlemanApi<API extends MiddlemanApi<API>> {
       @Nullable Object p8);
   /** Logs a message with formatted arguments (see {@link #log(String, Object)} for details). */
   void log(
-      String msg,
+      @Nullable String msg,
       @Nullable Object p1,
       @Nullable Object p2,
       @Nullable Object p3,
@@ -618,7 +618,7 @@ public interface MiddlemanApi<API extends MiddlemanApi<API>> {
       @Nullable Object p9);
   /** Logs a message with formatted arguments (see {@link #log(String, Object)} for details). */
   void log(
-      String msg,
+      @Nullable String msg,
       @Nullable Object p1,
       @Nullable Object p2,
       @Nullable Object p3,
@@ -631,7 +631,7 @@ public interface MiddlemanApi<API extends MiddlemanApi<API>> {
       @Nullable Object p10);
   /** Logs a message with formatted arguments (see {@link #log(String, Object)} for details). */
   void log(
-      String msg,
+      @Nullable String msg,
       @Nullable Object p1,
       @Nullable Object p2,
       @Nullable Object p3,
@@ -942,11 +942,11 @@ public interface MiddlemanApi<API extends MiddlemanApi<API>> {
 
     @Override
     public final void log(
-        String msg, @Nullable Object p1, @Nullable Object p2, @Nullable Object p3) {}
+        @Nullable String msg, @Nullable Object p1, @Nullable Object p2, @Nullable Object p3) {}
 
     @Override
     public final void log(
-        String msg,
+        @Nullable String msg,
         @Nullable Object p1,
         @Nullable Object p2,
         @Nullable Object p3,
@@ -954,7 +954,7 @@ public interface MiddlemanApi<API extends MiddlemanApi<API>> {
 
     @Override
     public final void log(
-        String msg,
+        @Nullable String msg,
         @Nullable Object p1,
         @Nullable Object p2,
         @Nullable Object p3,
@@ -963,7 +963,7 @@ public interface MiddlemanApi<API extends MiddlemanApi<API>> {
 
     @Override
     public final void log(
-        String msg,
+        @Nullable String msg,
         @Nullable Object p1,
         @Nullable Object p2,
         @Nullable Object p3,
@@ -973,7 +973,7 @@ public interface MiddlemanApi<API extends MiddlemanApi<API>> {
 
     @Override
     public final void log(
-        String msg,
+        @Nullable String msg,
         @Nullable Object p1,
         @Nullable Object p2,
         @Nullable Object p3,
@@ -984,7 +984,7 @@ public interface MiddlemanApi<API extends MiddlemanApi<API>> {
 
     @Override
     public final void log(
-        String msg,
+        @Nullable String msg,
         @Nullable Object p1,
         @Nullable Object p2,
         @Nullable Object p3,
@@ -996,7 +996,7 @@ public interface MiddlemanApi<API extends MiddlemanApi<API>> {
 
     @Override
     public final void log(
-        String msg,
+        @Nullable String msg,
         @Nullable Object p1,
         @Nullable Object p2,
         @Nullable Object p3,
@@ -1009,7 +1009,7 @@ public interface MiddlemanApi<API extends MiddlemanApi<API>> {
 
     @Override
     public final void log(
-        String msg,
+        @Nullable String msg,
         @Nullable Object p1,
         @Nullable Object p2,
         @Nullable Object p3,
@@ -1023,7 +1023,7 @@ public interface MiddlemanApi<API extends MiddlemanApi<API>> {
 
     @Override
     public final void log(
-        String msg,
+        @Nullable String msg,
         @Nullable Object p1,
         @Nullable Object p2,
         @Nullable Object p3,

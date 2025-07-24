@@ -74,6 +74,8 @@ public abstract class LoggingScope protected constructor(private val label: Stri
      */
     protected abstract fun specialize(key: LogSiteKey): LogSiteKey
 
+    internal fun doSpecialize(key: LogSiteKey): LogSiteKey = specialize(key)
+
     /**
      * Registers "hooks" which should be called when this scope is "closed".
      *

@@ -113,12 +113,7 @@ public abstract class LogSiteMap<V> {
             }
             if (removalHook == null) {
                 // Non-static inner class references the outer LogSiteMap.
-                removalHook = new Runnable() {
-                    @Override
-                    public void run() {
-                        concurrentMap.remove(key);
-                    }
-                };
+                removalHook = () -> concurrentMap.remove(key);
             }
             ((LoggingScope) groupByKey).onClose(removalHook);
         }

@@ -97,6 +97,8 @@ public abstract class LogPerBucketingStrategy<T> protected constructor(
      */
     protected abstract fun apply(key: T): Any?
 
+    internal fun doApply(key: T): Any? = apply(key)
+
     /**
      * Access to the [apply] method for testing purposes.
      *
