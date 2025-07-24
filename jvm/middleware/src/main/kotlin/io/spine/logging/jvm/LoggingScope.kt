@@ -89,6 +89,11 @@ public abstract class LoggingScope protected constructor(private val label: Stri
      */
     protected abstract fun onClose(removalHook: Runnable)
 
+    /**
+     * Opens access to [onClose] for the package.
+     */
+    internal fun doOnClose(removalHook: Runnable) = onClose(removalHook)
+
     override fun toString(): String = label
 
     public companion object {
