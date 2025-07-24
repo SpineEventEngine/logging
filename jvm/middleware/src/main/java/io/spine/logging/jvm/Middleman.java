@@ -26,6 +26,7 @@
 
 package io.spine.logging.jvm;
 
+import io.spine.annotation.VisibleForTesting;
 import io.spine.logging.jvm.backend.LoggerBackend;
 import io.spine.logging.jvm.backend.Platform;
 import io.spine.logging.jvm.parser.DefaultPrintfMessageParser;
@@ -73,7 +74,7 @@ public final class Middleman extends AbstractLogger<Middleman.Api> {
   // the NoOp type instead of the Api type. This helps ProGuard optimization recognize the type of
   // this field more easily. This allows ProGuard to strip away low-level logs in Android apps in
   // fewer optimization passes. Do not change this to 'Api', or any less specific type.
-  // VisibleForTesting
+  @VisibleForTesting
   static final NoOp NO_OP = new NoOp();
 
   /**
@@ -112,7 +113,7 @@ public final class Middleman extends AbstractLogger<Middleman.Api> {
   }
 
   /** Logging context implementing the fully specified API for this logger. */
-  // VisibleForTesting
+  @VisibleForTesting
   final class Context extends LogContext<Middleman, Api> implements Api {
     private Context(Level level, boolean isForced) {
       super(level, isForced);
