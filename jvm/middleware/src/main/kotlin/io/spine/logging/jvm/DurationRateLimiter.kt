@@ -27,7 +27,7 @@
 package io.spine.logging.jvm
 
 import com.google.errorprone.annotations.ThreadSafe
-import io.spine.logging.jvm.LogContext.Key.Companion.LOG_AT_MOST_EVERY
+import io.spine.logging.jvm.LogContext.Key.LOG_AT_MOST_EVERY
 import io.spine.logging.jvm.backend.Metadata
 import io.spine.logging.jvm.util.Checks.checkArgument
 import java.util.concurrent.TimeUnit
