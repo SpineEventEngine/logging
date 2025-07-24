@@ -28,6 +28,7 @@
 
 package io.spine.logging.jvm.backend
 
+import io.spine.annotation.VisibleForTesting
 import io.spine.logging.jvm.LogContext
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.util.Checks.checkArgument
@@ -96,12 +97,12 @@ public abstract class MetadataProcessor {
             }
         }
 
-        // Visible for testing
+        @VisibleForTesting
         @JvmStatic
         internal fun getLightweightProcessor(scope: Metadata, logged: Metadata): MetadataProcessor =
             LightweightProcessor(scope, logged)
 
-        // Visible for testing
+        @VisibleForTesting
         @JvmStatic
         internal fun getSimpleProcessor(scope: Metadata, logged: Metadata): MetadataProcessor =
             SimpleProcessor(scope, logged)
