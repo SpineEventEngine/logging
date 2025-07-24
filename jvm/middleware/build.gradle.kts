@@ -24,6 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import io.spine.dependency.kotlinx.DateTime
 import io.spine.dependency.local.Base
 import io.spine.dependency.local.Reflect
 import io.spine.gradle.java.disableLinters
@@ -34,6 +35,7 @@ plugins {
 }
 
 dependencies {
+    implementation(DateTime.lib)
     implementation(Base.annotations)
     implementation(Reflect.lib)
     implementation(project(":platform-generator", configuration = "generatedPlatformProvider"))
