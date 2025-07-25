@@ -73,7 +73,7 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
         sourceFileName: String?
     ): API
 
-    public fun logVarargs(message: String, varargs: Array<Any?>?)
+    public fun logVarargs(message: String, params: Array<Any?>?)
 
     public fun log(message: String?, p1: Any?)
 
@@ -313,7 +313,7 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
             return noOp()
         }
 
-        override fun logVarargs(message: String, varargs: Array<Any?>?): Unit = Unit
+        override fun logVarargs(message: String, params: Array<Any?>?): Unit = Unit
 
         override fun log(): Unit = Unit
 
