@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ public class JvmLogger(
 
     override fun createApi(level: Level): Api {
         val floggerApi = delegate.at(level.toJavaLogging())
-        return if (floggerApi.isEnabled) {
+        return if (floggerApi.isEnabled()) {
             ApiImpl(floggerApi)
         } else {
             NoOp
@@ -102,17 +102,18 @@ private class ApiImpl(private val delegate: Middleman.Api): JvmLogger.Api {
         return this
     }
 
-    override fun isEnabled(): Boolean = delegate.isEnabled
+    override fun isEnabled(): Boolean = delegate.isEnabled()
 
-    override fun log() {
-        delegate.withInjectedLogSite(JvmLogSite.callerOf(ApiImpl::class.java))
+    override fun log() =
+        delegate
+            .withInjectedLogSite(JvmLogSite.callerOf(ApiImpl::class.java))
             .log()
-    }
 
     override fun log(message: () -> String) {
         if (isEnabled()) {
             val prefix = loggingDomain.messagePrefix
-            delegate.withInjectedLogSite(JvmLogSite.callerOf(ApiImpl::class.java))
+            delegate
+                .withInjectedLogSite(JvmLogSite.callerOf(ApiImpl::class.java))
                 .log(prefix + message.invoke())
         }
     }

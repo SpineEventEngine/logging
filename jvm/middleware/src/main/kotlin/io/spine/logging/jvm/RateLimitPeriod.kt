@@ -44,7 +44,7 @@ import java.util.concurrent.TimeUnit
  */
 @Immutable
 @ThreadSafe
-internal class RateLimitPeriod(
+public class RateLimitPeriod(
     private val n: Int,
     private val unit: TimeUnit
 ) {
@@ -64,7 +64,7 @@ internal class RateLimitPeriod(
      * timestamp that indicates when logging should occur always differs from the
      * previous timestamp for proper rate limiting behavior.
      */
-    fun toNanos(): Long = unit.toNanos(n.toLong())
+    internal fun toNanos(): Long = unit.toNanos(n.toLong())
 
     override fun toString(): String = "$n $unit"
 

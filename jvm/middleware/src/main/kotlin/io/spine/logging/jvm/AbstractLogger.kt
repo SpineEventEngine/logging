@@ -66,7 +66,7 @@ public abstract class AbstractLogger<API : MiddlemanApi<API>> protected construc
 
         @Suppress("SimpleDateFormatWithoutLocale")
         @JvmField
-        public val FORMATTER: DateTimeFormatter = DateTimeFormatter
+        val FORMATTER: DateTimeFormatter = DateTimeFormatter
             .ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
             .withZone(ZoneId.systemDefault())
     }
@@ -132,12 +132,17 @@ public abstract class AbstractLogger<API : MiddlemanApi<API>> protected construc
     }
 
     /**
-     * Returns whether the given level is enabled for this logger. Users wishing to guard code with
-     * a check for "loggability" should use `logger.atLevel().isEnabled()` instead.
+     * Returns whether the given level is enabled for this logger.
+     *
+     * Users wishing to guard code with a check for "loggability"
+     * should use `logger.atLevel().isEnabled()` instead.
      */
     protected fun isLoggable(level: Level): Boolean = backend.isLoggable(level)
 
-    // ---- IMPLEMENTATION DETAIL (only visible to the base logging context) ----
+    /**
+     * Opens access to the `protected` `isLoggable` function for this package.
+     */
+    internal fun doIsLoggable(level: Level): Boolean = isLoggable(level)
 
     /**
      * Returns the logging backend (not visible to logger subclasses to discourage tightly coupled

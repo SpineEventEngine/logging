@@ -84,7 +84,7 @@ internal class CountingRateLimiter : RateLimitStatus() {
          * its pending state and returns an `allow` status until it is reset.
          */
         @JvmStatic
-        public fun check(metadata: Metadata, logSiteKey: LogSiteKey): RateLimitStatus? {
+        fun check(metadata: Metadata, logSiteKey: LogSiteKey): RateLimitStatus? {
             val rateLimitCount = metadata.findValue(LOG_EVERY_N)
                 // Without rate limiter specific metadata, this limiter has no effect.
                 ?: return null
