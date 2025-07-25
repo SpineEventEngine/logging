@@ -36,11 +36,12 @@ package io.spine.logging.jvm
  * The class name is stored in the internal JVM format (slash-separated) and converted to
  * the standard dot-separated format when needed for proper identification.
  *
- * @property internalClassName Internal (slash-separated) fully qualified class
- *           name (e.g., `"com/example/Foo$Bar"`).
- * @param method Bare method name without signature information.
- * @param encodedLineNumber A line number with additional uniqueness encoded in the upper 16 bits.
- * @param sourceFileName Name of the source file containing the log statement.
+ * @property internalClassName Internal, slash-separated, fully-qualified class name
+ *           (e.g., `"com/example/Foo$Bar"`).
+ * @property method Bare method name without signature information.
+ * @property encodedLineNumber A line number with additional uniqueness
+ *           encoded in the upper 16 bits.
+ * @param sourceFileName The name of the source file containing the log statement.
  */
 internal class InjectedJvmLogSite(
     private val internalClassName: String,

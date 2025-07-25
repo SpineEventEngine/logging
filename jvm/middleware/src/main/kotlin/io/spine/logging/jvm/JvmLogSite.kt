@@ -168,6 +168,7 @@ public abstract class JvmLogSite : LogSiteKey {
          * unsupported, and in those cases this method will always return the [invalid] instance.
          *
          * For example (in `MyLoggingHelper`):
+         *
          * ```kotlin
          * fun logAndSomethingElse(String message, Object... args) {
          *   logger.atInfo()
@@ -221,6 +222,7 @@ public abstract class JvmLogSite : LogSiteKey {
          * unsupported, and in those cases this method will always return the [invalid] instance.
          *
          * For example (in `MyLoggingHelper`):
+         *
          * ```kotlin
          * fun logAndSomethingElse(LogSite logSite, String message, Object... args) {
          *   logger.atInfo()
@@ -229,6 +231,7 @@ public abstract class JvmLogSite : LogSiteKey {
          * }
          * ```
          * where callers would do:
+         *
          * ```kotlin
          * MyLoggingHelper.logAndSomethingElse(logSite(), "message...")
          * ```
