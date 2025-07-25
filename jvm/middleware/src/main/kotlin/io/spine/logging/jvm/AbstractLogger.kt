@@ -46,6 +46,8 @@ import io.spine.logging.jvm.util.Checks.checkNotNull
  *
  * @param API The logging API provided by this logger.
  *
+ * @param backend The logging backend to which this logger will delegate the actual logging.
+ *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/AbstractLogger.java">
  *    Original Java code of Google Flogger</a> for historical context.
  */
@@ -53,7 +55,6 @@ import io.spine.logging.jvm.util.Checks.checkNotNull
 public abstract class AbstractLogger<API : MiddlemanApi<API>> protected constructor(
     private val backend: LoggerBackend
 ) {
-
     /**
      * An upper bound on the depth of reentrant logging allowed by a looger.
      *
@@ -70,8 +71,6 @@ public abstract class AbstractLogger<API : MiddlemanApi<API>> protected construc
             .ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
             .withZone(ZoneId.systemDefault())
     }
-
-    // ---- PUBLIC API ----
 
     /**
      * Returns a fluent logging API appropriate for the specified log level.
@@ -91,40 +90,53 @@ public abstract class AbstractLogger<API : MiddlemanApi<API>> protected construc
      */
     public abstract fun at(level: Level): API
 
-    /** A convenience method for at([Level.SEVERE]). */
+    /**
+     * A convenience method for at([Level.SEVERE]).
+     */
     public fun atSevere(): API = at(Level.SEVERE)
 
-    /** A convenience method for at([Level.WARNING]). */
+    /**
+     * A convenience method for at([Level.WARNING]).
+     */
     public fun atWarning(): API = at(Level.WARNING)
 
-    /** A convenience method for at([Level.INFO]). */
+    /**
+     * A convenience method for at([Level.INFO]).
+     */
     public fun atInfo(): API = at(Level.INFO)
 
-    /** A convenience method for at([Level.CONFIG]). */
-    @Suppress("unused")
+    /**
+     * A convenience method for at([Level.CONFIG]).
+     */
     public fun atConfig(): API = at(Level.CONFIG)
 
-    /** A convenience method for at([Level.FINE]). */
+    /**
+     * A convenience method for at([Level.FINE]).
+     */
     public fun atFine(): API = at(Level.FINE)
 
-    /** A convenience method for at([Level.FINER]). */
+    /**
+     * A convenience method for at([Level.FINER]).
+     */
     public fun atFiner(): API = at(Level.FINER)
 
-    /** A convenience method for at([Level.FINEST]). */
+    /**
+     * A convenience method for at([Level.FINEST]).
+     */
     public fun atFinest(): API = at(Level.FINEST)
 
-    // ---- HELPER METHODS (useful during sub-class initialization) ----
-
     /**
-     * Returns the non-null name of this logger (Flogger does not currently support anonymous
-     * loggers).
+     * Returns the non-null name of this logger.
+     *
+     * ### Anonymous loggers are NOT supported
+     *
+     * The Spine Logging library does not currently support the idea of
+     * an anonymous logger instance.
+     * The issue here is that in order to allow the logger instance and the `LoggerConfig`
+     * instance to share the same underlying logger, while allowing the backend API to be
+     * flexible enough _not_ to admit the existence of the JDK logger, we will
+     * need to push the `LoggerConfig` API down into the backend and expose it from there.
      */
-    // IMPORTANT: Flogger does not currently support the idea of an anonymous logger instance
-    // (but probably should). The issue here is that in order to allow the FluentLogger instance
-    // and the LoggerConfig instance to share the same underlying logger, while allowing the
-    // backend API to be flexible enough _not_ to admit the existence of the JDK logger, we will
-    // need to push the LoggerConfig API down into the backend and expose it from there.
-    // See b/14878562
     // TODO: Make anonymous loggers work with the config() method and the LoggerConfig API.
     public fun getName(): String {
         val loggerName = backend.loggerName
