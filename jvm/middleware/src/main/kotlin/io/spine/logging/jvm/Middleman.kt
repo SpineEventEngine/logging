@@ -45,8 +45,10 @@ import java.util.logging.Level
  * The choice to prevent direct extension of loggers was made to ensure that users
  * of a specific logger implementation always get the same behavior.
  *
- * @apiNote It is expected that this class is going to be merged
- *   with `io.spine.logging.JvmLogger` of the `logging` module.
+ * ### API Note
+ *
+ * It is expected that this class is going to be merged with `io.spine.logging.JvmLogger` of
+ * the `logging` module.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/FluentLogger.java">
  *     Original Java code of Google Flogger</a> for historical context.
@@ -70,17 +72,22 @@ public class Middleman(backend: LoggerBackend) : AbstractLogger<Middleman.Api>(b
     internal class NoOp : MiddlemanApi.NoOp<Api>(), Api
 
     public companion object {
-        // Singleton instance of the no-op API. This variable is purposefully declared as an instance of
-        // the NoOp type instead of the Api type. This helps ProGuard optimization recognize the type of
-        // this field more easily. This allows ProGuard to strip away low-level logs in Android apps in
-        // fewer optimization passes. Do not change this to 'Api', or any less specific type.
+
+        /**
+         * Singleton instance of the no-op API.
+         *
+         * This variable is purposefully declared as an instance of the [NoOp] type
+         * instead of the [Api] type. This helps ProGuard optimization recognize the type of
+         * this field easier. This allows ProGuard to strip away low-level logs in Android apps in
+         * fewer optimization passes. Do not change this to 'Api', or any less specific type.
+         */
         @VisibleForTesting
         @JvmField
         internal val NO_OP = NoOp()
 
         /**
-         * Returns a new logger instance which parses log messages using printf format for the enclosing
-         * class using the system default logging backend.
+         * Returns a new logger instance which parses log messages using `printf` format
+         * for the enclosing class using the system default logging backend.
          */
         @JvmStatic
         public fun forEnclosingClass(): Middleman {
