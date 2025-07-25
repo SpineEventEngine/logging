@@ -39,8 +39,6 @@ import java.util.concurrent.atomic.AtomicLong
  * This class implements [RateLimitStatus] as a mechanism for resetting
  * the rate limiter state.
  *
- * Instances of this class are thread-safe.
- *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/CountingRateLimiter.java">
  *       Original Java code of Google Flogger</a> for historical context.
  */
@@ -63,14 +61,20 @@ internal class CountingRateLimiter : RateLimitStatus() {
      * [MiddlemanApi.every].
      */
     internal fun incrementAndCheckLogCount(rateLimitCount: Int): RateLimitStatus =
-        if (invocationCount.incrementAndGet() >= rateLimitCount) this else DISALLOW
+        if (invocationCount.incrementAndGet() >= rateLimitCount) {
+            this
+        } else {
+            DISALLOW
+        }
 
-    // Reset function called to move the limiter out of the "pending" state after a log occurs.
-    override fun reset() {
+    /**
+     * This function is called to move the limiter out of the "pending" state after a log occurs.
+     */
+    override fun reset() =
         invocationCount.set(0)
-    }
 
     companion object {
+
         private val map = object : LogSiteMap<CountingRateLimiter>() {
             override fun initialValue(): CountingRateLimiter = CountingRateLimiter()
         }
