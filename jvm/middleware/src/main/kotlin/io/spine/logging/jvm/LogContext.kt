@@ -636,7 +636,7 @@ protected constructor(
     }
 
     public final override fun log(
-        msg: String?,
+        message: String?,
         p1: Any?,
         p2: Any?,
         p3: Any?,
@@ -644,12 +644,12 @@ protected constructor(
         p5: Any?
     ) {
         if (shouldLog()) {
-            logImpl(msg, p1, p2, p3, p4, p5)
+            logImpl(message, p1, p2, p3, p4, p5)
         }
     }
 
     public final override fun log(
-        msg: String?,
+        message: String?,
         p1: Any?,
         p2: Any?,
         p3: Any?,
@@ -658,12 +658,12 @@ protected constructor(
         p6: Any?
     ) {
         if (shouldLog()) {
-            logImpl(msg, p1, p2, p3, p4, p5, p6)
+            logImpl(message, p1, p2, p3, p4, p5, p6)
         }
     }
 
     public final override fun log(
-        msg: String?,
+        message: String?,
         p1: Any?,
         p2: Any?,
         p3: Any?,
@@ -673,12 +673,12 @@ protected constructor(
         p7: Any?
     ) {
         if (shouldLog()) {
-            logImpl(msg, p1, p2, p3, p4, p5, p6, p7)
+            logImpl(message, p1, p2, p3, p4, p5, p6, p7)
         }
     }
 
     public final override fun log(
-        msg: String?,
+        message: String?,
         p1: Any?,
         p2: Any?,
         p3: Any?,
@@ -689,12 +689,12 @@ protected constructor(
         p8: Any?
     ) {
         if (shouldLog()) {
-            logImpl(msg, p1, p2, p3, p4, p5, p6, p7, p8)
+            logImpl(message, p1, p2, p3, p4, p5, p6, p7, p8)
         }
     }
 
     public final override fun log(
-        msg: String?,
+        message: String?,
         p1: Any?,
         p2: Any?,
         p3: Any?,
@@ -706,12 +706,12 @@ protected constructor(
         p9: Any?
     ) {
         if (shouldLog()) {
-            logImpl(msg, p1, p2, p3, p4, p5, p6, p7, p8, p9)
+            logImpl(message, p1, p2, p3, p4, p5, p6, p7, p8, p9)
         }
     }
 
     public final override fun log(
-        msg: String?,
+        message: String?,
         p1: Any?,
         p2: Any?,
         p3: Any?,
@@ -724,12 +724,12 @@ protected constructor(
         p10: Any?
     ) {
         if (shouldLog()) {
-            logImpl(msg, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10)
+            logImpl(message, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10)
         }
     }
 
     public final override fun log(
-        msg: String?,
+        message: String?,
         p1: Any?,
         p2: Any?,
         p3: Any?,
@@ -756,515 +756,515 @@ protected constructor(
             params[8] = p9
             params[9] = p10
             System.arraycopy(rest, 0, params, 10, rest.size)
-            logImpl(msg, *params)
+            logImpl(message, *params)
         }
     }
 
-    public final override fun log(message: String, p1: Char) {
+    public final override fun log(message: String?, p1: Char) {
         if (shouldLog()) {
             logImpl(message, p1)
         }
     }
 
-    public final override fun log(message: String, p1: Byte) {
+    public final override fun log(message: String?, p1: Byte) {
         if (shouldLog()) {
             logImpl(message, p1)
         }
     }
 
-    public final override fun log(message: String, p1: Short) {
+    public final override fun log(message: String?, p1: Short) {
         if (shouldLog()) {
             logImpl(message, p1)
         }
     }
 
-    public final override fun log(message: String, p1: Int) {
+    public final override fun log(message: String?, p1: Int) {
         if (shouldLog()) {
             logImpl(message, p1)
         }
     }
 
-    public final override fun log(message: String, p1: Long) {
+    public final override fun log(message: String?, p1: Long) {
         if (shouldLog()) {
             logImpl(message, p1)
         }
     }
 
-    public final override fun log(message: String, p1: Any?, p2: Boolean) {
+    public final override fun log(message: String?, p1: Any?, p2: Boolean) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Any?, p2: Char) {
+    public final override fun log(message: String?, p1: Any?, p2: Char) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Any?, p2: Byte) {
+    public final override fun log(message: String?, p1: Any?, p2: Byte) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Any?, p2: Short) {
+    public final override fun log(message: String?, p1: Any?, p2: Short) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Any?, p2: Int) {
+    public final override fun log(message: String?, p1: Any?, p2: Int) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Any?, p2: Long) {
+    public final override fun log(message: String?, p1: Any?, p2: Long) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Any?, p2: Float) {
+    public final override fun log(message: String?, p1: Any?, p2: Float) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Any?, p2: Double) {
+    public final override fun log(message: String?, p1: Any?, p2: Double) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Boolean, p2: Any?) {
+    public final override fun log(message: String?, p1: Boolean, p2: Any?) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Char, p2: Any?) {
+    public final override fun log(message: String?, p1: Char, p2: Any?) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Byte, p2: Any?) {
+    public final override fun log(message: String?, p1: Byte, p2: Any?) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Short, p2: Any?) {
+    public final override fun log(message: String?, p1: Short, p2: Any?) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Int, p2: Any?) {
+    public final override fun log(message: String?, p1: Int, p2: Any?) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Long, p2: Any?) {
+    public final override fun log(message: String?, p1: Long, p2: Any?) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Float, p2: Any?) {
+    public final override fun log(message: String?, p1: Float, p2: Any?) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Double, p2: Any?) {
+    public final override fun log(message: String?, p1: Double, p2: Any?) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Boolean, p2: Boolean) {
+    public final override fun log(message: String?, p1: Boolean, p2: Boolean) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Char, p2: Boolean) {
+    public final override fun log(message: String?, p1: Char, p2: Boolean) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Byte, p2: Boolean) {
+    public final override fun log(message: String?, p1: Byte, p2: Boolean) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Short, p2: Boolean) {
+    public final override fun log(message: String?, p1: Short, p2: Boolean) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Int, p2: Boolean) {
+    public final override fun log(message: String?, p1: Int, p2: Boolean) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Long, p2: Boolean) {
+    public final override fun log(message: String?, p1: Long, p2: Boolean) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Float, p2: Boolean) {
+    public final override fun log(message: String?, p1: Float, p2: Boolean) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Double, p2: Boolean) {
+    public final override fun log(message: String?, p1: Double, p2: Boolean) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Boolean, p2: Char) {
+    public final override fun log(message: String?, p1: Boolean, p2: Char) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Char, p2: Char) {
+    public final override fun log(message: String?, p1: Char, p2: Char) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Byte, p2: Char) {
+    public final override fun log(message: String?, p1: Byte, p2: Char) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Short, p2: Char) {
+    public final override fun log(message: String?, p1: Short, p2: Char) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Int, p2: Char) {
+    public final override fun log(message: String?, p1: Int, p2: Char) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Long, p2: Char) {
+    public final override fun log(message: String?, p1: Long, p2: Char) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Float, p2: Char) {
+    public final override fun log(message: String?, p1: Float, p2: Char) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Double, p2: Char) {
+    public final override fun log(message: String?, p1: Double, p2: Char) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Boolean, p2: Byte) {
+    public final override fun log(message: String?, p1: Boolean, p2: Byte) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Char, p2: Byte) {
+    public final override fun log(message: String?, p1: Char, p2: Byte) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Byte, p2: Byte) {
+    public final override fun log(message: String?, p1: Byte, p2: Byte) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Short, p2: Byte) {
+    public final override fun log(message: String?, p1: Short, p2: Byte) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Int, p2: Byte) {
+    public final override fun log(message: String?, p1: Int, p2: Byte) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Long, p2: Byte) {
+    public final override fun log(message: String?, p1: Long, p2: Byte) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Float, p2: Byte) {
+    public final override fun log(message: String?, p1: Float, p2: Byte) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Double, p2: Byte) {
+    public final override fun log(message: String?, p1: Double, p2: Byte) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Boolean, p2: Short) {
+    public final override fun log(message: String?, p1: Boolean, p2: Short) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Char, p2: Short) {
+    public final override fun log(message: String?, p1: Char, p2: Short) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Byte, p2: Short) {
+    public final override fun log(message: String?, p1: Byte, p2: Short) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Short, p2: Short) {
+    public final override fun log(message: String?, p1: Short, p2: Short) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Int, p2: Short) {
+    public final override fun log(message: String?, p1: Int, p2: Short) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Long, p2: Short) {
+    public final override fun log(message: String?, p1: Long, p2: Short) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Float, p2: Short) {
+    public final override fun log(message: String?, p1: Float, p2: Short) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Double, p2: Short) {
+    public final override fun log(message: String?, p1: Double, p2: Short) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Boolean, p2: Int) {
+    public final override fun log(message: String?, p1: Boolean, p2: Int) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Char, p2: Int) {
+    public final override fun log(message: String?, p1: Char, p2: Int) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Byte, p2: Int) {
+    public final override fun log(message: String?, p1: Byte, p2: Int) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Short, p2: Int) {
+    public final override fun log(message: String?, p1: Short, p2: Int) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Int, p2: Int) {
+    public final override fun log(message: String?, p1: Int, p2: Int) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Long, p2: Int) {
+    public final override fun log(message: String?, p1: Long, p2: Int) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Float, p2: Int) {
+    public final override fun log(message: String?, p1: Float, p2: Int) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Double, p2: Int) {
+    public final override fun log(message: String?, p1: Double, p2: Int) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Boolean, p2: Long) {
+    public final override fun log(message: String?, p1: Boolean, p2: Long) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Char, p2: Long) {
+    public final override fun log(message: String?, p1: Char, p2: Long) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Byte, p2: Long) {
+    public final override fun log(message: String?, p1: Byte, p2: Long) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Short, p2: Long) {
+    public final override fun log(message: String?, p1: Short, p2: Long) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Int, p2: Long) {
+    public final override fun log(message: String?, p1: Int, p2: Long) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Long, p2: Long) {
+    public final override fun log(message: String?, p1: Long, p2: Long) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Float, p2: Long) {
+    public final override fun log(message: String?, p1: Float, p2: Long) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Double, p2: Long) {
+    public final override fun log(message: String?, p1: Double, p2: Long) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Boolean, p2: Float) {
+    public final override fun log(message: String?, p1: Boolean, p2: Float) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Char, p2: Float) {
+    public final override fun log(message: String?, p1: Char, p2: Float) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Byte, p2: Float) {
+    public final override fun log(message: String?, p1: Byte, p2: Float) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Short, p2: Float) {
+    public final override fun log(message: String?, p1: Short, p2: Float) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Int, p2: Float) {
+    public final override fun log(message: String?, p1: Int, p2: Float) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Long, p2: Float) {
+    public final override fun log(message: String?, p1: Long, p2: Float) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Float, p2: Float) {
+    public final override fun log(message: String?, p1: Float, p2: Float) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Double, p2: Float) {
+    public final override fun log(message: String?, p1: Double, p2: Float) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Boolean, p2: Double) {
+    public final override fun log(message: String?, p1: Boolean, p2: Double) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Char, p2: Double) {
+    public final override fun log(message: String?, p1: Char, p2: Double) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Byte, p2: Double) {
+    public final override fun log(message: String?, p1: Byte, p2: Double) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Short, p2: Double) {
+    public final override fun log(message: String?, p1: Short, p2: Double) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Int, p2: Double) {
+    public final override fun log(message: String?, p1: Int, p2: Double) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Long, p2: Double) {
+    public final override fun log(message: String?, p1: Long, p2: Double) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Float, p2: Double) {
+    public final override fun log(message: String?, p1: Float, p2: Double) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
     }
 
-    public final override fun log(message: String, p1: Double, p2: Double) {
+    public final override fun log(message: String?, p1: Double, p2: Double) {
         if (shouldLog()) {
             logImpl(message, p1, p2)
         }
