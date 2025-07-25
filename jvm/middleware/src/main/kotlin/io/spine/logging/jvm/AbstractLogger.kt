@@ -140,7 +140,7 @@ public abstract class AbstractLogger<API : MiddlemanApi<API>> protected construc
     protected fun isLoggable(level: Level): Boolean = backend.isLoggable(level)
 
     /**
-     * Opens access to the `protected` `isLoggable` function for this package.
+     * Opens access to the `protected` [isLoggable] function for this package.
      */
     internal fun doIsLoggable(level: Level): Boolean = isLoggable(level)
 
@@ -161,9 +161,9 @@ public abstract class AbstractLogger<API : MiddlemanApi<API>> protected construc
     @Suppress("TooGenericExceptionCaught")
     public fun write(data: LogData) {
         checkNotNull(data, "data")
-        // Note: Recursion checking should not be in the LoggerBackend.
-        // There are many backends and they
-        // can call into other backends. We only want the counter incremented per log statement.
+        // Note: Recursion checking should not be in the `LoggerBackend`.
+        // There are many backends and they can call into other backends.
+        // We only want the counter incremented per log statement.
         try {
             RecursionDepth.enterLogStatement().use { depth ->
                 if (depth.getValue() <= MAX_ALLOWED_RECURSION_DEPTH) {
@@ -194,7 +194,7 @@ public abstract class AbstractLogger<API : MiddlemanApi<API>> protected construc
             try {
                 badError.printStackTrace(System.err)
             } catch (_: RuntimeException) {
-                // We already printed the base error so it doesn't seem worth doing
+                // We already printed the base error, so it doesn't seem worth doing
                 // anything more here.
             }
         }
@@ -204,7 +204,6 @@ public abstract class AbstractLogger<API : MiddlemanApi<API>> protected construc
      * It is important that this code never risk calling back to a user-supplied value
      * (e.g., logged arguments or metadata) since that could trigger a recursive error state.
      */
-    @Suppress("UseOfSystemOutOrSystemErr")
     private fun reportError(message: String, data: LogData) {
         val out = buildString {
             append(formatTimestampIso8601(data))
@@ -213,9 +212,12 @@ public abstract class AbstractLogger<API : MiddlemanApi<API>> protected construc
             append("]: ")
             append(message)
         }
-        System.err.println(out)
-        // We expect System.err to be an auto-flushing stream, but let's be sure.
-        System.err.flush()
+        @Suppress("UseOfSystemOutOrSystemErr")
+        System.err.run {
+            println(out)
+            // We expect System.err to be an auto-flushing stream, but let's be sure.
+            flush()
+        }
     }
 
     private fun formatTimestampIso8601(data: LogData): String {
