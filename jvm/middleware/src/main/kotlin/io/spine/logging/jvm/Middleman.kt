@@ -103,9 +103,12 @@ public class Middleman(backend: LoggerBackend) : AbstractLogger<Middleman.Api>(b
         return if (isLoggable || isForced) Context(level, isForced) else NO_OP
     }
 
-    /** Logging context implementing the fully specified API for this logger. */
+    /**
+     * Logging context implementing the fully specified API for this logger.
+     */
     @VisibleForTesting
-    internal inner class Context(level: Level, isForced: Boolean) : LogContext<Middleman, Api>(level, isForced), Api {
+    internal inner class Context(level: Level, isForced: Boolean) :
+        LogContext<Middleman, Api>(level, isForced), Api {
 
         override fun getLogger(): Middleman = this@Middleman
 
