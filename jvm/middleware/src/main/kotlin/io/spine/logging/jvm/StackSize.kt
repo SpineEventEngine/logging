@@ -38,7 +38,7 @@ package io.spine.logging.jvm
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/StackSize.java">
  *     Original Java code of Google Flogger</a> for historical context.
  */
-@Suppress("MagicNumber")
+@Suppress("MagicNumber") // The numbers are the maximum stack sizes for each enum value.
 public enum class StackSize(public val maxDepth: Int) {
 
     /**
