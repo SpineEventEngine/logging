@@ -26,7 +26,6 @@
 
 package io.spine.logging.jvm
 
-import io.spine.logging.jvm.util.Checks.checkNotNull
 import org.jspecify.annotations.Nullable
 
 /**
@@ -71,15 +70,14 @@ public fun interface LazyArg<T> {
          * using this mechanism and, in general, explicitly calling `toString()` on arguments
          * which are being logged is an error as it precludes the ability to log an argument
          * structurally.
+         *
+         * ### Implementation note
+         *
+         * This method is essentially a coercing cast for the functional interface to give
+         * the compiler a target type to convert a lambda expression or method reference into.
          */
         @JvmStatic
-        public fun <T> lazy(lambdaOrMethodReference: LazyArg<T>): LazyArg<T> {
-
-            /**
-             * This method is essentially a coercing cast for the functional interface to give
-             * the compiler a target type to convert a lambda expression or method reference into.
-             */
-            return checkNotNull(lambdaOrMethodReference, "lazy arg")
-        }
+        public fun <T> lazy(lambdaOrMethodReference: LazyArg<T>): LazyArg<T> =
+            lambdaOrMethodReference
     }
 }
