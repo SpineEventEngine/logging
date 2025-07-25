@@ -65,7 +65,6 @@ import java.util.logging.Level
     "ReturnCount",
     "LargeClass",
     "MaxLineLength",
-    "MaxLineLength",
     "TooManyFunctions",
     "SpreadOperator",
     "MagicNumber"
@@ -338,7 +337,7 @@ protected constructor(
                 // |  LogContext::log
                 // |  LogContext::shouldLog
                 // |  OtherChildContext::postProcess
-                // |  ChildContext::postProcess  << this is *not* the caller of LogContext we're after
+                // |  ChildContext::postProcess  << this is *not* the caller of `LogContext` we're after
                 // \- LogContext::postProcess    << we are here
                 //
                 // By skipping the initial code inside this method, we don't trigger any stack
@@ -352,7 +351,7 @@ protected constructor(
                 addMetadata(Key.LOG_CAUSE, context)
             }
         }
-        // By default, no restrictions apply so we should log.
+        // By default, no restrictions apply, so we should log.
         return true
     }
 
@@ -440,9 +439,10 @@ protected constructor(
      */
     private fun logImpl(message: String?, vararg args: Any?) {
         this.args = arrayOf(*args)
-        // Evaluate any (rare) LazyArg instances early. This may throw exceptions from user code,
-        // but it seems reasonable to propagate them in this case (they would have been thrown
-        // if the argument was evaluated at the call site anyway).
+        // Evaluate any (rare) LazyArg instances early.
+        // This may throw exceptions from user code, but it seems reasonable
+        // to propagate them in this case.
+        // They would have been thrown if the argument was evaluated at the call site anyway.
         for (n in this.args!!.indices) {
             if (this.args!![n] is LazyArg<*>) {
                 this.args!![n] = (this.args!![n] as LazyArg<*>).evaluate()
