@@ -33,21 +33,22 @@ import io.spine.logging.jvm.backend.Metadata
  */
 internal class MutableMetadata : Metadata() {
 
-    /**
-     * The default number of key/value pairs we initially allocate space for when someone adds
-     * metadata to this context.
-     *
-     * Note: As of 10/12 the VM allocates small object arrays very linearly with
-     * respect to the number of elements.
-     * An array has a 12-byte header with 4 bytes/element for object references.
-     * The allocation size is always rounded up to the next 8 bytes which means we
-     * can just pick a small value for the initial size and grow from there without
-     * too much waste.
-     *
-     * For 4 key/value pairs, we will need 8 elements in the array, which will take up
-     * 48 bytes `(12 + (8 * 4) = 44`, which when rounded up is 48.
-     */
     private companion object {
+
+        /**
+         * The default number of key/value pairs we initially allocate space for when
+         * someone adds metadata to this context.
+         *
+         * Note: As of 10/12 the VM allocates small object arrays very linearly with
+         * respect to the number of elements.
+         * An array has a 12-byte header with 4 bytes/element for object references.
+         * The allocation size is always rounded up to the next 8 bytes, which means we
+         * can just pick a small value for the initial size and grow from there without
+         * too much waste.
+         *
+         * For 4 key/value pairs, we will need 8 elements in the array, which will
+         * take up 48 bytes `(12 + (8 * 4) = 44`, which when rounded up is 48.
+         */
         private const val INITIAL_KEY_VALUE_CAPACITY = 4
     }
 
