@@ -112,6 +112,10 @@ public abstract class LogPerBucketingStrategy<T> protected constructor(
 
     public companion object {
 
+        /**
+         * A strategy to use only if the set of log aggregation keys is known to be
+         * a strictly bounded set of instances with singleton semantics.
+         */
         private val KNOWN_BOUNDED = object : LogPerBucketingStrategy<Any>("KnownBounded") {
             override fun apply(key: Any): Any = key
         }
