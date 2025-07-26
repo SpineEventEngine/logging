@@ -213,8 +213,13 @@ public abstract class AbstractLogger<API : MiddlemanApi<API>> protected construc
     }
 
     /**
+     * Prints an error message to `System.err`.
+     *
      * It is important that this code never risk calling back to a user-supplied value
      * (e.g., logged arguments or metadata) since that could trigger a recursive error state.
+     *
+     * @param message The error message to report.
+     * @param data The log data that was being processed when the error occurred.
      */
     private fun reportError(message: String, data: LogData) {
         val out = buildString {

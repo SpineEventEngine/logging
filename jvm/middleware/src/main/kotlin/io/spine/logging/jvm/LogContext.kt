@@ -375,7 +375,7 @@ protected constructor(
      * See [RateLimitStatus] for more information on how to implement custom
      * rate limiting.
      *
-     * @param status a rate-limiting status, or `null` if the rate limiter was not active.
+     * @param status A rate-limiting status, or `null` if the rate limiter was not active.
      * @return whether logging will occur based on the current combined state of
      *         active rate limiters.
      */
