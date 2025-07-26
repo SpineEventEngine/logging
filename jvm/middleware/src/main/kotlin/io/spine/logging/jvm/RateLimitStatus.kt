@@ -31,22 +31,23 @@ import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 
 /**
- * Status for rate-limiting operations, usable by rate limiters and available to subclasses of
- * `LogContext` to handle rate limiting consistently.
+ * Status for rate-limiting operations, usable by rate limiters and available to
+ * subclasses of [LogContext] to handle rate limiting consistently.
  *
  * ## Design Notes
  *
- * The purpose of this class is to allow rate limiters to behave in a way which is consistent
- * when multiple rate limiters are combined for a single log statement. If you are writing a rate
- * limiter for Flogger which you want to "play well" with other rate limiters, it is essential that
- * you understand how `RateLimitStatus` is designed to work.
+ * The purpose of this class is to allow rate limiters to behave in a way which
+ * is consistent when multiple rate limiters are combined for a single log statement.
+ * If you are writing a rate limiter for logging which you want to "play well" with
+ * other rate limiters, it is essential that you understand how `RateLimitStatus`
+ * is designed to work.
  *
- * Firstly, `LogContext` tracks a single status for each log statement reached. This is
- * modified by code in the `postProcess()` method (which can be overridden by custom logger
- * implementations).
+ * Firstly, [LogContext] tracks a single status for each log statement reached.
+ * This is modified by code in the [postProcess()][LogContext.postProcess] method,
+ * which can be overridden by custom logger implementations.
  *
- * When a rate limiter is used, it returns a `RateLimitStatus`, which is combined with the
- * existing value held in the context:
+ * When a rate limiter is used, it returns a `RateLimitStatus`, which is
+ * combined with the existing value held in the context:
  *
  * ```kotlin
  * rateLimitStatus = RateLimitStatus.combine(rateLimitStatus, MyCustomRateLimiter.check(...))
@@ -55,17 +56,20 @@ import java.util.concurrent.atomic.AtomicInteger
  * A rate limiter should switch between two primary states "limiting" and "pending":
  *
  * - In the "limiting" state, the limiter should return the [DISALLOW] value
- *   and update any internal state until it reaches its trigger condition. Once the trigger
- *   condition is reached, the limiter enters the "pending" state.
+ *   and update any internal state until it reaches its trigger condition.
+ *   Once the trigger condition is reached, the limiter enters the "pending" state.
+ *
  * - In the "pending" state, the limiter returns an "allow" status _until it is [reset]_.
  *
- * This two-step approach means that, when multiple rate limiters are active for a single log
- * statement, logging occurs after all rate limiters are "pending" (and at this point they are all
- * reset). This is much more consistent than having each rate limiter operate independently, and
- * allows a much more intuitive understanding of expected behaviour.
+ * This two-step approach means that, when multiple rate limiters are active
+ * for a single log statement, logging occurs after all rate limiters are "pending"
+ * (and at this point they are all reset). This is much more consistent than having
+ * each rate limiter operate independently, and allows a much more intuitive
+ * understanding of expected behaviour.
  *
- * It is recommended that most rate limiters should start in the "pending" state to ensure that
- * the first log statement they process is emitted (even when multiple rate limiters are used).
+ * It is recommended that most rate limiters should start in the "pending"
+ * state to ensure that the first log statement they process is emitted
+ * (even when multiple rate limiters are used).
  * This isn't required, but it should be documented either way.
  *
  * Each rate limiter is expected to follow this basic structure:
@@ -95,17 +99,17 @@ import java.util.concurrent.atomic.AtomicInteger
  * }
  * ```
  *
- * The use of `LogSiteMap` ensures a rate limiter instance is held separately for each log
+ * The use of [LogSiteMap] ensures a rate limiter instance is held separately for each log
  * statement, but it also handles complex garbage collection issues around "specialized" log site
  * keys. All rate limiter implementations _must_ use this approach.
  *
  * Having the rate limiter class extend `RateLimitStatus` is a convenience for the case
- * where the `reset()` operation requires no additional information. If the `reset()`
- * operation requires extra state (e.g. from previous logging calls) then this approach will not be
- * possible, and a separate `RateLimitStatus` subclass would need to be allocated to hold that
- * state.
+ * where the [reset] operation requires no additional information.
+ * If the [reset] operation requires extra state (e.g. from previous logging calls) then
+ * this approach will not be possible, and a separate `RateLimitStatus` subclass would
+ * need to be allocated to hold that state.
  *
- * Rate limiter instances _must_ be thread safe, and should avoid using locks wherever
+ * Rate limiter instances _must_ be thread-safe, and should avoid using locks wherever
  * possible (since using explicit locking can cause unacceptable thread contention in highly
  * concurrent systems).
  *
@@ -161,8 +165,8 @@ public abstract class RateLimitStatus protected constructor() {
     }
 
     /**
-     * Resets an associated rate limiter, moving it out of the "pending" state and back into rate
-     * limiting mode.
+     * Resets an associated rate limiter, moving it out of the "pending" state and
+     * back into rate limiting mode.
      *
      * Note: This method is never invoked concurrently with another `reset()` operation,
      * but it can be concurrent with calls to update rate limiter state.
@@ -182,8 +186,8 @@ public abstract class RateLimitStatus protected constructor() {
         public val DISALLOW: RateLimitStatus = sentinel()
 
         /**
-         * The status to return whenever a stateless rate limiter determines that logging should
-         * occur.
+         * The status to return whenever a stateless rate limiter determines that
+         * logging should occur.
          *
          * Note: Truly stateless rate limiters should be _very_ rare, since they cannot hold
          * onto a pending "allow" state. Even a simple "sampling rate limiter" should be stateful
@@ -214,7 +218,7 @@ public abstract class RateLimitStatus protected constructor() {
          *
          * 1. If `rateLimitStatus == null` no rate limiters were applied, so logging is allowed.
          * 2. If `rateLimitStatus == DISALLOW`, the log was suppressed by rate limiting.
-         * 3. Otherwise the log statement was allowed, but rate limiters must now be reset.
+         * 3. Otherwise, the log statement was allowed, but rate limiters must now be reset.
          *
          * This code ensures that in the normal case of having no rate limiting for a log statement,
          * no allocations occur. It also ensures that (assuming well-written rate limiters) there
@@ -223,24 +227,26 @@ public abstract class RateLimitStatus protected constructor() {
         @JvmStatic
         public fun combine(a: RateLimitStatus?, b: RateLimitStatus?): RateLimitStatus? =
             when {
-                // In the vast majority of cases this code will be run once per log statement, and at
-                // least one of 'a' or 'b' will be null. So optimize early exiting for that case.
+                // In the vast majority of cases this code will be run once
+                // per log statement, and at least one of 'a' or 'b' will be null.
+                // So optimize early exiting for that case.
                 a == null -> b
                 b == null -> a
-                // This is already a rare situation where 2 rate limiters are active for the same log
-                // statement. However, in most of these cases, at least one will likely "disallow"
-                // logging.
+                // This is already a rare situation where 2 rate limiters are
+                // active for the same log statement.
+                // However, in most of these cases, at least one will likely "disallow" logging.
                 a == DISALLOW || b == ALLOW -> a
                 b == DISALLOW || a == ALLOW -> b
-                // Getting here should be very rare and happens only when multiple rate limiters have
-                // reached the "pending" state and logging should occur. Neither status is null, ALLOW
-                // or DISALLOW.
+                // Getting here should be very rare and happens only when multiple
+                // rate limiters have reached the "pending" state and logging should occur.
+                // Neither status is `null`, `ALLOW` or `DISALLOW`.
                 else -> object : RateLimitStatus() {
                     override fun reset() {
-                        // Make sure both statuses are reset regardless of errors. If both throw errors
-                        // we only expose the 2nd one (we don't track "suppressed" exceptions). This is
-                        // fine though since a reset() method should never risk throwing anything in the
-                        // first place.
+                        // Make sure both statuses are reset regardless of errors.
+                        // If both throw errors, we only expose the 2nd one
+                        // (we don't track "suppressed" exceptions).
+                        // This is fine though since a `reset()` method should never risk
+                        // throwing anything in the first place.
                         try {
                             a.reset()
                         } finally {
