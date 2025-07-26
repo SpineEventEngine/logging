@@ -38,13 +38,14 @@ Examples of unacceptable behavior include:
 
 ## Enforcement Responsibilities
 
-Community leaders are responsible for clarifying and enforcing our acceptable behavior standards.
-They will take appropriate and fair corrective action in response to any behavior that they
-deem inappropriate, threatening, offensive, or harmful.
+Community leaders are responsible for clarifying and enforcing our standards of
+acceptable behavior and will take appropriate and fair corrective action in
+response to any behavior that they deem inappropriate, threatening, offensive,
+or harmful.
 
 Community leaders have the right and responsibility to remove, edit, or reject
-comments, commits, code, wiki edits, issues, and other non-aligned contributions
-to this Code of Conduct. They will communicate reasons for moderation
+comments, commits, code, wiki edits, issues, and other contributions that are
+not aligned to this Code of Conduct, and will communicate reasons for moderation
 decisions when appropriate.
 
 ## Scope
@@ -62,7 +63,8 @@ reported to the community leaders responsible for enforcement at
 developers@spine.io.
 All complaints will be reviewed and investigated promptly and fairly.
 
-All community leaders are obligated to respect each incident reporter's privacy and security.
+All community leaders are obligated to respect the privacy and security of the
+reporter of any incident.
 
 ## Enforcement Guidelines
 
@@ -75,8 +77,8 @@ the consequences for any action they deem in violation of this Code of Conduct:
 unprofessional or unwelcome in the community.
 
 **Consequence**: A private, written warning from community leaders, providing
-clarity about the violation's nature and explaining why such behavior was inappropriate.
-A public apology may be requested.
+clarity around the nature of the violation and an explanation of why the
+behavior was inappropriate. A public apology may be requested.
 
 ### 2. Warning
 
@@ -84,10 +86,11 @@ A public apology may be requested.
 of actions.
 
 **Consequence**: A warning with consequences for continued behavior. No
-interaction is allowed with the people involved, including those enforcing the Code of Conduct,
-for a specified period of time. This includes avoiding interactions in community spaces
-as well as external channels like social media. Violating these terms could cause
-either a temporary or permanent ban.
+interaction with the people involved, including unsolicited interaction with
+those enforcing the Code of Conduct, for a specified period of time. This
+includes avoiding interactions in community spaces as well as external channels
+like social media. Violating these terms may lead to a temporary or
+permanent ban.
 
 ### 3. Temporary Ban
 
@@ -95,15 +98,16 @@ either a temporary or permanent ban.
 sustained inappropriate behavior.
 
 **Consequence**: A temporary ban from any sort of interaction or public
-communication with the community for a specified period of time. Neither public nor
-private interaction is allowed with the people involved, including those enforcing
-the Code of Conduct, during this period. Violating these terms may lead to a permanent ban.
+communication with the community for a specified period of time. No public or
+private interaction with the people involved, including unsolicited interaction
+with those enforcing the Code of Conduct, is allowed during this period.
+Violating these terms may lead to a permanent ban.
 
 ### 4. Permanent Ban
 
 **Community Impact**: Demonstrating a pattern of violation of community
-standards, including sustained inappropriate behavior, individual harassment,
-or aggression toward or disparagement of classes of individuals.
+standards, including sustained inappropriate behavior,  harassment of an
+individual, or aggression toward or disparagement of classes of individuals.
 
 **Consequence**: A permanent ban from any sort of public interaction within
 the community.
