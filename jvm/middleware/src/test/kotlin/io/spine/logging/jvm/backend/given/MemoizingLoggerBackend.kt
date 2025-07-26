@@ -33,7 +33,7 @@ import java.util.logging.Level
 /**
  * A logger backend that captures all [LogData] instances.
  *
- * This class is mutable and not thread safe.
+ * This class is mutable and not thread-safe.
  *
  * @see <a href="http://rb.gy/r6jjw">Original Java code of Google Flogger</a>
  *   for historical context.
