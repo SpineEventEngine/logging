@@ -28,7 +28,6 @@ package io.spine.logging.jvm.context
 
 import io.spine.logging.jvm.LoggingScope
 import io.spine.logging.jvm.LoggingScopeProvider
-import io.spine.logging.jvm.util.Checks.checkNotNull
 
 /**
  * Singleton keys which identify different types of scopes which scoped contexts can be bound to.
@@ -56,42 +55,48 @@ public class ScopeType private constructor(private val name: String) : LoggingSc
     }
 
     public companion object {
+
         /**
-         * The built-in "request" scope. This can be bound to a scoped context in order to provide a
-         * distinct request scope for each context, allowing stateful logging operations (e.g., rate
-         * limiting) to be scoped to the current request.
+         * The built-in "request" scope.
+         *
+         * This can be bound to a scoped context in order to provide a distinct
+         * request scope for each context, allowing stateful logging operations
+         * (e.g., rate limiting) to be scoped to the current request.
          *
          * Enable a request scope using:
          *
-         * ```
+         * ```kotlin
          * ScopedLoggingContext.getInstance().newScope(REQUEST).run { scopedMethod(x, y, z) }
          * ```
-         *
+
          * which runs `scopedMethod` with a new "request" scope for the duration of the context.
          *
          * Then use per-request rate limiting using:
          *
-         * ```
+         * ```kotlin
          * logger.atWarning().atMostEvery(5, SECONDS).per(REQUEST).log("Some error message...")
          * ```
          *
-         * Note that in order for the request scope to be applied to a log statement, the
-         * `per(REQUEST)` method must still be called; just being inside the request scope isn't enough.
+         * Note that in order for the request scope to be applied to a log statement,
+         * the `per(REQUEST)` method must still be called;
+         * just being inside the request scope isn't enough.
          */
         @JvmField
         public val REQUEST: ScopeType = create("request")
 
         /**
-         * Creates a new Scope type, which can be used as a singleton key to identify a scope during
-         * scoped context creation or logging. Callers are expected to retain this key in a static field
-         * or return it via a static method. Scope types have singleton semantics and two scope types with
+         * Creates a new Scope type, which can be used as a singleton key
+         * to identify a scope during scoped context creation or logging.
+         *
+         * Callers are expected to retain this key in a static field or
+         * return it via a static method.
+         *
+         * Scope types have singleton semantics and two scope types with
          * the same name are *NOT* equivalent.
          *
-         * @param name a debug friendly scope identifier (e.g. "my_batch_job").
+         * @param name A debug-friendly scope identifier (e.g., `"my_batch_job"`).
          */
         @JvmStatic
-        public fun create(name: String): ScopeType {
-            return ScopeType(checkNotNull(name, "name"))
-        }
+        public fun create(name: String): ScopeType = ScopeType(name)
     }
 }

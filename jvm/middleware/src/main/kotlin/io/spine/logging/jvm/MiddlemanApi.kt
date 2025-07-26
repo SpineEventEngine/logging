@@ -31,26 +31,32 @@ package io.spine.logging.jvm
 import java.util.concurrent.TimeUnit
 
 /**
- * The basic logging API. An implementation of this API (or an extension of it) will be
- * returned by any logger and forms the basis of the fluent call chain.
+ * The basic logging API.
+ *
+ * An implementation of this API (or an extension of it) will be returned by any logger and
+ * forms the basis of the fluent call chain.
  *
  * In typical usage each method in the API, with the exception of the terminal [log]
  * statements, will carry out some simple task (which may involve modifying the context of the log
- * statement) and return the same API for chaining. The exceptions to this are:
+ * statement) and return the same API for chaining.
+ *
+ * The exceptions to this are:
  * - Methods which return a NoOp implementation of the API in order to disable logging.
- * - Methods which return an alternate API in order to implement context specific grammar (though
+ * - Methods which return an alternate API in order to implement context-specific grammar (though
  *   these alternate APIs should always return the original logging API eventually).
  *
  * A hypothetical example of a context-specific grammar might be:
- * ```
+ * ```kotlin
  * logger.at(WARNING).whenSystem().isLowOnMemory().log("")
  * ```
  * In this example the `whenSystem()` method would return its own API with several
  * context-specific methods (`isLowOnMemory()`, `isThrashing()` etc...).
  * However, each of these sub-APIs must eventually return the original logging API.
  *
- * @apiNote It is expected that this class is going to be merged
- *   with `io.spine.logging.LoggingApi` of the `logging` module.
+ * ### API note
+ *
+ * It is expected that this class is going to be merged with `io.spine.logging.LoggingApi` of
+ * the `logging` module.
  *
  * @see [Original Java code of Google Flogger](https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LoggingApi.java)
  *   for historical context.
@@ -65,66 +71,78 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
      * Typically, this method will be used from within catch blocks to log
      * the caught exception or error. If the cause is `null` then this method has no effect.
      *
-     * If this method is called multiple times for a single log statement, the last invocation will
-     * take precedence.
+     * If this method is called multiple times for a single log statement,
+     * the last invocation will take precedence.
+     *
+     * @param cause The [Throwable] to associate with the log statement, or `null` to remove any.
      */
     public fun withCause(cause: Throwable?): API
 
     /**
-     * Modifies the current log statement to be emitted at most one-in-N times. The specified count
-     * must be greater than zero, and it is expected, but not required, that it is constant. In the
-     * absence of any other rate limiting, this method always allows the first invocation of any log
-     * statement to be emitted.
+     * Modifies the current log statement to be emitted at most one-in-N times.
+     *
+     * The specified count must be greater than zero, and it is expected,
+     * but not required, that it is constant.
+     * In the absence of any other rate limiting, this method always allows
+     * the first invocation of any log statement to be emitted.
      *
      * ### Notes
      *
-     * If *multiple rate limiters* are used for a single log statement, that log statement will
-     * only be emitted once all rate limiters have reached their threshold, and when a log statement
-     * is emitted all the rate limiters are reset. In particular for [every] this means that
-     * logs need not always be emitted at multiples of `n` if other rate limiters are active,
-     * though it will always be at least `n`.
+     * If *multiple rate limiters* are used for a single log statement,
+     * that log statement will only be emitted once all rate limiters have
+     * reached their threshold, and when a log statement is emitted all
+     * the rate limiters are reset. In particular for [every] this means
+     * that logs need not always be emitted at multiples of `n` if other
+     * rate limiters are active, though it will always be at least `n`.
      *
-     * When rate limiting is active, a "skipped" count is added to log statements to indicate
-     * how many logs were disallowed since the last log statement was emitted.
+     * When rate limiting is active, a "skipped" count is added to log
+     * statements to indicate how many logs were disallowed since
+     * the last log statement was emitted.
      *
-     * If this method is called multiple times for a single log statement, the last invocation will
-     * take precedence.
+     * If this method is called multiple times for a single log statement,
+     * the last invocation will take precedence.
      *
-     * @param n the factor by which to reduce logging frequency.
+     * @param n The factor by which to reduce logging frequency.
      * @throws IllegalArgumentException if [n] is not positive.
      */
     public fun every(n: Int): API
 
     /**
-     * Modifies the current log statement to be emitted with likelihood 1 in [n]. For example,
-     * inserting `onAverageEvery(20)` into a call chain results in approximately 5% as many
-     * messages being emitted as before. Unlike the other rate-limiting options, there is no
-     * guarantee about when the first such message will be emitted, though it becomes highly likely as
-     * the number of calls reaches several times [n].
+     * Modifies the current log statement to be emitted with likelihood 1 in [n].
+     *
+     * For example, inserting `onAverageEvery(20)` into a call chain results in
+     * approximately 5% as many messages being emitted as before.
+     * Unlike the other rate-limiting options, there is no guarantee about
+     * when the first such message will be emitted, though it becomes highly
+     * likely as the number of calls reaches several times [n].
      *
      * ### Notes
      *
-     * If *multiple rate limiters* are used for a single log statement, that log statement will
-     * only be emitted once all rate limiters have reached their threshold, and when a log statement
-     * is emitted all the rate limiters are reset. In particular for `onAverageEvery(N)` this
-     * means that logs may occurs less frequently than one-in-N if other rate limiters are active.
+     * If *multiple rate limiters* are used for a single log statement,
+     * that log statement will only be emitted once all rate limiters have reached
+     * their threshold, and when a log statement is emitted, all the rate limiters
+     * are reset. In particular for `onAverageEvery(N)` this means that logs may
+     * occur less frequently than one-in-N if other rate limiters are active.
      *
-     * When rate limiting is active, a "skipped" count is added to log statements to indicate
-     * how many logs were disallowed since the last log statement was emitted.
+     * When rate limiting is active, a "skipped" count is added to log statements
+     * to indicate how many logs were disallowed since the last log statement was emitted.
      *
-     * If this method is called multiple times for a single log statement, the last invocation will
-     * take precedence.
+     * If this method is called multiple times for a single log statement,
+     * the last invocation will take precedence.
      *
-     * @param n the factor by which to reduce logging frequency; a value of `1` has no effect.
+     * @param n The factor by which to reduce logging frequency; a value of `1` has no effect.
      * @throws IllegalArgumentException if [n] is not positive.
      */
     public fun onAverageEvery(n: Int): API
 
     /**
-     * Modifies the current log statement to be emitted at most once per specified time period. The
-     * specified duration must not be negative, and it is expected, but not required, that it is
-     * constant. In the absence of any other rate limiting, this method always allows the first
-     * invocation of any log statement to be emitted.
+     * Modifies the current log statement to be emitted at most once
+     * per specified time period.
+     *
+     * The specified duration must not be negative, and it is expected,
+     * but not required, that it is constant.
+     * In the absence of any other rate limiting, this method always
+     * allows the first invocation of any log statement to be emitted.
      *
      * Note that for performance reasons `atMostEvery()` is explicitly *not* intended to
      * perform "proper" rate limiting to produce a limited average rate over many samples.
@@ -138,69 +156,84 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
      * where `currentTimestampNanos` is the timestamp of the current log statement and
      * `lastTimestampNanos` is a time stamp of the last log statement that was emitted.
      *
-     * The effect of this is that when logging invocation is relatively infrequent, the period
-     * between emitted log statements can be higher than the specified duration. For example
-     * if the following log statement were called every 600ms:
-     * ```
+     * The effect of this is that when logging invocation is relatively infrequent,
+     * the period between emitted log statements can be higher than the specified duration.
+     * For example, if the following log statement were called every 600ms:
+     *
+     * ```kotlin
      * logger.atFine().atMostEvery(2, SECONDS).log(...)
      * ```
+     *
      * logging would occur after `0s`, `2.4s` and `4.8s` (not `4.2s`),
      * giving an effective duration of `2.4s` between log statements over time.
      *
-     * Providing a zero-length duration (i.e., `n == 0`) disables rate limiting and makes this
-     * method an effective no-op.
+     * Providing a zero-length duration (i.e., `n == 0`) disables rate limiting and
+     * makes this method an effective no-op.
      *
      * ### Granularity
      *
-     * Because the implementation of this feature relies on a nanosecond timestamp provided by the
-     * backend, the actual granularity of the underlying clock used may vary, and it is possible to
-     * specify a time period smaller than the smallest visible time increment. If this occurs, then
-     * the effective rate limit applied to the log statement will be the smallest available time
-     * increment. For example, if the system clock granularity is 1 millisecond, and a
-     * log statement is called with `atMostEvery(700, MICROSECONDS)`, the effective rate of
-     * logging (even averaged over long periods) could never be more than once every millisecond.
+     * Because the implementation of this feature relies on a nanosecond timestamp
+     * provided by the backend, the actual granularity of the underlying clock used
+     * may vary, and it is possible to specify a time period smaller than
+     * the smallest visible time increment.
+     *
+     * If this occurs, then the effective rate limit applied to the log statement
+     * will be the smallest available time increment.
+     *
+     * For example, if the system clock granularity is 1 millisecond, and
+     * a log statement is called with `atMostEvery(700, MICROSECONDS)`,
+     * the effective rate of logging (even averaged over long periods)
+     * could never be more than once every millisecond.
      *
      * ### Notes
      *
-     * If *multiple rate limiters* are used for a single log statement, that log statement will
-     * only be emitted once all rate limiters have reached their threshold, and when a log statement
-     * is emitted all the rate limiters are reset. So even if the rate limit duration has expired, it
-     * does not mean that logging will occur.
+     * If *multiple rate limiters* are used for a single log statement, that
+     * log statement will only be emitted once all rate limiters have reached their threshold,
+     * and when a log statement is emitted all the rate limiters are reset.
      *
-     * When rate limiting is active, a "skipped" count is added to log statements to indicate
-     * how many logs were disallowed since the last log statement was emitted.
+     * So even if the rate limit duration has expired, it does not mean that logging will occur.
      *
-     * If this method is called multiple times for a single log statement, the last invocation will
-     * take precedence.
+     * When rate limiting is active, a "skipped" count is added to log statements
+     * to indicate how many logs were disallowed since the last log statement was emitted.
      *
-     * @param n the minimum number of time units between emitted log statements
-     * @param unit the time unit for the duration
+     * If this method is called multiple times for a single log statement,
+     * the last invocation will take precedence.
+     *
+     * @param n The minimum number of time units between emitted log statements
+     * @param unit The time unit for the duration
      * @throws IllegalArgumentException if [n] is negative.
      */
     public fun atMostEvery(n: Int, unit: TimeUnit): API
 
     /**
-     * Returns true if logging is enabled at the level implied for this API, according to the current
-     * logger backend. For example:
-     * ```
+     * Returns true if logging is enabled at the level implied for this API,
+     * according to the current logger backend.
+     *
+     * For example:
+     *
+     * ```kotlin
      * if (logger.atFine().isEnabled()) {
      *   // Do non-trivial argument processing
      *   logger.atFine().log("Message: %s", value)
      * }
      * ```
      *
-     * Note that if logging is enabled for a log level, it does not always follow that the log
-     * statement will definitely be written to the backend (due to the effects of other methods in
-     * the fluent chain), but if this method returns `false` then it can safely be assumed that
-     * no logging will occur.
+     * Note that if logging is enabled for a log level, it does not always follow
+     * that the log statement will definitely be written to the backend
+     * (due to the effects of other methods in the fluent chain),
+     * but if this method returns `false` then it can safely be assumed
+     * that no logging will occur.
      *
-     * This method is unaffected by additional methods in the fluent chain and should only ever be
-     * invoked immediately after the level selector method. In other words, the expression:
-     * ```
+     * This method is unaffected by additional methods in the fluent chain and
+     * should only ever be invoked immediately after the level selector method.
+     *
+     * In other words, the expression:
+     *
+     * ```kotlin
      * logger.atFine().every(100).isEnabled()
      * ```
      * is incorrect because it will always behave identically to:
-     * ```
+     * ```kotlin
      * logger.atFine().isEnabled()
      * ```
      *
@@ -248,47 +281,57 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
      * clear which arguments may contain PII and other sensitive data (which might need to be
      * scrubbed during logging). This recommendation also applies to all the overloaded [log]
      * methods below.
+     *
+     * @param msg The literal string to log. If `null`, this method will log a string literal
+     *   reserved by the Logging library for `null`s.
      */
     public fun log(msg: String?)
 
     /**
      * Aggregates stateful logging with respect to a given [key].
      *
-     * Normally log statements with conditional behaviour (e.g. rate limiting) use the same state
-     * for each invocation (e.g. counters or timestamps). This method allows an additional qualifier
-     * to be given which allows for different conditional state for each unique qualifier.
+     * Normally log statements with conditional behaviour (e.g., rate limiting)
+     * use the same state for each invocation (e.g., counters or timestamps).
+     * This method allows an additional qualifier to be given which allows for
+     * different conditional state for each unique qualifier.
      *
-     * This only makes a difference for log statements which use persistent state to control
-     * conditional behaviour (e.g. [atMostEvery] or [every]).
+     * This only makes a difference for log statements which use persistent state
+     * to control conditional behaviour (e.g., [atMostEvery] or [every]).
      *
-     * This is the most general form of log aggregation and allows any keys to be used, but it
-     * requires the caller to have chosen a bucketing strategy. Where it is possible to refactor code
-     * to avoid passing keys from an unbounded space into the [per] method (e.g. by
-     * mapping cases to an [Enum]), this is usually preferable.
+     * This is the most general form of log aggregation and allows any keys to be used,
+     * but it requires the caller to have chosen a bucketing strategy.
+     * Where it is possible to refactor code to avoid passing keys from an
+     * unbounded space into the [per] method (e.g., by mapping cases to an [Enum]),
+     * this is usually preferable.
      *
-     * When using this method, a bucketing strategy is needed to reduce the risk of leaking memory.
-     * Consider the alternate API:
+     * When using this method, a bucketing strategy is needed to reduce
+     * the risk of leaking memory. Consider the alternate API:
      *
-     * ```
+     * ```kotlin
      * // Rate limit per unique error message ("No such file", "File corrupted" etc.).
      * logger.atWarning().per(error.getMessage()).atMostEvery(30, SECONDS).log(...)
      * ```
      *
-     * A method such as the one above would need to store some record of all the unique messages it
-     * has seen in order to perform aggregation. This means that the API would suffer a potentially
-     * unbounded memory leak if a timestamp were included in the message (since all values would now
-     * be unique and need to be retained).
+     * A method such as the one above would need to store some record of
+     * all the unique messages it has seen in order to perform aggregation.
+     * This means that the API would suffer a potentially unbounded memory
+     * leak if a timestamp were included in the message (since all values
+     * would now be unique and need to be retained).
      *
-     * To fix (or at least mitigate) this issue, a [LogPerBucketingStrategy] is passed to
-     * provide a mapping from "unbounded key space" (e.g. arbitrary strings) to a bounded set of
-     * "bucketed" values. In the case of error messages, you might implement a bucketing strategy to
+     * To fix (or at least mitigate) this issue, a [LogPerBucketingStrategy] is
+     * passed to provide a mapping from "unbounded key space" (e.g., arbitrary strings)
+     * to a bounded set of "bucketed" values.
+     *
+     * In the case of error messages, you might implement a bucketing strategy to
      * classify error messages based on the type of error.
      *
-     * This method is most useful in helping to avoid cases where a rare event might never be
-     * logged due to rate limiting. For example, the following code will cause log statements with
+     * This method is most useful in helping to avoid cases where a rare event
+     * might never be logged due to rate limiting.
+     *
+     * For example, the following code will cause log statements with
      * different types of `errorMessage`s to be rate-limited independently of each other.
      *
-     * ```
+     * ```kotlin
      * // Rate limit for each type of error (FileNotFoundException, CorruptedFileException etc.).
      * logger.atInfo().per(error, byClass()).atMostEvery(30, SECONDS).log(...)
      * ```
@@ -303,34 +346,45 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
      *
      * If multiple aggregation keys are added to a single log statement, then they all take effect
      * and logging is aggregated by the unique combination of keys passed to all "per" methods.
+     *
+     * @param key The key to aggregate logging by.
+     * @param strategy The bucketing strategy to use for the given key.
      */
     public fun <T> per(key: T?, strategy: LogPerBucketingStrategy<in T>): API
 
     /**
      * Aggregates stateful logging with respect to the given enum value.
      *
-     * Normally log statements with conditional behaviour (e.g. rate limiting) use the same state
-     * for each invocation (e.g., counters or timestamps). This method allows an additional qualifier
-     * to be given which allows for different conditional state for each unique qualifier.
+     * Normally log statements with conditional behaviour (e.g., rate limiting)
+     * use the same state for each invocation (e.g., counters or timestamps).
+     * This method allows an additional qualifier to be given which allows for
+     * different conditional state for each unique qualifier.
      *
-     * This only makes a difference for log statements which use persistent state to control
-     * conditional behaviour (e.g. [atMostEvery] or [every]).
+     * This only makes a difference for log statements which use persistent state
+     * to control conditional behaviour (e.g., [atMostEvery] or [every]).
      *
-     * This method is most useful in helping to avoid cases where a rare event might never be
-     * logged due to rate limiting. For example, the following code will cause log statements with
+     * This method is most useful in helping to avoid cases where a rare
+     * event might never be logged due to rate limiting.
+     *
+     * For example, the following code will cause log statements with
      * different `taskType`s to be rate-limited independently of each other.
      *
-     * ```
+     * ```kotlin
      * // We want to rate limit logging separately for all task types.
      * logger.at(INFO).per(taskType).atMostEvery(30, SECONDS).log("Start task: %s", taskSpec)
      * ```
      *
-     * The [key] passed to this method should always be a variable (passing a constant value
-     * has no effect). If `null` is passed, this call has no effect (e.g. rate limiting will
+     * The [key] passed to this method should always be a variable
+     * (passing a constant value has no effect).
+     *
+     * If `null` is passed, this call has no effect (e.g., rate limiting will
      * apply normally, without respect to any specific scope).
      *
-     * If multiple aggregation keys are added to a single log statement, then they all take effect
-     * and logging is aggregated by the unique combination of keys passed to all "per" methods.
+     * If multiple aggregation keys are added to a single log statement,
+     * then they all take effect and logging is aggregated by the unique
+     * combination of keys passed to all "per" methods.
+     *
+     * @param key The key to aggregate logging by.
      */
     public fun per(key: Enum<*>?): API
 
@@ -339,54 +393,59 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
      * provider.
      *
      * When [io.spine.logging.jvm.context.ScopedLoggingContext] is used to create a context,
-     * it can be bound to a [io.spine.logging.jvm.context.ScopeType].
-     * For example:
+     * it can be bound to a [io.spine.logging.jvm.context.ScopeType]. For example:
      *
-     * ```
-     * ScopedLoggingContexts.newContext(REQUEST).run(() -> scopedMethod(x, y, z))
+     *
+     * ```kotlin
+     * ScopedLoggingContexts.newContext(REQUEST).run { scopedMethod(x, y, z) }
      * ```
      *
      * where [io.spine.logging.jvm.context.ScopeType.REQUEST] defines the scope
      * type for the context in which `scopedMethod()` is called. Within this context, the scope
      * associated with the `REQUEST` type can then be used to aggregate logging behavior:
      *
-     * ```
+     * ```kotlin
      * logger.atInfo().atMostEvery(5, SECONDS).per(REQUEST).log("Some message...")
      * ```
      *
-     * New scope types can be created for specific subtasks using [io.spine.logging.jvm.context.ScopeType.create]
-     * but it is recommended to use shared constants (such as `ScopeType.REQUEST`) wherever feasible to
-     * avoid confusion.
+     * New scope types can be created for specific subtasks using
+     * [ScopeType.create][io.spine.logging.jvm.context.ScopeType.create]
+     * but it is recommended to use shared constants
+     * (such as [ScopeType.REQUEST][io.spine.logging.jvm.context.ScopeType.REQUEST])
+     * wherever feasible to avoid confusion.
      *
-     * Note that in order for the request scope to be applied to a log statement, the
-     * `per(REQUEST)` method must still be called; just being inside the request scope isn't enough.
+     * Note that in order for the request scope to be applied to a log statement,
+     * the `per(REQUEST)` method must still be called;
+     * just being inside the request scope isn't enough.
      *
      * Unlike other [per] methods, this method is expected to be given a constant value.
      * This is because the given value *provides* the current scope, rather than *being*
      * the current scope.
      *
-     * If a log statement using this method is invoked outside a context of the given type, this
-     * call has no effect (e.g., rate limiting will apply normally, without respect to any specific
-     * scope).
+     * If a log statement using this method is invoked outside a context of the given type,
+     * this call has no effect (e.g., rate limiting will apply normally, without respect
+     * to any specific scope).
      *
      * If multiple aggregation keys are added to a single log statement, then they all take effect
      * and logging is aggregated by the unique combination of keys passed to all "per" methods.
      *
-     * @param scopeProvider a constant used to define the type of the scope in which
-     *     logging is aggregated.
+     * @param scopeProvider A constant used to define the type of the scope in which
+     *        logging is aggregated.
      */
     public fun per(scopeProvider: LoggingScopeProvider): API
 
     /**
-     * Creates a synthetic exception and attaches it as the "cause" of the log statement as a way to
-     * provide additional context for the logging call itself. The exception created by this method is
-     * always of the type [LogSiteStackTrace], and its message indicates the stack size.
+     * Creates a synthetic exception and attaches it as the "cause" of the log statement
+     * as a way to provide additional context for the logging call itself.
      *
-     * If the [withCause] method is also called for the log statement (either before or
-     * after) [withStackTrace], the given exception becomes the cause of the synthetic
-     * exception.
+     * The exception created by this method is always of the type [LogSiteStackTrace],
+     * and its message indicates the stack size.
      *
-     * @param size the maximum size of the stack trace to be generated.
+     * If the [withCause] method is also called for the log statement
+     * (either before or after) [withStackTrace], the given exception
+     * becomes the cause of the synthetic exception.
+     *
+     * @param size The maximum size of the stack trace to be generated.
      */
     public fun withStackTrace(size: StackSize): API
 
@@ -421,20 +480,22 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
      *
      * This method is just an alias for `with(key, true)` to improve readability.
      *
-     * @param key the boolean metadata key (expected to be a static constant)
-     * @throws NullPointerException if the given key is null
+     * @param key The boolean metadata key (expected to be a static constant).
      * @see MetadataKey
      */
     public fun with(key: MetadataKey<Boolean>): API
 
     /**
-     * Sets the log site for the current log statement. Explicit log site injection is very rarely
-     * necessary, since either the log site is injected automatically, or it is determined at runtime
-     * via stack analysis. The one use case where calling this method explicitly may be useful is when
-     * making logging helper methods, where some common project-specific logging behavior is
-     * enshrined. For example, you can write:
+     * Sets the log site for the current log statement.
      *
-     * ```
+     * Explicit log site injection is very rarely necessary, since either the log site
+     * is injected automatically, or it is determined at runtime via stack analysis.
+     *
+     * The one use case where calling this method explicitly may be useful is
+     * when making logging helper methods, where some common project-specific logging
+     * behavior is enshrined. For example, you can write:
+     *
+     * ```kotlin
      * fun logStandardWarningAt(logSite: LogSite, message: String, vararg args: Any) {
      *   logger.atWarning()
      *       .withInjectedLogSite(logSite)
@@ -445,21 +506,22 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
      *
      * and then code can do:
      *
-     * ```
-     * import io.spine.logging.jvm.LogSites.logSite
+     * ```kotlin
+     * import io.spine.logging.jvm.LogSite.Companion.logSite
      * ```
      *
      * and elsewhere:
      *
-     * ```
+     * ```kotlin
      * logStandardWarningAt(logSite(), "Badness")
      * ...
      * logStandardWarningAt(logSite(), "More badness: %s", getData())
      * ```
      *
-     * Now each of the call sites for the helper method is treated as if it were in the logging
-     * API, and things like rate limiting work separately for each, and the location in the log
-     * statement will be the point at which the helper method was called.
+     * Now each of the call sites for the helper method is treated as if
+     * it were in the logging API, and things like rate limiting work separately
+     * for each, and the location in the log statement will be the point
+     * at which the helper method was called.
      *
      * It is very important to note that the `logSite()` call can be very slow, since
      * determining the log site can involve stack trace analysis. It is only recommended in cases
