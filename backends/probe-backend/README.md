@@ -12,8 +12,8 @@ instance or intercept the logged statements.
 
 ### Logging interception
 
-For intercepting log statements, this module exposes `captureLogData { ... }`. 
-This function uses `DynamicBackendFactory` to catch all `LogData` emitted 
+For intercepting log statements, this module exposes `captureLogData { ... }`.
+This function uses `DynamicBackendFactory` to catch all `LogData` emitted
 during the execution of the passed `action`.
 
 Usage example:
@@ -32,12 +32,12 @@ check(logged[0].literalArgument == message)
 
 ### Gradle configuration
 
-Please note, this module is **not published**. It can be used only within 
+Please note, this module is **not published**. It can be used only within
 `spine-logging` itself as a project dependency **for JVM**.
 
 Unlike other backends that are put to the runtime classpath, this one should be
-available during compilation. It is because `DynamicBackendFactory` (which is 
-a Kotlin object) and/or `captureLogData { ... }` are meant to be used in code.
+available during compilation. This requirement exists because both `DynamicBackendFactory`
+(a Kotlin object) and `captureLogData { ... }` are meant to be used directly in code.
 
 An example usage of `logging-probe-backend` in a JVM module:
 

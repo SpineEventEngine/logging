@@ -184,8 +184,8 @@ with(handler) {
 
 ### Gradle configuration
 
-The default implementation provides a no-op context. Context metadata is
-ignored in this case.
+The default implementation provides a no-op context.
+Context metadata is ignored in this case.
 
 To use a logging context, a `runtimeOnly` dependency for a context
 implementation should be added.
