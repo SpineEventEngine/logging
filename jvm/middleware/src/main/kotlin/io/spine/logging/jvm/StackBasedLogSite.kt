@@ -26,33 +26,31 @@
 
 package io.spine.logging.jvm
 
-import io.spine.logging.jvm.util.Checks.checkNotNull
 import kotlin.math.max
 
 /**
  * A stack based log site which uses information from a given [StackTraceElement].
  *
- * Unlike truly unique injected log sites, StackBasedLogSite falls back to using the class
- * name, method name and line number for `equals()` and `hashCode()`. This makes it almost
- * as good as a globally unique instance in most cases, except if either of the following
- * is true:
+ * Unlike truly unique injected log sites, StackBasedLogSite falls back to using
+ * the class name, method name and line number for `equals()` and `hashCode()`.
+ * This makes it almost as good as a globally unique instance in most cases,
+ * except if either of the following is true:
  *
  * - There are two log statements on a single line.
  * - Line number information is stripped from the class file.
  *
- * This class should not be used directly outside the core Flogger libraries. If you need
- * to generate a [JvmLogSite] from a [StackTraceElement], use
+ * This class should not be used directly outside the core Flogger libraries.
+ * If you need to generate a [JvmLogSite] from a [StackTraceElement], use
  * `JvmLogSite.logSiteFrom(StackTraceElement)` for proper log site creation.
  *
- * @param stackElement The stack trace element to use for the log site.
+ * @property element The stack trace element to use for the log site.
+ *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/StackBasedLogSite.java">
  *    Original Java code of Google Flogger</a> for historical context.
  */
 internal class StackBasedLogSite(
-    stackElement: StackTraceElement?
+    private val element: StackTraceElement
 ) : JvmLogSite() {
-
-    private val element: StackTraceElement = checkNotNull(stackElement, "stack element")
 
     override val className: String
         get() = element.className
@@ -72,9 +70,9 @@ internal class StackBasedLogSite(
         (other is StackBasedLogSite) && element == other.element
 
     override fun hashCode(): Int {
-        // Note that (unlike other log site implementations) this hash-code appears to include the
-        // file name when creating a hashcode, but this should be the same every time a stack trace
-        // element is created, so it shouldn't be a problem.
+        // Note that (unlike other log site implementations) this hash-code appears to
+        // include the file name when creating a hashcode, but this should be the same
+        // every time a stack trace element is created, so it shouldn't be a problem.
         return element.hashCode()
     }
 }

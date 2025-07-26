@@ -28,7 +28,6 @@
 
 package io.spine.logging.jvm
 
-import io.spine.logging.jvm.util.Checks.checkNotNull
 import java.util.concurrent.TimeUnit
 
 /**
@@ -60,6 +59,22 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
 
     public fun withStackTrace(size: StackSize): API
 
+    /**
+     * Adds a metadata key-value pair to the log statement.
+     *
+     * ### Keys cannot be `null`
+     *
+     * Null keys are always bad, even if the value is also `null`.
+     * This is one of the few places where the logger API will throw a runtime exception,
+     * and as such it is important to ensure the `NoOp` implementation also does the check.
+     *
+     * The reasoning for this is that the metadata key is never expected to be
+     * passed user data and should always be a static constant.
+     * Because of this it is always going to be an obvious code error if we get a `null` here.
+     *
+     * @param key The metadata key to add.
+     * @param value The value to associate with the key.
+     */
     public fun <T : Any> with(key: MetadataKey<T>, value: T?): API
 
     public fun with(key: MetadataKey<Boolean>): API
@@ -281,15 +296,9 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
 
         override fun isEnabled(): Boolean = false
 
-        override fun <T : Any> with(key: MetadataKey<T>, value: T?): API {
-            checkNotNull(key, "metadata key")
-            return noOp()
-        }
+        override fun <T : Any> with(key: MetadataKey<T>, value: T?): API = noOp()
 
-        override fun with(key: MetadataKey<Boolean>): API {
-            checkNotNull(key, "metadata key")
-            return noOp()
-        }
+        override fun with(key: MetadataKey<Boolean>): API = noOp()
 
         override fun <T> per(key: T?, strategy: LogPerBucketingStrategy<in T>): API = noOp()
 
@@ -303,15 +312,9 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
 
         override fun onAverageEvery(n: Int): API = noOp()
 
-        override fun atMostEvery(n: Int, unit: TimeUnit): API {
-            checkNotNull(unit, "time unit")
-            return noOp()
-        }
+        override fun atMostEvery(n: Int, unit: TimeUnit): API = noOp()
 
-        override fun withStackTrace(size: StackSize): API {
-            checkNotNull(size, "stack size")
-            return noOp()
-        }
+        override fun withStackTrace(size: StackSize): API = noOp()
 
         override fun logVarargs(message: String, params: Array<Any?>?): Unit = Unit
 

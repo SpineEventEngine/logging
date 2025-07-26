@@ -399,7 +399,7 @@ protected constructor(
             // (the `shouldLog()` method itself) when looking up the stack to find the log() method.
             logSiteInfo = checkNotNull(
                 Platform.getCallerFinder().findLogSite(LogContext::class.java, 1),
-                "logger backend must not return a null LogSite"
+                "A logger backend must not return a null `LogSite`."
             )
         }
         var logSiteKey: LogSiteKey? = null
@@ -501,8 +501,6 @@ protected constructor(
         return withInjectedLogSite(logSite)
     }
 
-    // ---- Public logging API ----
-
     public final override fun isEnabled(): Boolean {
         // We can't guarantee that all logger implementations will return instances of this class
         // _only_ when logging is enabled, so if would be potentially unsafe to just return
@@ -513,13 +511,6 @@ protected constructor(
     }
 
     public final override fun <T : Any> with(key: MetadataKey<T>, value: T?): API {
-        // Null keys are always bad (even if the value is also `null`).
-        // This is one of the few places where the logger API will throw a runtime exception
-        // (and as such it is important to ensure the `NoOp` implementation also does the check).
-        // The reasoning for this is that the metadata key is never expected to be passed user data,
-        // and should always be a static constant.
-        // Because of this it's always going to be an obvious code error if we get a `null` here.
-        checkNotNull(key, "metadata key")
         if (value != null) {
             @Suppress("UNCHECKED_CAST")
             addMetadata(key as MetadataKey<Any>, value as Any)
@@ -552,7 +543,7 @@ protected constructor(
 
     public override fun withStackTrace(size: StackSize): API {
         // Unlike other metadata methods, the "no-op" value is not null.
-        if (checkNotNull(size, "stack size") != StackSize.NONE) {
+        if (size != StackSize.NONE) {
             addMetadata(Key.CONTEXT_STACK_SIZE, size)
         }
         return api()
@@ -1440,7 +1431,6 @@ protected constructor(
             logSiteKey: LogSiteKey,
             metadata: Metadata
         ): LogSiteKey {
-            checkNotNull(logSiteKey, "logSiteKey") // For package null checker only.
             var result = logSiteKey
             for (n in 0 until metadata.size()) {
                 if (Key.LOG_SITE_GROUPING_KEY == metadata.getKey(n)) {

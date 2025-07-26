@@ -26,8 +26,6 @@
 
 package io.spine.logging.jvm
 
-import io.spine.logging.jvm.util.Checks.checkNotNull
-
 /**
  * Used by Scope/LogSiteMap and in response to "per()" or "perUnique()" (which is an implicitly
  * unbounded scope).
@@ -43,11 +41,6 @@ internal class SpecializedLogSiteKey private constructor(
     private val qualifier: Any
 ) : LogSiteKey {
 
-    init {
-        checkNotNull(delegate, "log site key")
-        checkNotNull(qualifier, "log site qualifier")
-    }
-
     companion object {
         @JvmStatic
         fun of(key: LogSiteKey, qualifier: Any): LogSiteKey =
@@ -57,7 +50,9 @@ internal class SpecializedLogSiteKey private constructor(
     // Equals is dependent on the order in which specialization occurred, even though
     // conceptually it needn't be.
     override fun equals(other: Any?): Boolean {
-        if (other !is SpecializedLogSiteKey) return false
+        if (other !is SpecializedLogSiteKey) {
+            return false
+        }
         return delegate == other.delegate && qualifier == other.qualifier
     }
 

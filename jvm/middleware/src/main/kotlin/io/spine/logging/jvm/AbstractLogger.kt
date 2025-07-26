@@ -34,9 +34,8 @@ import io.spine.logging.jvm.util.RecursionDepth
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.util.logging.Level
 import java.util.concurrent.TimeUnit.NANOSECONDS
-import io.spine.logging.jvm.util.Checks.checkNotNull
+import java.util.logging.Level
 
 /**
  * Base class for the fluent logging API.
@@ -172,7 +171,6 @@ public abstract class AbstractLogger<API : MiddlemanApi<API>> protected construc
      */
     @Suppress("TooGenericExceptionCaught")
     public fun write(data: LogData) {
-        checkNotNull(data, "data")
         // Note: Recursion checking should not be in the `LoggerBackend`.
         // There are many backends and they can call into other backends.
         // We only want the counter incremented per log statement.
