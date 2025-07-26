@@ -44,8 +44,6 @@ The interface provides a default property `logger` that returns a logger
 for the implementing class or object:
 
 ```kotlin
-import io.spine.logging.WithLogging
-
 class Example : WithLogging {
     fun doSomething() {
         logger.atWarning() // Call to the default property of `WithLogging`.
@@ -58,8 +56,6 @@ class Example : WithLogging {
 and for the given `KClass`:
 
 ```kotlin
-import io.spine.logging.LoggingFactory
-
 class App {
     private val logger1 = LoggingFactory.forEnclosingClass()
     private val logger2 = LoggingFactory.loggerFor(this::class)
@@ -114,8 +110,6 @@ includes rate limit counters.
 Here is an example of rate limiter context metadata:
 
 ```kotlin
-import io.spine.logging.WithLogging
-
 class Example : WithLogging {
     fun action() = repeat(12) {
         logger.atInfo()
@@ -136,10 +130,6 @@ level if the requested URL contains a debug parameter.
 Here is an example of how to attach a user ID:
 
 ```kotlin
-import io.spine.logging.LoggingFactory.singleMetadataKey
-import io.spine.logging.WithLogging
-import io.spine.logging.context.ScopedLoggingContext
-
 typealias Action = String
 typealias User = String
 

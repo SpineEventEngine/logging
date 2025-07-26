@@ -28,7 +28,6 @@ package io.spine.logging.jvm.parser
 
 import io.spine.logging.jvm.backend.TemplateContext
 import io.spine.logging.jvm.parameter.Parameter
-import io.spine.logging.jvm.util.Checks
 
 /**
  * A builder which is used during message parsing to create a message object which
