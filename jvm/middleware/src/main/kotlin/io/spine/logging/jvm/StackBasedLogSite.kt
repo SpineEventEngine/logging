@@ -69,10 +69,15 @@ internal class StackBasedLogSite(
     override fun equals(other: Any?): Boolean =
         (other is StackBasedLogSite) && element == other.element
 
-    override fun hashCode(): Int {
-        // Note that (unlike other log site implementations) this hash-code appears to
-        // include the file name when creating a hashcode, but this should be the same
-        // every time a stack trace element is created, so it shouldn't be a problem.
-        return element.hashCode()
-    }
+    /**
+     * Returns the hash code of the stack trace element.
+     *
+     * ### Implementation note
+     *
+     * Note that (unlike other log site implementations) this
+     * hash-code appears to include the file name when creating a hashcode.
+     * But this should be the same every time a stack trace element is created,
+     * so it shouldn't be a problem.
+     */
+    override fun hashCode(): Int = element.hashCode()
 }
