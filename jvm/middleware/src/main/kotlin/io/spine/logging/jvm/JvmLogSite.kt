@@ -72,9 +72,8 @@ public abstract class JvmLogSite : LogSiteKey {
      * [UNKNOWN_LINE] if not known.
      *
      * There is a limit of 16 bits for line numbers in a class.
-     * See [The LineNumberTable Attribute][line-number-table] for more details.
-     *
-     * [line-number-table]: http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.7.12
+     * See [The LineNumberTable Attribute]( http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.7.12)
+     * for more details.
      */
     public abstract val lineNumber: Int
 
