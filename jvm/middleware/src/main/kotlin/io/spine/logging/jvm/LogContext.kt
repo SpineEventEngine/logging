@@ -62,12 +62,8 @@ import java.util.logging.Level
  *     Original Java code of Google Flogger</a> for historical context.
  */
 @Suppress(
-    "ReturnCount",
     "LargeClass",
-    "MaxLineLength",
     "TooManyFunctions",
-    "SpreadOperator",
-    "MagicNumber"
 )
 public abstract class LogContext<LOGGER : AbstractLogger<API>, API : MiddlemanApi<API>>
 protected constructor(
@@ -719,6 +715,7 @@ protected constructor(
         }
     }
 
+    @Suppress("MagicNumber" /* Array indexing. */, "SpreadOperator")
     public final override fun log(
         message: String?,
         p1: Any?,
@@ -1261,6 +1258,7 @@ protected constructor(
         }
     }
 
+    @Suppress("SpreadOperator")
     public final override fun logVarargs(message: String, params: Array<Any?>?) {
         if (shouldLog()) {
             // Copy the varargs array (because we didn't create it and this is quite a rare case).
