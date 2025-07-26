@@ -19,8 +19,6 @@ during the execution of the passed `action`.
 Usage example:
 
 ```kotlin
-import io.spine.logging.backend.probe.captureLogData
-
 val message = "logged text"
 val logged = captureLogData {
     val logger = LoggingFactory.forEnclosingClass()
