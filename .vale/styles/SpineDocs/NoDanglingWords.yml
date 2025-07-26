@@ -1,0 +1,7 @@
+extends: existence
+message: "Avoid ending a sentence with '%s'."
+level: warning
+scope: sentence
+ignorecase: true
+tokens:
+  - '\b(and|or|but|so|to|in|on|of|with|a|an|the|if|is|are|was|as)\.?$'

@@ -1,0 +1,8 @@
+extends: existence
+message: "Keep lines under 90 characters for readability."
+level: warning
+scope: raw
+nonword: true
+tokens:
+  - '^\\s*\\*.*.{91,}$'   # Matches KDoc or Javadoc comment lines with length > 90
+
