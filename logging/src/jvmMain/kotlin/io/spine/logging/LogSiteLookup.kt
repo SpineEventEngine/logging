@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,8 +42,8 @@ public actual object LogSiteLookup {
      * the [LogSite.Invalid] instance.
      */
     public actual fun callerOf(loggingApi: KClass<*>): LogSite {
-        val floggerSite = JvmLogSite.callerOf(loggingApi.java)
-        val logSite = floggerSite.toLogSite()
+        val jvmSite = JvmLogSite.callerOf(loggingApi.java)
+        val logSite = jvmSite.toLogSite()
         return logSite
     }
 
@@ -54,11 +54,11 @@ public actual object LogSiteLookup {
      * the [LogSite.Invalid] instance.
      */
     public actual fun logSite(): LogSite {
-        val floggerSite = Platform.getCallerFinder().findLogSite(
+        val platformLogSite = Platform.getCallerFinder().findLogSite(
             LogSiteLookup::class.java,
             0
         )
-        val logSite = floggerSite.toLogSite()
+        val logSite = platformLogSite.toLogSite()
         return logSite
     }
 }
