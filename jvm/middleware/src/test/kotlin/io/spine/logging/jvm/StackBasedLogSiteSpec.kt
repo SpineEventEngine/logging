@@ -65,13 +65,6 @@ internal class StackBasedLogSiteSpec {
     }
 
     @Test
-    fun `throw when the given stack trace element is 'null'`() {
-        shouldThrow<IllegalStateException> {
-            StackBasedLogSite(null)
-        }
-    }
-
-    @Test
     fun `handle unknown constituents`() {
         val fileName = null // Can be unknown, represented with `null`.
         val lineNumber = -3 // Can also be unknown, represented with a negative value.

@@ -188,20 +188,20 @@ internal class FormatOptionsSpec {
     fun `reject inconsistent flags`() {
         // Prefixing plus and space for negative values is always incompatible for all formats.
         var options = parse("+ ", false)
-        for (fc in FormatChar.values()) {
+        for (fc in FormatChar.entries) {
             options.areValidFor(fc).shouldBeFalse()
         }
 
         // Left alignment and zero padding are always incompatible for all formats.
         options = parse("-0", false)
-        for (fc in FormatChar.values()) {
+        for (fc in FormatChar.entries) {
             options.areValidFor(fc).shouldBeFalse()
         }
     }
 
     @Test
     fun `always validate by default`() {
-        for (fc in FormatChar.values()) {
+        for (fc in FormatChar.entries) {
             defaultOptions.areValidFor(fc).shouldBeTrue()
         }
     }
