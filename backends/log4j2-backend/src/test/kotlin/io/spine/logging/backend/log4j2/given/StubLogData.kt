@@ -32,7 +32,6 @@ import io.spine.logging.jvm.LogContext
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.backend.LogData
 import io.spine.logging.jvm.backend.TemplateContext
-import io.spine.logging.jvm.parser.DefaultBraceStyleMessageParser
 import io.spine.logging.jvm.parser.DefaultPrintfMessageParser
 import io.spine.logging.jvm.parser.MessageParser
 import java.util.logging.Level
@@ -44,14 +43,14 @@ import java.util.logging.Level
  *   for historical context.
  */
 @Suppress("TooManyFunctions") // Many getters and setters.
-internal class FakeLogData : LogData {
+internal class StubLogData : LogData {
 
     override var level: Level = Level.INFO
     private var context: TemplateContext? = null
     private var _arguments: Array<Any?>? = null
     private var _literalArgument: Any? = null
     override var timestampNanos = 0L
-    override val metadata = FakeMetadata()
+    override val metadata = StubMetadata()
     override var logSite: JvmLogSite = LOG_SITE
 
     companion object {
@@ -60,22 +59,14 @@ internal class FakeLogData : LogData {
         private const val LOGGING_METHOD = "doAct"
         private const val LINE_NUMBER = 123
         private const val SOURCE_FILE = "src/io/spine/FakeClass.java"
-        private val LOG_SITE = FakeLogSite(LOGGING_CLASS, LOGGING_METHOD, LINE_NUMBER, SOURCE_FILE)
+        private val LOG_SITE = StubLogSite(LOGGING_CLASS, LOGGING_METHOD, LINE_NUMBER, SOURCE_FILE)
 
         /**
          * Creates an instance with a printf-formatted message.
          */
-        fun withPrintfStyle(message: String, vararg arguments: Any?): FakeLogData {
+        fun withPrintfStyle(message: String, vararg arguments: Any?): StubLogData {
             val printfParser = DefaultPrintfMessageParser.getInstance()
-            return FakeLogData(printfParser, message, *arguments)
-        }
-
-        /**
-         * Creates an instance with a brace-formatted message.
-         */
-        fun withBraceStyle(message: String, vararg arguments: Any?): FakeLogData {
-            val braceParser = DefaultBraceStyleMessageParser.getInstance()
-            return FakeLogData(braceParser, message, *arguments)
+            return StubLogData(printfParser, message, *arguments)
         }
     }
 
@@ -92,25 +83,19 @@ internal class FakeLogData : LogData {
     }
 
     @CanIgnoreReturnValue
-    fun setTimestampNanos(timestampNanos: Long): FakeLogData {
-        this.timestampNanos = timestampNanos
-        return this
-    }
-
-    @CanIgnoreReturnValue
-    fun setLevel(level: Level): FakeLogData {
+    fun setLevel(level: Level): StubLogData {
         this.level = level
         return this
     }
 
     @CanIgnoreReturnValue
-    fun setLogSite(logSite: JvmLogSite): FakeLogData {
+    fun setLogSite(logSite: JvmLogSite): StubLogData {
         this.logSite = logSite
         return this
     }
 
     @CanIgnoreReturnValue
-    fun <T : Any> addMetadata(key: MetadataKey<T>, value: Any): FakeLogData {
+    fun <T : Any> addMetadata(key: MetadataKey<T>, value: Any): StubLogData {
         metadata.add(key, key.cast(value)!!)
         return this
     }

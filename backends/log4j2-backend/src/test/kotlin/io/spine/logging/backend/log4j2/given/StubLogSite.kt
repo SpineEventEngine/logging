@@ -28,14 +28,13 @@ package io.spine.logging.backend.log4j2.given
 
 import io.spine.logging.jvm.JvmLogSite
 import java.util.*
-import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * A simplified implementation of [JvmLogSite] for testing.
  *
  * @see <a href="http://rb.gy/wal1a">Original Java code of Google Flogger</a> for historical context.
  */
-internal class FakeLogSite(
+internal class StubLogSite(
     override val className: String,
     override val methodName: String,
     override val lineNumber: Int,
@@ -44,23 +43,8 @@ internal class FakeLogSite(
 
     override val fileName: String? = sourcePath
 
-    companion object {
-        private const val LOGGING_CLASS = "com.example.ClassName"
-        private const val SOURCE_FILE = "com/example/ClassName.java"
-        private const val LINE_NUMBER = 124
-
-        private val uid = AtomicInteger()
-        private val uniqueMethod = { "doAct" + uid.incrementAndGet() }
-
-        /**
-         * Creates a unique instance to be used as a key
-         * when testing shared static maps.
-         */
-        fun unique() = FakeLogSite(LOGGING_CLASS, uniqueMethod(), LINE_NUMBER, SOURCE_FILE)
-    }
-
     override fun equals(other: Any?): Boolean {
-        if (other !is FakeLogSite) {
+        if (other !is StubLogSite) {
             return false
         }
         return className == other.className &&

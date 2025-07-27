@@ -28,7 +28,7 @@ package io.spine.logging.backend.log4j2
 
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import io.spine.logging.backend.log4j2.given.ConfigurableLogger
+import io.spine.logging.backend.log4j2.given.StubLogger
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
 import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.jvm.context.ContextDataProvider
@@ -61,7 +61,7 @@ import org.junit.jupiter.api.Test
 internal class Log4j2ScopedLoggingSpec {
 
     private val context = ContextDataProvider.getInstance().getContextApiSingleton()
-    private lateinit var logger: ConfigurableLogger
+    private lateinit var logger: StubLogger
     private lateinit var logged: List<LogEvent>
     private val lastLogged get() = logged.last()
 
@@ -450,7 +450,7 @@ internal class Log4j2ScopedLoggingSpec {
 private val serialNumbers = AtomicInteger()
 
 /**
- * Creates a [ConfigurableLogger] with a unique name and
+ * Creates a [StubLogger] with a unique name and
  * the given Log4j's [appender].
  *
  * The default console appender is removed.
@@ -458,7 +458,7 @@ private val serialNumbers = AtomicInteger()
  * A unique name should produce a different logger for each test,
  * allowing tests to be run in parallel.
  */
-private fun createLogger(appender: Appender): ConfigurableLogger {
+private fun createLogger(appender: Appender): StubLogger {
     val suiteName = Log4j2ScopedLoggingSpec::class.simpleName!!
     val testSerial = serialNumbers.incrementAndGet()
     val loggerName = "%s_%02d".format(suiteName, testSerial)
@@ -469,7 +469,7 @@ private fun createLogger(appender: Appender): ConfigurableLogger {
         addAppender(appender)
     }
     val backend = Log4j2LoggerBackend(log4jLogger)
-    val logger = ConfigurableLogger(backend)
+    val logger = StubLogger(backend)
     return logger
 }
 

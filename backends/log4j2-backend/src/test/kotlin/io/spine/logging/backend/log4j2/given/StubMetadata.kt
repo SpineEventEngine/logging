@@ -36,7 +36,7 @@ import io.spine.logging.jvm.backend.Metadata
  *
  * @see <a href="http://rb.gy/h75mb">Original Java code of Google Flogger</a> for historical context.
  */
-class FakeMetadata : Metadata() {
+internal class StubMetadata : Metadata() {
 
     private class KeyValuePair<T : Any>(val key: MetadataKey<T>, val value: T)
 
@@ -46,7 +46,7 @@ class FakeMetadata : Metadata() {
      * Adds a key/value pair to this [Metadata].
      */
     @CanIgnoreReturnValue
-    fun <T : Any> add(key: MetadataKey<T>, value: T): FakeMetadata {
+    fun <T : Any> add(key: MetadataKey<T>, value: T): StubMetadata {
         entries.add(KeyValuePair(key, value))
         return this
     }
