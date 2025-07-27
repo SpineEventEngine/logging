@@ -26,7 +26,6 @@
 
 package io.spine.logging.jvm.context
 
-/* These types clash with simple class names in this package. */
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldHaveSize
