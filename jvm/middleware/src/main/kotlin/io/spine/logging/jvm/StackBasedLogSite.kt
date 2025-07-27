@@ -31,7 +31,7 @@ import kotlin.math.max
 /**
  * A stack based log site which uses information from a given [StackTraceElement].
  *
- * Unlike truly unique injected log sites, StackBasedLogSite falls back to using
+ * Unlike truly unique injected log sites, `StackBasedLogSite` falls back to using
  * the class name, method name and line number for `equals()` and `hashCode()`.
  * This makes it almost as good as a globally unique instance in most cases,
  * except if either of the following is true:
@@ -39,7 +39,7 @@ import kotlin.math.max
  * - There are two log statements on a single line.
  * - Line number information is stripped from the class file.
  *
- * This class should not be used directly outside the core Flogger libraries.
+ * This class should not be used directly outside the core Logging libraries.
  * If you need to generate a [JvmLogSite] from a [StackTraceElement], use
  * `JvmLogSite.logSiteFrom(StackTraceElement)` for proper log site creation.
  *
