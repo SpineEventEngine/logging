@@ -109,6 +109,6 @@ public enum class StackSize(public val maxDepth: Int) {
      *     .log("message")
      * ```
      */
-    NONE(0);
+    NONE(0)
 }
 
