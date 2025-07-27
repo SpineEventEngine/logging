@@ -97,9 +97,10 @@ internal class MutableMetadata : Metadata() {
     }
 
     /**
-     * Adds the key/value pair to the metadata (growing the internal array as necessary). If the key
-     * cannot be repeated, and there is already a value for the key in the metadata, then the
-     * existing value is replaced, otherwise the value is added at the end of the metadata.
+     * Adds the key/value pair to the metadata (growing the internal array as necessary).
+     *
+     * If the key cannot be repeated, and there is already a value for the key in the metadata,
+     * then the existing value is replaced, otherwise the value is added at the end of the metadata.
      */
     fun <T : Any> addValue(key: MetadataKey<T>, value: T) {
         if (!key.canRepeat()) {
@@ -111,9 +112,10 @@ internal class MutableMetadata : Metadata() {
         }
         // Check that the array is big enough for one more element.
         if (2 * (keyValueCount + 1) > keyValuePairs.size) {
-            // Use doubling here (this code should almost never be hit in normal usage and the total
-            // number of items should always stay relatively small. If this resizing algorithm is ever
-            // modified it is vital that the new value is always an even number.
+            // Use doubling here (this code should almost never be hit in normal
+            // usage and the total number of items should always stay relatively small.
+            // If this resizing algorithm is ever modified it is vital that the new value
+            // is always an even number.
             keyValuePairs = keyValuePairs.copyOf(2 * keyValuePairs.size)
         }
         keyValuePairs[2 * keyValueCount] = key
