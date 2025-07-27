@@ -114,21 +114,24 @@ protected constructor(
     }
 
     /**
-     * Returns the current API (which is just the concrete sub-type of this instance). This is
-     * returned by fluent methods to continue the fluent call chain.
+     * Returns the current API (which is just the concrete sub-type of this instance).
+     *
+     * This is returned by fluent methods to continue the fluent call chain.
      */
     protected abstract fun api(): API
 
     /**
-     * Returns the logger which created this context. This is implemented as an abstract method to
-     * save a field in every context.
+     * Returns the logger which created this context.
+     *
+     * This is implemented as an abstract method to save a field in every context.
      */
     protected abstract fun getLogger(): LOGGER
 
     /**
      * Returns the constant no-op logging API, which can be returned by fluent methods in extended
-     * logging contexts to efficiently disable logging. This is implemented as an abstract method to
-     * save a field in every context.
+     * logging contexts to efficiently disable logging.
+     *
+     * This is implemented as an abstract method to save a field in every context.
      */
     protected abstract fun noOp(): API
 
@@ -1267,13 +1270,15 @@ protected constructor(
     }
 
     /**
-     * The predefined metadata keys used by the default logging API. Backend implementations can use
-     * these to identify metadata added by the core logging API.
+     * The predefined metadata keys used by the default logging API.
+     *
+     * Backend implementations can use these to identify metadata added by the core logging API.
      */
     public object Key {
 
         /**
          * The key associated with a [Throwable] cause to be associated with the log message.
+         *
          * This value is set by [MiddlemanApi.withCause].
          */
         @JvmField
@@ -1281,8 +1286,9 @@ protected constructor(
             MetadataKey.single("cause", Throwable::class.java)
 
         /**
-         * The key associated with a rate limiting counter for "1-in-N" rate limiting. The value is
-         * set by [MiddlemanApi.every].
+         * The key associated with a rate limiting counter for "1-in-N" rate limiting.
+         *
+         * The value is set by [MiddlemanApi.every].
          */
         @JvmField
         public val LOG_EVERY_N: MetadataKey<Int> =
@@ -1290,7 +1296,9 @@ protected constructor(
 
         /**
          * The key associated with a rate limiting counter for "1-in-N" randomly sampled rate
-         * limiting. The value is set by [MiddlemanApi.onAverageEvery].
+         * limiting.
+         *
+         * The value is set by [MiddlemanApi.onAverageEvery].
          */
         @JvmField
         public val LOG_SAMPLE_EVERY_N: MetadataKey<Int> =
@@ -1298,6 +1306,7 @@ protected constructor(
 
         /**
          * The key associated with a rate-limiting period for "at most once every N" rate limiting.
+         *
          * The value is set by [MiddlemanApi.atMostEvery].
          */
         @JvmField
@@ -1305,8 +1314,9 @@ protected constructor(
             MetadataKey.single("ratelimit_period", RateLimitPeriod::class.java)
 
         /**
-         * The key associated with a count of rate limited logs. This is only public so backends can
-         * reference the key to control formatting.
+         * The key associated with a count of rate limited logs.
+         *
+         * This is only public so backends can reference the key to control formatting.
          */
         @JvmField
         public val SKIPPED_LOG_COUNT: MetadataKey<Int> =

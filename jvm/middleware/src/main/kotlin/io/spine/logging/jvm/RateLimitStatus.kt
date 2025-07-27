@@ -119,14 +119,16 @@ import java.util.concurrent.atomic.AtomicInteger
 public abstract class RateLimitStatus protected constructor() {
 
     /**
-     * A log guard ensures that only one thread can claim "logging rights" for a log statement once
-     * an "allow" rate limit status is set. It also tracks the number of skipped invocations of the
-     * log site key.
+     * A log guard ensures that only one thread can claim "logging rights"
+     * for a log statement once an "allow" rate limit status is set.
+     *
+     * It also tracks the number of skipped invocations of the log site key.
      *
      * Note that the skipped count is tracked via the "log site key" and there may be several
-     * keys for a single log site (e.g. due to use of the `per(...)` methods). This is
-     * consistent with everywhere else which handles log site specific state, but does make it a
-     * little less obvious what the skipped count refers to at first glance.
+     * keys for a single log site (e.g., due to use of the `per(...)` methods).
+     *
+     * This is consistent with everywhere else which handles log site specific state,
+     * but does make it a little less obvious what the skipped count refers to at first glance.
      */
     private class LogGuard {
 
