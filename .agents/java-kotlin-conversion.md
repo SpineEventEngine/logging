@@ -36,8 +36,12 @@
 * Suppress `detekt` build errors using this format: `[Error]` with `@Suppress("Error")`.
 
 ## Documentation Conversion
+* Do not convert documentation links in HTML hyperlink (`<a href="...">...</a>`) format.
 * Keep the original Javadoc comments but convert them to KDoc format.
-* When converting, make the first paragraph to be exactly one sentence, moving the rest of the text to the new paragraph.
+* When converting type or method Javadoc, make the first paragraph to be exactly one sentence,
+  moving the rest of the text to the new paragraph.
+  Do not apply this rule to paragraphs other than the first one.
+  Do not apply this rule to the `@param`, `@return`, and `@throws` tags.
 * Convert `@param` to `@param` with the same description:
   - Start the description on the same line with the `@param` tag
   - Break at 90 chars
