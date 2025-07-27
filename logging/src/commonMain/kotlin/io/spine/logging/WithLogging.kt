@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ package io.spine.logging
  *
  * Usage example:
  *
- * ```
+ * ```kotlin
  * import io.spine.logging.WithLogging
  *
  * class MyClass : WithLogging {
@@ -47,7 +47,7 @@ package io.spine.logging
  *
  * Actual implementations are meant to take a logger from [LoggingFactory]:
  *
- * ```
+ * ```kotlin
  * import io.spine.logging.LoggingFactory.loggerFor
  *
  * public actual interface WithLogging {
@@ -58,19 +58,17 @@ package io.spine.logging
  *
  * Indeed, this interface could have a default implementation of [WithLogging.logger]
  * if default implementations for expected interfaces have been supported.
- * Take a look on [KT-20427](https://youtrack.jetbrains.com/issue/KT-20427/Allow-expect-declarations-with-a-default-implementation)
+ * Take a look at [KT-20427](https://youtrack.jetbrains.com/issue/KT-20427/Allow-expect-declarations-with-a-default-implementation)
  * for details.
  *
  * As for now, providing a default implementation for a property makes it
  * impossible to customize accessing of a logger in target implementations.
- * But this feature is needed. For example, JVM target overrides a property
- * name with `@JvmName("...")` annotation to prevent generating old-fashioned
- * getters with `get` prefix.
-*/
+ */
 public expect interface WithLogging {
 
     /**
      * Returns the logger created for this class.
      */
+    @Suppress("RedundantModalityModifier") // `open` is required for the JVM impl. to override.
     public open val logger: Logger<*>
 }

@@ -25,6 +25,7 @@
  */
 
 import io.spine.dependency.lib.AutoService
+import io.spine.dependency.local.Base
 import io.spine.dependency.local.Reflect
 import io.spine.gradle.java.disableLinters
 
@@ -34,6 +35,7 @@ plugins {
 }
 
 dependencies {
+    implementation(Base.annotations)
     implementation(Reflect.lib)
     implementation(project(":middleware"))
     implementation(project(":jul-backend"))

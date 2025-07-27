@@ -29,8 +29,6 @@ package io.spine.logging.jvm.backend
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.util.Checks.checkArgument
-import io.spine.logging.jvm.util.Checks.checkNotNull
-import java.util.HashMap
 
 /**
  * Callback API for logger backend implementations to handle metadata keys/values.
@@ -116,7 +114,7 @@ public abstract class MetadataHandler<C : Any> {
         public fun setDefaultRepeatedHandler(
             defaultHandler: RepeatedValueHandler<Any, in C>
         ): Builder<C> {
-            this.defaultRepeatedHandler = checkNotNull(defaultHandler, "handler")
+            this.defaultRepeatedHandler = defaultHandler
             return this
         }
 
@@ -134,8 +132,6 @@ public abstract class MetadataHandler<C : Any> {
             key: MetadataKey<T>,
             handler: ValueHandler<in T, in C>
         ): Builder<C> {
-            checkNotNull(key, "key")
-            checkNotNull(handler, "handler")
             repeatedValueHandlers.remove(key)
             @Suppress("UNCHECKED_CAST")
             singleValueHandlers[key] = handler as ValueHandler<*, in C>
@@ -156,8 +152,6 @@ public abstract class MetadataHandler<C : Any> {
             key: MetadataKey<out T>,
             handler: RepeatedValueHandler<T, in C>
         ): Builder<C> {
-            checkNotNull(key, "key")
-            checkNotNull(handler, "handler")
             checkArgument(key.canRepeat(), "key must be repeating")
             singleValueHandlers.remove(key)
             @Suppress("UNCHECKED_CAST")
@@ -196,7 +190,6 @@ public abstract class MetadataHandler<C : Any> {
         }
 
         private fun <T : Any> checkAndIgnore(key: MetadataKey<T>) {
-            checkNotNull(key, "key")
             // It is more efficient to ignore a repeated key explicitly.
             if (key.canRepeat()) {
                 @Suppress("UNCHECKED_CAST")
@@ -228,7 +221,6 @@ public abstract class MetadataHandler<C : Any> {
         }
 
         private fun checkAndRemove(key: MetadataKey<*>) {
-            checkNotNull(key, "key")
             singleValueHandlers.remove(key)
             repeatedValueHandlers.remove(key)
         }

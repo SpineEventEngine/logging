@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,7 +67,7 @@ package io.spine.logging.jvm.backend
  *   Original Java code of Google Flogger</a> for historical context.
  */
 public abstract class Clock {
-    
+
     /**
      * Returns the current time from the epoch (`00:00 1st Jan, 1970`) with nanosecond
      * granularity, though not necessarily nanosecond precision.

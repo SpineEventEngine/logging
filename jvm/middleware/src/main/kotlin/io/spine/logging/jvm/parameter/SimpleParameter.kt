@@ -26,7 +26,7 @@
 
 package io.spine.logging.jvm.parameter
 
-import com.google.common.annotations.VisibleForTesting
+import io.spine.annotation.VisibleForTesting
 import com.google.errorprone.annotations.Immutable
 import com.google.errorprone.annotations.ThreadSafe
 import io.spine.logging.jvm.backend.FormatChar

@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -188,20 +188,20 @@ internal class FormatOptionsSpec {
     fun `reject inconsistent flags`() {
         // Prefixing plus and space for negative values is always incompatible for all formats.
         var options = parse("+ ", false)
-        for (fc in FormatChar.values()) {
+        for (fc in FormatChar.entries) {
             options.areValidFor(fc).shouldBeFalse()
         }
 
         // Left alignment and zero padding are always incompatible for all formats.
         options = parse("-0", false)
-        for (fc in FormatChar.values()) {
+        for (fc in FormatChar.entries) {
             options.areValidFor(fc).shouldBeFalse()
         }
     }
 
     @Test
     fun `always validate by default`() {
-        for (fc in FormatChar.values()) {
+        for (fc in FormatChar.entries) {
             defaultOptions.areValidFor(fc).shouldBeTrue()
         }
     }

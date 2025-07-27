@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,7 +61,7 @@ import io.spine.logging.jvm.MetadataKey.KeyValueHandler
  * @param prefix The prefix to add before the key/value pairs (e.g., `[<prefix>[ foo=bar ]]`).
  * @param suffix The suffix to add after the key/value pairs.
  * @param out The buffer originally containing the log message, to which we append context.
- * 
+ *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/KeyValueFormatter.java">
  *   Original Java code of Google Flogger</a> for historical context.
  */

@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -110,8 +110,8 @@ public open class MetadataKey<T : Any> private constructor(
      */
     public fun interface KeyValueHandler {
 
-        /** 
-         * Handle a single key/value a pair of contextual metadata for a log statement.  
+        /**
+         * Handle a single key/value a pair of contextual metadata for a log statement.
          */
         public fun handle(key: String, value: Any?)
     }
@@ -146,13 +146,13 @@ public open class MetadataKey<T : Any> private constructor(
     protected constructor(label: String, clazz: Class<out T>, canRepeat: Boolean) :
             this(label, clazz, canRepeat, true)
 
-    /** 
-     * Cast an arbitrary value to the type of this key.  
+    /**
+     * Cast an arbitrary value to the type of this key.
      */
     public fun cast(value: Any?): T? = clazz.cast(value)
 
-    /** 
-     * Whether this key can be used to set more than one value in the metadata.  
+    /**
+     * Whether this key can be used to set more than one value in the metadata.
      */
     public fun canRepeat(): Boolean = canRepeat
 
@@ -177,7 +177,7 @@ public open class MetadataKey<T : Any> private constructor(
 
     /**
      * Emits one or more key/value pairs for a sequence of repeated metadata values.
-     * 
+     *
      * Call this method in preference to using [emitRepeated] directly to protect
      * against unbounded reentrant logging.
      */
@@ -299,7 +299,7 @@ public open class MetadataKey<T : Any> private constructor(
          *
          * When calling from Kotlin, please give preference to `MetadataKeysKt.singleKey()`.
          * In Kotlin, there's no explicit difference between primitive and object classes.
-         * 
+         *
          * When compiling to JVM, it is resolved during the compilation. An accident passing of a
          * potentially primitive class may lead to a runtime exception because metadata keys
          * are used with generics.
@@ -312,15 +312,15 @@ public open class MetadataKey<T : Any> private constructor(
         /**
          * Creates a single instance of [MetadataKey] with the given [label].
          *
-         * @param T The type  
+         * @param T The type
          * @see [single]
          */
         public inline fun <reified T : Any> single(label: String): MetadataKey<T> =
             single(label, T::class.java)
 
         /**
-         * Creates a key for a repeated piece of metadata. 
-         * 
+         * Creates a key for a repeated piece of metadata.
+         *
          * If metadata is added more than once using this key for a log statement,
          * all values will be retained as key/value pairs in the order they were added.
          *
@@ -329,9 +329,9 @@ public open class MetadataKey<T : Any> private constructor(
          * instances to static final constants.
          *
          * When calling from Kotlin, give preference to `MetadataKeysKt.repeatedKey()`.
-         * 
+         *
          * In Kotlin, there is no explicit difference between primitive and object classes.
-         * 
+         *
          * When compiling to JVM, it is resolved during the compilation.
          * An accident passing of a potentially primitive class may lead to a runtime
          * exception because metadata keys are used with generics.

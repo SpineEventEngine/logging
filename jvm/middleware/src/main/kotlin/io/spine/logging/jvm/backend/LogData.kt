@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,10 +33,11 @@ import java.util.logging.Level
  * A backend API for determining metadata associated with a log statement.
  *
  * Some metadata is expected to be available for all log statements (such as the log level or a
- * timestamp) whereas other data is optional (class/method name for example). As well providing the
- * common logging metadata, customized loggers can choose to add arbitrary key/value pairs to the
- * log data. It is up to each logging backend implementation to decide how it interprets this data
- * using the hierarchical key.
+ * timestamp) whereas other data is optional (class/method name for example).
+ *
+ * As well providing the common logging metadata, customized loggers can choose to add arbitrary
+ * key/value pairs to the log data. It is up to each logging backend implementation to decide how
+ * it interprets this data using the hierarchical key.
  *
  * @see io.spine.logging.jvm.backend.Metadata
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/LogData.java">

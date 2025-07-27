@@ -29,7 +29,7 @@ package io.spine.logging.jvm
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldNotBeInstanceOf
-import io.spine.logging.jvm.Middleman.forEnclosingClass
+import io.spine.logging.jvm.Middleman.Companion.forEnclosingClass
 import io.spine.logging.jvm.backend.given.MemoizingLoggerBackend
 import java.util.logging.Level
 import org.junit.jupiter.api.DisplayName
@@ -48,21 +48,21 @@ import org.junit.jupiter.api.Test
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/FluentLoggerTest.java">
  *     Original Java code of Google Flogger</a> for historical context.
  */
-@DisplayName("`FluentLogger2` should")
+@DisplayName("`Middleman` should")
 internal class LoggerSpec {
 
     @Test
     fun `create a logger for enclosing class`() {
         val logger = forEnclosingClass()
         val enclosingClass = this::class.java.name
-        logger.name shouldBe enclosingClass
+        logger.getName() shouldBe enclosingClass
 
         // Note that this one-to-one binding of loggers and backends is not
         // strictly necessary, and in the future it is plausible that a configured
         // backend factory might return backends shared with many loggers.
         // In that situation, the logger name must still be the enclosing class name
         // (held separately by the logger itself) while the backend name could differ.
-        val backend = logger.backend
+        val backend = logger.getBackend()
         backend.loggerName shouldBe enclosingClass
     }
 

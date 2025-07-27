@@ -28,7 +28,6 @@ package io.spine.logging.jvm.parser
 
 import io.spine.logging.jvm.backend.TemplateContext
 import io.spine.logging.jvm.parameter.Parameter
-import io.spine.logging.jvm.util.Checks
 
 /**
  * A builder which is used during message parsing to create a message object which
@@ -38,18 +37,18 @@ import io.spine.logging.jvm.util.Checks
  *
  * @param T The message type being built.
  *
+ * @property context The template context of the logging message being built.
+ *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/parser/MessageBuilder.java">
  *   Original Java code of Google Flogger</a> for historical context.
  */
-public abstract class MessageBuilder<T>(context: TemplateContext) {
-
-    private val context: TemplateContext = Checks.checkNotNull(context, "context")
+public abstract class MessageBuilder<T>(private val context: TemplateContext) {
 
     /**
-     *  Mask of parameter indexes seen during parsing, used to determine if there are gaps in the
-     *  specified parameters (which is a parsing error).
+     * Mask of parameter indexes seen during parsing, used to determine if
+     * there are gaps in the specified parameters (which is a parsing error).
      *
-     * This could be a long if we cared about tracking up to 64 parameters, but I suspect we don't.
+     * This could be a `long` if we cared about tracking up to 64 parameters, but we probably don't.
      */
     private var pmask: Int = 0
 
@@ -78,11 +77,10 @@ public abstract class MessageBuilder<T>(context: TemplateContext) {
     public val expectedArgumentCount: Int
         get() = maxIndex + 1
 
-
     /**
      * Called by parser implementations to signify that the parsing of the next
      * parameter is complete.
-     * 
+     *
      * This method will call [addParameterImpl] with exactly the same
      * arguments, but may also do additional work before or after that call.
      *

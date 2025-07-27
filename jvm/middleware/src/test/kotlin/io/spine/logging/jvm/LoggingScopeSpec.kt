@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@
 package io.spine.logging.jvm
 
 import io.kotest.matchers.shouldNotBe
-import io.spine.logging.jvm.LoggingScope.create
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -43,6 +42,7 @@ internal class LoggingScopeSpec {
     @Test
     fun `create distinct scopes for the same label`() {
         val label = "foo"
-        create(label) shouldNotBe create(label) // The same label doesn't make scopes equivalent.
+        // The same label doesn't make scopes equivalent.
+        LoggingScope.create(label) shouldNotBe LoggingScope.create(label)
     }
 }

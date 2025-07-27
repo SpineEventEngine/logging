@@ -1,12 +1,12 @@
 # 🪄 Converting Java code to Kotlin
 
 * Java code API comments are Javadoc format.
-* Kotlin code API comments are in KDoc format. 
- 
+* Kotlin code API comments are in KDoc format.
+
 ## Javadoc to KDoc conversion
 
 * The wording of original Javadoc comments must be preserved.
-                                                                      
+
 ## Treating nullability
 
 * Use nullable Kotlin type only if the type in Java is annotated as `@Nullable`.
@@ -36,9 +36,14 @@
 * Suppress `detekt` build errors using this format: `[Error]` with `@Suppress("Error")`.
 
 ## Documentation Conversion
-
-* Convert `@param` to `@param` with the same description: 
-  - Start the description on the same line with the `@param` tag 
+* Do not convert documentation links in HTML hyperlink (`<a href="...">...</a>`) format.
+* Keep the original Javadoc comments but convert them to KDoc format.
+* When converting type or method Javadoc, make the first paragraph to be exactly one sentence,
+  moving the rest of the text to the new paragraph.
+  Do not apply this rule to paragraphs other than the first one.
+  Do not apply this rule to the `@param`, `@return`, and `@throws` tags.
+* Convert `@param` to `@param` with the same description:
+  - Start the description on the same line with the `@param` tag
   - Break at 90 chars
   - Continue with the margin of 7 space chars.
 
@@ -53,4 +58,6 @@
  * Always use braces `{}` for `if`, `for`, and `while` statements.
  * If the converted function has more than two `return` statements, annotate it with `@Suppress("ReturnCount")`.
  * Keep inline comments from the original code.
+ * Ensure a single new line at the end of the produced Kotlin file without asking.
+
 

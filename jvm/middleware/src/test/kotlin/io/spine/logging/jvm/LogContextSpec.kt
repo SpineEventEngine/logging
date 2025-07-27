@@ -36,10 +36,10 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
-import io.spine.logging.jvm.DurationRateLimiter.newRateLimitPeriod
-import io.spine.logging.jvm.LazyArgs.lazy
+import io.spine.logging.jvm.DurationRateLimiter.Companion.newRateLimitPeriod
+import io.spine.logging.jvm.LazyArg.Companion.lazy
 import io.spine.logging.jvm.LogContext.Key
-import io.spine.logging.jvm.LogContext.specializeLogSiteKeyFromMetadata
+import io.spine.logging.jvm.LogContext.Companion.specializeLogSiteKeyFromMetadata
 import io.spine.logging.jvm.backend.given.FakeMetadata
 import io.spine.logging.jvm.backend.given.MemoizingLoggerBackend
 import io.spine.logging.jvm.backend.given.shouldContain
@@ -309,22 +309,24 @@ internal class LogContextSpec {
                 .log("Count=%d", counter)
         }
 
-        backend.loggedCount shouldBe 3
+        backend.run {
+            loggedCount shouldBe 3
 
-        // Check the first log we captured was the first one emitted.
-        backend.firstLogged.timestampNanos shouldBe startNanos
-        backend.firstLogged.metadata.shouldUniquelyContain(
-            Key.LOG_AT_MOST_EVERY,
-            newRateLimitPeriod(2, SECONDS)
-        )
+            // Check the first log we captured was the first one emitted.
+            firstLogged.timestampNanos shouldBe startNanos
+            firstLogged.metadata.shouldUniquelyContain(
+                Key.LOG_AT_MOST_EVERY,
+                newRateLimitPeriod(2, SECONDS)
+            )
 
-        // Check the expected count and skipped-count for each log.
-        backend.logged[0].shouldHaveArguments(0)
-        backend.logged[0].metadata.shouldNotContain(Key.SKIPPED_LOG_COUNT)
-        backend.logged[1].shouldHaveArguments(4)
-        backend.logged[1].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 3)
-        backend.logged[2].shouldHaveArguments(8)
-        backend.logged[2].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 3)
+            // Check the expected count and skipped-count for each log.
+            logged[0].shouldHaveArguments(0)
+            logged[0].metadata.shouldNotContain(Key.SKIPPED_LOG_COUNT)
+            logged[1].shouldHaveArguments(4)
+            logged[1].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 3)
+            logged[2].shouldHaveArguments(8)
+            logged[2].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 3)
+        }
     }
 
     @Nested
@@ -348,12 +350,14 @@ internal class LogContextSpec {
                     .log("Count=%d", counter)
             }
 
-            backend.loggedCount shouldBe 4
-            backend.logged[0].shouldHaveArguments(0)
-            backend.logged[1].shouldHaveArguments(20)
-            backend.logged[2].shouldHaveArguments(40)
-            backend.logged[3].shouldHaveArguments(60)
-            backend.logged[3].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 19)
+            backend.run {
+                loggedCount shouldBe 4
+                logged[0].shouldHaveArguments(0)
+                logged[1].shouldHaveArguments(20)
+                logged[2].shouldHaveArguments(40)
+                logged[3].shouldHaveArguments(60)
+                logged[3].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 19)
+            }
         }
 
         @Test
@@ -365,7 +369,7 @@ internal class LogContextSpec {
             // 10 logs per second over 6 seconds.
             for ((counter, millis) in (0..6000L step 100).withIndex()) {
                 val timestampNanos = startNanos + MILLISECONDS.toNanos(millis)
-                // Fever than N logs occur in the rate limit period,
+                // Fewer than N logs occur in the rate limit period,
                 // so logging should occur every 15 logs.
                 logger.at(INFO, timestampNanos)
                     .every(15)
@@ -373,13 +377,15 @@ internal class LogContextSpec {
                     .log("Count=%d", counter)
             }
 
-            backend.loggedCount shouldBe 5
-            backend.logged[0].shouldHaveArguments(0)
-            backend.logged[1].shouldHaveArguments(15)
-            backend.logged[2].shouldHaveArguments(30)
-            backend.logged[3].shouldHaveArguments(45)
-            backend.logged[4].shouldHaveArguments(60)
-            backend.logged[4].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 14)
+            backend.run {
+                loggedCount shouldBe 5
+                logged[0].shouldHaveArguments(0)
+                logged[1].shouldHaveArguments(15)
+                logged[2].shouldHaveArguments(30)
+                logged[3].shouldHaveArguments(45)
+                logged[4].shouldHaveArguments(60)
+                logged[4].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 14)
+            }
         }
     }
 
@@ -409,27 +415,29 @@ internal class LogContextSpec {
                 nowNanos += MILLISECONDS.toNanos(100)
             }
 
-            backend.loggedCount shouldBe 2
+            backend.run {
+                loggedCount shouldBe 2
 
-            backend.logged[0].metadata.shouldHaveSize(2)
-            backend.logged[0].metadata.shouldUniquelyContain(
-                Key.LOG_SITE_GROUPING_KEY,
-                IllegalArgumentException::class.java
-            )
-            backend.logged[0].metadata.shouldUniquelyContain(
-                Key.LOG_AT_MOST_EVERY,
-                ONCE_PER_SECOND
-            )
+                logged[0].metadata.shouldHaveSize(2)
+                logged[0].metadata.shouldUniquelyContain(
+                    Key.LOG_SITE_GROUPING_KEY,
+                    IllegalArgumentException::class.java
+                )
+                logged[0].metadata.shouldUniquelyContain(
+                    Key.LOG_AT_MOST_EVERY,
+                    ONCE_PER_SECOND
+                )
 
-            backend.logged[1].metadata.shouldHaveSize(2)
-            backend.logged[1].metadata.shouldUniquelyContain(
-                Key.LOG_SITE_GROUPING_KEY,
-                NullPointerException::class.java
-            )
-            backend.logged[1].metadata.shouldUniquelyContain(
-                Key.LOG_AT_MOST_EVERY,
-                ONCE_PER_SECOND
-            )
+                logged[1].metadata.shouldHaveSize(2)
+                logged[1].metadata.shouldUniquelyContain(
+                    Key.LOG_SITE_GROUPING_KEY,
+                    NullPointerException::class.java
+                )
+                logged[1].metadata.shouldUniquelyContain(
+                    Key.LOG_AT_MOST_EVERY,
+                    ONCE_PER_SECOND
+                )
+            }
         }
 
         @Test
@@ -457,17 +465,19 @@ internal class LogContextSpec {
                 nowNanos += MILLISECONDS.toNanos(100)
             }
 
-            backend.loggedCount shouldBe 2
+            backend.run {
+                loggedCount shouldBe 2
 
-            backend.logged[0].shouldHaveArguments(LogType.FOO)
-            backend.logged[0].metadata.shouldHaveSize(2)
-            backend.logged[0].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, LogType.FOO)
-            backend.logged[0].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
+                logged[0].shouldHaveArguments(LogType.FOO)
+                logged[0].metadata.shouldHaveSize(2)
+                logged[0].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, LogType.FOO)
+                logged[0].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
 
-            backend.logged[1].shouldHaveArguments(LogType.BAR)
-            backend.logged[1].metadata.shouldHaveSize(2)
-            backend.logged[1].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, LogType.BAR)
-            backend.logged[1].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
+                logged[1].shouldHaveArguments(LogType.BAR)
+                logged[1].metadata.shouldHaveSize(2)
+                logged[1].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, LogType.BAR)
+                logged[1].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
+            }
         }
 
         @Test
@@ -496,15 +506,17 @@ internal class LogContextSpec {
                 nowNanos += MILLISECONDS.toNanos(100)
             }
 
-            backend.loggedCount shouldBe 2
+            backend.run {
+                loggedCount shouldBe 2
 
-            backend.logged[0].metadata.shouldHaveSize(2)
-            backend.logged[0].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, fooScope)
-            backend.logged[0].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
+                logged[0].metadata.shouldHaveSize(2)
+                logged[0].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, fooScope)
+                logged[0].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
 
-            backend.logged[1].metadata.shouldHaveSize(2)
-            backend.logged[1].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, barScope)
-            backend.logged[1].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
+                logged[1].metadata.shouldHaveSize(2)
+                logged[1].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, barScope)
+                logged[1].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
+            }
         }
     }
 
@@ -518,11 +530,14 @@ internal class LogContextSpec {
             backend.setLevel(WARNING)
             val logger = ConfigurableLogger(backend)
             logger.forceAt(INFO).log("LOGGED")
-            backend.loggedCount shouldBe 1
-            backend.logged[0].shouldHaveMessage("LOGGED")
-            backend.logged[0].metadata.shouldHaveSize(1)
-            backend.logged[0].metadata.shouldUniquelyContain(Key.WAS_FORCED, true)
-            backend.logged[0].wasForced().shouldBeTrue()
+
+            backend.run {
+                loggedCount shouldBe 1
+                lastLogged.shouldHaveMessage("LOGGED")
+                lastLogged.metadata.shouldHaveSize(1)
+                lastLogged.metadata.shouldUniquelyContain(Key.WAS_FORCED, true)
+                lastLogged.wasForced().shouldBeTrue()
+            }
         }
 
         @Test
@@ -555,11 +570,13 @@ internal class LogContextSpec {
                 .withInjectedLogSite(logSite)
                 .log("NOT LOGGED")
 
-            backend.loggedCount shouldBe 2
-            backend.logged[0].shouldHaveMessage("LOGGED 1")
-            backend.logged[1].shouldHaveMessage("LOGGED 2")
-            backend.logged[1].metadata.shouldHaveSize(1)
-            backend.logged[1].metadata.shouldUniquelyContain(Key.WAS_FORCED, true)
+            backend.run {
+                loggedCount shouldBe 2
+                logged[0].shouldHaveMessage("LOGGED 1")
+                logged[1].shouldHaveMessage("LOGGED 2")
+                logged[1].metadata.shouldHaveSize(1)
+                logged[1].metadata.shouldUniquelyContain(Key.WAS_FORCED, true)
+            }
         }
 
         @Test
@@ -595,13 +612,15 @@ internal class LogContextSpec {
                 .withInjectedLogSite(logSite)
                 .log("NOT LOGGED")
 
-            backend.loggedCount shouldBe 2
-            backend.logged[0].shouldHaveMessage("LOGGED 1")
-            backend.logged[0].metadata.shouldHaveSize(1)
-            backend.logged[0].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
-            backend.logged[1].shouldHaveMessage("LOGGED 2")
-            backend.logged[1].metadata.shouldHaveSize(1)
-            backend.logged[1].metadata.shouldUniquelyContain(Key.WAS_FORCED, true)
+            backend.run {
+                loggedCount shouldBe 2
+                logged[0].shouldHaveMessage("LOGGED 1")
+                logged[0].metadata.shouldHaveSize(1)
+                logged[0].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
+                logged[1].shouldHaveMessage("LOGGED 2")
+                logged[1].metadata.shouldHaveSize(1)
+                logged[1].metadata.shouldUniquelyContain(Key.WAS_FORCED, true)
+            }
         }
     }
 
@@ -864,9 +883,9 @@ internal class LogContextSpec {
         // We do not expect this to ever happen in real code though.
         for (i in 0..6) {
             // Log every 2nd (0, 2, 4, 6)
-            logHelper(logger, JvmLogSites.logSite(), 2, "Foo: $i")
+            logHelper(logger, JvmLogSite.logSite(), 2, "Foo: $i")
             // Log every 3rd (0, 3, 6)
-            logHelper(logger, JvmLogSites.logSite(), 3, "Bar: $i")
+            logHelper(logger, JvmLogSite.logSite(), 3, "Bar: $i")
         }
         backend.loggedCount shouldBe 7
         backend.firstLogged.shouldHaveArguments("Foo: 0")
@@ -885,17 +904,17 @@ internal class LogContextSpec {
     @Test
     fun `suppress an invalid log site analysis`() {
         logger.atInfo()
-            .withInjectedLogSite(JvmLogSite.INVALID)
+            .withInjectedLogSite(JvmLogSite.invalid)
             .log("No log site here")
         logger.atInfo()
             .withInjectedLogSite(null)
             .log("No-op injection")
 
         backend.loggedCount shouldBe 2
-        backend.firstLogged.logSite shouldBe JvmLogSite.INVALID
+        backend.firstLogged.logSite shouldBe JvmLogSite.invalid
 
         backend.logged[1].logSite.shouldNotBeNull()
-        backend.logged[1].logSite shouldNotBe JvmLogSite.INVALID
+        backend.logged[1].logSite shouldNotBe JvmLogSite.invalid
     }
 
     @Nested inner class

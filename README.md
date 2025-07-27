@@ -5,10 +5,10 @@
 
 # Spine Logging
 
-Spine Logging is a versatile library designed for Kotlin and Java projects, 
-with a potential for multi-platform use. 
+Spine Logging is a versatile library designed for Kotlin and Java projects,
+with a potential for multi-platform use.
 
-As of now, only JVM target is supported, with a JavaScript implementation 
+As of now, only JVM target is supported, with a JavaScript implementation
 being our priority for future development.
 
 API and implementation are largely inspired by [Google Flogger][flogger],
@@ -16,9 +16,9 @@ and the introduction of fluent logging API in [SLF4J v2.0.0][fluent-slf4j].
 
 ## Current status: Experimental
 
-Please note that this library is still in the experimental phase of development, 
-and hence, its API may undergo significant changes. As such, we advise using 
-this library cautiously in your projects until it has reached a stable 
+Please note that this library is still in the experimental phase of development,
+and hence, its API may undergo significant changes. As such, we advise using
+this library cautiously in your projects until it has reached a stable
 release stage.
 
 ## Simple example
@@ -40,12 +40,10 @@ To get a logger, one can use the following:
 1. Make a logging class implement `WithLogging` interface.
 2. Get a logger from `LoggingFactory`.
 
-The interface provides a default property `logger` that returns a logger 
+The interface provides a default property `logger` that returns a logger
 for the implementing class or object:
 
 ```kotlin
-import io.spine.logging.WithLogging
-
 class Example : WithLogging {
     fun doSomething() {
         logger.atWarning() // Call to the default property of `WithLogging`.
@@ -58,8 +56,6 @@ class Example : WithLogging {
 and for the given `KClass`:
 
 ```kotlin
-import io.spine.logging.LoggingFactory
-
 class App {
     private val logger1 = LoggingFactory.forEnclosingClass()
     private val logger2 = LoggingFactory.loggerFor(this::class)
@@ -74,9 +70,9 @@ class App {
 
 ## Logging backends
 
-A logging backend handles an actual output of the logged statement. 
-`LogRecord` may be printed to the console, be written to a file or sent by 
-the network to some log-aggregating service. It all is up to a chosen backend 
+A logging backend handles an actual output of the logged statement.
+`LogRecord` may be printed to the console, be written to a file or sent by
+the network to some log-aggregating service. It all is up to a chosen backend
 and its configuration.
 
 The following backends are available:
@@ -85,10 +81,10 @@ The following backends are available:
 * `io.spine:spine-logging-log4j2-backend` – Log4j2 backend.
 
 The default backend is supplied along the logging library itself. To use it,
-one just needs to not supply any other backend. Then JUL backend will be 
+one just needs to not supply any other backend. Then JUL backend will be
 used automatically.
 
-For other backends, put a chosen one to `runtimeOnly` configuration, 
+For other backends, put a chosen one to `runtimeOnly` configuration,
 and the logging library will discover it in the runtime.
 
 An example usage of Log4j2 backend:
@@ -101,21 +97,19 @@ dependencies {
 ```
 
 Please note, only one backend implementation should be present in the runtime.
-Two or more backends will cause an exception because the logging framework 
+Two or more backends will cause an exception because the logging framework
 will not be able to understand, which one should be used. The default backend
 doesn't count here.
 
 ## Logging contexts
 
-A logging context refers to a set of attributes that are attached to all log 
-records while a context is installed. For example, rate limit counters are 
-always attached to the context.
+A logging context refers to a set of attributes attached to all log
+records while a context is installed. For example, the context always
+includes rate limit counters.
 
 Here is an example of rate limiter context metadata:
 
 ```kotlin
-import io.spine.logging.WithLogging
-
 class Example : WithLogging {
     fun action() = repeat(12) {
         logger.atInfo()
@@ -129,17 +123,13 @@ class Example : WithLogging {
 // INFO: Call #7 [CONTEXT ratelimit_count=7 skipped=6 ]
 ```
 
-Also, a user can attach its own metadata. For instance, you can attach 
-a user ID to all log records for the current request, or force logging 
+Also, a user can attach its own metadata. For instance, you can attach
+a user ID to all log records for the current request, or force logging
 level if the requested URL contains a debug parameter.
 
 Here is an example of how to attach a user ID:
 
 ```kotlin
-import io.spine.logging.LoggingFactory.singleMetadataKey
-import io.spine.logging.WithLogging
-import io.spine.logging.context.ScopedLoggingContext
-
 typealias Action = String
 typealias User = String
 
@@ -184,10 +174,10 @@ with(handler) {
 
 ### Gradle configuration
 
-The default implementation provides a no-op context. Context metadata is
-ignored in this case.
+The default implementation provides a no-op context.
+Context metadata is ignored in this case.
 
-To use a logging context, a `runtimeOnly` dependency for a context 
+To use a logging context, a `runtimeOnly` dependency for a context
 implementation should be added.
 
 If your project does not use gRPC, use the following dependency:

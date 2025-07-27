@@ -40,7 +40,6 @@ internal class LoggerFactorySpec {
                 LoggingFactory.loggerFor(this::class)
     }
 
-
     @Test
     fun `give no-op instance for non-annotated classes`() {
         LoggingFactory.loggingDomainOf(String::class) shouldBeSameInstanceAs LoggingDomain.noOp

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@
 package io.spine.logging
 
 import io.spine.logging.jvm.Middleman
-import io.spine.logging.jvm.JvmLogSites.callerOf
 import com.google.errorprone.annotations.CheckReturnValue
 import io.spine.logging.jvm.JvmLogSite
 import kotlin.reflect.KClass
@@ -51,7 +50,7 @@ public class JvmLogger(
 
     override fun createApi(level: Level): Api {
         val floggerApi = delegate.at(level.toJavaLogging())
-        return if (floggerApi.isEnabled) {
+        return if (floggerApi.isEnabled()) {
             ApiImpl(floggerApi)
         } else {
             NoOp
@@ -103,17 +102,18 @@ private class ApiImpl(private val delegate: Middleman.Api): JvmLogger.Api {
         return this
     }
 
-    override fun isEnabled(): Boolean = delegate.isEnabled
+    override fun isEnabled(): Boolean = delegate.isEnabled()
 
-    override fun log() {
-        delegate.withInjectedLogSite(callerOf(ApiImpl::class.java))
+    override fun log() =
+        delegate
+            .withInjectedLogSite(JvmLogSite.callerOf(ApiImpl::class.java))
             .log()
-    }
 
     override fun log(message: () -> String) {
         if (isEnabled()) {
             val prefix = loggingDomain.messagePrefix
-            delegate.withInjectedLogSite(callerOf(ApiImpl::class.java))
+            delegate
+                .withInjectedLogSite(JvmLogSite.callerOf(ApiImpl::class.java))
                 .log(prefix + message.invoke())
         }
     }
@@ -162,14 +162,14 @@ public operator fun JLevel.compareTo(other: JLevel): Int =
  * Converts this [LogSite] to the JVM logging counterpart.
  */
 private fun LogSite.toFloggerSite(): JvmLogSite {
-    if (this == LogSite.INVALID) {
-        return JvmLogSite.INVALID
+    if (this == LogSite.Invalid) {
+        return JvmLogSite.invalid
     }
     return object : JvmLogSite() {
-        override fun getClassName(): String = this@toFloggerSite.className
-        override fun getMethodName(): String = this@toFloggerSite.methodName
-        override fun getLineNumber(): Int = this@toFloggerSite.lineNumber
-        override fun getFileName(): String? = null
+        override val className: String = this@toFloggerSite.className
+        override val methodName: String = this@toFloggerSite.methodName
+        override val lineNumber: Int = this@toFloggerSite.lineNumber
+        override val fileName: String? = null
         override fun hashCode(): Int = this@toFloggerSite.hashCode()
         override fun equals(other: Any?): Boolean {
             if (other !is JvmLogSite) {

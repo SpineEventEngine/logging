@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,11 +36,13 @@ import java.util.concurrent.atomic.AtomicInteger
  * @see <a href="http://rb.gy/wal1a">Original Java code of Google Flogger</a> for historical context.
  */
 class FakeLogSite(
-    private val className: String,
-    private val methodName: String,
-    private val lineNumber: Int,
+    override val className: String,
+    override val methodName: String,
+    override val lineNumber: Int,
     private val sourcePath: String?
 ) : JvmLogSite() {
+
+    override val fileName: String? = sourcePath
 
     companion object {
         private const val LOGGING_CLASS = "com.example.ClassName"
@@ -57,14 +59,6 @@ class FakeLogSite(
         fun unique() = FakeLogSite(LOGGING_CLASS, uniqueMethod(), LINE_NUMBER, SOURCE_FILE)
     }
 
-    override fun getClassName(): String = className
-
-    override fun getMethodName(): String = methodName
-
-    override fun getLineNumber(): Int = lineNumber
-
-    override fun getFileName(): String? = sourcePath
-
     override fun equals(other: Any?): Boolean {
         if (other !is FakeLogSite) {
             return false
@@ -77,4 +71,3 @@ class FakeLogSite(
 
     override fun hashCode(): Int = Objects.hash(className, methodName, lineNumber, sourcePath)
 }
-

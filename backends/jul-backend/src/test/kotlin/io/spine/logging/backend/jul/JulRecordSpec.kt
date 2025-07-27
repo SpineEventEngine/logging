@@ -223,7 +223,6 @@ internal class JulRecordSpec {
         record.message shouldEndWith "[ERROR: MISSING LOG ARGUMENT]"
     }
 
-
     @Test
     fun `report an unused argument`() {
         val pattern = "%2\$s %s %<s %s"

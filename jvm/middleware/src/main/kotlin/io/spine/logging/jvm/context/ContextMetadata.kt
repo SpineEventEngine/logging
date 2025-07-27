@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -143,7 +143,6 @@ public abstract class ContextMetadata protected constructor() : Metadata() {
 
 private fun <T : Any> checkCannotRepeat(key: MetadataKey<T>) =
     checkArgument(!key.canRepeat(), "metadata key must be single valued")
-
 
 private class ImmutableScopeMetadata(private val entries: Array<Entry<*>?>) : ContextMetadata() {
 

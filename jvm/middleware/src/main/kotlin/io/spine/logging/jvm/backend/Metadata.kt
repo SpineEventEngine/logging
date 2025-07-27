@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,16 +51,16 @@ import io.spine.logging.jvm.MetadataKey
 public abstract class Metadata {
 
     public companion object {
-        
-        /** 
-         * Returns an immutable `Metadata` that has no items. 
+
+        /**
+         * Returns an immutable `Metadata` that has no items.
          */
         @JvmStatic
         public fun empty(): Metadata = EmptyMetadata
     }
-    
+
     /**
-     * Returns the number of key/value pairs for this instance. 
+     * Returns the number of key/value pairs for this instance.
      */
     public abstract fun size(): Int
 
@@ -98,7 +98,7 @@ private object EmptyMetadata : Metadata() {
     override fun size(): Int = 0
     override fun getKey(n: Int): MetadataKey<Any> = throw cannotReadFromEmpty()
     override fun getValue(n: Int): Any = throw cannotReadFromEmpty()
-    private fun cannotReadFromEmpty(): IndexOutOfBoundsException = 
+    private fun cannotReadFromEmpty(): IndexOutOfBoundsException =
         throw IndexOutOfBoundsException("cannot read from empty metadata")
     override fun <T : Any> findValue(key: MetadataKey<T>): T? = null
 }

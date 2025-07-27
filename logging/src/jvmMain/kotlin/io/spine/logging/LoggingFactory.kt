@@ -44,22 +44,18 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
         return result
     }
 
-    override fun computeValue(cls: Class<*>): JvmLogger {
-        return createForClass(cls)
-    }
+    override fun computeValue(cls: Class<*>): JvmLogger =
+        createForClass(cls)
 
     @JvmStatic
-    public actual fun loggingDomainOf(cls: KClass<*>): LoggingDomain {
-        return LoggingDomainClassValue.get(cls)
-    }
+    public actual fun loggingDomainOf(cls: KClass<*>): LoggingDomain =
+        LoggingDomainClassValue.get(cls)
 
     @JvmStatic
     public actual fun <T : Any> singleMetadataKey(
         label: String,
         valueClass: KClass<T>
-    ): MetadataKey<T> {
-        return JvmMetadataKey.single(label, valueClass)
-    }
+    ): MetadataKey<T> = JvmMetadataKey.single(label, valueClass)
 
     @JvmStatic
     public fun <T: Any> singleMetadataKey(label: String, type: Class<T>): MetadataKey<T> =
@@ -69,9 +65,7 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
     public actual fun <T : Any> repeatedMetadataKey(
         label: String,
         valueClass: KClass<T>
-    ): MetadataKey<T> {
-        return JvmMetadataKey.repeated(label, valueClass)
-    }
+    ): MetadataKey<T> = JvmMetadataKey.repeated(label, valueClass)
 
     @JvmStatic
     public fun <T : Any> repeatedMetadataKey(label: String, type: Class<T>): MetadataKey<T> =

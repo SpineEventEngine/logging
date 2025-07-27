@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,11 +30,8 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
-import io.spine.logging.jvm.DurationRateLimiter.check
-import io.spine.logging.jvm.DurationRateLimiter.newRateLimitPeriod
 import io.spine.logging.jvm.LogContext.Key
-import io.spine.logging.jvm.RateLimitStatus.DISALLOW
-import io.spine.logging.jvm.RateLimitStatus.checkStatus
+import io.spine.logging.jvm.RateLimitStatus.Companion.DISALLOW
 import io.spine.logging.jvm.backend.given.FakeMetadata
 import io.spine.logging.jvm.given.FakeLogSite
 import java.util.concurrent.TimeUnit
@@ -58,19 +55,23 @@ internal class DurationRateLimiterSpec {
     @Test
     fun `return 'null' if the corresponding metadata key is not present`() {
         // Not supplying the metadata key ignores rate limiting by returning null.
-        check(FakeMetadata(), FakeLogSite.unique(), FAKE_TIMESTAMP).shouldBeNull()
+        DurationRateLimiter.check(
+            FakeMetadata(),
+            FakeLogSite.unique(),
+            FAKE_TIMESTAMP
+        ).shouldBeNull()
     }
 
     @Test
     fun `rate limit`() {
-        val oncePerSecond = newRateLimitPeriod(1, TimeUnit.SECONDS)
+        val oncePerSecond = DurationRateLimiter.newRateLimitPeriod(1, TimeUnit.SECONDS)
         val metadata = FakeMetadata().add(Key.LOG_AT_MOST_EVERY, oncePerSecond)
         val logSite = FakeLogSite.unique()
         repeat(100) { i ->
             // Increment by 1/10 of a second per log. We should then log once per 10 logs.
             val timestamp = FAKE_TIMESTAMP + i * MILLISECONDS.toNanos(100)
-            val status = check(metadata, logSite, timestamp)
-            val skipCount = checkStatus(status, logSite, metadata)
+            val status = DurationRateLimiter.check(metadata, logSite, timestamp)
+            val skipCount = RateLimitStatus.checkStatus(status!!, logSite, metadata)
             val shouldLog = skipCount != -1
             shouldLog shouldBe (i % 10 == 0)
         }
@@ -78,49 +79,49 @@ internal class DurationRateLimiterSpec {
 
     @Test
     fun `distinct different log sites`() {
-        val oncePerSecond = newRateLimitPeriod(1, TimeUnit.SECONDS)
+        val oncePerSecond = DurationRateLimiter.newRateLimitPeriod(1, TimeUnit.SECONDS)
         val metadata = FakeMetadata().add(Key.LOG_AT_MOST_EVERY, oncePerSecond)
         val fooLog = FakeLogSite.unique()
         val barLog = FakeLogSite.unique()
 
         var timestamp = FAKE_TIMESTAMP
-        val allowFoo = check(metadata, fooLog, timestamp)
-        val allowBar = check(metadata, barLog, timestamp)
+        val allowFoo = DurationRateLimiter.check(metadata, fooLog, timestamp)
+        val allowBar = DurationRateLimiter.check(metadata, barLog, timestamp)
         allowFoo shouldNotBe allowBar
-        check(metadata, fooLog, timestamp) shouldBeSameInstanceAs allowFoo
-        check(metadata, barLog, timestamp) shouldBeSameInstanceAs allowBar
+        DurationRateLimiter.check(metadata, fooLog, timestamp) shouldBeSameInstanceAs allowFoo
+        DurationRateLimiter.check(metadata, barLog, timestamp) shouldBeSameInstanceAs allowBar
 
         // `foo` is reset, so it moves into its rate-limiting state,
         // but `bar` stays pending.
         allowFoo!!.reset()
         timestamp += MILLISECONDS.toNanos(100)
-        check(metadata, fooLog, timestamp) shouldBeSameInstanceAs DISALLOW
-        check(metadata, barLog, timestamp) shouldBeSameInstanceAs allowBar
+        DurationRateLimiter.check(metadata, fooLog, timestamp) shouldBeSameInstanceAs DISALLOW
+        DurationRateLimiter.check(metadata, barLog, timestamp) shouldBeSameInstanceAs allowBar
 
         // We reset `bar` after an additional 100ms has passed.
         // Both limiters are rate-limiting.
         allowBar!!.reset()
         timestamp += MILLISECONDS.toNanos(100)
-        check(metadata, fooLog, timestamp) shouldBeSameInstanceAs DISALLOW
-        check(metadata, barLog, timestamp) shouldBeSameInstanceAs DISALLOW
+        DurationRateLimiter.check(metadata, fooLog, timestamp) shouldBeSameInstanceAs DISALLOW
+        DurationRateLimiter.check(metadata, barLog, timestamp) shouldBeSameInstanceAs DISALLOW
 
         // After 800ms, it has been 1 second since `foo` was reset,
         // but only 900ms since `bar` was reset, so `foo` becomes pending
         // and `bar` remains rate-limiting.
         timestamp += MILLISECONDS.toNanos(800)
-        check(metadata, fooLog, timestamp) shouldBeSameInstanceAs allowFoo
-        check(metadata, barLog, timestamp) shouldBeSameInstanceAs DISALLOW
+        DurationRateLimiter.check(metadata, fooLog, timestamp) shouldBeSameInstanceAs allowFoo
+        DurationRateLimiter.check(metadata, barLog, timestamp) shouldBeSameInstanceAs DISALLOW
 
         // After another 100ms, both limiters are pending again.
         timestamp += MILLISECONDS.toNanos(100)
-        check(metadata, fooLog, timestamp) shouldBeSameInstanceAs allowFoo
-        check(metadata, barLog, timestamp) shouldBeSameInstanceAs allowBar
+        DurationRateLimiter.check(metadata, fooLog, timestamp) shouldBeSameInstanceAs allowFoo
+        DurationRateLimiter.check(metadata, barLog, timestamp) shouldBeSameInstanceAs allowBar
     }
 
     @Test
     fun `check the limit in accordance to the given timestamp`() {
         val limiter = DurationRateLimiter()
-        val period = newRateLimitPeriod(1, TimeUnit.SECONDS)
+        val period = DurationRateLimiter.newRateLimitPeriod(1, TimeUnit.SECONDS)
 
         // Arbitrary start time, but within the first period to ensure
         // we still log the first call.
@@ -146,7 +147,7 @@ internal class DurationRateLimiterSpec {
 
     @Test
     fun `transform rate limit period to string`() {
-        val period = newRateLimitPeriod(23, TimeUnit.SECONDS)
+        val period = DurationRateLimiter.newRateLimitPeriod(23, TimeUnit.SECONDS)
         "$period" shouldBe "23 SECONDS"
     }
 }

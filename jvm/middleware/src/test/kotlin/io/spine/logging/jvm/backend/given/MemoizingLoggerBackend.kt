@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ import java.util.logging.Level
 /**
  * A logger backend that captures all [LogData] instances.
  *
- * This class is mutable and not thread safe.
+ * This class is mutable and not thread-safe.
  *
  * @see <a href="http://rb.gy/r6jjw">Original Java code of Google Flogger</a>
  *   for historical context.

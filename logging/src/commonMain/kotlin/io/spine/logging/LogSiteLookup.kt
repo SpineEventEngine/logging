@@ -43,7 +43,7 @@ public expect object LogSiteLookup {
      * Returns a [LogSite] for the caller of the specified class.
      *
      * In some platforms, log site determination may be unsupported, and in
-     * those cases this method should return the [LogSite.INVALID] instance.
+     * those cases this method should return the [LogSite.Invalid] instance.
      */
     public fun callerOf(loggingApi: KClass<*>): LogSite
 
@@ -51,7 +51,7 @@ public expect object LogSiteLookup {
      * Returns a [LogSite] for the current line of code.
      *
      * In some platforms, log site determination may be unsupported, and in
-     * those cases this method should return the [LogSite.INVALID] instance.
+     * those cases this method should return the [LogSite.Invalid] instance.
      */
     public fun logSite(): LogSite
 }

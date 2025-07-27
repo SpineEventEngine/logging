@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -100,7 +100,7 @@ internal class StringBuilderExtsSpec {
         "$out" shouldBe "<class>.<method>:32"
 
         out.setLength(0)
-        out.appendLogSite(JvmLogSite.INVALID).shouldBeFalse()
+        out.appendLogSite(JvmLogSite.invalid).shouldBeFalse()
         "$out".shouldBeEmpty()
     }
 

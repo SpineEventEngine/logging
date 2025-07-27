@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,11 +43,11 @@ import java.util.FormattableFlags.UPPERCASE
 /**
  * Appends log-site information in the default format, including a trailing space.
  *
- * @param logSite The log site to be appended (ignored if [JvmLogSite.INVALID]).
+ * @param logSite The log site to be appended (ignored if [JvmLogSite.invalid]).
  * @return whether the log-site was appended.
  */
 public fun StringBuilder.appendLogSite(logSite: JvmLogSite): Boolean {
-    if (logSite == JvmLogSite.INVALID) {
+    if (logSite == JvmLogSite.invalid) {
         return false
     }
     this.append(logSite.className)

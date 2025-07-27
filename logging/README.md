@@ -2,8 +2,8 @@
 
 This module contains Spine Logging API.
 
-API and implementation are largely inspired by [Google Flogger][flogger] and
-the introduction of fluent logging API in [SLF4J v2.0.0][fluent-slf4j].
+API and implementation are largely inspired by both [Google Flogger][flogger]
+as well as the introduction of fluent logging API in [SLF4J v2.0.0][fluent-slf4j].
 
 The library aims to be multiplatform, but as of now, only the JVM target is supported.
 

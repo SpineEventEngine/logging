@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,16 +32,16 @@ import io.spine.logging.jvm.LoggingScope
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.MiddlemanApi
 import io.spine.logging.jvm.context.ScopedLoggingContext.Companion.getInstance
-import io.spine.logging.jvm.util.Checks.checkNotNull
 import io.spine.logging.jvm.util.Checks.checkState
 import java.util.concurrent.Callable
 
 /**
  * A user-facing API for creating and modifying scoped logging contexts in applications.
  *
- * Scoped contexts provide a way for application code to attach metadata and control the
- * behaviour of logging within well defined contexts. This is most often associated with making "per
- * request" modifications to logging behaviour such as:
+ * Scoped contexts provide a way for application code to attach metadata and
+ * control the behaviour of logging within well-defined contexts.
+ * This is most often associated with making "per request" modifications to
+ * logging behaviour such as:
  *
  * - Adding a request ID to every log statement.
  * - Forcing logging at a finer level for a specific request
@@ -98,26 +98,27 @@ public abstract class ScopedLoggingContext protected constructor() {
         private val scope: LoggingScope,
         private val next: ScopeList?
     ) {
-        init {
-            checkNotNull(key, "scope type")
-            checkNotNull(scope, "scope")
-        }
 
         public companion object {
+
             /**
-             * Adds a new scope to the list for the given type. If the given type is null, or a scope for
-             * the type already exists in the list, the original (potentially `null`) list reference
-             * is returned.
+             * Adds a new scope to the list for the given type.
+             *
+             * If the given type is null, or a scope for the type already exists in the list,
+             * the original (potentially `null`) list reference is returned.
              */
             @JvmStatic
             public fun addScope(list: ScopeList?, type: ScopeType?): ScopeList? {
-                return if (type != null && lookup(list, type) == null)
+                return if (type != null && lookup(list, type) == null) {
                     ScopeList(type, type.newScope(), list)
-                else
+                } else {
                     list
+                }
             }
 
-            /** Finds a scope instance for the given type in a possibly null scope list. */
+            /**
+             * Finds a scope instance for the given type in a possibly null scope list.
+             */
             @JvmStatic
             public fun lookup(list: ScopeList?, type: ScopeType): LoggingScope? {
                 var currentList = list
@@ -133,8 +134,10 @@ public abstract class ScopedLoggingContext protected constructor() {
     }
 
     /**
-     * A fluent builder API for creating and installing new context scopes. This API should be used
-     * whenever the metadata to be added to a scope is known at the time the scope is created.
+     * A fluent builder API for creating and installing new context scopes.
+     *
+     * This API should be used whenever the metadata to be added to a scope is known at
+     * the time the scope is created.
      *
      * This class is intended to be used only as part of a fluent statement, and retaining a
      * reference to a builder instance for any length of time is not recommended.
@@ -147,13 +150,13 @@ public abstract class ScopedLoggingContext protected constructor() {
         private var logLevelMap: LogLevelMap? = null
 
         /**
-         * Sets the tags to be used with the context. This method can be called at most once per
-         * builder.
+         * Sets the tags to be used with the context.
+         *
+         * This method can be called at most once per builder.
          */
         @CanIgnoreReturnValue
         public fun withTags(tags: Tags): Builder {
-            checkState(this.tags == null, "tags already set")
-            checkNotNull(tags, "tags")
+            checkState(this.tags == null, "Tags already set.")
             this.tags = tags
             return this
         }
@@ -172,13 +175,13 @@ public abstract class ScopedLoggingContext protected constructor() {
         }
 
         /**
-         * Sets the log level map to be used with the context being built. This method can be called
-         * at most once per builder.
+         * Sets the log level map to be used with the context being built.
+         *
+         * This method can be called at most once per builder.
          */
         @CanIgnoreReturnValue
         public fun withLogLevelMap(logLevelMap: LogLevelMap): Builder {
             checkState(this.logLevelMap == null, "log level map already set")
-            checkNotNull(logLevelMap, "log level map")
             this.logLevelMap = logLevelMap
             return this
         }
@@ -197,8 +200,6 @@ public abstract class ScopedLoggingContext protected constructor() {
          */
         public fun wrap(r: Runnable): Runnable {
             return Runnable {
-                //TODO:2025-06-30:alexander.yevsyukov: Migrate to `use { }`.
-                // JDK 1.6 does not have "try-with-resources"
                 val context = install()
                 var hasError = true
                 try {
@@ -385,7 +386,6 @@ public abstract class ScopedLoggingContext protected constructor() {
      */
     @CanIgnoreReturnValue
     public open fun addTags(tags: Tags): Boolean {
-        checkNotNull(tags, "tags")
         //TODO:2025-06-30:alexander.yevsyukov: Investigate why this method does nothing despite
         // the documentation.
         return false
@@ -398,14 +398,12 @@ public abstract class ScopedLoggingContext protected constructor() {
      * in which values were added, context metadata preserves the order of addition.
      * As such, it is not advised to add values for the same metadata key from multiple threads,
      * since that may create non-deterministic ordering.
-     * 
+     *
      * It is recommended (where possible) to add metadata when building
      * a new context, rather than adding it to context visible to multiple threads.
      */
     @CanIgnoreReturnValue
     public open fun <T : Any> addMetadata(key: MetadataKey<T>, value: T): Boolean {
-        checkNotNull(key, "key")
-        checkNotNull(value, "value")
         //TODO:2025-06-30:alexander.yevsyukov: Investigate why this method does nothing despite
         // the documentation.
         return false
@@ -426,7 +424,6 @@ public abstract class ScopedLoggingContext protected constructor() {
      */
     @CanIgnoreReturnValue
     public open fun applyLogLevelMap(logLevelMap: LogLevelMap): Boolean {
-        checkNotNull(logLevelMap, "log level map")
         //TODO:2025-06-30:alexander.yevsyukov: Investigate why this method does nothing despite
         // the documentation.
         return false

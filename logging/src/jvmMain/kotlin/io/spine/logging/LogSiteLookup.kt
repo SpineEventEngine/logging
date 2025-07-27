@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,6 @@ package io.spine.logging
 import io.spine.logging.jvm.backend.Platform
 import kotlin.reflect.KClass
 import io.spine.logging.jvm.JvmLogSite
-import io.spine.logging.jvm.JvmLogSites
 
 /**
  * Determines log sites for the current line of code using Flogger utils.
@@ -40,11 +39,11 @@ public actual object LogSiteLookup {
      * Returns a [LogSite] for the caller of the specified class.
      *
      * If log site determination is unsupported, this method returns
-     * the [LogSite.INVALID] instance.
+     * the [LogSite.Invalid] instance.
      */
     public actual fun callerOf(loggingApi: KClass<*>): LogSite {
-        val floggerSite = JvmLogSites.callerOf(loggingApi.java)
-        val logSite = floggerSite.toLogSite()
+        val jvmSite = JvmLogSite.callerOf(loggingApi.java)
+        val logSite = jvmSite.toLogSite()
         return logSite
     }
 
@@ -52,21 +51,21 @@ public actual object LogSiteLookup {
      * Returns a [LogSite] for the current line of code.
      *
      * If log site determination is unsupported, this method returns
-     * the [LogSite.INVALID] instance.
+     * the [LogSite.Invalid] instance.
      */
     public actual fun logSite(): LogSite {
-        val floggerSite = Platform.getCallerFinder().findLogSite(
+        val platformLogSite = Platform.getCallerFinder().findLogSite(
             LogSiteLookup::class.java,
             0
         )
-        val logSite = floggerSite.toLogSite()
+        val logSite = platformLogSite.toLogSite()
         return logSite
     }
 }
 
 private fun JvmLogSite.toLogSite(): LogSite {
-    if (this == JvmLogSite.INVALID) {
-        return LogSite.INVALID
+    if (this == JvmLogSite.invalid) {
+        return LogSite.Invalid
     }
     return InjectedLogSite(
         className = this@toLogSite.className,

@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,8 @@ import java.util.logging.Level
  * This logger has specific methods for injecting timestamps
  * and forcing log statements.
  *
- * @see <a href="https://rb.gy/smalv">Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="https://rb.gy/smalv">
+ *     Original Java code of Google Flogger</a> for historical context.
  */
 class ConfigurableLogger(backend: LoggerBackend) : AbstractLogger<ConfigurableLogger.Api>(backend) {
 
@@ -58,23 +59,20 @@ class ConfigurableLogger(backend: LoggerBackend) : AbstractLogger<ConfigurableLo
     /**
      * Logs at the given level with the fixed [DEFAULT_TIMESTAMP_NANOS].
      */
-    override fun at(level: Level): Api {
-        return at(level, DEFAULT_TIMESTAMP_NANOS)
-    }
+    override fun at(level: Level): Api =
+        at(level, DEFAULT_TIMESTAMP_NANOS)
 
     /**
      * Logs at the given level with the specified nanosecond timestamp.
      */
-    fun at(level: Level, timestampNanos: Long): Api {
-        return Context(level, false, timestampNanos)
-    }
+    fun at(level: Level, timestampNanos: Long): Api =
+        Context(level, false, timestampNanos)
 
     /**
      * Forces logging at the given level with the specified nanosecond timestamp.
      */
-    fun forceAt(level: Level, timestampNanos: Long = DEFAULT_TIMESTAMP_NANOS): Api {
-        return Context(level, true, timestampNanos)
-    }
+    fun forceAt(level: Level, timestampNanos: Long = DEFAULT_TIMESTAMP_NANOS): Api =
+        Context(level, true, timestampNanos)
 
     /**
      * Context that implements the logger's [Api].

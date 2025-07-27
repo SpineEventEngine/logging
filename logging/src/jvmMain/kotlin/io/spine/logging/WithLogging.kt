@@ -35,7 +35,7 @@ import io.spine.logging.LoggingFactory.loggerFor
  *
  * Usage example:
  *
- * ```
+ * ```kotlin
  * class MyClass : WithLogging {
  *     fun doAction() {
  *         logger.atInfo().log { "Action is in progress." }
