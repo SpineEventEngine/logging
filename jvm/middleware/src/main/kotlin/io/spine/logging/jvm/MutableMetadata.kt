@@ -41,6 +41,7 @@ internal class MutableMetadata : Metadata() {
          *
          * Note: As of 10/12 the VM allocates small object arrays very linearly with
          * respect to the number of elements.
+         *
          * An array has a 12-byte header with 4 bytes/element for object references.
          * The allocation size is always rounded up to the next 8 bytes, which means we
          * can just pick a small value for the initial size and grow from there without
@@ -100,7 +101,9 @@ internal class MutableMetadata : Metadata() {
      * Adds the key/value pair to the metadata (growing the internal array as necessary).
      *
      * If the key cannot be repeated, and there is already a value for the key in the metadata,
-     * then the existing value is replaced, otherwise the value is added at the end of the metadata.
+     * then the existing value is replaced.
+     *
+     * Otherwise the value is added at the end of the metadata.
      */
     fun <T : Any> addValue(key: MetadataKey<T>, value: T) {
         if (!key.canRepeat()) {

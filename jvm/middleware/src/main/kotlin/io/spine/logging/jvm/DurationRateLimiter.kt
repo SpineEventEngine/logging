@@ -50,8 +50,10 @@ internal class DurationRateLimiter : RateLimitStatus() {
     private val lastTimestampNanos = AtomicLong(-1L)
 
     /**
-     * Checks whether the current time stamp is after the rate-limiting period and if so, updates
-     * the time stamp and returns true. This is invoked during post-processing if a rate-limiting
+     * Checks whether the current time stamp is after the rate-limiting period and if so,
+     * updates the time stamp and returns true.
+     *
+     * This is invoked during post-processing if a rate-limiting
      * duration was set via [MiddlemanApi.atMostEvery].
      */
     internal fun checkLastTimestamp(
@@ -84,8 +86,9 @@ internal class DurationRateLimiter : RateLimitStatus() {
      * Reset function called to move the limiter out of the "pending" state.
      *
      * We do this by negating the timestamp (which was already negated when
-     * we entered the pending state, so we restore it
-     * to a positive value which moves us back into the "limiting" state).
+     * we entered the pending state).
+     *
+     * This restores it to a positive value which moves us back into the "limiting" state.
      */
     override fun reset() {
         // Only one thread at a time can reset a rate limiter, so this can be unconditional. We
