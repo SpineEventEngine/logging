@@ -39,7 +39,6 @@ dependencies {
     implementation(Reflect.lib)
     implementation(project(":middleware"))
     implementation(project(":jul-backend"))
-    testImplementation(project(":middleware", configuration = "testArtifacts"))
     testImplementation(AutoService.annotations)
     kaptTest(AutoService.processor)
 }

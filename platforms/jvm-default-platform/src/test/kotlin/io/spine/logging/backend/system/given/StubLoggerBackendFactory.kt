@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,32 +24,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.dependency.kotlinx.DateTime
-import io.spine.dependency.local.Base
-import io.spine.dependency.local.Reflect
-import io.spine.gradle.java.disableLinters
-import io.spine.gradle.testing.exposeTestConfiguration
+package io.spine.logging.backend.system.given
 
-plugins {
-    `jvm-module`
-}
+import io.spine.logging.jvm.backend.BackendFactory
+import io.spine.logging.jvm.backend.LoggerBackend
 
-dependencies {
-    implementation(DateTime.lib)
-    implementation(Base.annotations)
-    implementation(Reflect.lib)
-    implementation(project(":platform-generator", configuration = "generatedPlatformProvider"))
-    testImplementation(project(":logging"))
-    testImplementation(project(":probe-backend"))
-    testImplementation(project(":logging-testlib"))
-    testRuntimeOnly(project(":jvm-default-platform"))
-}
+/**
+ * A primitive factory of [StubLoggerBackend].
+ */
+internal class StubLoggerBackendFactory : BackendFactory() {
 
-java {
-    /**
-     * Abstract tests and their `given` classes can be re-used to test
-     * different backend and context implementations.
-     */
-    exposeTestConfiguration()
-    disableLinters() // Due to non-migrated Flogger sources.
+    override fun create(loggingClass: String): LoggerBackend =
+        StubLoggerBackend(loggingClass)
+
+    override fun toString(): String = javaClass.name
 }

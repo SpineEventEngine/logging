@@ -28,11 +28,11 @@ package io.spine.logging.backend.log4j2
 
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import io.spine.logging.backend.log4j2.given.ConfigurableLogger
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
 import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.jvm.context.ContextDataProvider
 import io.spine.logging.jvm.context.Tags
-import io.spine.logging.jvm.given.ConfigurableLogger
 import io.spine.logging.jvm.repeatedKey
 import io.spine.logging.jvm.singleKey
 import java.util.concurrent.atomic.AtomicInteger

@@ -35,8 +35,8 @@ import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
 import io.spine.logging.jvm.JvmLogSite
 import io.spine.logging.jvm.LogContext.Key
-import io.spine.logging.jvm.backend.given.FakeLogData
-import io.spine.logging.jvm.given.FakeLogSite
+import io.spine.logging.backend.log4j2.given.FakeLogData
+import io.spine.logging.backend.log4j2.given.FakeLogSite
 import io.spine.logging.jvm.parser.ParseException
 import io.spine.logging.jvm.repeatedKey
 import io.spine.logging.jvm.singleKey
