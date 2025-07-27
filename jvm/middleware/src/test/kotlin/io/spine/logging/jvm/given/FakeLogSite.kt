@@ -35,7 +35,7 @@ import java.util.concurrent.atomic.AtomicInteger
  *
  * @see <a href="http://rb.gy/wal1a">Original Java code of Google Flogger</a> for historical context.
  */
-class FakeLogSite(
+internal class FakeLogSite(
     override val className: String,
     override val methodName: String,
     override val lineNumber: Int,
