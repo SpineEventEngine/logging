@@ -48,15 +48,21 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for interaction between [ScopedLoggingContext][io.spine.logging.jvm.context.ScopedLoggingContext]
+ * Tests for interaction between
+ * [ScopedLoggingContext][io.spine.logging.jvm.context.ScopedLoggingContext]
  * and [Log4j2LoggerBackend].
  *
- * `ScopedLoggingContext` is abstract. To test it with Log4j backend,
- * a concrete implementation is needed. This test suite uses [GrpcScopedLoggingContext][io.spine.logging.context.grpc.GrpcScopedLoggingContext].
+ * [ScopedLoggingContext][io.spine.logging.jvm.context.ScopedLoggingContext] is abstract.
+ * To test it with the Log4j backend, a concrete implementation is needed.
+ *
+ * This test suite uses
+ * [GrpcScopedLoggingContext][io.spine.logging.context.grpc.GrpcScopedLoggingContext].
+ * It is provided by the dependency `testRuntimeOnly(project(":grpc-context"))`.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/log4j2/src/test/java/com/google/common/flogger/backend/log4j2/Log4j2ScopedLoggingTest.java">
  *     Original Java code of Google Flogger</a> for historical context.
  */
+@Suppress("KDocUnresolvedReference") // because of the `testRuntimeOnly` dependency.
 @DisplayName("With Log4j backend, `ScopedLoggingContext` should")
 internal class Log4j2ScopedLoggingSpec {
 
