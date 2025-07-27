@@ -1,12 +1,12 @@
 # 🪄 Converting Java code to Kotlin
 
 * Java code API comments are Javadoc format.
-* Kotlin code API comments are in KDoc format. 
- 
+* Kotlin code API comments are in KDoc format.
+
 ## Javadoc to KDoc conversion
 
 * The wording of original Javadoc comments must be preserved.
-                                                                      
+
 ## Treating nullability
 
 * Use nullable Kotlin type only if the type in Java is annotated as `@Nullable`.
@@ -36,9 +36,10 @@
 * Suppress `detekt` build errors using this format: `[Error]` with `@Suppress("Error")`.
 
 ## Documentation Conversion
-
-* Convert `@param` to `@param` with the same description: 
-  - Start the description on the same line with the `@param` tag 
+* Keep the original Javadoc comments but convert them to KDoc format.
+* When converting, make the first paragraph to be exactly one sentence, moving the rest of the text to the new paragraph.
+* Convert `@param` to `@param` with the same description:
+  - Start the description on the same line with the `@param` tag
   - Break at 90 chars
   - Continue with the margin of 7 space chars.
 
