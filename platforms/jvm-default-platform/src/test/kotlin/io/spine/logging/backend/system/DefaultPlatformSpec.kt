@@ -30,12 +30,12 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.backend.system.given.FixedTime
-import io.spine.logging.backend.system.given.MemoizingLoggerBackendFactory
+import io.spine.logging.backend.system.given.StubLoggerBackend
+import io.spine.logging.backend.system.given.StubLoggerBackendFactory
 import io.spine.logging.backend.system.given.NoOpCallerFinder
 import io.spine.logging.backend.system.given.StubBackendFactoryService
 import io.spine.logging.backend.system.given.StubClockService
 import io.spine.logging.backend.system.given.StubContextDataProviderService
-import io.spine.logging.jvm.backend.given.MemoizingLoggerBackend
 import io.spine.logging.jvm.context.ContextDataProvider
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -53,7 +53,7 @@ import org.junit.jupiter.api.Test
 @DisplayName("`DefaultPlatform` should")
 internal class DefaultPlatformSpec {
 
-    private val factory = MemoizingLoggerBackendFactory()
+    private val factory = StubLoggerBackendFactory()
     private val context = ContextDataProvider.getNoOpProvider()
     private val clock = FixedTime()
     private val caller = NoOpCallerFinder()
@@ -64,7 +64,7 @@ internal class DefaultPlatformSpec {
         val loggerName = "logger.name"
         val backend = platform.getBackendImpl(loggerName)
         backend.loggerName shouldContain loggerName
-        backend::class shouldBe MemoizingLoggerBackend::class
+        backend::class shouldBe StubLoggerBackend::class
     }
 
     @Test

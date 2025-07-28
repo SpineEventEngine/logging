@@ -34,10 +34,10 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.logging.backend.probe.MemoizingLoggerBackend
 import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.jvm.backend.Metadata
 import io.spine.logging.jvm.backend.Platform
-import io.spine.logging.jvm.backend.given.MemoizingLoggerBackend
 import io.spine.logging.jvm.backend.given.shouldBeEmpty
 import io.spine.logging.jvm.backend.given.shouldContainInOrder
 import io.spine.logging.jvm.backend.given.shouldHaveSize
@@ -50,8 +50,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-
-/* These types clash with simple class names in this package. */
 import io.spine.logging.Level as TLevel
 import io.spine.logging.context.LogLevelMap as TLogLevelMap
 import io.spine.logging.context.ScopedLoggingContext as TScopedLoggingContext

@@ -28,11 +28,11 @@ package io.spine.logging.backend.log4j2
 
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import io.spine.logging.backend.log4j2.given.StubLogger
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
 import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.jvm.context.ContextDataProvider
 import io.spine.logging.jvm.context.Tags
-import io.spine.logging.jvm.given.ConfigurableLogger
 import io.spine.logging.jvm.repeatedKey
 import io.spine.logging.jvm.singleKey
 import java.util.concurrent.atomic.AtomicInteger
@@ -48,20 +48,26 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for interaction between [ScopedLoggingContext][io.spine.logging.jvm.context.ScopedLoggingContext]
+ * Tests for interaction between
+ * [ScopedLoggingContext][io.spine.logging.jvm.context.ScopedLoggingContext]
  * and [Log4j2LoggerBackend].
  *
- * `ScopedLoggingContext` is abstract. To test it with Log4j backend,
- * a concrete implementation is needed. This test suite uses [GrpcScopedLoggingContext][io.spine.logging.context.grpc.GrpcScopedLoggingContext].
+ * [ScopedLoggingContext][io.spine.logging.jvm.context.ScopedLoggingContext] is abstract.
+ * To test it with the Log4j backend, a concrete implementation is needed.
+ *
+ * This test suite uses
+ * [GrpcScopedLoggingContext][io.spine.logging.context.grpc.GrpcScopedLoggingContext].
+ * It is provided by the dependency `testRuntimeOnly(project(":grpc-context"))`.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/log4j2/src/test/java/com/google/common/flogger/backend/log4j2/Log4j2ScopedLoggingTest.java">
  *     Original Java code of Google Flogger</a> for historical context.
  */
+@Suppress("KDocUnresolvedReference") // because of the `testRuntimeOnly` dependency.
 @DisplayName("With Log4j backend, `ScopedLoggingContext` should")
 internal class Log4j2ScopedLoggingSpec {
 
     private val context = ContextDataProvider.getInstance().getContextApiSingleton()
-    private lateinit var logger: ConfigurableLogger
+    private lateinit var logger: StubLogger
     private lateinit var logged: List<LogEvent>
     private val lastLogged get() = logged.last()
 
@@ -450,7 +456,7 @@ internal class Log4j2ScopedLoggingSpec {
 private val serialNumbers = AtomicInteger()
 
 /**
- * Creates a [ConfigurableLogger] with a unique name and
+ * Creates a [StubLogger] with a unique name and
  * the given Log4j's [appender].
  *
  * The default console appender is removed.
@@ -458,7 +464,7 @@ private val serialNumbers = AtomicInteger()
  * A unique name should produce a different logger for each test,
  * allowing tests to be run in parallel.
  */
-private fun createLogger(appender: Appender): ConfigurableLogger {
+private fun createLogger(appender: Appender): StubLogger {
     val suiteName = Log4j2ScopedLoggingSpec::class.simpleName!!
     val testSerial = serialNumbers.incrementAndGet()
     val loggerName = "%s_%02d".format(suiteName, testSerial)
@@ -469,7 +475,7 @@ private fun createLogger(appender: Appender): ConfigurableLogger {
         addAppender(appender)
     }
     val backend = Log4j2LoggerBackend(log4jLogger)
-    val logger = ConfigurableLogger(backend)
+    val logger = StubLogger(backend)
     return logger
 }
 

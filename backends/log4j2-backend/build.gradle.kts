@@ -26,7 +26,6 @@
 
 import io.spine.dependency.lib.Log4j2
 import io.spine.gradle.java.disableLinters
-import net.ltgt.gradle.errorprone.errorprone
 
 plugins {
     `jvm-module`
@@ -35,7 +34,7 @@ plugins {
 dependencies {
     implementation(Log4j2.core)
     implementation(project(":middleware"))
-    testImplementation(project(":middleware", configuration = "testArtifacts"))
+    testImplementation(project(":logging"))
     testRuntimeOnly(project(":grpc-context"))
 }
 

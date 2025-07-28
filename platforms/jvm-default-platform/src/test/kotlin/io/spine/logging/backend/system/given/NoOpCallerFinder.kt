@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,37 +28,9 @@ package io.spine.logging.backend.system.given
 
 import com.google.errorprone.annotations.Immutable
 import com.google.errorprone.annotations.ThreadSafe
-import io.spine.logging.jvm.backend.BackendFactory
-import io.spine.logging.jvm.backend.Clock
 import io.spine.logging.jvm.AbstractLogger
 import io.spine.logging.jvm.JvmLogSite
-import io.spine.logging.jvm.backend.LoggerBackend
 import io.spine.logging.jvm.backend.Platform
-import io.spine.logging.jvm.backend.given.MemoizingLoggerBackend
-
-/**
- * A primitive factory of [MemoizingLoggerBackend].
- */
-internal class MemoizingLoggerBackendFactory : BackendFactory() {
-
-    override fun create(loggingClass: String): LoggerBackend =
-        MemoizingLoggerBackend(loggingClass)
-
-    override fun toString(): String = javaClass.name
-}
-
-/**
- * A clock that always returns the configured [returnedTimestamp].
- */
-internal class FixedTime : Clock() {
-
-    /**
-     * A timestamp that this clock always returns.
-     */
-    var returnedTimestamp = 0L
-
-    override fun getCurrentTimeNanos(): Long = returnedTimestamp
-}
 
 /**
  * No-op implementation of [Platform.LogCallerFinder].

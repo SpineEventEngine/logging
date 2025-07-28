@@ -35,8 +35,8 @@ import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
 import io.spine.logging.jvm.JvmLogSite
 import io.spine.logging.jvm.LogContext.Key
-import io.spine.logging.jvm.backend.given.FakeLogData
-import io.spine.logging.jvm.given.FakeLogSite
+import io.spine.logging.backend.log4j2.given.StubLogData
+import io.spine.logging.backend.log4j2.given.StubLogSite
 import io.spine.logging.jvm.parser.ParseException
 import io.spine.logging.jvm.repeatedKey
 import io.spine.logging.jvm.singleKey
@@ -83,7 +83,7 @@ internal class Log4j2LoggerBackendSpec {
 
     @Test
     fun `log a literal message`() {
-        val literalData = FakeLogData(LITERAL)
+        val literalData = StubLogData(LITERAL)
         backend.log(literalData)
         lastLogged.formatted shouldBe LITERAL
     }
@@ -91,7 +91,7 @@ internal class Log4j2LoggerBackendSpec {
     @Test
     fun `log a formatted message`() {
         val (pattern, arguments) = "Hello %s %s" to arrayOf("Foo", "Bar")
-        val printfData = FakeLogData.withPrintfStyle(pattern, *arguments)
+        val printfData = StubLogData.withPrintfStyle(pattern, *arguments)
         backend.log(printfData)
         lastLogged.formatted shouldBe pattern.format(*arguments)
     }
@@ -99,7 +99,7 @@ internal class Log4j2LoggerBackendSpec {
     @Test
     fun `use the default level`() {
         val defaultLevel = Log4jLevel.INFO // By default Log4j settings.
-        val data = FakeLogData(LITERAL)
+        val data = StubLogData(LITERAL)
         backend.log(data)
         lastLogged.level shouldBe defaultLevel
     }
@@ -113,7 +113,7 @@ internal class Log4j2LoggerBackendSpec {
             val intValue = 23
             val strValue = "str value"
             val (pattern, argument) = "Foo='%s'" to "bar"
-            val data = FakeLogData.withPrintfStyle(pattern, argument)
+            val data = StubLogData.withPrintfStyle(pattern, argument)
                 .addMetadata(INT_KEY, intValue)
                 .addMetadata(STR_KEY, strValue)
             backend.log(data)
@@ -125,7 +125,7 @@ internal class Log4j2LoggerBackendSpec {
         @Test
         fun `with log cause`() {
             val cause = Throwable("Original Cause")
-            val data = FakeLogData(LITERAL)
+            val data = StubLogData(LITERAL)
                 .addMetadata(Key.LOG_CAUSE, cause)
             backend.log(data)
             lastLogged.thrown shouldBeSameInstanceAs cause
@@ -145,7 +145,7 @@ internal class Log4j2LoggerBackendSpec {
         )
         expectedMatches.forEach { (julLevel, expectedLog4jLevel) ->
             val message = julLevel.name
-            val data = FakeLogData(message)
+            val data = StubLogData(message)
                 .setLevel(julLevel)
             backend.log(data)
             lastLogged.level shouldBe expectedLog4jLevel
@@ -159,24 +159,24 @@ internal class Log4j2LoggerBackendSpec {
 
         @Test
         fun `with full information`() {
-            val logSite = FakeLogSite("<class>", "<method>", 42, "<file>")
+            val logSite = StubLogSite("<class>", "<method>", 42, "<file>")
             testLogSite(logSite)
         }
 
         @Test
         fun `without source file`() {
-            val logSite = FakeLogSite("<class>", "<method>", 42, null)
+            val logSite = StubLogSite("<class>", "<method>", 42, null)
             testLogSite(logSite)
         }
 
         @Test
         fun `without line number and source file`() {
-            val logSite = FakeLogSite("<class>", "<method>", -1, null)
+            val logSite = StubLogSite("<class>", "<method>", -1, null)
             testLogSite(logSite)
         }
 
         private fun testLogSite(logSite: JvmLogSite) {
-            val data = FakeLogData("")
+            val data = StubLogData("")
                 .setLogSite(logSite)
             backend.log(data)
             val actual = lastLogged.source
@@ -191,7 +191,7 @@ internal class Log4j2LoggerBackendSpec {
 
     @Test
     fun `propagate parsing errors`() {
-        val data = FakeLogData.withPrintfStyle("Hello %?X World", "ignored")
+        val data = StubLogData.withPrintfStyle("Hello %?X World", "ignored")
         val parseException = shouldThrow<ParseException> {
             backend.log(data)
         }

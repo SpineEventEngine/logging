@@ -33,7 +33,6 @@ plugins {
 
 dependencies {
     implementation(project(":middleware"))
-    implementation(project(":middleware", configuration = "testArtifacts"))
     implementation(project(":jul-backend"))
     implementation(AutoService.annotations)
     kapt(AutoService.processor)

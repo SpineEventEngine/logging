@@ -26,8 +26,6 @@
 
 package io.spine.logging.backend.probe
 
-import io.spine.logging.jvm.backend.given.MemoizingLoggerBackend
-
 /**
  * A factory of [MemoizingLoggerBackend].
  *

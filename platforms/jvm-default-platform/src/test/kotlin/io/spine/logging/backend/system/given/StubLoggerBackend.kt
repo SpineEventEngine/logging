@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.backend.given
+package io.spine.logging.backend.system.given
 
 import io.spine.logging.jvm.backend.LogData
 import io.spine.logging.jvm.backend.LoggerBackend
@@ -38,50 +38,18 @@ import java.util.logging.Level
  * @see <a href="http://rb.gy/r6jjw">Original Java code of Google Flogger</a>
  *   for historical context.
  */
-class MemoizingLoggerBackend(
+internal class StubLoggerBackend(
     override val loggerName: String = "com.example.MyClass"
 ) : LoggerBackend() {
 
     private var minLevel = Level.INFO
     private val mutableLogged: MutableList<LogData> = ArrayList()
 
-    /**
-     * [LogData] entries captured by this backend.
-     */
-    val logged: List<LogData> get() = mutableLogged
-
-    /**
-     * Number of [LogData] entries captured by this backend.
-     */
-    val loggedCount: Int get() = mutableLogged.size
-
-    /**
-     * The last [LogData] captured by this backend.
-     *
-     * @throws NoSuchElementException if there are no entries
-     */
-    val lastLogged: LogData get() = mutableLogged.last()
-
-    /**
-     * The first [LogData] captured by this backend.
-     *
-     * @throws NoSuchElementException if there are no entries
-     */
-    val firstLogged: LogData get() = mutableLogged.first()
-
-    /**
-     * Sets the current level of this backend.
-     */
-    fun setLevel(level: Level) {
-        minLevel = level
-    }
-
-    override fun isLoggable(level: Level) = level.intValue() >= minLevel.intValue()
+    override fun isLoggable(level: Level): Boolean = level.intValue() >= minLevel.intValue()
 
     override fun log(data: LogData) {
         mutableLogged.add(data)
     }
 
-    override fun handleError(error: RuntimeException, badData: LogData) = throw error
+    override fun handleError(error: RuntimeException, badData: LogData): Nothing = throw error
 }
-
