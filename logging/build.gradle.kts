@@ -73,7 +73,6 @@ kotlin {
             dependencies {
                 implementation(project(":probe-backend"))
                 implementation(project(":logging-testlib"))
-                implementation(project(":probe-backend"))
             }
         }
     }
