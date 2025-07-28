@@ -24,35 +24,42 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.log4j2.given
+package io.spine.logging.backend.jul.given
 
-import io.spine.logging.jvm.JvmLogSite
-import java.util.Objects
+import com.google.errorprone.annotations.CanIgnoreReturnValue
+import io.spine.logging.jvm.MetadataKey
+import io.spine.logging.jvm.backend.Metadata
 
 /**
- * A simplified implementation of [JvmLogSite] for testing.
+ * A mutable [Metadata] implementation for testing logging backends
+ * and other log handling code.
  *
- * @see <a href="http://rb.gy/wal1a">Original Java code of Google Flogger</a>
- *   for historical context.
+ * @see <a href="http://rb.gy/h75mb">Original Java code of Google Flogger</a> for historical context.
  */
-internal class StubLogSite(
-    override val className: String,
-    override val methodName: String,
-    override val lineNumber: Int,
-    private val sourcePath: String?
-) : JvmLogSite() {
+internal class StubMetadata : Metadata() {
 
-    override val fileName: String? = sourcePath
+    private class KeyValuePair<T : Any>(val key: MetadataKey<T>, val value: T)
 
-    override fun equals(other: Any?): Boolean {
-        if (other !is StubLogSite) {
-            return false
-        }
-        return className == other.className &&
-                methodName == other.methodName &&
-                lineNumber == other.lineNumber &&
-                sourcePath == other.sourcePath
+    private val entries = mutableListOf<KeyValuePair<*>>()
+
+    /**
+     * Adds a key/value pair to this [Metadata].
+     */
+    @CanIgnoreReturnValue
+    fun <T : Any> add(key: MetadataKey<T>, value: T): StubMetadata {
+        entries.add(KeyValuePair(key, value))
+        return this
     }
 
-    override fun hashCode(): Int = Objects.hash(className, methodName, lineNumber, sourcePath)
+    override fun size(): Int = entries.size
+
+    override fun getKey(n: Int): MetadataKey<Any> = entries[n].key as MetadataKey<Any>
+
+    override fun getValue(n: Int): Any = entries[n].value
+
+    override fun <T : Any> findValue(key: MetadataKey<T>): T? {
+        val entry = entries.firstOrNull { it.key == key }
+        val casted = key.cast(entry?.value) // It is safe to pass `null` here.
+        return casted
+    }
 }

@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.log4j2.given
+package io.spine.logging.backend.jul.given
 
 import io.spine.logging.jvm.AbstractLogger
 import io.spine.logging.jvm.MiddlemanApi
@@ -40,7 +40,8 @@ import java.util.logging.Level
  * @see <a href="https://rb.gy/smalv">
  *     Original Java code of Google Flogger</a> for historical context.
  */
-internal class StubLogger(backend: LoggerBackend) : AbstractLogger<StubLogger.Api>(backend) {
+internal class StubLogger(backend: LoggerBackend) :
+    AbstractLogger<StubLogger.Api>(backend) {
 
     companion object {
         // Midnight Jan 1st, 2000 (GMT)
@@ -79,3 +80,4 @@ internal class StubLogger(backend: LoggerBackend) : AbstractLogger<StubLogger.Ap
         override fun getMessageParser(): MessageParser = DefaultPrintfMessageParser.getInstance()
     }
 }
+

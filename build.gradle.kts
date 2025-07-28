@@ -56,7 +56,6 @@ spinePublishing {
         "std-context",
         "grpc-context",
         "smoke-test",
-        "middleware",
         "platform-generator",
         "jvm-default-platform",
     )

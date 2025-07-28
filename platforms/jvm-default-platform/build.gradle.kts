@@ -25,22 +25,23 @@
  */
 
 import io.spine.dependency.lib.AutoService
+import io.spine.dependency.lib.AutoServiceKsp
 import io.spine.dependency.local.Base
 import io.spine.dependency.local.Reflect
 import io.spine.gradle.java.disableLinters
 
 plugins {
     `jvm-module`
-    `kotlin-kapt`
+    ksp
 }
 
 dependencies {
     implementation(Base.annotations)
     implementation(Reflect.lib)
-    implementation(project(":middleware"))
+    implementation(project(":logging"))
     implementation(project(":jul-backend"))
     testImplementation(AutoService.annotations)
-    kaptTest(AutoService.processor)
+    kspTest(AutoServiceKsp.processor)
 }
 
 java {
@@ -61,9 +62,9 @@ java {
 afterEvaluate {
     // `kaptKotlin` task is created after the configuration phase,
     // so we have to use the `afterEvaluate` block.
-    val kaptKotlin by tasks.existing
+    val kspKotlin by tasks.existing
     @Suppress("unused")
     val dokkaHtml by tasks.existing {
-        dependsOn(kaptKotlin)
+        dependsOn(kspKotlin)
     }
 }

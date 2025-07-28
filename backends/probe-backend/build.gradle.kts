@@ -25,15 +25,16 @@
  */
 
 import io.spine.dependency.lib.AutoService
+import io.spine.dependency.lib.AutoServiceKsp
 
 plugins {
     `jvm-module`
-    `kotlin-kapt`
+    ksp
 }
 
 dependencies {
-    implementation(project(":middleware"))
+    implementation(project(":logging"))
     implementation(project(":jul-backend"))
     implementation(AutoService.annotations)
-    kapt(AutoService.processor)
+    ksp(AutoServiceKsp.processor)
 }

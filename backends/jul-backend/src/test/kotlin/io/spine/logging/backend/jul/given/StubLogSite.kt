@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,30 +24,34 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-plugins {
-    `jvm-module`
-}
+package io.spine.logging.backend.jul.given
 
-dependencies {
-    testImplementation(project(":logging"))
-    testImplementation(project(":fixtures"))
+import io.spine.logging.jvm.JvmLogSite
+import java.util.*
 
-    /**
-     * Adds the default backend and context to the classpath.
-     *
-     * The logging `Platform` discovers backend and context implementations
-     * automatically via Java's `ServiceLoader`. A user doesn't need to
-     * interact with “hard” classes from these dependencies. So, they are
-     * usually added to [runtimeOnly] configuration.
-     *
-     * But for this test, it is important to make sure that the actually
-     * discovered implementations match the test expectations. With a small
-     * chance, but the `Platform` may surprisingly load another, unexpected
-     * backend, and it will pass all tests.
-     *
-     * So, we use “hard” classes from these dependencies to assert that
-     * the actually loaded backend and context match the test expectations.
-     */
-    testImplementation(project(":jul-backend"))
-    testImplementation(project(":std-context"))
+/**
+ * A simplified implementation of [JvmLogSite] for testing.
+ *
+ * @see <a href="http://rb.gy/wal1a">Original Java code of Google Flogger</a> for historical context.
+ */
+internal class StubLogSite(
+    override val className: String,
+    override val methodName: String,
+    override val lineNumber: Int,
+    private val sourcePath: String?
+) : JvmLogSite() {
+
+    override val fileName: String? = sourcePath
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is StubLogSite) {
+            return false
+        }
+        return className == other.className &&
+                methodName == other.methodName &&
+                lineNumber == other.lineNumber &&
+                sourcePath == other.sourcePath
+    }
+
+    override fun hashCode(): Int = Objects.hash(className, methodName, lineNumber, sourcePath)
 }

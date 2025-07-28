@@ -38,8 +38,8 @@ import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.jvm.backend.Metadata
-import io.spine.logging.jvm.backend.given.FakeLogData
-import io.spine.logging.jvm.backend.given.FakeMetadata
+import io.spine.logging.backend.jul.given.StubLogData
+import io.spine.logging.backend.jul.given.StubMetadata
 import io.spine.logging.jvm.context.Tags
 import io.spine.logging.jvm.parser.ParseException
 import io.spine.logging.jvm.singleKey
@@ -77,14 +77,14 @@ internal class JulRecordSpec {
         @Test
         fun `log level`() {
             val level = Level.FINER
-            val data = FakeLogData("") .setLevel(level)
+            val data = StubLogData("") .setLevel(level)
             val record = JulRecord.create(data, Metadata.empty())
             record.level shouldBe level
         }
 
         @Test
         fun `literal message`() {
-            val data = FakeLogData(LITERAL)
+            val data = StubLogData(LITERAL)
             val record = JulRecord.create(data, Metadata.empty())
             record.message shouldBe LITERAL
             record.parameters.shouldBeEmpty()
@@ -92,7 +92,7 @@ internal class JulRecordSpec {
 
         @Test
         fun `logger name and log site info`() {
-            val data = FakeLogData("")
+            val data = StubLogData("")
             val record = JulRecord.create(data, Metadata.empty())
             record.loggerName shouldBe data.loggerName
             record.sourceClassName shouldBe data.logSite.className
@@ -102,7 +102,7 @@ internal class JulRecordSpec {
         @Test
         fun `'Throwable' cause`() {
             val cause = Throwable("Goodbye World")
-            val data = FakeLogData("").addMetadata(Key.LOG_CAUSE, cause)
+            val data = StubLogData("").addMetadata(Key.LOG_CAUSE, cause)
             val record = JulRecord.create(data, Metadata.empty())
             record.thrown shouldBeSameInstanceAs cause
         }
@@ -117,7 +117,7 @@ internal class JulRecordSpec {
             val intValue = 23
             val strValue = "test value"
 
-            val data = FakeLogData(LITERAL)
+            val data = StubLogData(LITERAL)
                 .setTimestampNanos(timestampNanos)
                 .addMetadata(INT_KEY, intValue)
                 .addMetadata(STR_KEY, strValue)
@@ -135,11 +135,11 @@ internal class JulRecordSpec {
             val strValue = "test value"
             val pathTree = listOf("foo", "bar", "baz")
 
-            val scope = FakeMetadata()
+            val scope = StubMetadata()
                 .add(PATH_KEY, pathTree[0])
                 .add(INT_KEY, intValue)
                 .add(PATH_KEY, pathTree[1])
-            val data = FakeLogData(LITERAL)
+            val data = StubLogData(LITERAL)
                 .addMetadata(STR_KEY, strValue)
                 .addMetadata(PATH_KEY, pathTree[2])
             val record = JulRecord.create(data, scope)
@@ -160,7 +160,7 @@ internal class JulRecordSpec {
                 .addTag(bar, barValue)
                 .addTag(baz)
                 .build()
-            val data = FakeLogData(LITERAL).addMetadata(Key.TAGS, tags)
+            val data = StubLogData(LITERAL).addMetadata(Key.TAGS, tags)
             val record = JulRecord.create(data, Metadata.empty())
 
             // Tags are returned in alphabetical order.
@@ -171,7 +171,7 @@ internal class JulRecordSpec {
 
     @Test
     fun `handle a nullable literal message`() {
-        val data = FakeLogData(null).setLevel(Level.WARNING)
+        val data = StubLogData(null).setLevel(Level.WARNING)
         val record = JulRecord.create(data, Metadata.empty())
         record.message shouldBe "null"
         record.parameters.shouldBeEmpty()
@@ -179,7 +179,7 @@ internal class JulRecordSpec {
 
     @Test
     fun `format brace pattern`() {
-        val data = FakeLogData.withBraceStyle("Answer={0}", 42)
+        val data = StubLogData.withBraceStyle("Answer={0}", 42)
         val record = JulRecord.create(data, Metadata.empty())
         record.message shouldBe "Answer=42"
         record.parameters.shouldBeEmpty()
@@ -189,7 +189,7 @@ internal class JulRecordSpec {
     fun `format printf pattern`() {
         val pattern = "Hex=%#08x, Int=%1\$d"
         val argument = 0xC0DE
-        val data = FakeLogData.withPrintfStyle(pattern, argument)
+        val data = StubLogData.withPrintfStyle(pattern, argument)
         val record = JulRecord.create(data, Metadata.empty())
         record.message shouldBe pattern.format(argument)
         record.parameters.shouldBeEmpty()
@@ -198,7 +198,7 @@ internal class JulRecordSpec {
     @Test
     fun `handle runtime errors happening during the logging`() {
         val passedCause = Throwable("Original Cause")
-        val data = FakeLogData(LITERAL).addMetadata(Key.LOG_CAUSE, passedCause)
+        val data = StubLogData(LITERAL).addMetadata(Key.LOG_CAUSE, passedCause)
         val error = RuntimeException()
         val record = JulRecord.error(error, data, Metadata.empty())
         record.thrown shouldBe error
@@ -209,7 +209,7 @@ internal class JulRecordSpec {
 
     @Test
     fun `handle nullable arguments`() {
-        val data = FakeLogData.withPrintfStyle("value=%s", null)
+        val data = StubLogData.withPrintfStyle("value=%s", null)
         val record = JulRecord.create(data, Metadata.empty())
         record.message shouldBe "value=null"
     }
@@ -218,7 +218,7 @@ internal class JulRecordSpec {
     fun `report a missing argument`() {
         val pattern = "foo=%s, bar=%s"
         val argument = "FOO"
-        val data = FakeLogData.withPrintfStyle(pattern, argument)
+        val data = StubLogData.withPrintfStyle(pattern, argument)
         val record = JulRecord.create(data, Metadata.empty())
         record.message shouldEndWith "[ERROR: MISSING LOG ARGUMENT]"
     }
@@ -227,7 +227,7 @@ internal class JulRecordSpec {
     fun `report an unused argument`() {
         val pattern = "%2\$s %s %<s %s"
         val args = arrayOf("a", "b")
-        val data = FakeLogData.withPrintfStyle(pattern, *(args + "c"))
+        val data = StubLogData.withPrintfStyle(pattern, *(args + "c"))
         val record = JulRecord.create(data, Metadata.empty())
         record.message shouldBe "${pattern.format(*args)} [ERROR: UNUSED LOG ARGUMENTS]"
     }
@@ -237,7 +237,7 @@ internal class JulRecordSpec {
         // If an unused argument is not the last, it is called “unreferenced”.
         val pattern = "%s %<s %3\$s %<s"
         val args = arrayOf("a", "b", "c") // "b" is unused.
-        val data = FakeLogData.withPrintfStyle(pattern, *args)
+        val data = StubLogData.withPrintfStyle(pattern, *args)
         val parseException = shouldThrow<ParseException> {
             JulRecord.create(data, Metadata.empty())
         }
@@ -252,7 +252,7 @@ internal class JulRecordSpec {
         // The pattern doesn't use the 32-nd argument.
         var pattern = "%s ".repeat(31) + "%33\$s"
         var arguments = arrayOfNulls<Any>(33)
-        var data = FakeLogData.withPrintfStyle(pattern, arguments)
+        var data = StubLogData.withPrintfStyle(pattern, arguments)
         val parseException = shouldThrow<ParseException> {
             JulRecord.create(data, Metadata.empty())
         }
@@ -261,7 +261,7 @@ internal class JulRecordSpec {
         // Gaps above the 32nd parameter are not detected.
         pattern = "%s ".repeat(32) + "%34\$s"
         arguments = arrayOfNulls(34)
-        data = FakeLogData.withPrintfStyle(pattern, arguments)
+        data = StubLogData.withPrintfStyle(pattern, arguments)
         shouldNotThrow<ParseException> {
             val record = JulRecord.create(data, Metadata.empty())
             record.message shouldNotContain "UNUSED"
@@ -271,7 +271,7 @@ internal class JulRecordSpec {
     @Test
     fun `have string representation`() {
         // LogData may behave differently with and without arguments.
-        var data = FakeLogData.withPrintfStyle("Answer=%d", 42)
+        var data = StubLogData.withPrintfStyle("Answer=%d", 42)
         var record = JulRecord.create(data, Metadata.empty())
         var stringifiedRecord = record.toString()
 
@@ -281,7 +281,7 @@ internal class JulRecordSpec {
         stringifiedRecord shouldContain "  arguments: []"
         stringifiedRecord shouldContain "  original message: Answer=%d"
 
-        data = FakeLogData(LITERAL)
+        data = StubLogData(LITERAL)
         record = JulRecord.create(data, Metadata.empty())
         stringifiedRecord = record.toString()
 

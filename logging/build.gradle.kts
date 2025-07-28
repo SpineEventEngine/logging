@@ -26,9 +26,12 @@
 
 @file:Suppress("unused") // source set accessed via `by getting`.
 
+import io.spine.dependency.kotlinx.DateTime
+import io.spine.dependency.local.Base
 import io.spine.dependency.local.Reflect
 import io.spine.gradle.publish.SpinePublishing
 import io.spine.gradle.publish.spinePublishing
+import org.gradle.kotlin.dsl.project
 
 plugins {
     `kmp-module`
@@ -54,14 +57,22 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                implementation(project(":middleware"))
+                implementation(DateTime.lib)
+                implementation(Base.annotations)
+                implementation(Reflect.lib)
+                implementation(
+                    project(
+                        ":platform-generator",
+                        configuration = "generatedPlatformProvider"
+                    )
+                )
                 runtimeOnly(project(":jvm-default-platform"))
             }
         }
         val jvmTest by getting {
             dependencies {
-                implementation(project(":logging-testlib"))
                 implementation(project(":probe-backend"))
+                implementation(project(":logging-testlib"))
             }
         }
     }

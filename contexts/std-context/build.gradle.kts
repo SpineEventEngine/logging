@@ -31,6 +31,5 @@ plugins {
 
 dependencies {
     implementation(project(":logging"))
-    implementation(project(":middleware"))
-    testImplementation(project(":middleware", configuration = "testArtifacts"))
+    testImplementation(testFixtures(project(":context-tests")))
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,24 +32,22 @@ import io.spine.logging.jvm.backend.LogMessageFormatter
 import io.spine.logging.jvm.backend.Metadata
 import io.spine.logging.jvm.backend.MetadataProcessor
 import io.spine.logging.jvm.backend.SimpleMessageFormatter
-import io.spine.logging.jvm.backend.given.FakeLogData
 
 /**
  * An instantiatable [AbstractJulRecord].
  *
- * It uses its own formatter to make sure the abstract methods
- * are indeed called when expected.
+ * It uses its own formatter to make sure the abstract methods are indeed called when expected.
  */
 @Suppress("serial") // Serial number is not needed.
-internal class FakeJulRecord(message: String, vararg args: Any?) :
-    AbstractJulRecord(FakeLogData.withPrintfStyle(message, *args), Metadata.empty()) {
+internal class StubJulRecord(message: String, vararg args: Any?) :
+    AbstractJulRecord(StubLogData.withPrintfStyle(message, *args), Metadata.empty()) {
 
-    private val formatter = FakeLogMessageFormatter()
+    private val formatter = StubFormatter()
 
     override fun getLogMessageFormatter(): LogMessageFormatter = formatter
 }
 
-private class FakeLogMessageFormatter : LogMessageFormatter() {
+private class StubFormatter : LogMessageFormatter() {
 
     private val defaultFormatter = SimpleMessageFormatter.getDefaultFormatter()
 

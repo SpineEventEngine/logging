@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.context
+package io.spine.logging.context
 
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
@@ -38,11 +38,12 @@ import io.spine.logging.backend.probe.MemoizingLoggerBackend
 import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.jvm.backend.Metadata
 import io.spine.logging.jvm.backend.Platform
-import io.spine.logging.jvm.backend.given.shouldBeEmpty
-import io.spine.logging.jvm.backend.given.shouldContainInOrder
-import io.spine.logging.jvm.backend.given.shouldHaveSize
-import io.spine.logging.jvm.backend.given.shouldUniquelyContain
-import io.spine.logging.jvm.given.ConfigurableLogger
+import io.spine.logging.jvm.context.ContextDataProvider
+import io.spine.logging.jvm.context.LogLevelMap
+import io.spine.logging.jvm.context.ScopeType
+import io.spine.logging.jvm.context.ScopedLoggingContext
+import io.spine.logging.jvm.context.ScopedLoggingContexts
+import io.spine.logging.jvm.context.Tags
 import io.spine.logging.jvm.repeatedKey
 import io.spine.logging.jvm.singleKey
 import io.spine.logging.toJavaLogging
@@ -62,6 +63,7 @@ private typealias LoggerName = String
  *
  * @see <a href="https://rb.gy/luq6y">Original Java code of Google Flogger</a> for historical context.
  */
+@Suppress("unused" /* Test functions in an abstract class. */)
 @DisplayName("`ContextDataProvider` should") // This name is to be overridden by inheritors.
 abstract class AbstractContextDataProviderSpec {
 
@@ -337,7 +339,7 @@ abstract class AbstractContextDataProviderSpec {
     @Test
     fun `merge scope and log site tags`() {
         val backend = MemoizingLoggerBackend()
-        val logger = ConfigurableLogger(backend)
+        val logger = StubLogger(backend)
         val logSiteTags = Tags.of("foo", "bar")
         val scopeTags = Tags.of("foo", "baz")
 

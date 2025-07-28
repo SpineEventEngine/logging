@@ -45,6 +45,7 @@ includeBackend(
 )
 
 includeContext(
+    "context-tests",
     "grpc-context",
     "std-context",
 )
@@ -64,7 +65,6 @@ includeTest(
 )
 
 includeJvm(
-    "middleware",
     "platform-generator",
 )
 

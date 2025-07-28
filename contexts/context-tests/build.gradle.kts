@@ -1,5 +1,10 @@
+import io.spine.dependency.boms.BomsPlugin
+import io.spine.dependency.local.TestLib
+import io.spine.dependency.test.Kotest
+import io.spine.gradle.report.license.LicenseReporter
+
 /*
- * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,32 +29,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.dependency.kotlinx.DateTime
-import io.spine.dependency.local.Base
-import io.spine.dependency.local.Reflect
-import io.spine.gradle.java.disableLinters
-import io.spine.gradle.testing.exposeTestConfiguration
-
 plugins {
-    `jvm-module`
+    `java-library`
+    kotlin("jvm")
+    `java-test-fixtures`
+    id("module-testing")
 }
+apply<BomsPlugin>()
+LicenseReporter.generateReportIn(project)
 
 dependencies {
-    implementation(DateTime.lib)
-    implementation(Base.annotations)
-    implementation(Reflect.lib)
-    implementation(project(":platform-generator", configuration = "generatedPlatformProvider"))
-    testImplementation(project(":logging"))
-    testImplementation(project(":probe-backend"))
-    testImplementation(project(":logging-testlib"))
-    testRuntimeOnly(project(":jvm-default-platform"))
-}
-
-java {
-    /**
-     * Abstract tests and their `given` classes can be re-used to test
-     * different backend and context implementations.
-     */
-    exposeTestConfiguration()
-    disableLinters() // Due to non-migrated Flogger sources.
+    testFixturesImplementation(TestLib.lib)
+    testFixturesImplementation(Kotest.assertions)
+    testFixturesImplementation(project(":logging"))
+    testFixturesImplementation(project(":probe-backend"))
 }
