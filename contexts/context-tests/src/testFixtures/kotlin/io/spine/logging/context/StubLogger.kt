@@ -80,4 +80,3 @@ internal class StubLogger(backend: LoggerBackend) :
         override fun getMessageParser(): MessageParser = DefaultPrintfMessageParser.getInstance()
     }
 }
-
