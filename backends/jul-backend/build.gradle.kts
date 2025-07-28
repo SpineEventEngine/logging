@@ -31,8 +31,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":middleware"))
-    testImplementation(project(":middleware", configuration = "testArtifacts"))
+    implementation(project(":logging"))
 }
 
 java {

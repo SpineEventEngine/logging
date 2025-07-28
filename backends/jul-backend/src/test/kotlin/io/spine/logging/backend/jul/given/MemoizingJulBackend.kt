@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,10 +27,7 @@
 package io.spine.logging.backend.jul.given
 
 import io.spine.logging.backend.jul.AbstractJulBackend
-import io.spine.logging.backend.jul.given.MemoizingJulBackend.ForcingLogger
 import io.spine.logging.jvm.backend.LogData
-import java.util.logging.Handler
-import java.util.logging.Level
 import java.util.logging.LogRecord
 import java.util.logging.Logger
 
@@ -88,59 +85,6 @@ internal class MemoizingJulBackend(logger: Logger) : AbstractJulBackend(logger) 
         override fun log(record: LogRecord) {
             wasForcingLoggerUsed = true
             super.log(record)
-        }
-    }
-}
-
-/**
- * A Java logger that remembers the captured and published log messages.
- *
- * A message is [captured] when it arrives to [Logger.log] method.
- * Then, if it passes [Logger.log] and arrives to handlers, it is [published].
- */
-internal class MemoizingLogger(name: String, level: Level) : Logger(name, null) {
-
-    /**
-     * Contains the message from the last call to [MemoizingLogger.log].
-     */
-    var captured: String? = null
-        private set
-
-    /**
-     * Contains the message from the last call to handlers of this logger.
-     *
-     * This property would have a message only if it has been passed down
-     * to handlers by [Logger.log] method.
-     */
-    var published: String? = null
-        private set
-
-    init {
-        val handler = TestHandler()
-        setLevel(level)
-        addHandler(handler)
-    }
-
-    override fun log(record: LogRecord) {
-        captured = record.message
-        super.log(record)
-    }
-
-    /**
-     * A handler that returns the message back to the outer [MemoizingLogger].
-     */
-    private inner class TestHandler : Handler() {
-
-        override fun publish(record: LogRecord) {
-            published = record.message
-        }
-
-        override fun flush() {
-            // no-op
-        }
-
-        override fun close() {
-            // no-op
         }
     }
 }

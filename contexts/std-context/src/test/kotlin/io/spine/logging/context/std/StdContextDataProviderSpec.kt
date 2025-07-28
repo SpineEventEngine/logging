@@ -29,7 +29,8 @@ package io.spine.logging.context.std
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.optional.shouldBePresent
 import io.kotest.matchers.types.shouldBeInstanceOf
-import io.spine.logging.jvm.context.AbstractContextDataProviderSpec
+import io.spine.logging.context.AbstractContextDataProviderSpec
+
 import io.spine.logging.jvm.context.ContextDataProvider
 import java.util.*
 import org.junit.jupiter.api.DisplayName

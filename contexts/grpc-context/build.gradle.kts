@@ -34,8 +34,8 @@ plugins {
 dependencies {
     implementation(Grpc.api)
     implementation(platform(Grpc.bom))
-    implementation(project(":middleware"))
-    testImplementation(project(":middleware", configuration = "testArtifacts"))
+    implementation(project(":logging"))
+    testImplementation(testFixtures(project(":context-tests")))
 }
 
 java {

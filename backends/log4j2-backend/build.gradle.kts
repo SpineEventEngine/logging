@@ -33,8 +33,7 @@ plugins {
 
 dependencies {
     implementation(Log4j2.core)
-    implementation(project(":middleware"))
-    testImplementation(project(":logging"))
+    implementation(project(":logging"))
     testRuntimeOnly(project(":grpc-context"))
 }
 

@@ -32,7 +32,6 @@ import io.spine.logging.jvm.backend.LogMessageFormatter
 import io.spine.logging.jvm.backend.Metadata
 import io.spine.logging.jvm.backend.MetadataProcessor
 import io.spine.logging.jvm.backend.SimpleMessageFormatter
-import io.spine.logging.jvm.backend.given.FakeLogData
 
 /**
  * An instantiatable [AbstractJulRecord].
@@ -41,8 +40,8 @@ import io.spine.logging.jvm.backend.given.FakeLogData
  * are indeed called when expected.
  */
 @Suppress("serial") // Serial number is not needed.
-internal class FakeJulRecord(message: String, vararg args: Any?) :
-    AbstractJulRecord(FakeLogData.withPrintfStyle(message, *args), Metadata.empty()) {
+internal class StubJulRecord(message: String, vararg args: Any?) :
+    AbstractJulRecord(StubLogData.withPrintfStyle(message, *args), Metadata.empty()) {
 
     private val formatter = FakeLogMessageFormatter()
 

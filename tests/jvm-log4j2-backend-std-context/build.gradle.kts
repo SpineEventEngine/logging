@@ -60,7 +60,6 @@ dependencies {
     testImplementation(Log4j2.core)
     testImplementation(project(":logging"))
     testImplementation(project(":fixtures"))
-    testImplementation(project(":middleware"))
 
     /**
      * Adds `log4j2` backend and the default context to the classpath.
