@@ -128,4 +128,3 @@ internal class StubLogData : LogData {
             return _literalArgument
         }
 }
-
