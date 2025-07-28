@@ -35,17 +35,13 @@ import io.spine.logging.jvm.parser.MessageParser
 import java.util.logging.Level
 
 /**
- * Dynamically reconfigurable logger for testing backend
- * and context implementations.
- *
- * This logger has specific methods for injecting timestamps
- * and forcing log statements.
+ * This logger has specific methods for injecting timestamps.
  *
  * @see <a href="https://rb.gy/smalv">
  *     Original Java code of Google Flogger</a> for historical context.
  */
-internal class ConfigurableLogger(backend: LoggerBackend) :
-    AbstractLogger<ConfigurableLogger.Api>(backend) {
+internal class StubLogger(backend: LoggerBackend) :
+    AbstractLogger<StubLogger.Api>(backend) {
 
     companion object {
         // Midnight Jan 1st, 2000 (GMT)
@@ -53,7 +49,7 @@ internal class ConfigurableLogger(backend: LoggerBackend) :
     }
 
     /**
-     * Non-wildcard logging API for the [ConfigurableLogger].
+     * Non-wildcard logging API for the [StubLogger].
      */
     interface Api : MiddlemanApi<Api>
 
@@ -70,18 +66,12 @@ internal class ConfigurableLogger(backend: LoggerBackend) :
         Context(level, false, timestampNanos)
 
     /**
-     * Forces logging at the given level with the specified nanosecond timestamp.
-     */
-    fun forceAt(level: Level, timestampNanos: Long = DEFAULT_TIMESTAMP_NANOS): Api =
-        Context(level, true, timestampNanos)
-
-    /**
      * Context that implements the logger's [Api].
      */
     private inner class Context(level: Level, isForced: Boolean, timestampNanos: Long) :
-        LogContext<ConfigurableLogger, Api>(level, isForced, timestampNanos), Api {
+        LogContext<StubLogger, Api>(level, isForced, timestampNanos), Api {
 
-        override fun getLogger(): ConfigurableLogger = this@ConfigurableLogger
+        override fun getLogger(): StubLogger = this@StubLogger
 
         override fun api(): Api  = this
 

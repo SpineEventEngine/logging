@@ -35,11 +35,7 @@ import io.spine.logging.jvm.parser.MessageParser
 import java.util.logging.Level
 
 /**
- * Dynamically reconfigurable logger for testing backend
- * and context implementations.
- *
- * This logger has specific methods for injecting timestamps
- * and forcing log statements.
+ * This logger has specific methods for injecting timestamps.
  *
  * @see <a href="https://rb.gy/smalv">
  *     Original Java code of Google Flogger</a> for historical context.

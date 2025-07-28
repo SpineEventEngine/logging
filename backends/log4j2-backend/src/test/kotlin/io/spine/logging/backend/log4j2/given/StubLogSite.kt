@@ -27,12 +27,13 @@
 package io.spine.logging.backend.log4j2.given
 
 import io.spine.logging.jvm.JvmLogSite
-import java.util.*
+import java.util.Objects
 
 /**
  * A simplified implementation of [JvmLogSite] for testing.
  *
- * @see <a href="http://rb.gy/wal1a">Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="http://rb.gy/wal1a">Original Java code of Google Flogger</a>
+ *   for historical context.
  */
 internal class StubLogSite(
     override val className: String,

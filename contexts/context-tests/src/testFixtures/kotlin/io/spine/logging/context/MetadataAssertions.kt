@@ -30,8 +30,6 @@ import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.backend.Metadata
 import io.kotest.matchers.collections.shouldContainInOrder
 import io.kotest.matchers.ints.shouldBeExactly
-import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 
 /**
@@ -62,29 +60,6 @@ infix fun Metadata.shouldHaveSize(number: Int) {
  */
 fun <T : Any> Metadata.shouldContainInOrder(key: MetadataKey<T>, vararg values: T) {
     valuesOf(key) shouldContainInOrder values.asList()
-}
-
-/**
- * Asserts that this [Metadata] has a [key] with the given [value].
- *
- * The given [value] should be the first one, which was mapped to the [key].
- */
-fun <T : Any> Metadata.shouldHaveFirstValue(key: MetadataKey<T>, value: T) {
-    findValue(key) shouldBe value
-}
-
-/**
- * Asserts that this [Metadata] does NOT HAVE a value for the given [key].
- */
-internal infix fun <T : Any> Metadata.shouldNotContain(key: MetadataKey<T>) {
-    findValue(key).shouldBeNull()
-}
-
-/**
- * Asserts that this [Metadata] has one or more values for the given [key]
- */
-infix fun <T : Any> Metadata.shouldContain(key: MetadataKey<T>) {
-    findValue(key).shouldNotBeNull()
 }
 
 /**

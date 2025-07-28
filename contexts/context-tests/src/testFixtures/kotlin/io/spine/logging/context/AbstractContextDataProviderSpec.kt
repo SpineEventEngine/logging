@@ -339,7 +339,7 @@ abstract class AbstractContextDataProviderSpec {
     @Test
     fun `merge scope and log site tags`() {
         val backend = MemoizingLoggerBackend()
-        val logger = ConfigurableLogger(backend)
+        val logger = StubLogger(backend)
         val logSiteTags = Tags.of("foo", "bar")
         val scopeTags = Tags.of("foo", "baz")
 
