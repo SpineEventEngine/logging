@@ -14,7 +14,4 @@
 12. [Safety rules](safety-rules.md)
 13. [Advanced safety rules](advanced-safety-rules.md)
 14. [Refactoring guidelines](refactoring-guidelines.md)
-15. [Interaction tips – key to effective collaboration!](interaction-tips.md)
-16. [LLM goals](llm-goals.md)
-    - [Problem-solving framework](llm-goals.md#problem-solving-framework-for-complex-tasks)
-17. [Common tasks](common-tasks.md)
+15. [Common tasks](common-tasks.md)
