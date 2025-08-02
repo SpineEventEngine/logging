@@ -59,8 +59,8 @@ public fun interface LazyArg<T> {
          * it evaluated only when logging will actually occur.
          *
          * ```kotlin
-         * logger.atFine().log("value=%s", lazy { doExpensive() })
-         * logger.atWarning().atMostEvery(5, MINUTES).log("value=%s", lazy(stats::create))
+         * logger.atFine().log("value=${lazy { doExpensive() }}")
+         * logger.atWarning().atMostEvery(5, MINUTES).log("value=${lazy(stats::create)}")
          * ```
          *
          * Evaluation of lazy arguments occurs at most once, and always in the same thread

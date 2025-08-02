@@ -29,8 +29,6 @@ package io.spine.logging.jvm
 import io.spine.annotation.VisibleForTesting
 import io.spine.logging.jvm.backend.LoggerBackend
 import io.spine.logging.jvm.backend.Platform
-import io.spine.logging.jvm.parser.DefaultPrintfMessageParser
-import io.spine.logging.jvm.parser.MessageParser
 import java.util.logging.Level
 
 /**
@@ -122,7 +120,5 @@ public class Middleman(backend: LoggerBackend) : AbstractLogger<Middleman.Api>(b
         override fun api(): Api = this
 
         override fun noOp(): Api = NO_OP
-
-        override fun getMessageParser(): MessageParser = DefaultPrintfMessageParser.getInstance()
     }
 }

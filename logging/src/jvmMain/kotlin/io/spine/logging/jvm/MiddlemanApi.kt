@@ -214,7 +214,7 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
      * ```kotlin
      * if (logger.atFine().isEnabled()) {
      *   // Do non-trivial argument processing
-     *   logger.atFine().log("Message: %s", value)
+     *   logger.atFine().log("Message: $value")
      * }
      * ```
      *
@@ -371,7 +371,7 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
      *
      * ```kotlin
      * // We want to rate limit logging separately for all task types.
-     * logger.at(INFO).per(taskType).atMostEvery(30, SECONDS).log("Start task: %s", taskSpec)
+     * logger.at(INFO).per(taskType).atMostEvery(30, SECONDS).log("Start task: $taskSpec")
      * ```
      *
      * The [key] passed to this method should always be a variable

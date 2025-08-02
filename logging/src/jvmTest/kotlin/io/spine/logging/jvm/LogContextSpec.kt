@@ -101,7 +101,7 @@ internal class LogContextSpec {
             logger.atInfo()
                 .withInjectedLogSite(logSite)
                 .every(n)
-                .log("%s", message)
+                .log(message)
         }
     }
 
@@ -234,7 +234,7 @@ internal class LogContextSpec {
             val timestampNanos = startNanos + MILLISECONDS.toNanos(millis)
             logger.at(INFO, timestampNanos)
                 .every(5)
-                .log("Count=%d", counter)
+                .log("Count=$counter")
         }
 
         backend.loggedCount shouldBe 3
@@ -263,7 +263,7 @@ internal class LogContextSpec {
             val timestampNanos = startNanos + MILLISECONDS.toNanos(millis)
             logger.at(INFO, timestampNanos)
                 .onAverageEvery(5)
-                .log("Count=%d", counter)
+                .log("Count=$counter")
         }
 
         // Statistically impossible that we randomly get +/- 100 over 1000 logs.
@@ -306,7 +306,7 @@ internal class LogContextSpec {
             val timestampNanos = startNanos + MILLISECONDS.toNanos(millis)
             logger.at(INFO, timestampNanos)
                 .atMostEvery(2, SECONDS)
-                .log("Count=%d", counter)
+                .log("Count=$counter")
         }
 
         backend.run {
@@ -347,7 +347,7 @@ internal class LogContextSpec {
                 logger.at(INFO, timestampNanos)
                     .every(15)
                     .atMostEvery(2, SECONDS)
-                    .log("Count=%d", counter)
+                    .log("Count=$counter")
             }
 
             backend.run {
@@ -374,7 +374,7 @@ internal class LogContextSpec {
                 logger.at(INFO, timestampNanos)
                     .every(15)
                     .atMostEvery(1, SECONDS)
-                    .log("Count=%d", counter)
+                    .log("Count=$counter")
             }
 
             backend.run {
@@ -411,7 +411,7 @@ internal class LogContextSpec {
                 logger.at(INFO, nowNanos)
                     .atMostEvery(1, SECONDS)
                     .per(exception, LogPerBucketingStrategy.byClass())
-                    .log("Err: %s", exception.message)
+                    .log("Err: ${exception.message}")
                 nowNanos += MILLISECONDS.toNanos(100)
             }
 
@@ -461,7 +461,7 @@ internal class LogContextSpec {
                 logger.at(INFO, nowNanos)
                     .atMostEvery(1, SECONDS)
                     .per(type)
-                    .log("Type: %s", type)
+                    .log("Type: $type")
                 nowNanos += MILLISECONDS.toNanos(100)
             }
 
