@@ -86,9 +86,9 @@ protected constructor(
     private var rateLimitStatus: RateLimitStatus? = null
 
     /**
-     * The log arguments (set only after post-processing).
+     * The log message (set only after post-processing).
      */
-    private var args: Array<Any?>? = null
+    private var message: String? = null
 
     /**
      * Creates a logging context with the specified level, and with a timestamp obtained from the
@@ -139,7 +139,7 @@ protected constructor(
         )
 
     public final override val literalArgument: Any?
-        get() = args!![0]
+        get() = message
 
     public final override fun wasForced(): Boolean {
         // Check explicit TRUE here because findValue() can return null (which would fail unboxing).
@@ -360,8 +360,7 @@ protected constructor(
      *
      * Note that this call is made inside each of the individual log methods (rather than in
      * `logImpl()`) because it is better to decide whether we are actually going to do the
-     * logging before we pay the price of creating a varargs array and doing things like
-     * auto-boxing of arguments.
+     * logging before we process the log message.
      */
     private fun shouldLog(): Boolean {
         // The log site may have already been injected via "withInjectedLogSite()" or similar.
@@ -405,11 +404,10 @@ protected constructor(
     }
 
     /**
-     * Make the backend logging call. This is the point at which we have paid the price of creating
-     * a varargs array and doing any necessary auto-boxing.
+     * Make the backend logging call.
      */
-    private fun logImpl(message: String?, vararg args: Any?) {
-        this.args = arrayOf(*args)
+    private fun logImpl(message: String?) {
+        this.message = message
         // Right at the end of processing add any tags injected by the platform.
         // Any tags supplied at the log site are merged with the injected tags
         // (though this should be very rare).
@@ -540,7 +538,7 @@ protected constructor(
     /*
      * Note that while all log statements look almost identical to each other, it is vital that we
      * keep the 'shouldLog()' call outside of the call to 'logImpl()' so we can decide whether or not
-     * to abort logging before we do any varargs creation.
+     * to abort logging before we process the log message.
      */
 
     public final override fun log() {
