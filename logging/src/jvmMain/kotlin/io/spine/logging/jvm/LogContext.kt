@@ -31,9 +31,7 @@ import io.spine.logging.jvm.JvmLogSite.Companion.injectedLogSite
 import io.spine.logging.jvm.backend.LogData
 import io.spine.logging.jvm.backend.Metadata
 import io.spine.logging.jvm.backend.Platform
-import io.spine.logging.jvm.backend.TemplateContext
 import io.spine.logging.jvm.context.Tags
-import io.spine.logging.jvm.parser.MessageParser
 import io.spine.logging.jvm.util.Checks.checkNotNull
 import io.spine.reflect.CallerFinder.stackForCallerOf
 import java.util.concurrent.TimeUnit
@@ -88,11 +86,6 @@ protected constructor(
     private var rateLimitStatus: RateLimitStatus? = null
 
     /**
-     * The template context if formatting is required (set only after post-processing).
-     */
-    private var logTemplateContext: TemplateContext? = null
-
-    /**
      * The log arguments (set only after post-processing).
      */
     private var args: Array<Any?>? = null
@@ -135,10 +128,7 @@ protected constructor(
      */
     protected abstract fun noOp(): API
 
-    /**
-     * Returns the message parser used for all log statements made through this logger.
-     */
-    protected abstract fun getMessageParser(): MessageParser
+
 
     public final override val loggerName: String?
         get() = getLogger().getName()
@@ -148,26 +138,8 @@ protected constructor(
             "Cannot request log site information prior to `postProcess()`."
         )
 
-    public final override val templateContext: TemplateContext?
-        get() = logTemplateContext
-
-    public final override val arguments: Array<Any?>
-        get() {
-            if (logTemplateContext == null) {
-                error("Cannot get arguments unless a template context exists.")
-            }
-            return args!!
-        }
-
     public final override val literalArgument: Any?
-        get() {
-            if (logTemplateContext != null) {
-                error(
-                    "Cannot get literal argument if a template context exists: $logTemplateContext."
-                )
-            }
-            return args!![0]
-        }
+        get() = args!![0]
 
     public final override fun wasForced(): Boolean {
         // Check explicit TRUE here because findValue() can return null (which would fail unboxing).
@@ -447,15 +419,6 @@ protected constructor(
                 this.args!![n] = (this.args!![n] as LazyArg<*>).evaluate()
             }
         }
-        // Using "!=" is fast and sufficient here because the only real case this should
-        // be skipping is when we called `log(String)` or `log()`, which should not result in
-        // a template being created.
-        // DO NOT replace this with a string instance which can be interned, or use equals() here,
-        // since that could mistakenly treat other calls to log(String, Object...) incorrectly.
-        if (message !== LITERAL_VALUE_MESSAGE) {
-            val msg = message ?: NULL_MESSAGE
-            this.logTemplateContext = TemplateContext(getMessageParser(), msg)
-        }
         // Right at the end of processing add any tags injected by the platform.
         // Any tags supplied at the log site are merged with the injected tags
         // (though this should be very rare).
@@ -601,29 +564,7 @@ protected constructor(
         }
     }
 
-    public final override fun log(message: String?, p1: Any?) {
-        if (shouldLog()) {
-            logImpl(message, p1)
-        }
-    }
 
-    public final override fun log(message: String?, p1: Any?, p2: Any?) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Any?, p2: Any?, p3: Any?) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2, p3)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Any?, p2: Any?, p3: Any?, p4: Any?) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2, p3, p4)
-        }
-    }
 
     public final override fun log(
         message: String?,

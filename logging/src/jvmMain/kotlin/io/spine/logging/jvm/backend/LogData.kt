@@ -113,30 +113,9 @@ public interface LogData {
     public fun wasForced(): Boolean
 
     /**
-     * A template key for this log statement, or `null` if the statement does not
-     * require formatting.
+     * Returns the single argument to be logged directly when no formatting is required.
      *
-     * If this property is `null` the message to be logged can be determined by
-     * accessing [literalArgument].
-     */
-    public val templateContext: TemplateContext?
-
-    /**
-     * The arguments to be formatted with the message.
-     *
-     * Arguments exist when a `log()` method with a format message and
-     * separate arguments was invoked.
-     *
-     * @throws IllegalStateException
-     *   if no arguments are available (i.e., when there is no [templateContext]).
-     */
-    public val arguments: Array<Any?>
-
-    /**
-     * Returns the single argument to be logged directly when no arguments were provided.
-     *
-     * @throws IllegalStateException
-     *   if no single literal argument is available (i.e., when [templateContext] exists).
+     * This represents the plain string message passed to log(String?) methods.
      */
     public val literalArgument: Any?
 }
