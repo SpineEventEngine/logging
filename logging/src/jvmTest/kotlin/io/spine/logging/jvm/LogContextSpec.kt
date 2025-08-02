@@ -38,7 +38,7 @@ import io.kotest.matchers.throwable.shouldHaveMessage
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 import io.spine.logging.backend.probe.MemoizingLoggerBackend
 import io.spine.logging.jvm.DurationRateLimiter.Companion.newRateLimitPeriod
-import io.spine.logging.jvm.LazyArg.Companion.lazy
+
 import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.jvm.LogContext.Companion.specializeLogSiteKeyFromMetadata
 import io.spine.logging.jvm.backend.given.FakeMetadata
@@ -101,7 +101,7 @@ internal class LogContextSpec {
             logger.atInfo()
                 .withInjectedLogSite(logSite)
                 .every(n)
-                .log("%s", message)
+                .log(message)
         }
     }
 
@@ -124,16 +124,6 @@ internal class LogContextSpec {
         backend.lastLogged shouldHaveMessage MESSAGE_LITERAL
     }
 
-    @Test
-    fun `lazily evaluate arguments`() {
-        logger.atInfo().log(MESSAGE_PATTERN, lazy { MESSAGE_ARGUMENT })
-        logger.atFine().log(
-            MESSAGE_PATTERN,
-            lazy { error("Lazy arguments should not be evaluated in a disabled log statement") }
-        )
-        backend.lastLogged shouldHaveMessage MESSAGE_PATTERN
-        backend.lastLogged.shouldHaveArguments(MESSAGE_ARGUMENT)
-    }
 
     @Test
     fun `accept a formatted message`() {
@@ -234,7 +224,7 @@ internal class LogContextSpec {
             val timestampNanos = startNanos + MILLISECONDS.toNanos(millis)
             logger.at(INFO, timestampNanos)
                 .every(5)
-                .log("Count=%d", counter)
+                .log("Count=$counter")
         }
 
         backend.loggedCount shouldBe 3
@@ -263,7 +253,7 @@ internal class LogContextSpec {
             val timestampNanos = startNanos + MILLISECONDS.toNanos(millis)
             logger.at(INFO, timestampNanos)
                 .onAverageEvery(5)
-                .log("Count=%d", counter)
+                .log("Count=$counter")
         }
 
         // Statistically impossible that we randomly get +/- 100 over 1000 logs.
@@ -306,7 +296,7 @@ internal class LogContextSpec {
             val timestampNanos = startNanos + MILLISECONDS.toNanos(millis)
             logger.at(INFO, timestampNanos)
                 .atMostEvery(2, SECONDS)
-                .log("Count=%d", counter)
+                .log("Count=$counter")
         }
 
         backend.run {
@@ -347,7 +337,7 @@ internal class LogContextSpec {
                 logger.at(INFO, timestampNanos)
                     .every(15)
                     .atMostEvery(2, SECONDS)
-                    .log("Count=%d", counter)
+                    .log("Count=$counter")
             }
 
             backend.run {
@@ -374,7 +364,7 @@ internal class LogContextSpec {
                 logger.at(INFO, timestampNanos)
                     .every(15)
                     .atMostEvery(1, SECONDS)
-                    .log("Count=%d", counter)
+                    .log("Count=$counter")
             }
 
             backend.run {
@@ -411,7 +401,7 @@ internal class LogContextSpec {
                 logger.at(INFO, nowNanos)
                     .atMostEvery(1, SECONDS)
                     .per(exception, LogPerBucketingStrategy.byClass())
-                    .log("Err: %s", exception.message)
+                    .log("Err: ${exception.message}")
                 nowNanos += MILLISECONDS.toNanos(100)
             }
 
@@ -461,7 +451,7 @@ internal class LogContextSpec {
                 logger.at(INFO, nowNanos)
                     .atMostEvery(1, SECONDS)
                     .per(type)
-                    .log("Type: %s", type)
+                    .log("Type: $type")
                 nowNanos += MILLISECONDS.toNanos(100)
             }
 
