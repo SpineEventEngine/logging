@@ -100,5 +100,4 @@ internal class StubLogData : LogData {
     override val literalArgument: Any?
         get() = _literalArgument
 }
-}
 

@@ -27,7 +27,6 @@
 package io.spine.logging.backend.jul.given
 
 import io.spine.logging.backend.jul.AbstractJulRecord
-import io.spine.logging.jvm.backend.AnyMessages
 import io.spine.logging.jvm.backend.LogData
 import io.spine.logging.jvm.backend.Metadata
 
