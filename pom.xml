@@ -10,7 +10,7 @@ all modules and does not describe the project structure per-subproject.
  -->
 <groupId>io.spine</groupId>
 <artifactId>spine-logging</artifactId>
-<version>2.0.0-SNAPSHOT.263</version>
+<version>2.0.0-SNAPSHOT.280</version>
 
 <inceptionYear>2015</inceptionYear>
 
@@ -72,9 +72,21 @@ all modules and does not describe the project structure per-subproject.
     <scope>compile</scope>
   </dependency>
   <dependency>
+    <groupId>org.jetbrains.kotlin</groupId>
+    <artifactId>kotlin-bom</artifactId>
+    <version>2.1.21</version>
+    <scope>compile</scope>
+  </dependency>
+  <dependency>
+    <groupId>org.jetbrains.kotlin</groupId>
+    <artifactId>kotlin-stdlib</artifactId>
+    <version>2.1.21</version>
+    <scope>compile</scope>
+  </dependency>
+  <dependency>
     <groupId>org.jetbrains.kotlinx</groupId>
-    <artifactId>kotlinx-datetime</artifactId>
-    <version>0.7.1</version>
+    <artifactId>kotlinx-coroutines-bom</artifactId>
+    <version>1.10.2</version>
     <scope>compile</scope>
   </dependency>
   <dependency>
@@ -102,9 +114,33 @@ all modules and does not describe the project structure per-subproject.
     <scope>test</scope>
   </dependency>
   <dependency>
+    <groupId>io.kotest</groupId>
+    <artifactId>kotest-assertions-core</artifactId>
+    <version>5.9.1</version>
+    <scope>test</scope>
+  </dependency>
+  <dependency>
+    <groupId>io.kotest</groupId>
+    <artifactId>kotest-framework-datatest</artifactId>
+    <version>5.9.1</version>
+    <scope>test</scope>
+  </dependency>
+  <dependency>
+    <groupId>io.spine.tools</groupId>
+    <artifactId>spine-testlib</artifactId>
+    <version>2.0.0-SNAPSHOT.202</version>
+    <scope>test</scope>
+  </dependency>
+  <dependency>
     <groupId>org.apache.logging.log4j</groupId>
     <artifactId>log4j-core</artifactId>
     <version>2.20.0</version>
+    <scope>test</scope>
+  </dependency>
+  <dependency>
+    <groupId>org.junit</groupId>
+    <artifactId>junit-bom</artifactId>
+    <version>5.13.2</version>
     <scope>test</scope>
   </dependency>
   <dependency>
@@ -116,6 +152,12 @@ all modules and does not describe the project structure per-subproject.
   <dependency>
     <groupId>org.junit.jupiter</groupId>
     <artifactId>junit-jupiter-api</artifactId>
+    <version>5.13.2</version>
+    <scope>test</scope>
+  </dependency>
+  <dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter-engine</artifactId>
     <version>5.13.2</version>
     <scope>test</scope>
   </dependency>
@@ -138,9 +180,19 @@ all modules and does not describe the project structure per-subproject.
     <scope>test</scope>
   </dependency>
   <dependency>
-    <groupId>com.google.auto.service</groupId>
-    <artifactId>auto-service</artifactId>
-    <version>1.1.1</version>
+    <groupId>com.google.devtools.ksp</groupId>
+    <artifactId>symbol-processing</artifactId>
+    <version>2.1.21-2.0.2</version>
+  </dependency>
+  <dependency>
+    <groupId>com.google.devtools.ksp</groupId>
+    <artifactId>symbol-processing-api</artifactId>
+    <version>2.1.21-2.0.2</version>
+  </dependency>
+  <dependency>
+    <groupId>com.google.devtools.ksp</groupId>
+    <artifactId>symbol-processing-cmdline</artifactId>
+    <version>2.1.21-2.0.2</version>
   </dependency>
   <dependency>
     <groupId>com.google.errorprone</groupId>
@@ -170,23 +222,18 @@ all modules and does not describe the project structure per-subproject.
     <version>10.12.1</version>
   </dependency>
   <dependency>
+    <groupId>dev.zacsweers.autoservice</groupId>
+    <artifactId>auto-service-ksp</artifactId>
+    <version>1.2.0</version>
+  </dependency>
+  <dependency>
     <groupId>io.gitlab.arturbosch.detekt</groupId>
     <artifactId>detekt-cli</artifactId>
     <version>1.23.8</version>
   </dependency>
   <dependency>
     <groupId>io.kotest</groupId>
-    <artifactId>kotest-assertions-core</artifactId>
-    <version>5.9.1</version>
-  </dependency>
-  <dependency>
-    <groupId>io.kotest</groupId>
     <artifactId>kotest-framework-api</artifactId>
-    <version>5.9.1</version>
-  </dependency>
-  <dependency>
-    <groupId>io.kotest</groupId>
-    <artifactId>kotest-framework-datatest</artifactId>
     <version>5.9.1</version>
   </dependency>
   <dependency>
@@ -208,11 +255,6 @@ all modules and does not describe the project structure per-subproject.
     <groupId>io.spine.tools</groupId>
     <artifactId>spine-dokka-extensions</artifactId>
     <version>2.0.0-SNAPSHOT.7</version>
-  </dependency>
-  <dependency>
-    <groupId>io.spine.tools</groupId>
-    <artifactId>spine-testlib</artifactId>
-    <version>2.0.0-SNAPSHOT.202</version>
   </dependency>
   <dependency>
     <groupId>net.sourceforge.pmd</groupId>
@@ -277,16 +319,6 @@ all modules and does not describe the project structure per-subproject.
   </dependency>
   <dependency>
     <groupId>org.jetbrains.kotlin</groupId>
-    <artifactId>kotlin-annotation-processing-gradle</artifactId>
-    <version>2.1.21</version>
-  </dependency>
-  <dependency>
-    <groupId>org.jetbrains.kotlin</groupId>
-    <artifactId>kotlin-bom</artifactId>
-    <version>2.1.21</version>
-  </dependency>
-  <dependency>
-    <groupId>org.jetbrains.kotlin</groupId>
     <artifactId>kotlin-build-tools-impl</artifactId>
     <version>2.1.21</version>
   </dependency>
@@ -307,11 +339,6 @@ all modules and does not describe the project structure per-subproject.
   </dependency>
   <dependency>
     <groupId>org.jetbrains.kotlin</groupId>
-    <artifactId>kotlin-stdlib</artifactId>
-    <version>2.1.21</version>
-  </dependency>
-  <dependency>
-    <groupId>org.jetbrains.kotlin</groupId>
     <artifactId>kotlin-test-annotations-common</artifactId>
     <version>null</version>
   </dependency>
@@ -322,18 +349,8 @@ all modules and does not describe the project structure per-subproject.
   </dependency>
   <dependency>
     <groupId>org.jetbrains.kotlinx</groupId>
-    <artifactId>kotlinx-coroutines-bom</artifactId>
-    <version>1.10.2</version>
-  </dependency>
-  <dependency>
-    <groupId>org.junit</groupId>
-    <artifactId>junit-bom</artifactId>
-    <version>5.13.2</version>
-  </dependency>
-  <dependency>
-    <groupId>org.junit.jupiter</groupId>
-    <artifactId>junit-jupiter-engine</artifactId>
-    <version>5.13.2</version>
+    <artifactId>kotlinx-datetime</artifactId>
+    <version>0.7.1</version>
   </dependency>
 </dependencies>
 
