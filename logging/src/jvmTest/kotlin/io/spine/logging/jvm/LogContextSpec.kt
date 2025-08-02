@@ -38,7 +38,7 @@ import io.kotest.matchers.throwable.shouldHaveMessage
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 import io.spine.logging.backend.probe.MemoizingLoggerBackend
 import io.spine.logging.jvm.DurationRateLimiter.Companion.newRateLimitPeriod
-import io.spine.logging.jvm.LazyArg.Companion.lazy
+
 import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.jvm.LogContext.Companion.specializeLogSiteKeyFromMetadata
 import io.spine.logging.jvm.backend.given.FakeMetadata
@@ -124,16 +124,6 @@ internal class LogContextSpec {
         backend.lastLogged shouldHaveMessage MESSAGE_LITERAL
     }
 
-    @Test
-    fun `lazily evaluate arguments`() {
-        logger.atInfo().log(MESSAGE_PATTERN, lazy { MESSAGE_ARGUMENT })
-        logger.atFine().log(
-            MESSAGE_PATTERN,
-            lazy { error("Lazy arguments should not be evaluated in a disabled log statement") }
-        )
-        backend.lastLogged shouldHaveMessage MESSAGE_PATTERN
-        backend.lastLogged.shouldHaveArguments(MESSAGE_ARGUMENT)
-    }
 
     @Test
     fun `accept a formatted message`() {

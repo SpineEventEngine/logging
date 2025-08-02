@@ -410,15 +410,6 @@ protected constructor(
      */
     private fun logImpl(message: String?, vararg args: Any?) {
         this.args = arrayOf(*args)
-        // Evaluate any (rare) LazyArg instances early.
-        // This may throw exceptions from user code, but it seems reasonable
-        // to propagate them in this case.
-        // They would have been thrown if the argument was evaluated at the call site anyway.
-        for (n in this.args!!.indices) {
-            if (this.args!![n] is LazyArg<*>) {
-                this.args!![n] = (this.args!![n] as LazyArg<*>).evaluate()
-            }
-        }
         // Right at the end of processing add any tags injected by the platform.
         // Any tags supplied at the log site are merged with the injected tags
         // (though this should be very rare).

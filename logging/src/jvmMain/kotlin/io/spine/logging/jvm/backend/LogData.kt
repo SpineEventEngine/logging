@@ -113,9 +113,7 @@ public interface LogData {
     public fun wasForced(): Boolean
 
     /**
-     * Returns the single argument to be logged directly when no formatting is required.
-     *
-     * This represents the plain string message passed to log(String?) methods.
+     * Returns the single argument to be logged.
      */
     public val literalArgument: Any?
 }
