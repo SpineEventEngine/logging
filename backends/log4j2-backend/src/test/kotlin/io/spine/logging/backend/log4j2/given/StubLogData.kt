@@ -31,23 +31,17 @@ import io.spine.logging.jvm.JvmLogSite
 import io.spine.logging.jvm.LogContext
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.backend.LogData
-import io.spine.logging.jvm.backend.TemplateContext
-import io.spine.logging.jvm.parser.DefaultPrintfMessageParser
-import io.spine.logging.jvm.parser.MessageParser
 import java.util.logging.Level
 
 /**
- * A mutable [LogData] fot testing backends and other log handling code.
+ * A mutable [LogData] for testing backends and other log handling code.
  *
- * @see <a href="http://rb.gy/z2i0q">Original Java code of Google Flogger</a>
- *   for historical context.
+ * Simplified version after removing formatting support - only supports literal arguments.
  */
 @Suppress("TooManyFunctions") // Many getters and setters.
 internal class StubLogData : LogData {
 
     override var level: Level = Level.INFO
-    private var context: TemplateContext? = null
-    private var _arguments: Array<Any?>? = null
     private var _literalArgument: Any? = null
     override var timestampNanos = 0L
     override val metadata = StubMetadata()
@@ -62,11 +56,10 @@ internal class StubLogData : LogData {
         private val LOG_SITE = StubLogSite(LOGGING_CLASS, LOGGING_METHOD, LINE_NUMBER, SOURCE_FILE)
 
         /**
-         * Creates an instance with a printf-formatted message.
+         * Creates an instance with a message (replaces old formatting methods).
          */
-        fun withPrintfStyle(message: String, vararg arguments: Any?): StubLogData {
-            val printfParser = DefaultPrintfMessageParser.getInstance()
-            return StubLogData(printfParser, message, *arguments)
+        fun withMessage(message: String): StubLogData {
+            return StubLogData(message)
         }
     }
 
@@ -75,11 +68,6 @@ internal class StubLogData : LogData {
      */
     constructor(literalArgument: Any?) {
         this._literalArgument = literalArgument
-    }
-
-    private constructor(parser: MessageParser, message: String, vararg arguments: Any?) {
-        context = TemplateContext(parser, message)
-        this._arguments = arguments.toList().toTypedArray()
     }
 
     @CanIgnoreReturnValue
@@ -109,22 +97,6 @@ internal class StubLogData : LogData {
         return metadata.findValue(LogContext.Key.WAS_FORCED) == true
     }
 
-    override val templateContext: TemplateContext?
-        get() = context
-
-    override val arguments: Array<Any?>
-        get() {
-            check(context != null) {
-                "Cannot get log data's arguments without a context."
-            }
-            return _arguments!!.clone()
-        }
-
     override val literalArgument: Any?
-        get() {
-            check(context == null) {
-                "Cannot get log data's literal argument if a context exists."
-            }
-            return _literalArgument
-        }
+        get() = _literalArgument
 }

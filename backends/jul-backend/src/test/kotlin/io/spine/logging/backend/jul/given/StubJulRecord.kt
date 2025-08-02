@@ -27,40 +27,18 @@
 package io.spine.logging.backend.jul.given
 
 import io.spine.logging.backend.jul.AbstractJulRecord
+import io.spine.logging.jvm.backend.AnyMessages
 import io.spine.logging.jvm.backend.LogData
-import io.spine.logging.jvm.backend.LogMessageFormatter
 import io.spine.logging.jvm.backend.Metadata
-import io.spine.logging.jvm.backend.MetadataProcessor
-import io.spine.logging.jvm.backend.SimpleMessageFormatter
 
 /**
  * An instantiatable [AbstractJulRecord].
  *
- * It uses its own formatter to make sure the abstract methods are indeed called when expected.
+ * This is a simplified version after removing formatting support.
  */
 @Suppress("serial") // Serial number is not needed.
-internal class StubJulRecord(message: String, vararg args: Any?) :
-    AbstractJulRecord(StubLogData.withPrintfStyle(message, *args), Metadata.empty()) {
+internal class StubJulRecord(message: String) :
+    AbstractJulRecord(StubLogData.withMessage(message), Metadata.empty()) {
 
-    private val formatter = StubFormatter()
-
-    override fun getLogMessageFormatter(): LogMessageFormatter = formatter
-}
-
-private class StubFormatter : LogMessageFormatter() {
-
-    private val defaultFormatter = SimpleMessageFormatter.getDefaultFormatter()
-
-    override fun append(
-        logData: LogData,
-        metadata: MetadataProcessor,
-        buffer: StringBuilder
-    ): StringBuilder {
-        buffer.append("Appended: ")
-        defaultFormatter.append(logData, metadata, buffer)
-        return buffer
-    }
-
-    override fun format(logData: LogData, metadata: MetadataProcessor): String =
-        "Copied: " + defaultFormatter.format(logData, metadata)
+    // With formatting support removed, this is much simpler - no custom formatter needed
 }
