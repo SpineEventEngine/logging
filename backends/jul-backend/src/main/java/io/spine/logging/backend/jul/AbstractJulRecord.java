@@ -114,7 +114,7 @@ public abstract class AbstractJulRecord extends LogRecord {
      *
      * Note that Formatter instances are mutable and protect the state via synchronization.
      * We never modify the instance, however, and only call the synchronized
-     * `formatMessage()` helper method, so we can use it safely, without additional locking.
+     * `safeMessage()` helper method, so we can use it safely, without additional locking.
      */
     private static final Formatter jdkMessageFormatter =
             new Formatter() {
@@ -179,9 +179,9 @@ public abstract class AbstractJulRecord extends LogRecord {
     }
 
     /**
-     * Formats the log message from the LogData.
+     * Gets the safe message from the LogData.
      */
-    private String formatMessage() {
+    private String safeMessage() {
         return AnyMessages.safeToString(data.getLiteralArgument());
     }
 
@@ -212,7 +212,7 @@ public abstract class AbstractJulRecord extends LogRecord {
         if (cachedMessage != null) {
             return cachedMessage;
         }
-        var formattedMessage = formatMessage();
+        var formattedMessage = safeMessage();
         super.setMessage(formattedMessage);
         return formattedMessage;
     }
@@ -244,7 +244,7 @@ public abstract class AbstractJulRecord extends LogRecord {
             // class, you can avoid making a complete copy of the message  during logging. Formatters
             // which don't specialize and call getMessage() instead will get the same result, just with an
             // extra String copy.
-            buffer.append(formatMessage());
+            buffer.append(safeMessage());
         } else if (getParameters().length == 0) {
             // If getMessage() was called then the cost of making a String copy was already made, so just
             // append it here (or this could be a user supplied string without additional parameters).

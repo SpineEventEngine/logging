@@ -31,6 +31,7 @@ import io.spine.logging.jvm.MetadataKey;
 import io.spine.logging.jvm.backend.AnyMessages;
 import io.spine.logging.jvm.backend.LogData;
 import io.spine.logging.jvm.backend.MetadataHandler;
+import io.spine.logging.jvm.backend.MetadataProcessor;
 import io.spine.logging.jvm.backend.Platform;
 import io.spine.logging.jvm.context.ScopedLoggingContext;
 import io.spine.logging.jvm.context.Tags;
@@ -48,6 +49,8 @@ import org.apache.logging.log4j.util.StringMap;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import static io.spine.logging.jvm.backend.AnyMessages.safeToString;
+import static io.spine.logging.jvm.backend.MetadataProcessor.forScopeAndLogSite;
 import static java.util.Objects.requireNonNull;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -62,7 +65,7 @@ final class Log4j2LogEventUtil {
     }
 
     static LogEvent toLog4jLogEvent(String loggerName, LogData logData) {
-        var metadata = io.spine.logging.jvm.backend.MetadataProcessor.forScopeAndLogSite(Platform.getInjectedMetadata(), logData.getMetadata());
+        var metadata = forScopeAndLogSite(Platform.getInjectedMetadata(), logData.getMetadata());
 
         /*
          * If no configuration file could be located, Log4j2 will use the DefaultConfiguration. This
@@ -81,7 +84,7 @@ final class Log4j2LogEventUtil {
          */
         var ctx = LoggerContext.getContext(false);
         var config = ctx.getConfiguration();
-        String message = AnyMessages.safeToString(logData.getLiteralArgument());
+        String message = safeToString(logData.getLiteralArgument());
 
         var thrown = metadata.getSingleValue(LogContext.Key.LOG_CAUSE);
         return toLog4jLogEvent(
@@ -255,7 +258,7 @@ final class Log4j2LogEventUtil {
      * This context data will be added to the log4j2 event.
      */
     private static StringMap createContextMap(LogData logData) {
-        var metadataProcessor = io.spine.logging.jvm.backend.MetadataProcessor.forScopeAndLogSite(Platform.getInjectedMetadata(),
+        var metadataProcessor = forScopeAndLogSite(Platform.getInjectedMetadata(),
                                                    logData.getMetadata());
 
         var contextData = ContextDataFactory.createContextData(metadataProcessor.keyCount());

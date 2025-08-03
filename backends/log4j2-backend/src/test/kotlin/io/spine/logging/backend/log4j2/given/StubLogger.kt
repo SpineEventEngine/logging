@@ -72,7 +72,5 @@ internal class StubLogger(backend: LoggerBackend) : AbstractLogger<StubLogger.Ap
         override fun api(): Api  = this
 
         override fun noOp(): Api = throw UnsupportedOperationException()
-
-        // Removed getMessageParser() as formatting support is no longer available
     }
 }

@@ -56,7 +56,7 @@ internal class StubLogData : LogData {
         private val LOG_SITE = StubLogSite(LOGGING_CLASS, LOGGING_METHOD, LINE_NUMBER, SOURCE_FILE)
 
         /**
-         * Creates an instance with a message (replaces old formatting methods).
+         * Creates an instance with a message.
          */
         fun withMessage(message: String): StubLogData {
             return StubLogData(message)
