@@ -30,15 +30,12 @@ import io.spine.logging.jvm.AbstractLogger
 import io.spine.logging.jvm.MiddlemanApi
 import io.spine.logging.jvm.LogContext
 import io.spine.logging.jvm.backend.LoggerBackend
-import io.spine.logging.jvm.parser.DefaultPrintfMessageParser
-import io.spine.logging.jvm.parser.MessageParser
 import java.util.logging.Level
 
 /**
  * This logger has specific methods for injecting timestamps.
  *
- * @see <a href="https://rb.gy/smalv">
- *     Original Java code of Google Flogger</a> for historical context.
+ * Simplified version after removing formatting support.
  */
 internal class StubLogger(backend: LoggerBackend) : AbstractLogger<StubLogger.Api>(backend) {
 
@@ -75,7 +72,5 @@ internal class StubLogger(backend: LoggerBackend) : AbstractLogger<StubLogger.Ap
         override fun api(): Api  = this
 
         override fun noOp(): Api = throw UnsupportedOperationException()
-
-        override fun getMessageParser(): MessageParser = DefaultPrintfMessageParser.getInstance()
     }
 }

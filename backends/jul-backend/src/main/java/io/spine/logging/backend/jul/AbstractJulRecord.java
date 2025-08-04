@@ -27,11 +27,9 @@
 package io.spine.logging.backend.jul;
 
 import io.spine.logging.jvm.backend.LogData;
-import io.spine.logging.jvm.backend.LogMessageFormatter;
 import io.spine.logging.jvm.backend.AnyMessages;
 import io.spine.logging.jvm.backend.Metadata;
 import io.spine.logging.jvm.backend.MetadataProcessor;
-import io.spine.logging.jvm.backend.SimpleMessageFormatter;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 
 import java.io.Serial;
@@ -116,7 +114,7 @@ public abstract class AbstractJulRecord extends LogRecord {
      *
      * Note that Formatter instances are mutable and protect the state via synchronization.
      * We never modify the instance, however, and only call the synchronized
-     * `formatMessage()` helper method, so we can use it safely, without additional locking.
+     * `safeMessage()` helper method, so we can use it safely, without additional locking.
      */
     private static final Formatter jdkMessageFormatter =
             new Formatter() {
@@ -181,12 +179,10 @@ public abstract class AbstractJulRecord extends LogRecord {
     }
 
     /**
-     * Returns the formatter used when formatting {@link LogData}. This is not used if the log
-     * message was set explicitly, and can be overridden to supply a different formatter without
-     * necessarily requiring a new field in this class (to cut down on instance size).
+     * Gets the safe message from the LogData.
      */
-    protected LogMessageFormatter getLogMessageFormatter() {
-        return SimpleMessageFormatter.getDefaultFormatter();
+    private String safeMessage() {
+        return AnyMessages.safeToString(data.getLiteralArgument());
     }
 
     @Override
@@ -216,7 +212,7 @@ public abstract class AbstractJulRecord extends LogRecord {
         if (cachedMessage != null) {
             return cachedMessage;
         }
-        var formattedMessage = getLogMessageFormatter().format(data, metadata);
+        var formattedMessage = safeMessage();
         super.setMessage(formattedMessage);
         return formattedMessage;
     }
@@ -248,7 +244,7 @@ public abstract class AbstractJulRecord extends LogRecord {
             // class, you can avoid making a complete copy of the message  during logging. Formatters
             // which don't specialize and call getMessage() instead will get the same result, just with an
             // extra String copy.
-            getLogMessageFormatter().append(data, metadata, buffer);
+            buffer.append(safeMessage());
         } else if (getParameters().length == 0) {
             // If getMessage() was called then the cost of making a String copy was already made, so just
             // append it here (or this could be a user supplied string without additional parameters).
@@ -345,21 +341,9 @@ public abstract class AbstractJulRecord extends LogRecord {
         return out.toString();
     }
 
-    @SuppressWarnings("MethodWithMultipleLoops")
     private static void safeAppend(LogData data, StringBuilder out) {
         out.append("  original message: ");
-        if (data.getTemplateContext() == null) {
-            out.append(AnyMessages.safeToString(data.getLiteralArgument()));
-        } else {
-            // We know that there's at least one argument to display here.
-            out.append(data.getTemplateContext()
-                           .getMessage());
-            out.append("\n  original arguments:");
-            for (var arg : data.getArguments()) {
-                out.append("\n    ")
-                   .append(AnyMessages.safeToString(arg));
-            }
-        }
+        out.append(AnyMessages.safeToString(data.getLiteralArgument()));
         var metadata = data.getMetadata();
         if (metadata.size() > 0) {
             out.append("\n  metadata:");
