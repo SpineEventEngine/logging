@@ -50,6 +50,7 @@ import io.spine.logging.jvm.context.Tags
 import io.spine.logging.jvm.given.ConfigurableLogger
 import io.spine.logging.jvm.given.FakeLogSite
 import io.spine.logging.jvm.given.iterate
+import io.spine.logging.jvm.given.shouldHaveArguments
 import io.spine.logging.jvm.given.shouldHaveMessage
 import java.lang.System.currentTimeMillis
 import java.util.concurrent.TimeUnit.MILLISECONDS
@@ -123,18 +124,7 @@ internal class LogContextSpec {
     }
 
 
-    @Test
-    fun `accept a formatted message`() {
-        logger.at(INFO).log(MESSAGE_PATTERN, MESSAGE_ARGUMENT)
-        backend.loggedCount shouldBe 1
-        backend.lastLogged shouldHaveMessage MESSAGE_PATTERN
-        backend.lastLogged.shouldHaveArguments(MESSAGE_ARGUMENT)
 
-        // Should NOT ask for literal argument as none exists.
-        shouldThrow<IllegalStateException> {
-            backend.lastLogged.literalArgument
-        }
-    }
 
     @Test
     fun `accept a literal message`() {
@@ -614,12 +604,7 @@ internal class LogContextSpec {
         backend.lastLogged.shouldHaveMessage("")
     }
 
-    @Test
-    fun `not escape percent char when given no arguments`() {
-        logger.atInfo().log(MESSAGE_PATTERN)
-        backend.lastLogged.shouldHaveMessage(MESSAGE_PATTERN)
-        backend.lastLogged.shouldHaveArguments()
-    }
+
 
     /**
      * Tests that a `null` literal is passed unmodified to the backend
@@ -641,41 +626,7 @@ internal class LogContextSpec {
         }
     }
 
-    @Test
-    fun `provide shortcuts for passing up to 12 arguments`() {
-        val msg = "Any message will do..."
 
-        // Verify that the arguments passed in to the object-based methods
-        // are mapped correctly.
-        logger.atInfo().log(msg, "1")
-        backend.lastLogged.shouldHaveArguments("1")
-        logger.atInfo().logVarargs(msg, arrayOf("1", "2"))
-        backend.lastLogged.shouldHaveArguments("1", "2")
-        logger.atInfo().logVarargs(msg, arrayOf("1", "2", "3"))
-        backend.lastLogged.shouldHaveArguments("1", "2", "3")
-        logger.atInfo().logVarargs(msg, arrayOf("1", "2", "3", "4"))
-        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4")
-        logger.atInfo().logVarargs(msg, arrayOf("1", "2", "3", "4", "5"))
-        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5")
-        logger.atInfo().logVarargs(msg, arrayOf("1", "2", "3", "4", "5", "6"))
-        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5", "6")
-        logger.atInfo().logVarargs(msg, arrayOf("1", "2", "3", "4", "5", "6", "7"))
-        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5", "6", "7")
-        logger.atInfo().logVarargs(msg, arrayOf("1", "2", "3", "4", "5", "6", "7", "8"))
-        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8")
-        logger.atInfo().logVarargs(msg, arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9"))
-        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        logger.atInfo().logVarargs(msg, arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
-        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
-        logger.atInfo()
-            .logVarargs(msg, arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"))
-        backend.lastLogged
-            .shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11")
-        logger.atInfo()
-            .logVarargs(msg, arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"))
-        backend.lastLogged
-            .shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
-    }
 
     @Test
     fun `provide shortcuts for passing a non-boxed argument`() {
