@@ -55,6 +55,9 @@ import java.util.logging.Level
  *
  * Logging contexts are not thread-safe.
  *
+ * @param LOGGER The type of the logger for which this context works.
+ * @param API The type of the API served by this context.
+ *
  * @property level The log level of the log statement that this context was created for.
  * @param isForced Whether to force this log statement (see [wasForced] for details).
  * @property timestampNanos The timestamp of the log statement that this context is associated with.
@@ -93,7 +96,7 @@ protected constructor(
     private var logTemplateContext: TemplateContext? = null
 
     /**
-     * The log arguments (set only after post-processing).
+     * The log argument (set only after post-processing).
      */
     private var arg: String? = null
 
