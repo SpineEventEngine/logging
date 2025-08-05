@@ -191,18 +191,7 @@ final class Log4j2LogEventUtil {
     @SuppressWarnings({"HardcodedLineSeparator", "MethodWithMultipleLoops"})
     private static void appendLogData(LogData data, StringBuilder out) {
         out.append("  original message: ");
-        if (data.getTemplateContext() == null) {
-            out.append(data.getLiteralArgument());
-        } else {
-            // We know that there's at least one argument to display here.
-            out.append(data.getTemplateContext()
-                           .getMessage());
-            out.append("\n  original arguments:");
-            for (var arg : data.getArguments()) {
-                out.append("\n    ")
-                   .append(AnyMessages.safeToString(arg));
-            }
-        }
+        out.append(data.getLiteralArgument());
         var metadata = data.getMetadata();
         if (metadata.size() > 0) {
             out.append("\n  metadata:");
