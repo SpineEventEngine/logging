@@ -26,40 +26,41 @@
 
 package io.spine.logging.jvm.given
 
-import io.kotest.matchers.shouldBe
 import io.spine.logging.jvm.backend.LogData
+import io.spine.logging.jvm.backend.LoggerBackend
+import java.util.logging.Level
 
 /**
- * This file contains Kotest-like assertions for [LogData].
- */
-
-/**
- * Asserts that this [LogData] has a given [value] as a literal
- * or template message.
+ * A memoizing backend that formats the given [LogData] on its own
+ * using built-in Kotlin formatting.
  *
- * The message is literal when it is passed to the logger without
- * any formatting arguments, otherwise it is part of [LogData.templateContext].
+ * See [log] method for details.
  */
-internal infix fun LogData.shouldHaveMessage(value: String?) {
-    literalArgument shouldBe value
-}
+internal open class FormattingBackend : LoggerBackend() {
 
-/**
- * Asserts that this [LogData] has a message with the given argument value.
- *
- * This function is deprecated. Use [shouldHaveMessage] with "Count=$number" instead.
- */
-@Deprecated("Use shouldHaveMessage(\"Count=\$number\") instead", ReplaceWith("shouldHaveMessage(\"Count=\$number\")"))
-internal fun LogData.shouldHaveArguments(number: Int) {
-    shouldHaveMessage("Count=$number")
-}
+    private val mutableLogged = mutableListOf<String>()
 
-/**
- * Asserts that this [LogData] has no arguments.
- *
- * This function is deprecated. Use [shouldHaveMessage] with empty string instead.
- */
-@Deprecated("Use shouldHaveMessage(\"\") instead", ReplaceWith("shouldHaveMessage(\"\")"))
-internal fun LogData.shouldHaveArguments() {
-    shouldHaveMessage("")
+    /**
+     * The captured messages that have been logged by this backend.
+     */
+    val logged: List<String> get() = mutableLogged
+
+    override val loggerName: String = "<unused>"
+
+    override fun isLoggable(level: Level): Boolean = true
+
+    /**
+     * Formats the given [LogData] without using core logging utils,
+     * so it is possible to test what happens if arguments cause errors.
+     *
+     * The core utility classes handle this properly. But custom backends
+     * are not obligated to use them.
+     */
+    override fun log(data: LogData) {
+        mutableLogged.add("${data.literalArgument}")
+    }
+
+    // Do not handle any errors in the backend, so we can test
+    // “last resort” error handling.
+    override fun handleError(error: RuntimeException, badData: LogData) = throw error
 }

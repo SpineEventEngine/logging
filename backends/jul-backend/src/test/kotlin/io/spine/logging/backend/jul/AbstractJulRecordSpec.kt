@@ -26,11 +26,11 @@
 
 package io.spine.logging.backend.jul
 
-import io.spine.logging.backend.jul.given.StubJulRecord
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.logging.backend.jul.given.StubJulRecord
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -42,32 +42,20 @@ import org.junit.jupiter.api.Test
 @DisplayName("`AbstractJulRecord` should")
 internal class AbstractJulRecordSpec {
 
-    private val literal = "Hello %s"
-    private val argument = "World"
-    private val expectedMessage = "Copied: Hello World"
-    private val expectedAppended = "Appended: Hello World"
+    private val literal = "Hello World"
 
     @Test
     fun `cache the returned message`() {
-        val record = StubJulRecord(literal, argument)
+        val record = StubJulRecord(literal)
         val message = record.message
-        message shouldBe expectedMessage
+        message shouldBe literal
         record.message shouldBeSameInstanceAs message
     }
 
     @Test
-    fun `cache the returned formatted message`() {
-        val mutableArgument = StringBuilder(argument)
-        val record = StubJulRecord(literal, mutableArgument)
-        val formatted = record.formattedMessage
-        formatted shouldBe expectedMessage
-        record.formattedMessage shouldBeSameInstanceAs formatted
-    }
-
-    @Test
     fun `override the initially supplied message`() {
-        val record = StubJulRecord(literal, argument)
-        record.message shouldBe expectedMessage
+        val record = StubJulRecord(literal)
+        record.message shouldBe literal
         val overriddenMessage = "Custom"
         record.message = overriddenMessage
         record.message shouldBe overriddenMessage
@@ -77,8 +65,8 @@ internal class AbstractJulRecordSpec {
 
     @Test
     fun `override with parameters`() {
-        val record = StubJulRecord(literal, argument)
-        record.message shouldBe expectedMessage
+        val record = StubJulRecord(literal)
+        record.message shouldBe literal
         record.parameters.shouldBeEmpty()
 
         // Please note, braces are NOT printf formatting options.
@@ -98,37 +86,5 @@ internal class AbstractJulRecordSpec {
         val expectedMessage = "Custom Parameter"
         "${record.appendFormattedMessageTo(StringBuilder())}" shouldBe expectedMessage
         record.formattedMessage shouldBe expectedMessage
-    }
-
-    @Test
-    fun `append formatted messages to a buffer without caching`() {
-
-        // By default, `AbstractLogRecord` doesn't cache the message
-        // until `AbstractLogRecord.getMessage()` is called.
-
-        val mutableArgument = StringBuilder(argument)
-        val record = StubJulRecord(literal, mutableArgument)
-        "${record.appendFormattedMessageTo(StringBuilder())}" shouldBe expectedAppended
-
-        // Since the message is not cached, it is still can be modified
-        // through the passed mutable argument.
-        val insertion = "Mutable"
-        val expectedAppended = expectedAppended.replace(argument, "$insertion$argument")
-        mutableArgument.insert(0, insertion)
-        record.appendFormattedMessageTo(StringBuilder()).toString() shouldBe expectedAppended
-    }
-
-    @Test
-    fun `append formatted message to a buffer with caching`() {
-        val mutableArgument = StringBuilder(argument)
-        val record = StubJulRecord(literal, mutableArgument)
-        "${record.appendFormattedMessageTo(StringBuilder())}" shouldBe expectedAppended
-
-        // After a call to `AbstractLogRecord.getMessage()`, the message is cached.
-        // Updating of a mutable argument has no effect, and the underlying
-        // formatter is not called.
-        record.message
-        mutableArgument.insert(0, "IGNORED")
-        "${record.appendFormattedMessageTo(StringBuilder())}" shouldBe expectedMessage
     }
 }

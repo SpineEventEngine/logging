@@ -52,7 +52,7 @@ import static java.util.logging.Level.WARNING;
  * <p>This class supports three distinct modes of operation, depending on the state of the message
  * and/or parameters:
  *
- * <h2>Null message, null or empty parameters</h2>
+ * <h2>A {@code null} message, {@code null} or empty parameters</h2>
  *
  * This is the initial state of the log record, and indicates that the log message has not been
  * formatted. This is a non-visible, internal state, since any attempt to read the message string
@@ -112,7 +112,7 @@ public abstract class AbstractJulRecord extends LogRecord {
     /**
      * The sinleton `Forematter` for JUL records.
      *
-     * Note that Formatter instances are mutable and protect the state via synchronization.
+     * <p>Note that Formatter instances are mutable and protect the state via synchronization.
      * We never modify the instance, however, and only call the synchronized
      * `safeMessage()` helper method, so we can use it safely, without additional locking.
      */

@@ -26,18 +26,13 @@
 
 package io.spine.logging.backend.log4j2
 
-import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.matchers.collections.shouldBeEmpty
-import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
-import io.spine.logging.jvm.JvmLogSite
-import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.backend.log4j2.given.StubLogData
 import io.spine.logging.backend.log4j2.given.StubLogSite
-import io.spine.logging.jvm.parser.ParseException
+import io.spine.logging.jvm.JvmLogSite
+import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.jvm.repeatedKey
 import io.spine.logging.jvm.singleKey
 import java.util.concurrent.atomic.AtomicInteger
@@ -89,14 +84,6 @@ internal class Log4j2LoggerBackendSpec {
     }
 
     @Test
-    fun `log a formatted message`() {
-        val (pattern, arguments) = "Hello %s %s" to arrayOf("Foo", "Bar")
-        val printfData = StubLogData.withPrintfStyle(pattern, *arguments)
-        backend.log(printfData)
-        lastLogged.formatted shouldBe pattern.format(*arguments)
-    }
-
-    @Test
     fun `use the default level`() {
         val defaultLevel = Log4jLevel.INFO // By default Log4j settings.
         val data = StubLogData(LITERAL)
@@ -112,12 +99,12 @@ internal class Log4j2LoggerBackendSpec {
         fun `with custom keys`() {
             val intValue = 23
             val strValue = "str value"
-            val (pattern, argument) = "Foo='%s'" to "bar"
-            val data = StubLogData.withPrintfStyle(pattern, argument)
+            val msg = "Foo='bar'"
+            val data = StubLogData.withMessage(msg)
                 .addMetadata(INT_KEY, intValue)
                 .addMetadata(STR_KEY, strValue)
             backend.log(data)
-            val expectedMessage = pattern.format(argument)
+            val expectedMessage = msg
             val expectedMetadata = "int=$intValue str=\"$strValue\""
             lastLogged.formatted shouldBe "$expectedMessage [CONTEXT $expectedMetadata ]"
         }
@@ -187,18 +174,6 @@ internal class Log4j2LoggerBackendSpec {
                 fileName shouldBe logSite.fileName
             }
         }
-    }
-
-    @Test
-    fun `propagate parsing errors`() {
-        val data = StubLogData.withPrintfStyle("Hello %?X World", "ignored")
-        val parseException = shouldThrow<ParseException> {
-            backend.log(data)
-        }
-        logged.shouldBeEmpty()
-        backend.handleError(parseException, data)
-        logged shouldHaveSize 1
-        lastLogged.formatted shouldContain "LOGGING ERROR: invalid flag"
     }
 }
 

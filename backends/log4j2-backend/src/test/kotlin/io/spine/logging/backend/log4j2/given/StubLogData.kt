@@ -35,8 +35,6 @@ import java.util.logging.Level
 
 /**
  * A mutable [LogData] for testing backends and other log handling code.
- *
- * Simplified version after removing formatting support - only supports literal arguments.
  */
 @Suppress("TooManyFunctions") // Many getters and setters.
 internal class StubLogData : LogData {

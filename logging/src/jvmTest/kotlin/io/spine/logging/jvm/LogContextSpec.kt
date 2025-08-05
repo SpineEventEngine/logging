@@ -126,29 +126,10 @@ internal class LogContextSpec {
 
 
     @Test
-    fun `accept a formatted message`() {
-        logger.at(INFO).log(MESSAGE_PATTERN, MESSAGE_ARGUMENT)
-        backend.loggedCount shouldBe 1
-        backend.lastLogged shouldHaveMessage MESSAGE_PATTERN
-        backend.lastLogged.shouldHaveArguments(MESSAGE_ARGUMENT)
-
-        // Should NOT ask for literal argument as none exists.
-        shouldThrow<IllegalStateException> {
-            backend.lastLogged.literalArgument
-        }
-    }
-
-    @Test
     fun `accept a literal message`() {
         logger.at(INFO).log(MESSAGE_LITERAL)
         backend.loggedCount shouldBe 1
         backend.lastLogged shouldHaveMessage MESSAGE_LITERAL
-
-        // Cannot ask for format arguments as none exist.
-        backend.lastLogged.templateContext.shouldBeNull()
-        shouldThrow<IllegalStateException> {
-            backend.lastLogged.arguments
-        }
     }
 
     @Test
@@ -234,11 +215,11 @@ internal class LogContextSpec {
         backend.firstLogged.metadata.shouldUniquelyContain(Key.LOG_EVERY_N, 5)
 
         // Check the expected count and skipped-count for each log.
-        backend.logged[0].shouldHaveArguments(0)
+        backend.logged[0].shouldHaveMessage("Count=0")
         backend.logged[0].metadata.shouldNotContain(Key.SKIPPED_LOG_COUNT)
-        backend.logged[1].shouldHaveArguments(5)
+        backend.logged[1].shouldHaveMessage("Count=5")
         backend.logged[1].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 4)
-        backend.logged[2].shouldHaveArguments(10)
+        backend.logged[2].shouldHaveMessage("Count=10")
         backend.logged[2].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 4)
     }
 
@@ -267,7 +248,7 @@ internal class LogContextSpec {
             // so we can get the log index from it.
             val deltaNanos = backend.logged[n].timestampNanos - startNanos
             val logIndex = (deltaNanos / MILLISECONDS.toNanos(1)).toInt()
-            backend.logged[n].shouldHaveArguments(logIndex)
+            backend.logged[n].shouldHaveMessage("Count=$logIndex")
 
             // This works even if `lastLogIndex` == -1.
             val skipped = logIndex - lastLogIndex - 1
@@ -310,11 +291,11 @@ internal class LogContextSpec {
             )
 
             // Check the expected count and skipped-count for each log.
-            logged[0].shouldHaveArguments(0)
+            logged[0].shouldHaveMessage("Count=0")
             logged[0].metadata.shouldNotContain(Key.SKIPPED_LOG_COUNT)
-            logged[1].shouldHaveArguments(4)
+            logged[1].shouldHaveMessage("Count=4")
             logged[1].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 3)
-            logged[2].shouldHaveArguments(8)
+            logged[2].shouldHaveMessage("Count=8")
             logged[2].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 3)
         }
     }
@@ -342,10 +323,10 @@ internal class LogContextSpec {
 
             backend.run {
                 loggedCount shouldBe 4
-                logged[0].shouldHaveArguments(0)
-                logged[1].shouldHaveArguments(20)
-                logged[2].shouldHaveArguments(40)
-                logged[3].shouldHaveArguments(60)
+                logged[0].shouldHaveMessage("Count=0")
+                logged[1].shouldHaveMessage("Count=20")
+                logged[2].shouldHaveMessage("Count=40")
+                logged[3].shouldHaveMessage("Count=60")
                 logged[3].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 19)
             }
         }
@@ -369,11 +350,11 @@ internal class LogContextSpec {
 
             backend.run {
                 loggedCount shouldBe 5
-                logged[0].shouldHaveArguments(0)
-                logged[1].shouldHaveArguments(15)
-                logged[2].shouldHaveArguments(30)
-                logged[3].shouldHaveArguments(45)
-                logged[4].shouldHaveArguments(60)
+                logged[0].shouldHaveMessage("Count=0")
+                logged[1].shouldHaveMessage("Count=15")
+                logged[2].shouldHaveMessage("Count=30")
+                logged[3].shouldHaveMessage("Count=45")
+                logged[4].shouldHaveMessage("Count=60")
                 logged[4].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 14)
             }
         }
@@ -458,12 +439,12 @@ internal class LogContextSpec {
             backend.run {
                 loggedCount shouldBe 2
 
-                logged[0].shouldHaveArguments(LogType.FOO)
+                logged[0].shouldHaveMessage(LogType.FOO.toString())
                 logged[0].metadata.shouldHaveSize(2)
                 logged[0].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, LogType.FOO)
                 logged[0].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
 
-                logged[1].shouldHaveArguments(LogType.BAR)
+                logged[1].shouldHaveMessage(LogType.BAR.toString())
                 logged[1].metadata.shouldHaveSize(2)
                 logged[1].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, LogType.BAR)
                 logged[1].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
@@ -618,28 +599,17 @@ internal class LogContextSpec {
     // and the backend preserves arguments as expected.
 
     @Test
-    fun `accept formatting arguments as array`() {
-        val args = arrayOf<Any?>("foo", null, "baz")
-        logger.atInfo().logVarargs("Any message ...", args)
-        backend.lastLogged.shouldHaveArguments(*args)
-
-        // Make sure we took a copy of the arguments rather than risk re-using them.
-        backend.loggedCount shouldBe 1
-        backend.lastLogged.arguments shouldNotBeSameInstanceAs args
-    }
-
-    @Test
     fun `log an empty message without arguments`() {
         logger.atInfo().log()
         backend.lastLogged.shouldHaveMessage("")
-        backend.lastLogged.shouldHaveArguments()
+        backend.lastLogged.shouldHaveMessage("")
     }
 
     @Test
     fun `not escape percent char when given no arguments`() {
         logger.atInfo().log(MESSAGE_PATTERN)
         backend.lastLogged.shouldHaveMessage(MESSAGE_PATTERN)
-        backend.lastLogged.shouldHaveArguments()
+        backend.lastLogged.shouldHaveMessage("")
     }
 
     /**
@@ -648,171 +618,9 @@ internal class LogContextSpec {
      */
     @Test
     fun `accept a nullable literal`() {
-        // We want to call `log(String)`, not `log(Object)` with a null value.
+        // We want to call `log(String)`, not `log(Object)` with a `null` value.
         logger.atInfo().log(null as String?)
         backend.lastLogged.shouldHaveMessage(null)
-    }
-
-    /**
-     * Tests that `null` arguments are passed unmodified to the backend
-     * without throwing an exception.
-     */
-    @Test
-    fun `accept a nullable argument`() {
-        logger.atInfo().log(MESSAGE_PATTERN, null)
-        backend.lastLogged.let {
-            it shouldHaveMessage (MESSAGE_PATTERN)
-            it.shouldHaveArguments(null)
-        }
-    }
-
-    @Test
-    fun `log 'null' if given message and argument are 'null' simultaneously`() {
-        logger.atInfo().log(null, null)
-        backend.lastLogged.let {
-            it shouldHaveMessage ("<null>")
-            it.shouldHaveArguments(null)
-        }
-    }
-
-    @Test
-    fun `provide shortcuts for passing up to 12 arguments`() {
-        val msg = "Any message will do..."
-
-        // Verify that the arguments passed in to the object-based methods
-        // are mapped correctly.
-        logger.atInfo().log(msg, "1")
-        backend.lastLogged.shouldHaveArguments("1")
-        logger.atInfo().log(msg, "1", "2")
-        backend.lastLogged.shouldHaveArguments("1", "2")
-        logger.atInfo().log(msg, "1", "2", "3")
-        backend.lastLogged.shouldHaveArguments("1", "2", "3")
-        logger.atInfo().log(msg, "1", "2", "3", "4")
-        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4")
-        logger.atInfo().log(msg, "1", "2", "3", "4", "5")
-        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5")
-        logger.atInfo().log(msg, "1", "2", "3", "4", "5", "6")
-        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5", "6")
-        logger.atInfo().log(msg, "1", "2", "3", "4", "5", "6", "7")
-        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5", "6", "7")
-        logger.atInfo().log(msg, "1", "2", "3", "4", "5", "6", "7", "8")
-        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8")
-        logger.atInfo().log(msg, "1", "2", "3", "4", "5", "6", "7", "8", "9")
-        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8", "9")
-        logger.atInfo().log(msg, "1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
-        backend.lastLogged.shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
-        logger.atInfo()
-            .log(msg, "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11")
-        backend.lastLogged
-            .shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11")
-        logger.atInfo()
-            .log(msg, "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
-        backend.lastLogged
-            .shouldHaveArguments("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
-    }
-
-    @Test
-    fun `provide shortcuts for passing a non-boxed argument`() {
-        val msg = "Any message will do..."
-
-        // Verify arguments passed in to the non-boxed fundamental type methods
-        // are mapped correctly.
-        logger.atInfo().log(msg, BYTE_ARG)
-        backend.lastLogged.shouldHaveArguments(BYTE_ARG)
-        logger.atInfo().log(msg, SHORT_ARG)
-        backend.lastLogged.shouldHaveArguments(SHORT_ARG)
-        logger.atInfo().log(msg, INT_ARG)
-        backend.lastLogged.shouldHaveArguments(INT_ARG)
-        logger.atInfo().log(msg, LONG_ARG)
-        backend.lastLogged.shouldHaveArguments(LONG_ARG)
-        logger.atInfo().log(msg, CHAR_ARG)
-        backend.lastLogged.shouldHaveArguments(CHAR_ARG)
-    }
-
-    @Test
-    fun `provide shortcuts for passing two non-boxed arguments`() {
-        val msg = "Any message will do..."
-
-        // Verify arguments passed in to the non-boxed fundamental type methods
-        // are mapped correctly.
-        logger.atInfo().log(msg, BYTE_ARG, BYTE_ARG)
-        backend.lastLogged.shouldHaveArguments(BYTE_ARG, BYTE_ARG)
-        logger.atInfo().log(msg, BYTE_ARG, SHORT_ARG)
-        backend.lastLogged.shouldHaveArguments(BYTE_ARG, SHORT_ARG)
-        logger.atInfo().log(msg, BYTE_ARG, INT_ARG)
-        backend.lastLogged.shouldHaveArguments(BYTE_ARG, INT_ARG)
-        logger.atInfo().log(msg, BYTE_ARG, LONG_ARG)
-        backend.lastLogged.shouldHaveArguments(BYTE_ARG, LONG_ARG)
-        logger.atInfo().log(msg, BYTE_ARG, CHAR_ARG)
-        backend.lastLogged.shouldHaveArguments(BYTE_ARG, CHAR_ARG)
-        logger.atInfo().log(msg, SHORT_ARG, BYTE_ARG)
-        backend.lastLogged.shouldHaveArguments(SHORT_ARG, BYTE_ARG)
-        logger.atInfo().log(msg, SHORT_ARG, SHORT_ARG)
-        backend.lastLogged.shouldHaveArguments(SHORT_ARG, SHORT_ARG)
-        logger.atInfo().log(msg, SHORT_ARG, INT_ARG)
-        backend.lastLogged.shouldHaveArguments(SHORT_ARG, INT_ARG)
-        logger.atInfo().log(msg, SHORT_ARG, LONG_ARG)
-        backend.lastLogged.shouldHaveArguments(SHORT_ARG, LONG_ARG)
-        logger.atInfo().log(msg, SHORT_ARG, CHAR_ARG)
-        backend.lastLogged.shouldHaveArguments(SHORT_ARG, CHAR_ARG)
-        logger.atInfo().log(msg, INT_ARG, BYTE_ARG)
-        backend.lastLogged.shouldHaveArguments(INT_ARG, BYTE_ARG)
-        logger.atInfo().log(msg, INT_ARG, SHORT_ARG)
-        backend.lastLogged.shouldHaveArguments(INT_ARG, SHORT_ARG)
-        logger.atInfo().log(msg, INT_ARG, INT_ARG)
-        backend.lastLogged.shouldHaveArguments(INT_ARG, INT_ARG)
-        logger.atInfo().log(msg, INT_ARG, LONG_ARG)
-        backend.lastLogged.shouldHaveArguments(INT_ARG, LONG_ARG)
-        logger.atInfo().log(msg, INT_ARG, CHAR_ARG)
-        backend.lastLogged.shouldHaveArguments(INT_ARG, CHAR_ARG)
-        logger.atInfo().log(msg, LONG_ARG, BYTE_ARG)
-        backend.lastLogged.shouldHaveArguments(LONG_ARG, BYTE_ARG)
-        logger.atInfo().log(msg, LONG_ARG, SHORT_ARG)
-        backend.lastLogged.shouldHaveArguments(LONG_ARG, SHORT_ARG)
-        logger.atInfo().log(msg, LONG_ARG, INT_ARG)
-        backend.lastLogged.shouldHaveArguments(LONG_ARG, INT_ARG)
-        logger.atInfo().log(msg, LONG_ARG, LONG_ARG)
-        backend.lastLogged.shouldHaveArguments(LONG_ARG, LONG_ARG)
-        logger.atInfo().log(msg, LONG_ARG, CHAR_ARG)
-        backend.lastLogged.shouldHaveArguments(LONG_ARG, CHAR_ARG)
-        logger.atInfo().log(msg, CHAR_ARG, BYTE_ARG)
-        backend.lastLogged.shouldHaveArguments(CHAR_ARG, BYTE_ARG)
-        logger.atInfo().log(msg, CHAR_ARG, SHORT_ARG)
-        backend.lastLogged.shouldHaveArguments(CHAR_ARG, SHORT_ARG)
-        logger.atInfo().log(msg, CHAR_ARG, INT_ARG)
-        backend.lastLogged.shouldHaveArguments(CHAR_ARG, INT_ARG)
-        logger.atInfo().log(msg, CHAR_ARG, LONG_ARG)
-        backend.lastLogged.shouldHaveArguments(CHAR_ARG, LONG_ARG)
-        logger.atInfo().log(msg, CHAR_ARG, CHAR_ARG)
-        backend.lastLogged.shouldHaveArguments(CHAR_ARG, CHAR_ARG)
-    }
-
-    @Test
-    fun `provide shortcuts for passing two mixed, non-boxed arguments`() {
-        val ms = "Any message will do..."
-
-        // Verify arguments passed in to the non-boxed fundamental type methods
-        // are mapped correctly.
-        logger.atInfo().log(ms, OBJECT_ARG, BYTE_ARG)
-        backend.lastLogged.shouldHaveArguments(OBJECT_ARG, BYTE_ARG)
-        logger.atInfo().log(ms, OBJECT_ARG, SHORT_ARG)
-        backend.lastLogged.shouldHaveArguments(OBJECT_ARG, SHORT_ARG)
-        logger.atInfo().log(ms, OBJECT_ARG, INT_ARG)
-        backend.lastLogged.shouldHaveArguments(OBJECT_ARG, INT_ARG)
-        logger.atInfo().log(ms, OBJECT_ARG, LONG_ARG)
-        backend.lastLogged.shouldHaveArguments(OBJECT_ARG, LONG_ARG)
-        logger.atInfo().log(ms, OBJECT_ARG, CHAR_ARG)
-        backend.lastLogged.shouldHaveArguments(OBJECT_ARG, CHAR_ARG)
-        logger.atInfo().log(ms, BYTE_ARG, OBJECT_ARG)
-        backend.lastLogged.shouldHaveArguments(BYTE_ARG, OBJECT_ARG)
-        logger.atInfo().log(ms, SHORT_ARG, OBJECT_ARG)
-        backend.lastLogged.shouldHaveArguments(SHORT_ARG, OBJECT_ARG)
-        logger.atInfo().log(ms, INT_ARG, OBJECT_ARG)
-        backend.lastLogged.shouldHaveArguments(INT_ARG, OBJECT_ARG)
-        logger.atInfo().log(ms, LONG_ARG, OBJECT_ARG)
-        backend.lastLogged.shouldHaveArguments(LONG_ARG, OBJECT_ARG)
-        logger.atInfo().log(ms, CHAR_ARG, OBJECT_ARG)
-        backend.lastLogged.shouldHaveArguments(CHAR_ARG, OBJECT_ARG)
     }
 
     @Test
@@ -820,11 +628,10 @@ internal class LogContextSpec {
 
         // Keep these two lines immediately adjacent to each other.
         val expectedCaller = callerInfoFollowingLine()
-        logger.atSevere().withStackTrace(StackSize.FULL).log(MESSAGE_PATTERN, MESSAGE_ARGUMENT)
+        logger.atSevere().withStackTrace(StackSize.FULL).log(MESSAGE_LITERAL)
 
         backend.loggedCount shouldBe 1
-        backend.firstLogged.shouldHaveMessage(MESSAGE_PATTERN)
-        backend.firstLogged.shouldHaveArguments(MESSAGE_ARGUMENT)
+        backend.firstLogged.shouldHaveMessage(MESSAGE_LITERAL)
         backend.firstLogged.metadata.shouldHaveSize(1)
         backend.firstLogged.metadata.shouldContain(Key.LOG_CAUSE)
 
@@ -855,8 +662,7 @@ internal class LogContextSpec {
             .log(MESSAGE_PATTERN, MESSAGE_ARGUMENT)
 
         backend.loggedCount shouldBe 1
-        backend.firstLogged.shouldHaveMessage(MESSAGE_PATTERN)
-        backend.firstLogged.shouldHaveArguments(MESSAGE_ARGUMENT)
+        backend.firstLogged.shouldHaveMessage(MESSAGE_LITERAL)
         backend.firstLogged.metadata.shouldHaveSize(1)
         backend.firstLogged.metadata.shouldContain(Key.LOG_CAUSE)
 
@@ -878,13 +684,13 @@ internal class LogContextSpec {
             logHelper(logger, JvmLogSite.logSite(), 3, "Bar: $i")
         }
         backend.loggedCount shouldBe 7
-        backend.firstLogged.shouldHaveArguments("Foo: 0")
-        backend.logged[1].shouldHaveArguments("Bar: 0")
-        backend.logged[2].shouldHaveArguments("Foo: 2")
-        backend.logged[3].shouldHaveArguments("Bar: 3")
-        backend.logged[4].shouldHaveArguments("Foo: 4")
-        backend.logged[5].shouldHaveArguments("Foo: 6")
-        backend.logged[6].shouldHaveArguments("Bar: 6")
+        backend.firstLogged.shouldHaveMessage("Foo: 0")
+        backend.logged[1].shouldHaveMessage("Bar: 0")
+        backend.logged[2].shouldHaveMessage("Foo: 2")
+        backend.logged[3].shouldHaveMessage("Bar: 3")
+        backend.logged[4].shouldHaveMessage("Foo: 4")
+        backend.logged[5].shouldHaveMessage("Foo: 6")
+        backend.logged[6].shouldHaveMessage("Bar: 6")
     }
 
     /**

@@ -32,8 +32,9 @@ import java.util.logging.Level
 /**
  * A backend API for determining metadata associated with a log statement.
  *
- * Some metadata is expected to be available for all log statements (such as the log level or a
- * timestamp) whereas other data is optional (class/method name for example).
+ * Some metadata is expected to be available for all log statements
+ * (such as the log level or a timestamp) whereas other data is optional
+ * (class/method name for example).
  *
  * As well providing the common logging metadata, customized loggers can choose to add arbitrary
  * key/value pairs to the log data. It is up to each logging backend implementation to decide how

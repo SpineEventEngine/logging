@@ -27,17 +27,12 @@
 package io.spine.logging.backend.jul.given
 
 import io.spine.logging.backend.jul.AbstractJulRecord
-import io.spine.logging.jvm.backend.LogData
 import io.spine.logging.jvm.backend.Metadata
 
 /**
  * An instantiatable [AbstractJulRecord].
- *
- * This is a simplified version after removing formatting support.
  */
 @Suppress("serial") // Serial number is not needed.
 internal class StubJulRecord(message: String) :
     AbstractJulRecord(StubLogData.withMessage(message), Metadata.empty()) {
-
-    // With formatting support removed, this is much simpler - no custom formatter needed
 }

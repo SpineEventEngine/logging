@@ -27,10 +27,6 @@
 package io.spine.logging.jvm.given
 
 /**
- * Contains test environment for Flogger API tests.
- */
-
-/**
  * Creates a new [Iterator] over the given [values].
  */
 internal fun <T> iterate(vararg values: T): Iterator<T> = listOf(*values).iterator()
