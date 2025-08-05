@@ -31,11 +31,8 @@ import io.spine.logging.jvm.JvmLogSite
 import io.spine.logging.jvm.LogContext
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.backend.LogData
-import io.spine.logging.jvm.backend.TemplateContext
 import io.spine.logging.jvm.given.FakeLogSite
-import io.spine.logging.jvm.parser.DefaultBraceStyleMessageParser
-import io.spine.logging.jvm.parser.DefaultPrintfMessageParser
-import io.spine.logging.jvm.parser.MessageParser
+import java.util.logging.Level
 import java.util.logging.Level
 
 /**
@@ -48,8 +45,6 @@ import java.util.logging.Level
 class FakeLogData : LogData {
 
     override var level: Level = Level.INFO
-    private var context: TemplateContext? = null
-    private var _arguments: Array<Any?>? = null
     private var _literalArgument: Any? = null
     override var timestampNanos = 0L
     override val metadata = FakeMetadata()
@@ -62,22 +57,6 @@ class FakeLogData : LogData {
         private const val LINE_NUMBER = 123
         private const val SOURCE_FILE = "src/io/spine/FakeClass.java"
         private val LOG_SITE = FakeLogSite(LOGGING_CLASS, LOGGING_METHOD, LINE_NUMBER, SOURCE_FILE)
-
-        /**
-         * Creates an instance with a printf-formatted message.
-         */
-        fun withPrintfStyle(message: String, vararg arguments: Any?): FakeLogData {
-            val printfParser = DefaultPrintfMessageParser.getInstance()
-            return FakeLogData(printfParser, message, *arguments)
-        }
-
-        /**
-         * Creates an instance with a brace-formatted message.
-         */
-        fun withBraceStyle(message: String, vararg arguments: Any?): FakeLogData {
-            val braceParser = DefaultBraceStyleMessageParser.getInstance()
-            return FakeLogData(braceParser, message, *arguments)
-        }
     }
 
     /**
@@ -85,11 +64,6 @@ class FakeLogData : LogData {
      */
     constructor(literalArgument: Any?) {
         this._literalArgument = literalArgument
-    }
-
-    private constructor(parser: MessageParser, message: String, vararg arguments: Any?) {
-        context = TemplateContext(parser, message)
-        this._arguments = arguments.toList().toTypedArray()
     }
 
     @CanIgnoreReturnValue
@@ -125,23 +99,7 @@ class FakeLogData : LogData {
         return metadata.findValue(LogContext.Key.WAS_FORCED) == true
     }
 
-    override val templateContext: TemplateContext?
-        get() = context
-
-    override val arguments: Array<Any?>
-        get() {
-            check(context != null) {
-                "Cannot get log data's arguments without a context."
-            }
-            return _arguments!!.clone()
-        }
-
     override val literalArgument: Any?
-        get() {
-            check(context == null) {
-                "Cannot get log data's literal argument if a context exists."
-            }
-            return _literalArgument
-        }
+        get() = _literalArgument
 }
 
