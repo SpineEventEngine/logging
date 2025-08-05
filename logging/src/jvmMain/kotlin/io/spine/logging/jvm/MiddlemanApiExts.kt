@@ -71,6 +71,7 @@ public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(message: String, vara
 /**
  * Extension method for logging a formatted message with an array of arguments.
  */
+@Suppress("SpreadOperator")
 public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.logVarargs(
     message: String,
     params: Array<Any?>?

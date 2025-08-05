@@ -433,10 +433,12 @@ protected constructor(
     }
 
     /**
-     * Make the backend logging call. This is the point at which we have paid the price of creating
+     * Make the backend logging call.
+     *
+     * This is the point at which we have paid the price of creating
      * a varargs array and doing any necessary auto-boxing.
      */
-    private fun logImpl(message: String?, vararg args: Any?) {
+    private fun logImpl(vararg args: Any?) {
         this.args = arrayOf(*args)
         // Evaluate any (rare) LazyArg instances early.
         // This may throw exceptions from user code, but it seems reasonable
@@ -447,15 +449,7 @@ protected constructor(
                 this.args!![n] = (this.args!![n] as LazyArg<*>).evaluate()
             }
         }
-        // Using "!=" is fast and sufficient here because the only real case this should
-        // be skipping is when we called `log(String)` or `log()`, which should not result in
-        // a template being created.
-        // DO NOT replace this with a string instance which can be interned, or use equals() here,
-        // since that could mistakenly treat other calls to log(String, Object...) incorrectly.
-        if (message !== LITERAL_VALUE_MESSAGE) {
-            val msg = message ?: NULL_MESSAGE
-            this.logTemplateContext = TemplateContext(getMessageParser(), msg)
-        }
+
         // Right at the end of processing add any tags injected by the platform.
         // Any tags supplied at the log site are merged with the injected tags
         // (though this should be very rare).
@@ -591,13 +585,13 @@ protected constructor(
 
     public final override fun log() {
         if (shouldLog()) {
-            logImpl(LITERAL_VALUE_MESSAGE, "")
+            logImpl("")
         }
     }
 
     public final override fun log(msg: () -> String?) {
         if (shouldLog()) {
-            logImpl(LITERAL_VALUE_MESSAGE, msg())
+            logImpl(msg())
         }
     }
 
@@ -742,20 +736,6 @@ protected constructor(
     }
 
     public companion object {
-        /**
-         * The text logged when both message and parameters are `null`.
-         */
-        private const val NULL_MESSAGE = "<null>"
-
-        /**
-         * A simple token used to identify cases where a single literal value is logged.
-         *
-         * Note that this instance must be unique, and it is important not to replace this
-         * with `""` or any other value than might be interned and be accessible to code
-         * outside this class.
-         */
-        @Suppress("StringOperationCanBeSimplified")
-        private val LITERAL_VALUE_MESSAGE = String()
 
         // WARNING: If we ever start to use combined log-site and scoped context metadata here via
         // MetadataProcessor, there's an issue. It's possible that the same scope can appear in both
