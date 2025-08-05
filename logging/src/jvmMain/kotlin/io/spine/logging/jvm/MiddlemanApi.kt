@@ -233,6 +233,7 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
      * logger.atFine().every(100).isEnabled()
      * ```
      * is incorrect because it will always behave identically to:
+     *
      * ```kotlin
      * logger.atFine().isEnabled()
      * ```
@@ -271,20 +272,10 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
     public fun log()
 
     /**
-     * Logs the given literal string without interpreting any argument placeholders.
-     *
-     * Important: This is intended only for use with hard-coded, literal strings which cannot
-     * contain user data. If you wish to log user-generated data, you should do something like:
-     * ```
-     * log("user data=%s", value)
-     * ```
-     * This serves to give the user data context in the log file but, more importantly, makes it
-     * clear which arguments may contain PII and other sensitive data (which might need to be
-     * scrubbed during logging). This recommendation also applies to all the overloaded [log]
-     * methods below.
+     * Logs the given string computed by the given function.
      *
      * @param msg A lambda that returns the literal string to log. If the lambda returns `null`,
-     *   this method will log a string literal reserved by the Logging library for `null`s.
+     *       this method will log a string literal reserved by the Logging library for `null`s.
      */
     public fun log(msg: () -> String?)
 
