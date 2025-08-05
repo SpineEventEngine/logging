@@ -601,8 +601,6 @@ protected constructor(
         }
     }
 
-
-
     @Suppress("SpreadOperator")
     public final override fun logVarargs(message: String, params: Array<Any?>?) {
         if (shouldLog()) {
