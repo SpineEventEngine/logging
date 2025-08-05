@@ -187,13 +187,11 @@ public object SimpleMessageFormatter {
      * for needing buffering (e.g., prepending log site data), and those must also be taken
      * into account.
      *
-     * @param logData The log statement data.
      * @param metadata The metadata intended to be formatted with the log statement.
      * @param keysToIgnore A set of metadata keys which are known not to appear in
      *        the final formatted message.
      */
     public fun mustBeFormatted(
-        logData: LogData,
         metadata: MetadataProcessor,
         keysToIgnore: Set<MetadataKey<*>>
     ): Boolean {
@@ -224,7 +222,7 @@ public object SimpleMessageFormatter {
             }
 
             override fun format(logData: LogData, metadata: MetadataProcessor): String {
-                return if (mustBeFormatted(logData, metadata, keysToIgnore)) {
+                return if (mustBeFormatted(metadata, keysToIgnore)) {
                     append(logData, metadata, StringBuilder()).toString()
                 } else {
                     getLiteralLogMessage(logData)

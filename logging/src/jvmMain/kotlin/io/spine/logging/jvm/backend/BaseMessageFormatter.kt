@@ -119,11 +119,6 @@ protected constructor(
         private const val MISSING_ARGUMENT_MESSAGE = "[ERROR: MISSING LOG ARGUMENT]"
 
         /**
-         * Literal string to be appended wherever additional unused arguments are provided.
-         */
-        private const val EXTRA_ARGUMENT_MESSAGE = " [ERROR: UNUSED LOG ARGUMENTS]"
-
-        /**
          * Appends the log message of the given log data to the given buffer.
          *
          * @param data The log data with the message to be appended.
