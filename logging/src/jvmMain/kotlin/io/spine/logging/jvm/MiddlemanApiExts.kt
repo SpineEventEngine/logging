@@ -41,7 +41,7 @@ public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(msg: String?) =
  * Extension method for logging a formatted message with a single argument.
  */
 public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(message: String, arg: Any?) =
-    logVarargs(message, arrayOf(arg))
+    log { String.format(message, arg) }
 
 /**
  * Extension method for logging a formatted message with two arguments.
@@ -50,7 +50,7 @@ public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(
     message: String,
     arg1: Any?,
     arg2: Any?
-) = logVarargs(message, arrayOf(arg1, arg2))
+) = log { String.format(message, arg1, arg2) }
 
 /**
  * Extension method for logging a formatted message with three arguments.
@@ -60,10 +60,21 @@ public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(
     arg1: Any?,
     arg2: Any?,
     arg3: Any?
-) = logVarargs(message, arrayOf(arg1, arg2, arg3))
+) = log { String.format(message, arg1, arg2, arg3) }
 
 /**
  * Extension method for logging a formatted message with multiple arguments.
  */
 public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(message: String, vararg args: Any?) =
-    logVarargs(message, args as Array<Any?>)
+    log { String.format(message, *args) }
+
+/**
+ * Extension method for logging a formatted message with an array of arguments.
+ *
+ * This method replaces the removed `logVarargs` method.
+ */
+public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.logVarargs(
+    message: String,
+    params: Array<Any?>?
+) = log { if (params != null) String.format(message, *params) else message }
+

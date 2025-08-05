@@ -562,21 +562,6 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
     ): API
 
     /**
-     * Logs a formatted representation of values in the given array,
-     * using the specified message template.
-     *
-     * This method is only expected to be invoked with an existing
-     * varargs array passed in from another method.
-     * Unlike [log], which would treat an array as a single
-     * parameter, this method will unwrap the given array.
-     *
-     * @param message The message template string containing an argument
-     *        placeholder for each element of [params].
-     * @param params The non-null array of arguments to be formatted.
-     */
-    public fun logVarargs(message: String, params: Array<Any?>?)
-
-    /**
      * An implementation of [MiddlemanApi] which does nothing and discards all parameters.
      *
      * This class (or a subclass in the case of an extended API) should be returned whenever logging
@@ -617,8 +602,6 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
         override fun atMostEvery(n: Int, unit: TimeUnit): API = noOp()
 
         override fun withStackTrace(size: StackSize): API = noOp()
-
-        override fun logVarargs(message: String, params: Array<Any?>?): Unit = Unit
 
         override fun log(): Unit = Unit
 

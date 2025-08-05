@@ -601,13 +601,6 @@ protected constructor(
         }
     }
 
-    @Suppress("SpreadOperator")
-    public final override fun logVarargs(message: String, params: Array<Any?>?) {
-        if (shouldLog()) {
-            // Copy the varargs array (because we didn't create it and this is quite a rare case).
-            logImpl(message, *(params?.copyOf(params.size) ?: emptyArray()))
-        }
-    }
 
     /**
      * The predefined metadata keys used by the default logging API.
