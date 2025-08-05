@@ -95,7 +95,7 @@ protected constructor(
     /**
      * The log arguments (set only after post-processing).
      */
-    private var args: Array<Any?>? = null
+    private var arg: String? = null
 
     /**
      * Creates a logging context with the specified level, and with a timestamp obtained from the
@@ -151,13 +151,12 @@ protected constructor(
     public final override val templateContext: TemplateContext?
         get() = logTemplateContext
 
-    public final override val arguments: Array<Any?>
-        get() {
-            if (logTemplateContext == null) {
-                error("Cannot get arguments unless a template context exists.")
-            }
-            return args!!
+    public final override val arguments: Array<Any?> by lazy {
+        if (logTemplateContext == null) {
+            error("Cannot get arguments unless a template context exists.")
         }
+        arrayOf(arg)
+    }
 
     public final override val literalArgument: Any?
         get() {
@@ -166,7 +165,7 @@ protected constructor(
                     "Cannot get literal argument if a template context exists: $logTemplateContext."
                 )
             }
-            return args!![0]
+            return arg!![0]
         }
 
     public final override fun wasForced(): Boolean {
@@ -435,20 +434,10 @@ protected constructor(
     /**
      * Make the backend logging call.
      *
-     * This is the point at which we have paid the price of creating
-     * a varargs array and doing any necessary auto-boxing.
+     * This method takes a single string parameter as it's always called with one string argument.
      */
-    private fun logImpl(vararg args: Any?) {
-        this.args = arrayOf(*args)
-        // Evaluate any (rare) LazyArg instances early.
-        // This may throw exceptions from user code, but it seems reasonable
-        // to propagate them in this case.
-        // They would have been thrown if the argument was evaluated at the call site anyway.
-        for (n in this.args!!.indices) {
-            if (this.args!![n] is LazyArg<*>) {
-                this.args!![n] = (this.args!![n] as LazyArg<*>).evaluate()
-            }
-        }
+    private fun logImpl(arg: String?) {
+        this.arg = arg
 
         // Right at the end of processing add any tags injected by the platform.
         // Any tags supplied at the log site are merged with the injected tags
