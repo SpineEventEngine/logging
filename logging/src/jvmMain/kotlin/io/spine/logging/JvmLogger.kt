@@ -114,7 +114,7 @@ private class ApiImpl(private val delegate: Middleman.Api): JvmLogger.Api {
             val prefix = loggingDomain.messagePrefix
             delegate
                 .withInjectedLogSite(JvmLogSite.callerOf(ApiImpl::class.java))
-                .log(prefix + message.invoke())
+                .log { prefix + message.invoke() }
         }
     }
 }

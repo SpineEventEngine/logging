@@ -101,7 +101,7 @@ internal class LogContextSpec {
             logger.atInfo()
                 .withInjectedLogSite(logSite)
                 .every(n)
-                .log("%s", message)
+                .log { message }
         }
     }
 
@@ -118,7 +118,7 @@ internal class LogContextSpec {
         val cause = Throwable()
         logger.atInfo()
             .withCause(cause)
-            .log(MESSAGE_LITERAL)
+            .log { MESSAGE_LITERAL }
         backend.lastLogged.metadata shouldHaveSize 1
         backend.lastLogged.metadata.shouldUniquelyContain(Key.LOG_CAUSE, cause)
         backend.lastLogged shouldHaveMessage MESSAGE_LITERAL
@@ -218,7 +218,7 @@ internal class LogContextSpec {
         val tags = Tags.of("foo", "bar")
         logger.atInfo()
             .with(Key.TAGS, tags)
-            .log("With tags")
+            .log { "With tags" }
         backend.loggedCount shouldBe 1
         backend.lastLogged.metadata.shouldUniquelyContain(Key.TAGS, tags)
     }
@@ -663,22 +663,9 @@ internal class LogContextSpec {
         backend.lastLogged.shouldHaveMessage(null)
     }
 
-    /**
-     * Tests that `null` arguments are passed unmodified to the backend
-     * without throwing an exception.
-     */
     @Test
-    fun `accept a nullable argument`() {
-        logger.atInfo().log(MESSAGE_PATTERN, null)
-        backend.lastLogged.let {
-            it shouldHaveMessage (MESSAGE_PATTERN)
-            it.shouldHaveArguments(null)
-        }
-    }
-
-    @Test
-    fun `log 'null' if given message and argument are 'null' simultaneously`() {
-        logger.atInfo().log(null, null)
+    fun `log 'null' if given message is 'null'`() {
+        logger.atInfo().log(null)
         backend.lastLogged.let {
             it shouldHaveMessage ("<null>")
             it.shouldHaveArguments(null)

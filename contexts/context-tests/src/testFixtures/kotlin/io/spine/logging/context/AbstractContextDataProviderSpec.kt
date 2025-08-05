@@ -350,7 +350,7 @@ abstract class AbstractContextDataProviderSpec {
                 canAddTags shouldBe true
                 logger.atInfo()
                     .with(Key.TAGS, logSiteTags)
-                    .log("With tags")
+                    .log { "With tags" }
             }
 
         // Merged tag values are ordered alphabetically.

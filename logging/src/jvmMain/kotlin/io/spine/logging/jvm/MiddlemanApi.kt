@@ -257,15 +257,16 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
     public fun isEnabled(): Boolean
 
     /**
-     * Terminal log statement when a message is not required. A `log` method must terminate all
-     * fluent logging chains, and the no-argument method can be used if there is no need for a log
-     * message. For example:
+     * Terminal log statement when a message is not required.
+     *
+     * A `log` method must terminate all fluent logging chains, and the no-argument method
+     * can be used if there is no need for a log message. For example:
      * ```
      * logger.at(INFO).withCause(error).log()
      * ```
      *
-     * However, as it is good practice to give all log statements a meaningful log message, use of this
-     * method should be rare.
+     * However, as it is good practice to give all log statements a meaningful log message,
+     * use of this method should be rare.
      */
     public fun log()
 
@@ -282,10 +283,10 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
      * scrubbed during logging). This recommendation also applies to all the overloaded [log]
      * methods below.
      *
-     * @param msg The literal string to log. If `null`, this method will log a string literal
-     *   reserved by the Logging library for `null`s.
+     * @param msg A lambda that returns the literal string to log. If the lambda returns `null`,
+     *   this method will log a string literal reserved by the Logging library for `null`s.
      */
-    public fun log(msg: String?)
+    public fun log(msg: () -> String?)
 
     /**
      * Aggregates stateful logging with respect to a given [key].
@@ -630,6 +631,6 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
 
         override fun log(): Unit = Unit
 
-        override fun log(msg: String?): Unit = Unit
+        override fun log(msg: () -> String?): Unit = Unit
     }
 }

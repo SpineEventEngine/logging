@@ -595,9 +595,9 @@ protected constructor(
         }
     }
 
-    public final override fun log(msg: String?) {
+    public final override fun log(msg: () -> String?) {
         if (shouldLog()) {
-            logImpl(LITERAL_VALUE_MESSAGE, msg)
+            logImpl(LITERAL_VALUE_MESSAGE, msg())
         }
     }
 
