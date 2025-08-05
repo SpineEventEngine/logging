@@ -387,7 +387,6 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
      * When [io.spine.logging.jvm.context.ScopedLoggingContext] is used to create a context,
      * it can be bound to a [io.spine.logging.jvm.context.ScopeType]. For example:
      *
-     *
      * ```kotlin
      * ScopedLoggingContexts.newContext(REQUEST).run { scopedMethod(x, y, z) }
      * ```

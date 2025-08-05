@@ -29,51 +29,64 @@
 package io.spine.logging.jvm
 
 /**
- * Extension method to maintain backward compatibility with the previous API.
+ * Extension function to maintain backward compatibility with the previous API.
  *
  * This allows calling `log(String?)` with a string literal, which will be wrapped
  * in a lambda to match the new API signature.
  */
-public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(msg: String?) =
+public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(msg: String?) {
     log { msg }
+}
 
 /**
- * Extension method for logging a formatted message with a single argument.
+ * Extension function for logging a formatted message with a single argument.
  */
-public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(message: String, arg: Any?) =
+public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(message: String, arg: Any?) {
     log { String.format(message, arg) }
+}
 
 /**
- * Extension method for logging a formatted message with two arguments.
+ * Extension function for logging a formatted message with two arguments.
  */
 public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(
     message: String,
     arg1: Any?,
     arg2: Any?
-) = log { String.format(message, arg1, arg2) }
+) {
+    log { String.format(message, arg1, arg2) }
+}
 
 /**
- * Extension method for logging a formatted message with three arguments.
+ * Extension function for logging a formatted message with three arguments.
  */
 public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(
     message: String,
     arg1: Any?,
     arg2: Any?,
     arg3: Any?
-) = log { String.format(message, arg1, arg2, arg3) }
+): Unit {
+    log { String.format(message, arg1, arg2, arg3) }
+}
 
 /**
- * Extension method for logging a formatted message with multiple arguments.
+ * Extension function for logging a formatted message with multiple arguments.
  */
-public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(message: String, vararg args: Any?) =
+public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(message: String, vararg args: Any?) {
     log { String.format(message, *args) }
+}
 
 /**
- * Extension method for logging a formatted message with an array of arguments.
+ * Extension function for logging a formatted message with an array of arguments.
+ *
+ * Since the `log` function which accepts one parameter interprets the given array
+ * as one instance passed to formatting, this overload is needed for convenience of calls
+ * when an array contains the formatting arguments.
  */
 @Suppress("SpreadOperator")
 public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.logVarargs(
     message: String,
     params: Array<Any?>?
-) = log { if (params != null) String.format(message, *params) else message }
+) {
+    log { if (params != null) String.format(message, *params) else message }
+}
 
