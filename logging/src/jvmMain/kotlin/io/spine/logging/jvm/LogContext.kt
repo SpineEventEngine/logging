@@ -165,7 +165,7 @@ protected constructor(
                     "Cannot get literal argument if a template context exists: $logTemplateContext."
                 )
             }
-            return arg!![0]
+            return arg
         }
 
     public final override fun wasForced(): Boolean {

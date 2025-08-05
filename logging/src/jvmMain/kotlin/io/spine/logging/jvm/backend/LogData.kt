@@ -94,7 +94,8 @@ public interface LogData {
      * Forced log statements should behave exactly as if none of the filtering or
      * rate-limiting occurred, including argument validity checks.
      *
-     * Thus the idiomatic use of `wasForced` is:
+     * Thus, the idiomatic use of `wasForced` is:
+     *
      * ```kotlin
      * fun someFilteringMethod(value: Int): API {
      *   if (wasForced()) {
