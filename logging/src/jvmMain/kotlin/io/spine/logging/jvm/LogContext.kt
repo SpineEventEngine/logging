@@ -601,11 +601,6 @@ protected constructor(
         }
     }
 
-    public final override fun log(message: String?, p1: Any?) {
-        if (shouldLog()) {
-            logImpl(message, p1)
-        }
-    }
 
 
     @Suppress("SpreadOperator")

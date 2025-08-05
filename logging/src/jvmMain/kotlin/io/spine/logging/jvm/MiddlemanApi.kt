@@ -585,22 +585,6 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
     public fun logVarargs(message: String, params: Array<Any?>?)
 
     /**
-     * Logs a formatted representation of the given parameter,
-     * using the specified message template.
-     *
-     * The message string is expected to contain argument placeholder terms
-     * appropriate to the logger's choice of parser.
-     *
-     * Note that `printf`-style loggers are always expected to accept the standard Java `printf`
-     * formatting characters (e.g., "%s", "%d", etc...) and all flags unless otherwise stated.
-     * Null arguments are formatted as the literal string "null" regardless of
-     * formatting flags.
-     *
-     * @param message the message template string containing a single argument placeholder.
-     */
-    public fun log(message: String?, p1: Any?)
-
-    /**
      * An implementation of [MiddlemanApi] which does nothing and discards all parameters.
      *
      * This class (or a subclass in the case of an extended API) should be returned whenever logging
@@ -647,7 +631,5 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
         override fun log(): Unit = Unit
 
         override fun log(msg: String?): Unit = Unit
-
-        override fun log(message: String?, p1: Any?): Unit = Unit
     }
 }
