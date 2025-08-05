@@ -140,7 +140,7 @@ protected constructor(
      */
     protected abstract fun getMessageParser(): MessageParser
 
-    public final override val loggerName: String?
+    public final override val loggerName: String
         get() = getLogger().getName()
 
     public final override val logSite: JvmLogSite
