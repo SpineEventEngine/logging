@@ -50,7 +50,6 @@ import io.spine.logging.jvm.context.Tags
 import io.spine.logging.jvm.given.ConfigurableLogger
 import io.spine.logging.jvm.given.FakeLogSite
 import io.spine.logging.jvm.given.iterate
-import io.spine.logging.jvm.given.shouldHaveArguments
 import io.spine.logging.jvm.given.shouldHaveMessage
 import java.lang.System.currentTimeMillis
 import java.util.concurrent.TimeUnit.MILLISECONDS
@@ -142,12 +141,6 @@ internal class LogContextSpec {
         logger.at(INFO).log(MESSAGE_LITERAL)
         backend.loggedCount shouldBe 1
         backend.lastLogged shouldHaveMessage MESSAGE_LITERAL
-
-        // Cannot ask for format arguments as none exist.
-        backend.lastLogged.templateContext.shouldBeNull()
-        shouldThrow<IllegalStateException> {
-            backend.lastLogged.arguments
-        }
     }
 
     @Test
@@ -613,25 +606,12 @@ internal class LogContextSpec {
         }
     }
 
-    // These tests verify that the mapping between the logging context,
-    // and the backend preserves arguments as expected.
+    // These tests verify basic logging functionality.
 
     @Test
-    fun `accept formatting arguments as array`() {
-        val args = arrayOf<Any?>("foo", null, "baz")
-        logger.atInfo().logVarargs("Any message ...", args)
-        backend.lastLogged.shouldHaveArguments(*args)
-
-        // Make sure we took a copy of the arguments rather than risk re-using them.
-        backend.loggedCount shouldBe 1
-        backend.lastLogged.arguments shouldNotBeSameInstanceAs args
-    }
-
-    @Test
-    fun `log an empty message without arguments`() {
+    fun `log an empty message`() {
         logger.atInfo().log()
         backend.lastLogged.shouldHaveMessage("")
-        backend.lastLogged.shouldHaveArguments()
     }
 
     @Test

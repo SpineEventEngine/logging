@@ -348,18 +348,7 @@ public abstract class AbstractJulRecord extends LogRecord {
     @SuppressWarnings("MethodWithMultipleLoops")
     private static void safeAppend(LogData data, StringBuilder out) {
         out.append("  original message: ");
-        if (data.getTemplateContext() == null) {
-            out.append(AnyMessages.safeToString(data.getLiteralArgument()));
-        } else {
-            // We know that there's at least one argument to display here.
-            out.append(data.getTemplateContext()
-                           .getMessage());
-            out.append("\n  original arguments:");
-            for (var arg : data.getArguments()) {
-                out.append("\n    ")
-                   .append(AnyMessages.safeToString(arg));
-            }
-        }
+        out.append(AnyMessages.safeToString(data.getLiteralArgument()));
         var metadata = data.getMetadata();
         if (metadata.size() > 0) {
             out.append("\n  metadata:");
