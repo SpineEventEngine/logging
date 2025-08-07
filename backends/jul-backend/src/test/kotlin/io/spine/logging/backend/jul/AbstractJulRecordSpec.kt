@@ -54,15 +54,6 @@ internal class AbstractJulRecordSpec {
     }
 
     @Test
-    fun `cache the returned formatted message`() {
-        val mutableArgument = StringBuilder(argument)
-        val record = StubJulRecord(literal, mutableArgument)
-        val formatted = record.formattedMessage
-        formatted shouldBe expectedMessage
-        record.formattedMessage shouldBeSameInstanceAs formatted
-    }
-
-    @Test
     fun `override the initially supplied message`() {
         val record = StubJulRecord(literal, argument)
         record.message shouldBe expectedMessage

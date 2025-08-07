@@ -32,7 +32,6 @@ import io.spine.logging.jvm.backend.AnyMessages;
 import io.spine.logging.jvm.backend.Metadata;
 import io.spine.logging.jvm.backend.MetadataProcessor;
 import io.spine.logging.jvm.backend.SimpleMessageFormatter;
-import com.google.errorprone.annotations.CanIgnoreReturnValue;
 
 import java.io.Serial;
 import java.util.Arrays;
@@ -126,6 +125,7 @@ public abstract class AbstractJulRecord extends LogRecord {
      * Subclasses calling this constructor are expected to additionally call {@link #setThrown} and
      * perhaps {@link #setMessage} (depending on whether eager message caching is desired).
      */
+    @SuppressWarnings("OverridableMethodCallDuringObjectConstruction")
     protected AbstractJulRecord(LogData data, Metadata scope) {
         super(data.getLevel(), null);
         this.data = data;
@@ -176,10 +176,12 @@ public abstract class AbstractJulRecord extends LogRecord {
     }
 
     @Override
+    @SuppressWarnings("AssignmentToMethodParameter") // Special `null` treatment.
     public final void setParameters(Object[] parameters) {
         // IMPORTANT: We call getMessage() to cache the internal formatted message if someone indicates
         // they want to change the parameters. This is to avoid a situation in which parameters are set,
         // but the underlying message is still null. Do this first to switch internal states.
+        @SuppressWarnings("unused")
         var unused = getMessage();
         // Now handle setting parameters as normal.
         if (parameters == null) {
@@ -208,91 +210,17 @@ public abstract class AbstractJulRecord extends LogRecord {
     }
 
     /**
-     * Appends the formatted log message to the given buffer.
-     *
-     * <p>In idiomatic usage, this method will avoid making a separate copy of
-     * the formatted message, and instead append directly into the given buffer.
-     * In cases where a log record is only formatted once, this can save a lot of
-     * needless string copying.
-     *
-     * <p>If {@code #getMessage()} has been called on this log record before calling this method,
-     * the cached result will be appended instead (though the effect will be the same).
-     *
-     * <p>If this log record has had a message and parameters explicitly set, it is formatted as if
-     * by the default implementation of {@link Formatter#formatMessage(LogRecord)},
-     * and the result is not cached.
+     * No-op by AbstractLogRecord.
      */
-    @CanIgnoreReturnValue
-    public final StringBuilder appendFormattedMessageTo(StringBuilder buffer) {
-        var cachedMessage = super.getMessage();
-        if (cachedMessage == null) {
-            // This code path is critical for optimized use of AbstractLogRecord. If the log message was
-            // not reset at any point up to now, we can append the formatted message directly to an output
-            // buffer without first creating a copy in a String instance. This mean that by using
-            // AbstractLogRecord idiomatically and having a Formatter which can specialize against this
-            // class, you can avoid making a complete copy of the message  during logging. Formatters
-            // which don't specialize and call getMessage() instead will get the same result, just with an
-            // extra String copy.
-            getLogMessageFormatter().append(data, metadata, buffer);
-        } else if (getParameters().length == 0) {
-            // If getMessage() was called then the cost of making a String copy was already made, so just
-            // append it here (or this could be a user supplied string without additional parameters).
-            buffer.append(cachedMessage);
-        } else {
-            // User supplied message and parameters means we just default to standard Java behaviour every
-            // time, which is fine because this should almost never happen.
-            buffer.append(jdkMessageFormatter.formatMessage(this));
-        }
-        return buffer;
-    }
-
-    /**
-     * Returns the formatted log message, caching the result in the common case. This method only
-     * differs from {@link #getMessage()} if this log record was modified externally after creation
-     * by resetting the log message or parameters.
-     */
-    public final String getFormattedMessage() {
-        if (getParameters().length == 0) {
-            return getMessage();
-        }
-        return jdkMessageFormatter.formatMessage(this);
-    }
-
-    // Unsupported by AbstractLogRecord.
     @Override
     public final void setResourceBundle(ResourceBundle bundle) {
     }
 
-    // Unsupported by AbstractLogRecord.
+    /**
+     * No-op by AbstractLogRecord.
+     */
     @Override
     public final void setResourceBundleName(String name) {
-    }
-
-    /**
-     * Returns a snapshot of this log record, copied and flattened to a plain,
-     * mutable {@link LogRecord} instance.
-     *
-     * <p>The log message of the new log record is the formatted message from this
-     * instance, so the new log record never has any parameters.
-     *
-     * <p>Since {@code AbstractLogRecord} has synthetic fields, it's not safely mutable itself. Once
-     * copied, the plain LogRecord will not benefit from some of the potential optimizations which
-     * {@code AbstractLogRecord} can be subject to.
-     */
-    public final LogRecord toMutableLogRecord() {
-        var copy = new LogRecord(getLevel(), getFormattedMessage());
-        copy.setParameters(NO_PARAMETERS);
-        copy.setSourceClassName(getSourceClassName());
-        copy.setSourceMethodName(getSourceMethodName());
-        copy.setLoggerName(getLoggerName());
-        copy.setInstant(getInstant());
-        copy.setThrown(getThrown());
-
-        // Not set explicitly normally, but a copy should be safe (even if it's null). We don't copy
-        // the sequence number since that's intended to be unique per LogRecord, and resource bundles
-        // are not supported.
-        copy.setLongThreadID(getLongThreadID());
-        return copy;
     }
 
     /**
@@ -329,7 +257,6 @@ public abstract class AbstractJulRecord extends LogRecord {
         return out.toString();
     }
 
-    @SuppressWarnings("MethodWithMultipleLoops")
     private static void safeAppend(LogData data, StringBuilder out) {
         out.append("  original message: ");
         out.append(AnyMessages.safeToString(data.getLiteralArgument()));

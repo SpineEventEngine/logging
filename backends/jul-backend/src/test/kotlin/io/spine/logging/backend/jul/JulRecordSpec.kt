@@ -26,22 +26,17 @@
 
 package io.spine.logging.backend.jul
 
-import io.kotest.assertions.throwables.shouldNotThrow
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.string.shouldContain
-import io.kotest.matchers.string.shouldEndWith
-import io.kotest.matchers.string.shouldNotContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
-import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.LogContext.Key
-import io.spine.logging.jvm.backend.Metadata
 import io.spine.logging.backend.jul.given.StubLogData
 import io.spine.logging.backend.jul.given.StubMetadata
+import io.spine.logging.jvm.LogContext.Key
+import io.spine.logging.jvm.MetadataKey
+import io.spine.logging.jvm.backend.Metadata
 import io.spine.logging.jvm.context.Tags
-import io.spine.logging.jvm.parser.ParseException
 import io.spine.logging.jvm.singleKey
 import java.time.Instant.ofEpochMilli
 import java.util.concurrent.TimeUnit.NANOSECONDS
