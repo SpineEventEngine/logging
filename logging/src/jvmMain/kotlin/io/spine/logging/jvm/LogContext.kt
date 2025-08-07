@@ -31,7 +31,6 @@ import io.spine.logging.jvm.JvmLogSite.Companion.injectedLogSite
 import io.spine.logging.jvm.backend.LogData
 import io.spine.logging.jvm.backend.Metadata
 import io.spine.logging.jvm.backend.Platform
-import io.spine.logging.jvm.backend.TemplateContext
 import io.spine.logging.jvm.context.Tags
 import io.spine.logging.jvm.parser.MessageParser
 import io.spine.logging.jvm.util.Checks.checkNotNull
@@ -91,14 +90,11 @@ protected constructor(
     private var rateLimitStatus: RateLimitStatus? = null
 
     /**
-     * The template context if formatting is required (set only after post-processing).
+     * The literal argument for this log statement (set only after post-processing).
      */
-    private var logTemplateContext: TemplateContext? = null
+    private var literalArg: String? = null
 
-    /**
-     * The log argument (set only after post-processing).
-     */
-    private var arg: String? = null
+
 
     /**
      * Creates a logging context with the specified level, and with a timestamp obtained from the
@@ -151,25 +147,8 @@ protected constructor(
             "Cannot request log site information prior to `postProcess()`."
         )
 
-    public final override val templateContext: TemplateContext?
-        get() = logTemplateContext
-
-    public final override val arguments: Array<Any?> by lazy {
-        if (logTemplateContext == null) {
-            error("Cannot get arguments unless a template context exists.")
-        }
-        arrayOf(arg)
-    }
-
     public final override val literalArgument: Any?
-        get() {
-            if (logTemplateContext != null) {
-                error(
-                    "Cannot get literal argument if a template context exists: $logTemplateContext."
-                )
-            }
-            return arg
-        }
+        get() = literalArg
 
     public final override fun wasForced(): Boolean {
         // Check explicit TRUE here because findValue() can return null (which would fail unboxing).
@@ -440,7 +419,7 @@ protected constructor(
      * This method takes a single string parameter as it's always called with one string argument.
      */
     private fun logImpl(arg: String?) {
-        this.arg = arg
+        this.literalArg = arg
 
         // Right at the end of processing add any tags injected by the platform.
         // Any tags supplied at the log site are merged with the injected tags

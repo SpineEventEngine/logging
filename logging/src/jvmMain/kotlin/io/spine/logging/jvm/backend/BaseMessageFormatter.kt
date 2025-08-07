@@ -119,15 +119,7 @@ protected constructor(
         private const val MISSING_ARGUMENT_MESSAGE = "[ERROR: MISSING LOG ARGUMENT]"
 
         /**
-         * Literal string to be appended wherever additional unused arguments are provided.
-         */
-        private const val EXTRA_ARGUMENT_MESSAGE = " [ERROR: UNUSED LOG ARGUMENTS]"
-
-        /**
-         * Appends the formatted log message of the given log data to the given buffer.
-         *
-         * Note that the [LogData] need not have a template context or arguments, it might just
-         * have a literal argument, which will be appended without additional formatting.
+         * Appends the log message of the given log data to the given buffer.
          *
          * @param data The log data with the message to be appended.
          * @param out A buffer to append to.
@@ -136,18 +128,7 @@ protected constructor(
         @JvmStatic
         @CanIgnoreReturnValue
         public fun appendFormattedMessage(data: LogData, out: StringBuilder): StringBuilder {
-            if (data.templateContext != null) {
-                val formatter = BaseMessageFormatter(data.templateContext!!, data.arguments, out)
-                val result = formatter.build()
-                if (data.arguments.size > formatter.expectedArgumentCount) {
-                    // TODO(dbeaumont): Do better and look at adding formatted values or
-                    //  maybe just a count?
-                    result.append(EXTRA_ARGUMENT_MESSAGE)
-                }
-                return result
-            } else {
-                out.append(data.literalArgument.safeToString())
-            }
+            out.append(data.literalArgument.safeToString())
             return out
         }
     }

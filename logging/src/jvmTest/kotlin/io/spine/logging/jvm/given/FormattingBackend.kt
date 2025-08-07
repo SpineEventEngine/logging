@@ -28,14 +28,10 @@ package io.spine.logging.jvm.given
 
 import io.spine.logging.jvm.backend.LogData
 import io.spine.logging.jvm.backend.LoggerBackend
-import java.util.*
 import java.util.logging.Level
 
 /**
- * A memoizing backend that formats the given [LogData] on its own
- * using built-in Kotlin formatting.
- *
- * See [log] method for details.
+ * A memoizing backend that captures logged messages.
  */
 internal open class FormattingBackend : LoggerBackend() {
 
@@ -51,21 +47,10 @@ internal open class FormattingBackend : LoggerBackend() {
     override fun isLoggable(level: Level): Boolean = true
 
     /**
-     * Formats the given [LogData] without using core logging utils,
-     * so it is possible to test what happens if arguments cause errors.
-     *
-     * The core utility classes handle this properly. But custom backends
-     * are not obligated to use them.
+     * Logs the literal argument from the given [LogData].
      */
     override fun log(data: LogData) {
-        val templateContext = data.templateContext
-        if (templateContext == null) {
-            mutableLogged.add("${data.literalArgument}")
-        } else {
-            val pattern = templateContext.message
-            val formatted = pattern.format(Locale.ENGLISH, *data.arguments)
-            mutableLogged.add(formatted)
-        }
+        mutableLogged.add("${data.literalArgument}")
     }
 
     // Do not handle any errors in the backend, so we can test
