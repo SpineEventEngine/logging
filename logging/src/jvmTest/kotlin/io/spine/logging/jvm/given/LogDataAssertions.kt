@@ -39,13 +39,3 @@ import io.kotest.matchers.shouldBe
 internal infix fun LogData.shouldHaveMessage(value: String?) {
     literalArgument shouldBe value
 }
-
-/**
- * Stub implementation for compatibility with existing tests.
- * Since formatting arguments were removed, this method does nothing.
- */
-internal fun LogData.shouldHaveArguments(vararg args: Any?) {
-    // No-op: Arguments no longer exist since formatting was removed
-}
-
-

@@ -26,7 +26,6 @@
 
 package io.spine.logging.jvm
 
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.ints.shouldBeInRange
@@ -35,11 +34,10 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.throwable.shouldHaveMessage
-import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 import io.spine.logging.backend.probe.MemoizingLoggerBackend
 import io.spine.logging.jvm.DurationRateLimiter.Companion.newRateLimitPeriod
-import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.jvm.LogContext.Companion.specializeLogSiteKeyFromMetadata
+import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.jvm.backend.given.FakeMetadata
 import io.spine.logging.jvm.backend.given.shouldContain
 import io.spine.logging.jvm.backend.given.shouldContainInOrder
@@ -50,7 +48,6 @@ import io.spine.logging.jvm.context.Tags
 import io.spine.logging.jvm.given.ConfigurableLogger
 import io.spine.logging.jvm.given.FakeLogSite
 import io.spine.logging.jvm.given.iterate
-import io.spine.logging.jvm.given.shouldHaveArguments
 import io.spine.logging.jvm.given.shouldHaveMessage
 import java.lang.System.currentTimeMillis
 import java.util.concurrent.TimeUnit.MILLISECONDS
@@ -216,11 +213,8 @@ internal class LogContextSpec {
         backend.firstLogged.metadata.shouldUniquelyContain(Key.LOG_EVERY_N, 5)
 
         // Check the expected count and skipped-count for each log.
-        backend.logged[0].shouldHaveArguments(0)
         backend.logged[0].metadata.shouldNotContain(Key.SKIPPED_LOG_COUNT)
-        backend.logged[1].shouldHaveArguments(5)
         backend.logged[1].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 4)
-        backend.logged[2].shouldHaveArguments(10)
         backend.logged[2].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 4)
     }
 
@@ -249,7 +243,6 @@ internal class LogContextSpec {
             // so we can get the log index from it.
             val deltaNanos = backend.logged[n].timestampNanos - startNanos
             val logIndex = (deltaNanos / MILLISECONDS.toNanos(1)).toInt()
-            backend.logged[n].shouldHaveArguments(logIndex)
 
             // This works even if `lastLogIndex` == -1.
             val skipped = logIndex - lastLogIndex - 1
@@ -292,11 +285,8 @@ internal class LogContextSpec {
             )
 
             // Check the expected count and skipped-count for each log.
-            logged[0].shouldHaveArguments(0)
             logged[0].metadata.shouldNotContain(Key.SKIPPED_LOG_COUNT)
-            logged[1].shouldHaveArguments(4)
             logged[1].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 3)
-            logged[2].shouldHaveArguments(8)
             logged[2].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 3)
         }
     }
@@ -324,10 +314,6 @@ internal class LogContextSpec {
 
             backend.run {
                 loggedCount shouldBe 4
-                logged[0].shouldHaveArguments(0)
-                logged[1].shouldHaveArguments(20)
-                logged[2].shouldHaveArguments(40)
-                logged[3].shouldHaveArguments(60)
                 logged[3].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 19)
             }
         }
@@ -351,11 +337,6 @@ internal class LogContextSpec {
 
             backend.run {
                 loggedCount shouldBe 5
-                logged[0].shouldHaveArguments(0)
-                logged[1].shouldHaveArguments(15)
-                logged[2].shouldHaveArguments(30)
-                logged[3].shouldHaveArguments(45)
-                logged[4].shouldHaveArguments(60)
                 logged[4].metadata.shouldUniquelyContain(Key.SKIPPED_LOG_COUNT, 14)
             }
         }
@@ -440,12 +421,10 @@ internal class LogContextSpec {
             backend.run {
                 loggedCount shouldBe 2
 
-                logged[0].shouldHaveArguments(LogType.FOO)
                 logged[0].metadata.shouldHaveSize(2)
                 logged[0].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, LogType.FOO)
                 logged[0].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
 
-                logged[1].shouldHaveArguments(LogType.BAR)
                 logged[1].metadata.shouldHaveSize(2)
                 logged[1].metadata.shouldUniquelyContain(Key.LOG_SITE_GROUPING_KEY, LogType.BAR)
                 logged[1].metadata.shouldUniquelyContain(Key.LOG_AT_MOST_EVERY, ONCE_PER_SECOND)
@@ -622,114 +601,7 @@ internal class LogContextSpec {
         logger.atInfo().log(null)
         backend.lastLogged.let {
             it shouldHaveMessage ("<null>")
-            it.shouldHaveArguments(null)
         }
-    }
-
-
-
-    @Test
-    fun `provide shortcuts for passing a non-boxed argument`() {
-        val msg = "Any message will do..."
-
-        // Verify arguments passed in to the non-boxed fundamental type methods
-        // are mapped correctly.
-        logger.atInfo().log(msg, BYTE_ARG)
-        backend.lastLogged.shouldHaveArguments(BYTE_ARG)
-        logger.atInfo().log(msg, SHORT_ARG)
-        backend.lastLogged.shouldHaveArguments(SHORT_ARG)
-        logger.atInfo().log(msg, INT_ARG)
-        backend.lastLogged.shouldHaveArguments(INT_ARG)
-        logger.atInfo().log(msg, LONG_ARG)
-        backend.lastLogged.shouldHaveArguments(LONG_ARG)
-        logger.atInfo().log(msg, CHAR_ARG)
-        backend.lastLogged.shouldHaveArguments(CHAR_ARG)
-    }
-
-    @Test
-    fun `provide shortcuts for passing two non-boxed arguments`() {
-        val msg = "Any message will do..."
-
-        // Verify arguments passed in to the non-boxed fundamental type methods
-        // are mapped correctly.
-        logger.atInfo().logVarargs(msg, arrayOf(BYTE_ARG, BYTE_ARG))
-        backend.lastLogged.shouldHaveArguments(BYTE_ARG, BYTE_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(BYTE_ARG, SHORT_ARG))
-        backend.lastLogged.shouldHaveArguments(BYTE_ARG, SHORT_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(BYTE_ARG, INT_ARG))
-        backend.lastLogged.shouldHaveArguments(BYTE_ARG, INT_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(BYTE_ARG, LONG_ARG))
-        backend.lastLogged.shouldHaveArguments(BYTE_ARG, LONG_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(BYTE_ARG, CHAR_ARG))
-        backend.lastLogged.shouldHaveArguments(BYTE_ARG, CHAR_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(SHORT_ARG, BYTE_ARG))
-        backend.lastLogged.shouldHaveArguments(SHORT_ARG, BYTE_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(SHORT_ARG, SHORT_ARG))
-        backend.lastLogged.shouldHaveArguments(SHORT_ARG, SHORT_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(SHORT_ARG, INT_ARG))
-        backend.lastLogged.shouldHaveArguments(SHORT_ARG, INT_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(SHORT_ARG, LONG_ARG))
-        backend.lastLogged.shouldHaveArguments(SHORT_ARG, LONG_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(SHORT_ARG, CHAR_ARG))
-        backend.lastLogged.shouldHaveArguments(SHORT_ARG, CHAR_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(INT_ARG, BYTE_ARG))
-        backend.lastLogged.shouldHaveArguments(INT_ARG, BYTE_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(INT_ARG, SHORT_ARG))
-        backend.lastLogged.shouldHaveArguments(INT_ARG, SHORT_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(INT_ARG, INT_ARG))
-        backend.lastLogged.shouldHaveArguments(INT_ARG, INT_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(INT_ARG, LONG_ARG))
-        backend.lastLogged.shouldHaveArguments(INT_ARG, LONG_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(INT_ARG, CHAR_ARG))
-        backend.lastLogged.shouldHaveArguments(INT_ARG, CHAR_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(LONG_ARG, BYTE_ARG))
-        backend.lastLogged.shouldHaveArguments(LONG_ARG, BYTE_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(LONG_ARG, SHORT_ARG))
-        backend.lastLogged.shouldHaveArguments(LONG_ARG, SHORT_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(LONG_ARG, INT_ARG))
-        backend.lastLogged.shouldHaveArguments(LONG_ARG, INT_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(LONG_ARG, LONG_ARG))
-        backend.lastLogged.shouldHaveArguments(LONG_ARG, LONG_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(LONG_ARG, CHAR_ARG))
-        backend.lastLogged.shouldHaveArguments(LONG_ARG, CHAR_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(CHAR_ARG, BYTE_ARG))
-        backend.lastLogged.shouldHaveArguments(CHAR_ARG, BYTE_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(CHAR_ARG, SHORT_ARG))
-        backend.lastLogged.shouldHaveArguments(CHAR_ARG, SHORT_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(CHAR_ARG, INT_ARG))
-        backend.lastLogged.shouldHaveArguments(CHAR_ARG, INT_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(CHAR_ARG, LONG_ARG))
-        backend.lastLogged.shouldHaveArguments(CHAR_ARG, LONG_ARG)
-        logger.atInfo().logVarargs(msg, arrayOf(CHAR_ARG, CHAR_ARG))
-        backend.lastLogged.shouldHaveArguments(CHAR_ARG, CHAR_ARG)
-    }
-
-    @Test
-    fun `provide shortcuts for passing two mixed, non-boxed arguments`() {
-        val ms = "Any message will do..."
-
-        // Verify arguments passed in to the non-boxed fundamental type methods
-        // are mapped correctly.
-        logger.atInfo().logVarargs(ms, arrayOf(OBJECT_ARG, BYTE_ARG))
-        backend.lastLogged.shouldHaveArguments(OBJECT_ARG, BYTE_ARG)
-        logger.atInfo().logVarargs(ms, arrayOf(OBJECT_ARG, SHORT_ARG))
-        backend.lastLogged.shouldHaveArguments(OBJECT_ARG, SHORT_ARG)
-        logger.atInfo().logVarargs(ms, arrayOf(OBJECT_ARG, INT_ARG))
-        backend.lastLogged.shouldHaveArguments(OBJECT_ARG, INT_ARG)
-        logger.atInfo().logVarargs(ms, arrayOf(OBJECT_ARG, LONG_ARG))
-        backend.lastLogged.shouldHaveArguments(OBJECT_ARG, LONG_ARG)
-        logger.atInfo().logVarargs(ms, arrayOf(OBJECT_ARG, CHAR_ARG))
-        backend.lastLogged.shouldHaveArguments(OBJECT_ARG, CHAR_ARG)
-        logger.atInfo().logVarargs(ms, arrayOf(BYTE_ARG, OBJECT_ARG))
-        backend.lastLogged.shouldHaveArguments(BYTE_ARG, OBJECT_ARG)
-        logger.atInfo().logVarargs(ms, arrayOf(SHORT_ARG, OBJECT_ARG))
-        backend.lastLogged.shouldHaveArguments(SHORT_ARG, OBJECT_ARG)
-        logger.atInfo().logVarargs(ms, arrayOf(INT_ARG, OBJECT_ARG))
-        backend.lastLogged.shouldHaveArguments(INT_ARG, OBJECT_ARG)
-        logger.atInfo().logVarargs(ms, arrayOf(LONG_ARG, OBJECT_ARG))
-        backend.lastLogged.shouldHaveArguments(LONG_ARG, OBJECT_ARG)
-        logger.atInfo().logVarargs(ms, arrayOf(CHAR_ARG, OBJECT_ARG))
-        backend.lastLogged.shouldHaveArguments(CHAR_ARG, OBJECT_ARG)
     }
 
     @Test
@@ -741,7 +613,6 @@ internal class LogContextSpec {
 
         backend.loggedCount shouldBe 1
         backend.firstLogged.shouldHaveMessage(MESSAGE_PATTERN)
-        backend.firstLogged.shouldHaveArguments(MESSAGE_ARGUMENT)
         backend.firstLogged.metadata.shouldHaveSize(1)
         backend.firstLogged.metadata.shouldContain(Key.LOG_CAUSE)
 
@@ -773,7 +644,6 @@ internal class LogContextSpec {
 
         backend.loggedCount shouldBe 1
         backend.firstLogged.shouldHaveMessage(MESSAGE_PATTERN)
-        backend.firstLogged.shouldHaveArguments(MESSAGE_ARGUMENT)
         backend.firstLogged.metadata.shouldHaveSize(1)
         backend.firstLogged.metadata.shouldContain(Key.LOG_CAUSE)
 
@@ -795,13 +665,6 @@ internal class LogContextSpec {
             logHelper(logger, JvmLogSite.logSite(), 3, "Bar: $i")
         }
         backend.loggedCount shouldBe 7
-        backend.firstLogged.shouldHaveArguments("Foo: 0")
-        backend.logged[1].shouldHaveArguments("Bar: 0")
-        backend.logged[2].shouldHaveArguments("Foo: 2")
-        backend.logged[3].shouldHaveArguments("Bar: 3")
-        backend.logged[4].shouldHaveArguments("Foo: 4")
-        backend.logged[5].shouldHaveArguments("Foo: 6")
-        backend.logged[6].shouldHaveArguments("Bar: 6")
     }
 
     /**
