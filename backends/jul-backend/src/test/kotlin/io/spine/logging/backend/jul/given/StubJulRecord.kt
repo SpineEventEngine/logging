@@ -40,7 +40,7 @@ import io.spine.logging.jvm.backend.SimpleMessageFormatter
  */
 @Suppress("serial") // Serial number is not needed.
 internal class StubJulRecord(message: String, vararg args: Any?) :
-    AbstractJulRecord(StubLogData.withPrintfStyle(message, *args), Metadata.empty()) {
+    AbstractJulRecord(StubLogData(String.format(message, *args)), Metadata.empty()) {
 
     private val formatter = StubFormatter()
 

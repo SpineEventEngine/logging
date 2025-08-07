@@ -178,24 +178,6 @@ internal class JulRecordSpec {
     }
 
     @Test
-    fun `format brace pattern`() {
-        val data = StubLogData.withBraceStyle("Answer={0}", 42)
-        val record = JulRecord.create(data, Metadata.empty())
-        record.message shouldBe "Answer=42"
-        record.parameters.shouldBeEmpty()
-    }
-
-    @Test
-    fun `format printf pattern`() {
-        val pattern = "Hex=%#08x, Int=%1\$d"
-        val argument = 0xC0DE
-        val data = StubLogData.withPrintfStyle(pattern, argument)
-        val record = JulRecord.create(data, Metadata.empty())
-        record.message shouldBe pattern.format(argument)
-        record.parameters.shouldBeEmpty()
-    }
-
-    @Test
     fun `handle runtime errors happening during the logging`() {
         val passedCause = Throwable("Original Cause")
         val data = StubLogData(LITERAL).addMetadata(Key.LOG_CAUSE, passedCause)
@@ -209,69 +191,15 @@ internal class JulRecordSpec {
 
     @Test
     fun `handle nullable arguments`() {
-        val data = StubLogData.withPrintfStyle("value=%s", null)
+        val data = StubLogData("value=null")
         val record = JulRecord.create(data, Metadata.empty())
         record.message shouldBe "value=null"
     }
 
     @Test
-    fun `report a missing argument`() {
-        val pattern = "foo=%s, bar=%s"
-        val argument = "FOO"
-        val data = StubLogData.withPrintfStyle(pattern, argument)
-        val record = JulRecord.create(data, Metadata.empty())
-        record.message shouldEndWith "[ERROR: MISSING LOG ARGUMENT]"
-    }
-
-    @Test
-    fun `report an unused argument`() {
-        val pattern = "%2\$s %s %<s %s"
-        val args = arrayOf("a", "b")
-        val data = StubLogData.withPrintfStyle(pattern, *(args + "c"))
-        val record = JulRecord.create(data, Metadata.empty())
-        record.message shouldBe "${pattern.format(*args)} [ERROR: UNUSED LOG ARGUMENTS]"
-    }
-
-    @Test
-    fun `report an unreferenced midway argument`() {
-        // If an unused argument is not the last, it is called “unreferenced”.
-        val pattern = "%s %<s %3\$s %<s"
-        val args = arrayOf("a", "b", "c") // "b" is unused.
-        val data = StubLogData.withPrintfStyle(pattern, *args)
-        val parseException = shouldThrow<ParseException> {
-            JulRecord.create(data, Metadata.empty())
-        }
-
-        // In `printf` pattern, indexes start from one.
-        // But in the thrown exception, they are counted from zero.
-        parseException.message shouldBe "unreferenced arguments [first missing index=1]"
-    }
-
-    @Test
-    fun `report the unreferenced arguments up to 32rd`() {
-        // The pattern doesn't use the 32-nd argument.
-        var pattern = "%s ".repeat(31) + "%33\$s"
-        var arguments = arrayOfNulls<Any>(33)
-        var data = StubLogData.withPrintfStyle(pattern, arguments)
-        val parseException = shouldThrow<ParseException> {
-            JulRecord.create(data, Metadata.empty())
-        }
-        parseException.message shouldContain "unreferenced arguments [first missing index=31]"
-
-        // Gaps above the 32nd parameter are not detected.
-        pattern = "%s ".repeat(32) + "%34\$s"
-        arguments = arrayOfNulls(34)
-        data = StubLogData.withPrintfStyle(pattern, arguments)
-        shouldNotThrow<ParseException> {
-            val record = JulRecord.create(data, Metadata.empty())
-            record.message shouldNotContain "UNUSED"
-        }
-    }
-
-    @Test
     fun `have string representation`() {
         // LogData may behave differently with and without arguments.
-        var data = StubLogData.withPrintfStyle("Answer=%d", 42)
+        var data = StubLogData("Answer=42")
         var record = JulRecord.create(data, Metadata.empty())
         var stringifiedRecord = record.toString()
 
@@ -279,7 +207,7 @@ internal class JulRecordSpec {
         // we do not have arguments after formatting.
         stringifiedRecord shouldContain "  message: Answer=42"
         stringifiedRecord shouldContain "  arguments: []"
-        stringifiedRecord shouldContain "  original message: Answer=%d"
+        stringifiedRecord shouldContain "  original message: Answer=42"
 
         data = StubLogData(LITERAL)
         record = JulRecord.create(data, Metadata.empty())

@@ -32,7 +32,6 @@ import io.spine.logging.jvm.LogContext
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.backend.LogData
 import java.util.logging.Level
-import java.util.logging.Level
 
 /**
  * A mutable [LogData] fot testing backends and other log handling code.

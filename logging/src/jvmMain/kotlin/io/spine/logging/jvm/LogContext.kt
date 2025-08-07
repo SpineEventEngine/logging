@@ -147,8 +147,6 @@ protected constructor(
             "Cannot request log site information prior to `postProcess()`."
         )
 
-
-
     public final override val literalArgument: Any?
         get() = literalArg
 

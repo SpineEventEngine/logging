@@ -47,25 +47,10 @@ import static java.util.logging.Level.WARNING;
 /**
  * Abstract base for {@code java.util.logging} (JUL) log records.
  *
- * <p>This class behaves externally like {@link LogRecord} but supports more
- * memory efficient message formatting. Take a look at
- * {@link #appendFormattedMessageTo(StringBuilder)} method for details.
- *
  * <p>This class supports three distinct modes of operation, depending on the state of the message
  * and/or parameters:
  *
- * <h2>Null message, null or empty parameters</h2>
- *
- * This is the initial state of the log record, and indicates that the log message has not been
- * formatted. This is a non-visible, internal state, since any attempt to read the message string
- * will result in it being formatted and subsequently cached.
- *
- * <p>In this state the formatted message <em>can</em> still be appended to a buffer via {@link
- * #appendFormattedMessageTo(StringBuilder)} without retaining a cached string copy. If the log
- * record is expected to be formatted only once during logging, this will save an extraneous string
- * copy from being made, which in some systems could save a lot of allocations and memory copying.
- *
- * <h2>Non-null message, null or empty parameters</h2>
+ * <h2>Non-null message, {@code null} or empty parameters</h2>
  *
  * This state is reached either when {@link #getMessage()} is first called, or if an explicit
  * non-null message is set via {@link #setMessage(String)} (without setting any parameters). In
@@ -81,8 +66,8 @@ import static java.util.logging.Level.WARNING;
  *
  * <p>For many reasons it is never a good idea for users to modify unknown {@link LogRecord}
  * instances, but this does happen occasionally, so this class supports that in a best effort way,
- * but users are always recommended to copy {@link LogRecord} instances if they need to modify
- * them.
+ * but users are always recommended to copy {@link LogRecord} instances if they need
+ * to modify them.
  *
  * <h2>Corollary</h2>
  *
@@ -112,9 +97,10 @@ import static java.util.logging.Level.WARNING;
 public abstract class AbstractJulRecord extends LogRecord {
 
     /**
-     * The sinleton `Forematter` for JUL records.
+     * The singleton {@code Formatter} for JUL records.
      *
-     * Note that Formatter instances are mutable and protect the state via synchronization.
+     * <p>Note that {@code Formatter} instances are mutable and protect
+     * the state via synchronization.
      * We never modify the instance, however, and only call the synchronized
      * `formatMessage()` helper method, so we can use it safely, without additional locking.
      */
@@ -222,20 +208,19 @@ public abstract class AbstractJulRecord extends LogRecord {
     }
 
     /**
-     * Appends the formatted log message to the given buffer. In idiomatic usage, this method will
-     * avoid making a separate copy of the formatted message, and instead append directly into the
-     * given buffer. In cases where are log record is only formatted once, this can save a lot of
+     * Appends the formatted log message to the given buffer.
+     *
+     * <p>In idiomatic usage, this method will avoid making a separate copy of
+     * the formatted message, and instead append directly into the given buffer.
+     * In cases where a log record is only formatted once, this can save a lot of
      * needless string copying.
      *
      * <p>If {@code #getMessage()} has been called on this log record before calling this method,
-     * the
-     * cached result will appended instead (though the effect will be the same).
+     * the cached result will be appended instead (though the effect will be the same).
      *
      * <p>If this log record has had a message and parameters explicitly set, it is formatted as if
-     * by
-     * the default implementation of {@link Formatter#formatMessage(LogRecord)}, and the result is
-     * not
-     * cached.
+     * by the default implementation of {@link Formatter#formatMessage(LogRecord)},
+     * and the result is not cached.
      */
     @CanIgnoreReturnValue
     public final StringBuilder appendFormattedMessageTo(StringBuilder buffer) {
@@ -265,9 +250,6 @@ public abstract class AbstractJulRecord extends LogRecord {
      * Returns the formatted log message, caching the result in the common case. This method only
      * differs from {@link #getMessage()} if this log record was modified externally after creation
      * by resetting the log message or parameters.
-     *
-     * <p>Use {@link #appendFormattedMessageTo(StringBuilder)} whenever a buffer is already
-     * available.
      */
     public final String getFormattedMessage() {
         if (getParameters().length == 0) {
@@ -287,9 +269,11 @@ public abstract class AbstractJulRecord extends LogRecord {
     }
 
     /**
-     * Returns a snapshot of this log record, copied and flattened to a plain, mutable {@link
-     * LogRecord} instance. The log message of the new log record is the formatted message from this
-     * instance, so the new new log record never has any parameters.
+     * Returns a snapshot of this log record, copied and flattened to a plain,
+     * mutable {@link LogRecord} instance.
+     *
+     * <p>The log message of the new log record is the formatted message from this
+     * instance, so the new log record never has any parameters.
      *
      * <p>Since {@code AbstractLogRecord} has synthetic fields, it's not safely mutable itself. Once
      * copied, the plain LogRecord will not benefit from some of the potential optimizations which

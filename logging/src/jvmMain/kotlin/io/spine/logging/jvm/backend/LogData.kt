@@ -113,13 +113,8 @@ public interface LogData {
      */
     public fun wasForced(): Boolean
 
-
-
     /**
-     * Returns the single argument to be logged directly when no arguments were provided.
-     *
-     * @throws IllegalStateException
-     *   if no single literal argument is available (i.e., when [templateContext] exists).
+     * Returns the single argument to be logged directly.
      */
     public val literalArgument: Any?
 }
