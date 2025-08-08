@@ -28,7 +28,7 @@ package io.spine.logging.jvm.backend
 
 /**
  * A simple message formatter that handles only literal strings without complex formatting.
- * 
+ *
  * This formatter replaces the previous complex formatting system and only supports
  * lazily evaluated messages through `() -> String?` functions.
  */
