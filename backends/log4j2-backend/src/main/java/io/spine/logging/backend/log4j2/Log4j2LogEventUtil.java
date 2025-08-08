@@ -28,7 +28,6 @@ package io.spine.logging.backend.log4j2;
 
 import io.spine.logging.jvm.LogContext;
 import io.spine.logging.jvm.MetadataKey;
-import io.spine.logging.jvm.backend.AnyMessages;
 import io.spine.logging.jvm.backend.LogData;
 import io.spine.logging.jvm.backend.MetadataHandler;
 import io.spine.logging.jvm.backend.Platform;
@@ -42,14 +41,12 @@ import org.apache.logging.log4j.core.impl.ContextDataFactory;
 import org.apache.logging.log4j.core.impl.Log4jLogEvent;
 import org.apache.logging.log4j.core.time.Instant;
 import org.apache.logging.log4j.core.time.MutableInstant;
-import org.apache.logging.log4j.core.util.Throwables;
 import org.apache.logging.log4j.message.SimpleMessage;
 import org.apache.logging.log4j.util.StringMap;
 
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static io.spine.logging.jvm.backend.BaseMessageFormatter.appendFormattedMessage;
 import static io.spine.logging.jvm.backend.MetadataProcessor.forScopeAndLogSite;
 import static java.util.Objects.requireNonNull;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
@@ -89,7 +86,9 @@ final class Log4j2LogEventUtil {
             message = SimpleMessageFormatter.getDefaultFormatter()
                                             .format(logData, metadata);
         } else {
-            message = appendFormattedMessage(logData, new StringBuilder()).toString();
+            throw new IllegalStateException(String.format(
+                    "Unable to format a message for the configuration: `%s`.", config
+            ));
         }
 
         var thrown = metadata.getSingleValue(LogContext.Key.LOG_CAUSE);
