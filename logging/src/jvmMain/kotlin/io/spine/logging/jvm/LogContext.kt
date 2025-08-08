@@ -32,7 +32,6 @@ import io.spine.logging.jvm.backend.LogData
 import io.spine.logging.jvm.backend.Metadata
 import io.spine.logging.jvm.backend.Platform
 import io.spine.logging.jvm.context.Tags
-import io.spine.logging.jvm.parser.MessageParser
 import io.spine.logging.jvm.util.Checks.checkNotNull
 import io.spine.reflect.CallerFinder.stackForCallerOf
 import java.util.concurrent.TimeUnit
@@ -134,10 +133,7 @@ protected constructor(
      */
     protected abstract fun noOp(): API
 
-    /**
-     * Returns the message parser used for all log statements made through this logger.
-     */
-    protected abstract fun getMessageParser(): MessageParser
+
 
     public final override val loggerName: String
         get() = getLogger().getName()

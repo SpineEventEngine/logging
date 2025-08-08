@@ -85,9 +85,9 @@ public abstract class LoggerBackend {
      *
      * Errors passed into this method are expected to have only three distinct causes:
      *
-     * 1. Bad format strings in log messages (e.g., `"foo=%Q"`.
-     *    These are always instances of [ParseException] and contain
-     *    human-readable error messages describing the problem.
+     * 1. Bad format strings in log messages (e.g., `"foo=%Q"`).
+     *    These are formatting errors that contain human-readable error messages
+     *    describing the problem.
      *
      * 2. A backend optionally choosing not to handle errors from user code during formatting.
      *    This is not recommended (see below) but may be useful in testing or debugging.

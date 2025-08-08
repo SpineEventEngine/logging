@@ -29,13 +29,29 @@ package io.spine.logging.jvm
 import io.spine.logging.jvm.backend.LogData
 import io.spine.logging.jvm.backend.LoggerBackend
 import io.spine.logging.jvm.backend.LoggingException
-import io.spine.logging.jvm.backend.appendLogSite
 import io.spine.logging.jvm.util.RecursionDepth
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.concurrent.TimeUnit.NANOSECONDS
 import java.util.logging.Level
+
+/**
+ * Appends the log site information to this StringBuilder.
+ */
+private fun StringBuilder.appendLogSite(logSite: JvmLogSite) {
+    append(logSite.className)
+    append('.')
+    append(logSite.methodName)
+    append('(')
+    val fileName = logSite.fileName
+    if (fileName != null) {
+        append(fileName)
+        append(':')
+    }
+    append(logSite.lineNumber)
+    append(')')
+}
 
 /**
  * Base class for the fluent logging API.
