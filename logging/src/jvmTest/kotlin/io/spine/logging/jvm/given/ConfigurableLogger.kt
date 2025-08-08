@@ -30,8 +30,6 @@ import io.spine.logging.jvm.AbstractLogger
 import io.spine.logging.jvm.MiddlemanApi
 import io.spine.logging.jvm.LogContext
 import io.spine.logging.jvm.backend.LoggerBackend
-import io.spine.logging.jvm.parser.DefaultPrintfMessageParser
-import io.spine.logging.jvm.parser.MessageParser
 import java.util.logging.Level
 
 /**
@@ -87,7 +85,6 @@ internal class ConfigurableLogger(backend: LoggerBackend) :
 
         override fun noOp(): Api = throw UnsupportedOperationException()
 
-        override fun getMessageParser(): MessageParser = DefaultPrintfMessageParser.getInstance()
     }
 }
 
