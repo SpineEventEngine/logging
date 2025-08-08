@@ -29,7 +29,6 @@ package io.spine.logging.jvm
 import io.spine.logging.jvm.backend.LogData
 import io.spine.logging.jvm.backend.LoggerBackend
 import io.spine.logging.jvm.backend.LoggingException
-import io.spine.logging.jvm.backend.appendLogSite
 import io.spine.logging.jvm.util.RecursionDepth
 import java.time.Instant
 import java.time.ZoneId
@@ -223,7 +222,7 @@ public abstract class AbstractLogger<API : MiddlemanApi<API>> protected construc
         val out = buildString {
             append(formatTimestampIso8601(data))
             append(": logging error [")
-            appendLogSite(data.logSite)
+            append(data.logSite?.toString() ?: "UNKNOWN")
             append("]: ")
             append(message)
         }
