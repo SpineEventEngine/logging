@@ -26,6 +26,8 @@
 
 package io.spine.logging.jvm.backend
 
+import io.spine.logging.jvm.MetadataKey
+
 /**
  * A simple message formatter that handles only literal strings without complex formatting.
  *
@@ -39,14 +41,56 @@ public class SimpleMessageFormatter private constructor() : LogMessageFormatter(
         metadata: MetadataProcessor,
         buffer: StringBuilder
     ): StringBuilder {
-        // Just append the literal message - no formatting
+        // Append the literal message
         buffer.append(logData.literalArgument ?: "")
+        
+        // Append metadata if present
+        if (metadata.keyCount() > 0) {
+            buffer.append(" [CONTEXT ")
+            val metadataEntries = mutableListOf<String>()
+            metadata.process(METADATA_HANDLER, metadataEntries)
+            buffer.append(metadataEntries.joinToString(" "))
+            buffer.append(" ]")
+        }
+        
         return buffer
     }
 
     public companion object {
 
         private val DEFAULT_FORMATTER = SimpleMessageFormatter()
+
+        /**
+         * Metadata handler for formatting key-value pairs.
+         */
+        private val METADATA_HANDLER = object : MetadataHandler<MutableList<String>>() {
+            override fun <T : Any> handle(key: MetadataKey<T>, value: T, context: MutableList<String>) {
+                val stringified = "${key.label}=${formatValue(value)}"
+                context.add(stringified)
+            }
+
+            override fun <T : Any> handleRepeated(key: MetadataKey<T>, values: Iterator<T>, context: MutableList<String>) {
+                // Convert to list to handle single vs multiple values
+                val valueList = values.asSequence().map(::formatValue).toList()
+                val formattedValue = when (valueList.size) {
+                    0 -> "[]"  // Empty list
+                    1 -> valueList[0]  // Single value without brackets
+                    else -> valueList.toString()  // Multiple values as [value1, value2, ...]
+                }
+                val stringified = "${key.label}=$formattedValue"
+                context.add(stringified)
+            }
+        }
+
+        /**
+         * Formats a value for metadata output, adding quotes around strings if needed.
+         */
+        private fun formatValue(value: Any): String {
+            return when (value) {
+                is String -> "\"$value\""
+                else -> value.toString()
+            }
+        }
 
         /**
          * Returns the default formatter instance.
