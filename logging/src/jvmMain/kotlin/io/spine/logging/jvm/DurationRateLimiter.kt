@@ -29,7 +29,6 @@ package io.spine.logging.jvm
 import com.google.errorprone.annotations.ThreadSafe
 import io.spine.logging.jvm.LogContext.Key.LOG_AT_MOST_EVERY
 import io.spine.logging.jvm.backend.Metadata
-import io.spine.logging.jvm.util.Checks.checkArgument
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.max
@@ -60,7 +59,7 @@ internal class DurationRateLimiter : RateLimitStatus() {
         timestampNanos: Long,
         period: RateLimitPeriod
     ): RateLimitStatus {
-        checkArgument(timestampNanos >= 0, "timestamp cannot be negative")
+        require(timestampNanos >= 0) { "Timestamp cannot be negative: $timestampNanos." }
         // If this is negative, we are in the pending state and will return "allow" until we are
         // reset. The value held here is updated to be the most recent negated timestamp, and is
         // negated again (making it positive and setting us into the rate-limiting state) when we
@@ -70,7 +69,7 @@ internal class DurationRateLimiter : RateLimitStatus() {
             val deadlineNanos = lastNanos + period.toNanos()
             // Check for negative deadline to avoid overflow for ridiculous durations. Assume
             // overflow always means "no logging".
-            if (deadlineNanos < 0 || timestampNanos < deadlineNanos) {
+            if (deadlineNanos !in 0..timestampNanos) {
                 return DISALLOW
             }
         }

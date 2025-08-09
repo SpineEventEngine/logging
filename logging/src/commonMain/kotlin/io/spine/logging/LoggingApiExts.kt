@@ -29,13 +29,10 @@
 package io.spine.logging
 
 /**
- * Extension function to maintain backward compatibility with the previous API.
- *
- * This allows calling `log(String?)` with a string literal, which will be wrapped
- * in a lambda to match the new API signature.
+ * Extension function to log the given message.
  */
 public fun <API : LoggingApi<API>> LoggingApi<API>.log(msg: String?) {
-    log { msg ?: "" }
+    log({ msg })
 }
 
 /**
@@ -64,28 +61,13 @@ public fun <API : LoggingApi<API>> LoggingApi<API>.log(
     arg1: Any?,
     arg2: Any?,
     arg3: Any?
-): Unit {
+) {
     log { String.format(message, arg1, arg2, arg3) }
 }
 
 /**
  * Extension function for logging a formatted message with multiple arguments.
  */
-public fun <API : LoggingApi<API>> LoggingApi<API>.log(message: String, vararg args: Any?) {
+public fun <API : LoggingApi<API>> LoggingApi<API>.logVarargs(message: String, vararg args: Any?) {
     log { String.format(message, *args) }
-}
-
-/**
- * Extension function for logging a formatted message with an array of arguments.
- *
- * Since the `log` function which accepts one parameter interprets the given array
- * as one instance passed to formatting, this overload is needed for convenience of calls
- * when an array contains the formatting arguments.
- */
-@Suppress("SpreadOperator")
-public fun <API : LoggingApi<API>> LoggingApi<API>.logVarargs(
-    message: String,
-    params: Array<Any?>?
-) {
-    log { if (params != null) String.format(message, *params) else message }
 }

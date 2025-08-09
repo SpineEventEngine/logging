@@ -31,7 +31,8 @@ package io.spine.logging.jvm.backend
 import io.spine.annotation.VisibleForTesting
 import io.spine.logging.jvm.LogContext
 import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.util.Checks.checkArgument
+import io.spine.logging.jvm.backend.LightweightProcessor.Companion.MAX_LIGHTWEIGHT_ELEMENTS
+import io.spine.logging.jvm.checkCannotRepeat
 import java.util.*
 
 /**
@@ -235,7 +236,9 @@ private class LightweightProcessor(
         // so "right sizing" the array wouldn't be worth it.
         val maxKeyCount = scope.size() + logged.size()
         // This should be impossible (outside of tests).
-        checkArgument(maxKeyCount <= MAX_LIGHTWEIGHT_ELEMENTS, "metadata size too large")
+        require(maxKeyCount <= MAX_LIGHTWEIGHT_ELEMENTS) {
+            "Metadata size too large: $maxKeyCount. The limit is: $MAX_LIGHTWEIGHT_ELEMENTS."
+        }
         this.keyMap = IntArray(maxKeyCount)
         this.keyCount = prepareKeyMap(keyMap)
     }
@@ -286,7 +289,7 @@ private class LightweightProcessor(
     }
 
     override fun <T : Any> getSingleValue(key: MetadataKey<T>): T? {
-        checkArgument(!key.canRepeat(), "key must be single valued")
+        checkCannotRepeat(key)
         val index = indexOf(key, keyMap, keyCount)
         // For single keys, the keyMap values are just the value index.
         return if (index >= 0) key.cast(getValue(keyMap[index])) else null
@@ -503,7 +506,7 @@ private class SimpleProcessor(scope: Metadata, logged: Metadata) : MetadataProce
     // It's safe to ignore warnings since single keys are only ever 'T' when added to the map.
     @Suppress("UNCHECKED_CAST")
     override fun <T : Any> getSingleValue(key: MetadataKey<T>): T? {
-        checkArgument(!key.canRepeat(), "key must be single valued")
+        checkCannotRepeat(key)
         val value: Any? = map[key as MetadataKey<Any>]
         return if (value != null) value as T else null
     }

@@ -29,7 +29,7 @@ package io.spine.logging.jvm.context
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.backend.Metadata
-import io.spine.logging.jvm.util.Checks.checkArgument
+import io.spine.logging.jvm.checkCannotRepeat
 import org.jetbrains.annotations.NotNull
 
 /**
@@ -140,9 +140,6 @@ public abstract class ContextMetadata protected constructor() : Metadata() {
         public fun empty(): ContextMetadata = EmptyMetadata
     }
 }
-
-private fun <T : Any> checkCannotRepeat(key: MetadataKey<T>) =
-    checkArgument(!key.canRepeat(), "metadata key must be single valued")
 
 private class ImmutableScopeMetadata(private val entries: Array<Entry<*>?>) : ContextMetadata() {
 

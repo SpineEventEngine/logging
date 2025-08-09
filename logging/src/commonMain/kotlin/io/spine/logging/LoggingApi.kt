@@ -266,7 +266,7 @@ public interface LoggingApi<API: LoggingApi<API>> {
     /**
      * Logs a message produced by the given function block.
      */
-    public fun log(message: () -> String)
+    public fun log(message: () -> String?)
 
     /**
      * An implementation of [LoggingApi] which does nothing, discarding all parameters.
@@ -328,6 +328,6 @@ public interface LoggingApi<API: LoggingApi<API>> {
         /**
          * Does nothing.
          */
-        override fun log(message: () -> String): Unit = Unit
+        override fun log(message: () -> String?): Unit = Unit
     }
 }
