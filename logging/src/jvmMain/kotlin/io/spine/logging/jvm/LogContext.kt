@@ -93,6 +93,8 @@ protected constructor(
      */
     private var literalArg: String? = null
 
+
+
     /**
      * Creates a logging context with the specified level, and with a timestamp obtained from the
      * configured logging [Platform].
@@ -130,6 +132,8 @@ protected constructor(
      * This is implemented as an abstract method to save a field in every context.
      */
     protected abstract fun noOp(): API
+
+
 
     public final override val loggerName: String
         get() = getLogger().getName()

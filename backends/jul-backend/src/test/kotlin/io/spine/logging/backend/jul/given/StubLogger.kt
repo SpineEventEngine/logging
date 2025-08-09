@@ -74,7 +74,6 @@ internal class StubLogger(backend: LoggerBackend) :
         override fun api(): Api  = this
 
         override fun noOp(): Api = throw UnsupportedOperationException()
-
     }
 }
 

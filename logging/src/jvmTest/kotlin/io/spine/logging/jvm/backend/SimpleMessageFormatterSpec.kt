@@ -92,7 +92,7 @@ internal class SimpleMessageFormatterSpec {
     `append formatted log message and metadata` {
 
         /**
-         * Tests literal message logging since formatting was removed.
+         * Parsing and basic formatting are well tested in [BaseMessageFormatterSpec].
          */
         @Test
         fun `to an empty buffer`() {

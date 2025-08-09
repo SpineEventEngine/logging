@@ -120,6 +120,5 @@ public class Middleman(backend: LoggerBackend) : AbstractLogger<Middleman.Api>(b
         override fun api(): Api = this
 
         override fun noOp(): Api = NO_OP
-
     }
 }
