@@ -73,16 +73,19 @@ public abstract class AbstractLogger<API : MiddlemanApi<API>> protected construc
     /**
      * Returns a fluent logging API appropriate for the specified log level.
      *
-     * If a logger implementation determines that logging is definitely disabled at this point then
-     * this method is expected to return a "no-op" implementation of that logging API, which will
-     * result in all further calls made for the log statement to being silently ignored.
+     * If a logger implementation determines that logging is definitely disabled at this point,
+     * then this method is expected to return a "no-op" implementation of that logging API.
+     * This, in turn, will result in all further calls made for the log statement to
+     * being silently ignored.
      *
      * A simple implementation of this method in a concrete subclass might look like:
-     * ```
+     *
+     * ```kotlin
      * val isLoggable = isLoggable(level)
      * val isForced = Platform.shouldForceLogging(getName(), level, isLoggable)
      * return if (isLoggable || isForced) SubContext(level, isForced) else NO_OP
      * ```
+     *
      * where `NO_OP` is a singleton, no-op instance of the logging API whose methods do
      * nothing and just `return noOp()`.
      */
