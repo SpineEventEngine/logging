@@ -185,7 +185,7 @@ public object SimpleMessageFormatter {
      *
      * By calling this class it is possible to more easily detect cases where using
      * buffers to format the log message is not required.
-     * Obviously, a logger backend my have its own reasons for needing buffering
+     * Obviously, a logger backend may have its own reasons for needing buffering
      * (e.g., prepending log site data) and those must also be taken into account.
      *
      * @param metadata The metadata intended to be formatted with the log statement.
