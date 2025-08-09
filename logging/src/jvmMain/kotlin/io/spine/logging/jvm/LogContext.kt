@@ -93,8 +93,6 @@ protected constructor(
      */
     private var literalArg: String? = null
 
-
-
     /**
      * Creates a logging context with the specified level, and with a timestamp obtained from the
      * configured logging [Platform].
@@ -273,7 +271,7 @@ protected constructor(
      * @return true if logging should be attempted (usually based on rate limiter state).
      */
     protected open fun postProcess(logSiteKey: LogSiteKey?): Boolean {
-        // Without metadata there's nothing to post-process.
+        // Without metadata there's nothing to post process.
         if (_metadata != null) {
             // Without a log site we ignore any log-site specific behaviour.
             if (logSiteKey != null) {
