@@ -28,7 +28,8 @@ package io.spine.gradle.report.license
 
 import io.spine.docs.MarkdownDocument
 import io.spine.gradle.artifactId
-import java.util.*
+import java.time.Instant
+import java.util.TimeZone
 import org.gradle.api.Project
 
 /**
@@ -44,22 +45,20 @@ internal class Template(
         private const val longBreak = "\n\n"
     }
 
-    internal fun writeHeader() {
+    internal fun writeHeader() = with(project) {
         out.nl()
-            .h1(
-                "Dependencies of " +
-                        "`${project.group}:${project.artifactId}:${project.version}`"
-            )
-            .nl()
+           .h1("Dependencies of `$group:$artifactId:$version`")
+           .nl()
     }
 
     internal fun writeFooter() {
+        val currentTime = Instant.now().atZone(TimeZone.getDefault().toZoneId())
         out.text(longBreak)
             .text("The dependencies distributed under several licenses, ")
             .text("are used according their commercial-use-friendly license.")
             .text(longBreak)
             .text("This report was generated on ")
-            .bold("${Date()}")
+            .bold("$currentTime")
             .text(" using ")
             .link(
                 "Gradle-License-Report plugin",
