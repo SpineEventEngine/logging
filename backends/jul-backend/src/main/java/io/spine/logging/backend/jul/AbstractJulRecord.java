@@ -26,9 +26,9 @@
 
 package io.spine.logging.backend.jul;
 
+import io.spine.logging.jvm.backend.AnyMessages;
 import io.spine.logging.jvm.backend.LogData;
 import io.spine.logging.jvm.backend.LogMessageFormatter;
-import io.spine.logging.jvm.backend.AnyMessages;
 import io.spine.logging.jvm.backend.Metadata;
 import io.spine.logging.jvm.backend.MetadataProcessor;
 import io.spine.logging.jvm.backend.SimpleMessageFormatter;
@@ -36,10 +36,10 @@ import io.spine.logging.jvm.backend.SimpleMessageFormatter;
 import java.io.Serial;
 import java.util.Arrays;
 import java.util.ResourceBundle;
-import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
 import static java.time.Instant.ofEpochMilli;
+import static java.util.Objects.requireNonNullElse;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static java.util.logging.Level.WARNING;
 
@@ -95,23 +95,6 @@ import static java.util.logging.Level.WARNING;
 @SuppressWarnings("HardcodedLineSeparator")
 public abstract class AbstractJulRecord extends LogRecord {
 
-    /**
-     * The singleton {@code Formatter} for JUL records.
-     *
-     * <p>Note that {@code Formatter} instances are mutable and protect
-     * the state via synchronization.
-     * We never modify the instance, however, and only call the synchronized
-     * `formatMessage()` helper method, so we can use it safely, without additional locking.
-     */
-    private static final Formatter jdkMessageFormatter =
-            new Formatter() {
-                /** Never invoked by our code. */
-                @Override
-                public String format(LogRecord record) {
-                    throw new UnsupportedOperationException();
-                }
-            };
-
     private static final Object[] NO_PARAMETERS = new Object[0];
 
     @Serial
@@ -153,6 +136,7 @@ public abstract class AbstractJulRecord extends LogRecord {
      * set
      * as the cause. The level of this record is the maximum of WARNING or the original level.
      */
+    @SuppressWarnings("OverridableMethodCallDuringObjectConstruction")
     protected AbstractJulRecord(RuntimeException error, LogData data, Metadata scope) {
         this(data, scope);
         // Re-target this log message as a warning (or above) since it indicates a real bug.
@@ -192,10 +176,7 @@ public abstract class AbstractJulRecord extends LogRecord {
 
     @Override
     public final void setMessage(String message) {
-        if (message == null) {
-            message = "";
-        }
-        super.setMessage(message);
+        super.setMessage(requireNonNullElse(message, ""));
     }
 
     @Override
@@ -210,14 +191,14 @@ public abstract class AbstractJulRecord extends LogRecord {
     }
 
     /**
-     * No-op by AbstractLogRecord.
+     * No-op.
      */
     @Override
     public final void setResourceBundle(ResourceBundle bundle) {
     }
 
     /**
-     * No-op by AbstractLogRecord.
+     * No-op.
      */
     @Override
     public final void setResourceBundleName(String name) {
