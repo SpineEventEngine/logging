@@ -37,23 +37,6 @@ import java.util.concurrent.TimeUnit.NANOSECONDS
 import java.util.logging.Level
 
 /**
- * Appends the log site information to this StringBuilder.
- */
-public fun StringBuilder.appendLogSite(logSite: JvmLogSite) {
-    append(logSite.className)
-    append('.')
-    append(logSite.methodName)
-    append('(')
-    val fileName = logSite.fileName
-    if (fileName != null) {
-        append(fileName)
-        append(':')
-    }
-    append(logSite.lineNumber)
-    append(')')
-}
-
-/**
  * Base class for the fluent logging API.
  *
  * This class is a factory for instances of a logging API, used to build
@@ -229,7 +212,7 @@ public abstract class AbstractLogger<API : MiddlemanApi<API>> protected construc
     /**
      * Prints an error message to `System.err`.
      *
-     * It is important that this code never risk calling back to a user-supplied value
+     * It is important that this code never risks calling back to a user-supplied value
      * (e.g., logged arguments or metadata) since that could trigger a recursive error state.
      *
      * @param message The error message to report.
@@ -239,7 +222,7 @@ public abstract class AbstractLogger<API : MiddlemanApi<API>> protected construc
         val out = buildString {
             append(formatTimestampIso8601(data))
             append(": logging error [")
-            append(data.logSite.toString())
+            appendLogSite(data.logSite)
             append("]: ")
             append(message)
         }
@@ -256,3 +239,21 @@ public abstract class AbstractLogger<API : MiddlemanApi<API>> protected construc
         return FORMATTER.format(instant)
     }
 }
+
+/**
+ * Appends the log site information to this StringBuilder.
+ */
+private fun StringBuilder.appendLogSite(logSite: JvmLogSite) {
+    append(logSite.className)
+    append('.')
+    append(logSite.methodName)
+    append('(')
+    val fileName = logSite.fileName
+    if (fileName != null) {
+        append(fileName)
+        append(':')
+    }
+    append(logSite.lineNumber)
+    append(')')
+}
+
