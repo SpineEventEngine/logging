@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,8 +27,11 @@
 package io.spine.logging.jvm.backend
 
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.jvm.backend.given.FakeLogData
 import io.spine.logging.jvm.backend.given.FakeMetadata
+import io.spine.logging.jvm.context.Tags
 import io.spine.logging.jvm.repeatedKey
 import io.spine.logging.jvm.singleKey
 import org.junit.jupiter.api.DisplayName
@@ -37,97 +40,144 @@ import org.junit.jupiter.api.Test
 
 /**
  * Tests for [SimpleMessageFormatter].
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/backend/SimpleMessageFormatterTest.java">
+ *     Original Java code of Google Flogger</a> for historical context.
  */
 @DisplayName("`SimpleMessageFormatter` should")
 internal class SimpleMessageFormatterSpec {
 
-    private val formatter = SimpleMessageFormatter.getDefaultFormatter()
+    companion object {
+        private val INT_KEY = repeatedKey<Int>("int")
+        private val BOOL_KEY = singleKey<Boolean>("bool")
+        private val STRING_KEY = singleKey<String>("string")
+        private val EMPTY_SCOPE = Metadata.empty()
+        private const val LITERAL = "Hello World"
+    }
 
     @Nested
-    inner class `format messages` {
+    inner class
+    `format a literal` {
 
         @Test
         fun `without metadata`() {
-            val logData = FakeLogData("Hello World")
-            val metadata = MetadataProcessor.forScopeAndLogSite(Metadata.empty(), Metadata.empty())
-            val result = formatter.format(logData, metadata)
-            result shouldBe "Hello World"
+            val logged = FakeLogData(LITERAL)
+            format(logged, EMPTY_SCOPE) shouldBeSameInstanceAs LITERAL
         }
 
         @Test
-        fun `with empty metadata`() {
-            val logData = FakeLogData("Test message")
-            val emptyMetadata = FakeMetadata()
-            val processor = MetadataProcessor.forScopeAndLogSite(Metadata.empty(), emptyMetadata)
-            val result = formatter.format(logData, processor)
-            result shouldBe "Test message"
+        fun `with metadata`() {
+            val logged = FakeLogData(LITERAL).addMetadata(BOOL_KEY, true)
+            format(logged, EMPTY_SCOPE) shouldBe "$LITERAL [CONTEXT bool=true ]"
         }
 
         @Test
-        fun `with single metadata keys`() {
-            val strKey = singleKey<String>("str")
-            val intKey = singleKey<Int>("count")
-
-            val logData = FakeLogData("Message")
-            val metadata = FakeMetadata()
-                .add(strKey, "value")
-                .add(intKey, 42)
-
-            val processor = MetadataProcessor.forScopeAndLogSite(Metadata.empty(), metadata)
-            val result = formatter.format(logData, processor)
-            result shouldBe "Message [CONTEXT str=\"value\" count=42 ]"
+        fun `with a cause`() {
+            // Having a cause is a special case and never formatted.
+            val cause: Throwable = IllegalArgumentException("Badness")
+            val logged = FakeLogData(LITERAL).addMetadata(Key.LOG_CAUSE, cause)
+            format(logged, EMPTY_SCOPE) shouldBeSameInstanceAs LITERAL
         }
 
         @Test
-        fun `with repeated metadata key having single value`() {
-            val repeatedKey = repeatedKey<Int>("numbers")
-
-            val logData = FakeLogData("Data")
-            val metadata = FakeMetadata()
-                .add(repeatedKey, 123)
-
-            val processor = MetadataProcessor.forScopeAndLogSite(Metadata.empty(), metadata)
-            val result = formatter.format(logData, processor)
-            result shouldBe "Data [CONTEXT numbers=123 ]"
-        }
-
-        @Test
-        fun `with repeated metadata key having multiple values`() {
-            val repeatedKey = repeatedKey<String>("items")
-
-            val logData = FakeLogData("List")
-            val metadata = FakeMetadata()
-                .add(repeatedKey, "first")
-                .add(repeatedKey, "second")
-                .add(repeatedKey, "third")
-
-            val processor = MetadataProcessor.forScopeAndLogSite(Metadata.empty(), metadata)
-            val result = formatter.format(logData, processor)
-            result shouldBe "List [CONTEXT items=[\"first\", \"second\", \"third\"] ]"
-        }
-
-        @Test
-        fun `matching Log4j2 backend test case`() {
-            // This replicates the exact test case that was failing in Log4j2LoggerBackendSpec
-            val intKey = repeatedKey<Int>("int")
-            val strKey = singleKey<String>("str")
-
-            val logData = FakeLogData("Foo='bar'")
-            val metadata = FakeMetadata()
-                .add(intKey, 23)
-                .add(strKey, "str value")
-
-            val processor = MetadataProcessor.forScopeAndLogSite(Metadata.empty(), metadata)
-            val result = formatter.format(logData, processor)
-            result shouldBe "Foo='bar' [CONTEXT int=23 str=\"str value\" ]"
-        }
-
-        @Test
-        fun `with null literal argument`() {
-            val logData = FakeLogData(null)
-            val metadata = MetadataProcessor.forScopeAndLogSite(Metadata.empty(), Metadata.empty())
-            val result = formatter.format(logData, metadata)
-            result shouldBe ""
+        fun `with scope metadata`() {
+            val logged = FakeLogData(LITERAL)
+            val scopeData = FakeMetadata().add(INT_KEY, 42)
+            format(logged, scopeData) shouldBe "$LITERAL [CONTEXT int=42 ]"
         }
     }
+
+    @Nested
+    inner class
+    `append formatted log message and metadata` {
+
+        /**
+         * Parsing and basic formatting are well tested in [BaseMessageFormatterSpec].
+         */
+        @Test
+        fun `to an empty buffer`() {
+            val logged = FakeLogData("answer=42")
+            appendFormatted(logged, EMPTY_SCOPE) shouldBe "answer=42"
+
+            val scope = FakeMetadata().add(INT_KEY, 1)
+            appendFormatted(logged, scope) shouldBe "answer=42 [CONTEXT int=1 ]"
+
+            val cause: Throwable = IllegalArgumentException("Badness")
+            logged.addMetadata(Key.LOG_CAUSE, cause)
+            appendFormatted(logged, scope) shouldBe "answer=42 [CONTEXT int=1 ]"
+
+            logged.addMetadata(INT_KEY, 2)
+            appendFormatted(logged, scope) shouldBe "answer=42 [CONTEXT int=1 int=2 ]"
+
+            // Note that values are grouped by a key, and keys are emitted
+            // in “encounter order” (scope first).
+            scope.add(STRING_KEY, "Hi")
+            appendFormatted(logged, scope) shouldBe "answer=42 [CONTEXT int=1 int=2 string=\"Hi\" ]"
+
+            // Tags get embedded as metadata, and format in metadata order.
+            // So while tag keys are ordered locally, mixing tags and metadata
+            // does not result in a global ordering of context keys.
+            val tags = Tags.builder()
+                .addTag("two", "bar")
+                .addTag("one", "foo")
+                .build()
+            logged.addMetadata(Key.TAGS, tags)
+            val withTags = "answer=42 [CONTEXT int=1 int=2 string=\"Hi\" one=\"foo\" two=\"bar\" ]"
+            appendFormatted(logged, scope) shouldBe withTags
+        }
+
+        @Test
+        fun `to a non-empty buffer`() {
+            val tags = Tags.builder()
+                .addTag("two", "bar")
+                .addTag("one", "foo")
+                .build()
+            val logged = FakeLogData("message").addMetadata(Key.TAGS, tags)
+            val scope = FakeMetadata().add(STRING_KEY, "Hi")
+
+            val formatter = SimpleMessageFormatter.getDefaultFormatter()
+            val metadata = MetadataProcessor.forScopeAndLogSite(scope, logged.metadata)
+
+            val formatted = formatter.format(logged, metadata)
+            formatted shouldBe "message [CONTEXT string=\"Hi\" one=\"foo\" two=\"bar\" ]"
+
+            val buffer = StringBuilder("PREFIX: ")
+            val appended = formatter.append(logged, metadata, buffer)
+            "$appended" shouldBe "PREFIX: message [CONTEXT string=\"Hi\" one=\"foo\" two=\"bar\" ]"
+        }
+
+        @Test
+        fun `ignoring the given key`() {
+            val tags = Tags.builder()
+                .addTag("two", "bar")
+                .addTag("one", "foo")
+                .build()
+            val logged = FakeLogData("msg").addMetadata(Key.TAGS, tags)
+            val scope = FakeMetadata().add(STRING_KEY, "Hi")
+            val formatter = SimpleMessageFormatter.getSimpleFormatterIgnoring(STRING_KEY)
+
+            // Cause is ignored in “simple” message formatting, and should not appear
+            // in the output even though it is not explicitly ignored above.
+            val cause: Throwable = IllegalArgumentException("Badness")
+            logged.addMetadata(Key.LOG_CAUSE, cause)
+            val metadata = MetadataProcessor.forScopeAndLogSite(scope, logged.metadata)
+            formatter.format(logged, metadata) shouldBe "msg [CONTEXT one=\"foo\" two=\"bar\" ]"
+
+            val buffer = StringBuilder("PREFIX: ")
+            val appended = formatter.append(logged, metadata, buffer)
+            "$appended" shouldBe "PREFIX: msg [CONTEXT one=\"foo\" two=\"bar\" ]"
+        }
+    }
+}
+
+private fun format(logData: LogData, scope: Metadata): String {
+    val metadata = MetadataProcessor.forScopeAndLogSite(scope, logData.metadata)
+    return SimpleMessageFormatter.getDefaultFormatter().format(logData, metadata)
+}
+
+private fun appendFormatted(logData: LogData, scope: Metadata): String {
+    val metadata = MetadataProcessor.forScopeAndLogSite(scope, logData.metadata)
+    return SimpleMessageFormatter.getDefaultFormatter()
+        .append(logData, metadata, StringBuilder())
+        .toString()
 }
