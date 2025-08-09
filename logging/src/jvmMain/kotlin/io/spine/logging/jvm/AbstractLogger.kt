@@ -39,7 +39,7 @@ import java.util.logging.Level
 /**
  * Appends the log site information to this StringBuilder.
  */
-private fun StringBuilder.appendLogSite(logSite: JvmLogSite) {
+public fun StringBuilder.appendLogSite(logSite: JvmLogSite) {
     append(logSite.className)
     append('.')
     append(logSite.methodName)
