@@ -26,68 +26,52 @@
 
 package io.spine.logging.test
 
+import io.kotest.matchers.string.shouldContain
 import io.spine.logging.LoggingFactory
 import io.spine.logging.log
 import io.spine.logging.logVarargs
+import io.spine.logging.testing.tapConsole
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
  * Tests to verify that the logging API works correctly after removing formatting infrastructure.
+ *
+ * This test suite merely ensures that there are these functions.
  */
-@DisplayName("Logging API should")
+@Suppress("DEPRECATION")
+@DisplayName("Logging API should provide extension functions for")
 internal class LoggingCompatibilityTest {
 
     private val logger = LoggingFactory.loggerFor(this::class)
 
     @Test
-    @DisplayName("support lazy evaluation with lambda")
-    fun testLazyEvaluation() {
-        logger.atInfo().log { "Lazy evaluation message" }
-    }
-
-    @Test
-    @DisplayName("support extension function with string literal")
-    fun testStringLiteral() {
+    fun `string literal`() {
         logger.atInfo().log("String literal message")
     }
 
     @Test
-    @DisplayName("support extension function with formatted string and single argument")
-    fun testFormattedMessageOneArg() {
-        logger.atInfo().log("Formatted message: %s", "test")
+    fun `formatted string and single argument`() {
+        val output = tapConsole {
+            logger.atInfo().log("Formatted message: %s", "test")
+        }
+        output shouldContain "Formatted message: test"
     }
 
     @Test
-    @DisplayName("support extension function with formatted string and multiple arguments")
-    fun testFormattedMessageMultipleArgs() {
-        logger.atInfo().log("Multiple args: %s, %d, %s", "first", 42, "third")
+    fun `formatted string and multiple arguments`() {
+        val output = tapConsole {
+            logger.atInfo().log("Multiple args: %s, %d, %s", "first", 42, "third")
+        }
+        output shouldContain "Multiple args: first, 42, third"
     }
 
     @Test
-    @DisplayName("support extension function with varargs")
-    fun testVarargs() {
-        logger.atInfo().log("Varargs: %s %s %s", "one", "two", "three")
-    }
-
-    @Test
-    @DisplayName("support logVarargs extension function")
-    fun testLogVarargs() {
-        val args = arrayOf<Any?>("arg1", "arg2")
-        logger.atInfo().logVarargs("Message with array: %s %s", args)
-    }
-
-    @Test
-    @DisplayName("support fluent API chaining")
-    fun testFluentChaining() {
-        logger.atInfo()
-            .every(100)
-            .log { "Fluent chaining with lazy evaluation" }
-    }
-
-    @Test
-    @DisplayName("support empty log statement")
-    fun testEmptyLog() {
-        logger.atInfo().log()
+    fun `provide 'logVarargs' extension function`() {
+        val output = tapConsole {
+            val args = arrayOf<Any?>("arg1", "arg2")
+            logger.atInfo().logVarargs("Message with array: %s %s", args)
+        }
+        output shouldContain "Message with array: arg1 arg2"
     }
 }

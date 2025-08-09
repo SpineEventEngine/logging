@@ -31,6 +31,7 @@ package io.spine.logging
 /**
  * Extension function to log the given message.
  */
+@Deprecated("Use `log { msg }` instead.", ReplaceWith("log { msg }"))
 public fun <API : LoggingApi<API>> LoggingApi<API>.log(msg: String?) {
     log({ msg })
 }
@@ -38,6 +39,7 @@ public fun <API : LoggingApi<API>> LoggingApi<API>.log(msg: String?) {
 /**
  * Extension function for logging a formatted message with a single argument.
  */
+@Deprecated("Use `log { msg }` instead.", ReplaceWith("log { msg }"))
 public fun <API : LoggingApi<API>> LoggingApi<API>.log(message: String, arg: Any?) {
     log { String.format(message, arg) }
 }
@@ -45,6 +47,7 @@ public fun <API : LoggingApi<API>> LoggingApi<API>.log(message: String, arg: Any
 /**
  * Extension function for logging a formatted message with two arguments.
  */
+@Deprecated("Use `log { msg }` instead.", ReplaceWith("log { msg }"))
 public fun <API : LoggingApi<API>> LoggingApi<API>.log(
     message: String,
     arg1: Any?,
@@ -56,6 +59,7 @@ public fun <API : LoggingApi<API>> LoggingApi<API>.log(
 /**
  * Extension function for logging a formatted message with three arguments.
  */
+@Deprecated("Use `log { msg }` instead.", ReplaceWith("log { msg }"))
 public fun <API : LoggingApi<API>> LoggingApi<API>.log(
     message: String,
     arg1: Any?,
@@ -68,6 +72,7 @@ public fun <API : LoggingApi<API>> LoggingApi<API>.log(
 /**
  * Extension function for logging a formatted message with multiple arguments.
  */
+@Deprecated("Use `log { msg }` instead.", ReplaceWith("log { msg }"))
 public fun <API : LoggingApi<API>> LoggingApi<API>.logVarargs(message: String, vararg args: Any?) {
     log { String.format(message, *args) }
 }
