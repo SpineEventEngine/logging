@@ -65,10 +65,12 @@ final class Log4j2LogEventUtil {
         var metadata = forScopeAndLogSite(Platform.getInjectedMetadata(), logData.getMetadata());
 
         /*
-         * If no configuration file could be located, Log4j2 will use the DefaultConfiguration. This
-         * will cause logging output to go to the console and the context data will be ignored. This
-         * mechanism can be used to detect if a configuration file has been loaded (or if the default
-         * configuration was overwritten through the means of a configuration factory) by checking the
+         * If no configuration file could be located, Log4j2 will use the DefaultConfiguration.
+         * This will cause logging output to go to the console,
+         * and the context data will be ignored.
+         * This mechanism can be used to detect if a configuration file has been loaded
+         * (or if the default configuration was overwritten through the means of
+         *  a configuration factory) by checking the
          * type of the current configuration class.
          *
          * Be aware that the `LoggerContext` class is not part of Log4j2's public API and behavior
@@ -139,6 +141,7 @@ final class Log4j2LogEventUtil {
         var instant = new MutableInstant();
         // Don't use Duration here as (a) it allocates and (b) we can't allow error on overflow.
         var epochSeconds = NANOSECONDS.toSeconds(timestampNanos);
+        @SuppressWarnings("NumericCastThatLosesPrecision")
         var remainingNanos = (int) (timestampNanos - SECONDS.toNanos(epochSeconds));
         instant.initFromEpochSecond(epochSeconds, remainingNanos);
         return instant;
@@ -151,11 +154,14 @@ final class Log4j2LogEventUtil {
         var logLevel = level.intValue();
         if (logLevel < java.util.logging.Level.FINE.intValue()) {
             return org.apache.logging.log4j.Level.TRACE;
-        } else if (logLevel < java.util.logging.Level.INFO.intValue()) {
+        }
+        if (logLevel < java.util.logging.Level.INFO.intValue()) {
             return org.apache.logging.log4j.Level.DEBUG;
-        } else if (logLevel < java.util.logging.Level.WARNING.intValue()) {
+        }
+        if (logLevel < java.util.logging.Level.WARNING.intValue()) {
             return org.apache.logging.log4j.Level.INFO;
-        } else if (logLevel < java.util.logging.Level.SEVERE.intValue()) {
+        }
+        if (logLevel < java.util.logging.Level.SEVERE.intValue()) {
             return org.apache.logging.log4j.Level.WARN;
         }
         return org.apache.logging.log4j.Level.ERROR;
@@ -187,7 +193,7 @@ final class Log4j2LogEventUtil {
     /**
      * Appends the given {@link LogData} to the given {@link StringBuilder}.
      */
-    @SuppressWarnings({"HardcodedLineSeparator", "MethodWithMultipleLoops"})
+    @SuppressWarnings("HardcodedLineSeparator")
     private static void appendLogData(LogData data, StringBuilder out) {
         out.append("  original message: ");
         out.append(data.getLiteralArgument());
