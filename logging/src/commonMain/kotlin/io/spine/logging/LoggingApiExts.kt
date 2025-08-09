@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,18 +24,50 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.given
+@file:Suppress("RedundantUnitReturnType")
 
-import io.spine.logging.jvm.backend.LogData
-import io.kotest.matchers.shouldBe
-
-/**
- * This file contains Kotest-like assertions for [LogData].
- */
+package io.spine.logging
 
 /**
- * Asserts that this [LogData] has a given [value] as a literal message.
+ * Extension function to log the given message.
  */
-internal infix fun LogData.shouldHaveMessage(value: String?) {
-    literalArgument shouldBe value
+public fun <API : LoggingApi<API>> LoggingApi<API>.log(msg: String?) {
+    log({ msg })
+}
+
+/**
+ * Extension function for logging a formatted message with a single argument.
+ */
+public fun <API : LoggingApi<API>> LoggingApi<API>.log(message: String, arg: Any?) {
+    log { String.format(message, arg) }
+}
+
+/**
+ * Extension function for logging a formatted message with two arguments.
+ */
+public fun <API : LoggingApi<API>> LoggingApi<API>.log(
+    message: String,
+    arg1: Any?,
+    arg2: Any?
+) {
+    log { String.format(message, arg1, arg2) }
+}
+
+/**
+ * Extension function for logging a formatted message with three arguments.
+ */
+public fun <API : LoggingApi<API>> LoggingApi<API>.log(
+    message: String,
+    arg1: Any?,
+    arg2: Any?,
+    arg3: Any?
+) {
+    log { String.format(message, arg1, arg2, arg3) }
+}
+
+/**
+ * Extension function for logging a formatted message with multiple arguments.
+ */
+public fun <API : LoggingApi<API>> LoggingApi<API>.logVarargs(message: String, vararg args: Any?) {
+    log { String.format(message, *args) }
 }

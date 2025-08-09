@@ -94,7 +94,8 @@ public interface LogData {
      * Forced log statements should behave exactly as if none of the filtering or
      * rate-limiting occurred, including argument validity checks.
      *
-     * Thus the idiomatic use of `wasForced` is:
+     * Thus, the idiomatic use of `wasForced` is:
+     *
      * ```kotlin
      * fun someFilteringMethod(value: Int): API {
      *   if (wasForced()) {
@@ -113,30 +114,7 @@ public interface LogData {
     public fun wasForced(): Boolean
 
     /**
-     * A template key for this log statement, or `null` if the statement does not
-     * require formatting.
-     *
-     * If this property is `null` the message to be logged can be determined by
-     * accessing [literalArgument].
-     */
-    public val templateContext: TemplateContext?
-
-    /**
-     * The arguments to be formatted with the message.
-     *
-     * Arguments exist when a `log()` method with a format message and
-     * separate arguments was invoked.
-     *
-     * @throws IllegalStateException
-     *   if no arguments are available (i.e., when there is no [templateContext]).
-     */
-    public val arguments: Array<Any?>
-
-    /**
-     * Returns the single argument to be logged directly when no arguments were provided.
-     *
-     * @throws IllegalStateException
-     *   if no single literal argument is available (i.e., when [templateContext] exists).
+     * Returns the single argument to be logged directly.
      */
     public val literalArgument: Any?
 }

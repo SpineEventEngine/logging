@@ -59,7 +59,7 @@ public object ScopedLoggingContexts {
                 .atWarning()
                 .atMostEvery(5, MINUTES)
                 .withStackTrace(StackSize.SMALL)
-                .log(msg)
+                .log { msg }
         }
         return wasSuccessful
     }

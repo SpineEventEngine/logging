@@ -43,14 +43,9 @@ public object Checks {
         return value
     }
 
-    @JvmStatic
-    public fun checkArgument(condition: Boolean, message: String): Unit =
-        require(condition) { message }
-
-    @JvmStatic
-    public fun checkState(condition: Boolean, message: String): Unit = check(condition) { message }
-
-    /** Checks if the given string is a valid metadata identifier. */
+    /**
+     * Checks if the given string is a valid metadata identifier.
+     */
     @JvmStatic
     @CanIgnoreReturnValue
     public fun checkMetadataIdentifier(s: String): String {

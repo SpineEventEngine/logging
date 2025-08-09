@@ -32,7 +32,6 @@ import io.spine.logging.jvm.LoggingScope
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.MiddlemanApi
 import io.spine.logging.jvm.context.ScopedLoggingContext.Companion.getInstance
-import io.spine.logging.jvm.util.Checks.checkState
 import java.util.concurrent.Callable
 
 /**
@@ -156,7 +155,7 @@ public abstract class ScopedLoggingContext protected constructor() {
          */
         @CanIgnoreReturnValue
         public fun withTags(tags: Tags): Builder {
-            checkState(this.tags == null, "Tags already set.")
+            check(this.tags == null)  { "Tags already set: `$tags`." }
             this.tags = tags
             return this
         }
@@ -181,7 +180,9 @@ public abstract class ScopedLoggingContext protected constructor() {
          */
         @CanIgnoreReturnValue
         public fun withLogLevelMap(logLevelMap: LogLevelMap): Builder {
-            checkState(this.logLevelMap == null, "log level map already set")
+            check(this.logLevelMap == null) {
+                "Log level map already set: `$logLevelMap`."
+            }
             this.logLevelMap = logLevelMap
             return this
         }

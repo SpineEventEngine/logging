@@ -31,9 +31,7 @@ import io.spine.logging.jvm.JvmLogSite.Companion.injectedLogSite
 import io.spine.logging.jvm.backend.LogData
 import io.spine.logging.jvm.backend.Metadata
 import io.spine.logging.jvm.backend.Platform
-import io.spine.logging.jvm.backend.TemplateContext
 import io.spine.logging.jvm.context.Tags
-import io.spine.logging.jvm.parser.MessageParser
 import io.spine.logging.jvm.util.Checks.checkNotNull
 import io.spine.reflect.CallerFinder.stackForCallerOf
 import java.util.concurrent.TimeUnit
@@ -54,6 +52,9 @@ import java.util.logging.Level
  * needed to return the extended context.
  *
  * Logging contexts are not thread-safe.
+ *
+ * @param LOGGER The type of the logger for which this context works.
+ * @param API The type of the API served by this context.
  *
  * @property level The log level of the log statement that this context was created for.
  * @param isForced Whether to force this log statement (see [wasForced] for details).
@@ -88,14 +89,9 @@ protected constructor(
     private var rateLimitStatus: RateLimitStatus? = null
 
     /**
-     * The template context if formatting is required (set only after post-processing).
+     * The literal argument for this log statement (set only after post-processing).
      */
-    private var logTemplateContext: TemplateContext? = null
-
-    /**
-     * The log arguments (set only after post-processing).
-     */
-    private var args: Array<Any?>? = null
+    private var literalArg: String? = null
 
     /**
      * Creates a logging context with the specified level, and with a timestamp obtained from the
@@ -135,12 +131,7 @@ protected constructor(
      */
     protected abstract fun noOp(): API
 
-    /**
-     * Returns the message parser used for all log statements made through this logger.
-     */
-    protected abstract fun getMessageParser(): MessageParser
-
-    public final override val loggerName: String?
+    public final override val loggerName: String
         get() = getLogger().getName()
 
     public final override val logSite: JvmLogSite
@@ -148,26 +139,8 @@ protected constructor(
             "Cannot request log site information prior to `postProcess()`."
         )
 
-    public final override val templateContext: TemplateContext?
-        get() = logTemplateContext
-
-    public final override val arguments: Array<Any?>
-        get() {
-            if (logTemplateContext == null) {
-                error("Cannot get arguments unless a template context exists.")
-            }
-            return args!!
-        }
-
     public final override val literalArgument: Any?
-        get() {
-            if (logTemplateContext != null) {
-                error(
-                    "Cannot get literal argument if a template context exists: $logTemplateContext."
-                )
-            }
-            return args!![0]
-        }
+        get() = literalArg
 
     public final override fun wasForced(): Boolean {
         // Check explicit TRUE here because findValue() can return null (which would fail unboxing).
@@ -264,8 +237,9 @@ protected constructor(
      * ## Rate Limiting and Skipped Logs
      *
      * When handling rate limiting, [updateRateLimiterStatus] should be
-     * called for each active rate limiter. This ensures that even if logging does not occur, the
-     * number of "skipped" log statements is recorded correctly and emitted for the next allowed log.
+     * called for each active rate limiter. This ensures that even if logging does not occur,
+     * the number of "skipped" log statements is recorded correctly and emitted
+     * for the next allowed log.
      *
      * If `postProcess()` returns `false` without updating the rate limit status, the
      * log statement may not be counted as skipped. In some situations this is desired,
@@ -279,24 +253,25 @@ protected constructor(
      * resetting of rate limiter state. A `postProcess()` method can "early exit" as soon as
      * `shouldLog` is false, but should assume logging will occur while it remains `true`.
      *
-     * If a method in the logging chain determines that logging should definitely not occur, it may
-     * choose to return the `NoOp` logging API at that point. However this will bypass any
-     * post-processing, and no rate limiter state will be updated. This is sometimes desirable, but
-     * the API documentation should make it clear to the user as to which behaviour occurs.
+     * If a method in the logging chain determines that logging should definitely not occur,
+     * it may choose to return the `NoOp` logging API at that point. However this will bypass any
+     * post-processing, and no rate limiter state will be updated. This is sometimes desirable,
+     * but the API documentation should make it clear to the user as to which behaviour occurs.
      *
      * For example, level selector methods (such as `atInfo()`) return the `NoOp` API
-     * for "disabled" log statements, and these have no effect on rate limiter state, and will not
-     * update the "skipped" count. This is fine because controlling logging via log level
-     * selection is not conceptually a form of "rate limiting".
+     * for "disabled" log statements, and these have no effect on rate limiter state,
+     * and will not update the "skipped" count.
+     * This is fine because controlling logging via log level selection is
+     * not conceptually a form of "rate limiting".
      *
      * The default implementation of this method enforces the rate limits as set
      * by [every] and [atMostEvery].
      *
-     * @param logSiteKey used to lookup persistent, per log statement, state.
+     * @param logSiteKey The key used to lookup persistent, per log statement, state.
      * @return true if logging should be attempted (usually based on rate limiter state).
      */
     protected open fun postProcess(logSiteKey: LogSiteKey?): Boolean {
-        // Without metadata there's nothing to post-process.
+        // Without metadata there's nothing to post process.
         if (_metadata != null) {
             // Without a log site we ignore any log-site specific behaviour.
             if (logSiteKey != null) {
@@ -433,29 +408,13 @@ protected constructor(
     }
 
     /**
-     * Make the backend logging call. This is the point at which we have paid the price of creating
-     * a varargs array and doing any necessary auto-boxing.
+     * Make the backend logging call.
+     *
+     * This method takes a single string parameter as it's always called with one string argument.
      */
-    private fun logImpl(message: String?, vararg args: Any?) {
-        this.args = arrayOf(*args)
-        // Evaluate any (rare) LazyArg instances early.
-        // This may throw exceptions from user code, but it seems reasonable
-        // to propagate them in this case.
-        // They would have been thrown if the argument was evaluated at the call site anyway.
-        for (n in this.args!!.indices) {
-            if (this.args!![n] is LazyArg<*>) {
-                this.args!![n] = (this.args!![n] as LazyArg<*>).evaluate()
-            }
-        }
-        // Using "!=" is fast and sufficient here because the only real case this should
-        // be skipping is when we called `log(String)` or `log()`, which should not result in
-        // a template being created.
-        // DO NOT replace this with a string instance which can be interned, or use equals() here,
-        // since that could mistakenly treat other calls to log(String, Object...) incorrectly.
-        if (message !== LITERAL_VALUE_MESSAGE) {
-            val msg = message ?: NULL_MESSAGE
-            this.logTemplateContext = TemplateContext(getMessageParser(), msg)
-        }
+    private fun logImpl(arg: String?) {
+        this.literalArg = arg
+
         // Right at the end of processing add any tags injected by the platform.
         // Any tags supplied at the log site are merged with the injected tags
         // (though this should be very rare).
@@ -591,683 +550,16 @@ protected constructor(
 
     public final override fun log() {
         if (shouldLog()) {
-            logImpl(LITERAL_VALUE_MESSAGE, "")
+            logImpl("")
         }
     }
 
-    public final override fun log(msg: String?) {
+    public final override fun log(msg: () -> String?) {
         if (shouldLog()) {
-            logImpl(LITERAL_VALUE_MESSAGE, msg)
+            logImpl(msg())
         }
     }
 
-    public final override fun log(message: String?, p1: Any?) {
-        if (shouldLog()) {
-            logImpl(message, p1)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Any?, p2: Any?) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Any?, p2: Any?, p3: Any?) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2, p3)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Any?, p2: Any?, p3: Any?, p4: Any?) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2, p3, p4)
-        }
-    }
-
-    public final override fun log(
-        message: String?,
-        p1: Any?,
-        p2: Any?,
-        p3: Any?,
-        p4: Any?,
-        p5: Any?
-    ) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2, p3, p4, p5)
-        }
-    }
-
-    public final override fun log(
-        message: String?,
-        p1: Any?,
-        p2: Any?,
-        p3: Any?,
-        p4: Any?,
-        p5: Any?,
-        p6: Any?
-    ) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2, p3, p4, p5, p6)
-        }
-    }
-
-    public final override fun log(
-        message: String?,
-        p1: Any?,
-        p2: Any?,
-        p3: Any?,
-        p4: Any?,
-        p5: Any?,
-        p6: Any?,
-        p7: Any?
-    ) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2, p3, p4, p5, p6, p7)
-        }
-    }
-
-    public final override fun log(
-        message: String?,
-        p1: Any?,
-        p2: Any?,
-        p3: Any?,
-        p4: Any?,
-        p5: Any?,
-        p6: Any?,
-        p7: Any?,
-        p8: Any?
-    ) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2, p3, p4, p5, p6, p7, p8)
-        }
-    }
-
-    public final override fun log(
-        message: String?,
-        p1: Any?,
-        p2: Any?,
-        p3: Any?,
-        p4: Any?,
-        p5: Any?,
-        p6: Any?,
-        p7: Any?,
-        p8: Any?,
-        p9: Any?
-    ) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2, p3, p4, p5, p6, p7, p8, p9)
-        }
-    }
-
-    public final override fun log(
-        message: String?,
-        p1: Any?,
-        p2: Any?,
-        p3: Any?,
-        p4: Any?,
-        p5: Any?,
-        p6: Any?,
-        p7: Any?,
-        p8: Any?,
-        p9: Any?,
-        p10: Any?
-    ) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10)
-        }
-    }
-
-    @Suppress("MagicNumber" /* Array indexing. */, "SpreadOperator")
-    public final override fun log(
-        message: String?,
-        p1: Any?,
-        p2: Any?,
-        p3: Any?,
-        p4: Any?,
-        p5: Any?,
-        p6: Any?,
-        p7: Any?,
-        p8: Any?,
-        p9: Any?,
-        p10: Any?,
-        vararg rest: Any?
-    ) {
-        if (shouldLog()) {
-            // Manually create a new varargs array and copy the parameters in.
-            val params = arrayOfNulls<Any?>(rest.size + 10)
-            params[0] = p1
-            params[1] = p2
-            params[2] = p3
-            params[3] = p4
-            params[4] = p5
-            params[5] = p6
-            params[6] = p7
-            params[7] = p8
-            params[8] = p9
-            params[9] = p10
-            System.arraycopy(rest, 0, params, 10, rest.size)
-            logImpl(message, *params)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Char) {
-        if (shouldLog()) {
-            logImpl(message, p1)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Byte) {
-        if (shouldLog()) {
-            logImpl(message, p1)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Short) {
-        if (shouldLog()) {
-            logImpl(message, p1)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Int) {
-        if (shouldLog()) {
-            logImpl(message, p1)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Long) {
-        if (shouldLog()) {
-            logImpl(message, p1)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Any?, p2: Boolean) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Any?, p2: Char) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Any?, p2: Byte) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Any?, p2: Short) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Any?, p2: Int) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Any?, p2: Long) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Any?, p2: Float) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Any?, p2: Double) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Boolean, p2: Any?) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Char, p2: Any?) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Byte, p2: Any?) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Short, p2: Any?) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Int, p2: Any?) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Long, p2: Any?) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Float, p2: Any?) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Double, p2: Any?) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Boolean, p2: Boolean) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Char, p2: Boolean) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Byte, p2: Boolean) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Short, p2: Boolean) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Int, p2: Boolean) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Long, p2: Boolean) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Float, p2: Boolean) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Double, p2: Boolean) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Boolean, p2: Char) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Char, p2: Char) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Byte, p2: Char) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Short, p2: Char) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Int, p2: Char) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Long, p2: Char) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Float, p2: Char) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Double, p2: Char) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Boolean, p2: Byte) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Char, p2: Byte) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Byte, p2: Byte) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Short, p2: Byte) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Int, p2: Byte) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Long, p2: Byte) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Float, p2: Byte) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Double, p2: Byte) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Boolean, p2: Short) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Char, p2: Short) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Byte, p2: Short) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Short, p2: Short) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Int, p2: Short) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Long, p2: Short) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Float, p2: Short) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Double, p2: Short) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Boolean, p2: Int) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Char, p2: Int) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Byte, p2: Int) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Short, p2: Int) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Int, p2: Int) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Long, p2: Int) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Float, p2: Int) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Double, p2: Int) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Boolean, p2: Long) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Char, p2: Long) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Byte, p2: Long) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Short, p2: Long) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Int, p2: Long) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Long, p2: Long) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Float, p2: Long) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Double, p2: Long) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Boolean, p2: Float) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Char, p2: Float) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Byte, p2: Float) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Short, p2: Float) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Int, p2: Float) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Long, p2: Float) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Float, p2: Float) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Double, p2: Float) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Boolean, p2: Double) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Char, p2: Double) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Byte, p2: Double) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Short, p2: Double) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Int, p2: Double) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Long, p2: Double) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Float, p2: Double) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    public final override fun log(message: String?, p1: Double, p2: Double) {
-        if (shouldLog()) {
-            logImpl(message, p1, p2)
-        }
-    }
-
-    @Suppress("SpreadOperator")
-    public final override fun logVarargs(message: String, params: Array<Any?>?) {
-        if (shouldLog()) {
-            // Copy the varargs array (because we didn't create it and this is quite a rare case).
-            logImpl(message, *(params?.copyOf(params.size) ?: emptyArray()))
-        }
-    }
 
     /**
      * The predefined metadata keys used by the default logging API.
@@ -1409,20 +701,6 @@ protected constructor(
     }
 
     public companion object {
-        /**
-         * The text logged when both message and parameters are `null`.
-         */
-        private const val NULL_MESSAGE = "<null>"
-
-        /**
-         * A simple token used to identify cases where a single literal value is logged.
-         *
-         * Note that this instance must be unique, and it is important not to replace this
-         * with `""` or any other value than might be interned and be accessible to code
-         * outside this class.
-         */
-        @Suppress("StringOperationCanBeSimplified")
-        private val LITERAL_VALUE_MESSAGE = String()
 
         // WARNING: If we ever start to use combined log-site and scoped context metadata here via
         // MetadataProcessor, there's an issue. It's possible that the same scope can appear in both

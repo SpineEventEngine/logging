@@ -96,7 +96,7 @@ internal class SimpleMessageFormatterSpec {
          */
         @Test
         fun `to an empty buffer`() {
-            val logged = FakeLogData.withPrintfStyle("answer=%d", 42)
+            val logged = FakeLogData("answer=42")
             appendFormatted(logged, EMPTY_SCOPE) shouldBe "answer=42"
 
             val scope = FakeMetadata().add(INT_KEY, 1)
