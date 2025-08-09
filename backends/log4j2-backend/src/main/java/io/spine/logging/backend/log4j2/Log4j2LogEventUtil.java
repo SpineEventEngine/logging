@@ -153,11 +153,14 @@ final class Log4j2LogEventUtil {
         var logLevel = level.intValue();
         if (logLevel < java.util.logging.Level.FINE.intValue()) {
             return org.apache.logging.log4j.Level.TRACE;
-        } else if (logLevel < java.util.logging.Level.INFO.intValue()) {
+        }
+        if (logLevel < java.util.logging.Level.INFO.intValue()) {
             return org.apache.logging.log4j.Level.DEBUG;
-        } else if (logLevel < java.util.logging.Level.WARNING.intValue()) {
+        }
+        if (logLevel < java.util.logging.Level.WARNING.intValue()) {
             return org.apache.logging.log4j.Level.INFO;
-        } else if (logLevel < java.util.logging.Level.SEVERE.intValue()) {
+        }
+        if (logLevel < java.util.logging.Level.SEVERE.intValue()) {
             return org.apache.logging.log4j.Level.WARN;
         }
         return org.apache.logging.log4j.Level.ERROR;
@@ -189,7 +192,7 @@ final class Log4j2LogEventUtil {
     /**
      * Appends the given {@link LogData} to the given {@link StringBuilder}.
      */
-    @SuppressWarnings({"HardcodedLineSeparator", "MethodWithMultipleLoops"})
+    @SuppressWarnings("HardcodedLineSeparator")
     private static void appendLogData(LogData data, StringBuilder out) {
         out.append("  original message: ");
         out.append(data.getLiteralArgument());
