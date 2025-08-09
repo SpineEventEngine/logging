@@ -133,8 +133,6 @@ protected constructor(
      */
     protected abstract fun noOp(): API
 
-
-
     public final override val loggerName: String
         get() = getLogger().getName()
 
@@ -241,8 +239,9 @@ protected constructor(
      * ## Rate Limiting and Skipped Logs
      *
      * When handling rate limiting, [updateRateLimiterStatus] should be
-     * called for each active rate limiter. This ensures that even if logging does not occur, the
-     * number of "skipped" log statements is recorded correctly and emitted for the next allowed log.
+     * called for each active rate limiter. This ensures that even if logging does not occur,
+     * the number of "skipped" log statements is recorded correctly and emitted
+     * for the next allowed log.
      *
      * If `postProcess()` returns `false` without updating the rate limit status, the
      * log statement may not be counted as skipped. In some situations this is desired,
@@ -256,20 +255,21 @@ protected constructor(
      * resetting of rate limiter state. A `postProcess()` method can "early exit" as soon as
      * `shouldLog` is false, but should assume logging will occur while it remains `true`.
      *
-     * If a method in the logging chain determines that logging should definitely not occur, it may
-     * choose to return the `NoOp` logging API at that point. However this will bypass any
-     * post-processing, and no rate limiter state will be updated. This is sometimes desirable, but
-     * the API documentation should make it clear to the user as to which behaviour occurs.
+     * If a method in the logging chain determines that logging should definitely not occur,
+     * it may choose to return the `NoOp` logging API at that point. However this will bypass any
+     * post-processing, and no rate limiter state will be updated. This is sometimes desirable,
+     * but the API documentation should make it clear to the user as to which behaviour occurs.
      *
      * For example, level selector methods (such as `atInfo()`) return the `NoOp` API
-     * for "disabled" log statements, and these have no effect on rate limiter state, and will not
-     * update the "skipped" count. This is fine because controlling logging via log level
-     * selection is not conceptually a form of "rate limiting".
+     * for "disabled" log statements, and these have no effect on rate limiter state,
+     * and will not update the "skipped" count.
+     * This is fine because controlling logging via log level selection is
+     * not conceptually a form of "rate limiting".
      *
      * The default implementation of this method enforces the rate limits as set
      * by [every] and [atMostEvery].
      *
-     * @param logSiteKey used to lookup persistent, per log statement, state.
+     * @param logSiteKey The key used to lookup persistent, per log statement, state.
      * @return true if logging should be attempted (usually based on rate limiter state).
      */
     protected open fun postProcess(logSiteKey: LogSiteKey?): Boolean {
