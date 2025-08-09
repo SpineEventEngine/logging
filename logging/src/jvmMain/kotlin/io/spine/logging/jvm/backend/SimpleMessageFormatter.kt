@@ -27,6 +27,7 @@
 package io.spine.logging.jvm.backend
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
+import io.spine.annotation.Internal
 import io.spine.logging.jvm.LogContext
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.MetadataKey.KeyValueHandler
@@ -36,14 +37,16 @@ import io.spine.logging.jvm.backend.SimpleMessageFormatter.mustBeFormatted
 import java.util.*
 
 /**
- * Helper class for formatting LogData as text. This class is useful for any logging backend which
- * performs unstructured, text only, logging. Note however that it makes several assumptions
- * regarding metadata and formatting, which may not apply to every text based logging backend.
+ * A helper object for formatting [LogData] as text.
+ *
+ * This object is useful for any logging backend that performs unstructured, text-only, logging.
+ * Note however, that it makes several assumptions regarding metadata and formatting,
+ * which may not apply to every text-based logging backend.
  *
  * This primarily exists to support both the JDK logging classes and text only Android backends.
- * Code in here may be factored out as necessary to support other use cases in future.
+ * Code in here may be factored out as necessary to support other use cases in the future.
  *
- * If a text based logger backend is not performance critical, then it should just append the log
+ * If a text-based logger backend is not performance critical, then it should just append the log
  * message and metadata to a local buffer. For example:
  *
  * ```kotlin
@@ -60,9 +63,8 @@ import java.util.*
  * [getSimpleFormatterIgnoring] can be used to obtain a static formatter,
  * instead of using the default.
  *
- * @see <a
- *         href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/SimpleMessageFormatter.java">
- *         Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/SimpleMessageFormatter.java">
+ *   Original Java code of Google Flogger</a> for historical context.
  */
 public object SimpleMessageFormatter {
 
@@ -73,19 +75,21 @@ public object SimpleMessageFormatter {
     private val DEFAULT_FORMATTER: LogMessageFormatter = newFormatter(DEFAULT_KEYS_TO_IGNORE)
 
     /**
-     * Returns the singleton default log message formatter. This formats log messages in the form:
+     * Returns the singleton default log message formatter.
+     *
+     * This formats log messages in the form:
      *
      * ```
      * Log message [CONTEXT key="value" id=42 ]
      * ```
      *
      * with context from the log data and scope, merged together in a sequence of key/value
-     * pairs after the formatted message. If the log message is long or multi-line, then the context
-     * suffix will be formatted on a single separate line.
+     * pairs after the formatted message. If the log message is long or multi-line,
+     * then the context suffix will be formatted on a single separate line.
      *
      * The `cause` is omitted from the context section, since it's handled separately by
-     * most logger backends and not considered part of the formatted message. Other internal metadata
-     * keys may also be suppressed.
+     * most logger backends and not considered part of the formatted message.
+     * Other internal metadata keys may also be suppressed.
      */
     @JvmStatic
     public fun getDefaultFormatter(): LogMessageFormatter = DEFAULT_FORMATTER
@@ -97,15 +101,18 @@ public object SimpleMessageFormatter {
      * Log message [CONTEXT key="value" id=42 ]
      * ```
      *
-     * with context from the log data and scope, merged together in a sequence of key/value
-     * pairs after the formatted message. If the log message is long or multi-line, then the context
+     * with context from the log data and scope, merged together in
+     * a sequence of key/value pairs after the formatted message.
+     * If the log message is long or multi-line, then the context
      * suffix will be formatted on a single separate line.
      *
-     * This differs from the default formatter because it allows the caller to specify
-     * additional metadata keys to be omitted from the formatted context. By default the `cause` is
-     * always omitted from the context section, since it's handled separately by most logger backends and
-     * almost never expected to be part of the formatted message. Other internal metadata keys may
-     * also be suppressed.
+     * This differs from the default formatter because it allows
+     * the caller to specify additional metadata keys to be omitted
+     * from the formatted context.
+     * By default the `cause` is always omitted from the context section,
+     * since it's handled separately by most logger backends and
+     * almost never expected to be part of the formatted message.
+     * Other internal metadata keys may also be suppressed.
      */
     public fun getSimpleFormatterIgnoring(
         vararg extraIgnoredKeys: MetadataKey<*>
@@ -119,23 +126,19 @@ public object SimpleMessageFormatter {
     }
 
     /**
-     * Appends formatted context information to the given buffer using the supplied metadata
-     * handler.
+     * Appends formatted context information to the given buffer
+     * using the supplied metadata handler.
+     *
      * A custom metadata handler is useful if the logger backend wishes to:
      *
      * - Ignore more than just the default set of metadata keys (currently just the "cause").
      * - Intercept and capture metadata values for additional processing or logging control.
      *
-     * @param metadataProcessor
-     *         snapshot of the metadata to be processed ([MetadataProcessor] is
-     *         reusable so passing one in can save repeated processing of the same metadata).
-     *
-     * @param metadataHandler
-     *         a metadata handler for intercepting and dispatching metadata during
-     *         formatting.
-     *
-     * @param buffer
-     *         destination buffer into which the log message and metadata will be appended.
+     * @param metadataProcessor A snapshot of the metadata to be processed ([MetadataProcessor] is
+     *        reusable so passing one in can save repeated processing of the same metadata).
+     * @param metadataHandler A metadata handler for intercepting and dispatching
+     *        metadata during formatting.
+     * @param buffer Destination buffer into which the log message and metadata will be appended.
      *
      * @return the given destination buffer (for method chaining).
      */
@@ -152,30 +155,26 @@ public object SimpleMessageFormatter {
     }
 
     /**
-     * Returns the single literal value as a string. This method must never be called if the log
-     * data has arguments to be formatted.
+     * Returns the single literal value as a string.
      *
-     * This method is designed to be paired with
-     * [mustBeFormatted] and can always be safely called if that
-     * method returned `false` for the same log data.
+     * This function must never be called if the log data has arguments to be formatted.
      *
-     * @param logData
-     *         the log statement data.
+     * This function is designed to be paired with [mustBeFormatted] and can always be safely
+     * called if that method returned `false` for the same log data.
+     *
+     * @param logData The log statement data.
      *
      * @return the single logged value as a string.
-     * @throws IllegalStateException
-     *         if the log data had arguments to be formatted (i.e. there was a
-     *         template context).
      */
     public fun getLiteralLogMessage(logData: LogData): String =
         logData.literalArgument.safeToString()
 
     /**
-     * An internal helper method for logger backends which are aggressively optimized for
-     * performance.
-     * This method is a best-effort optimization and should not be necessary for most
-     * implementations.
-     * It is not a stable API and may be removed at some point in the future.
+     * An internal helper function for logger backends which are aggressively
+     * optimized for performance.
+     *
+     * This function is a best-effort optimization and should not be necessary for most
+     * implementations. It is not a stable API and may be removed at some point in the future.
      *
      * This method attempts to determine, for the given log data and log metadata, if the
      * default message formatting performed by the other methods in this class would
@@ -184,14 +183,16 @@ public object SimpleMessageFormatter {
      * If this method returns `false` then the literal log message can be obtained via
      * [getLiteralLogMessage], otherwise it must be formatted manually.
      *
-     * By calling this class it is possible to more easily detect cases where using buffers to
-     * format the log message is not required. Obviously a logger backend my have its own reasons
-     * for needing buffering (e.g., prepending log site data) and those must also be taken into account.
+     * By calling this class it is possible to more easily detect cases where using
+     * buffers to format the log message is not required.
+     * Obviously, a logger backend my have its own reasons for needing buffering
+     * (e.g., prepending log site data) and those must also be taken into account.
      *
      * @param metadata The metadata intended to be formatted with the log statement.
      * @param keysToIgnore A set of metadata keys which are known not to appear in
      *        the final formatted message.
      */
+    @Internal
     public fun mustBeFormatted(
         metadata: MetadataProcessor,
         keysToIgnore: Set<MetadataKey<*>>
@@ -222,13 +223,12 @@ public object SimpleMessageFormatter {
                 return appendContext(metadata, handler, buffer)
             }
 
-            override fun format(logData: LogData, metadata: MetadataProcessor): String {
-                return if (mustBeFormatted(metadata, keysToIgnore)) {
+            override fun format(logData: LogData, metadata: MetadataProcessor): String =
+                if (mustBeFormatted(metadata, keysToIgnore)) {
                     append(logData, metadata, StringBuilder()).toString()
                 } else {
                     getLiteralLogMessage(logData)
                 }
-            }
         }
     }
 }
