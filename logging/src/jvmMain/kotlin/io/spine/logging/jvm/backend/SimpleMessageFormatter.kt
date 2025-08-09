@@ -31,6 +31,7 @@ import io.spine.annotation.Internal
 import io.spine.logging.jvm.LogContext
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.MetadataKey.KeyValueHandler
+import io.spine.logging.jvm.backend.SimpleMessageFormatter.appendContext
 import io.spine.logging.jvm.backend.SimpleMessageFormatter.getLiteralLogMessage
 import io.spine.logging.jvm.backend.SimpleMessageFormatter.getSimpleFormatterIgnoring
 import io.spine.logging.jvm.backend.SimpleMessageFormatter.mustBeFormatted
@@ -68,11 +69,10 @@ import java.util.*
  */
 public object SimpleMessageFormatter {
 
-    @Suppress("ConstantCaseForConstants")
-    private val DEFAULT_KEYS_TO_IGNORE: Set<MetadataKey<*>> =
+    private val defaultKeysToIgnore: Set<MetadataKey<*>> =
         Collections.singleton(LogContext.Key.LOG_CAUSE)
 
-    private val DEFAULT_FORMATTER: LogMessageFormatter = newFormatter(DEFAULT_KEYS_TO_IGNORE)
+    private val defaultFormatter: LogMessageFormatter = IgnoringFormatter(defaultKeysToIgnore)
 
     /**
      * Returns the singleton default log message formatter.
@@ -92,7 +92,7 @@ public object SimpleMessageFormatter {
      * Other internal metadata keys may also be suppressed.
      */
     @JvmStatic
-    public fun getDefaultFormatter(): LogMessageFormatter = DEFAULT_FORMATTER
+    public fun getDefaultFormatter(): LogMessageFormatter = defaultFormatter
 
     /**
      * Returns a log message formatter which formats log messages in the form:
@@ -120,9 +120,9 @@ public object SimpleMessageFormatter {
         if (extraIgnoredKeys.isEmpty()) {
             return getDefaultFormatter()
         }
-        val ignored = DEFAULT_KEYS_TO_IGNORE.toMutableSet()
+        val ignored = defaultKeysToIgnore.toMutableSet()
         ignored.addAll(extraIgnoredKeys)
-        return newFormatter(ignored)
+        return IgnoringFormatter(ignored)
     }
 
     /**
@@ -176,7 +176,7 @@ public object SimpleMessageFormatter {
      * This function is a best-effort optimization and should not be necessary for most
      * implementations. It is not a stable API and may be removed at some point in the future.
      *
-     * This method attempts to determine, for the given log data and log metadata, if the
+     * This function attempts to determine, for the given log data and log metadata, if the
      * default message formatting performed by the other methods in this class would
      * just result in the literal log message being used, with no additional formatting.
      *
@@ -203,32 +203,32 @@ public object SimpleMessageFormatter {
         return metadata.keyCount() > keysToIgnore.size ||
                 !keysToIgnore.containsAll(metadata.keySet())
     }
+}
 
-    /**
-     * Returns a new "simple" formatter which ignores the given set of metadata keys.
-     *
-     * The caller must ensure that the given set is effectively immutable.
-     */
-    private fun newFormatter(keysToIgnore: Set<MetadataKey<*>>): LogMessageFormatter {
-        return object : LogMessageFormatter() {
-            private val handler: MetadataHandler<KeyValueHandler> =
-                MetadataKeyValueHandlers.getDefaultHandler(keysToIgnore)
+/**
+ * A "simple" formatter which ignores the given set of metadata keys.
+ *
+ * The caller must ensure that the given set is effectively immutable.
+ */
+private class IgnoringFormatter(
+    private val keysToIgnore: Set<MetadataKey<*>>
+) : LogMessageFormatter() {
+    private val handler: MetadataHandler<KeyValueHandler> =
+        MetadataKeyValueHandlers.getDefaultHandler(keysToIgnore)
 
-            override fun append(
-                logData: LogData,
-                metadata: MetadataProcessor,
-                buffer: StringBuilder
-            ): StringBuilder {
-                buffer.append(logData.literalArgument.safeToString())
-                return appendContext(metadata, handler, buffer)
-            }
-
-            override fun format(logData: LogData, metadata: MetadataProcessor): String =
-                if (mustBeFormatted(metadata, keysToIgnore)) {
-                    append(logData, metadata, StringBuilder()).toString()
-                } else {
-                    getLiteralLogMessage(logData)
-                }
-        }
+    override fun append(
+        logData: LogData,
+        metadata: MetadataProcessor,
+        buffer: StringBuilder
+    ): StringBuilder {
+        buffer.append(logData.literalArgument.safeToString())
+        return appendContext(metadata, handler, buffer)
     }
+
+    override fun format(logData: LogData, metadata: MetadataProcessor): String =
+        if (mustBeFormatted(metadata, keysToIgnore)) {
+            append(logData, metadata, StringBuilder()).toString()
+        } else {
+            getLiteralLogMessage(logData)
+        }
 }
