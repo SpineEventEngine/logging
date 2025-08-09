@@ -64,7 +64,7 @@ public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(
     arg1: Any?,
     arg2: Any?,
     arg3: Any?
-): Unit {
+) {
     log { String.format(message, arg1, arg2, arg3) }
 }
 
