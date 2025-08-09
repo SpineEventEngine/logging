@@ -64,12 +64,20 @@ public class SimpleMessageFormatter private constructor() : LogMessageFormatter(
          * Metadata handler for formatting key-value pairs.
          */
         private val METADATA_HANDLER = object : MetadataHandler<MutableList<String>>() {
-            override fun <T : Any> handle(key: MetadataKey<T>, value: T, context: MutableList<String>) {
+            override fun <T : Any> handle(
+                key: MetadataKey<T>, 
+                value: T, 
+                context: MutableList<String>
+            ) {
                 val stringified = "${key.label}=${formatValue(value)}"
                 context.add(stringified)
             }
 
-            override fun <T : Any> handleRepeated(key: MetadataKey<T>, values: Iterator<T>, context: MutableList<String>) {
+            override fun <T : Any> handleRepeated(
+                key: MetadataKey<T>, 
+                values: Iterator<T>, 
+                context: MutableList<String>
+            ) {
                 // Convert to list to handle single vs multiple values
                 val valueList = values.asSequence().map(::formatValue).toList()
                 val formattedValue = when (valueList.size) {
