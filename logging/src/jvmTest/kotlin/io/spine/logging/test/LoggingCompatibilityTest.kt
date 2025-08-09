@@ -52,14 +52,14 @@ internal class LoggingCompatibilityTest {
         logger.atInfo().log("String literal message")
     }
 
-    @Test  
+    @Test
     @DisplayName("support extension function with formatted string and single argument")
     fun testFormattedMessageOneArg() {
         logger.atInfo().log("Formatted message: %s", "test")
     }
 
     @Test
-    @DisplayName("support extension function with formatted string and multiple arguments") 
+    @DisplayName("support extension function with formatted string and multiple arguments")
     fun testFormattedMessageMultipleArgs() {
         logger.atInfo().log("Multiple args: %s, %d, %s", "first", 42, "third")
     }
