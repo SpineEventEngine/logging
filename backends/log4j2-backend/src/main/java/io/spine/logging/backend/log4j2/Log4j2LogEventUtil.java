@@ -141,6 +141,7 @@ final class Log4j2LogEventUtil {
         var instant = new MutableInstant();
         // Don't use Duration here as (a) it allocates and (b) we can't allow error on overflow.
         var epochSeconds = NANOSECONDS.toSeconds(timestampNanos);
+        @SuppressWarnings("NumericCastThatLosesPrecision")
         var remainingNanos = (int) (timestampNanos - SECONDS.toNanos(epochSeconds));
         instant.initFromEpochSecond(epochSeconds, remainingNanos);
         return instant;
