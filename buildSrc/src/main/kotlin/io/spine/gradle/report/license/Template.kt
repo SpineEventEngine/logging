@@ -28,8 +28,7 @@ package io.spine.gradle.report.license
 
 import io.spine.docs.MarkdownDocument
 import io.spine.gradle.artifactId
-import java.time.Instant
-import java.util.TimeZone
+import java.util.Date
 import org.gradle.api.Project
 
 /**
@@ -52,7 +51,7 @@ internal class Template(
     }
 
     internal fun writeFooter() {
-        val currentTime = Instant.now().atZone(TimeZone.getDefault().toZoneId())
+        val currentTime = Date()
         out.text(longBreak)
             .text("The dependencies distributed under several licenses, ")
             .text("are used according their commercial-use-friendly license.")
@@ -60,12 +59,14 @@ internal class Template(
             .text("This report was generated on ")
             .bold("$currentTime")
             .text(" using ")
+            .nl()
             .link(
                 "Gradle-License-Report plugin",
                 "https://github.com/jk1/Gradle-License-Report"
             )
             .text(" by Evgeny Naumenko, ")
             .text("licensed under ")
+            .nl()
             .link(
                 "Apache 2.0 License",
                 "https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE"
