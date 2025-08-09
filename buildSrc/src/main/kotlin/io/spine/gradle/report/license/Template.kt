@@ -40,6 +40,7 @@ internal class Template(
 ) {
 
     private companion object {
+        @Suppress("ConstPropertyName")
         private const val longBreak = "\n\n"
     }
 
