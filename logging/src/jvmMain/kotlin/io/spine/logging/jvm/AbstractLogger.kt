@@ -239,7 +239,7 @@ public abstract class AbstractLogger<API : MiddlemanApi<API>> protected construc
         val out = buildString {
             append(formatTimestampIso8601(data))
             append(": logging error [")
-            append(data.logSite?.toString() ?: "UNKNOWN")
+            append(data.logSite.toString())
             append("]: ")
             append(message)
         }
