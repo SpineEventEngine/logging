@@ -43,7 +43,7 @@ import java.util.*
 /**
  * Error message for if `toString()` returns null.
  */
-private const val NULL_TOSTRING_MESSAGE = "toString() returned null"
+private const val NULL_TO_STRING_MESSAGE = "`toString()` returned `null`"
 
 /**
  * The locale to be used for the formatting.
@@ -93,7 +93,7 @@ private fun Any?.toNonNullString(): String {
         // We also want to distinguish a null
         // value (which is normal) from having toString() return `null` (which is an error).
         val s: String? = this.toString()
-        return s ?: formatErrorMessageFor(NULL_TOSTRING_MESSAGE)
+        return s ?: formatErrorMessageFor(NULL_TO_STRING_MESSAGE)
     }
     // None of the following methods can return `null` if given a non-null value.
     return when (this) {
