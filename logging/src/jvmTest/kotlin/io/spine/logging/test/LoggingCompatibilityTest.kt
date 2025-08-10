@@ -67,7 +67,7 @@ internal class LoggingCompatibilityTest {
     }
 
     @Test
-    fun `provide 'logVarargs' extension function`() {
+    fun `accepting array as 'varargs'`() {
         val output = tapConsole {
             val args = arrayOf<Any?>("arg1", "arg2")
             logger.atInfo().logVarargs("Message with array: %s %s", args)
