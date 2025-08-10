@@ -89,4 +89,3 @@ public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.logVarargs(
 ) {
     log { if (params != null) String.format(message, *params) else message }
 }
-
