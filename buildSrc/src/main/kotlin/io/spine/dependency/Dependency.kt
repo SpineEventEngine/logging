@@ -105,6 +105,7 @@ abstract class DependencyWithBom : Dependency() {
 fun Configuration.diagSuffix(project: Project): String =
     "the configuration `$name` in the project: `${project.path}`."
 
+
 private fun ResolutionStrategy.forceWithLogging(
     project: Project,
     configuration: Configuration,
