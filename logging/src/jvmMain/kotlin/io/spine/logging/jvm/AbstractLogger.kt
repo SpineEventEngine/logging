@@ -259,4 +259,3 @@ private fun StringBuilder.appendLogSite(logSite: JvmLogSite) {
     append(logSite.lineNumber)
     append(')')
 }
-
