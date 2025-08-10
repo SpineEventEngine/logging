@@ -79,11 +79,13 @@ private class NoOpScopedLoggingContext : ScopedLoggingContext(), AutoCloseable {
             LazyLogger.logger
                 .atWarning()
                 .withStackTrace(StackSize.SMALL)
-                .log("""
-                        Scoped logging contexts are disabled; no context data provider was installed.
-                        To enable scoped logging contexts in your application, see the site-specific Platform class used to configure logging behaviour.
-                        Default Platform: `$defaultPlatform`.
-                        """.trimIndent())
+                .log {
+                    """
+                    Scoped logging contexts are disabled; no context data provider was installed.
+                    To enable scoped logging contexts in your application, see the site-specific Platform class used to configure logging behaviour.
+                    Default Platform: `$defaultPlatform`.
+                    """.trimIndent()
+                }
         }
     }
 

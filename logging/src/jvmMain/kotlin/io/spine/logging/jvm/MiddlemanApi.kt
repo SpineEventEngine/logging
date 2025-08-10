@@ -233,6 +233,7 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
      * logger.atFine().every(100).isEnabled()
      * ```
      * is incorrect because it will always behave identically to:
+     *
      * ```kotlin
      * logger.atFine().isEnabled()
      * ```
@@ -257,35 +258,26 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
     public fun isEnabled(): Boolean
 
     /**
-     * Terminal log statement when a message is not required. A `log` method must terminate all
-     * fluent logging chains, and the no-argument method can be used if there is no need for a log
-     * message. For example:
+     * Terminal log statement when a message is not required.
+     *
+     * A `log` method must terminate all fluent logging chains, and the no-argument method
+     * can be used if there is no need for a log message. For example:
      * ```
      * logger.at(INFO).withCause(error).log()
      * ```
      *
-     * However, as it is good practice to give all log statements a meaningful log message, use of this
-     * method should be rare.
+     * However, as it is good practice to give all log statements a meaningful log message,
+     * use of this method should be rare.
      */
     public fun log()
 
     /**
-     * Logs the given literal string without interpreting any argument placeholders.
+     * Logs the given string computed by the given function.
      *
-     * Important: This is intended only for use with hard-coded, literal strings which cannot
-     * contain user data. If you wish to log user-generated data, you should do something like:
-     * ```
-     * log("user data=%s", value)
-     * ```
-     * This serves to give the user data context in the log file but, more importantly, makes it
-     * clear which arguments may contain PII and other sensitive data (which might need to be
-     * scrubbed during logging). This recommendation also applies to all the overloaded [log]
-     * methods below.
-     *
-     * @param msg The literal string to log. If `null`, this method will log a string literal
-     *   reserved by the Logging library for `null`s.
+     * @param msg A lambda that returns the literal string to log. If the lambda returns `null`,
+     *       this method will log a string literal reserved by the Logging library for `null`s.
      */
-    public fun log(msg: String?)
+    public fun log(msg: () -> String?)
 
     /**
      * Aggregates stateful logging with respect to a given [key].
@@ -394,7 +386,6 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
      *
      * When [io.spine.logging.jvm.context.ScopedLoggingContext] is used to create a context,
      * it can be bound to a [io.spine.logging.jvm.context.ScopeType]. For example:
-     *
      *
      * ```kotlin
      * ScopedLoggingContexts.newContext(REQUEST).run { scopedMethod(x, y, z) }
@@ -570,264 +561,6 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
     ): API
 
     /**
-     * Logs a formatted representation of values in the given array,
-     * using the specified message template.
-     *
-     * This method is only expected to be invoked with an existing
-     * varargs array passed in from another method.
-     * Unlike [log], which would treat an array as a single
-     * parameter, this method will unwrap the given array.
-     *
-     * @param message The message template string containing an argument
-     *        placeholder for each element of [params].
-     * @param params The non-null array of arguments to be formatted.
-     */
-    public fun logVarargs(message: String, params: Array<Any?>?)
-
-    /**
-     * Logs a formatted representation of the given parameter,
-     * using the specified message template.
-     *
-     * The message string is expected to contain argument placeholder terms
-     * appropriate to the logger's choice of parser.
-     *
-     * Note that `printf`-style loggers are always expected to accept the standard Java `printf`
-     * formatting characters (e.g., "%s", "%d", etc...) and all flags unless otherwise stated.
-     * Null arguments are formatted as the literal string "null" regardless of
-     * formatting flags.
-     *
-     * @param message the message template string containing a single argument placeholder.
-     */
-    public fun log(message: String?, p1: Any?)
-
-    /**
-     * Logs a message with formatted arguments (see [log] with one parameter for details).
-     */
-    public fun log(message: String?, p1: Any?, p2: Any?)
-
-    /**
-     * Logs a message with formatted arguments (see [log] with one parameter for details).
-     */
-    public fun log(message: String?, p1: Any?, p2: Any?, p3: Any?)
-
-    /**
-     * Logs a message with formatted arguments (see [log] with one parameter for details).
-     */
-    public fun log(message: String?, p1: Any?, p2: Any?, p3: Any?, p4: Any?)
-
-    /**
-     * Logs a message with formatted arguments (see [log] with one parameter for details).
-     */
-    public fun log(message: String?, p1: Any?, p2: Any?, p3: Any?, p4: Any?, p5: Any?)
-
-    /**
-     * Logs a message with formatted arguments (see [log] with one parameter for details).
-     */
-    public fun log(
-        message: String?,
-        p1: Any?,
-        p2: Any?,
-        p3: Any?,
-        p4: Any?,
-        p5: Any?,
-        p6: Any?
-    )
-
-    /**
-     * Logs a message with formatted arguments (see [log] with one parameter for details).
-     */
-    public fun log(
-        message: String?,
-        p1: Any?,
-        p2: Any?,
-        p3: Any?,
-        p4: Any?,
-        p5: Any?,
-        p6: Any?,
-        p7: Any?
-    )
-
-    /** Logs a message with formatted arguments (see [log] with one parameter for details). */
-    public fun log(
-        message: String?,
-        p1: Any?,
-        p2: Any?,
-        p3: Any?,
-        p4: Any?,
-        p5: Any?,
-        p6: Any?,
-        p7: Any?,
-        p8: Any?
-    )
-
-    /** Logs a message with formatted arguments (see [log] with one parameter for details). */
-    public fun log(
-        message: String?,
-        p1: Any?,
-        p2: Any?,
-        p3: Any?,
-        p4: Any?,
-        p5: Any?,
-        p6: Any?,
-        p7: Any?,
-        p8: Any?,
-        p9: Any?
-    )
-
-    /** Logs a message with formatted arguments (see [log] with one parameter for details). */
-    public fun log(
-        message: String?,
-        p1: Any?,
-        p2: Any?,
-        p3: Any?,
-        p4: Any?,
-        p5: Any?,
-        p6: Any?,
-        p7: Any?,
-        p8: Any?,
-        p9: Any?,
-        p10: Any?
-    )
-
-    /** Logs a message with formatted arguments (see [log] with one parameter for details). */
-    public fun log(
-        message: String?,
-        p1: Any?,
-        p2: Any?,
-        p3: Any?,
-        p4: Any?,
-        p5: Any?,
-        p6: Any?,
-        p7: Any?,
-        p8: Any?,
-        p9: Any?,
-        p10: Any?,
-        vararg rest: Any?
-    )
-
-    // Single primitive parameter methods
-    /** Logs a message with a primitive parameter (see [log] with one parameter for details). */
-    public fun log(message: String?, p1: Char)
-    /** Logs a message with a primitive parameter (see [log] with one parameter for details). */
-    public fun log(message: String?, p1: Byte)
-    /** Logs a message with a primitive parameter (see [log] with one parameter for details). */
-    public fun log(message: String?, p1: Short)
-    /** Logs a message with a primitive parameter (see [log] with one parameter for details). */
-    public fun log(message: String?, p1: Int)
-    /** Logs a message with a primitive parameter (see [log] with one parameter for details). */
-    public fun log(message: String?, p1: Long)
-
-    // Two parameter methods with primitives
-    /** Logs a message with a primitive parameter (see [log] with one parameter for details). */
-    public fun log(message: String?, p1: Any?, p2: Boolean)
-    /** Logs a message with a primitive parameter (see [log] with one parameter for details). */
-    public fun log(message: String?, p1: Any?, p2: Char)
-    /** Logs a message with a primitive parameter (see [log] with one parameter for details). */
-    public fun log(message: String?, p1: Any?, p2: Byte)
-    /** Logs a message with a primitive parameter (see [log] with one parameter for details). */
-    public fun log(message: String?, p1: Any?, p2: Short)
-    /** Logs a message with a primitive parameter (see [log] with one parameter for details). */
-    public fun log(message: String?, p1: Any?, p2: Int)
-    /** Logs a message with a primitive parameter (see [log] with one parameter for details). */
-    public fun log(message: String?, p1: Any?, p2: Long)
-    /** Logs a message with a primitive parameter (see [log] with one parameter for details). */
-    public fun log(message: String?, p1: Any?, p2: Float)
-    /** Logs a message with a primitive parameter (see [log] with one parameter for details). */
-    public fun log(message: String?, p1: Any?, p2: Double)
-
-    /** Logs a message with a primitive parameter (see [log] with one parameter for details). */
-    public fun log(message: String?, p1: Boolean, p2: Any?)
-    /** Logs a message with a primitive parameter (see [log] with one parameter for details). */
-    public fun log(message: String?, p1: Char, p2: Any?)
-    /** Logs a message with a primitive parameter (see [log] with one parameter for details). */
-    public fun log(message: String?, p1: Byte, p2: Any?)
-    /** Logs a message with a primitive parameter (see [log] with one parameter for details). */
-    public fun log(message: String?, p1: Short, p2: Any?)
-    /** Logs a message with a primitive parameter (see [log] with one parameter for details). */
-    public fun log(message: String?, p1: Int, p2: Any?)
-    /** Logs a message with a primitive parameter (see [log] with one parameter for details). */
-    public fun log(message: String?, p1: Long, p2: Any?)
-    /** Logs a message with a primitive parameter (see [log] with one parameter for details). */
-    public fun log(message: String?, p1: Float, p2: Any?)
-    /** Logs a message with a primitive parameter (see [log] with one parameter for details). */
-    public fun log(message: String?, p1: Double, p2: Any?)
-
-    // Primitive-primitive combinations
-    // All methods below log a message with two primitive parameters
-    // (see log(String?, Any?) method for details about formatting)
-    public fun log(message: String?, p1: Boolean, p2: Boolean)
-    public fun log(message: String?, p1: Char, p2: Boolean)
-    public fun log(message: String?, p1: Byte, p2: Boolean)
-    public fun log(message: String?, p1: Short, p2: Boolean)
-    public fun log(message: String?, p1: Int, p2: Boolean)
-    public fun log(message: String?, p1: Long, p2: Boolean)
-    public fun log(message: String?, p1: Float, p2: Boolean)
-    public fun log(message: String?, p1: Double, p2: Boolean)
-
-    public fun log(message: String?, p1: Boolean, p2: Char)
-    public fun log(message: String?, p1: Char, p2: Char)
-    public fun log(message: String?, p1: Byte, p2: Char)
-    public fun log(message: String?, p1: Short, p2: Char)
-    public fun log(message: String?, p1: Int, p2: Char)
-    public fun log(message: String?, p1: Long, p2: Char)
-    public fun log(message: String?, p1: Float, p2: Char)
-    public fun log(message: String?, p1: Double, p2: Char)
-
-    public fun log(message: String?, p1: Boolean, p2: Byte)
-    public fun log(message: String?, p1: Char, p2: Byte)
-    public fun log(message: String?, p1: Byte, p2: Byte)
-    public fun log(message: String?, p1: Short, p2: Byte)
-    public fun log(message: String?, p1: Int, p2: Byte)
-    public fun log(message: String?, p1: Long, p2: Byte)
-    public fun log(message: String?, p1: Float, p2: Byte)
-    public fun log(message: String?, p1: Double, p2: Byte)
-
-    public fun log(message: String?, p1: Boolean, p2: Short)
-    public fun log(message: String?, p1: Char, p2: Short)
-    public fun log(message: String?, p1: Byte, p2: Short)
-    public fun log(message: String?, p1: Short, p2: Short)
-    public fun log(message: String?, p1: Int, p2: Short)
-    public fun log(message: String?, p1: Long, p2: Short)
-    public fun log(message: String?, p1: Float, p2: Short)
-    public fun log(message: String?, p1: Double, p2: Short)
-
-    public fun log(message: String?, p1: Boolean, p2: Int)
-    public fun log(message: String?, p1: Char, p2: Int)
-    public fun log(message: String?, p1: Byte, p2: Int)
-    public fun log(message: String?, p1: Short, p2: Int)
-    public fun log(message: String?, p1: Int, p2: Int)
-    public fun log(message: String?, p1: Long, p2: Int)
-    public fun log(message: String?, p1: Float, p2: Int)
-    public fun log(message: String?, p1: Double, p2: Int)
-
-    public fun log(message: String?, p1: Boolean, p2: Long)
-    public fun log(message: String?, p1: Char, p2: Long)
-    public fun log(message: String?, p1: Byte, p2: Long)
-    public fun log(message: String?, p1: Short, p2: Long)
-    public fun log(message: String?, p1: Int, p2: Long)
-    public fun log(message: String?, p1: Long, p2: Long)
-    public fun log(message: String?, p1: Float, p2: Long)
-    public fun log(message: String?, p1: Double, p2: Long)
-
-    public fun log(message: String?, p1: Boolean, p2: Float)
-    public fun log(message: String?, p1: Char, p2: Float)
-    public fun log(message: String?, p1: Byte, p2: Float)
-    public fun log(message: String?, p1: Short, p2: Float)
-    public fun log(message: String?, p1: Int, p2: Float)
-    public fun log(message: String?, p1: Long, p2: Float)
-    public fun log(message: String?, p1: Float, p2: Float)
-    public fun log(message: String?, p1: Double, p2: Float)
-
-    public fun log(message: String?, p1: Boolean, p2: Double)
-    public fun log(message: String?, p1: Char, p2: Double)
-    public fun log(message: String?, p1: Byte, p2: Double)
-    public fun log(message: String?, p1: Short, p2: Double)
-    public fun log(message: String?, p1: Int, p2: Double)
-    public fun log(message: String?, p1: Long, p2: Double)
-    public fun log(message: String?, p1: Float, p2: Double)
-    public fun log(message: String?, p1: Double, p2: Double)
-
-    /**
      * An implementation of [MiddlemanApi] which does nothing and discards all parameters.
      *
      * This class (or a subclass in the case of an extended API) should be returned whenever logging
@@ -869,190 +602,8 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
 
         override fun withStackTrace(size: StackSize): API = noOp()
 
-        override fun logVarargs(message: String, params: Array<Any?>?): Unit = Unit
-
         override fun log(): Unit = Unit
 
-        override fun log(msg: String?): Unit = Unit
-
-        override fun log(message: String?, p1: Any?): Unit = Unit
-
-        override fun log(message: String?, p1: Any?, p2: Any?): Unit = Unit
-
-        override fun log(message: String?, p1: Any?, p2: Any?, p3: Any?): Unit = Unit
-
-        override fun log(message: String?, p1: Any?, p2: Any?, p3: Any?, p4: Any?): Unit = Unit
-
-        override fun log(message: String?, p1: Any?, p2: Any?, p3: Any?, p4: Any?, p5: Any?): Unit =
-            Unit
-
-        override fun log(
-            message: String?,
-            p1: Any?,
-            p2: Any?,
-            p3: Any?,
-            p4: Any?,
-            p5: Any?,
-            p6: Any?
-        ): Unit = Unit
-
-        override fun log(
-            message: String?,
-            p1: Any?,
-            p2: Any?,
-            p3: Any?,
-            p4: Any?,
-            p5: Any?,
-            p6: Any?,
-            p7: Any?
-        ): Unit = Unit
-
-        override fun log(
-            message: String?,
-            p1: Any?,
-            p2: Any?,
-            p3: Any?,
-            p4: Any?,
-            p5: Any?,
-            p6: Any?,
-            p7: Any?,
-            p8: Any?
-        ): Unit = Unit
-
-        override fun log(
-            message: String?,
-            p1: Any?,
-            p2: Any?,
-            p3: Any?,
-            p4: Any?,
-            p5: Any?,
-            p6: Any?,
-            p7: Any?,
-            p8: Any?,
-            p9: Any?
-        ): Unit = Unit
-
-        override fun log(
-            message: String?,
-            p1: Any?,
-            p2: Any?,
-            p3: Any?,
-            p4: Any?,
-            p5: Any?,
-            p6: Any?,
-            p7: Any?,
-            p8: Any?,
-            p9: Any?,
-            p10: Any?
-        ): Unit = Unit
-
-        override fun log(
-            message: String?,
-            p1: Any?,
-            p2: Any?,
-            p3: Any?,
-            p4: Any?,
-            p5: Any?,
-            p6: Any?,
-            p7: Any?,
-            p8: Any?,
-            p9: Any?,
-            p10: Any?,
-            vararg rest: Any?
-        ): Unit = Unit
-
-        // Single primitive parameter methods
-        override fun log(message: String?, p1: Char): Unit = Unit
-        override fun log(message: String?, p1: Byte): Unit = Unit
-        override fun log(message: String?, p1: Short): Unit = Unit
-        override fun log(message: String?, p1: Int): Unit = Unit
-        override fun log(message: String?, p1: Long): Unit = Unit
-
-        // Two parameter methods with primitives
-        override fun log(message: String?, p1: Any?, p2: Boolean): Unit = Unit
-        override fun log(message: String?, p1: Any?, p2: Char): Unit = Unit
-        override fun log(message: String?, p1: Any?, p2: Byte): Unit = Unit
-        override fun log(message: String?, p1: Any?, p2: Short): Unit = Unit
-        override fun log(message: String?, p1: Any?, p2: Int): Unit = Unit
-        override fun log(message: String?, p1: Any?, p2: Long): Unit = Unit
-        override fun log(message: String?, p1: Any?, p2: Float): Unit = Unit
-        override fun log(message: String?, p1: Any?, p2: Double): Unit = Unit
-
-        override fun log(message: String?, p1: Boolean, p2: Any?): Unit = Unit
-        override fun log(message: String?, p1: Char, p2: Any?): Unit = Unit
-        override fun log(message: String?, p1: Byte, p2: Any?): Unit = Unit
-        override fun log(message: String?, p1: Short, p2: Any?): Unit = Unit
-        override fun log(message: String?, p1: Int, p2: Any?): Unit = Unit
-        override fun log(message: String?, p1: Long, p2: Any?): Unit = Unit
-        override fun log(message: String?, p1: Float, p2: Any?): Unit = Unit
-        override fun log(message: String?, p1: Double, p2: Any?): Unit = Unit
-
-        // Primitive-primitive combinations
-        override fun log(message: String?, p1: Boolean, p2: Boolean): Unit = Unit
-        override fun log(message: String?, p1: Char, p2: Boolean): Unit = Unit
-        override fun log(message: String?, p1: Byte, p2: Boolean): Unit = Unit
-        override fun log(message: String?, p1: Short, p2: Boolean): Unit = Unit
-        override fun log(message: String?, p1: Int, p2: Boolean): Unit = Unit
-        override fun log(message: String?, p1: Long, p2: Boolean): Unit = Unit
-        override fun log(message: String?, p1: Float, p2: Boolean): Unit = Unit
-        override fun log(message: String?, p1: Double, p2: Boolean): Unit = Unit
-
-        override fun log(message: String?, p1: Boolean, p2: Char): Unit = Unit
-        override fun log(message: String?, p1: Char, p2: Char): Unit = Unit
-        override fun log(message: String?, p1: Byte, p2: Char): Unit = Unit
-        override fun log(message: String?, p1: Short, p2: Char): Unit = Unit
-        override fun log(message: String?, p1: Int, p2: Char): Unit = Unit
-        override fun log(message: String?, p1: Long, p2: Char): Unit = Unit
-        override fun log(message: String?, p1: Float, p2: Char): Unit = Unit
-        override fun log(message: String?, p1: Double, p2: Char): Unit = Unit
-
-        override fun log(message: String?, p1: Boolean, p2: Byte): Unit = Unit
-        override fun log(message: String?, p1: Char, p2: Byte): Unit = Unit
-        override fun log(message: String?, p1: Byte, p2: Byte): Unit = Unit
-        override fun log(message: String?, p1: Short, p2: Byte): Unit = Unit
-        override fun log(message: String?, p1: Int, p2: Byte): Unit = Unit
-        override fun log(message: String?, p1: Long, p2: Byte): Unit = Unit
-        override fun log(message: String?, p1: Float, p2: Byte): Unit = Unit
-        override fun log(message: String?, p1: Double, p2: Byte): Unit = Unit
-        override fun log(message: String?, p1: Boolean, p2: Short): Unit = Unit
-        override fun log(message: String?, p1: Char, p2: Short): Unit = Unit
-        override fun log(message: String?, p1: Byte, p2: Short): Unit = Unit
-        override fun log(message: String?, p1: Short, p2: Short): Unit = Unit
-        override fun log(message: String?, p1: Int, p2: Short): Unit = Unit
-        override fun log(message: String?, p1: Long, p2: Short): Unit = Unit
-        override fun log(message: String?, p1: Float, p2: Short): Unit = Unit
-        override fun log(message: String?, p1: Double, p2: Short): Unit = Unit
-        override fun log(message: String?, p1: Boolean, p2: Int): Unit = Unit
-        override fun log(message: String?, p1: Char, p2: Int): Unit = Unit
-        override fun log(message: String?, p1: Byte, p2: Int): Unit = Unit
-        override fun log(message: String?, p1: Short, p2: Int): Unit = Unit
-        override fun log(message: String?, p1: Int, p2: Int): Unit = Unit
-        override fun log(message: String?, p1: Long, p2: Int): Unit = Unit
-        override fun log(message: String?, p1: Float, p2: Int): Unit = Unit
-        override fun log(message: String?, p1: Double, p2: Int): Unit = Unit
-        override fun log(message: String?, p1: Boolean, p2: Long): Unit = Unit
-        override fun log(message: String?, p1: Char, p2: Long): Unit = Unit
-        override fun log(message: String?, p1: Byte, p2: Long): Unit = Unit
-        override fun log(message: String?, p1: Short, p2: Long): Unit = Unit
-        override fun log(message: String?, p1: Int, p2: Long): Unit = Unit
-        override fun log(message: String?, p1: Long, p2: Long): Unit = Unit
-        override fun log(message: String?, p1: Float, p2: Long): Unit = Unit
-        override fun log(message: String?, p1: Double, p2: Long): Unit = Unit
-        override fun log(message: String?, p1: Boolean, p2: Float): Unit = Unit
-        override fun log(message: String?, p1: Char, p2: Float): Unit = Unit
-        override fun log(message: String?, p1: Byte, p2: Float): Unit = Unit
-        override fun log(message: String?, p1: Short, p2: Float): Unit = Unit
-        override fun log(message: String?, p1: Int, p2: Float): Unit = Unit
-        override fun log(message: String?, p1: Long, p2: Float): Unit = Unit
-        override fun log(message: String?, p1: Float, p2: Float): Unit = Unit
-        override fun log(message: String?, p1: Double, p2: Float): Unit = Unit
-        override fun log(message: String?, p1: Boolean, p2: Double): Unit = Unit
-        override fun log(message: String?, p1: Char, p2: Double): Unit = Unit
-        override fun log(message: String?, p1: Byte, p2: Double): Unit = Unit
-        override fun log(message: String?, p1: Short, p2: Double): Unit = Unit
-        override fun log(message: String?, p1: Int, p2: Double): Unit = Unit
-        override fun log(message: String?, p1: Long, p2: Double): Unit = Unit
-        override fun log(message: String?, p1: Float, p2: Double): Unit = Unit
-        override fun log(message: String?, p1: Double, p2: Double): Unit = Unit
+        override fun log(msg: () -> String?): Unit = Unit
     }
 }

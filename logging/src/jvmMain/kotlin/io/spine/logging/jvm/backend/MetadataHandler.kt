@@ -28,7 +28,7 @@ package io.spine.logging.jvm.backend
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.util.Checks.checkArgument
+import io.spine.logging.jvm.checkCannotRepeat
 
 /**
  * Callback API for logger backend implementations to handle metadata keys/values.
@@ -152,7 +152,7 @@ public abstract class MetadataHandler<C : Any> {
             key: MetadataKey<out T>,
             handler: RepeatedValueHandler<T, in C>
         ): Builder<C> {
-            checkArgument(key.canRepeat(), "key must be repeating")
+            checkCannotRepeat(key)
             singleValueHandlers.remove(key)
             @Suppress("UNCHECKED_CAST")
             repeatedValueHandlers[key] = handler as RepeatedValueHandler<*, in C>

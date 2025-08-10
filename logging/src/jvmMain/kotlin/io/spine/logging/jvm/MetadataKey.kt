@@ -379,3 +379,11 @@ private fun createBloomFilterMaskFromSystemHashcode(instance: Any): Long {
     }
     return bloom
 }
+
+/**
+ * Throws [IllegalArgumentException] if the given [key] can be
+ * used to set more than one value in the metadata.
+ */
+internal fun checkCannotRepeat(key: MetadataKey<*>) {
+    require(!key.canRepeat()) { "The key must be single-valued: `$key`." }
+}

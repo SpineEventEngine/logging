@@ -323,7 +323,7 @@ internal class Log4j2ScopedLoggingSpec {
                 .withTags(contextTags)
                 .install()
                 .use {
-                    logger.atInfo().log("test")
+                    logger.atInfo().log { "test" }
                     lastLogged.contextTags shouldBe expectedTags
                 }
         }
