@@ -385,5 +385,5 @@ private fun createBloomFilterMaskFromSystemHashcode(instance: Any): Long {
  * used to set more than one value in the metadata.
  */
 internal fun checkCannotRepeat(key: MetadataKey<*>) {
-    require(!key.canRepeat()) { "key must be single valued: `$key`." }
+    require(!key.canRepeat()) { "The key must be single-valued: `$key`." }
 }
