@@ -31,7 +31,6 @@ This plan consolidates the JVM-specific fluent logging API into the common Loggi
 - [x] For JVM-only features:
     - [x] Implement per(scopeProvider) as an extension on LoggingApi in JVM sources.
     - [x] Introduce small platform abstractions to preserve semantics on other targets (no-ops where unsupported).
-- [ ] Ensure method chaining remains fluent and preserves API type.
 
 ## Phase 3 — Migrate Middleman to return LoggingApi
 - [ ] Change Middleman.Api to extend LoggingApi (or alias to it), and adapt Middleman.at(level) to return LoggingApi-compatible context objects.
