@@ -253,6 +253,8 @@ public interface LoggingApi<API: LoggingApi<API>> {
      * The `key` passed to this method should always be a variable.
      * Passing of a constant has no effect.
      *
+     * If the `key` is `null`, this method has no effect (no-op).
+     *
      * If multiple aggregation keys are added to a single log statement,
      * then they all take effect and logging is aggregated by the unique
      * combination of keys passed to all [per] methods.
