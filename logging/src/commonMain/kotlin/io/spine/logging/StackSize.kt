@@ -28,9 +28,6 @@ package io.spine.logging
 
 /**
  * Platform-neutral stack trace size enumeration used by LoggingApi.withStackTrace(size).
- *
- * Actual implementations are provided per platform. On JVM, this is typealiased to
- * io.spine.logging.jvm.StackSize.
  */
 public expect enum class StackSize {
     SMALL,
