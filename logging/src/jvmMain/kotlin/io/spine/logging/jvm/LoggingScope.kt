@@ -27,10 +27,6 @@
 package io.spine.logging.jvm
 
 import io.spine.annotation.VisibleForTesting
-import java.lang.ref.ReferenceQueue
-import java.lang.ref.WeakReference
-import java.util.Queue
-import java.util.concurrent.ConcurrentLinkedQueue
 
 /**
  * An opaque scope marker which can be attached to log sites to provide "per scope" behaviour
@@ -87,12 +83,12 @@ public abstract class LoggingScope protected constructor(private val label: Stri
      * that a log site is called from is the intersection of all the currently active scopes
      * which apply to it).
      */
-    protected abstract fun onClose(removalHook: Runnable)
+    protected abstract fun onClose(removalHook: () -> Unit)
 
     /**
      * Opens access to [onClose] for the package.
      */
-    internal fun doOnClose(removalHook: Runnable) = onClose(removalHook)
+    internal fun doOnClose(removalHook: () -> Unit) = onClose(removalHook)
 
     override fun toString(): String = label
 
@@ -128,55 +124,18 @@ public abstract class LoggingScope protected constructor(private val label: Stri
         override fun specialize(key: LogSiteKey): LogSiteKey =
             SpecializedLogSiteKey.of(key, keyPart)
 
-        override fun onClose(removalHook: Runnable) {
+        override fun onClose(removalHook: () -> Unit) {
             // Clear the reference queue about as often as we would add a new key to a map.
             // This should still mean that the queue is almost always empty when we check
             // it (since we expect more than one specialized log site key per scope) and it
             // avoids spamming the queue clearance loop for every log statement and avoids
             // class loading the reference queue until we know scopes have been used.
             KeyPart.removeUnusedKeys()
-            keyPart.onCloseHooks.offer(removalHook)
+            keyPart.addOnCloseHook(removalHook)
         }
 
         internal fun closeForTesting() {
             keyPart.close()
-        }
-    }
-}
-
-/**
- * This class is only loaded once we've seen scopes in action (Android doesn't like
- * eager class loading, and many Android apps won't use scopes). This forms part of each
- * log site key, some must have singleton semantics.
- */
-private class KeyPart(scope: LoggingScope) : WeakReference<LoggingScope>(scope, queue) {
-
-    val onCloseHooks: Queue<Runnable> = ConcurrentLinkedQueue()
-
-    // If this were ever too "bursty" due to removal of many keys for the same scope,
-    // we could modify this code to process only a maximum number of removals each time
-    // and keep a single "in progress" KeyPart around until the next time.
-    fun close() {
-        // This executes once for each map entry created in the enclosing scope.
-        // It is very dependent on logging usage in the scope and theoretically unbounded.
-        var r = onCloseHooks.poll()
-        while (r != null) {
-            r.run()
-            r = onCloseHooks.poll()
-        }
-    }
-
-    companion object {
-        private val queue = ReferenceQueue<LoggingScope>()
-
-        fun removeUnusedKeys() {
-            // There are always more specialized keys than entries in the reference queue,
-            // so the queue should be empty most of the time we get here.
-            var p = queue.poll() as KeyPart?
-            while (p != null) {
-                p.close()
-                p = queue.poll() as KeyPart?
-            }
         }
     }
 }

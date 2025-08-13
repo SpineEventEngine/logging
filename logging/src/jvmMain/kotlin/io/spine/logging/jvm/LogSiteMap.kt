@@ -95,7 +95,7 @@ public abstract class LogSiteMap<V> {
 
     @Suppress("LoopWithTooManyJumpStatements")
     private fun addRemovalHook(key: LogSiteKey, metadata: Metadata) {
-        var removalHook: Runnable? = null
+        var removalHook: (() -> Unit)? = null
         for (i in 0 until metadata.size()) {
             if (LogContext.Key.LOG_SITE_GROUPING_KEY != metadata.getKey(i)) {
                 continue
@@ -106,9 +106,9 @@ public abstract class LogSiteMap<V> {
             }
             if (removalHook == null) {
                 // Non-static inner class references the outer LogSiteMap.
-                removalHook = Runnable { concurrentMap.remove(key) }
+                removalHook = { concurrentMap.remove(key) }
             }
-            groupByKey.doOnClose(removalHook)
+            groupByKey.doOnClose(removalHook!!)
         }
     }
 }
