@@ -75,8 +75,10 @@ private class ApiImpl(private val delegate: Middleman.Api): JvmLogger.Api {
         return this
     }
 
-    override fun withCause(cause: Throwable): JvmLogger.Api {
-        delegate.withCause(cause)
+    override fun withCause(cause: Throwable?): JvmLogger.Api {
+        if (cause != null) {
+            delegate.withCause(cause)
+        }
         return this
     }
 
@@ -91,14 +93,22 @@ private class ApiImpl(private val delegate: Middleman.Api): JvmLogger.Api {
         return this
     }
 
+    override fun onAverageEvery(n: Int): JvmLogger.Api {
+        delegate.onAverageEvery(n)
+        return this
+    }
+
     override fun atMostEvery(n: Int, unit: DurationUnit): JvmLogger.Api {
         val javaTimeUnit = unit.toTimeUnit()
         delegate.atMostEvery(n, javaTimeUnit)
         return this
     }
 
-    override fun per(key: Enum<*>): JvmLogger.Api {
-        delegate.per(key)
+
+    override fun per(key: Enum<*>?): JvmLogger.Api {
+        if (key != null) {
+            delegate.per(key)
+        }
         return this
     }
 

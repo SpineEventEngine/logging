@@ -47,7 +47,7 @@ public interface LoggingApi<API: LoggingApi<API>> {
      * If the method is called more than once, the parameter of the last
      * invocation will be used.
      */
-    public fun withCause(cause: Throwable): API
+    public fun withCause(cause: Throwable?): API
 
     /**
      * Sets the log site for the current log statement.
@@ -152,6 +152,17 @@ public interface LoggingApi<API: LoggingApi<API>> {
     public fun every(n: Int): API
 
     /**
+     * Modifies the current log statement to be emitted on average once per N invocations.
+     *
+     * The specified [n] must be greater than zero.
+     * The first invocation is always emitted.
+     * If called multiple times, the last invocation takes precedence.
+     *
+     * @throws IllegalArgumentException if [n] is non-positive.
+     */
+    public fun onAverageEvery(n: Int): API
+
+    /**
      * Modifies the current log statement to be emitted **at most** once per
      * the specified period.
      *
@@ -246,7 +257,7 @@ public interface LoggingApi<API: LoggingApi<API>> {
      * then they all take effect and logging is aggregated by the unique
      * combination of keys passed to all [per] methods.
      */
-    public fun per(key: Enum<*>): API
+    public fun per(key: Enum<*>?): API
 
     /**
      * Returns `true` if logging is enabled at the level implied for this API.
@@ -274,6 +285,7 @@ public interface LoggingApi<API: LoggingApi<API>> {
      * Extending classes are likely to be non-wildcard, fully specified, no-op
      * implementations of the [API].
      */
+    @Suppress("TooManyFunctions")
     public open class NoOp<API: LoggingApi<API>>: LoggingApi<API> {
 
         /**
@@ -293,7 +305,7 @@ public interface LoggingApi<API: LoggingApi<API>> {
         /**
          * Does nothing.
          */
-        override fun withCause(cause: Throwable): API = noOp()
+        override fun withCause(cause: Throwable?): API = noOp()
 
         /**
          * Does nothing.
@@ -308,7 +320,12 @@ public interface LoggingApi<API: LoggingApi<API>> {
         /**
          * Does nothing.
          */
-        override fun per(key: Enum<*>): API = noOp()
+        override fun onAverageEvery(n: Int): API = noOp()
+
+        /**
+         * Does nothing.
+         */
+        override fun per(key: Enum<*>?): API = noOp()
 
         /**
          * Does nothing.
