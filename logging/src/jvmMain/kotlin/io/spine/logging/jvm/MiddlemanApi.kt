@@ -28,6 +28,7 @@
 
 package io.spine.logging.jvm
 
+import io.spine.logging.LoggingScopeProvider
 import java.util.concurrent.TimeUnit
 
 /**

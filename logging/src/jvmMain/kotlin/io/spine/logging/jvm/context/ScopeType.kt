@@ -27,7 +27,7 @@
 package io.spine.logging.jvm.context
 
 import io.spine.logging.jvm.LoggingScope
-import io.spine.logging.jvm.LoggingScopeProvider
+import io.spine.logging.LoggingScopeProvider
 
 /**
  * Singleton keys which identify different types of scopes which scoped contexts can be bound to.

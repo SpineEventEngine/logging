@@ -34,6 +34,7 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.throwable.shouldHaveMessage
+import io.spine.logging.LoggingScopeProvider
 import io.spine.logging.backend.probe.MemoizingLoggerBackend
 import io.spine.logging.jvm.DurationRateLimiter.Companion.newRateLimitPeriod
 import io.spine.logging.jvm.LogContext.Companion.specializeLogSiteKeyFromMetadata
@@ -71,13 +72,6 @@ internal class LogContextSpec {
     private val logger = Middleman(backend)
 
     companion object {
-        // Arbitrary constants of overloaded types for testing argument mappings.
-        private const val BYTE_ARG = Byte.MAX_VALUE
-        private const val SHORT_ARG = Short.MAX_VALUE
-        private const val INT_ARG = Int.MAX_VALUE
-        private const val LONG_ARG = Long.MAX_VALUE
-        private const val CHAR_ARG = 'X'
-        private val OBJECT_ARG = Any()
         private val REPEATED_KEY = repeatedKey<String>("str")
         private val FLAG_KEY = repeatedKey<Boolean>("flag")
         private val ONCE_PER_SECOND = newRateLimitPeriod(1, SECONDS)

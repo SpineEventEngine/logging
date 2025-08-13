@@ -27,6 +27,7 @@
 package io.spine.logging.jvm
 
 import io.spine.annotation.VisibleForTesting
+import io.spine.logging.LoggingScopeProvider
 import io.spine.logging.jvm.JvmLogSite.Companion.injectedLogSite
 import io.spine.logging.jvm.backend.LogData
 import io.spine.logging.jvm.backend.Metadata
