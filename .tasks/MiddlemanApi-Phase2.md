@@ -62,51 +62,15 @@ Outcome:
 
 ## 5) Stack trace capture
 
-- [ ] Introduce expect/actual StackSize in common
-    - [ ] Enumerate practical sizes; allow platform to clamp
-    - [ ] KDoc: performance and size notes
-- [ ] Add LoggingApi.withStackTrace(size: StackSize)
-    - [ ] JVM actual: synthetic exception attached as cause; preserves withCause chaining (user cause becomes cause of synthetic)
-    - [ ] Other platforms: best-effort or no-op with clear docs
+- [x] Introduce expect/actual StackSize in common
+    - [x] Enumerate practical sizes; allow platform to clamp
+    - [x] KDoc: performance and size notes
+- [x] Add LoggingApi.withStackTrace(size: StackSize)
+    - [x] JVM actual: synthetic exception attached as cause; preserves withCause chaining (user cause becomes cause of synthetic)
+    - [x] Other platforms: best-effort or no-op with clear docs
 
 ## 6) Log site injection alignment
 
-- [ ] Keep LoggingApi.withInjectedLogSite(common LogSite) as the portable API
-    - [ ] Ensure first call wins if invoked multiple times
-    - [ ] No-op on null
-- [ ] JVM-only overloads remain JVM-specific
-    - [ ] Do not expose agent-only overloads in common
-    - [ ] KDoc: discourage explicit injection except for helper methods with perf caveats
-
-## 7) Source and binary compatibility considerations
-
-- [ ] Maintain fluent non-wildcard API types to aid optimizer behavior
-- [ ] Add null-accepting overloads where needed; avoid breaking existing signatures
-- [ ] Ensure NoOp implementations enforce null-key check for metadata (consistent behavior)
-
-## 8) Tests and verification (scoped to Phase 2 changes)
-
-- [ ] Tests: withCause accepts null (no-op) and non-null (sets cause)
-- [ ] Tests: with(key, value) behavior
-    - [ ] Null key throws; null value recorded
-    - [ ] Boolean overload forwards to true
-- [ ] Tests: per(...) aggregation
-    - [ ] Generic key with bucketing strategy
-    - [ ] Enum key; null = no-op
-    - [ ] Scope provider aggregation on JVM; no-op on other platforms
-- [ ] Tests: withStackTrace size policy and chaining with withCause (JVM)
-- [ ] Tests: onAverageEvery sampling behaves statistically over large N
-- [ ] Tests: atMostEvery granularity notes hold; first call allowed
-
-## 9) Documentation
-
-- [ ] Update KDoc for new/changed LoggingApi methods
-    - [ ] Reference semantics from Phase 1 decisions
-- [ ] Document platform-specific behaviors and no-ops
-- [ ] Note performance caveats (stack traces, injected log sites, sampling)
-
-## 10) Implementation notes and handoffs
-
-- [ ] Place platform-neutral APIs in common; JVM specifics as expect/actual or extensions
-- [ ] Keep agent-only hooks confined to JVM internals
-- [ ] Prepare small migration notes for Phase 4 deprecation work
+- [x] Keep LoggingApi.withInjectedLogSite(common LogSite) as the portable API
+    - [x] Ensure first call wins if invoked multiple times
+    - [x] No-op on null
