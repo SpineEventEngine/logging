@@ -56,9 +56,7 @@ internal class JvmMetadataKey<T: Any>(
             JvmMetadataKey(label, clazz, canRepeat = true)
     }
 
-    override fun cast(value: Any): T {
-        return clazz.cast(value)
-    }
+    override fun cast(value: Any?): T? = value?.let { clazz.cast(it) }
 }
 
 /**

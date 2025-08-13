@@ -98,9 +98,9 @@ import org.jetbrains.annotations.VisibleForTesting
 public open class MetadataKey<T : Any> private constructor(
     label: String,
     private val clazz: Class<out T>,
-    private val canRepeat: Boolean,
+    override val canRepeat: Boolean,
     private val isCustom: Boolean
-) {
+) : io.spine.logging.MetadataKey<T> {
 
     /**
      * Callback interface to handle additional contextual `Metadata` in log statements. This
@@ -120,7 +120,7 @@ public open class MetadataKey<T : Any> private constructor(
      * A short, human-readable text label which will prefix the metadata in cases
      * where it is formatted as part of the log message.
      */
-    public val label: String = Checks.checkMetadataIdentifier(label)
+    override val label: String = Checks.checkMetadataIdentifier(label)
 
     /**
      * A 64-bit bloom filter mask for this metadata key, usable by backend implementations
@@ -149,7 +149,7 @@ public open class MetadataKey<T : Any> private constructor(
     /**
      * Cast an arbitrary value to the type of this key.
      */
-    public fun cast(value: Any?): T? = clazz.cast(value)
+    override fun cast(value: Any?): T? = clazz.cast(value)
 
     /**
      * Whether this key can be used to set more than one value in the metadata.

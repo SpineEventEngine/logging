@@ -42,7 +42,7 @@ public interface MetadataKey<T: Any> {
     /**
      * Cast an arbitrary value to the type of this key.
      */
-    public fun cast(value: Any): T
+    public fun cast(value: Any?): T?
 
     /**
      * Whether this key can be used to set more than one value in the metadata.
