@@ -37,7 +37,7 @@ import kotlin.reflect.KClass
 public actual object LoggingFactory: ClassValue<JvmLogger>() {
 
     @JvmStatic
-    @JvmName("getLogger") // Set the name explicitly to avoid synthetic `$logging` suffix.
+    @JvmName("getLogger") // Set the name explicitly to avoid the synthetic `$logging` suffix.
     public actual fun <API: LoggingApi<API>> loggerFor(cls: KClass<*>): Logger<API> {
         @Suppress("UNCHECKED_CAST") // Safe as `JvmLogger.Api`
         val result = get(cls.java) as Logger<API>
