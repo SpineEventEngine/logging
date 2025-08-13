@@ -58,12 +58,12 @@ public interface LoggingApi<API: LoggingApi<API>> {
      * via stack analysis.
      *
      * The one use case where calling this method explicitly may be useful is
-     * when making logging helper methods, where some common project specific
+     * when making logging helper methods, where some common project-specific
      * logging behavior is enshrined.
      *
      * For example, one can implement the following helper:
      *
-     * ```
+     * ```kotlin
      * import io.spine.logging.LogSite
      * import io.spine.logging.LoggingFactory
      *
@@ -79,7 +79,7 @@ public interface LoggingApi<API: LoggingApi<API>> {
      *
      * And then call it elsewhere:
      *
-     * ```
+     * ```kotlin
      * import io.spine.logging.LogSiteLookup.logSite
      * import MyLoggingHelper.logAtInfo
      *
@@ -99,7 +99,7 @@ public interface LoggingApi<API: LoggingApi<API>> {
      *
      * Implementation option of `MyLoggingHelper` with [LogSiteLookup.callerOf]:
      *
-     * ```
+     * ```kotlin
      * import io.spine.logging.LogSiteLookup.callerOf
      * import io.spine.logging.LoggingFactory
      *
@@ -116,7 +116,7 @@ public interface LoggingApi<API: LoggingApi<API>> {
      * Now, the log site for each call is determined automatically to be a caller
      * of `MyLoggingHelper` class, and logging statements look much prettier:
      *
-     * ```
+     * ```kotlin
      * import MyLoggingHelper.logAtInfo
      *
      * ...
