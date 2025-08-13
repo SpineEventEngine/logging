@@ -29,7 +29,6 @@ package io.spine.logging.context
 import com.google.errorprone.annotations.CheckReturnValue
 import com.google.errorprone.annotations.Immutable
 import com.google.errorprone.annotations.ThreadSafe
-import io.spine.logging.JvmMetadataKey
 import io.spine.logging.Level
 import io.spine.logging.MetadataKey
 import io.spine.logging.toJavaLogging
@@ -179,7 +178,8 @@ private class DelegatingContextBuilder(
         key: MetadataKey<T>,
         value: T
     ): ScopedLoggingContext.Builder {
-        delegate.withMetadata((key as JvmMetadataKey<T>).adapter, value)
+        @Suppress("UNCHECKED_CAST")
+        delegate.withMetadata((key as io.spine.logging.jvm.MetadataKey<T>), value)
         return this
     }
 

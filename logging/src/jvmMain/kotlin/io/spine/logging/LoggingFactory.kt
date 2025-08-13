@@ -30,6 +30,7 @@ import io.spine.logging.jvm.Middleman
 import io.spine.logging.jvm.backend.Platform
 import io.spine.reflect.CallerFinder
 import kotlin.reflect.KClass
+import kotlin.jvm.javaObjectType
 
 /**
  * Obtains a [JvmLogger] for a given class.
@@ -55,7 +56,7 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
     public actual fun <T : Any> singleMetadataKey(
         label: String,
         valueClass: KClass<T>
-    ): MetadataKey<T> = JvmMetadataKey.single(label, valueClass)
+    ): MetadataKey<T> = io.spine.logging.jvm.MetadataKey.single(label, valueClass.javaObjectType)
 
     @JvmStatic
     public fun <T: Any> singleMetadataKey(label: String, type: Class<T>): MetadataKey<T> =
@@ -65,7 +66,7 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
     public actual fun <T : Any> repeatedMetadataKey(
         label: String,
         valueClass: KClass<T>
-    ): MetadataKey<T> = JvmMetadataKey.repeated(label, valueClass)
+    ): MetadataKey<T> = io.spine.logging.jvm.MetadataKey.repeated(label, valueClass.javaObjectType)
 
     @JvmStatic
     public fun <T : Any> repeatedMetadataKey(label: String, type: Class<T>): MetadataKey<T> =

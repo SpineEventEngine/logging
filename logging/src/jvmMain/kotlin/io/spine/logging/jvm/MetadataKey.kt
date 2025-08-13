@@ -212,11 +212,11 @@ public open class MetadataKey<T : Any> private constructor(
      * * Suffixes should only contain lower case ASCII letters and underscore (i.e., `[a-z_]`).
      *
      * This method is called as part of logs processing and could be invoked a very large number of
-     * times in performance critical code. Implementations must be very careful to avoid calling any
-     * code which might risk deadlocks, stack overflow, concurrency issues or performance problems.
+     * times in performance-critical code. Implementations must be very careful to avoid calling any
+     * code, which might risk deadlocks, stack overflow, concurrency issues or performance problems.
      * In particular, implementations of this method should be careful to avoid:
      *
-     * * Calling any code which could log using the same `MetadataKey` instance (unless you
+     * * Calling any code, which could log using the same `MetadataKey` instance (unless you
      *   implement protection against reentrant calling in this method).
      * * Calling code which might block (e.g., performing file I/O or acquiring locks).
      * * * Allocating non-trivial amounts of memory (e.g., recording values in an unbounded data
