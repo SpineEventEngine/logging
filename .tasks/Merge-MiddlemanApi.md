@@ -28,8 +28,8 @@ This plan consolidates the JVM-specific fluent logging API into the common Loggi
 
 ## Phase 2 — Extend LoggingApi to cover MiddlemanApi gaps
 - [x] Add missing cross-platform methods from MiddlemanApi to LoggingApi where behavior is platform-neutral (e.g., withCause, rate limiting controls, isEnabled, log variants).
-- [ ] For JVM-only features:
-    - [ ] Implement per(scopeProvider) as an extension on LoggingApi in JVM sources.
+- [x] For JVM-only features:
+    - [x] Implement per(scopeProvider) as an extension on LoggingApi in JVM sources.
     - [x] Introduce small platform abstractions to preserve semantics on other targets (no-ops where unsupported).
 - [ ] Ensure method chaining remains fluent and preserves API type.
 
