@@ -36,14 +36,15 @@ package io.spine.logging.jvm
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/SpecializedLogSiteKey.java">
  *     Original Java code of Google Flogger</a> for historical context.
  */
-internal class SpecializedLogSiteKey private constructor(
+public actual class SpecializedLogSiteKey private constructor(
     private val delegate: LogSiteKey,
     private val qualifier: Any
 ) : LogSiteKey {
 
-    companion object {
+    public companion object {
+
         @JvmStatic
-        fun of(key: LogSiteKey, qualifier: Any): LogSiteKey =
+        public fun of(key: LogSiteKey, qualifier: Any): LogSiteKey =
             SpecializedLogSiteKey(key, qualifier)
     }
 

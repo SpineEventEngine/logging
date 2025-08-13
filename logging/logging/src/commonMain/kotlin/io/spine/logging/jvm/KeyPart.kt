@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,17 +26,10 @@
 
 package io.spine.logging.jvm
 
-/**
- * A tagging interface to mark implementations that are suitable for use as a key for looking
- * up per log site persistent state.
- *
- * Normally the class used is just [JvmLogSite] but other, more specific, keys can be used.
- * There are no method requirements on this interface, but the instance must have correct
- * `equals()`, `hashCode()` and `toString()` implementations and must be at least as unique
- * as the associated `LogSite` (i.e., two keys created for different log sites must never
- * be equal for proper state management).
- *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSiteKey.java">
- *     Original Java code of Google Flogger</a> for historical context.
- */
-public actual interface LogSiteKey
+public expect abstract class KeyPart {
+    public abstract fun addOnCloseHook(hook: () -> Unit)
+    public abstract fun close()
+    public companion object {
+        public fun removeUnusedKeys()
+    }
+}

@@ -34,19 +34,19 @@ package io.spine.logging.jvm
  * This file encapsulates Java-specific weak-reference and concurrent queue usage to keep
  * LoggingScope API Kotlin-only.
  */
-internal class KeyPart(scope: LoggingScope) :
+public actual class KeyPart internal constructor(scope: LoggingScope) :
     java.lang.ref.WeakReference<LoggingScope>(scope, queue) {
 
     private val onCloseHooks = java.util.concurrent.ConcurrentLinkedQueue<() -> Unit>()
 
-    fun addOnCloseHook(hook: () -> Unit) {
+    public actual fun addOnCloseHook(hook: () -> Unit) {
         onCloseHooks.offer(hook)
     }
 
     // If this were ever too "bursty" due to removal of many keys for the same scope,
     // we could modify this code to process only a maximum number of removals each time
     // and keep a single "in progress" KeyPart around until the next time.
-    fun close() {
+    public actual fun close() {
         // This executes once for each map entry created in the enclosing scope.
         // It is very dependent on logging usage in the scope and theoretically unbounded.
         var r = onCloseHooks.poll()
@@ -56,10 +56,10 @@ internal class KeyPart(scope: LoggingScope) :
         }
     }
 
-    internal companion object {
+    public actual companion object {
         private val queue = java.lang.ref.ReferenceQueue<LoggingScope>()
 
-        fun removeUnusedKeys() {
+        public actual fun removeUnusedKeys() {
             // There are always more specialized keys than entries in the reference queue,
             // so the queue should be empty most of the time we get here.
             var p = queue.poll() as KeyPart?
