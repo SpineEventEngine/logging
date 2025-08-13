@@ -29,6 +29,7 @@ package io.spine.logging.jvm
 import com.google.errorprone.annotations.RestrictedApi
 import io.spine.annotation.Internal
 import io.spine.logging.LogSite
+import io.spine.logging.LogSiteKey
 import io.spine.logging.jvm.JvmLogSite.Companion.callerOf
 import io.spine.logging.jvm.JvmLogSite.Companion.invalid
 import io.spine.logging.jvm.JvmLogSite.Companion.logSite

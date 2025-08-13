@@ -24,7 +24,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
-/** Platform-neutral helper for specializing log site keys with qualifiers. */
-public expect class SpecializedLogSiteKey
+/**
+ * Platform-neutral marker for a log site key used to aggregate state per log statement.
+ *
+ * Actual implementation is platform-specific.
+ */
+public expect interface LogSiteKey

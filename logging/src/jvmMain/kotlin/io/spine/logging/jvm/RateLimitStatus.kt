@@ -26,6 +26,7 @@
 
 package io.spine.logging.jvm
 
+import io.spine.logging.LogSiteKey
 import io.spine.logging.jvm.backend.Metadata
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger

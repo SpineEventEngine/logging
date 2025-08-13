@@ -26,6 +26,7 @@
 
 package io.spine.logging.jvm
 
+import io.spine.logging.LogSiteKey
 import io.spine.logging.jvm.LogContext.Key.LOG_SAMPLE_EVERY_N
 import io.spine.logging.jvm.backend.Metadata
 import java.util.Random
@@ -34,7 +35,7 @@ import java.util.concurrent.atomic.AtomicInteger
 /**
  * Rate limiter to support `onAverageEvery(N)` functionality.
  *
- * Instances of this class are created for each unique [LogSiteKey] for which rate limiting
+ * Instances of this class are created for each unique [io.spine.logging.LogSiteKey] for which rate limiting
  * via the `LOG_SAMPLE_EVERY_N` metadata key is required. This class implements
  * `RateLimitStatus` as a mechanism for resetting its own state.
  *

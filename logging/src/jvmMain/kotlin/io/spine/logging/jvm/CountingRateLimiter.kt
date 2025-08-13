@@ -27,6 +27,7 @@
 package io.spine.logging.jvm
 
 import com.google.errorprone.annotations.ThreadSafe
+import io.spine.logging.LogSiteKey
 import io.spine.logging.jvm.LogContext.Key.LOG_EVERY_N
 import io.spine.logging.jvm.backend.Metadata
 import java.util.concurrent.atomic.AtomicLong
@@ -34,7 +35,7 @@ import java.util.concurrent.atomic.AtomicLong
 /**
  * Rate limiter to support `every(N)` capability.
  *
- * Instances of this class are created for each unique [LogSiteKey] for
+ * Instances of this class are created for each unique [io.spine.logging.LogSiteKey] for
  * which rate limiting via the [LOG_EVERY_N] metadata key is required.
  * This class implements [RateLimitStatus] as a mechanism for resetting
  * the rate limiter state.

@@ -27,6 +27,9 @@
 package io.spine.logging.jvm
 
 import io.spine.annotation.VisibleForTesting
+import io.spine.logging.KeyPart
+import io.spine.logging.LogSiteKey
+import io.spine.logging.SpecializedLogSiteKey
 
 /**
  * An opaque scope marker which can be attached to log sites to provide "per scope" behaviour
@@ -36,7 +39,7 @@ import io.spine.annotation.VisibleForTesting
  * the current [io.spine.logging.jvm.context.ScopedLoggingContext ScopedLoggingContexts].
  *
  * Stateful fluent logging APIs which need to look up per log site information
- * (e.g., rate limit state) should do so via a [LogSiteMap] using the [LogSiteKey] passed
+ * (e.g., rate limit state) should do so via a [LogSiteMap] using the [io.spine.logging.LogSiteKey] passed
  * into the [LogContext.postProcess] method. If scopes are present in the log site
  * [io.spine.logging.jvm.backend.Metadata] then the log site key provided to
  * the `postProcess()` method will already be specialized to take account of any
@@ -64,7 +67,7 @@ public abstract class LoggingScope protected constructor(private val label: Stri
      * - Should have a different [Object.hashCode] to the given key.
      * - Should be efficient and lightweight.
      *
-     * As such it is recommended that the [SpecializedLogSiteKey.of] method is used
+     * As such it is recommended that the [io.spine.logging.SpecializedLogSiteKey.of] method is used
      * in implementations, passing in a suitable qualifier (which need not be the scope
      * itself, but must be unique per scope).
      */

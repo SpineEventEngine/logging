@@ -24,7 +24,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
+
+import io.spine.logging.jvm.LoggingScope
+import java.lang.ref.ReferenceQueue
+import java.lang.ref.WeakReference
+import java.util.concurrent.ConcurrentLinkedQueue
 
 /**
  * This class is only loaded once we've seen scopes in action (Android doesn't like
@@ -35,9 +40,9 @@ package io.spine.logging.jvm
  * LoggingScope API Kotlin-only.
  */
 public actual class KeyPart internal constructor(scope: LoggingScope) :
-    java.lang.ref.WeakReference<LoggingScope>(scope, queue) {
+    WeakReference<LoggingScope>(scope, queue) {
 
-    private val onCloseHooks = java.util.concurrent.ConcurrentLinkedQueue<() -> Unit>()
+    private val onCloseHooks = ConcurrentLinkedQueue<() -> Unit>()
 
     public actual fun addOnCloseHook(hook: () -> Unit) {
         onCloseHooks.offer(hook)
@@ -57,7 +62,7 @@ public actual class KeyPart internal constructor(scope: LoggingScope) :
     }
 
     public actual companion object {
-        private val queue = java.lang.ref.ReferenceQueue<LoggingScope>()
+        private val queue = ReferenceQueue<LoggingScope>()
 
         public actual fun removeUnusedKeys() {
             // There are always more specialized keys than entries in the reference queue,

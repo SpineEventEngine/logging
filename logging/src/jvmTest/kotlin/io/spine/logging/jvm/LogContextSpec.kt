@@ -696,7 +696,7 @@ internal class LogContextSpec {
         }
 
         /**
-         * This is unfortunate but hard to work around unless [SpecializedLogSiteKey]
+         * This is unfortunate but hard to work around unless [io.spine.logging.SpecializedLogSiteKey]
          * can be made invariant to the order of specialization (but this class must be
          * very efficient, so that would be hard).
          *
