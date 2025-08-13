@@ -29,6 +29,7 @@ package io.spine.logging
 import io.spine.logging.jvm.Middleman
 import com.google.errorprone.annotations.CheckReturnValue
 import io.spine.logging.jvm.JvmLogSite
+import io.spine.logging.jvm.JvmLogSite.Companion.injectedLogSite
 import kotlin.reflect.KClass
 import kotlin.time.DurationUnit
 import kotlin.time.toTimeUnit
@@ -87,6 +88,18 @@ private class ApiImpl(private val delegate: Middleman.Api): JvmLogger.Api {
         val floggerLogSite = logSite.toFloggerSite()
         delegate.withInjectedLogSite(floggerLogSite)
         return this
+    }
+
+    override fun withInjectedLogSite(
+        internalClassName: String,
+        methodName: String,
+        encodedLineNumber: Int,
+        sourceFileName: String?
+    ): JvmLogger.Api {
+        val logSite = injectedLogSite(
+            internalClassName, methodName, encodedLineNumber, sourceFileName
+        )
+        return withInjectedLogSite(logSite)
     }
 
     override fun <T : Any> with(key: MetadataKey<T>, value: T?): JvmLogger.Api {

@@ -28,6 +28,7 @@
 
 package io.spine.logging.jvm
 
+import io.spine.annotation.Internal
 import io.spine.logging.LoggingScopeProvider
 import java.util.concurrent.TimeUnit
 
@@ -554,6 +555,7 @@ public interface MiddlemanApi<API : MiddlemanApi<API>> {
      *        This value is strictly for debugging and does not contribute
      *        to either `equals()` or `hashCode()` behavior.
      */
+    @Internal
     public fun withInjectedLogSite(
         internalClassName: String,
         methodName: String,
