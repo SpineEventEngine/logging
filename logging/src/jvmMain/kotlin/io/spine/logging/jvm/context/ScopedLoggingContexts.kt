@@ -30,7 +30,8 @@ import io.spine.logging.jvm.Middleman
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.StackSize
 import com.google.errorprone.annotations.CanIgnoreReturnValue
-import java.util.concurrent.TimeUnit.MINUTES
+import kotlin.time.DurationUnit
+import kotlin.time.DurationUnit.MINUTES
 
 /**
  * Static methods equivalent to the instance methods on

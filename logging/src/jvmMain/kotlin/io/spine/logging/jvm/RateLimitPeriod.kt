@@ -30,6 +30,8 @@ import com.google.errorprone.annotations.Immutable
 import com.google.errorprone.annotations.ThreadSafe
 import io.spine.logging.jvm.backend.LogData
 import java.util.concurrent.TimeUnit
+import kotlin.time.DurationUnit
+import kotlin.time.toTimeUnit
 
 /**
  * Immutable metadata for rate limiting based on a fixed count.
@@ -48,7 +50,7 @@ import java.util.concurrent.TimeUnit
 @ThreadSafe
 public class RateLimitPeriod(
     private val n: Int,
-    private val unit: TimeUnit
+    private val unit: DurationUnit
 ) {
 
     init {
@@ -66,7 +68,7 @@ public class RateLimitPeriod(
      * timestamp that indicates when logging should occur always differs from the
      * previous timestamp for proper rate limiting behavior.
      */
-    internal fun toNanos(): Long = unit.toNanos(n.toLong())
+    internal fun toNanos(): Long = unit.toTimeUnit().toNanos(n.toLong())
 
     override fun toString(): String = "$n $unit"
 

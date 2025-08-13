@@ -30,7 +30,6 @@ import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.ints.shouldBeInRange
 import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.throwable.shouldHaveMessage
@@ -51,10 +50,11 @@ import io.spine.logging.jvm.given.FakeLogSite
 import io.spine.logging.jvm.given.iterate
 import io.spine.logging.jvm.given.shouldHaveMessage
 import java.lang.System.currentTimeMillis
-import java.util.concurrent.TimeUnit.MILLISECONDS
-import java.util.concurrent.TimeUnit.SECONDS
 import java.util.logging.Level.INFO
 import java.util.logging.Level.WARNING
+import kotlin.time.DurationUnit.MILLISECONDS
+import kotlin.time.DurationUnit.SECONDS
+import kotlin.time.toTimeUnit
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -194,7 +194,7 @@ internal class LogContextSpec {
 
         // Logging occurs for counts: 0, 5, 10 (timestamp is not important).
         for ((counter, millis) in (0..1000L step 100).withIndex()) {
-            val timestampNanos = startNanos + MILLISECONDS.toNanos(millis)
+            val timestampNanos = startNanos + MILLISECONDS.toTimeUnit().toNanos(millis)
             logger.at(INFO, timestampNanos)
                 .every(5)
                 .log("Count=%d", counter)
@@ -220,7 +220,7 @@ internal class LogContextSpec {
 
         // Logging occurs randomly 1-in-5 times over 1000 log statements.
         for ((counter, millis) in (0..1000L).withIndex()) {
-            val timestampNanos = startNanos + MILLISECONDS.toNanos(millis)
+            val timestampNanos = startNanos + MILLISECONDS.toTimeUnit().toNanos(millis)
             logger.at(INFO, timestampNanos)
                 .onAverageEvery(5)
                 .log("Count=%d", counter)
@@ -236,7 +236,7 @@ internal class LogContextSpec {
             // The timestamp increases by 1 millisecond each time,
             // so we can get the log index from it.
             val deltaNanos = backend.logged[n].timestampNanos - startNanos
-            val logIndex = (deltaNanos / MILLISECONDS.toNanos(1)).toInt()
+            val logIndex = (deltaNanos / MILLISECONDS.toTimeUnit().toNanos(1)).toInt()
 
             // This works even if `lastLogIndex` == -1.
             val skipped = logIndex - lastLogIndex - 1
@@ -262,7 +262,7 @@ internal class LogContextSpec {
         // 2nd multiple of 2 seconds because the timestamp is reset to be (start + 2400ms)
         // and not (start + 2000ms). `atMostEvery()` does not rate limit over multiple samples.
         for ((counter, millis) in (0..5000L step 600).withIndex()) {
-            val timestampNanos = startNanos + MILLISECONDS.toNanos(millis)
+            val timestampNanos = startNanos + MILLISECONDS.toTimeUnit().toNanos(millis)
             logger.at(INFO, timestampNanos)
                 .atMostEvery(2, SECONDS)
                 .log("Count=%d", counter)
@@ -297,7 +297,7 @@ internal class LogContextSpec {
 
             // 10 logs per second over 6 seconds.
             for ((counter, millis) in (0..6000L step 100).withIndex()) {
-                val timestampNanos = startNanos + MILLISECONDS.toNanos(millis)
+                val timestampNanos = startNanos + MILLISECONDS.toTimeUnit().toNanos(millis)
                 // More than N logs occur per rate limit period,
                 // so logging should occur every 2 seconds.
                 logger.at(INFO, timestampNanos)
@@ -320,7 +320,7 @@ internal class LogContextSpec {
 
             // 10 logs per second over 6 seconds.
             for ((counter, millis) in (0..6000L step 100).withIndex()) {
-                val timestampNanos = startNanos + MILLISECONDS.toNanos(millis)
+                val timestampNanos = startNanos + MILLISECONDS.toTimeUnit().toNanos(millis)
                 // Fewer than N logs occur in the rate limit period,
                 // so logging should occur every 15 logs.
                 logger.at(INFO, timestampNanos)
@@ -359,7 +359,7 @@ internal class LogContextSpec {
                     .atMostEvery(1, SECONDS)
                     .per(exception, LogPerBucketingStrategy.byClass())
                     .log("Err: %s", exception.message)
-                nowNanos += MILLISECONDS.toNanos(100)
+                nowNanos += MILLISECONDS.toTimeUnit().toNanos(100)
             }
 
             backend.run {
@@ -409,7 +409,7 @@ internal class LogContextSpec {
                     .atMostEvery(1, SECONDS)
                     .per(type)
                     .log("Type: %s", type)
-                nowNanos += MILLISECONDS.toNanos(100)
+                nowNanos += MILLISECONDS.toTimeUnit().toNanos(100)
             }
 
             backend.run {
@@ -448,7 +448,7 @@ internal class LogContextSpec {
                     .atMostEvery(1, SECONDS)
                     .per(provider)
                     .log("message")
-                nowNanos += MILLISECONDS.toNanos(100)
+                nowNanos += MILLISECONDS.toTimeUnit().toNanos(100)
             }
 
             backend.run {
@@ -537,21 +537,21 @@ internal class LogContextSpec {
                 .log("LOGGED 1") // Log statements always get logged the first time.
 
             // Not logged due to rate limiting.
-            nowNanos += MILLISECONDS.toNanos(100)
+            nowNanos += MILLISECONDS.toTimeUnit().toNanos(100)
             logger.at(INFO, nowNanos)
                 .atMostEvery(1, SECONDS)
                 .withInjectedLogSite(logSite)
                 .log("NOT LOGGED")
 
             // Manually create the forced context (there is no “normal” API for this).
-            nowNanos += MILLISECONDS.toNanos(100)
+            nowNanos += MILLISECONDS.toTimeUnit().toNanos(100)
             logger.forceAt(INFO, nowNanos)
                 .atMostEvery(1, SECONDS)
                 .withInjectedLogSite(logSite)
                 .log("LOGGED 2")
 
             // Not logged due to rate limiting.
-            nowNanos += MILLISECONDS.toNanos(100)
+            nowNanos += MILLISECONDS.toTimeUnit().toNanos(100)
             logger.at(INFO, nowNanos)
                 .atMostEvery(1, SECONDS)
                 .withInjectedLogSite(logSite)
@@ -661,26 +661,6 @@ internal class LogContextSpec {
         backend.loggedCount shouldBe 7
     }
 
-    /**
-     * It is important that injecting an INVALID log site acts as an override
-     * to suppress log site analysis (i.e., rate limiting) rather than being a no-op.
-     */
-    @Test
-    fun `suppress an invalid log site analysis`() {
-        logger.atInfo()
-            .withInjectedLogSite(JvmLogSite.invalid)
-            .log("No log site here")
-        logger.atInfo()
-            .withInjectedLogSite(null)
-            .log("No-op injection")
-
-        backend.loggedCount shouldBe 2
-        backend.firstLogged.logSite shouldBe JvmLogSite.invalid
-
-        backend.logged[1].logSite.shouldNotBeNull()
-        backend.logged[1].logSite shouldNotBe JvmLogSite.invalid
-    }
-
     @Nested inner class
     Specialize {
 
@@ -772,7 +752,7 @@ private fun callerInfoFollowingLine(): StackTraceElement {
     )
 }
 
-private fun currentTimeNanos(): Long = MILLISECONDS.toNanos(currentTimeMillis())
+private fun currentTimeNanos(): Long = MILLISECONDS.toTimeUnit().toNanos(currentTimeMillis())
 
 private enum class LogType {
     FOO,

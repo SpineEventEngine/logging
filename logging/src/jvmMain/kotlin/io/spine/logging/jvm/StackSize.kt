@@ -27,7 +27,7 @@
 package io.spine.logging.jvm
 
 /**
- * Enum values to be passed into [MiddlemanApi.withStackTrace] to control the maximum
+ * Enum values to be passed into [io.spine.logging.LoggingApi.withStackTrace] to control the maximum
  * number of stack trace elements created.
  *
  * @property maxDepth The maximum stack depth to create when adding contextual stack
@@ -51,8 +51,8 @@ public enum class StackSize(public val maxDepth: Int) {
      *
      * Requesting a small stack trace for log statements which occur under normal
      * circumstances is acceptable but may affect performance. Consider using
-     * [MiddlemanApi.withStackTrace] in conjunction with rate-limiting methods,
-     * such as [MiddlemanApi.atMostEvery], to mitigate performance issues.
+     * [io.spine.logging.LoggingApi.withStackTrace] in conjunction with rate-limiting methods,
+     * such as [io.spine.logging.LoggingApi.atMostEvery], to mitigate performance issues.
      *
      * The current maximum size of a `SMALL` stack trace is 10 elements, but this
      * value may change in future versions.

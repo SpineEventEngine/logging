@@ -30,7 +30,6 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue
 import com.google.errorprone.annotations.MustBeClosed
 import io.spine.logging.jvm.LoggingScope
 import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.MiddlemanApi
 import io.spine.logging.jvm.context.ScopedLoggingContext.Companion.getInstance
 import java.util.concurrent.Callable
 
@@ -350,7 +349,7 @@ public abstract class ScopedLoggingContext protected constructor() {
      * This method is the same as [newContext] except it additionally binds a new
      * [ScopeType] instance to the newly created context.
      * This allows log statements to control stateful logging operations (e.g., rate limiting)
-     * using [MiddlemanApi.per] method.
+     * using [io.spine.logging.LoggingApi.per] method.
      *
      * Note for users: if you do not need an instance of `ScopedLoggingContext` for some
      * reason such as testability (injecting it, for example), consider using the static methods in

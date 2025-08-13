@@ -34,6 +34,7 @@ import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.concurrent.TimeUnit.NANOSECONDS
+import io.spine.logging.LoggingApi
 import java.util.logging.Level
 
 /**
@@ -50,7 +51,7 @@ import java.util.logging.Level
  *    Original Java code of Google Flogger</a> for historical context.
  */
 @Suppress("TooManyFunctions")
-public abstract class AbstractLogger<API : MiddlemanApi<API>> protected constructor(
+public abstract class AbstractLogger<API : LoggingApi<API>> protected constructor(
     private val backend: LoggerBackend
 ) {
     /**

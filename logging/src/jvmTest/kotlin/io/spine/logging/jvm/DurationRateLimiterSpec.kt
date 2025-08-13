@@ -36,6 +36,8 @@ import io.spine.logging.jvm.backend.given.FakeMetadata
 import io.spine.logging.jvm.given.FakeLogSite
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeUnit.MILLISECONDS
+import kotlin.time.DurationUnit
+import kotlin.time.DurationUnit.SECONDS
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -64,7 +66,7 @@ internal class DurationRateLimiterSpec {
 
     @Test
     fun `rate limit`() {
-        val oncePerSecond = DurationRateLimiter.newRateLimitPeriod(1, TimeUnit.SECONDS)
+        val oncePerSecond = DurationRateLimiter.newRateLimitPeriod(1, SECONDS)
         val metadata = FakeMetadata().add(Key.LOG_AT_MOST_EVERY, oncePerSecond)
         val logSite = FakeLogSite.unique()
         repeat(100) { i ->
@@ -79,7 +81,7 @@ internal class DurationRateLimiterSpec {
 
     @Test
     fun `distinct different log sites`() {
-        val oncePerSecond = DurationRateLimiter.newRateLimitPeriod(1, TimeUnit.SECONDS)
+        val oncePerSecond = DurationRateLimiter.newRateLimitPeriod(1, SECONDS)
         val metadata = FakeMetadata().add(Key.LOG_AT_MOST_EVERY, oncePerSecond)
         val fooLog = FakeLogSite.unique()
         val barLog = FakeLogSite.unique()
@@ -121,7 +123,7 @@ internal class DurationRateLimiterSpec {
     @Test
     fun `check the limit in accordance to the given timestamp`() {
         val limiter = DurationRateLimiter()
-        val period = DurationRateLimiter.newRateLimitPeriod(1, TimeUnit.SECONDS)
+        val period = DurationRateLimiter.newRateLimitPeriod(1, SECONDS)
 
         // Arbitrary start time, but within the first period to ensure
         // we still log the first call.
@@ -147,7 +149,7 @@ internal class DurationRateLimiterSpec {
 
     @Test
     fun `transform rate limit period to string`() {
-        val period = DurationRateLimiter.newRateLimitPeriod(23, TimeUnit.SECONDS)
+        val period = DurationRateLimiter.newRateLimitPeriod(23, SECONDS)
         "$period" shouldBe "23 SECONDS"
     }
 }

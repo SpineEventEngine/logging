@@ -26,8 +26,9 @@
 
 package io.spine.logging.context
 
+import io.spine.logging.LoggingApi
+import io.spine.logging.context.StubLogger.Companion.DEFAULT_TIMESTAMP_NANOS
 import io.spine.logging.jvm.AbstractLogger
-import io.spine.logging.jvm.MiddlemanApi
 import io.spine.logging.jvm.LogContext
 import io.spine.logging.jvm.backend.LoggerBackend
 import java.util.logging.Level
@@ -49,7 +50,7 @@ internal class StubLogger(backend: LoggerBackend) :
     /**
      * Non-wildcard logging API for the [StubLogger].
      */
-    interface Api : MiddlemanApi<Api>
+    interface Api : LoggingApi<Api>
 
     /**
      * Logs at the given level with the fixed [DEFAULT_TIMESTAMP_NANOS].

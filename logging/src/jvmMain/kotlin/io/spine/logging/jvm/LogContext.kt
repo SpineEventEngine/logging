@@ -27,6 +27,9 @@
 package io.spine.logging.jvm
 
 import io.spine.annotation.VisibleForTesting
+import io.spine.logging.LogSite
+import io.spine.logging.LoggingApi
+import io.spine.logging.LoggingDomain
 import io.spine.logging.LoggingScopeProvider
 import io.spine.logging.jvm.JvmLogSite.Companion.injectedLogSite
 import io.spine.logging.jvm.backend.LogData
@@ -35,13 +38,14 @@ import io.spine.logging.jvm.backend.Platform
 import io.spine.logging.jvm.context.Tags
 import io.spine.logging.jvm.util.Checks.checkNotNull
 import io.spine.reflect.CallerFinder.stackForCallerOf
-import java.util.concurrent.TimeUnit
 import java.util.logging.Level
+import kotlin.time.DurationUnit
+import io.spine.logging.MetadataKey as CommonMetadataKey
 
 /**
  * The base context for a logging statement, which implements the base logging API.
  *
- * This class is an implementation of the base [MiddlemanApi] interface and acts as a holder
+ * This class is an implementation of the base [LoggingApi] interface and acts as a holder
  * for any state applied to the log statement during the fluent call sequence. The lifecycle of a
  * logging context is very short; it is created by a logger, usually in response to a call to the
  * [AbstractLogger.at] method, and normally lasts only as long as the log statement.
@@ -67,12 +71,12 @@ import java.util.logging.Level
     "LargeClass",
     "TooManyFunctions",
 )
-public abstract class LogContext<LOGGER : AbstractLogger<API>, API : MiddlemanApi<API>>
+public abstract class LogContext<LOGGER : AbstractLogger<API>, API : LoggingApi<API>>
 protected constructor(
     final override val level: Level,
     isForced: Boolean,
     final override val timestampNanos: Long
-) : MiddlemanApi<API>, LogData {
+) : LoggingApi<API>, LogData {
 
     /**
      * Additional metadata for this log statement (added via fluent API methods).
@@ -435,14 +439,18 @@ protected constructor(
 
     // ---- Log site injection (used by pre-processors and special cases) ----
 
-    public final override fun withInjectedLogSite(logSite: JvmLogSite?): API {
+    public final override fun withInjectedLogSite(logSite: LogSite): API {
         // First call wins (since auto-injection will typically target the `log()` method at
         // the end of the chain and might not check for previous explicit injection).
-        // In particular it MUST be allowed for a caller to specify the "INVALID" log site, and
-        // have that set the field here to disable log site lookup at this log statement
-        // (though passing "null" is a no-op).
-        if (this.logSiteInfo == null && logSite != null) {
-            this.logSiteInfo = logSite
+        // It MUST be allowed for a caller to specify the "INVALID" log site to disable
+        // log site lookup at this log statement.
+        if (this.logSiteInfo == null) {
+            val jvmSite = when (logSite) {
+                is JvmLogSite -> logSite
+                is LogSite.Invalid -> JvmLogSite.invalid
+                else -> JvmLogSite.invalid
+            }
+            this.logSiteInfo = jvmSite
         }
         return api()
     }
@@ -469,7 +477,9 @@ protected constructor(
         return wasForced() || getLogger().doIsLoggable(level)
     }
 
-    public final override fun <T : Any> with(key: MetadataKey<T>, value: T?): API {
+    public override fun withLoggingDomain(domain: LoggingDomain): API = api()
+
+    public final override fun <T : Any> with(key: CommonMetadataKey<T>, value: T?): API {
         if (value != null) {
             @Suppress("UNCHECKED_CAST")
             addMetadata(key as MetadataKey<Any>, value as Any)
@@ -477,7 +487,7 @@ protected constructor(
         return api()
     }
 
-    public final override fun with(key: MetadataKey<Boolean>): API = with(key, true)
+    public final override fun with(key: CommonMetadataKey<Boolean>): API = with(key, true)
 
     public override fun <T> per(key: T?, strategy: LogPerBucketingStrategy<in T>): API {
         // Skip calling the bucketer for null so implementations don't need to check.
@@ -528,7 +538,7 @@ protected constructor(
         return api()
     }
 
-    public final override fun atMostEvery(n: Int, unit: TimeUnit): API {
+    public final override fun atMostEvery(n: Int, unit: DurationUnit): API {
         // See wasForced() for discussion as to why this occurs before argument checking.
         if (wasForced()) {
             return api()
@@ -538,7 +548,10 @@ protected constructor(
         // Rate limiting with a zero length period is a no-op, but if the time unit is
         // nanoseconds then the value is rounded up inside the rate limit object.
         if (n > 0) {
-            addMetadata(Key.LOG_AT_MOST_EVERY, DurationRateLimiter.newRateLimitPeriod(n, unit))
+            addMetadata(
+                Key.LOG_AT_MOST_EVERY,
+                DurationRateLimiter.newRateLimitPeriod(n, unit)
+            )
         }
         return api()
     }
@@ -555,9 +568,9 @@ protected constructor(
         }
     }
 
-    public final override fun log(msg: () -> String?) {
+    public final override fun log(message: () -> String?) {
         if (shouldLog()) {
-            logImpl(msg())
+            logImpl(message())
         }
     }
 
@@ -572,7 +585,7 @@ protected constructor(
         /**
          * The key associated with a [Throwable] cause to be associated with the log message.
          *
-         * This value is set by [MiddlemanApi.withCause].
+         * This value is set by [io.spine.logging.LoggingApi.withCause].
          */
         @JvmField
         public val LOG_CAUSE: MetadataKey<Throwable> =
@@ -581,7 +594,7 @@ protected constructor(
         /**
          * The key associated with a rate limiting counter for "1-in-N" rate limiting.
          *
-         * The value is set by [MiddlemanApi.every].
+         * The value is set by [io.spine.logging.LoggingApi.every].
          */
         @JvmField
         public val LOG_EVERY_N: MetadataKey<Int> =
@@ -591,7 +604,7 @@ protected constructor(
          * The key associated with a rate limiting counter for "1-in-N" randomly sampled rate
          * limiting.
          *
-         * The value is set by [MiddlemanApi.onAverageEvery].
+         * The value is set by [io.spine.logging.LoggingApi.onAverageEvery].
          */
         @JvmField
         public val LOG_SAMPLE_EVERY_N: MetadataKey<Int> =
@@ -600,7 +613,7 @@ protected constructor(
         /**
          * The key associated with a rate-limiting period for "at most once every N" rate limiting.
          *
-         * The value is set by [MiddlemanApi.atMostEvery].
+         * The value is set by [io.spine.logging.LoggingApi.atMostEvery].
          */
         @JvmField
         public val LOG_AT_MOST_EVERY: MetadataKey<RateLimitPeriod> =

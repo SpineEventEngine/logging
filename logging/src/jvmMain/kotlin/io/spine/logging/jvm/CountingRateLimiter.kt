@@ -58,7 +58,7 @@ internal class CountingRateLimiter : RateLimitStatus() {
      * rate limit count.
      *
      * This is invoked during post-processing if a rate-limiting count was set via
-     * [MiddlemanApi.every].
+     * [io.spine.logging.LoggingApi.every].
      */
     internal fun incrementAndCheckLogCount(rateLimitCount: Int): RateLimitStatus =
         if (invocationCount.incrementAndGet() >= rateLimitCount) {

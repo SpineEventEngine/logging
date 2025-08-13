@@ -26,10 +26,11 @@
 
 package io.spine.logging.jvm.given
 
+import io.spine.logging.LoggingApi
 import io.spine.logging.jvm.AbstractLogger
-import io.spine.logging.jvm.MiddlemanApi
 import io.spine.logging.jvm.LogContext
 import io.spine.logging.jvm.backend.LoggerBackend
+import io.spine.logging.jvm.given.ConfigurableLogger.Companion.DEFAULT_TIMESTAMP_NANOS
 import java.util.logging.Level
 
 /**
@@ -53,7 +54,7 @@ internal class ConfigurableLogger(backend: LoggerBackend) :
     /**
      * Non-wildcard logging API for the [ConfigurableLogger].
      */
-    interface Api : MiddlemanApi<Api>
+    interface Api : LoggingApi<Api>
 
     /**
      * Logs at the given level with the fixed [DEFAULT_TIMESTAMP_NANOS].

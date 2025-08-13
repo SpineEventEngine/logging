@@ -142,7 +142,8 @@ public abstract class JvmLogSite : LogSiteKey, LogSite {
         /**
          * Returns a [JvmLogSite] for the caller of the specified class.
          *
-         * This can be used in conjunction with the [MiddlemanApi.withInjectedLogSite] method to
+         * This can be used in conjunction with
+         * the [io.spine.logging.LoggingApi.withInjectedLogSite] function to
          * implement logging helper methods. In some platforms, log site determination may be
          * unsupported, and in those cases this method will always return the [invalid] instance.
          *
@@ -196,7 +197,7 @@ public abstract class JvmLogSite : LogSiteKey, LogSite {
         /**
          * Returns a [JvmLogSite] for the current line of code.
          *
-         * This can be used in conjunction with the [MiddlemanApi.withInjectedLogSite] method to
+         * This can be used in conjunction with the [io.spine.logging.LoggingApi.withInjectedLogSite] method to
          * implement logging helper methods. In some platforms, log site determination may be
          * unsupported, and in those cases this method will always return the [invalid] instance.
          *

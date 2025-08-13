@@ -29,6 +29,7 @@ package io.spine.logging.jvm
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldNotBeInstanceOf
+import io.spine.logging.LoggingApi
 import io.spine.logging.backend.probe.MemoizingLoggerBackend
 import io.spine.logging.jvm.Middleman.Companion.forEnclosingClass
 import java.util.logging.Level
@@ -73,18 +74,18 @@ internal class LoggerSpec {
         backend.setLevel(Level.INFO)
 
         // Down to and including the configured log level are not no-op instances.
-        logger.atSevere().shouldNotBeInstanceOf<MiddlemanApi.NoOp<*>>()
-        logger.atWarning().shouldNotBeInstanceOf<MiddlemanApi.NoOp<*>>()
-        logger.atInfo().shouldNotBeInstanceOf<MiddlemanApi.NoOp<*>>()
+        logger.atSevere().shouldNotBeInstanceOf<LoggingApi.NoOp<*>>()
+        logger.atWarning().shouldNotBeInstanceOf<LoggingApi.NoOp<*>>()
+        logger.atInfo().shouldNotBeInstanceOf<LoggingApi.NoOp<*>>()
 
         logger.atSevere().shouldBeInstanceOf<Middleman.Context>()
         logger.atWarning().shouldBeInstanceOf<Middleman.Context>()
         logger.atInfo().shouldBeInstanceOf<Middleman.Context>()
 
         // Below the configured log level, you only get no-op instances.
-        logger.atFine().shouldBeInstanceOf<MiddlemanApi.NoOp<*>>()
-        logger.atFiner().shouldBeInstanceOf<MiddlemanApi.NoOp<*>>()
-        logger.atFinest().shouldBeInstanceOf<MiddlemanApi.NoOp<*>>()
+        logger.atFine().shouldBeInstanceOf<LoggingApi.NoOp<*>>()
+        logger.atFiner().shouldBeInstanceOf<LoggingApi.NoOp<*>>()
+        logger.atFinest().shouldBeInstanceOf<LoggingApi.NoOp<*>>()
 
         // Just verify that logs below the current log level are discarded.
         logger.atFine().log("DISCARDED")
@@ -96,8 +97,8 @@ internal class LoggerSpec {
         logger.atInfo().log("LOGGED")
         backend.loggedCount shouldBe 1
         backend.setLevel(Level.OFF)
-        logger.atSevere().shouldBeInstanceOf<MiddlemanApi.NoOp<*>>()
+        logger.atSevere().shouldBeInstanceOf<LoggingApi.NoOp<*>>()
         backend.setLevel(Level.ALL)
-        logger.atFinest().shouldNotBeInstanceOf<MiddlemanApi.NoOp<*>>()
+        logger.atFinest().shouldNotBeInstanceOf<LoggingApi.NoOp<*>>()
     }
 }

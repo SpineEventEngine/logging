@@ -26,13 +26,12 @@
 
 package io.spine.logging
 
-import io.spine.logging.jvm.Middleman
 import com.google.errorprone.annotations.CheckReturnValue
 import io.spine.logging.jvm.JvmLogSite
 import io.spine.logging.jvm.JvmLogSite.Companion.injectedLogSite
+import io.spine.logging.jvm.Middleman
 import kotlin.reflect.KClass
 import kotlin.time.DurationUnit
-import kotlin.time.toTimeUnit
 import java.util.logging.Level as JLevel
 
 /**
@@ -128,8 +127,7 @@ private class ApiImpl(private val delegate: Middleman.Api): JvmLogger.Api {
     }
 
     override fun atMostEvery(n: Int, unit: DurationUnit): JvmLogger.Api {
-        val javaTimeUnit = unit.toTimeUnit()
-        delegate.atMostEvery(n, javaTimeUnit)
+        delegate.atMostEvery(n, unit)
         return this
     }
 
