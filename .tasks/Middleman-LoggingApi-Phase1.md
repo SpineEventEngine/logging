@@ -31,13 +31,33 @@ Semantic deltas and nullability:
 - per(Enum<*>): MiddlemanApi accepts nullable enum; LoggingApi originally required non-null. DECISION: make LoggingApi accept nullable Enum<*>? (null = no-op) to align.
 - Rate limiting: semantics are equivalent for every(...) and atMostEvery(...). onAverageEvery(...) added to LoggingApi in Phase 2 (platform-neutral API, JVM implementation delegates to Middleman).
 
-Placement decisions for JVM-only capabilities:
-- per(T?, LogPerBucketingStrategy): remain JVM-only extension(s) in a future phase (require jvm type).
-- per(scopeProvider: LoggingScopeProvider): implement as JVM extension on JvmLogger.Api in a future phase (needs access to underlying Middleman or alternative plumbing).
-- withStackTrace(StackSize): JVM-only extension in a future phase.
-- Metadata with(...) methods: consider multiplatform story later; keep as JVM-only for now.
-- Agent-only withInjectedLogSite overload: JVM-only.
+JVM-only pieces to make Kotlin multiplatform so LoggingApi can expose more MiddlemanApi functions:
+- LogPerBucketingStrategy (new common abstraction) — expect/actual.
+  - Minimal common API: name/identity and a bucketOf(key: Any?) function or equivalent, without JVM-only dependencies.
+  - JVM actual keeps current behavior; other platforms can provide simple strategies or no-op bucketing with bounded maps.
+- Scoped logging aggregation API — introduce a common LoggingScopeProvider (or LoggingScopeKey) expect/actual.
+  - Common: a marker/functional type to obtain current scope token by key.
+  - JVM: actual type bridges to existing io.spine.logging.jvm.LoggingScopeProvider and ScopedLoggingContext. Other platforms: no-op scopes that always return null.
+- Stack trace capture policy — StackSize enum and synthetic stack trace type.
+  - Move StackSize to common as expect/actual (or mirror enum in common with platform capabilities notes).
+  - Provide a common LogSiteStackTrace-like abstraction (name TBD) or adjust API to use StackSize only and let backends decide whether to attach synthetic trace.
+- Structured metadata key compatibility in fluent API — enable with(key, value) on LoggingApi using common MetadataKey.
+  - Common already has io.spine.logging.MetadataKey; add LoggingApi.with(key: MetadataKey<T>, value: T?) and with(key: MetadataKey<Boolean>).
+  - JVM actual implementation continues to use existing plumbing; other platforms can store metadata in a simple per-call map for backends that ignore it.
+- Log site injection type alignment.
+  - Prefer common LogSite in LoggingApi (already exists). For parity, Middleman-specific JvmLogSite overload remains JVM-only; no multiplatform action needed beyond ensuring backends can accept common LogSite.
+
+Placement decisions for remaining JVM-only capabilities (stay JVM-specific):
+- Agent-only withInjectedLogSite overload with internalClassName/methodName/encodedLineNumber/sourceFileName — remain JVM-only.
 
 Notes:
 - Fluent chaining type remains non-wildcard via JvmLogger.Api on JVM and LoggingApi<API> in common.
 - No behavior changes intended for existing common API aside from null-accepting overloads, which are no-ops on null.
+
+Actionable checklist for Phase 2 based on the above:
+- Add to common LoggingApi: onAverageEvery(n) ✓ (Already present)
+- Add to common LoggingApi: with(key: MetadataKey<T>, value: T?) and with(key: MetadataKey<Boolean>) — requires common MetadataKey alignment.
+- Introduce expect/actual: LogPerBucketingStrategy minimal interface in common; adapt JVM implementation.
+- Introduce expect/actual: LoggingScopeProvider (or common scope key), with JVM actual delegating to existing scopes; other platforms as no-op.
+- Introduce expect/actual: StackSize; adjust Middleman/JVM to use common type where possible.
+- Keep agent-only withInjectedLogSite(...) overload JVM-only.
