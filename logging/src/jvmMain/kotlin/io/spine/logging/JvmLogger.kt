@@ -66,6 +66,7 @@ public class JvmLogger(
 /**
  * Implements [LoggingApi] wrapping [Middleman.Api].
  */
+@Suppress("TooManyFunctions")
 private class ApiImpl(private val delegate: Middleman.Api): JvmLogger.Api {
 
     private var loggingDomain: LoggingDomain? = null
@@ -88,6 +89,21 @@ private class ApiImpl(private val delegate: Middleman.Api): JvmLogger.Api {
         return this
     }
 
+    override fun <T : Any> with(key: MetadataKey<T>, value: T?): JvmLogger.Api {
+        delegate.with(key as io.spine.logging.jvm.MetadataKey<T>, value)
+        return this
+    }
+
+    override fun with(key: MetadataKey<Boolean>): JvmLogger.Api {
+        delegate.with(key as io.spine.logging.jvm.MetadataKey<Boolean>)
+        return this
+    }
+
+    override fun withStackTrace(size: StackSize): JvmLogger.Api {
+        delegate.withStackTrace(size)
+        return this
+    }
+
     override fun every(n: Int): JvmLogger.Api {
         delegate.every(n)
         return this
@@ -104,11 +120,22 @@ private class ApiImpl(private val delegate: Middleman.Api): JvmLogger.Api {
         return this
     }
 
-
     override fun per(key: Enum<*>?): JvmLogger.Api {
         if (key != null) {
             delegate.per(key)
         }
+        return this
+    }
+
+    override fun <T> per(key: T?, strategy: LogPerBucketingStrategy<in T>): JvmLogger.Api {
+        if (key != null) {
+            delegate.per(key, strategy)
+        }
+        return this
+    }
+
+    override fun per(scopeProvider: LoggingScopeProvider): JvmLogger.Api {
+        delegate.per(scopeProvider)
         return this
     }
 

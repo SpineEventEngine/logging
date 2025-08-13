@@ -31,6 +31,7 @@ import kotlin.time.DurationUnit
 /**
  * The basic logging API returned by a [Logger].
  */
+@Suppress("TooManyFunctions")
 public interface LoggingApi<API: LoggingApi<API>> {
 
     /**
@@ -131,6 +132,49 @@ public interface LoggingApi<API: LoggingApi<API>> {
      * by earlier (explicit) calls.
      */
     public fun withInjectedLogSite(logSite: LogSite): API
+
+    /**
+     * Associates structured metadata with the current log statement.
+     *
+     * The key must not be null, or an exception will be thrown.
+     * A null value is permitted and will be recorded by the backend.
+     * If this method is called multiple times with the same key,
+     * the last invocation takes precedence.
+     *
+     * @param key The metadata key.
+     * @param value The metadata value, may be `null`.
+     * @return the logging API for method chaining.
+     * @throws IllegalArgumentException if key is `null`.
+     */
+    public fun <T : Any> with(key: MetadataKey<T>, value: T?): API
+
+    /**
+     * Associates a boolean flag metadata with the current log statement.
+     *
+     * This is a convenience method equivalent to calling `with(key, true)`.
+     * It's intended for backend-recognized flags that don't require a value.
+     *
+     * @param key The boolean metadata key.
+     * @return the logging API for method chaining.
+     * @throws IllegalArgumentException if key is `null`.
+     */
+    public fun with(key: MetadataKey<Boolean>): API
+
+    /**
+     * Associates a stack trace with the current log statement.
+     *
+     * On JVM platforms, this creates a synthetic exception attached as cause,
+     * which preserves withCause chaining (user cause becomes cause of synthetic).
+     * On other platforms, this provides best-effort stack trace capture or
+     * acts as a no-op with clear documentation.
+     *
+     * Performance warning: Stack trace capture can be expensive and should
+     * be used judiciously, especially in production code.
+     *
+     * @param size The maximum stack trace size.
+     * @return the logging API for method chaining.
+     */
+    public fun withStackTrace(size: StackSize): API
 
     /**
      * Modifies the current log statement to be emitted only once per N invocations.
@@ -262,6 +306,40 @@ public interface LoggingApi<API: LoggingApi<API>> {
     public fun per(key: Enum<*>?): API
 
     /**
+     * Aggregates stateful logging with respect to the given key using a bucketing strategy.
+     *
+     * This method allows custom aggregation strategies to control how different keys
+     * are grouped for rate limiting and other stateful logging behaviors. The strategy
+     * determines how keys are mapped to buckets, with bounded-bucket guarantees preserved.
+     *
+     * If the key is null, this method has no effect (no-op).
+     * Multiple aggregation keys can be combined for composite aggregation.
+     *
+     * Memory leak caution: Use bounded strategies like LogPerBucketingStrategy.knownBounded()
+     * or LogPerBucketingStrategy.byHashCode(maxBuckets) to prevent unbounded memory growth.
+     *
+     * @param key The aggregation key - null treated as no-op.
+     * @param strategy The bucketing strategy for key mapping.
+     * @return the logging API for method chaining.
+     */
+    public fun <T> per(key: T?, strategy: LogPerBucketingStrategy<in T>): API
+
+    /**
+     * Aggregates stateful logging with respect to the current logging scope.
+     *
+     * This method enables scope-based aggregation where logging behavior is
+     * grouped by the current scope context. If not in scope or scope provider
+     * returns null, this method has no effect (no-op).
+     *
+     * The scope must be explicitly used (not just being in a context) for
+     * aggregation to take effect.
+     *
+     * @param scopeProvider The scope provider for aggregation.
+     * @return the logging API for method chaining.
+     */
+    public fun per(scopeProvider: LoggingScopeProvider): API
+
+    /**
      * Returns `true` if logging is enabled at the level implied for this API.
      */
     public fun isEnabled(): Boolean
@@ -317,6 +395,21 @@ public interface LoggingApi<API: LoggingApi<API>> {
         /**
          * Does nothing.
          */
+        override fun <T : Any> with(key: MetadataKey<T>, value: T?): API = noOp()
+
+        /**
+         * Does nothing.
+         */
+        override fun with(key: MetadataKey<Boolean>): API = noOp()
+
+        /**
+         * Does nothing.
+         */
+        override fun withStackTrace(size: StackSize): API = noOp()
+
+        /**
+         * Does nothing.
+         */
         override fun every(n: Int): API = noOp()
 
         /**
@@ -328,6 +421,16 @@ public interface LoggingApi<API: LoggingApi<API>> {
          * Does nothing.
          */
         override fun per(key: Enum<*>?): API = noOp()
+
+        /**
+         * Does nothing.
+         */
+        override fun <T> per(key: T?, strategy: LogPerBucketingStrategy<in T>): API = noOp()
+
+        /**
+         * Does nothing.
+         */
+        override fun per(scopeProvider: LoggingScopeProvider): API = noOp()
 
         /**
          * Does nothing.
