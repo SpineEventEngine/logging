@@ -55,6 +55,7 @@ public expect class KeyPart {
 
         /**
          * Removes keys that are no longer in use from the internal storage.
+         *
          * This helps prevent memory leaks by cleaning up abandoned key references.
          */
         public fun removeUnusedKeys()
