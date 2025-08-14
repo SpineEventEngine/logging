@@ -177,7 +177,7 @@ internal class LogContextSpec {
 
     /**
      * For testing log-site tags are correctly merged with metadata,
-     * see [AbstractContextDataProviderSpec][io.spine.logging.jvm.context.AbstractContextDataProviderSpec].
+     * see [io.spine.logging.context.AbstractContextDataProviderSpec].
      */
     @Test
     fun `accept tags`() {
