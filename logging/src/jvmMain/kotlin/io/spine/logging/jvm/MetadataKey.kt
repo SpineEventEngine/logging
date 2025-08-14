@@ -26,6 +26,7 @@
 
 package io.spine.logging.jvm
 
+import io.spine.logging.KeyValueHandler
 import io.spine.logging.jvm.backend.Platform
 import io.spine.logging.jvm.util.Checks
 import org.jetbrains.annotations.VisibleForTesting
@@ -101,20 +102,6 @@ public open class MetadataKey<T : Any> private constructor(
     override val canRepeat: Boolean,
     private val isCustom: Boolean
 ) : io.spine.logging.MetadataKey<T> {
-
-    /**
-     * Callback interface to handle additional contextual `Metadata` in log statements. This
-     * interface is only intended to be implemented by logger backend classes as part of handling
-     * metadata, and should not be used in any general application code, other than to implement the
-     * [MetadataKey.emit] method in this class.
-     */
-    public fun interface KeyValueHandler {
-
-        /**
-         * Handle a single key/value a pair of contextual metadata for a log statement.
-         */
-        public fun handle(key: String, value: Any?)
-    }
 
     /**
      * A short, human-readable text label which will prefix the metadata in cases
@@ -200,7 +187,7 @@ public open class MetadataKey<T : Any> private constructor(
 
     /**
      * Override this method to provide custom logic for emitting one or more key/value pairs for a
-     * given metadata value (call [.safeEmit] from logging code to actually emit values).
+     * given metadata value (call [safeEmit] from logging code to actually emit values).
      *
      * By default, this method simply emits the given value with this key's label, but it can be
      * customized key/value pairs if necessary.

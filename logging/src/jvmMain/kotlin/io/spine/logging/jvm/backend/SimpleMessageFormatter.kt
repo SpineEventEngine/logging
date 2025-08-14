@@ -28,9 +28,9 @@ package io.spine.logging.jvm.backend
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.annotation.Internal
+import io.spine.logging.KeyValueHandler
 import io.spine.logging.jvm.LogContext
 import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.MetadataKey.KeyValueHandler
 import io.spine.logging.jvm.backend.SimpleMessageFormatter.appendContext
 import io.spine.logging.jvm.backend.SimpleMessageFormatter.getLiteralLogMessage
 import io.spine.logging.jvm.backend.SimpleMessageFormatter.getSimpleFormatterIgnoring

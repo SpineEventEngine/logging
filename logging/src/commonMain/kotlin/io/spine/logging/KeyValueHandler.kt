@@ -27,25 +27,16 @@
 package io.spine.logging
 
 /**
- *  A key for logging semi-structured metadata values.
+ * Callback interface to handle additional contextual `Metadata` in log statements.
  *
- *  @param T The type of the value associated with this key.
+ * This interface is only intended to be implemented by logger backend classes as part of handling
+ * metadata, and should not be used in any general application code, other than to implement the
+ * [io.spine.logging.jvm.MetadataKey.emit] method in this class.
  */
-public interface MetadataKey<T: Any> {
+public fun interface KeyValueHandler {
 
     /**
-     * A short, human-readable text label which will prefix the metadata in
-     * cases where it is formatted as part of the log message.
+     * Handle a single key/value a pair of contextual metadata for a log statement.
      */
-    public val label: String
-
-    /**
-     * Cast an arbitrary value to the type of this key.
-     */
-    public fun cast(value: Any?): T?
-
-    /**
-     * Whether this key can be used to set more than one value in the metadata.
-     */
-    public val canRepeat: Boolean
+    public fun handle(key: String, value: Any?)
 }

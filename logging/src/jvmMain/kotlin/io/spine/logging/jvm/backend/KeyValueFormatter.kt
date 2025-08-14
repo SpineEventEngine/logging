@@ -26,7 +26,7 @@
 
 package io.spine.logging.jvm.backend
 
-import io.spine.logging.jvm.MetadataKey.KeyValueHandler
+import io.spine.logging.KeyValueHandler
 
 /**
  * Formats key/value pairs as a human-readable string on the end of log statements.

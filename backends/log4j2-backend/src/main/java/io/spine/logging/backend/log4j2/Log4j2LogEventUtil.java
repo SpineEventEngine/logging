@@ -26,6 +26,7 @@
 
 package io.spine.logging.backend.log4j2;
 
+import io.spine.logging.KeyValueHandler;
 import io.spine.logging.jvm.LogContext;
 import io.spine.logging.jvm.MetadataKey;
 import io.spine.logging.jvm.backend.LogData;
@@ -223,12 +224,12 @@ final class Log4j2LogEventUtil {
                        .getLineNumber());
     }
 
-    private static final MetadataHandler<MetadataKey.KeyValueHandler> HANDLER =
+    private static final MetadataHandler<KeyValueHandler> HANDLER =
             MetadataHandler.builder(Log4j2LogEventUtil::handleMetadata)
                     .build();
 
     private static void handleMetadata(
-            MetadataKey<Object> key, Object value, MetadataKey.KeyValueHandler kvh) {
+            MetadataKey<Object> key, Object value, KeyValueHandler kvh) {
         if (key.getClass()
                .equals(LogContext.Key.TAGS.getClass())) {
             processTags(key, value, kvh);
@@ -245,7 +246,7 @@ final class Log4j2LogEventUtil {
     }
 
     private static void processTags(
-            MetadataKey<Object> key, Object value, MetadataKey.KeyValueHandler kvh) {
+            MetadataKey<Object> key, Object value, KeyValueHandler kvh) {
         var valueQueue = ValueQueue.appendValueToNewQueue(value);
         // Unlike single metadata (which is usually formatted as a single value), tags are always
         // formatted as a list.

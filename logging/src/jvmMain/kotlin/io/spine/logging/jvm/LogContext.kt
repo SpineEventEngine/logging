@@ -27,6 +27,7 @@
 package io.spine.logging.jvm
 
 import io.spine.annotation.VisibleForTesting
+import io.spine.logging.KeyValueHandler
 import io.spine.logging.LogPerBucketingStrategy
 import io.spine.logging.LogSite
 import io.spine.logging.LogSiteKey

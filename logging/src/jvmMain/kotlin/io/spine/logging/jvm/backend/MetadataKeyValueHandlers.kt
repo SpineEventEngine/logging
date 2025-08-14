@@ -26,8 +26,8 @@
 
 package io.spine.logging.jvm.backend
 
+import io.spine.logging.KeyValueHandler
 import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.MetadataKey.KeyValueHandler
 
 /**
  * A helper class providing the default callbacks and handlers for processing
