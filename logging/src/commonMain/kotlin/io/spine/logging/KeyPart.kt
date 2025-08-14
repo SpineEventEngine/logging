@@ -26,7 +26,6 @@
 
 package io.spine.logging
 
-
 /**
  * A part of a log site key which has singleton semantics per logging scope.
  *
