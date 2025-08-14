@@ -91,10 +91,10 @@ public abstract class ScopedLoggingContext protected constructor() {
     /**
      * Lightweight internal helper class for context implementations to manage a list of scopes.
      */
-    public class ScopeList(
+    public class ScopeItem(
         private val key: ScopeType,
         private val scope: LoggingScope,
-        private val next: ScopeList?
+        private val next: ScopeItem?
     ) {
 
         public companion object {
@@ -106,9 +106,9 @@ public abstract class ScopedLoggingContext protected constructor() {
              * the original (potentially `null`) list reference is returned.
              */
             @JvmStatic
-            public fun addScope(list: ScopeList?, type: ScopeType?): ScopeList? {
+            public fun addScope(list: ScopeItem?, type: ScopeType?): ScopeItem? {
                 return if (type != null && lookup(list, type) == null) {
-                    ScopeList(type, type.newScope(), list)
+                    ScopeItem(type, type.newScope(), list)
                 } else {
                     list
                 }
@@ -118,7 +118,7 @@ public abstract class ScopedLoggingContext protected constructor() {
              * Finds a scope instance for the given type in a possibly null scope list.
              */
             @JvmStatic
-            public fun lookup(list: ScopeList?, type: ScopeType): LoggingScope? {
+            public fun lookup(list: ScopeItem?, type: ScopeType): LoggingScope? {
                 var currentList = list
                 while (currentList != null) {
                     if (type == currentList.key) {
