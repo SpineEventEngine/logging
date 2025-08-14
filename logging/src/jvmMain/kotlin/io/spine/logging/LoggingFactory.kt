@@ -26,6 +26,8 @@
 
 package io.spine.logging
 
+import io.spine.logging.jvm.MetadataKey.Companion.repeated
+import io.spine.logging.jvm.MetadataKey.Companion.single
 import io.spine.logging.jvm.Middleman
 import io.spine.logging.jvm.backend.Platform
 import io.spine.reflect.CallerFinder
@@ -56,7 +58,7 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
     public actual fun <T : Any> singleMetadataKey(
         label: String,
         valueClass: KClass<T>
-    ): MetadataKey<T> = io.spine.logging.jvm.MetadataKey.single(label, valueClass.javaObjectType)
+    ): MetadataKey<T> = single(label, valueClass.javaObjectType)
 
     @JvmStatic
     public fun <T: Any> singleMetadataKey(label: String, type: Class<T>): MetadataKey<T> =
@@ -66,7 +68,7 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
     public actual fun <T : Any> repeatedMetadataKey(
         label: String,
         valueClass: KClass<T>
-    ): MetadataKey<T> = io.spine.logging.jvm.MetadataKey.repeated(label, valueClass.javaObjectType)
+    ): MetadataKey<T> = repeated(label, valueClass.javaObjectType)
 
     @JvmStatic
     public fun <T : Any> repeatedMetadataKey(label: String, type: Class<T>): MetadataKey<T> =
