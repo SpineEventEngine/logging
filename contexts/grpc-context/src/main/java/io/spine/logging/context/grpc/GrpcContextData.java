@@ -30,7 +30,7 @@ import io.spine.logging.LoggingScope;
 import io.spine.logging.jvm.context.ContextMetadata;
 import io.spine.logging.jvm.context.LogLevelMap;
 import io.spine.logging.jvm.context.ScopeType;
-import io.spine.logging.jvm.context.ScopedLoggingContext.ScopeItem;
+import io.spine.logging.jvm.context.ScopeItem;
 import io.spine.logging.jvm.context.Tags;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;

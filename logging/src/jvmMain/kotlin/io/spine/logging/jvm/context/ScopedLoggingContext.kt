@@ -28,7 +28,6 @@ package io.spine.logging.jvm.context
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import com.google.errorprone.annotations.MustBeClosed
-import io.spine.logging.LoggingScope
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.context.ScopedLoggingContext.Companion.getInstance
 import java.util.concurrent.Callable
@@ -87,49 +86,6 @@ import java.util.concurrent.Callable
  * for historical context.
  */
 public abstract class ScopedLoggingContext protected constructor() {
-
-    /**
-     * Lightweight internal helper class for context implementations to manage a list of scopes.
-     */
-    public class ScopeItem(
-        private val key: ScopeType,
-        private val scope: LoggingScope,
-        private val next: ScopeItem?
-    ) {
-
-        public companion object {
-
-            /**
-             * Adds a new scope to the list for the given type.
-             *
-             * If the given type is null, or a scope for the type already exists in the list,
-             * the original (potentially `null`) list reference is returned.
-             */
-            @JvmStatic
-            public fun addScope(list: ScopeItem?, type: ScopeType?): ScopeItem? {
-                return if (type != null && lookup(list, type) == null) {
-                    ScopeItem(type, type.newScope(), list)
-                } else {
-                    list
-                }
-            }
-
-            /**
-             * Finds a scope instance for the given type in a possibly null scope list.
-             */
-            @JvmStatic
-            public fun lookup(list: ScopeItem?, type: ScopeType): LoggingScope? {
-                var currentList = list
-                while (currentList != null) {
-                    if (type == currentList.key) {
-                        return currentList.scope
-                    }
-                    currentList = currentList.next
-                }
-                return null
-            }
-        }
-    }
 
     /**
      * A fluent builder API for creating and installing new context scopes.
