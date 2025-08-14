@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2020, The Flogger Authors; TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,9 @@ import io.spine.annotation.VisibleForTesting
 /**
  * JVM implementation of the logging scope which provides garbage collection for the keys
  * via JVM week references.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/2c7d806b08217993fea229d833a6f8b748591b45/api/src/main/java/com/google/common/flogger/LoggingScope.java">
+ *     Original Flogger code</a> for historic reference.
  */
 public actual abstract class LoggingScope protected constructor(private val label: String) {
 
