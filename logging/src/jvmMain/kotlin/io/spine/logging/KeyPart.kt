@@ -37,7 +37,7 @@ import java.util.concurrent.ConcurrentLinkedQueue
  * log site key, so must have singleton semantics per scope.
  *
  * This file encapsulates Java-specific weak-reference and concurrent queue usage to keep
- * LoggingScope API Kotlin-only.
+ * the [LoggingScope] API Kotlin-only.
  */
 public actual class KeyPart internal constructor(scope: LoggingScope) :
     WeakReference<LoggingScope>(scope, queue) {

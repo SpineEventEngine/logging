@@ -26,10 +26,33 @@
 
 package io.spine.logging
 
+
+/**
+ * A part of a log site key which has singleton semantics per logging scope.
+ *
+ * This class is responsible for managing lifecycle and cleanup of log site keys.
+ * It ensures that key references are properly maintained and cleaned up when no longer needed.
+ */
 public expect class KeyPart {
+
+    /**
+     * Adds a hook that will be executed when this key part is closed.
+     *
+     * @param hook the function to execute on close
+     */
     public fun addOnCloseHook(hook: () -> Unit)
+
+    /**
+     * Closes this key part and executes all registered close hooks.
+     * After closing, the key part becomes invalid and should not be used.
+     */
     public fun close()
+
     public companion object {
+        /**
+         * Removes keys that are no longer in use from the internal storage.
+         * This helps prevent memory leaks by cleaning up abandoned key references.
+         */
         public fun removeUnusedKeys()
     }
 }
