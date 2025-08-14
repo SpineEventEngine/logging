@@ -29,68 +29,27 @@ package io.spine.logging
 import io.spine.annotation.VisibleForTesting
 
 /**
- * An opaque scope marker which can be attached to log sites to provide "per scope" behaviour
- * for stateful logging operations (e.g., rate limiting).
- *
- * Scopes are provided via the [LoggingScopeProvider] interface and found by looking for
- * the current [ScopedLoggingContext][io.spine.logging.jvm.context.ScopedLoggingContext].
- *
- * Stateful fluent logging APIs which need to look up per log site information
- * (e.g., rate limit state) should do so via a [LogSiteMap][io.spine.logging.jvm.LogSiteMap] using
- * the [LogSiteKey] passed into the [io.spine.logging.jvm.LogContext.postProcess] function.
- *
- * If scopes are present in the log site [Metadata][io.spine.logging.jvm.backend.Metadata]
- * then the log site key provided to the `postProcess()` method will already be specialized
- * to take account of any scopes present.
- *
- * Note that scopes have no effect when applied to stateless log statements
- * (e.g., log statements without rate limiting) since the log site key for that log statement
- * will not be used in any maps.
- *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LoggingScope.java">
- *       Original Java code of Google Flogger</a> for historical context.
+ * JVM implementation of the logging scope which provides garbage collection for the keys
+ * via JVM week references.
  */
 public actual abstract class LoggingScope protected constructor(private val label: String) {
 
-    /**
-     * Returns a specialization of the given key which accounts for this scope instance.
-     *
-     * Two specialized keys should compare as [Object.equals] if and only if they are
-     * specializations from the same log site, with the same sequence of scopes applied.
-     *
-     * The returned instance:
-     *
-     * - Must be an immutable "value type".
-     * - Must not compare as [Object.equals] to the given key.
-     * - Should have a different [Object.hashCode] to the given key.
-     * - Should be efficient and lightweight.
-     *
-     * As such it is recommended that the [SpecializedLogSiteKey.of] method is used
-     * in implementations, passing in a suitable qualifier (which need not be the scope
-     * itself, but must be unique per scope).
-     */
-    protected abstract fun specialize(key: LogSiteKey): LogSiteKey
+    protected actual abstract fun specialize(key: LogSiteKey): LogSiteKey
+    protected actual abstract fun onClose(removalHook: () -> Unit)
 
+    /**
+     * Opens [specialize] for the package.
+     */
     internal fun doSpecialize(key: LogSiteKey): LogSiteKey = specialize(key)
-
-    /**
-     * Registers "hooks" which should be called when this scope is "closed".
-     *
-     * The hooks are intended to remove the keys associated with this scope from any data
-     * structures they may be held in, to avoid leaking allocations.
-     *
-     * Note that a key may be specialized with several scopes and the first scope to be
-     * closed will remove it from any associated data structures (conceptually the scope
-     * that a log site is called from is the intersection of all the currently active scopes
-     * which apply to it).
-     */
-    protected abstract fun onClose(removalHook: () -> Unit)
 
     /**
      * Opens access to [onClose] for the package.
      */
     internal fun doOnClose(removalHook: () -> Unit) = onClose(removalHook)
 
+    /**
+     * Returns the [label] of this scope.
+     */
     override fun toString(): String = label
 
     public companion object {

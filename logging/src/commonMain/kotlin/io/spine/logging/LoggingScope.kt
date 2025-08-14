@@ -27,6 +27,58 @@
 package io.spine.logging
 
 /**
- * Platform-neutral representation of a logging scope used for per-scope aggregation.
+ * An opaque scope marker which can be attached to log sites to provide "per scope" behaviour
+ * for stateful logging operations (e.g., rate limiting).
+ *
+ * Scopes are provided via the [LoggingScopeProvider] interface and found by looking for
+ * the current [ScopedLoggingContext][io.spine.logging.jvm.context.ScopedLoggingContext].
+ *
+ * Stateful fluent logging APIs which need to look up per log site information
+ * (e.g., rate limit state) should do so via a [LogSiteMap][io.spine.logging.jvm.LogSiteMap] using
+ * the [LogSiteKey] passed into the [io.spine.logging.jvm.LogContext.postProcess] function.
+ *
+ * If scopes are present in the log site [Metadata][io.spine.logging.jvm.backend.Metadata]
+ * then the log site key provided to the `postProcess()` method will already be specialized
+ * to take account of any scopes present.
+ *
+ * Note that scopes have no effect when applied to stateless log statements
+ * (e.g., log statements without rate limiting) since the log site key for that log statement
+ * will not be used in any maps.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LoggingScope.java">
+ *       Original Java code of Google Flogger</a> for historical context.
  */
-public expect abstract class LoggingScope
+public expect abstract class LoggingScope {
+
+    /**
+     * Returns a specialization of the given key which accounts for this scope instance.
+     *
+     * Two specialized keys should compare as [equals] if and only if they are
+     * specializations from the same log site, with the same sequence of scopes applied.
+     *
+     * The returned instance:
+     *
+     * - Must be an immutable "value type".
+     * - Must not compare as [equals] to the given key.
+     * - Should have a different [hashCode] to the given key.
+     * - Should be efficient and lightweight.
+     *
+     * As such it is recommended that the [SpecializedLogSiteKey.of] method is used
+     * in implementations, passing in a suitable qualifier (which need not be the scope
+     * itself, but must be unique per scope).
+     */
+    protected abstract fun specialize(key: LogSiteKey): LogSiteKey
+
+    /**
+     * Registers "hooks" which should be called when this scope is "closed".
+     *
+     * The hooks are intended to remove the keys associated with this scope from any data
+     * structures they may be held in, to avoid leaking allocations.
+     *
+     * Note that a key may be specialized with several scopes and the first scope to be
+     * closed will remove it from any associated data structures (conceptually, the scope
+     * that a log site is called from is the intersection of all the currently active scopes
+     * which apply to it).
+     */
+    protected abstract fun onClose(removalHook: () -> Unit)
+}

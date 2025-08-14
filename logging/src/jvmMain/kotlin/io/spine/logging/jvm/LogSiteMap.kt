@@ -27,7 +27,6 @@
 package io.spine.logging.jvm
 
 import io.spine.annotation.TestOnly
-import io.spine.annotation.VisibleForTesting
 import io.spine.logging.LogSiteKey
 import io.spine.logging.LoggingScope
 import io.spine.logging.jvm.backend.Metadata

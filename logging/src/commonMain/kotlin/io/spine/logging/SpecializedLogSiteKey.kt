@@ -26,5 +26,7 @@
 
 package io.spine.logging
 
-/** Platform-neutral helper for specializing log site keys with qualifiers. */
-public expect class SpecializedLogSiteKey
+/**
+ * Platform-neutral helper for specializing log site keys with qualifiers.
+ */
+public expect class SpecializedLogSiteKey : LogSiteKey

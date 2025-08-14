@@ -27,11 +27,8 @@
 package io.spine.logging
 
 /**
- * Used by Scope/LogSiteMap and in response to "per()" or "perUnique()" (which is an implicitly
- * unbounded scope).
- *
- * This should avoid it needing to be made public assuming it's in the same package for
- * proper encapsulation and access control.
+ * Used by [LoggingScope] and [io.spine.logging.jvm.LogSiteMap] and in response to
+ * "per()" or "perUnique()" (which is an implicitly unbounded scope).
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/SpecializedLogSiteKey.java">
  *     Original Java code of Google Flogger</a> for historical context.
