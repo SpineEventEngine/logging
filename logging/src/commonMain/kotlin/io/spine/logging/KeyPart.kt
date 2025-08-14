@@ -30,7 +30,7 @@ package io.spine.logging
 /**
  * A part of a log site key which has singleton semantics per logging scope.
  *
- * This class is responsible for managing lifecycle and cleanup of log site keys.
+ * This class is responsible for managing the lifecycle and cleanup of log site keys.
  * It ensures that key references are properly maintained and cleaned up when no longer needed.
  */
 public expect class KeyPart {
@@ -40,6 +40,7 @@ public expect class KeyPart {
      *
      * @param hook the function to execute on close
      */
+    @Suppress("unused") // the parameter is used by `actual` impl.
     public fun addOnCloseHook(hook: () -> Unit)
 
     /**
