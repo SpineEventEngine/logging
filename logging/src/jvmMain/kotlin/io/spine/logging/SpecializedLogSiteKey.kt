@@ -38,11 +38,10 @@ internal class SpecializedLogSiteKey private constructor(
     private val qualifier: Any
 ) : LogSiteKey {
 
-    public companion object {
+    companion object {
 
         @JvmStatic
-        public fun of(key: LogSiteKey, qualifier: Any): LogSiteKey =
-            SpecializedLogSiteKey(key, qualifier)
+        fun of(key: LogSiteKey, qualifier: Any): LogSiteKey = SpecializedLogSiteKey(key, qualifier)
     }
 
     // Equals is dependent on the order in which specialization occurred, even though
