@@ -49,6 +49,7 @@ public expect class KeyPart {
     public fun close()
 
     public companion object {
+
         /**
          * Removes keys that are no longer in use from the internal storage.
          * This helps prevent memory leaks by cleaning up abandoned key references.
