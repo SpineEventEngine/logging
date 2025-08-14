@@ -29,7 +29,7 @@ package io.spine.logging.context.std
 import io.spine.logging.Level
 import io.spine.logging.compareTo
 import io.spine.logging.context.LogLevelMap
-import io.spine.logging.jvm.LoggingScope
+import io.spine.logging.LoggingScope
 import io.spine.logging.jvm.context.ContextMetadata
 import io.spine.logging.jvm.context.ScopeType
 import io.spine.logging.jvm.context.ScopedLoggingContext.ScopeList

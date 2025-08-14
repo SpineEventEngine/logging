@@ -28,8 +28,5 @@ package io.spine.logging
 
 /**
  * Platform-neutral representation of a logging scope used for per-scope aggregation.
- *
- * Actual implementations are provided per platform. On JVM, this is typealiased to
- * io.spine.logging.jvm.LoggingScope.
  */
 public expect abstract class LoggingScope

@@ -27,7 +27,7 @@
 package io.spine.logging.context.std
 
 import io.spine.logging.context.toMap
-import io.spine.logging.jvm.LoggingScope
+import io.spine.logging.LoggingScope
 import io.spine.logging.jvm.backend.Metadata
 import io.spine.logging.jvm.context.ContextDataProvider
 import io.spine.logging.jvm.context.ScopeType

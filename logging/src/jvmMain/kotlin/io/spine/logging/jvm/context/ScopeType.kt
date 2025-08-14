@@ -26,7 +26,7 @@
 
 package io.spine.logging.jvm.context
 
-import io.spine.logging.jvm.LoggingScope
+import io.spine.logging.LoggingScope
 import io.spine.logging.LoggingScopeProvider
 
 /**

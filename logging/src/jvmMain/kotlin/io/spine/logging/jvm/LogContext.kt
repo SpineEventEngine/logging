@@ -32,6 +32,7 @@ import io.spine.logging.StackSize
 import io.spine.logging.LogSiteKey
 import io.spine.logging.LoggingApi
 import io.spine.logging.LoggingDomain
+import io.spine.logging.LoggingScope
 import io.spine.logging.LoggingScopeProvider
 import io.spine.logging.SpecializedLogSiteKey
 import io.spine.logging.jvm.JvmLogSite.Companion.injectedLogSite

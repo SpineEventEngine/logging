@@ -26,4 +26,116 @@
 
 package io.spine.logging
 
-public actual typealias LoggingScope = io.spine.logging.jvm.LoggingScope
+import io.spine.annotation.VisibleForTesting
+
+/**
+ * An opaque scope marker which can be attached to log sites to provide "per scope" behaviour
+ * for stateful logging operations (e.g., rate limiting).
+ *
+ * Scopes are provided via the [LoggingScopeProvider] interface and found by looking for
+ * the current [io.spine.logging.jvm.context.ScopedLoggingContext ScopedLoggingContexts].
+ *
+ * Stateful fluent logging APIs which need to look up per log site information
+ * (e.g., rate limit state) should do so via a [io.spine.logging.jvm.LogSiteMap] using the [LogSiteKey] passed
+ * into the [io.spine.logging.jvm.LogContext.postProcess] method. If scopes are present in the log site
+ * [io.spine.logging.jvm.backend.Metadata] then the log site key provided to
+ * the `postProcess()` method will already be specialized to take account of any
+ * scopes present.
+ *
+ * Note that scopes have no effect when applied to stateless log statements
+ * (e.g., log statements without rate limiting) since the log site key for that log statement
+ * will not be used in any maps.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LoggingScope.java">
+ *       Original Java code of Google Flogger</a> for historical context.
+ */
+public actual abstract class LoggingScope protected constructor(private val label: String) {
+
+    /**
+     * Returns a specialization of the given key which accounts for this scope instance.
+     *
+     * Two specialized keys should compare as [Object.equals] if and only if they are
+     * specializations from the same log site, with the same sequence of scopes applied.
+     *
+     * The returned instance:
+     *
+     * - Must be an immutable "value type".
+     * - Must not compare as [Object.equals] to the given key.
+     * - Should have a different [Object.hashCode] to the given key.
+     * - Should be efficient and lightweight.
+     *
+     * As such it is recommended that the [SpecializedLogSiteKey.of] method is used
+     * in implementations, passing in a suitable qualifier (which need not be the scope
+     * itself, but must be unique per scope).
+     */
+    protected abstract fun specialize(key: LogSiteKey): LogSiteKey
+
+    internal fun doSpecialize(key: LogSiteKey): LogSiteKey = specialize(key)
+
+    /**
+     * Registers "hooks" which should be called when this scope is "closed".
+     *
+     * The hooks are intended to remove the keys associated with this scope from any data
+     * structures they may be held in, to avoid leaking allocations.
+     *
+     * Note that a key may be specialized with several scopes and the first scope to be
+     * closed will remove it from any associated data structures (conceptually the scope
+     * that a log site is called from is the intersection of all the currently active scopes
+     * which apply to it).
+     */
+    protected abstract fun onClose(removalHook: () -> Unit)
+
+    /**
+     * Opens access to [onClose] for the package.
+     */
+    internal fun doOnClose(removalHook: () -> Unit) = onClose(removalHook)
+
+    override fun toString(): String = label
+
+    public companion object {
+
+        /**
+         * Creates a scope which automatically removes any associated keys from [io.spine.logging.jvm.LogSiteMap]s
+         * when it's garbage collected.
+         *
+         * The given label is used only for debugging purposes and may appear in log
+         * statements, it should not contain any user data or other runtime information.
+         */
+        // TODO: Strongly consider making the label a compile time constant.
+        @JvmStatic
+        public fun create(label: String): io.spine.logging.LoggingScope = WeakScope(label)
+    }
+
+    @VisibleForTesting
+    internal class WeakScope(label: String) : LoggingScope(label) {
+
+        /**
+         * Do NOT reference the Scope directly from a specialized key, use the "key part"
+         * to avoid the key part weak reference is enqueued which triggers tidy up at the next
+         * call to `specializeForScopesIn()` where scopes are used.
+         *
+         * This must be unique per scope since it acts as a qualifier within specialized
+         * log site keys. Using a different weak reference per specialized key would not work
+         * (which is part of the reason we also need the "on close" queue as well as
+         * the reference queue).
+         */
+        private val keyPart: KeyPart = KeyPart(this)
+
+        override fun specialize(key: LogSiteKey): LogSiteKey =
+            SpecializedLogSiteKey.of(key, keyPart)
+
+        override fun onClose(removalHook: () -> Unit) {
+            // Clear the reference queue about as often as we would add a new key to a map.
+            // This should still mean that the queue is almost always empty when we check
+            // it (since we expect more than one specialized log site key per scope) and it
+            // avoids spamming the queue clearance loop for every log statement and avoids
+            // class loading the reference queue until we know scopes have been used.
+            KeyPart.removeUnusedKeys()
+            keyPart.addOnCloseHook(removalHook)
+        }
+
+        internal fun closeForTesting() {
+            keyPart.close()
+        }
+    }
+}

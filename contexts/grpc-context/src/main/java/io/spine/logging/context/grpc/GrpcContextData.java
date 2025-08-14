@@ -26,7 +26,7 @@
 
 package io.spine.logging.context.grpc;
 
-import io.spine.logging.jvm.LoggingScope;
+import io.spine.logging.LoggingScope;
 import io.spine.logging.jvm.context.ContextMetadata;
 import io.spine.logging.jvm.context.LogLevelMap;
 import io.spine.logging.jvm.context.ScopeType;
