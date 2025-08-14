@@ -47,6 +47,7 @@ public expect class KeyPart {
 
     /**
      * Closes this key part and executes all registered close hooks.
+     *
      * After closing, the key part becomes invalid and should not be used.
      */
     public fun close()
