@@ -149,7 +149,7 @@ public fun JLogLevelMap?.toMap(): LogLevelMap? {
  * Gets a Flogger log map instance, assuming that this map instance is a [MapImpl].
  * If not, an error is thrown with a diagnostic message.
  *
- * This function is a safety net to prevent accidental introduction of other map implementations.
+ * This function is a safety net to prevent an accidental introduction of other map implementations.
  * It is safe to assume that under a JVM, only [MapImpl] will be used because we
  * control the instantiation. This method ensures that the downcast is checked and documented.
  */

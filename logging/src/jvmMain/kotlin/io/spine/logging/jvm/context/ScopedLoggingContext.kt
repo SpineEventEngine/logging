@@ -394,7 +394,7 @@ public abstract class ScopedLoggingContext protected constructor() {
     /**
      * Adds a single metadata key/value pair to the current context.
      *
-     * Unlike [Tags], which have a well defined value ordering, independent of the order
+     * Unlike [Tags], which have a well-defined value ordering, independent of the order
      * in which values were added, context metadata preserves the order of addition.
      * As such, it is not advised to add values for the same metadata key from multiple threads,
      * since that may create non-deterministic ordering.
