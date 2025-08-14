@@ -268,7 +268,7 @@ public abstract class ScopedLoggingContext protected constructor() {
         /**
          * Installs a new context based on the state of the builder.
          *
-         * The caller is *required* to invoke [AutoCloseable.close] on
+         * The caller is *required* to invoke [AutoCloseable.close][AutoCloseable] on
          * the returned instances in the reverse order to which they were obtained:
          *
          * ```kotlin
