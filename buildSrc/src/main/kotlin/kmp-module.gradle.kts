@@ -105,16 +105,20 @@ kotlin {
     // Enables explicit API mode for any Kotlin sources within the module.
     explicitApi()
 
+    compilerOptions {
+        setFreeCompilerArgs()
+    }
+
     // Enables and configures JVM target.
     jvm {
         compilerOptions {
             jvmTarget.set(BuildSettings.jvmTarget)
-            setFreeCompilerArgs()
         }
     }
 
     // Dependencies are specified per-target.
     // Please note, common sources are implicitly available in all targets.
+    @Suppress("unused") // source set `val`s are used implicitly.
     sourceSets {
         val commonTest by getting {
             dependencies {

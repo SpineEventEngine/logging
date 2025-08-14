@@ -31,7 +31,6 @@ import io.spine.dependency.local.Base
 import io.spine.dependency.local.Reflect
 import io.spine.gradle.publish.SpinePublishing
 import io.spine.gradle.publish.spinePublishing
-import org.gradle.kotlin.dsl.project
 
 plugins {
     `kmp-module`
