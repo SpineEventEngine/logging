@@ -95,15 +95,15 @@ public actual abstract class LoggingScope protected constructor(private val labe
     public companion object {
 
         /**
-         * Creates a scope which automatically removes any associated keys from [io.spine.logging.jvm.LogSiteMap]s
-         * when it's garbage collected.
+         * Creates a scope which automatically removes any associated keys
+         * from [io.spine.logging.jvm.LogSiteMap]s when it is garbage collected.
          *
          * The given label is used only for debugging purposes and may appear in log
          * statements, it should not contain any user data or other runtime information.
          */
         // TODO: Strongly consider making the label a compile time constant.
         @JvmStatic
-        public fun create(label: String): io.spine.logging.LoggingScope = WeakScope(label)
+        public fun create(label: String): LoggingScope = WeakScope(label)
     }
 
     @VisibleForTesting
