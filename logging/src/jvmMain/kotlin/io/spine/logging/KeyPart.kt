@@ -26,7 +26,6 @@
 
 package io.spine.logging
 
-import io.spine.logging.LoggingScope
 import java.lang.ref.ReferenceQueue
 import java.lang.ref.WeakReference
 import java.util.concurrent.ConcurrentLinkedQueue
