@@ -47,7 +47,7 @@ import java.util.*
  * This primarily exists to support both the JDK logging classes and text only Android backends.
  * Code in here may be factored out as necessary to support other use cases in the future.
  *
- * If a text-based logger backend is not performance critical, then it should just append the log
+ * If a text-based logger backend is not performance-critical, then it should just append the log
  * message and metadata to a local buffer. For example:
  *
  * ```kotlin
