@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2020, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,9 @@ package io.spine.logging
  *
  * This class is responsible for managing the lifecycle and cleanup of log site keys.
  * It ensures that key references are properly maintained and cleaned up when no longer needed.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/2c7d806b08217993fea229d833a6f8b748591b45/api/src/main/java/com/google/common/flogger/LoggingScope.java#L143">
+ *     Original Flogger code</a> for historic reference.
  */
 public expect class KeyPart {
 
