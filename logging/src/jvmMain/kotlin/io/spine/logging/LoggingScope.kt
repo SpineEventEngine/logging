@@ -33,14 +33,15 @@ import io.spine.annotation.VisibleForTesting
  * for stateful logging operations (e.g., rate limiting).
  *
  * Scopes are provided via the [LoggingScopeProvider] interface and found by looking for
- * the current [io.spine.logging.jvm.context.ScopedLoggingContext ScopedLoggingContexts].
+ * the current [ScopedLoggingContext][io.spine.logging.jvm.context.ScopedLoggingContext].
  *
  * Stateful fluent logging APIs which need to look up per log site information
- * (e.g., rate limit state) should do so via a [io.spine.logging.jvm.LogSiteMap] using the [LogSiteKey] passed
- * into the [io.spine.logging.jvm.LogContext.postProcess] method. If scopes are present in the log site
- * [io.spine.logging.jvm.backend.Metadata] then the log site key provided to
- * the `postProcess()` method will already be specialized to take account of any
- * scopes present.
+ * (e.g., rate limit state) should do so via a [LogSiteMap][io.spine.logging.jvm.LogSiteMap] using
+ * the [LogSiteKey] passed into the [io.spine.logging.jvm.LogContext.postProcess] function.
+ *
+ * If scopes are present in the log site [Metadata][io.spine.logging.jvm.backend.Metadata]
+ * then the log site key provided to the `postProcess()` method will already be specialized
+ * to take account of any scopes present.
  *
  * Note that scopes have no effect when applied to stateless log statements
  * (e.g., log statements without rate limiting) since the log site key for that log statement
