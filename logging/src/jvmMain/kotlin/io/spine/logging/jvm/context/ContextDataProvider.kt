@@ -183,6 +183,6 @@ public abstract class ContextDataProvider {
          */
         @JvmStatic
         public fun getNoOpProvider(): ContextDataProvider =
-            NoOpContextDataProvider.Companion.noOpInstance
+            NoOpContextDataProvider.noOpInstance
     }
 }
