@@ -35,8 +35,6 @@ import io.spine.gradle.javac.configureJavac
 import io.spine.gradle.kotlin.setFreeCompilerArgs
 import io.spine.gradle.publish.IncrementGuard
 import io.spine.gradle.report.license.LicenseReporter
-import io.spine.gradle.testing.configureLogging
-import io.spine.gradle.testing.registerTestTasks
 
 /**
  * Configures this [Project] as a Kotlin Multiplatform module.

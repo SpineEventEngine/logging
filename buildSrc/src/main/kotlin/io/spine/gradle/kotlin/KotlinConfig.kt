@@ -28,7 +28,6 @@ package io.spine.gradle.kotlin
 
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.jetbrains.kotlin.gradle.dsl.KotlinCommonCompilerOptions
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompilerOptions
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 
 /**
