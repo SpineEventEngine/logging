@@ -28,6 +28,7 @@ package io.spine.logging.jvm
 
 import io.spine.annotation.VisibleForTesting
 import io.spine.logging.LogSite
+import io.spine.logging.StackSize
 import io.spine.logging.LogSiteKey
 import io.spine.logging.LoggingApi
 import io.spine.logging.LoggingDomain
