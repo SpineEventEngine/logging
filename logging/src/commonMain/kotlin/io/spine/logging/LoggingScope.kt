@@ -31,7 +31,7 @@ package io.spine.logging
  * for stateful logging operations (e.g., rate limiting).
  *
  * Scopes are provided via the [LoggingScopeProvider] interface and found by looking for
- * the current [ScopedLoggingContext][io.spine.logging.jvm.context.ScopedLoggingContext].
+ * the current [ScopedLoggingContext][io.spine.logging.context.ScopedLoggingContext].
  *
  * Stateful fluent logging APIs which need to look up per log site information
  * (e.g., rate limit state) should do so via a [LogSiteMap][io.spine.logging.jvm.LogSiteMap] using
