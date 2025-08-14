@@ -27,14 +27,15 @@
 package io.spine.logging.jvm
 
 import io.spine.annotation.VisibleForTesting
+import io.spine.logging.LogPerBucketingStrategy
 import io.spine.logging.LogSite
-import io.spine.logging.StackSize
 import io.spine.logging.LogSiteKey
 import io.spine.logging.LoggingApi
 import io.spine.logging.LoggingDomain
 import io.spine.logging.LoggingScope
 import io.spine.logging.LoggingScopeProvider
 import io.spine.logging.SpecializedLogSiteKey
+import io.spine.logging.StackSize
 import io.spine.logging.jvm.JvmLogSite.Companion.injectedLogSite
 import io.spine.logging.jvm.backend.LogData
 import io.spine.logging.jvm.backend.Metadata

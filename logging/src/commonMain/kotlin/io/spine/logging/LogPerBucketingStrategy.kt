@@ -27,9 +27,7 @@
 package io.spine.logging
 
 /**
- * Platform-neutral marker for a bucketing strategy used by LoggingApi.per(key, strategy).
- *
- * Actual implementations are provided per platform. On JVM, this is typealiased to
- * io.spine.logging.jvm.LogPerBucketingStrategy.
+ * Platform-neutral marker for a bucketing strategy used by
+ * [LoggingApi.per(key, strategy)][LoggingApi.per].
  */
 public expect abstract class LogPerBucketingStrategy<T>
