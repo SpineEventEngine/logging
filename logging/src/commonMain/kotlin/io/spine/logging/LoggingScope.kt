@@ -63,7 +63,7 @@ public expect abstract class LoggingScope {
      * - Should have a different [hashCode] to the given key.
      * - Should be efficient and lightweight.
      *
-     * As such it is recommended that the [SpecializedLogSiteKey.of] method is used
+     * As such it is recommended that the `SpecializedLogSiteKey.of` factory function is used
      * in implementations, passing in a suitable qualifier (which need not be the scope
      * itself, but must be unique per scope).
      */
