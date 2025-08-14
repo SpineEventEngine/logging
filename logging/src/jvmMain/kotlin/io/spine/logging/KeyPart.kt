@@ -61,6 +61,14 @@ public actual class KeyPart internal constructor(scope: LoggingScope) :
     }
 
     public actual companion object {
+
+        /**
+         * The singleton reference queue of the logging scopes.
+         *
+         * The queue is populated via [KeyPart] which descends from [WeakReference].
+         *
+         * @see KeyPart
+         */
         private val queue = ReferenceQueue<LoggingScope>()
 
         public actual fun removeUnusedKeys() {
