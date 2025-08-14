@@ -30,7 +30,9 @@ package io.spine.logging
  * A tagging interface to mark implementations that are suitable for use as a key for looking
  * up per log site persistent state.
  *
- * Normally the class used is just [io.spine.logging.jvm.JvmLogSite] but other, more specific, keys can be used.
+ * Normally the class used is just [io.spine.logging.jvm.JvmLogSite] but other,
+ * more specific, keys can be used.
+ *
  * There are no method requirements on this interface, but the instance must have correct
  * `equals()`, `hashCode()` and `toString()` implementations and must be at least as unique
  * as the associated `LogSite` (i.e., two keys created for different log sites must never
