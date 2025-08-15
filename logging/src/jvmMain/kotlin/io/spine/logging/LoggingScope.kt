@@ -64,7 +64,6 @@ public actual abstract class LoggingScope protected constructor(private val labe
          * The given label is used only for debugging purposes and may appear in log
          * statements, it should not contain any user data or other runtime information.
          */
-        // TODO: Strongly consider making the label a compile time constant.
         @JvmStatic
         public fun create(label: String): LoggingScope = WeakScope(label)
     }
