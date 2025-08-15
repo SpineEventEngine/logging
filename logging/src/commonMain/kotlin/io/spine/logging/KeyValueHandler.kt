@@ -30,13 +30,13 @@ package io.spine.logging
  * Callback interface to handle additional contextual `Metadata` in log statements.
  *
  * This interface is only intended to be implemented by logger backend classes as part of handling
- * metadata, and should not be used in any general application code, other than to implement the
- * [io.spine.logging.jvm.MetadataKey.emit] method in this class.
+ * metadata, and should not be used in any general application code, other than to implement
+ * the [io.spine.logging.jvm.MetadataKey.emit] method in this class.
  */
 public fun interface KeyValueHandler {
 
     /**
-     * Handle a single key/value a pair of contextual metadata for a log statement.
+     * Handles a single key/value a pair of contextual metadata for a log statement.
      */
     public fun handle(key: String, value: Any?)
 }
