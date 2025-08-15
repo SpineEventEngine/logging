@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,24 +24,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
 /**
- * Provides a scope to a log statement via the [LogContext.per] method.
+ * Callback interface to handle additional contextual `Metadata` in log statements.
  *
- * This interface exists to avoid needing to pass specific instances of [LoggingScope]
- * around in user code. The scope provider can lookup the correct scope instance for the current
- * thread, and different providers can provide different types of scope.
- * E.g., you can have a provider for "request" scopes, and a provider for "subtask" scopes.
- *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LoggingScopeProvider.java">
- *     Original Java code of Google Flogger</a> for historical context.
+ * This interface is only intended to be implemented by logger backend classes as part of handling
+ * metadata, and should not be used in any general application code, other than to implement
+ * the [io.spine.logging.jvm.MetadataKey.emit] method in this class.
  */
-public fun interface LoggingScopeProvider {
+public fun interface KeyValueHandler {
 
     /**
-     * Returns the current scope (most likely via global or thread local state) or `null` if
-     * there is no current scope.
+     * Handles a single key/value a pair of contextual metadata for a log statement.
      */
-    public fun getCurrentScope(): LoggingScope?
+    public fun handle(key: String, value: Any?)
 }

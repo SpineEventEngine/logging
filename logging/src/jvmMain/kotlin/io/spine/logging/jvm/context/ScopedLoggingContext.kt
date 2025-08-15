@@ -28,9 +28,7 @@ package io.spine.logging.jvm.context
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import com.google.errorprone.annotations.MustBeClosed
-import io.spine.logging.jvm.LoggingScope
 import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.MiddlemanApi
 import io.spine.logging.jvm.context.ScopedLoggingContext.Companion.getInstance
 import java.util.concurrent.Callable
 
@@ -88,49 +86,6 @@ import java.util.concurrent.Callable
  * for historical context.
  */
 public abstract class ScopedLoggingContext protected constructor() {
-
-    /**
-     * Lightweight internal helper class for context implementations to manage a list of scopes.
-     */
-    public class ScopeList(
-        private val key: ScopeType,
-        private val scope: LoggingScope,
-        private val next: ScopeList?
-    ) {
-
-        public companion object {
-
-            /**
-             * Adds a new scope to the list for the given type.
-             *
-             * If the given type is null, or a scope for the type already exists in the list,
-             * the original (potentially `null`) list reference is returned.
-             */
-            @JvmStatic
-            public fun addScope(list: ScopeList?, type: ScopeType?): ScopeList? {
-                return if (type != null && lookup(list, type) == null) {
-                    ScopeList(type, type.newScope(), list)
-                } else {
-                    list
-                }
-            }
-
-            /**
-             * Finds a scope instance for the given type in a possibly null scope list.
-             */
-            @JvmStatic
-            public fun lookup(list: ScopeList?, type: ScopeType): LoggingScope? {
-                var currentList = list
-                while (currentList != null) {
-                    if (type == currentList.key) {
-                        return currentList.scope
-                    }
-                    currentList = currentList.next
-                }
-                return null
-            }
-        }
-    }
 
     /**
      * A fluent builder API for creating and installing new context scopes.
@@ -269,7 +224,7 @@ public abstract class ScopedLoggingContext protected constructor() {
         /**
          * Installs a new context based on the state of the builder.
          *
-         * The caller is *required* to invoke [AutoCloseable.close] on
+         * The caller is *required* to invoke [AutoCloseable.close][AutoCloseable] on
          * the returned instances in the reverse order to which they were obtained:
          *
          * ```kotlin
@@ -350,7 +305,7 @@ public abstract class ScopedLoggingContext protected constructor() {
      * This method is the same as [newContext] except it additionally binds a new
      * [ScopeType] instance to the newly created context.
      * This allows log statements to control stateful logging operations (e.g., rate limiting)
-     * using [MiddlemanApi.per] method.
+     * using [io.spine.logging.LoggingApi.per] method.
      *
      * Note for users: if you do not need an instance of `ScopedLoggingContext` for some
      * reason such as testability (injecting it, for example), consider using the static methods in
@@ -395,7 +350,7 @@ public abstract class ScopedLoggingContext protected constructor() {
     /**
      * Adds a single metadata key/value pair to the current context.
      *
-     * Unlike [Tags], which have a well defined value ordering, independent of the order
+     * Unlike [Tags], which have a well-defined value ordering, independent of the order
      * in which values were added, context metadata preserves the order of addition.
      * As such, it is not advised to add values for the same metadata key from multiple threads,
      * since that may create non-deterministic ordering.

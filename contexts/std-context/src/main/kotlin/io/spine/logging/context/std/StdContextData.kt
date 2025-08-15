@@ -29,10 +29,10 @@ package io.spine.logging.context.std
 import io.spine.logging.Level
 import io.spine.logging.compareTo
 import io.spine.logging.context.LogLevelMap
-import io.spine.logging.jvm.LoggingScope
+import io.spine.logging.LoggingScope
 import io.spine.logging.jvm.context.ContextMetadata
 import io.spine.logging.jvm.context.ScopeType
-import io.spine.logging.jvm.context.ScopedLoggingContext.ScopeList
+import io.spine.logging.jvm.context.ScopeItem
 import io.spine.logging.jvm.context.Tags
 
 /**
@@ -45,14 +45,14 @@ import io.spine.logging.jvm.context.Tags
  */
 internal class StdContextData(scopeType: ScopeType?) {
 
-    internal val scopes: ScopeList?
+    internal val scopes: ScopeItem?
     internal val tagRef: ScopedReference<Tags>
     internal val metadataRef: ScopedReference<ContextMetadata>
     internal val logLevelMapRef: ScopedReference<LogLevelMap>
 
     init {
         val parent = CurrentStdContext.data
-        scopes = ScopeList.addScope(parent?.scopes, scopeType)
+        scopes = ScopeItem.addScope(parent?.scopes, scopeType)
         tagRef = object : ScopedReference<Tags>(parent?.tagRef?.get()) {
             override fun merge(current: Tags, delta: Tags): Tags =
                 current.merge(delta)
@@ -182,7 +182,7 @@ internal object CurrentStdContext {
      *         is no logging scope with the requested type.
      */
     fun lookupScopeFor(type: ScopeType): LoggingScope? =
-        data?.let { ScopeList.lookup(it.scopes, type) }
+        data?.let { ScopeItem.lookup(it.scopes, type) }
 
     /**
      * Installs the given [newData] as the current context data.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,25 +27,21 @@
 package io.spine.logging
 
 /**
- *  A key for logging semi-structured metadata values.
+ * Provides a scope to a log statement via the [LogContext.per] method.
  *
- *  @param T The type of the value associated with this key.
+ * This interface exists to avoid needing to pass specific instances of [LoggingScope]
+ * around in user code. The scope provider can lookup the correct scope instance for the current
+ * thread, and different providers can provide different types of scope.
+ * E.g., you can have a provider for "request" scopes, and a provider for "subtask" scopes.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LoggingScopeProvider.java">
+ *     Original Java code of Google Flogger</a> for historical context.
  */
-public interface MetadataKey<T: Any> {
+public fun interface LoggingScopeProvider {
 
     /**
-     * A short, human-readable text label which will prefix the metadata in
-     * cases where it is formatted as part of the log message.
+     * Returns the current scope (most likely via global or thread local state) or `null` if
+     * there is no current scope.
      */
-    public val label: String
-
-    /**
-     * Cast an arbitrary value to the type of this key.
-     */
-    public fun cast(value: Any?): T?
-
-    /**
-     * Whether this key can be used to set more than one value in the metadata.
-     */
-    public val canRepeat: Boolean
+    public fun getCurrentScope(): LoggingScope?
 }

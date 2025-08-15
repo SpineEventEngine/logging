@@ -26,6 +26,9 @@
 
 package io.spine.logging.jvm
 
+import io.spine.annotation.TestOnly
+import io.spine.logging.LogSiteKey
+import io.spine.logging.LoggingScope
 import io.spine.logging.jvm.backend.Metadata
 import io.spine.logging.jvm.util.Checks.checkNotNull
 import java.util.concurrent.ConcurrentHashMap
@@ -33,12 +36,15 @@ import java.util.concurrent.ConcurrentHashMap
 /**
  * Provides per log site state for stateful fluent logging operations (e.g. rate limiting).
  *
- * A log site map allows a logging API to efficiently, and safely, retrieve mutable log site
- * state. This state can then be updated according to the current log statement.
+ * A log site map allows a logging API to efficiently, and safely,
+ * retrieve mutable log site state. This state can then be updated
+ * according to the current log statement.
  *
- * Note that values held in this map are expected to be mutable and must still be thread safe
- * themselves (the map protects only from concurrent lookup, not concurrent modification of the
- * state itself). It is also strongly advised that all implementations of log site state avoid using
+ * Note that values held in this map are expected to be mutable and must still
+ * be thread-safe themselves (the map protects only from the concurrent lookup,
+ * not concurrent modification of the state itself).
+ *
+ * It is also strongly advised that all implementations of log site state avoid using
  * locking (e.g. "synchronized" data structures) due to the risk of causing not trivial and
  * potentially harmful thread contention bottlenecks during logging.
  *
@@ -51,7 +57,7 @@ import java.util.concurrent.ConcurrentHashMap
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSiteMap.java">
  *         Original Java code of Google Flogger</a> for historical context.
  */
-public abstract class LogSiteMap<V> {
+public abstract class LogSiteMap<V : Any> {
 
     private val concurrentMap = ConcurrentHashMap<LogSiteKey, V>()
 
@@ -65,7 +71,12 @@ public abstract class LogSiteMap<V> {
      */
     protected abstract fun initialValue(): V
 
-    // This method exists only for testing. Do not make this public.
+    /**
+     * Tells if the map contains the given [key].
+     *
+     * This method exists only for testing. Do not make this public.
+     */
+    @TestOnly
     internal fun contains(key: LogSiteKey): Boolean = concurrentMap.containsKey(key)
 
     /**
@@ -95,7 +106,7 @@ public abstract class LogSiteMap<V> {
 
     @Suppress("LoopWithTooManyJumpStatements")
     private fun addRemovalHook(key: LogSiteKey, metadata: Metadata) {
-        var removalHook: Runnable? = null
+        var removalHook: (() -> Unit)? = null
         for (i in 0 until metadata.size()) {
             if (LogContext.Key.LOG_SITE_GROUPING_KEY != metadata.getKey(i)) {
                 continue
@@ -106,7 +117,7 @@ public abstract class LogSiteMap<V> {
             }
             if (removalHook == null) {
                 // Non-static inner class references the outer LogSiteMap.
-                removalHook = Runnable { concurrentMap.remove(key) }
+                removalHook = { concurrentMap.remove(key) }
             }
             groupByKey.doOnClose(removalHook)
         }

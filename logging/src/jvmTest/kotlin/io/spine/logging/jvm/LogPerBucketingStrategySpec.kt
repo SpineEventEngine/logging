@@ -29,6 +29,7 @@ package io.spine.logging.jvm
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.logging.LogPerBucketingStrategy
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 

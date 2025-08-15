@@ -27,12 +27,13 @@
 package io.spine.logging.jvm
 
 import io.spine.annotation.VisibleForTesting
+import io.spine.logging.LoggingApi
 import io.spine.logging.jvm.backend.LoggerBackend
 import io.spine.logging.jvm.backend.Platform
 import java.util.logging.Level
 
 /**
- * The default implementation of [AbstractLogger] which returns the basic [MiddlemanApi]
+ * The default implementation of [AbstractLogger] which returns the basic [LoggingApi]
  * and uses the default parser and system configured backend.
  *
  * Note that when extending the logging API or specifying a new parser, you will need to create a
@@ -61,13 +62,13 @@ public class Middleman(backend: LoggerBackend) : AbstractLogger<Middleman.Api>(b
      * a separate top-level API and LogContext is created, allowing it to be shared by other
      * implementations.
      */
-    public interface Api : MiddlemanApi<Api>
+    public interface Api : LoggingApi<Api>
 
     /**
      * The non-wildcard, fully specified, no-op API implementation. This is required to provide a
      * no-op implementation whose type is compatible with this logger's API.
      */
-    internal class NoOp : MiddlemanApi.NoOp<Api>(), Api
+    internal class NoOp : LoggingApi.NoOp<Api>(), Api
 
     public companion object {
 

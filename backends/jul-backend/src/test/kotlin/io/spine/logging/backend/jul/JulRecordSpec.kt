@@ -31,6 +31,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.logging.KeyValueHandler
 import io.spine.logging.backend.jul.given.StubLogData
 import io.spine.logging.backend.jul.given.StubMetadata
 import io.spine.logging.jvm.LogContext.Key

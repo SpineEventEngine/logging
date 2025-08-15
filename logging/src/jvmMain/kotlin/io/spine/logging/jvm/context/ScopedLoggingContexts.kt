@@ -26,11 +26,12 @@
 
 package io.spine.logging.jvm.context
 
-import io.spine.logging.jvm.Middleman
-import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.StackSize
 import com.google.errorprone.annotations.CanIgnoreReturnValue
-import java.util.concurrent.TimeUnit.MINUTES
+import io.spine.logging.StackSize
+import io.spine.logging.jvm.MetadataKey
+import io.spine.logging.jvm.Middleman
+import io.spine.logging.jvm.context.ScopedLoggingContexts.newContext
+import kotlin.time.DurationUnit.MINUTES
 
 /**
  * Static methods equivalent to the instance methods on

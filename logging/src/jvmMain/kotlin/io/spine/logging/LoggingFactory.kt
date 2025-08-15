@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,10 +26,13 @@
 
 package io.spine.logging
 
+import io.spine.logging.jvm.MetadataKey.Companion.repeated
+import io.spine.logging.jvm.MetadataKey.Companion.single
 import io.spine.logging.jvm.Middleman
 import io.spine.logging.jvm.backend.Platform
 import io.spine.reflect.CallerFinder
 import kotlin.reflect.KClass
+import kotlin.jvm.javaObjectType
 
 /**
  * Obtains a [JvmLogger] for a given class.
@@ -37,7 +40,7 @@ import kotlin.reflect.KClass
 public actual object LoggingFactory: ClassValue<JvmLogger>() {
 
     @JvmStatic
-    @JvmName("getLogger") // Set the name explicitly to avoid synthetic `$logging` suffix.
+    @JvmName("getLogger") // Set the name explicitly to avoid the synthetic `$logging` suffix.
     public actual fun <API: LoggingApi<API>> loggerFor(cls: KClass<*>): Logger<API> {
         @Suppress("UNCHECKED_CAST") // Safe as `JvmLogger.Api`
         val result = get(cls.java) as Logger<API>
@@ -55,7 +58,7 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
     public actual fun <T : Any> singleMetadataKey(
         label: String,
         valueClass: KClass<T>
-    ): MetadataKey<T> = JvmMetadataKey.single(label, valueClass)
+    ): MetadataKey<T> = single(label, valueClass.javaObjectType)
 
     @JvmStatic
     public fun <T: Any> singleMetadataKey(label: String, type: Class<T>): MetadataKey<T> =
@@ -65,7 +68,7 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
     public actual fun <T : Any> repeatedMetadataKey(
         label: String,
         valueClass: KClass<T>
-    ): MetadataKey<T> = JvmMetadataKey.repeated(label, valueClass)
+    ): MetadataKey<T> = repeated(label, valueClass.javaObjectType)
 
     @JvmStatic
     public fun <T : Any> repeatedMetadataKey(label: String, type: Class<T>): MetadataKey<T> =

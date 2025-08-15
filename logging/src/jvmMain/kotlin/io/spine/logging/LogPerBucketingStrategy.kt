@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,16 +24,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
 import io.spine.annotation.TestOnly
-import io.spine.logging.jvm.LogPerBucketingStrategy.Companion.byClass
-import io.spine.logging.jvm.LogPerBucketingStrategy.Companion.byHashCode
-import io.spine.logging.jvm.LogPerBucketingStrategy.Companion.knownBounded
 
 /**
  * Provides a strategy for "bucketing" a potentially unbounded set of log
- * aggregation keys used by the [MiddlemanApi.per] method.
+ * aggregation keys used by the [LoggingApi.per] method.
  *
  * When implementing new strategies not provided by this class, it is important
  * to ensure that the [apply] method returns values from a bounded set of
@@ -46,7 +43,7 @@ import io.spine.logging.jvm.LogPerBucketingStrategy.Companion.knownBounded
  * different instance will be held in each log site.
  *
  * This multiplies the amount of memory that is retained indefinitely by
- * any use of [MiddlemanApi.per].
+ * any use of [LoggingApi.per].
  *
  * One way to handle arbitrary key types would be to create a strategy which
  * "interns" instances in some way, to produce singleton identifiers.
@@ -67,7 +64,7 @@ import io.spine.logging.jvm.LogPerBucketingStrategy.Companion.knownBounded
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogPerBucketingStrategy.java">
  *     Original Java code of Google Flogger</a> for historical context.
  */
-public abstract class LogPerBucketingStrategy<T> protected constructor(
+public actual abstract class LogPerBucketingStrategy<T> protected constructor(
     private val name: String
 ) {
     /**
@@ -85,7 +82,7 @@ public abstract class LogPerBucketingStrategy<T> protected constructor(
      * (e.g. [String]) then returning the given key instance is generally a bad idea.
      *
      * Even if the set of key values is small, the set of distinct allocated instances
-     * passed to [MiddlemanApi.per] can be unbounded, and that's what matters.
+     * passed to [LoggingApi.per] can be unbounded, and that's what matters.
      *
      * As such, it is always better to map keys to some singleton identifier or
      * intern the keys in some way.
@@ -142,7 +139,7 @@ public abstract class LogPerBucketingStrategy<T> protected constructor(
          * A strategy to use only if the set of log aggregation keys is known to be
          * a strictly bounded set of instances with singleton semantics.
          *
-         * **WARNING**: When using this strategy, keys passed to [MiddlemanApi.per]
+         * **WARNING**: When using this strategy, keys passed to [LoggingApi.per]
          * are used as-is by the log aggregation code, and held indefinitely by internal
          * static data structures.
          *
@@ -191,7 +188,7 @@ public abstract class LogPerBucketingStrategy<T> protected constructor(
          * A strategy defined for some given set of known keys.
          *
          * Unlike [knownBounded], this strategy maps keys to a bounded set of identifiers, and
-         * permits the use of non-singleton keys in [MiddlemanApi.per].
+         * permits the use of non-singleton keys in [LoggingApi.per].
          *
          * If keys outside this set are used this strategy returns `null`, and
          * log aggregation will not occur.

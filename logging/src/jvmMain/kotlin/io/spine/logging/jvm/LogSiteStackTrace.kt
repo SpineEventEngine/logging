@@ -26,6 +26,7 @@
 
 package io.spine.logging.jvm
 
+import io.spine.logging.StackSize
 import java.io.Serial
 
 /**

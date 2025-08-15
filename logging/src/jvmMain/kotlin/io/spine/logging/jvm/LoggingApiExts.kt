@@ -28,27 +28,29 @@
 
 package io.spine.logging.jvm
 
+import io.spine.logging.LoggingApi
+
 /**
  * Extension function to maintain backward compatibility with the previous API.
  *
  * This allows calling `log(String?)` with a string literal, which will be wrapped
  * in a lambda to match the new API signature.
  */
-public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(msg: String?) {
+public fun <API : LoggingApi<API>> LoggingApi<API>.log(msg: String?) {
     log { msg }
 }
 
 /**
  * Extension function for logging a formatted message with a single argument.
  */
-public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(message: String, arg: Any?) {
+public fun <API : LoggingApi<API>> LoggingApi<API>.log(message: String, arg: Any?) {
     log { String.format(message, arg) }
 }
 
 /**
  * Extension function for logging a formatted message with two arguments.
  */
-public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(
+public fun <API : LoggingApi<API>> LoggingApi<API>.log(
     message: String,
     arg1: Any?,
     arg2: Any?
@@ -59,7 +61,7 @@ public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(
 /**
  * Extension function for logging a formatted message with three arguments.
  */
-public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(
+public fun <API : LoggingApi<API>> LoggingApi<API>.log(
     message: String,
     arg1: Any?,
     arg2: Any?,
@@ -71,7 +73,7 @@ public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(
 /**
  * Extension function for logging a formatted message with multiple arguments.
  */
-public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(message: String, vararg args: Any?) {
+public fun <API : LoggingApi<API>> LoggingApi<API>.log(message: String, vararg args: Any?) {
     log { String.format(message, *args) }
 }
 
@@ -83,7 +85,7 @@ public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.log(message: String, vara
  * when an array contains the formatting arguments.
  */
 @Suppress("SpreadOperator")
-public fun <API : MiddlemanApi<API>> MiddlemanApi<API>.logVarargs(
+public fun <API : LoggingApi<API>> LoggingApi<API>.logVarargs(
     message: String,
     params: Array<Any?>?
 ) {

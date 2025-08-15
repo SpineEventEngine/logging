@@ -27,16 +27,17 @@
 package io.spine.logging.jvm
 
 import com.google.errorprone.annotations.ThreadSafe
+import io.spine.logging.LogSiteKey
 import io.spine.logging.jvm.LogContext.Key.LOG_AT_MOST_EVERY
 import io.spine.logging.jvm.backend.Metadata
-import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.max
+import kotlin.time.DurationUnit
 
 /**
  * Rate limiter to support `atMostEvery(N, units)` functionality.
  *
- * Instances of this class are created for each unique [LogSiteKey] for which
+ * Instances of this class are created for each unique [io.spine.logging.LogSiteKey] for which
  * rate limiting via the [LOG_AT_MOST_EVERY] metadata key is required.
  * This class implements `RateLimitStatus` as a mechanism for resetting the rate limiter state.
  *
@@ -53,7 +54,7 @@ internal class DurationRateLimiter : RateLimitStatus() {
      * updates the time stamp and returns true.
      *
      * This is invoked during post-processing if a rate-limiting
-     * duration was set via [MiddlemanApi.atMostEvery].
+     * duration was set via [io.spine.logging.LoggingApi.atMostEvery].
      */
     internal fun checkLastTimestamp(
         timestampNanos: Long,
@@ -108,7 +109,7 @@ internal class DurationRateLimiter : RateLimitStatus() {
          * This is invoked by the [LogContext.atMostEvery] method to create a metadata value.
          */
         @JvmStatic
-        fun newRateLimitPeriod(n: Int, unit: TimeUnit): RateLimitPeriod =
+        fun newRateLimitPeriod(n: Int, unit: DurationUnit): RateLimitPeriod =
             // We could cache commonly used values here if we wanted.
             RateLimitPeriod(n, unit)
 

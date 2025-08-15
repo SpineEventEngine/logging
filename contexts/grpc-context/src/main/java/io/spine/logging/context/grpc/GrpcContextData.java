@@ -26,11 +26,11 @@
 
 package io.spine.logging.context.grpc;
 
-import io.spine.logging.jvm.LoggingScope;
+import io.spine.logging.LoggingScope;
 import io.spine.logging.jvm.context.ContextMetadata;
 import io.spine.logging.jvm.context.LogLevelMap;
 import io.spine.logging.jvm.context.ScopeType;
-import io.spine.logging.jvm.context.ScopedLoggingContext.ScopeList;
+import io.spine.logging.jvm.context.ScopeItem;
 import io.spine.logging.jvm.context.Tags;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
@@ -94,7 +94,7 @@ final class GrpcContextData {
 
   @Nullable
   static LoggingScope lookupScopeFor(@Nullable GrpcContextData contextData, ScopeType type) {
-    return contextData != null ? ScopeList.lookup(contextData.scopes, type) : null;
+    return contextData != null ? ScopeItem.lookup(contextData.scopes, type) : null;
   }
 
   private abstract static class ScopedReference<T> {
@@ -123,7 +123,7 @@ final class GrpcContextData {
     abstract T merge(T current, T delta);
   }
 
-  @Nullable private final ScopeList scopes;
+  @Nullable private final ScopeItem scopes;
   private final ScopedReference<Tags> tagRef;
   private final ScopedReference<ContextMetadata> metadataRef;
   private final ScopedReference<LogLevelMap> logLevelMapRef;
@@ -134,7 +134,7 @@ final class GrpcContextData {
       @Nullable GrpcContextData parent,
       @Nullable ScopeType scopeType,
       GrpcContextDataProvider provider) {
-    this.scopes = ScopeList.addScope(parent != null ? parent.scopes : null, scopeType);
+    this.scopes = ScopeItem.addScope(parent != null ? parent.scopes : null, scopeType);
     this.tagRef =
         new ScopedReference<>(parent != null ? parent.tagRef.get() : null) {
           @Override

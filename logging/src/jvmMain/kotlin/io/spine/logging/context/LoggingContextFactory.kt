@@ -29,7 +29,6 @@ package io.spine.logging.context
 import com.google.errorprone.annotations.CheckReturnValue
 import com.google.errorprone.annotations.Immutable
 import com.google.errorprone.annotations.ThreadSafe
-import io.spine.logging.JvmMetadataKey
 import io.spine.logging.Level
 import io.spine.logging.MetadataKey
 import io.spine.logging.toJavaLogging
@@ -150,7 +149,7 @@ public fun JLogLevelMap?.toMap(): LogLevelMap? {
  * Gets a Flogger log map instance, assuming that this map instance is a [MapImpl].
  * If not, an error is thrown with a diagnostic message.
  *
- * This function is a safety net to prevent accidental introduction of other map implementations.
+ * This function is a safety net to prevent an accidental introduction of other map implementations.
  * It is safe to assume that under a JVM, only [MapImpl] will be used because we
  * control the instantiation. This method ensures that the downcast is checked and documented.
  */
@@ -179,7 +178,8 @@ private class DelegatingContextBuilder(
         key: MetadataKey<T>,
         value: T
     ): ScopedLoggingContext.Builder {
-        delegate.withMetadata((key as JvmMetadataKey<T>).adapter, value)
+        @Suppress("UNCHECKED_CAST")
+        delegate.withMetadata((key as io.spine.logging.jvm.MetadataKey<T>), value)
         return this
     }
 

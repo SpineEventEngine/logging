@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.log4j2;
 
-import io.spine.logging.jvm.MetadataKey.KeyValueHandler;
+import io.spine.logging.KeyValueHandler;
 import io.spine.logging.jvm.context.Tags;
 import org.jspecify.annotations.Nullable;
 

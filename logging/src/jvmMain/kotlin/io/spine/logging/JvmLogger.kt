@@ -26,12 +26,12 @@
 
 package io.spine.logging
 
-import io.spine.logging.jvm.Middleman
 import com.google.errorprone.annotations.CheckReturnValue
 import io.spine.logging.jvm.JvmLogSite
+import io.spine.logging.jvm.JvmLogSite.Companion.injectedLogSite
+import io.spine.logging.jvm.Middleman
 import kotlin.reflect.KClass
 import kotlin.time.DurationUnit
-import kotlin.time.toTimeUnit
 import java.util.logging.Level as JLevel
 
 /**
@@ -66,6 +66,7 @@ public class JvmLogger(
 /**
  * Implements [LoggingApi] wrapping [Middleman.Api].
  */
+@Suppress("TooManyFunctions")
 private class ApiImpl(private val delegate: Middleman.Api): JvmLogger.Api {
 
     private var loggingDomain: LoggingDomain? = null
@@ -75,8 +76,10 @@ private class ApiImpl(private val delegate: Middleman.Api): JvmLogger.Api {
         return this
     }
 
-    override fun withCause(cause: Throwable): JvmLogger.Api {
-        delegate.withCause(cause)
+    override fun withCause(cause: Throwable?): JvmLogger.Api {
+        if (cause != null) {
+            delegate.withCause(cause)
+        }
         return this
     }
 
@@ -86,19 +89,64 @@ private class ApiImpl(private val delegate: Middleman.Api): JvmLogger.Api {
         return this
     }
 
+    override fun withInjectedLogSite(
+        internalClassName: String,
+        methodName: String,
+        encodedLineNumber: Int,
+        sourceFileName: String?
+    ): JvmLogger.Api {
+        val logSite = injectedLogSite(
+            internalClassName, methodName, encodedLineNumber, sourceFileName
+        )
+        return withInjectedLogSite(logSite)
+    }
+
+    override fun <T : Any> with(key: MetadataKey<T>, value: T?): JvmLogger.Api {
+        delegate.with(key as io.spine.logging.jvm.MetadataKey<T>, value)
+        return this
+    }
+
+    override fun with(key: MetadataKey<Boolean>): JvmLogger.Api {
+        delegate.with(key as io.spine.logging.jvm.MetadataKey<Boolean>)
+        return this
+    }
+
+    override fun withStackTrace(size: StackSize): JvmLogger.Api {
+        delegate.withStackTrace(size)
+        return this
+    }
+
     override fun every(n: Int): JvmLogger.Api {
         delegate.every(n)
         return this
     }
 
-    override fun atMostEvery(n: Int, unit: DurationUnit): JvmLogger.Api {
-        val javaTimeUnit = unit.toTimeUnit()
-        delegate.atMostEvery(n, javaTimeUnit)
+    override fun onAverageEvery(n: Int): JvmLogger.Api {
+        delegate.onAverageEvery(n)
         return this
     }
 
-    override fun per(key: Enum<*>): JvmLogger.Api {
-        delegate.per(key)
+    override fun atMostEvery(n: Int, unit: DurationUnit): JvmLogger.Api {
+        delegate.atMostEvery(n, unit)
+        return this
+    }
+
+    override fun per(key: Enum<*>?): JvmLogger.Api {
+        if (key != null) {
+            delegate.per(key)
+        }
+        return this
+    }
+
+    override fun <T> per(key: T?, strategy: LogPerBucketingStrategy<in T>): JvmLogger.Api {
+        if (key != null) {
+            delegate.per(key, strategy)
+        }
+        return this
+    }
+
+    override fun per(scopeProvider: LoggingScopeProvider): JvmLogger.Api {
+        delegate.per(scopeProvider)
         return this
     }
 

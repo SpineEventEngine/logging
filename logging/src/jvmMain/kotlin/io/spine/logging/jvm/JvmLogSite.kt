@@ -28,7 +28,8 @@ package io.spine.logging.jvm
 
 import com.google.errorprone.annotations.RestrictedApi
 import io.spine.annotation.Internal
-import io.spine.logging.jvm.JvmLogSite.Companion.UNKNOWN_LINE
+import io.spine.logging.LogSite
+import io.spine.logging.LogSiteKey
 import io.spine.logging.jvm.JvmLogSite.Companion.callerOf
 import io.spine.logging.jvm.JvmLogSite.Companion.invalid
 import io.spine.logging.jvm.JvmLogSite.Companion.logSite
@@ -55,27 +56,7 @@ import io.spine.logging.jvm.backend.Platform
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSite.java">
  *     Original Java code of Google Flogger</a> for historical context.
  */
-public abstract class JvmLogSite : LogSiteKey {
-
-    /**
-     * The name of the class containing the log statement.
-     */
-    public abstract val className: String
-
-    /**
-     * The name of the method containing the log statement.
-     */
-    public abstract val methodName: String
-
-    /**
-     * A valid line number for the log statement in the range `1 – 65535`, or
-     * [UNKNOWN_LINE] if not known.
-     *
-     * There is a limit of 16 bits for line numbers in a class.
-     * See [The LineNumberTable Attribute]( http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.7.12)
-     * for more details.
-     */
-    public abstract val lineNumber: Int
+public abstract class JvmLogSite : LogSiteKey, LogSite {
 
     /**
      * The name of the class file containing the log statement (or `null` if not known).
@@ -162,7 +143,8 @@ public abstract class JvmLogSite : LogSiteKey {
         /**
          * Returns a [JvmLogSite] for the caller of the specified class.
          *
-         * This can be used in conjunction with the [MiddlemanApi.withInjectedLogSite] method to
+         * This can be used in conjunction with
+         * the [io.spine.logging.LoggingApi.withInjectedLogSite] function to
          * implement logging helper methods. In some platforms, log site determination may be
          * unsupported, and in those cases this method will always return the [invalid] instance.
          *
@@ -216,7 +198,7 @@ public abstract class JvmLogSite : LogSiteKey {
         /**
          * Returns a [JvmLogSite] for the current line of code.
          *
-         * This can be used in conjunction with the [MiddlemanApi.withInjectedLogSite] method to
+         * This can be used in conjunction with the [io.spine.logging.LoggingApi.withInjectedLogSite] method to
          * implement logging helper methods. In some platforms, log site determination may be
          * unsupported, and in those cases this method will always return the [invalid] instance.
          *

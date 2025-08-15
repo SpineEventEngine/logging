@@ -26,7 +26,7 @@
 
 package io.spine.logging.jvm.context
 
-import io.spine.logging.jvm.LoggingScope
+import io.spine.logging.LoggingScope
 import io.spine.logging.jvm.backend.Metadata
 import io.spine.logging.jvm.backend.Platform
 import java.util.logging.Level
@@ -183,6 +183,6 @@ public abstract class ContextDataProvider {
          */
         @JvmStatic
         public fun getNoOpProvider(): ContextDataProvider =
-            NoOpContextDataProvider.Companion.noOpInstance
+            NoOpContextDataProvider.noOpInstance
     }
 }

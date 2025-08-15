@@ -26,17 +26,18 @@
 
 package io.spine.logging.jvm
 
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.collections.shouldContain
+import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.shouldBe
+import io.spine.logging.KeyValueHandler
 import io.spine.logging.jvm.MetadataKey.Companion.repeated
 import io.spine.logging.jvm.MetadataKey.Companion.single
 import io.spine.logging.jvm.backend.Platform
 import io.spine.logging.jvm.given.MemoizingKvHandler
 import io.spine.logging.jvm.given.iterate
 import io.spine.logging.jvm.util.RecursionDepth
-import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.matchers.collections.shouldContain
-import io.kotest.matchers.collections.shouldContainExactly
-import io.kotest.matchers.collections.shouldHaveSize
-import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 

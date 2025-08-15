@@ -27,25 +27,13 @@
 package io.spine.logging
 
 /**
- *  A key for logging semi-structured metadata values.
- *
- *  @param T The type of the value associated with this key.
+ * A platform-neutral stack trace size enumeration used by
+ * [LoggingApi.withStackTrace(size)][LoggingApi.withStackTrace].
  */
-public interface MetadataKey<T: Any> {
-
-    /**
-     * A short, human-readable text label which will prefix the metadata in
-     * cases where it is formatted as part of the log message.
-     */
-    public val label: String
-
-    /**
-     * Cast an arbitrary value to the type of this key.
-     */
-    public fun cast(value: Any?): T?
-
-    /**
-     * Whether this key can be used to set more than one value in the metadata.
-     */
-    public val canRepeat: Boolean
+public expect enum class StackSize {
+    SMALL,
+    MEDIUM,
+    LARGE,
+    FULL,
+    NONE,
 }

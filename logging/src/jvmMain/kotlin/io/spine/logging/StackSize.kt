@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,10 +24,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
 /**
- * Enum values to be passed into [MiddlemanApi.withStackTrace] to control the maximum
+ * Enum values to be passed into [LoggingApi.withStackTrace] to control the maximum
  * number of stack trace elements created.
  *
  * @property maxDepth The maximum stack depth to create when adding contextual stack
@@ -39,7 +39,7 @@ package io.spine.logging.jvm
  *     Original Java code of Google Flogger</a> for historical context.
  */
 @Suppress("MagicNumber") // The numbers are the maximum stack sizes for each enum value.
-public enum class StackSize(public val maxDepth: Int) {
+public actual enum class StackSize(public val maxDepth: Int) {
 
     /**
      * Produces a small stack suitable for finer grained debugging.
@@ -51,8 +51,8 @@ public enum class StackSize(public val maxDepth: Int) {
      *
      * Requesting a small stack trace for log statements which occur under normal
      * circumstances is acceptable but may affect performance. Consider using
-     * [MiddlemanApi.withStackTrace] in conjunction with rate-limiting methods,
-     * such as [MiddlemanApi.atMostEvery], to mitigate performance issues.
+     * [LoggingApi.withStackTrace] in conjunction with rate-limiting methods,
+     * such as [LoggingApi.atMostEvery], to mitigate performance issues.
      *
      * The current maximum size of a `SMALL` stack trace is 10 elements, but this
      * value may change in future versions.
@@ -111,4 +111,3 @@ public enum class StackSize(public val maxDepth: Int) {
      */
     NONE(0)
 }
-

@@ -28,9 +28,9 @@ package io.spine.logging.jvm.backend
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.annotation.Internal
+import io.spine.logging.KeyValueHandler
 import io.spine.logging.jvm.LogContext
 import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.MetadataKey.KeyValueHandler
 import io.spine.logging.jvm.backend.SimpleMessageFormatter.appendContext
 import io.spine.logging.jvm.backend.SimpleMessageFormatter.getLiteralLogMessage
 import io.spine.logging.jvm.backend.SimpleMessageFormatter.getSimpleFormatterIgnoring
@@ -47,7 +47,7 @@ import java.util.*
  * This primarily exists to support both the JDK logging classes and text only Android backends.
  * Code in here may be factored out as necessary to support other use cases in the future.
  *
- * If a text-based logger backend is not performance critical, then it should just append the log
+ * If a text-based logger backend is not performance-critical, then it should just append the log
  * message and metadata to a local buffer. For example:
  *
  * ```kotlin
