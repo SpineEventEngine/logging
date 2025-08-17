@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.util
+package io.spine.logging.util
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 

@@ -28,11 +28,11 @@ package io.spine.logging.jvm.util
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
-import io.spine.logging.jvm.util.Checks.checkMetadataIdentifier
+import io.spine.logging.util.Checks.checkMetadataIdentifier
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-/** Tests for [Checks]. */
+/** Tests for [io.spine.logging.util.Checks]. */
 @DisplayName("`Checks` should")
 internal class ChecksSpec {
 

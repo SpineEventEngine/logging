@@ -37,7 +37,7 @@ import io.spine.logging.jvm.MetadataKey.Companion.single
 import io.spine.logging.backend.Platform
 import io.spine.logging.jvm.given.MemoizingKvHandler
 import io.spine.logging.jvm.given.iterate
-import io.spine.logging.jvm.util.RecursionDepth
+import io.spine.logging.util.RecursionDepth
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
