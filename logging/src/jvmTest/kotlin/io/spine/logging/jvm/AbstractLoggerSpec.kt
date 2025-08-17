@@ -33,6 +33,7 @@ import io.kotest.matchers.string.shouldBeEmpty
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldMatch
 import io.kotest.matchers.string.shouldNotContain
+import io.spine.logging.log
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.LoggingException
 import io.spine.logging.jvm.given.ConfigurableLogger
@@ -84,7 +85,7 @@ internal class AbstractLoggerSpec {
         val bad: Any = ThrowingAny(exception)
 
         val output = tapConsole {
-            logger.atInfo().log("Bad value: %s.", bad)
+            logger.atInfo().log { "Bad value: $bad." }
         }
 
         backend.logged.shouldBeEmpty()
@@ -109,7 +110,7 @@ internal class AbstractLoggerSpec {
         val bad: Any = ThrowingAny(outerException)
 
         val output = tapConsole {
-            logger.atInfo().log("Bad value: %s.", bad)
+            logger.atInfo().log { "Bad value: $bad." }
         }
 
         backend.logged.shouldBeEmpty()
@@ -126,13 +127,13 @@ internal class AbstractLoggerSpec {
     fun `guard from significant recursion`() {
         val bad: Any = object : Any() {
             override fun toString(): String {
-                logger.atInfo().log("recursion: %s", this)
+                logger.atInfo().log { "recursion: $this" }
                 return "<unused>"
             }
         }
 
         val output = tapConsole {
-            logger.atInfo().log("Evil value: %s.", bad)
+            logger.atInfo().log { "Evil value: $bad." }
         }
 
         // Defined by `AbstractLogger.MAX_ALLOWED_RECURSION_DEPTH` constant.
