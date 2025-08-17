@@ -27,9 +27,9 @@
 package io.spine.logging.backend.system.given
 
 import com.google.auto.service.AutoService
-import io.spine.logging.jvm.backend.LoggerBackend
-import io.spine.logging.jvm.backend.BackendFactory
-import io.spine.logging.jvm.backend.Clock
+import io.spine.logging.backend.LoggerBackend
+import io.spine.logging.backend.BackendFactory
+import io.spine.logging.backend.Clock
 import io.spine.logging.jvm.context.ContextDataProvider
 import io.spine.logging.jvm.context.ScopedLoggingContext
 

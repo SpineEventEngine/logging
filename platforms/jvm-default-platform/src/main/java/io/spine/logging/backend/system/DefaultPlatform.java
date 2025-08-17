@@ -28,10 +28,10 @@ package io.spine.logging.backend.system;
 
 import io.spine.annotation.VisibleForTesting;
 import io.spine.logging.backend.jul.JulBackendFactory;
-import io.spine.logging.jvm.backend.BackendFactory;
-import io.spine.logging.jvm.backend.Clock;
-import io.spine.logging.jvm.backend.LoggerBackend;
-import io.spine.logging.jvm.backend.Platform;
+import io.spine.logging.backend.BackendFactory;
+import io.spine.logging.backend.Clock;
+import io.spine.logging.backend.LoggerBackend;
+import io.spine.logging.backend.Platform;
 import io.spine.logging.jvm.context.ContextDataProvider;
 import org.jspecify.annotations.Nullable;
 

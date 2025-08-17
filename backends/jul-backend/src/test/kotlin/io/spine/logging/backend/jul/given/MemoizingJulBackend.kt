@@ -27,7 +27,7 @@
 package io.spine.logging.backend.jul.given
 
 import io.spine.logging.backend.jul.AbstractJulBackend
-import io.spine.logging.jvm.backend.LogData
+import io.spine.logging.backend.LogData
 import java.util.logging.LogRecord
 import java.util.logging.Logger
 

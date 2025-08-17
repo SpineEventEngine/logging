@@ -30,7 +30,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.logging.jvm.JvmLogSite
 import io.spine.logging.jvm.LogContext
 import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.backend.LogData
+import io.spine.logging.backend.LogData
 import io.spine.logging.jvm.given.FakeLogSite
 import java.util.logging.Level
 

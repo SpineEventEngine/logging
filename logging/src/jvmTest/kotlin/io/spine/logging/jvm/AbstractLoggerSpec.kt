@@ -33,8 +33,8 @@ import io.kotest.matchers.string.shouldBeEmpty
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldMatch
 import io.kotest.matchers.string.shouldNotContain
-import io.spine.logging.jvm.backend.LogData
-import io.spine.logging.jvm.backend.LoggingException
+import io.spine.logging.backend.LogData
+import io.spine.logging.backend.LoggingException
 import io.spine.logging.jvm.given.ConfigurableLogger
 import io.spine.logging.jvm.given.FormattingBackend
 import io.spine.logging.testing.tapConsole

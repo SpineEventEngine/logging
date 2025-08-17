@@ -24,32 +24,27 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.backend
+package io.spine.logging.backend
 
-import java.io.Serial
+import io.spine.logging.jvm.MetadataKey
 
 /**
- * An exception thrown when a log statement cannot be emitted correctly.
+ * API for handling repeated metadata key/values in a single callback.
  *
- * This exception should only be thrown by logger backend implementations
- * which have opted not to handle specific issues.
- *
- * Typically, a logger backend would only throw `LoggingException` in response
- * to issues in **test code** or other debugging environments.
- *
- * In **production code**, the backend should be configured
- * to emit a modified log statement which includes the error information.
- *
- * @see LoggerBackend.handleError
- *
- * @see <br><a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/LoggingException.java">
- *      Original Java code of Google Flogger</a> for historical context.
+ * @param T The key/value type.
+ * @param C The type of the context passed to the callbacks.
  */
-public class LoggingException(message: String?) : RuntimeException(message) {
+public fun interface RepeatedValueHandler<T : Any, C> {
 
-    public companion object {
-        @JvmStatic
-        @Serial
-        private val serialVersionUID: Long = 0L
-    }
+    /**
+     * Handles all repeated metadata values for a given key.
+     *
+     * @param key The repeatable metadata key for which this handler was registered,
+     *        or an unknown key if this is the default handler.
+     * @param values A lightweight iterator over all values associated with the key.
+     *        Note that this instance is read-only and must not be held beyond
+     *        the scope of this callback.
+     * @param context An arbitrary context object supplied to the process method.
+     */
+    public fun handle(key: MetadataKey<T>, values: Iterator<T>, context: C)
 }

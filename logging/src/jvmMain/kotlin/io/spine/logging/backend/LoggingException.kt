@@ -24,24 +24,32 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.backend
+package io.spine.logging.backend
 
-import io.spine.logging.jvm.MetadataKey
+import java.io.Serial
 
 /**
- * API for handling metadata key/value pairs individually.
+ * An exception thrown when a log statement cannot be emitted correctly.
  *
- * @param T The key/value type.
- * @param C The type of the context passed to the callbacks.
+ * This exception should only be thrown by logger backend implementations
+ * which have opted not to handle specific issues.
+ *
+ * Typically, a logger backend would only throw `LoggingException` in response
+ * to issues in **test code** or other debugging environments.
+ *
+ * In **production code**, the backend should be configured
+ * to emit a modified log statement which includes the error information.
+ *
+ * @see LoggerBackend.handleError
+ *
+ * @see <br><a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/LoggingException.java">
+ *      Original Java code of Google Flogger</a> for historical context.
  */
-public fun interface ValueHandler<T : Any, C> {
+public class LoggingException(message: String?) : RuntimeException(message) {
 
-    /**
-     * Handles metadata values individually.
-     *
-     * @param key The metadata key (not necessarily a "singleton" key).
-     * @param value The associated metadata value.
-     * @param context An arbitrary context object supplied to the process method.
-     */
-    public fun handle(key: MetadataKey<T>, value: T, context: C)
+    public companion object {
+        @JvmStatic
+        @Serial
+        private val serialVersionUID: Long = 0L
+    }
 }

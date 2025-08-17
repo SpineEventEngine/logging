@@ -26,7 +26,7 @@
 
 package io.spine.logging
 
-import io.spine.logging.jvm.backend.Platform
+import io.spine.logging.backend.Platform
 import kotlin.reflect.KClass
 import io.spine.logging.jvm.JvmLogSite
 

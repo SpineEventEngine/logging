@@ -30,7 +30,7 @@ import com.google.errorprone.annotations.Immutable
 import com.google.errorprone.annotations.ThreadSafe
 import io.spine.logging.jvm.AbstractLogger
 import io.spine.logging.jvm.JvmLogSite
-import io.spine.logging.jvm.backend.Platform
+import io.spine.logging.backend.Platform
 
 /**
  * No-op implementation of [Platform.LogCallerFinder].

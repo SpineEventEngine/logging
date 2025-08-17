@@ -29,6 +29,9 @@ package io.spine.logging.jvm.backend
 import com.google.common.base.Joiner
 import com.google.common.collect.Iterators
 import io.kotest.matchers.shouldBe
+import io.spine.logging.backend.Metadata
+import io.spine.logging.backend.MetadataHandler
+import io.spine.logging.backend.MetadataProcessor
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.backend.given.FakeMetadata
 import io.spine.logging.jvm.repeatedKey
@@ -37,7 +40,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for [MetadataHandler].
+ * Tests for [io.spine.logging.backend.MetadataHandler].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/backend/MetadataHandlerTest.java">
  *     Original Java code of Google Flogger</a> for historical context.

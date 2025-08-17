@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.backend
+package io.spine.logging.backend
 
 import io.spine.logging.jvm.AbstractLogger
 import io.spine.logging.jvm.JvmLogSite
@@ -37,6 +37,7 @@ import com.google.common.base.Preconditions.checkNotNull
 import com.google.errorprone.annotations.Immutable
 import com.google.errorprone.annotations.ThreadSafe
 import java.lang.reflect.InvocationTargetException
+import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
 /**
@@ -319,7 +320,7 @@ public abstract class Platform {
      */
     @OptIn(ExperimentalTime::class)
     protected open fun getCurrentTimeNanosImpl(): Long {
-        return kotlin.time.Clock.System.now().let {
+        return Clock.System.now().let {
             it.epochSeconds * MILLISECONDS.toNanos(1) + it.nanosecondsOfSecond
         }
     }

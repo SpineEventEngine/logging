@@ -28,7 +28,7 @@ package io.spine.logging.jvm.context
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.backend.Metadata
+import io.spine.logging.backend.Metadata
 import io.spine.logging.jvm.checkCannotRepeat
 import org.jetbrains.annotations.NotNull
 
@@ -100,7 +100,7 @@ public abstract class ContextMetadata protected constructor() : Metadata() {
      * Whether this is achieved via copying or chaining of instances is
      * an implementation detail.
      *
-     * Use [io.spine.logging.jvm.backend.MetadataProcessor] to process
+     * Use [io.spine.logging.backend.MetadataProcessor] to process
      * metadata consistently with respect to single valued and repeated keys,
      * and use [Metadata.findValue] to look up the "most recent"
      * value for a single valued key.

@@ -29,7 +29,7 @@ package io.spine.logging.jvm
 import io.spine.annotation.TestOnly
 import io.spine.logging.LogSiteKey
 import io.spine.logging.LoggingScope
-import io.spine.logging.jvm.backend.Metadata
+import io.spine.logging.backend.Metadata
 import io.spine.logging.jvm.util.Checks.checkNotNull
 import java.util.concurrent.ConcurrentHashMap
 

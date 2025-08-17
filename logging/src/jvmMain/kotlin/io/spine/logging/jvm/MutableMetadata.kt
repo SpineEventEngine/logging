@@ -26,7 +26,7 @@
 
 package io.spine.logging.jvm
 
-import io.spine.logging.jvm.backend.Metadata
+import io.spine.logging.backend.Metadata
 
 /**
  * A [Metadata] with read/write features.

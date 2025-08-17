@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,17 +24,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.backend
+package io.spine.logging.backend
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.annotation.Internal
 import io.spine.logging.KeyValueHandler
 import io.spine.logging.jvm.LogContext
 import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.backend.SimpleMessageFormatter.appendContext
-import io.spine.logging.jvm.backend.SimpleMessageFormatter.getLiteralLogMessage
-import io.spine.logging.jvm.backend.SimpleMessageFormatter.getSimpleFormatterIgnoring
-import io.spine.logging.jvm.backend.SimpleMessageFormatter.mustBeFormatted
+import io.spine.logging.backend.SimpleMessageFormatter.appendContext
+import io.spine.logging.backend.SimpleMessageFormatter.getLiteralLogMessage
+import io.spine.logging.backend.SimpleMessageFormatter.getSimpleFormatterIgnoring
+import io.spine.logging.backend.SimpleMessageFormatter.mustBeFormatted
 import java.util.*
 
 /**

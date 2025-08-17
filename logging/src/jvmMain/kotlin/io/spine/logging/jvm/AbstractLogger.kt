@@ -26,9 +26,9 @@
 
 package io.spine.logging.jvm
 
-import io.spine.logging.jvm.backend.LogData
-import io.spine.logging.jvm.backend.LoggerBackend
-import io.spine.logging.jvm.backend.LoggingException
+import io.spine.logging.backend.LogData
+import io.spine.logging.backend.LoggerBackend
+import io.spine.logging.backend.LoggingException
 import io.spine.logging.jvm.util.RecursionDepth
 import java.time.Instant
 import java.time.ZoneId

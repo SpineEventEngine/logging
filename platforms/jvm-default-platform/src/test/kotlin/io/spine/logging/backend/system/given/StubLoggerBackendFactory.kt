@@ -26,8 +26,8 @@
 
 package io.spine.logging.backend.system.given
 
-import io.spine.logging.jvm.backend.BackendFactory
-import io.spine.logging.jvm.backend.LoggerBackend
+import io.spine.logging.backend.BackendFactory
+import io.spine.logging.backend.LoggerBackend
 
 /**
  * A primitive factory of [StubLoggerBackend].

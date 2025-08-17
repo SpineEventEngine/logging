@@ -27,7 +27,7 @@
 package io.spine.logging.jvm.backend.given
 
 import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.backend.Metadata
+import io.spine.logging.backend.Metadata
 import io.kotest.matchers.collections.shouldContainInOrder
 import io.kotest.matchers.ints.shouldBeExactly
 import io.kotest.matchers.nulls.shouldBeNull

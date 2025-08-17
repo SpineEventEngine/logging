@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.probe
 
-import io.spine.logging.jvm.backend.LogData
+import io.spine.logging.backend.LogData
 
 /**
  * Runs the given [action], capturing all log data that are passed

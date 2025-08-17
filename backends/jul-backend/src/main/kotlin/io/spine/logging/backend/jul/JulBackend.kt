@@ -26,9 +26,9 @@
 
 package io.spine.logging.backend.jul
 
-import io.spine.logging.jvm.backend.LogData
-import io.spine.logging.jvm.backend.LoggerBackend
-import io.spine.logging.jvm.backend.Platform
+import io.spine.logging.backend.LogData
+import io.spine.logging.backend.LoggerBackend
+import io.spine.logging.backend.Platform
 import java.util.logging.Handler
 import java.util.logging.Level
 import java.util.logging.LogRecord

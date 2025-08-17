@@ -30,7 +30,7 @@ import com.google.errorprone.annotations.Immutable;
 import com.google.errorprone.annotations.ThreadSafe;
 import io.spine.logging.jvm.AbstractLogger;
 import io.spine.logging.jvm.JvmLogSite;
-import io.spine.logging.jvm.backend.Platform.LogCallerFinder;
+import io.spine.logging.backend.Platform.LogCallerFinder;
 
 import static io.spine.reflect.CallerFinder.findCallerOf;
 

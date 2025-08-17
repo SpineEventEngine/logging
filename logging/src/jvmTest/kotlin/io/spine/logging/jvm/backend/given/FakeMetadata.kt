@@ -28,7 +28,7 @@ package io.spine.logging.jvm.backend.given
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.backend.Metadata
+import io.spine.logging.backend.Metadata
 
 /**
  * A mutable [Metadata] implementation for testing logging backends

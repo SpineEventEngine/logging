@@ -30,7 +30,7 @@ import io.spine.logging.LoggingApi
 import io.spine.logging.backend.log4j2.given.StubLogger.Companion.DEFAULT_TIMESTAMP_NANOS
 import io.spine.logging.jvm.AbstractLogger
 import io.spine.logging.jvm.LogContext
-import io.spine.logging.jvm.backend.LoggerBackend
+import io.spine.logging.backend.LoggerBackend
 import java.util.logging.Level
 
 /**

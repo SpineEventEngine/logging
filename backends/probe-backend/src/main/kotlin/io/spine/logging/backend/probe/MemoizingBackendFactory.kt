@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.probe
 
-import io.spine.logging.jvm.backend.LoggerBackend
+import io.spine.logging.backend.LoggerBackend
 
 /**
  * A backend factory that stores the created instances of [LoggerBackend].

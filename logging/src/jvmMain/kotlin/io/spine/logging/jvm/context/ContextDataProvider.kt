@@ -27,8 +27,8 @@
 package io.spine.logging.jvm.context
 
 import io.spine.logging.LoggingScope
-import io.spine.logging.jvm.backend.Metadata
-import io.spine.logging.jvm.backend.Platform
+import io.spine.logging.backend.Metadata
+import io.spine.logging.backend.Platform
 import java.util.logging.Level
 
 /**

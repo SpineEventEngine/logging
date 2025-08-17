@@ -26,10 +26,10 @@
 
 package io.spine.logging.backend.probe
 
-import io.spine.logging.jvm.backend.LoggerBackend
+import io.spine.logging.backend.LoggerBackend
 
 /**
- * A typed [BackendFactory][io.spine.logging.jvm.backend.BackendFactory].
+ * A typed [BackendFactory][io.spine.logging.backend.BackendFactory].
  *
  * This interface can't extend the original factory because it is an abstract class.
  *
