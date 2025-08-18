@@ -27,7 +27,6 @@
 package io.spine.logging.backend
 
 import io.spine.logging.LogSite
-import io.spine.logging.jvm.JvmLogSite
 import java.util.logging.Level
 
 /**
