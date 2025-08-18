@@ -26,9 +26,7 @@
 
 @file:JvmName("AnyMessages")
 
-package io.spine.logging.jvm.backend
-
-import java.util.*
+package io.spine.logging.backend
 
 /**
  * Extension functions for classes wishing to implement their own log message formatting.
@@ -44,15 +42,6 @@ import java.util.*
  * Error message for if `toString()` returns null.
  */
 private const val NULL_TO_STRING_MESSAGE = "`toString()` returned `null`"
-
-/**
- * The locale to be used for the formatting.
- *
- * It would be more "proper" to use `Locale.getDefault(Locale.Category.FORMAT)` here,
- * but also removes the capability of optimising certain formatting operations.
- */
-@JvmField
-public val FORMAT_LOCALE: Locale = Locale.ROOT
 
 /**
  * Returns a string representation of the user-supplied value

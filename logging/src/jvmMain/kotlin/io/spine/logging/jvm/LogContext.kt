@@ -38,11 +38,11 @@ import io.spine.logging.LoggingScopeProvider
 import io.spine.logging.SpecializedLogSiteKey
 import io.spine.logging.StackSize
 import io.spine.logging.jvm.JvmLogSite.Companion.injectedLogSite
-import io.spine.logging.jvm.backend.LogData
-import io.spine.logging.jvm.backend.Metadata
-import io.spine.logging.jvm.backend.Platform
+import io.spine.logging.backend.LogData
+import io.spine.logging.backend.Metadata
+import io.spine.logging.backend.Platform
 import io.spine.logging.jvm.context.Tags
-import io.spine.logging.jvm.util.Checks.checkNotNull
+import io.spine.logging.util.Checks.checkNotNull
 import io.spine.reflect.CallerFinder.stackForCallerOf
 import java.util.logging.Level
 import kotlin.time.DurationUnit

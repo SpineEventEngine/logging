@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.system.given
 
-import io.spine.logging.jvm.backend.Clock
+import io.spine.logging.backend.Clock
 
 /**
  * A clock that always returns the configured [returnedTimestamp].

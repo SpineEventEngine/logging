@@ -37,6 +37,7 @@ import io.spine.logging.LogPerBucketingStrategy
 import io.spine.logging.LoggingScope
 import io.spine.logging.LoggingScopeProvider
 import io.spine.logging.StackSize
+import io.spine.logging.log
 import io.spine.logging.backend.probe.MemoizingLoggerBackend
 import io.spine.logging.jvm.DurationRateLimiter.Companion.newRateLimitPeriod
 import io.spine.logging.jvm.LogContext.Companion.specializeLogSiteKeyFromMetadata
@@ -122,7 +123,7 @@ internal class LogContextSpec {
 
     @Test
     fun `accept a literal message`() {
-        logger.at(INFO).log(MESSAGE_LITERAL)
+        logger.at(INFO).log { MESSAGE_LITERAL }
         backend.loggedCount shouldBe 1
         backend.lastLogged shouldHaveMessage MESSAGE_LITERAL
     }
@@ -134,7 +135,7 @@ internal class LogContextSpec {
         logger.atInfo()
             .withCause(cause)
             .every(invocations)
-            .log(MESSAGE_LITERAL)
+            .log { MESSAGE_LITERAL }
         backend.loggedCount shouldBe 1
         backend.lastLogged.metadata shouldHaveSize 2 // Cause and rate.
         backend.lastLogged.metadata.shouldUniquelyContain(Key.LOG_EVERY_N, invocations)
@@ -200,7 +201,7 @@ internal class LogContextSpec {
             val timestampNanos = startNanos + MILLISECONDS.toTimeUnit().toNanos(millis)
             logger.at(INFO, timestampNanos)
                 .every(5)
-                .log("Count=%d", counter)
+                .log { "Count=$counter" }
         }
 
         backend.loggedCount shouldBe 3
@@ -226,7 +227,7 @@ internal class LogContextSpec {
             val timestampNanos = startNanos + MILLISECONDS.toTimeUnit().toNanos(millis)
             logger.at(INFO, timestampNanos)
                 .onAverageEvery(5)
-                .log("Count=%d", counter)
+                .log { "Count=$counter" }
         }
 
         // Statistically impossible that we randomly get +/- 100 over 1000 logs.
@@ -268,7 +269,7 @@ internal class LogContextSpec {
             val timestampNanos = startNanos + MILLISECONDS.toTimeUnit().toNanos(millis)
             logger.at(INFO, timestampNanos)
                 .atMostEvery(2, SECONDS)
-                .log("Count=%d", counter)
+                .log { "Count=$counter" }
         }
 
         backend.run {
@@ -306,7 +307,7 @@ internal class LogContextSpec {
                 logger.at(INFO, timestampNanos)
                     .every(15)
                     .atMostEvery(2, SECONDS)
-                    .log("Count=%d", counter)
+                    .log { "Count=$counter" }
             }
 
             backend.run {
@@ -329,7 +330,7 @@ internal class LogContextSpec {
                 logger.at(INFO, timestampNanos)
                     .every(15)
                     .atMostEvery(1, SECONDS)
-                    .log("Count=%d", counter)
+                    .log { "Count=$counter" }
             }
 
             backend.run {
@@ -361,7 +362,7 @@ internal class LogContextSpec {
                 logger.at(INFO, nowNanos)
                     .atMostEvery(1, SECONDS)
                     .per(exception, LogPerBucketingStrategy.byClass())
-                    .log("Err: %s", exception.message)
+                    .log { "Err: ${exception.message}" }
                 nowNanos += MILLISECONDS.toTimeUnit().toNanos(100)
             }
 
@@ -411,7 +412,7 @@ internal class LogContextSpec {
                 logger.at(INFO, nowNanos)
                     .atMostEvery(1, SECONDS)
                     .per(type)
-                    .log("Type: %s", type)
+                    .log { "Type: $type" }
                 nowNanos += MILLISECONDS.toTimeUnit().toNanos(100)
             }
 
@@ -434,7 +435,7 @@ internal class LogContextSpec {
             val logger = ConfigurableLogger(backend)
 
             // We can't test a specific implementation of `ScopedLoggingContext` here,
-            // so we fake it. The `ScopedLoggingContext` behavior is well tested elsewhere.
+            // so we fake it. The `ScopedLoggingContext` behavior is well-tested elsewhere.
             // Only tests should ever create “immediate providers” like this
             // as it doesn't make sense otherwise.
             var nowNanos = currentTimeNanos()
@@ -450,7 +451,7 @@ internal class LogContextSpec {
                 logger.at(INFO, nowNanos)
                     .atMostEvery(1, SECONDS)
                     .per(provider)
-                    .log("message")
+                    .log { "message" }
                 nowNanos += MILLISECONDS.toTimeUnit().toNanos(100)
             }
 
@@ -477,7 +478,7 @@ internal class LogContextSpec {
             val backend = MemoizingLoggerBackend()
             backend.setLevel(WARNING)
             val logger = ConfigurableLogger(backend)
-            logger.forceAt(INFO).log("LOGGED")
+            logger.forceAt(INFO).log { "LOGGED" }
 
             backend.run {
                 loggedCount shouldBe 1
@@ -497,26 +498,26 @@ internal class LogContextSpec {
             logger.atInfo()
                 .every(3)
                 .withInjectedLogSite(logSite) // Note that the log site is passed explicitly.
-                .log("LOGGED 1") // Log statements always get logged the first time.
+                .log { "LOGGED 1" } // Log statements always get logged the first time.
 
             // Not logged due to rate limiting.
             logger.atInfo()
                 .every(3)
                 .withInjectedLogSite(logSite)
-                .log("NOT LOGGED")
+                .log { "NOT LOGGED" }
 
             // Manually create the forced context (there is no “normal” API for this).
             logger.forceAt(INFO)
                 .every(3)
                 .withInjectedLogSite(logSite)
-                .log("LOGGED 2")
+                .log { "LOGGED 2" }
 
             // This shows that the “forced” context does not count towards the rate limit count.
             // Otherwise, this log statement would have been logged.
             logger.atInfo()
                 .every(3)
                 .withInjectedLogSite(logSite)
-                .log("NOT LOGGED")
+                .log { "NOT LOGGED" }
 
             backend.run {
                 loggedCount shouldBe 2
@@ -537,28 +538,28 @@ internal class LogContextSpec {
             logger.at(INFO, nowNanos)
                 .atMostEvery(1, SECONDS)
                 .withInjectedLogSite(logSite) // Note that the log site is passed explicitly.
-                .log("LOGGED 1") // Log statements always get logged the first time.
+                .log { "LOGGED 1" } // Log statements always get logged the first time.
 
             // Not logged due to rate limiting.
             nowNanos += MILLISECONDS.toTimeUnit().toNanos(100)
             logger.at(INFO, nowNanos)
                 .atMostEvery(1, SECONDS)
                 .withInjectedLogSite(logSite)
-                .log("NOT LOGGED")
+                .log { "NOT LOGGED" }
 
             // Manually create the forced context (there is no “normal” API for this).
             nowNanos += MILLISECONDS.toTimeUnit().toNanos(100)
             logger.forceAt(INFO, nowNanos)
                 .atMostEvery(1, SECONDS)
                 .withInjectedLogSite(logSite)
-                .log("LOGGED 2")
+                .log { "LOGGED 2" }
 
             // Not logged due to rate limiting.
             nowNanos += MILLISECONDS.toTimeUnit().toNanos(100)
             logger.at(INFO, nowNanos)
                 .atMostEvery(1, SECONDS)
                 .withInjectedLogSite(logSite)
-                .log("NOT LOGGED")
+                .log { "NOT LOGGED" }
 
             backend.run {
                 loggedCount shouldBe 2
@@ -589,13 +590,13 @@ internal class LogContextSpec {
     @Test
     fun `accept a nullable literal`() {
         // We want to call `log(String)`, not `log(Object)` with a null value.
-        logger.atInfo().log(null as String?)
+        logger.atInfo().log { null as String? }
         backend.lastLogged.shouldHaveMessage(null)
     }
 
     @Test
     fun `log 'null' if given message is 'null'`() {
-        logger.atInfo().log(null)
+        logger.atInfo().log { null }
         backend.lastLogged.let {
             it shouldHaveMessage ("<null>")
         }
@@ -606,7 +607,7 @@ internal class LogContextSpec {
 
         // Keep these two lines immediately adjacent to each other.
         val expectedCaller = callerInfoFollowingLine()
-        logger.atSevere().withStackTrace(StackSize.FULL).log(MESSAGE_PATTERN, MESSAGE_ARGUMENT)
+        logger.atSevere().withStackTrace(StackSize.FULL).log { MESSAGE_PATTERN }
 
         backend.loggedCount shouldBe 1
         backend.firstLogged.shouldHaveMessage(MESSAGE_PATTERN)
@@ -637,7 +638,7 @@ internal class LogContextSpec {
         logger.atInfo()
             .withStackTrace(StackSize.SMALL)
             .withCause(badness)
-            .log(MESSAGE_PATTERN, MESSAGE_ARGUMENT)
+            .log { MESSAGE_PATTERN }
 
         backend.loggedCount shouldBe 1
         backend.firstLogged.shouldHaveMessage(MESSAGE_PATTERN)

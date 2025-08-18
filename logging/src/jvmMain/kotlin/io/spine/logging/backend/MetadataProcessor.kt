@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,12 +26,12 @@
 
 @file:Suppress("MaxLineLength")
 
-package io.spine.logging.jvm.backend
+package io.spine.logging.backend
 
 import io.spine.annotation.VisibleForTesting
 import io.spine.logging.jvm.LogContext
 import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.backend.LightweightProcessor.Companion.MAX_LIGHTWEIGHT_ELEMENTS
+import io.spine.logging.backend.LightweightProcessor.Companion.MAX_LIGHTWEIGHT_ELEMENTS
 import io.spine.logging.jvm.checkCannotRepeat
 import java.util.*
 
@@ -92,7 +92,7 @@ public abstract class MetadataProcessor {
             return when {
                 totalSize == 0 ->
                     EMPTY_PROCESSOR
-                totalSize <= LightweightProcessor.MAX_LIGHTWEIGHT_ELEMENTS ->
+                totalSize <= MAX_LIGHTWEIGHT_ELEMENTS ->
                     getLightweightProcessor(scopeMetadata, logMetadata)
                 else -> getSimpleProcessor(scopeMetadata, logMetadata)
             }

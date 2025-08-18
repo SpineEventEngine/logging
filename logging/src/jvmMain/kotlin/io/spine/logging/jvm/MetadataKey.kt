@@ -29,8 +29,8 @@ package io.spine.logging.jvm
 import io.spine.annotation.VisibleForTesting
 import io.spine.logging.KeyValueHandler
 import io.spine.logging.jvm.MetadataKey.Companion.single
-import io.spine.logging.jvm.backend.Platform
-import io.spine.logging.jvm.util.Checks
+import io.spine.logging.backend.Platform
+import io.spine.logging.util.Checks
 
 /**
  * A key for logging semi-structured metadata values.

@@ -27,11 +27,11 @@
 package io.spine.logging.backend.jul.given
 
 import io.spine.logging.backend.jul.AbstractJulRecord
-import io.spine.logging.jvm.backend.LogData
-import io.spine.logging.jvm.backend.LogMessageFormatter
-import io.spine.logging.jvm.backend.Metadata
-import io.spine.logging.jvm.backend.MetadataProcessor
-import io.spine.logging.jvm.backend.SimpleMessageFormatter
+import io.spine.logging.backend.LogData
+import io.spine.logging.backend.LogMessageFormatter
+import io.spine.logging.backend.Metadata
+import io.spine.logging.backend.MetadataProcessor
+import io.spine.logging.backend.SimpleMessageFormatter
 
 /**
  * An instantiatable [AbstractJulRecord].

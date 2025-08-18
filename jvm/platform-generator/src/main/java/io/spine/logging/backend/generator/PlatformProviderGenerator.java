@@ -83,7 +83,7 @@ import static org.objectweb.asm.Opcodes.V1_6;
 public final class PlatformProviderGenerator {
 
     private static final String[] PLATFORM_CLASSES = {
-            "Lio/spine/logging/jvm/backend/system/DefaultPlatform;",
+            "Lio/spine/logging/backend/system/DefaultPlatform;",
     };
 
     /**
@@ -99,7 +99,7 @@ public final class PlatformProviderGenerator {
         classWriter.visit(
                 V1_6,
                 ACC_PUBLIC + ACC_FINAL + ACC_SUPER,
-                "io/spine/logging/jvm/backend/PlatformProvider",
+                "io/spine/logging/backend/PlatformProvider",
                 null,
                 "java/lang/Object",
                 null)
@@ -118,7 +118,7 @@ public final class PlatformProviderGenerator {
         methodVisitor = classWriter.visitMethod(
                 ACC_PUBLIC + ACC_STATIC,
                 "getPlatform",
-                "()Lio/spine/logging/jvm/backend/Platform;",
+                "()Lio/spine/logging/backend/Platform;",
                 null,
                 null
         );
@@ -141,7 +141,7 @@ public final class PlatformProviderGenerator {
         var path = Paths.get(args[0]);
         Files.createDirectories(path.getParent());
         try (var jar = new JarOutputStream(newOutputStream(path, StandardOpenOption.CREATE_NEW))) {
-            var entry = new ZipEntry("io/spine/logging/jvm/backend/PlatformProvider.class");
+            var entry = new ZipEntry("io/spine/logging/backend/PlatformProvider.class");
             // Clear timestamp to ensure JAR is deterministic for build cache.
             entry.setTime(0);
             jar.putNextEntry(entry);

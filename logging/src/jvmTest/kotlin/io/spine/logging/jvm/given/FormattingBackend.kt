@@ -26,8 +26,8 @@
 
 package io.spine.logging.jvm.given
 
-import io.spine.logging.jvm.backend.LogData
-import io.spine.logging.jvm.backend.LoggerBackend
+import io.spine.logging.backend.LogData
+import io.spine.logging.backend.LoggerBackend
 import java.util.logging.Level
 
 /**

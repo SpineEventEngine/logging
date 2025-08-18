@@ -29,6 +29,7 @@ package io.spine.logging.jvm
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldNotBeInstanceOf
+import io.spine.logging.log
 import io.spine.logging.LoggingApi
 import io.spine.logging.backend.probe.MemoizingLoggerBackend
 import io.spine.logging.jvm.Middleman.Companion.forEnclosingClass
@@ -88,13 +89,13 @@ internal class LoggerSpec {
         logger.atFinest().shouldBeInstanceOf<LoggingApi.NoOp<*>>()
 
         // Just verify that logs below the current log level are discarded.
-        logger.atFine().log("DISCARDED")
-        logger.atFiner().log("DISCARDED")
-        logger.atFinest().log("DISCARDED")
+        logger.atFine().log { "DISCARDED" }
+        logger.atFiner().log { "DISCARDED" }
+        logger.atFinest().log { "DISCARDED" }
         backend.loggedCount shouldBe 0
 
         // But those at or above are passed to the backend.
-        logger.atInfo().log("LOGGED")
+        logger.atInfo().log { "LOGGED" }
         backend.loggedCount shouldBe 1
         backend.setLevel(Level.OFF)
         logger.atSevere().shouldBeInstanceOf<LoggingApi.NoOp<*>>()

@@ -36,8 +36,8 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.backend.probe.MemoizingLoggerBackend
 import io.spine.logging.jvm.LogContext.Key
-import io.spine.logging.jvm.backend.Metadata
-import io.spine.logging.jvm.backend.Platform
+import io.spine.logging.backend.Metadata
+import io.spine.logging.backend.Platform
 import io.spine.logging.jvm.context.ContextDataProvider
 import io.spine.logging.jvm.context.LogLevelMap
 import io.spine.logging.jvm.context.ScopeType

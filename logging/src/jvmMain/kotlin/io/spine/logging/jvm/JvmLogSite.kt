@@ -33,7 +33,7 @@ import io.spine.logging.LogSiteKey
 import io.spine.logging.jvm.JvmLogSite.Companion.callerOf
 import io.spine.logging.jvm.JvmLogSite.Companion.invalid
 import io.spine.logging.jvm.JvmLogSite.Companion.logSite
-import io.spine.logging.jvm.backend.Platform
+import io.spine.logging.backend.Platform
 
 /**
  * A value type which represents the location of a single log statement.

@@ -26,7 +26,7 @@
 
 package io.spine.logging.jvm.given
 
-import io.spine.logging.jvm.backend.LogData
+import io.spine.logging.backend.LogData
 import io.kotest.matchers.shouldBe
 
 /**

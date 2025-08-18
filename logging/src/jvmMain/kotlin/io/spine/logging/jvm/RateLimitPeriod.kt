@@ -28,7 +28,7 @@ package io.spine.logging.jvm
 
 import com.google.errorprone.annotations.Immutable
 import com.google.errorprone.annotations.ThreadSafe
-import io.spine.logging.jvm.backend.LogData
+import io.spine.logging.backend.LogData
 import java.util.concurrent.TimeUnit
 import kotlin.time.DurationUnit
 import kotlin.time.toTimeUnit

@@ -35,7 +35,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-import static io.spine.logging.jvm.util.Checks.checkNotNull;
+import static io.spine.logging.util.Checks.checkNotNull;
 
 /**
  * A simple FIFO queue linked-list implementation designed to store multiple

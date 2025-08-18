@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.util
+package io.spine.logging.util
 
 import java.io.Closeable
 
@@ -38,7 +38,7 @@ import java.io.Closeable
  * #### API Note
  * This class is an internal detail and must not be used outside the core of the Logging library.
  * Backends which need to know the recursion depth should call
- * [io.spine.logging.jvm.backend.Platform.getCurrentRecursionDepth].
+ * [io.spine.logging.backend.Platform.getCurrentRecursionDepth].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/util/RecursionDepth.java">
  *   Original Java code of Google Flogger</a> for historical context.

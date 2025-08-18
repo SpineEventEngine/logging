@@ -36,7 +36,7 @@ import io.spine.logging.backend.jul.given.StubLogData
 import io.spine.logging.backend.jul.given.StubMetadata
 import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.backend.Metadata
+import io.spine.logging.backend.Metadata
 import io.spine.logging.jvm.context.Tags
 import io.spine.logging.jvm.singleKey
 import java.time.Instant.ofEpochMilli

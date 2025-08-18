@@ -26,6 +26,7 @@
 
 package io.spine.logging.jvm.backend
 
+import io.spine.logging.backend.MetadataProcessor
 import org.junit.jupiter.api.DisplayName
 
 @DisplayName("`SimpleProcessor` should")

@@ -27,7 +27,7 @@
 package io.spine.logging.jvm.context
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
-import io.spine.logging.jvm.util.Checks.checkMetadataIdentifier
+import io.spine.logging.util.Checks.checkMetadataIdentifier
 
 /**
  * A simple immutable implementation of [Map.Entry].
