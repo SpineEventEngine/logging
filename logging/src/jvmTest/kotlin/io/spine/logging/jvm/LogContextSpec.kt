@@ -37,25 +37,24 @@ import io.spine.logging.LogPerBucketingStrategy
 import io.spine.logging.LoggingScope
 import io.spine.logging.LoggingScopeProvider
 import io.spine.logging.StackSize
-import io.spine.logging.log
 import io.spine.logging.backend.probe.MemoizingLoggerBackend
 import io.spine.logging.jvm.DurationRateLimiter.Companion.newRateLimitPeriod
 import io.spine.logging.jvm.LogContext.Companion.specializeLogSiteKeyFromMetadata
 import io.spine.logging.jvm.LogContext.Key
-import io.spine.logging.jvm.backend.given.FakeMetadata
-import io.spine.logging.jvm.backend.given.shouldContain
-import io.spine.logging.jvm.backend.given.shouldContainInOrder
-import io.spine.logging.jvm.backend.given.shouldHaveSize
-import io.spine.logging.jvm.backend.given.shouldNotContain
-import io.spine.logging.jvm.backend.given.shouldUniquelyContain
+import io.spine.logging.backend.given.FakeMetadata
+import io.spine.logging.backend.given.shouldContain
+import io.spine.logging.backend.given.shouldContainInOrder
+import io.spine.logging.backend.given.shouldHaveSize
+import io.spine.logging.backend.given.shouldNotContain
+import io.spine.logging.backend.given.shouldUniquelyContain
 import io.spine.logging.jvm.context.Tags
 import io.spine.logging.jvm.given.ConfigurableLogger
 import io.spine.logging.jvm.given.FakeLogSite
 import io.spine.logging.jvm.given.iterate
 import io.spine.logging.jvm.given.shouldHaveMessage
 import java.lang.System.currentTimeMillis
-import java.util.logging.Level.INFO
-import java.util.logging.Level.WARNING
+import io.spine.logging.Level.Companion.INFO
+import io.spine.logging.Level.Companion.WARNING
 import kotlin.time.DurationUnit.MILLISECONDS
 import kotlin.time.DurationUnit.SECONDS
 import kotlin.time.toTimeUnit
@@ -82,7 +81,6 @@ internal class LogContextSpec {
 
         private const val MESSAGE_LITERAL = "Hello World"
         private const val MESSAGE_PATTERN = "Hello %s"
-        private const val MESSAGE_ARGUMENT = "World"
 
         // In normal use, the logger would never need to be passed in,
         // and you'd use `logVarargs()`.

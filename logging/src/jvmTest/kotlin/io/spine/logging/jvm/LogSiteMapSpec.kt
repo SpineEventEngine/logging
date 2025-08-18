@@ -35,7 +35,7 @@ import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 import io.spine.logging.LogSiteKey
 import io.spine.logging.LoggingScope
 import io.spine.logging.backend.Metadata
-import io.spine.logging.jvm.backend.given.FakeMetadata
+import io.spine.logging.backend.given.FakeMetadata
 import io.spine.logging.jvm.given.FakeLogSite
 import java.lang.Thread.sleep
 import java.util.concurrent.Callable

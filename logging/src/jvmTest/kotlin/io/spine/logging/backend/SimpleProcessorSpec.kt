@@ -24,11 +24,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.backend
+package io.spine.logging.backend
 
-import io.spine.logging.backend.MetadataProcessor
 import org.junit.jupiter.api.DisplayName
 
-@DisplayName("`LightweightProcessor` should")
-internal class LightweightProcessorSpec :
-    MetadataProcessorSpec(MetadataProcessor::getLightweightProcessor)
+@DisplayName("`SimpleProcessor` should")
+internal class SimpleProcessorSpec :
+    MetadataProcessorSpec(MetadataProcessor::getSimpleProcessor)

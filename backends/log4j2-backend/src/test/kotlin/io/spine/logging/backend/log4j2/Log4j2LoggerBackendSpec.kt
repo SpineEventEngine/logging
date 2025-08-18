@@ -35,6 +35,7 @@ import io.spine.logging.jvm.JvmLogSite
 import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.jvm.repeatedKey
 import io.spine.logging.jvm.singleKey
+import io.spine.logging.toLevel
 import java.util.concurrent.atomic.AtomicInteger
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.core.Appender
@@ -133,7 +134,7 @@ internal class Log4j2LoggerBackendSpec {
         expectedMatches.forEach { (julLevel, expectedLog4jLevel) ->
             val message = julLevel.name
             val data = StubLogData(message)
-                .setLevel(julLevel)
+                .setLevel(julLevel.toLevel())
             backend.log(data)
             lastLogged.level shouldBe expectedLog4jLevel
             lastLogged.formatted shouldBe message

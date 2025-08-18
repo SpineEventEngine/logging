@@ -26,12 +26,12 @@
 
 package io.spine.logging.jvm.given
 
+import io.spine.logging.Level
 import io.spine.logging.LoggingApi
+import io.spine.logging.backend.LoggerBackend
 import io.spine.logging.jvm.AbstractLogger
 import io.spine.logging.jvm.LogContext
-import io.spine.logging.backend.LoggerBackend
 import io.spine.logging.jvm.given.ConfigurableLogger.Companion.DEFAULT_TIMESTAMP_NANOS
-import java.util.logging.Level
 
 /**
  * Dynamically reconfigurable logger for testing backend

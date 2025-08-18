@@ -33,5 +33,6 @@ package io.spine.logging
 public data class InjectedLogSite(
     override val className: String,
     override val methodName: String,
+    override val fileName: String?,
     override val lineNumber: Int,
 ) : LogSite

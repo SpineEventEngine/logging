@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,6 +43,9 @@ package io.spine.logging
  * Usually, this type if filled from a stack trace until it is injected
  * [manually][LoggingApi.withInjectedLogSite], or the used backend provides
  * its own mechanism to determine a log site.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSite.java">
+ *     Original Java code of Google Flogger</a> for historical context.
  */
 public interface LogSite {
 
@@ -55,6 +58,13 @@ public interface LogSite {
      * Name of the method containing the log statement.
      */
     public val methodName: String
+
+    /**
+     * The name of the class file containing the log statement (or `null` if not known).
+     *
+     * The source file name is optional and strictly for debugging purposes.
+     */
+    public val fileName: String?
 
     /**
      * Line number of the log statement.
@@ -72,6 +82,7 @@ public interface LogSite {
     public object Invalid : LogSite {
         override val className: String = "<unknown class>"
         override val methodName: String = "<unknown method>"
+        override val fileName: String? = null
         override val lineNumber: Int = 0
     }
 }

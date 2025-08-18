@@ -26,17 +26,14 @@
 
 package io.spine.logging.context.std
 
-import io.spine.logging.context.toMap
+import io.spine.logging.Level
 import io.spine.logging.LoggingScope
 import io.spine.logging.backend.Metadata
+import io.spine.logging.context.toMap
 import io.spine.logging.jvm.context.ContextDataProvider
 import io.spine.logging.jvm.context.ScopeType
 import io.spine.logging.jvm.context.ScopedLoggingContext
 import io.spine.logging.jvm.context.Tags
-import io.spine.logging.toJavaLogging
-import io.spine.logging.toLevel
-import java.util.logging.Level
-import java.util.logging.Level as JLevel
 
 /**
  * A basic implementation of [ContextDataProvider].
@@ -55,7 +52,7 @@ public class StdContextDataProvider: ContextDataProvider() {
 
     override fun shouldForceLogging(
         loggerName: String,
-        level: JLevel,
+        level: Level,
         isEnabledByLevel: Boolean
     ): Boolean {
 
@@ -63,15 +60,14 @@ public class StdContextDataProvider: ContextDataProvider() {
             return false
         }
 
-        val l = level.toLevel()
-        return CurrentStdContext.shouldForceLoggingFor(loggerName, l)
+        return CurrentStdContext.shouldForceLoggingFor(loggerName, level)
     }
 
     override fun getMappedLevel(loggerName: String): Level? {
         if (!hasLogLevelMap) {
             return null
         }
-        return CurrentStdContext.mappedLevelOf(loggerName)?.toJavaLogging()
+        return CurrentStdContext.mappedLevelOf(loggerName)
     }
 
     override fun getTags(): Tags = CurrentStdContext.tags()

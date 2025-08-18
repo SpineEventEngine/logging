@@ -26,10 +26,10 @@
 
 package io.spine.logging.jvm.context
 
+import io.spine.logging.Level
 import io.spine.logging.LoggingScope
 import io.spine.logging.backend.Metadata
 import io.spine.logging.backend.Platform
-import java.util.logging.Level
 
 /**
  * An API for injecting scoped metadata for log statements (either globally or on

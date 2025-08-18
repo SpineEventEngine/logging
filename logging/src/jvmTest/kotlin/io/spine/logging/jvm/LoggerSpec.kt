@@ -29,11 +29,10 @@ package io.spine.logging.jvm
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldNotBeInstanceOf
-import io.spine.logging.log
 import io.spine.logging.LoggingApi
 import io.spine.logging.backend.probe.MemoizingLoggerBackend
 import io.spine.logging.jvm.Middleman.Companion.forEnclosingClass
-import java.util.logging.Level
+import io.spine.logging.Level
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 

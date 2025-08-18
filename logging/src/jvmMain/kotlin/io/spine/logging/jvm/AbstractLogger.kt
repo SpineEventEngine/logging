@@ -26,6 +26,8 @@
 
 package io.spine.logging.jvm
 
+import io.spine.logging.Level
+import io.spine.logging.LogSite
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.LoggerBackend
 import io.spine.logging.backend.LoggingException
@@ -35,7 +37,6 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.concurrent.TimeUnit.NANOSECONDS
 import io.spine.logging.LoggingApi
-import java.util.logging.Level
 
 /**
  * Base class for the fluent logging API.
@@ -108,9 +109,9 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
     public fun atInfo(): API = at(Level.INFO)
 
     /**
-     * A convenience method for at([Level.CONFIG]).
+     * A convenience method for at([Level.INFO]).
      */
-    public fun atConfig(): API = at(Level.CONFIG)
+    public fun atConfig(): API = at(Level.INFO)
 
     /**
      * A convenience method for at([Level.FINE]).
@@ -247,7 +248,7 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
 /**
  * Appends the log site information to this StringBuilder.
  */
-private fun StringBuilder.appendLogSite(logSite: JvmLogSite) {
+private fun StringBuilder.appendLogSite(logSite: LogSite) {
     append(logSite.className)
     append('.')
     append(logSite.methodName)

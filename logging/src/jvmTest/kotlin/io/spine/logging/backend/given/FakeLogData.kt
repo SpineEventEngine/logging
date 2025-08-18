@@ -24,15 +24,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.backend.given
+package io.spine.logging.backend.given
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
+import io.spine.logging.Level
 import io.spine.logging.jvm.JvmLogSite
 import io.spine.logging.jvm.LogContext
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.backend.LogData
 import io.spine.logging.jvm.given.FakeLogSite
-import java.util.logging.Level
 
 /**
  * A mutable [LogData] fot testing backends and other log handling code.

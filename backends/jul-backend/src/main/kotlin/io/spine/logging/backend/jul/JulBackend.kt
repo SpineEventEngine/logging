@@ -26,11 +26,14 @@
 
 package io.spine.logging.backend.jul
 
+import io.spine.logging.Level
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.LoggerBackend
 import io.spine.logging.backend.Platform
+import io.spine.logging.compareTo
+import io.spine.logging.toJavaLogging
+import io.spine.logging.toLevel
 import java.util.logging.Handler
-import java.util.logging.Level
 import java.util.logging.LogRecord
 import java.util.logging.Logger
 
@@ -92,7 +95,7 @@ internal class JulBackend(loggingClass: String): AbstractJulBackend(loggingClass
      */
     private fun doLog(record: LogRecord, wasForced: Boolean) {
         // If not forced, do work as usually.
-        if (!wasForced || isLoggable(record.level)) {
+        if (!wasForced || isLoggable(record.level.toLevel())) {
             logger.log(record)
             return
         }
@@ -140,7 +143,11 @@ private fun publishForced(handler: Handler, record: LogRecord) {
 }
 
 /**
- * Compares Java logging levels using their [values][Level.intValue].
+ * Creates a new log record with the given [level] and [message][msg].
+ *
+ * @param level The level for the log record.
+ * @param msg The raw non-localized logging message (may be `null`).
+ * @see java.util.logging.LogRecord
  */
-private operator fun Level.compareTo(other: Level): Int =
-    intValue().compareTo(other.intValue())
+public fun LogRecord(level: Level, msg: String?): LogRecord =
+    LogRecord(level.toJavaLogging(), msg)

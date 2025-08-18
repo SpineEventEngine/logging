@@ -33,6 +33,7 @@ internal class LogSiteLookupTest {
         val expectedLogSite = InjectedLogSite(
             callSite.className,
             callSite.methodName,
+            null,
             callSite.lineNumber - 1
         )
         logSite shouldBe expectedLogSite

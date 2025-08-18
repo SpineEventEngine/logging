@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.backend
+package io.spine.logging.backend
 
 import com.google.common.collect.Iterators
 import io.kotest.assertions.throwables.shouldThrow
@@ -33,18 +33,15 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.ints.shouldBeLessThanOrEqual
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
-import io.spine.logging.backend.Metadata
-import io.spine.logging.backend.MetadataHandler
-import io.spine.logging.backend.MetadataProcessor
+import io.spine.logging.backend.given.FakeMetadata
 import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.backend.given.FakeMetadata
 import io.spine.logging.jvm.repeatedKey
 import io.spine.logging.jvm.singleKey
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for [io.spine.logging.backend.MetadataProcessor].
+ * Tests for [MetadataProcessor].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/backend/MetadataProcessorTest.java">
  *     Original Java code of Google Flogger</a> for historical context.
@@ -205,8 +202,8 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
 }
 
 /**
- * A convenience interface to describe [io.spine.logging.backend.MetadataProcessor.getLightweightProcessor]
- * and [io.spine.logging.backend.MetadataProcessor.getSimpleProcessor] methods' signature.
+ * A convenience interface to describe [MetadataProcessor.getLightweightProcessor]
+ * and [MetadataProcessor.getSimpleProcessor] methods' signature.
  */
 fun interface ProcessorFactory {
     fun processorFor(logged: Metadata, scope: Metadata): MetadataProcessor

@@ -65,13 +65,44 @@ public data class Level(
      * Level values repeat those from `java.util.logging.Level` for easier compatibility.
      */
     public companion object {
+
+        @JvmField
         public val OFF: Level = Level("OFF", Int.MAX_VALUE)
+
+        @JvmField
         public val FATAL: Level = Level("FATAL", 2000)
+
+        @JvmField
         public val ERROR: Level = Level("ERROR", 1000)
+
+        @JvmField
+        public val SEVERE: Level = Level("SEVERE", ERROR.value)
+
+        @JvmField
         public val WARNING: Level = Level("WARNING", 900)
+
+        @JvmField
         public val INFO: Level = Level("INFO", 800)
+
+        @JvmField
+        public val CONFIG: Level = Level("CONFIG", 700)
+
+        @JvmField
         public val DEBUG: Level = Level("DEBUG", 500)
-        public val TRACE: Level = Level("TRACE", 400)
+
+        @JvmField
+        public val FINE: Level = Level("FINE", DEBUG.value)
+
+        @JvmField
+        public val FINER: Level = Level("FINER", 400)
+
+        @JvmField
+        public val TRACE: Level = Level("TRACE", FINER.value)
+
+        @JvmField
+        public val FINEST: Level = Level("FINEST", 300)
+
+        @JvmField
         public val ALL: Level = Level("ALL", Int.MIN_VALUE)
     }
 }

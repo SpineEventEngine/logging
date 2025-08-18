@@ -38,6 +38,7 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.LogRecord;
 
+import static io.spine.logging.JvmLoggerKt.toJavaLogging;
 import static java.time.Instant.ofEpochMilli;
 import static java.util.Objects.requireNonNullElse;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
@@ -110,7 +111,7 @@ public abstract class AbstractJulRecord extends LogRecord {
      */
     @SuppressWarnings("OverridableMethodCallDuringObjectConstruction")
     protected AbstractJulRecord(LogData data, Metadata scope) {
-        super(data.getLevel(), null);
+        super(toJavaLogging(data.getLevel()), null);
         this.data = data;
         this.metadata = MetadataProcessor.forScopeAndLogSite(scope, data.getMetadata());
 
@@ -140,8 +141,9 @@ public abstract class AbstractJulRecord extends LogRecord {
     protected AbstractJulRecord(RuntimeException error, LogData data, Metadata scope) {
         this(data, scope);
         // Re-target this log message as a warning (or above) since it indicates a real bug.
-        setLevel(data.getLevel()
-                     .intValue() < WARNING.intValue() ? WARNING : data.getLevel());
+        setLevel(data.getLevel().getValue() < WARNING.intValue()
+                 ? WARNING
+                 : toJavaLogging(data.getLevel()));
         setThrown(error);
         var errorMsg =
                 new StringBuilder("LOGGING ERROR: ").append(error.getMessage())

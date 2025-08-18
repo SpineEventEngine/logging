@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +26,8 @@
 
 package io.spine.logging.backend
 
-import io.spine.logging.jvm.JvmLogSite
-import java.util.logging.Level
+import io.spine.logging.Level
+import io.spine.logging.LogSite
 
 /**
  * A backend API for determining metadata associated with a log statement.
@@ -67,7 +67,7 @@ public interface LogData {
      * @throws IllegalStateException
      *   if called prior to the [io.spine.logging.jvm.LogContext.postProcess] function being called.
      */
-    public val logSite: JvmLogSite
+    public val logSite: LogSite
 
     /**
      * Returns any additional metadata for this log statement.

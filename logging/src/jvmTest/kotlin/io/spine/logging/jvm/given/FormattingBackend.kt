@@ -26,9 +26,9 @@
 
 package io.spine.logging.jvm.given
 
+import io.spine.logging.Level
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.LoggerBackend
-import java.util.logging.Level
 
 /**
  * A memoizing backend that captures logged messages.

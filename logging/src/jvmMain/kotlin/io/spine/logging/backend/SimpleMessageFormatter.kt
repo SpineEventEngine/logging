@@ -35,7 +35,6 @@ import io.spine.logging.backend.SimpleMessageFormatter.appendContext
 import io.spine.logging.backend.SimpleMessageFormatter.getLiteralLogMessage
 import io.spine.logging.backend.SimpleMessageFormatter.getSimpleFormatterIgnoring
 import io.spine.logging.backend.SimpleMessageFormatter.mustBeFormatted
-import java.util.*
 
 /**
  * A helper object for formatting [LogData] as text.
@@ -69,8 +68,7 @@ import java.util.*
  */
 public object SimpleMessageFormatter {
 
-    private val defaultKeysToIgnore: Set<MetadataKey<*>> =
-        Collections.singleton(LogContext.Key.LOG_CAUSE)
+    private val defaultKeysToIgnore: Set<MetadataKey<*>> = setOf(LogContext.Key.LOG_CAUSE)
 
     private val defaultFormatter: LogMessageFormatter = IgnoringFormatter(defaultKeysToIgnore)
 

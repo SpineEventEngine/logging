@@ -27,11 +27,11 @@
 package io.spine.logging.jvm.context
 
 import io.kotest.matchers.types.shouldBeSameInstanceAs
-import io.spine.logging.jvm.backend.given.shouldBeEmpty
-import io.spine.logging.jvm.backend.given.shouldContainInOrder
-import io.spine.logging.jvm.backend.given.shouldHaveFirstValue
-import io.spine.logging.jvm.backend.given.shouldHaveSize
-import io.spine.logging.jvm.backend.given.shouldNotContain
+import io.spine.logging.backend.given.shouldBeEmpty
+import io.spine.logging.backend.given.shouldContainInOrder
+import io.spine.logging.backend.given.shouldHaveFirstValue
+import io.spine.logging.backend.given.shouldHaveSize
+import io.spine.logging.backend.given.shouldNotContain
 import io.spine.logging.jvm.repeatedKey
 import io.spine.logging.jvm.singleKey
 import org.junit.jupiter.api.DisplayName

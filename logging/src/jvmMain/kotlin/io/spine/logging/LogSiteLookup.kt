@@ -70,6 +70,7 @@ private fun JvmLogSite.toLogSite(): LogSite {
     return InjectedLogSite(
         className = this@toLogSite.className,
         methodName = this@toLogSite.methodName,
+        fileName = this@toLogSite.fileName,
         lineNumber = this@toLogSite.lineNumber
     )
 }

@@ -69,7 +69,7 @@ public abstract class JvmLogSite : LogSiteKey, LogSite {
      * See the [JVM class file format specification](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.7.10)
      * for more details.
      */
-    public abstract val fileName: String?
+    public abstract override val fileName: String?
 
     /**
      * Provides debug information with only the public attributes.
@@ -101,7 +101,7 @@ public abstract class JvmLogSite : LogSiteKey, LogSite {
          * cannot be determined.
          */
         @JvmField
-        public val invalid: JvmLogSite = InvalidLogSite()
+        public val invalid: JvmLogSite = InvalidLogSite
 
         /**
          * Creates a log site injected from constants held in a class' constant pool.

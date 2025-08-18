@@ -32,7 +32,8 @@ import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
-import java.util.logging.Level
+import io.spine.logging.Level
+import io.spine.logging.toJavaLogging
 import java.util.logging.LogRecord
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested

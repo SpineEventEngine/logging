@@ -27,11 +27,13 @@
 package io.spine.logging.backend.jul.given
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
+import io.spine.logging.Level
+import io.spine.logging.backend.LogData
 import io.spine.logging.jvm.JvmLogSite
 import io.spine.logging.jvm.LogContext
 import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.backend.LogData
-import java.util.logging.Level
+import io.spine.logging.toLevel
+import java.util.logging.Level as JLevel
 
 /**
  * A mutable [LogData] fot testing backends and other log handling code.
@@ -75,6 +77,9 @@ internal class StubLogData : LogData {
         this.level = level
         return this
     }
+
+    @CanIgnoreReturnValue
+    fun setLevel(level: JLevel): StubLogData = setLevel(level.toLevel())
 
     @CanIgnoreReturnValue
     fun <T : Any> addMetadata(key: MetadataKey<T>, value: Any): StubLogData {
