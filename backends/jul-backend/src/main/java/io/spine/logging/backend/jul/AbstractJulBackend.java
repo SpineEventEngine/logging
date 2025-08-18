@@ -201,7 +201,7 @@ public abstract class AbstractJulBackend extends LoggerBackend {
       // Log to the root logger to bypass any configuration that might drop this message.
       Logger.getLogger("")
           .log(
-              toJavaLogging(Level.ERROR),
+              toJavaLogging(Level.SEVERE),
               "Forcing log statements with Flogger has been partially disabled.\n"
                   + "The Flogger library cannot modify logger log levels, which is necessary to"
                   + " force log statements. This is likely due to an installed SecurityManager.\n"
