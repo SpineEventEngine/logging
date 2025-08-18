@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,14 +24,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.backend
+package io.spine.logging.backend
 
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
-import io.spine.logging.backend.LogData
-import io.spine.logging.backend.Metadata
-import io.spine.logging.backend.MetadataProcessor
-import io.spine.logging.backend.SimpleMessageFormatter
 import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.jvm.backend.given.FakeLogData
 import io.spine.logging.jvm.backend.given.FakeMetadata
@@ -43,7 +39,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for [io.spine.logging.backend.SimpleMessageFormatter].
+ * Tests for [SimpleMessageFormatter].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/backend/SimpleMessageFormatterTest.java">
  *     Original Java code of Google Flogger</a> for historical context.
