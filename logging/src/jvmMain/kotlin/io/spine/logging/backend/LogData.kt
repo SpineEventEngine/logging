@@ -26,6 +26,7 @@
 
 package io.spine.logging.backend
 
+import io.spine.logging.LogSite
 import io.spine.logging.jvm.JvmLogSite
 import java.util.logging.Level
 
@@ -67,7 +68,7 @@ public interface LogData {
      * @throws IllegalStateException
      *   if called prior to the [io.spine.logging.jvm.LogContext.postProcess] function being called.
      */
-    public val logSite: JvmLogSite
+    public val logSite: LogSite
 
     /**
      * Returns any additional metadata for this log statement.

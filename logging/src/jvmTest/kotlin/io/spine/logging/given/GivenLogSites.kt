@@ -28,6 +28,8 @@ package io.spine.logging.given
 
 import io.spine.logging.InjectedLogSite
 import io.spine.logging.LogSite
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 /**
  * Generates a random [LogSite].
@@ -35,11 +37,13 @@ import io.spine.logging.LogSite
  * All returned sites will have the same class, but different method names
  * and line numbers.
  */
+@OptIn(ExperimentalUuidApi::class)
 internal fun randomLogSite(): LogSite {
     val randomLine = (1..700).random()
     return InjectedLogSite(
         className = InjectedLogSite::class.qualifiedName!!,
         methodName = "callMe_$randomLine",
+        fileName = Uuid.random().toString(),
         lineNumber = randomLine
     )
 }

@@ -40,6 +40,8 @@ package io.spine.logging.jvm
  */
 internal class InvalidLogSite : JvmLogSite() {
 
+    //TODO:2025-08-18:alexander.yevsyukov: Turn into `object`?
+
     override val className: String = "<unknown class>"
 
     override val methodName: String = "<unknown method>"

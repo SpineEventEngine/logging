@@ -26,6 +26,7 @@
 
 package io.spine.logging.jvm
 
+import io.spine.logging.LogSite
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.LoggerBackend
 import io.spine.logging.backend.LoggingException
@@ -247,7 +248,7 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
 /**
  * Appends the log site information to this StringBuilder.
  */
-private fun StringBuilder.appendLogSite(logSite: JvmLogSite) {
+private fun StringBuilder.appendLogSite(logSite: LogSite) {
     append(logSite.className)
     append('.')
     append(logSite.methodName)
