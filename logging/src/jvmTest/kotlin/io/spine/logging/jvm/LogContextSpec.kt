@@ -37,7 +37,6 @@ import io.spine.logging.LogPerBucketingStrategy
 import io.spine.logging.LoggingScope
 import io.spine.logging.LoggingScopeProvider
 import io.spine.logging.StackSize
-import io.spine.logging.log
 import io.spine.logging.backend.probe.MemoizingLoggerBackend
 import io.spine.logging.jvm.DurationRateLimiter.Companion.newRateLimitPeriod
 import io.spine.logging.jvm.LogContext.Companion.specializeLogSiteKeyFromMetadata
@@ -82,7 +81,6 @@ internal class LogContextSpec {
 
         private const val MESSAGE_LITERAL = "Hello World"
         private const val MESSAGE_PATTERN = "Hello %s"
-        private const val MESSAGE_ARGUMENT = "World"
 
         // In normal use, the logger would never need to be passed in,
         // and you'd use `logVarargs()`.
