@@ -64,20 +64,20 @@ internal class JvmMetadataKeySpec {
         val badLabels = mutableListOf("", "foo bar", "_FOO")
         badLabels.forEach { label ->
             shouldThrow<IllegalArgumentException> {
-                MetadataKey.of(label, String::class.java, false)
+                MetadataKey.of(label, String::class, false)
             }
         }
     }
 
     @Test
     fun `cast an arbitrary value to the type of a key`() {
-        val key = single("foo", String::class.java)
+        val key = single<String>("foo")
         key.cast("value") shouldBe "value"
     }
 
     @Test
     fun `throw if can't cast value to the type of a key`() {
-        val key = single("foo", String::class.java)
+        val key = single<String>("foo")
         shouldThrow<ClassCastException> {
             key.cast(123)
         }
@@ -85,7 +85,7 @@ internal class JvmMetadataKeySpec {
 
     @Test
     fun `emit key-value pair for a single value`() {
-        val key = single("foo", String::class.java)
+        val key = single<String>("foo")
         val memoizingHandler = MemoizingKvHandler()
         key.safeEmit("123", memoizingHandler)
         memoizingHandler.entries.shouldHaveSize(1)
@@ -94,7 +94,7 @@ internal class JvmMetadataKeySpec {
 
     @Test
     fun `emit key-value pairs for several values`() {
-        val key = repeated("foo", String::class.java)
+        val key = repeated<String>("foo")
         val memoizingHandler = MemoizingKvHandler()
         key.safeEmitRepeated(iterate("123", "abc"), memoizingHandler)
         memoizingHandler.entries.shouldHaveSize(2)
@@ -103,7 +103,7 @@ internal class JvmMetadataKeySpec {
 
     @Test
     fun `fail on attempt to emit several values for a singleton key`() {
-        val key = single("foo", String::class.java)
+        val key = single<String>("foo")
         val memoizingHandler = MemoizingKvHandler()
         shouldThrow<IllegalStateException> {
             key.safeEmitRepeated(iterate("123", "abc"), memoizingHandler)
@@ -161,7 +161,7 @@ internal class JvmMetadataKeySpec {
  * include that key, even in code, which has no explicit knowledge of it.
  */
 private class ReenteringKey(label: String) :
-    MetadataKey<Any>(label, Any::class.java, true) {
+    MetadataKey<Any>(label, Any::class, true) {
 
     override fun emit(value: Any, kvh: KeyValueHandler) {
         val currentDepth = Platform.getCurrentRecursionDepth()

@@ -696,7 +696,7 @@ protected constructor(
         @JvmField
         public val TAGS: MetadataKey<Tags> = object : MetadataKey<Tags>(
             "tags",
-            Tags::class.java,
+            Tags::class,
             false
         ) {
             override fun emit(value: Tags, kvh: KeyValueHandler) {

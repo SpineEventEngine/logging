@@ -59,7 +59,7 @@ internal class JulRecordSpec {
         private val INT_KEY = singleKey<Int>("int")
         private val STR_KEY = singleKey<String>("str")
         private val PATH_KEY =
-            object : MetadataKey<String>("path", String::class.java, true) {
+            object : MetadataKey<String>("path", String::class, true) {
                 override fun emitRepeated(values: Iterator<String>, kvh: KeyValueHandler) {
                     val joined = values.asSequence().joinToString("/")
                     kvh.handle(label, joined)

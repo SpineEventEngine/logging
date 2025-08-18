@@ -31,6 +31,7 @@ import io.spine.logging.KeyValueHandler
 import io.spine.logging.jvm.MetadataKey.Companion.single
 import io.spine.logging.backend.Platform
 import io.spine.logging.util.Checks
+import kotlin.reflect.KClass
 
 /**
  * A key for logging semi-structured metadata values.
@@ -97,9 +98,9 @@ import io.spine.logging.util.Checks
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/MetadataKey.java">
  *   Original Java code of Google Flogger</a> for historical context.
  */
-public open class MetadataKey<T : Any> private constructor(
+public open class MetadataKey<T : Any>(
     label: String,
-    private val clazz: Class<out T>,
+    private val clazz: KClass<out T>,
     override val canRepeat: Boolean,
     private val isCustom: Boolean
 ) : io.spine.logging.MetadataKey<T> {
@@ -131,13 +132,13 @@ public open class MetadataKey<T : Any> private constructor(
      * @param clazz The class representing the type [T].
      * @param canRepeat Whether this key supports multiple values.
      */
-    protected constructor(label: String, clazz: Class<out T>, canRepeat: Boolean) :
+    protected constructor(label: String, clazz: KClass<out T>, canRepeat: Boolean) :
             this(label, clazz, canRepeat, true)
 
     /**
      * Cast an arbitrary value to the type of this key.
      */
-    override fun cast(value: Any?): T? = clazz.cast(value)
+    override fun cast(value: Any?): T? = clazz.java.cast(value)
 
     /**
      * Whether this key can be used to set more than one value in the metadata.
@@ -249,7 +250,7 @@ public open class MetadataKey<T : Any> private constructor(
      * Prevent subclasses using `toString()` for anything unexpected.
      */
     override fun toString(): String =
-        javaClass.getName() + '/' + label + '[' + clazz.getName() + ']'
+        javaClass.getName() + '/' + label + '[' + clazz.qualifiedName + ']'
 
     public companion object {
 
@@ -262,7 +263,7 @@ public open class MetadataKey<T : Any> private constructor(
         @VisibleForTesting
         internal fun <T : Any> of(
             label: String,
-            clazz: Class<out T>,
+            clazz: KClass<out T>,
             canRepeat: Boolean
         ): MetadataKey<T> = MetadataKey(label, clazz, canRepeat)
 
@@ -295,7 +296,7 @@ public open class MetadataKey<T : Any> private constructor(
         @JvmStatic
         @Suppress("UNCHECKED_CAST")
         public fun <T : Any> single(label: String, clazz: Class<out T>): MetadataKey<T> =
-            MetadataKey(label, clazz, canRepeat = false, isCustom = false)
+            MetadataKey(label, clazz.kotlin, canRepeat = false, isCustom = false)
 
         /**
          * Creates a single instance of [MetadataKey] with the given [label].
@@ -327,7 +328,7 @@ public open class MetadataKey<T : Any> private constructor(
         @JvmStatic
         @Suppress("UNCHECKED_CAST")
         public fun <T : Any> repeated(label: String, clazz: Class<out T>): MetadataKey<T> =
-            MetadataKey(label, clazz, canRepeat = true, isCustom = false)
+            MetadataKey(label, clazz.kotlin, canRepeat = true, isCustom = false)
 
         /**
          * The Kotlin version of []
