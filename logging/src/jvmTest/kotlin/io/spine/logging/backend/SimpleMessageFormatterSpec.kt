@@ -29,8 +29,8 @@ package io.spine.logging.backend
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.jvm.LogContext.Key
-import io.spine.logging.jvm.backend.given.FakeLogData
-import io.spine.logging.jvm.backend.given.FakeMetadata
+import io.spine.logging.backend.given.FakeLogData
+import io.spine.logging.backend.given.FakeMetadata
 import io.spine.logging.jvm.context.Tags
 import io.spine.logging.jvm.repeatedKey
 import io.spine.logging.jvm.singleKey

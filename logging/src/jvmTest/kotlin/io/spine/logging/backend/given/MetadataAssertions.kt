@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.backend.given
+package io.spine.logging.backend.given
 
 import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.backend.Metadata
