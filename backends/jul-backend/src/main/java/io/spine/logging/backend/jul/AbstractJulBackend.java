@@ -26,13 +26,15 @@
 
 package io.spine.logging.backend.jul;
 
+import io.spine.logging.Level;
 import io.spine.logging.backend.LoggerBackend;
 
 import java.util.logging.Filter;
 import java.util.logging.Handler;
-import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+
+import static io.spine.logging.JvmLoggerKt.toJavaLogging;
 
 /**
  * An abstract implementation of {@code java.util.logging} (JUL) based backend.
@@ -80,7 +82,7 @@ public abstract class AbstractJulBackend extends LoggerBackend {
 
   @Override
   public final boolean isLoggable(Level level) {
-    return logger.isLoggable(level);
+    return logger.isLoggable(toJavaLogging(level));
   }
 
   /**
@@ -190,7 +192,7 @@ public abstract class AbstractJulBackend extends LoggerBackend {
     // while these checks are being made, but there is nothing we can really do about this (the
     // setting of log levels is not protected by synchronizing the logger instance).
     try {
-      forcingLogger.setLevel(Level.ALL);
+      forcingLogger.setLevel(toJavaLogging(Level.ALL));
     } catch (SecurityException e) {
       // If we're blocked from changing logging configuration then we cannot log "forced" log
       // statements via the forcingLogger. Fall back to publishing them directly to the handlers
@@ -199,7 +201,7 @@ public abstract class AbstractJulBackend extends LoggerBackend {
       // Log to the root logger to bypass any configuration that might drop this message.
       Logger.getLogger("")
           .log(
-              Level.SEVERE,
+              toJavaLogging(Level.ERROR),
               "Forcing log statements with Flogger has been partially disabled.\n"
                   + "The Flogger library cannot modify logger log levels, which is necessary to"
                   + " force log statements. This is likely due to an installed SecurityManager.\n"

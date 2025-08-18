@@ -29,8 +29,9 @@ package io.spine.logging.backend.jul
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.LoggerBackend
 import io.spine.logging.backend.Platform
+import io.spine.logging.compareTo
+import io.spine.logging.toLevel
 import java.util.logging.Handler
-import java.util.logging.Level
 import java.util.logging.LogRecord
 import java.util.logging.Logger
 
@@ -92,7 +93,7 @@ internal class JulBackend(loggingClass: String): AbstractJulBackend(loggingClass
      */
     private fun doLog(record: LogRecord, wasForced: Boolean) {
         // If not forced, do work as usually.
-        if (!wasForced || isLoggable(record.level)) {
+        if (!wasForced || isLoggable(record.level.toLevel())) {
             logger.log(record)
             return
         }
@@ -138,9 +139,3 @@ private fun publishForced(handler: Handler, record: LogRecord) {
         handler.level = prevLevel
     }
 }
-
-/**
- * Compares Java logging levels using their [values][Level.intValue].
- */
-private operator fun Level.compareTo(other: Level): Int =
-    intValue().compareTo(other.intValue())

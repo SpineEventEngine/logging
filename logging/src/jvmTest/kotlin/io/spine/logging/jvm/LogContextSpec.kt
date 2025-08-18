@@ -53,8 +53,8 @@ import io.spine.logging.jvm.given.FakeLogSite
 import io.spine.logging.jvm.given.iterate
 import io.spine.logging.jvm.given.shouldHaveMessage
 import java.lang.System.currentTimeMillis
-import java.util.logging.Level.INFO
-import java.util.logging.Level.WARNING
+import io.spine.logging.Level.Companion.INFO
+import io.spine.logging.Level.Companion.WARNING
 import kotlin.time.DurationUnit.MILLISECONDS
 import kotlin.time.DurationUnit.SECONDS
 import kotlin.time.toTimeUnit

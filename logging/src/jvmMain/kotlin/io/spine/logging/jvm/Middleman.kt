@@ -27,10 +27,10 @@
 package io.spine.logging.jvm
 
 import io.spine.annotation.VisibleForTesting
+import io.spine.logging.Level
 import io.spine.logging.LoggingApi
 import io.spine.logging.backend.LoggerBackend
 import io.spine.logging.backend.Platform
-import java.util.logging.Level
 
 /**
  * The default implementation of [AbstractLogger] which returns the basic [LoggingApi]

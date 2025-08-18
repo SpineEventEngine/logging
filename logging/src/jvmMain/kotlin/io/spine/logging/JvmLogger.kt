@@ -49,7 +49,7 @@ public class JvmLogger(
     public interface Api: LoggingApi<Api>
 
     override fun createApi(level: Level): Api {
-        val floggerApi = delegate.at(level.toJavaLogging())
+        val floggerApi = delegate.at(level)
         return if (floggerApi.isEnabled()) {
             ApiImpl(floggerApi)
         } else {

@@ -26,9 +26,10 @@
 
 package io.spine.logging.backend.system.given
 
+import io.spine.logging.Level
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.LoggerBackend
-import java.util.logging.Level
+import io.spine.logging.compareTo
 
 /**
  * A logger backend that captures all [LogData] instances.
@@ -45,7 +46,7 @@ internal class StubLoggerBackend(
     private var minLevel = Level.INFO
     private val mutableLogged: MutableList<LogData> = ArrayList()
 
-    override fun isLoggable(level: Level): Boolean = level.intValue() >= minLevel.intValue()
+    override fun isLoggable(level: Level): Boolean = level >= minLevel
 
     override fun log(data: LogData) {
         mutableLogged.add(data)

@@ -27,6 +27,7 @@
 package io.spine.logging.backend.log4j2;
 
 import io.spine.logging.KeyValueHandler;
+import io.spine.logging.Level;
 import io.spine.logging.jvm.LogContext;
 import io.spine.logging.jvm.MetadataKey;
 import io.spine.logging.backend.LogData;
@@ -48,6 +49,7 @@ import org.apache.logging.log4j.util.StringMap;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import static io.spine.logging.JvmLoggerKt.toLevel;
 import static io.spine.logging.backend.MetadataProcessor.forScopeAndLogSite;
 import static java.util.Objects.requireNonNull;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
@@ -103,8 +105,9 @@ final class Log4j2LogEventUtil {
     static LogEvent toLog4jLogEvent(String loggerName, RuntimeException error, LogData badData) {
         var message = formatBadLogData(error, badData);
         // Re-target this log message as a warning (or above) since it indicates a real bug.
-        var level = badData.getLevel()
-                           .intValue() < WARNING.intValue() ? WARNING : badData.getLevel();
+        var level = badData.getLevel().getValue() < WARNING.intValue()
+                    ? toLevel(WARNING)
+                    : badData.getLevel();
         return toLog4jLogEvent(loggerName, badData, message, toLog4jLevel(level), error);
     }
 
@@ -151,8 +154,8 @@ final class Log4j2LogEventUtil {
     /**
      * Converts {@code java.util.logging.Leve}l to {@code org.apache.log4j.Level}.
      */
-    static org.apache.logging.log4j.Level toLog4jLevel(java.util.logging.Level level) {
-        var logLevel = level.intValue();
+    static org.apache.logging.log4j.Level toLog4jLevel(Level level) {
+        var logLevel = level.getValue();
         if (logLevel < java.util.logging.Level.FINE.intValue()) {
             return org.apache.logging.log4j.Level.TRACE;
         }

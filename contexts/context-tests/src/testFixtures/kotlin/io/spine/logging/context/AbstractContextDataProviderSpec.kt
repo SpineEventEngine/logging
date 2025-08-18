@@ -47,6 +47,7 @@ import io.spine.logging.jvm.context.Tags
 import io.spine.logging.jvm.repeatedKey
 import io.spine.logging.jvm.singleKey
 import io.spine.logging.toJavaLogging
+import io.spine.logging.toLevel
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -401,7 +402,7 @@ abstract class AbstractContextDataProviderSpec {
         val map = TLogLevelMap.create(mapOf(loggerName to level))
         TScopedLoggingContext.newContext().withLogLevelMap(map).execute {
             val customLevel = Platform.getMappedLevel(loggerName)
-            customLevel shouldBe level.toJavaLogging()
+            customLevel shouldBe level
         }
     }
 }
@@ -416,7 +417,7 @@ private fun ContextDataProvider.isLoggingForced(logger: LoggerName, level: JLeve
     // We expect that by default the specified level is disabled,
     // and the context itself would force the logging.
     val isEnabledByLevel = false
-    val isForced = shouldForceLogging(logger, level, isEnabledByLevel)
+    val isForced = shouldForceLogging(logger, level.toLevel(), isEnabledByLevel)
     return isForced
 }
 

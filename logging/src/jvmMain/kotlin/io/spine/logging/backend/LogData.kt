@@ -26,8 +26,8 @@
 
 package io.spine.logging.backend
 
+import io.spine.logging.Level
 import io.spine.logging.LogSite
-import java.util.logging.Level
 
 /**
  * A backend API for determining metadata associated with a log statement.

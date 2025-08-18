@@ -28,7 +28,8 @@ package io.spine.logging.backend.probe
 
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.LoggerBackend
-import java.util.logging.Level
+import io.spine.logging.Level
+import io.spine.logging.compareTo
 
 /**
  * A logger backend that captures all [LogData] instances.
@@ -76,7 +77,7 @@ public class MemoizingLoggerBackend(
         minLevel = level
     }
 
-    override fun isLoggable(level: Level): Boolean = level.intValue() >= minLevel.intValue()
+    override fun isLoggable(level: Level): Boolean = level >= minLevel
 
     override fun log(data: LogData) {
         mutableLogged.add(data)

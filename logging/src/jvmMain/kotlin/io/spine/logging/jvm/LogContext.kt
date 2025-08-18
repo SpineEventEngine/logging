@@ -28,6 +28,7 @@ package io.spine.logging.jvm
 
 import io.spine.annotation.VisibleForTesting
 import io.spine.logging.KeyValueHandler
+import io.spine.logging.Level
 import io.spine.logging.LogPerBucketingStrategy
 import io.spine.logging.LogSite
 import io.spine.logging.LogSiteKey
@@ -44,7 +45,6 @@ import io.spine.logging.backend.Platform
 import io.spine.logging.jvm.context.Tags
 import io.spine.logging.util.Checks.checkNotNull
 import io.spine.reflect.CallerFinder.stackForCallerOf
-import java.util.logging.Level
 import kotlin.time.DurationUnit
 import io.spine.logging.MetadataKey as CommonMetadataKey
 

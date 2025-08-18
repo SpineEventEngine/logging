@@ -26,6 +26,7 @@
 
 package io.spine.logging.jvm
 
+import io.spine.logging.Level
 import io.spine.logging.LogSite
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.LoggerBackend
@@ -36,7 +37,6 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.concurrent.TimeUnit.NANOSECONDS
 import io.spine.logging.LoggingApi
-import java.util.logging.Level
 
 /**
  * Base class for the fluent logging API.
@@ -94,9 +94,9 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
     public abstract fun at(level: Level): API
 
     /**
-     * A convenience method for at([Level.SEVERE]).
+     * A convenience method for at([Level.ERROR]).
      */
-    public fun atSevere(): API = at(Level.SEVERE)
+    public fun atSevere(): API = at(Level.ERROR)
 
     /**
      * A convenience method for at([Level.WARNING]).
@@ -109,24 +109,24 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
     public fun atInfo(): API = at(Level.INFO)
 
     /**
-     * A convenience method for at([Level.CONFIG]).
+     * A convenience method for at([Level.INFO]).
      */
-    public fun atConfig(): API = at(Level.CONFIG)
+    public fun atConfig(): API = at(Level.INFO)
 
     /**
-     * A convenience method for at([Level.FINE]).
+     * A convenience method for at([Level.DEBUG]).
      */
-    public fun atFine(): API = at(Level.FINE)
+    public fun atFine(): API = at(Level.DEBUG)
 
     /**
-     * A convenience method for at([Level.FINER]).
+     * A convenience method for at([Level.DEBUG]).
      */
-    public fun atFiner(): API = at(Level.FINER)
+    public fun atFiner(): API = at(Level.DEBUG)
 
     /**
-     * A convenience method for at([Level.FINEST]).
+     * A convenience method for at([Level.TRACE]).
      */
-    public fun atFinest(): API = at(Level.FINEST)
+    public fun atFinest(): API = at(Level.TRACE)
 
     /**
      * Returns the non-null name of this logger.

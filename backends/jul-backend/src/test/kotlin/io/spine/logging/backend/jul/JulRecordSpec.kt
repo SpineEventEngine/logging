@@ -39,6 +39,7 @@ import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.backend.Metadata
 import io.spine.logging.jvm.context.Tags
 import io.spine.logging.jvm.singleKey
+import io.spine.logging.toLevel
 import java.time.Instant.ofEpochMilli
 import java.util.concurrent.TimeUnit.NANOSECONDS
 import java.util.logging.Level
@@ -73,7 +74,7 @@ internal class JulRecordSpec {
         @Test
         fun `log level`() {
             val level = Level.FINER
-            val data = StubLogData("") .setLevel(level)
+            val data = StubLogData("").setLevel(level.toLevel())
             val record = JulRecord.create(data, Metadata.empty())
             record.level shouldBe level
         }
@@ -167,7 +168,7 @@ internal class JulRecordSpec {
 
     @Test
     fun `handle a nullable literal message`() {
-        val data = StubLogData(null).setLevel(Level.WARNING)
+        val data = StubLogData(null).setLevel(Level.WARNING.toLevel())
         val record = JulRecord.create(data, Metadata.empty())
         record.message shouldBe "null"
         record.parameters.shouldBeEmpty()

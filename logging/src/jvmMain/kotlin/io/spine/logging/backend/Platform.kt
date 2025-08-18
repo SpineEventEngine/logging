@@ -26,12 +26,12 @@
 
 package io.spine.logging.backend
 
+import io.spine.logging.Level
 import io.spine.logging.jvm.AbstractLogger
 import io.spine.logging.jvm.JvmLogSite
 import io.spine.logging.jvm.context.ContextDataProvider
 import io.spine.logging.jvm.context.Tags
 import io.spine.logging.util.RecursionDepth
-import java.util.logging.Level
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import com.google.common.base.Preconditions.checkNotNull
 import com.google.errorprone.annotations.Immutable
