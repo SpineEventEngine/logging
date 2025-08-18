@@ -47,13 +47,13 @@ import org.junit.jupiter.api.Test
 @DisplayName("`AbstractJulBackend` should")
 internal class AbstractJulBackendSpec {
 
-    private val logger = MemoizingLogger("unused", Level.INFO.toJavaLogging())
+    private val logger = MemoizingLogger("unused", Level.INFO)
     private val backend = MemoizingJulBackend(logger)
 
     @Test
     fun `say whether logging is enabled for the given level`() {
         backend.isLoggable(Level.INFO).shouldBeTrue()
-        backend.isLoggable(Level.DEBUG).shouldBeFalse()
+        backend.isLoggable(Level.FINE).shouldBeFalse()
     }
 
     @Nested inner class
@@ -64,7 +64,7 @@ internal class AbstractJulBackendSpec {
         @Test
         fun `log at an enabled level using the underlying logger`() {
             val message = "Enabled and Unforced"
-            val record = LogRecord(Level.INFO.toJavaLogging(), message)
+            val record = LogRecord(Level.INFO, message)
             backend.log(record, forced)
             logger.captured shouldBe message
             logger.published shouldBe message
@@ -74,7 +74,7 @@ internal class AbstractJulBackendSpec {
         @Test
         fun `not log at a disabled level`() {
             val message = "Disabled and Unforced"
-            val record = LogRecord(Level.DEBUG.toJavaLogging(), message)
+            val record = LogRecord(Level.FINE, message)
             backend.log(record, forced)
             logger.captured shouldBe message // Passed to the logger.
             logger.published.shouldBeNull() // But not published.
@@ -92,7 +92,7 @@ internal class AbstractJulBackendSpec {
             // Forced and unforced logging is treated the same way
             // if the used level is enabled.
             val message = "Enabled and Forced"
-            val record = LogRecord(Level.INFO.toJavaLogging(), message)
+            val record = LogRecord(Level.INFO, message)
             backend.log(record, forced)
             logger.captured shouldBe message
             logger.published shouldBe message
@@ -119,7 +119,7 @@ internal class AbstractJulBackendSpec {
         @Test
         fun `log at a disabled level using a special forcing logger`() {
             val message = "Disabled and Forced"
-            val record = LogRecord(Level.DEBUG.toJavaLogging(), message)
+            val record = LogRecord(Level.DEBUG, message)
             backend.log(record, forced)
             logger.captured.shouldBeNull()
             logger.published shouldBe message

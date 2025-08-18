@@ -26,8 +26,10 @@
 
 package io.spine.logging.backend.jul.given
 
+import io.spine.logging.Level
+import io.spine.logging.toJavaLogging
 import java.util.logging.Handler
-import java.util.logging.Level
+import java.util.logging.Level as JLevel
 import java.util.logging.LogRecord
 import java.util.logging.Logger
 
@@ -37,7 +39,12 @@ import java.util.logging.Logger
  * A message is [captured] when it arrives to [Logger.log] method.
  * Then, if it passes [Logger.log] and arrives to handlers, it is [published].
  */
-internal class MemoizingLogger(name: String, level: Level) : Logger(name, null) {
+internal class MemoizingLogger(name: String, level: JLevel) : Logger(name, null) {
+
+    /**
+     * Creates a new instance with the given [name] and [level].
+     */
+    constructor(name: String, level: Level) : this(name, level.toJavaLogging())
 
     /**
      * Contains the message from the last call to [MemoizingLogger.log].

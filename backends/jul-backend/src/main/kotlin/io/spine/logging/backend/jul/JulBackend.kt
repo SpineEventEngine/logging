@@ -26,10 +26,12 @@
 
 package io.spine.logging.backend.jul
 
+import io.spine.logging.Level
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.LoggerBackend
 import io.spine.logging.backend.Platform
 import io.spine.logging.compareTo
+import io.spine.logging.toJavaLogging
 import io.spine.logging.toLevel
 import java.util.logging.Handler
 import java.util.logging.LogRecord
@@ -139,3 +141,13 @@ private fun publishForced(handler: Handler, record: LogRecord) {
         handler.level = prevLevel
     }
 }
+
+/**
+ * Creates a new log record with the given [level] and [message][msg].
+ *
+ * @param level The level for the log record.
+ * @param msg The raw non-localized logging message (may be `null`).
+ * @see java.util.logging.LogRecord
+ */
+public fun LogRecord(level: Level, msg: String?): LogRecord =
+    LogRecord(level.toJavaLogging(), msg)
