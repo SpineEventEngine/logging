@@ -101,7 +101,7 @@ public abstract class JvmLogSite : LogSiteKey, LogSite {
          * cannot be determined.
          */
         @JvmField
-        public val invalid: JvmLogSite = InvalidLogSite()
+        public val invalid: JvmLogSite = InvalidLogSite
 
         /**
          * Creates a log site injected from constants held in a class' constant pool.

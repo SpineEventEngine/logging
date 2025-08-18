@@ -38,9 +38,7 @@ package io.spine.logging.jvm
  * methods, which rely on being able to look up site-specific metadata will be disabled and
  * essentially become "no ops" for proper error handling.
  */
-internal class InvalidLogSite : JvmLogSite() {
-
-    //TODO:2025-08-18:alexander.yevsyukov: Turn into `object`?
+internal object InvalidLogSite : JvmLogSite() {
 
     override val className: String = "<unknown class>"
 
@@ -49,6 +47,4 @@ internal class InvalidLogSite : JvmLogSite() {
     override val lineNumber: Int = UNKNOWN_LINE
 
     override val fileName: String? = null
-
-    // No need to implement equals() or hashCode() for a singleton instance.
 }
