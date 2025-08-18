@@ -74,7 +74,7 @@ internal class JulRecordSpec {
         @Test
         fun `log level`() {
             val level = Level.FINER
-            val data = StubLogData("").setLevel(level.toLevel())
+            val data = StubLogData("").setLevel(level)
             val record = JulRecord.create(data, Metadata.empty())
             record.level shouldBe level
         }
@@ -168,7 +168,7 @@ internal class JulRecordSpec {
 
     @Test
     fun `handle a nullable literal message`() {
-        val data = StubLogData(null).setLevel(Level.WARNING.toLevel())
+        val data = StubLogData(null).setLevel(Level.WARNING)
         val record = JulRecord.create(data, Metadata.empty())
         record.message shouldBe "null"
         record.parameters.shouldBeEmpty()
