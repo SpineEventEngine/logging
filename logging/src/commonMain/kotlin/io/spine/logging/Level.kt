@@ -76,7 +76,7 @@ public data class Level(
         public val ERROR: Level = Level("ERROR", 1000)
 
         @JvmField
-        public val SEVERE: Level = ERROR
+        public val SEVERE: Level = Level("SEVERE", ERROR.value)
 
         @JvmField
         public val WARNING: Level = Level("WARNING", 900)
@@ -91,13 +91,13 @@ public data class Level(
         public val DEBUG: Level = Level("DEBUG", 500)
 
         @JvmField
-        public val FINE: Level = DEBUG
+        public val FINE: Level = Level("FINE", DEBUG.value)
 
         @JvmField
-        public val TRACE: Level = Level("TRACE", 400)
+        public val FINER: Level = Level("FINER", 400)
 
         @JvmField
-        public val FINER: Level = TRACE
+        public val TRACE: Level = Level("TRACE", FINER.value)
 
         @JvmField
         public val FINEST: Level = Level("FINEST", 300)
