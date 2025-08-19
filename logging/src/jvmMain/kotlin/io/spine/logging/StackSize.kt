@@ -103,10 +103,11 @@ public actual enum class StackSize(public val maxDepth: Int) {
      * Provides no stack trace, making the `withStackTrace()` method an effective no-op.
      *
      * This is useful when your stack size is conditional. For example:
+     *
      * ```kotlin
      * logger.atWarning()
      *     .withStackTrace(if (showTrace) StackSize.MEDIUM else StackSize.NONE)
-     *     .log("message")
+     *     .log { "message" }
      * ```
      */
     NONE(0)
