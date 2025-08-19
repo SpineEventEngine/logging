@@ -595,7 +595,7 @@ protected constructor(
          */
         @JvmField
         public val LOG_CAUSE: MetadataKey<Throwable> =
-            MetadataKey.single("cause", Throwable::class.java)
+            MetadataKey.single("cause", Throwable::class)
 
         /**
          * The key associated with a rate limiting counter for "1-in-N" rate limiting.
@@ -604,7 +604,7 @@ protected constructor(
          */
         @JvmField
         public val LOG_EVERY_N: MetadataKey<Int> =
-            MetadataKey.single("ratelimit_count", Int::class.javaObjectType)
+            MetadataKey.single("ratelimit_count", Int::class)
 
         /**
          * The key associated with a rate limiting counter for "1-in-N" randomly sampled rate
@@ -614,7 +614,7 @@ protected constructor(
          */
         @JvmField
         public val LOG_SAMPLE_EVERY_N: MetadataKey<Int> =
-            MetadataKey.single("sampling_count", Int::class.javaObjectType)
+            MetadataKey.single("sampling_count", Int::class)
 
         /**
          * The key associated with a rate-limiting period for "at most once every N" rate limiting.
@@ -623,7 +623,7 @@ protected constructor(
          */
         @JvmField
         public val LOG_AT_MOST_EVERY: MetadataKey<RateLimitPeriod> =
-            MetadataKey.single("ratelimit_period", RateLimitPeriod::class.java)
+            MetadataKey.single("ratelimit_period", RateLimitPeriod::class)
 
         /**
          * The key associated with a count of rate limited logs.
@@ -632,7 +632,7 @@ protected constructor(
          */
         @JvmField
         public val SKIPPED_LOG_COUNT: MetadataKey<Int> =
-            MetadataKey.single("skipped", Int::class.javaObjectType)
+            MetadataKey.single("skipped", Int::class)
 
         /**
          * The key associated with a sequence of log site "grouping keys".
@@ -678,7 +678,7 @@ protected constructor(
          */
         @JvmField
         public val WAS_FORCED: MetadataKey<Boolean> =
-            MetadataKey.single("forced", Boolean::class.javaObjectType)
+            MetadataKey.single("forced", Boolean::class)
 
         /**
          * The key associated with any injected [Tags].
@@ -717,7 +717,7 @@ protected constructor(
          * statement.
          */
         internal val CONTEXT_STACK_SIZE: MetadataKey<StackSize> =
-            MetadataKey.single("stack_size", StackSize::class.java)
+            MetadataKey.single("stack_size", StackSize::class)
     }
 
     public companion object {

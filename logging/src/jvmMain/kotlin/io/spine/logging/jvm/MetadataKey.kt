@@ -295,8 +295,8 @@ public open class MetadataKey<T : Any>(
          */
         @JvmStatic
         @Suppress("UNCHECKED_CAST")
-        public fun <T : Any> single(label: String, clazz: Class<out T>): MetadataKey<T> =
-            MetadataKey(label, clazz.kotlin, canRepeat = false, isCustom = false)
+        public fun <T : Any> single(label: String, clazz: KClass<out T>): MetadataKey<T> =
+            MetadataKey(label, clazz, canRepeat = false, isCustom = false)
 
         /**
          * Creates a single instance of [MetadataKey] with the given [label].
@@ -305,7 +305,7 @@ public open class MetadataKey<T : Any>(
          * @see [single]
          */
         public inline fun <reified T : Any> single(label: String): MetadataKey<T> =
-            single(label, T::class.java)
+            single(label, T::class)
 
         /**
          * Creates a key for a repeated piece of metadata.
@@ -327,14 +327,14 @@ public open class MetadataKey<T : Any>(
          */
         @JvmStatic
         @Suppress("UNCHECKED_CAST")
-        public fun <T : Any> repeated(label: String, clazz: Class<out T>): MetadataKey<T> =
-            MetadataKey(label, clazz.kotlin, canRepeat = true, isCustom = false)
+        public fun <T : Any> repeated(label: String, clazz: KClass<out T>): MetadataKey<T> =
+            MetadataKey(label, clazz, canRepeat = true, isCustom = false)
 
         /**
          * The Kotlin version of []
          */
         public inline fun <reified T : Any> repeated(label: String): MetadataKey<T> =
-            repeated(label, T::class.java)
+            repeated(label, T::class)
     }
 }
 

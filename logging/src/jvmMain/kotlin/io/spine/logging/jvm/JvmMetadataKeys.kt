@@ -37,7 +37,7 @@ package io.spine.logging.jvm
  * @param T type of values that can be associated with this key
  */
 public inline fun <reified T : Any> singleKey(label: String): MetadataKey<T> =
-    MetadataKey.single(label, T::class.javaObjectType)
+    MetadataKey.single(label, T::class)
 
 /**
  * Creates a new repeated [MetadataKey] with the given [label].
@@ -50,4 +50,4 @@ public inline fun <reified T : Any> singleKey(label: String): MetadataKey<T> =
  * @param T type of values that can be associated with this key
  */
 public inline fun <reified T : Any> repeatedKey(label: String): MetadataKey<T> =
-    MetadataKey.repeated(label, T::class.javaObjectType)
+    MetadataKey.repeated(label, T::class)
