@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend
 
-import io.spine.logging.jvm.MetadataKey
+import io.spine.logging.MetadataKey
 
 /**
  * A sequence of metadata key/value pairs which can be associated to a log statement,

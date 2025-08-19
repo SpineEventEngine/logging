@@ -102,12 +102,12 @@ private class ApiImpl(private val delegate: Middleman.Api): JvmLogger.Api {
     }
 
     override fun <T : Any> with(key: MetadataKey<T>, value: T?): JvmLogger.Api {
-        delegate.with(key as io.spine.logging.jvm.MetadataKey<T>, value)
+        delegate.with(key, value)
         return this
     }
 
     override fun with(key: MetadataKey<Boolean>): JvmLogger.Api {
-        delegate.with(key as io.spine.logging.jvm.MetadataKey<Boolean>)
+        delegate.with(key)
         return this
     }
 

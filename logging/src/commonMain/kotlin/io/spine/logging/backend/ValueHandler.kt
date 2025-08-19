@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend
 
-import io.spine.logging.jvm.MetadataKey
+import io.spine.logging.MetadataKey
 
 /**
  * API for handling metadata key/value pairs individually.

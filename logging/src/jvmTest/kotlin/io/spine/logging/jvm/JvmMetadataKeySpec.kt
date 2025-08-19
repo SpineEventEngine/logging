@@ -32,8 +32,9 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.spine.logging.KeyValueHandler
-import io.spine.logging.jvm.MetadataKey.Companion.repeated
-import io.spine.logging.jvm.MetadataKey.Companion.single
+import io.spine.logging.MetadataKey
+import io.spine.logging.MetadataKey.Companion.repeated
+import io.spine.logging.MetadataKey.Companion.single
 import io.spine.logging.backend.Platform
 import io.spine.logging.jvm.given.MemoizingKvHandler
 import io.spine.logging.jvm.given.iterate
@@ -64,20 +65,20 @@ internal class JvmMetadataKeySpec {
         val badLabels = mutableListOf("", "foo bar", "_FOO")
         badLabels.forEach { label ->
             shouldThrow<IllegalArgumentException> {
-                MetadataKey.of(label, String::class.java, false)
+                MetadataKey.of(label, String::class, false)
             }
         }
     }
 
     @Test
     fun `cast an arbitrary value to the type of a key`() {
-        val key = single("foo", String::class.java)
+        val key = single<String>("foo")
         key.cast("value") shouldBe "value"
     }
 
     @Test
     fun `throw if can't cast value to the type of a key`() {
-        val key = single("foo", String::class.java)
+        val key = single<String>("foo")
         shouldThrow<ClassCastException> {
             key.cast(123)
         }
@@ -85,7 +86,7 @@ internal class JvmMetadataKeySpec {
 
     @Test
     fun `emit key-value pair for a single value`() {
-        val key = single("foo", String::class.java)
+        val key = single<String>("foo")
         val memoizingHandler = MemoizingKvHandler()
         key.safeEmit("123", memoizingHandler)
         memoizingHandler.entries.shouldHaveSize(1)
@@ -94,7 +95,7 @@ internal class JvmMetadataKeySpec {
 
     @Test
     fun `emit key-value pairs for several values`() {
-        val key = repeated("foo", String::class.java)
+        val key = repeated<String>("foo")
         val memoizingHandler = MemoizingKvHandler()
         key.safeEmitRepeated(iterate("123", "abc"), memoizingHandler)
         memoizingHandler.entries.shouldHaveSize(2)
@@ -103,7 +104,7 @@ internal class JvmMetadataKeySpec {
 
     @Test
     fun `fail on attempt to emit several values for a singleton key`() {
-        val key = single("foo", String::class.java)
+        val key = single<String>("foo")
         val memoizingHandler = MemoizingKvHandler()
         shouldThrow<IllegalStateException> {
             key.safeEmitRepeated(iterate("123", "abc"), memoizingHandler)
@@ -160,8 +161,7 @@ internal class JvmMetadataKeySpec {
  * Such is possible if the key is added to a context because all logging will now
  * include that key, even in code, which has no explicit knowledge of it.
  */
-private class ReenteringKey(label: String) :
-    MetadataKey<Any>(label, Any::class.java, true) {
+private class ReenteringKey(label: String) : MetadataKey<Any>(label, Any::class, true) {
 
     override fun emit(value: Any, kvh: KeyValueHandler) {
         val currentDepth = Platform.getCurrentRecursionDepth()

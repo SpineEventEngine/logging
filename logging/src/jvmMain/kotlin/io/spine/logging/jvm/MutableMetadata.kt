@@ -26,6 +26,7 @@
 
 package io.spine.logging.jvm
 
+import io.spine.logging.MetadataKey
 import io.spine.logging.backend.Metadata
 
 /**

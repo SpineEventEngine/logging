@@ -27,7 +27,7 @@
 package io.spine.logging.backend.given
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
-import io.spine.logging.jvm.MetadataKey
+import io.spine.logging.MetadataKey
 import io.spine.logging.backend.Metadata
 
 /**
@@ -53,6 +53,7 @@ class FakeMetadata : Metadata() {
 
     override fun size(): Int = entries.size
 
+    @Suppress("UNCHECKED_CAST")
     override fun getKey(n: Int): MetadataKey<Any> = entries[n].key as MetadataKey<Any>
 
     override fun getValue(n: Int): Any = entries[n].value

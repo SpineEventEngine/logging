@@ -26,9 +26,9 @@
 
 package io.spine.logging.jvm.context
 
+import io.spine.logging.MetadataKey
 import io.spine.logging.StackSize
 import io.spine.logging.jvm.Middleman
-import io.spine.logging.jvm.MetadataKey
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**

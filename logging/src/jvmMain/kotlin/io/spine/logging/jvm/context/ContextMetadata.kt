@@ -27,9 +27,9 @@
 package io.spine.logging.jvm.context
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
-import io.spine.logging.jvm.MetadataKey
+import io.spine.logging.MetadataKey
 import io.spine.logging.backend.Metadata
-import io.spine.logging.jvm.checkCannotRepeat
+import io.spine.logging.checkCannotRepeat
 import org.jetbrains.annotations.NotNull
 
 /**
@@ -113,7 +113,7 @@ public abstract class ContextMetadata protected constructor() : Metadata() {
     internal abstract fun get(n: Int): Entry<*>
 
     @Suppress("UNCHECKED_CAST")
-    override fun getKey(n: Int): @NotNull MetadataKey<@NotNull Any> =
+    override fun getKey(n: Int): @NotNull MetadataKey<Any> =
         get(n).key as MetadataKey<Any>
 
     override fun getValue(n: Int): Any = get(n).value

@@ -34,6 +34,7 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.logging.MetadataKey
 import io.spine.logging.backend.Metadata
 import io.spine.logging.backend.Platform
 import io.spine.logging.backend.probe.MemoizingLoggerBackend
@@ -44,8 +45,6 @@ import io.spine.logging.jvm.context.ScopeType
 import io.spine.logging.jvm.context.ScopedLoggingContext
 import io.spine.logging.jvm.context.ScopedLoggingContexts
 import io.spine.logging.jvm.context.Tags
-import io.spine.logging.jvm.repeatedKey
-import io.spine.logging.jvm.singleKey
 import io.spine.logging.toLevel
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -87,8 +86,8 @@ abstract class AbstractContextDataProviderSpec {
     protected abstract val implementationUnderTest: ContextDataProvider
 
     private companion object {
-        private val FOO = singleKey<String>("foo")
-        private val BAR = repeatedKey<String>("bar")
+        private val FOO = MetadataKey.single<String>("foo")
+        private val BAR = MetadataKey.repeated<String>("bar")
         private val SUB_TASK = ScopeType.create("sub task")
         private val BATCH_JOB = ScopeType.create("batch job")
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,30 +24,23 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging.backend
 
 /**
- * Creates a new single [MetadataKey] with the given [label].
+ * An exception thrown when a log statement cannot be emitted correctly.
  *
- * In JVM, if the given type [T] describes a Java primitive,
- * this method would use a type of the corresponding object wrapper.
- * Thus, making type [T] safe to be used with Java generics, that is
- * the case for metadata keys.
+ * This exception should only be thrown by logger backend implementations
+ * which have opted not to handle specific issues.
  *
- * @param T type of values that can be associated with this key
+ * Typically, a logger backend would only throw `LoggingException` in response
+ * to issues in **test code** or other debugging environments.
+ *
+ * In **production code**, the backend should be configured
+ * to emit a modified log statement which includes the error information.
+ *
+ * @see LoggerBackend.handleError
+ *
+ * @see <br><a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/LoggingException.java">
+ *      Original Java code of Google Flogger</a> for historical context.
  */
-public inline fun <reified T : Any> singleKey(label: String): MetadataKey<T> =
-    MetadataKey.single(label, T::class.javaObjectType)
-
-/**
- * Creates a new repeated [MetadataKey] with the given [label].
- *
- * In JVM, if the given type [T] describes a Java primitive,
- * this method would use a type of the corresponding object wrapper.
- * Thus, making type [T] safe to be used with Java generics, that is
- * the case for metadata keys.
- *
- * @param T type of values that can be associated with this key
- */
-public inline fun <reified T : Any> repeatedKey(label: String): MetadataKey<T> =
-    MetadataKey.repeated(label, T::class.javaObjectType)
+public class LoggingException(message: String?) : RuntimeException(message)

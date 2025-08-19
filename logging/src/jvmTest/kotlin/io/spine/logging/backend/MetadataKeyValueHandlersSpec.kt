@@ -33,8 +33,7 @@ import io.spine.logging.backend.MetadataKeyValueHandlers.getDefaultRepeatedValue
 import io.spine.logging.backend.MetadataKeyValueHandlers.getDefaultValueHandler
 import io.spine.logging.jvm.given.MemoizingKvHandler
 import io.spine.logging.jvm.given.iterate
-import io.spine.logging.jvm.repeatedKey
-import io.spine.logging.jvm.singleKey
+import io.spine.logging.MetadataKey
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -48,9 +47,9 @@ import org.junit.jupiter.api.Test
 internal class MetadataKeyValueHandlersSpec {
 
     companion object {
-        private val single = singleKey<Any>("single")
-        private val repeated = repeatedKey<Any>("repeated")
-        private val ignored = singleKey<Any>("ignored")
+        private val single = MetadataKey.single<Any>("single")
+        private val repeated = MetadataKey.repeated<Any>("repeated")
+        private val ignored = MetadataKey.single<Any>("ignored")
     }
 
     @Test

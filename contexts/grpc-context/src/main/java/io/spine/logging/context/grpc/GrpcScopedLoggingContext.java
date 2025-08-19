@@ -28,7 +28,7 @@ package io.spine.logging.context.grpc;
 
 import static io.spine.logging.util.Checks.checkNotNull;
 
-import io.spine.logging.jvm.MetadataKey;
+import io.spine.logging.MetadataKey;
 import io.spine.logging.jvm.context.ContextMetadata;
 import io.spine.logging.jvm.context.LogLevelMap;
 import io.spine.logging.jvm.context.ScopeType;

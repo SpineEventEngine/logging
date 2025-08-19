@@ -29,11 +29,14 @@
 package io.spine.logging.backend
 
 import io.spine.annotation.VisibleForTesting
-import io.spine.logging.jvm.LogContext
-import io.spine.logging.jvm.MetadataKey
+import io.spine.logging.MetadataKey
 import io.spine.logging.backend.LightweightProcessor.Companion.MAX_LIGHTWEIGHT_ELEMENTS
-import io.spine.logging.jvm.checkCannotRepeat
-import java.util.*
+import io.spine.logging.checkCannotRepeat
+import io.spine.logging.jvm.LogContext
+import kotlin.collections.map
+import kotlin.map
+import kotlin.sequences.map
+import kotlin.text.map
 
 /**
  * Processor combining scope and log-site metadata into a single view.
@@ -183,7 +186,7 @@ private class NoOpProcessor: MetadataProcessor() {
         Unit
     override fun <T : Any> getSingleValue(key: MetadataKey<T>): T? = null
     override fun keyCount(): Int = 0
-    override fun keySet(): Set<MetadataKey<*>> = Collections.emptySet()
+    override fun keySet(): Set<MetadataKey<*>> = setOf()
 }
 
 /**
@@ -484,10 +487,10 @@ private class SimpleProcessor(scope: Metadata, logged: Metadata) : MetadataProce
         for (e in map.entries) {
             if (e.key.canRepeat()) {
                 @Suppress("UNCHECKED_CAST")
-                e.setValue(Collections.unmodifiableList(e.value as List<*>))
+                e.setValue(e.value as List<*>)
             }
         }
-        this.map = Collections.unmodifiableMap(map)
+        this.map = map
     }
 
     override fun <C : Any> process(handler: MetadataHandler<C>, context: C) {

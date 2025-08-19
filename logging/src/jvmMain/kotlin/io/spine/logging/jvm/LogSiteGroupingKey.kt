@@ -27,6 +27,7 @@
 package io.spine.logging.jvm
 
 import io.spine.logging.KeyValueHandler
+import io.spine.logging.MetadataKey
 
 /**
  * The key associated with a sequence of log site "grouping keys".
@@ -37,7 +38,7 @@ import io.spine.logging.KeyValueHandler
  * This is used by the `per()` methods and is only public so backends can
  * reference the key to control formatting.
  */
-public open class LogSiteGroupingKey : MetadataKey<Any>("group_by", Any::class.java, true) {
+public open class LogSiteGroupingKey : MetadataKey<Any>("group_by", Any::class, true) {
 
     override fun emitRepeated(values: Iterator<Any>, kvh: KeyValueHandler) {
         if (values.hasNext()) {

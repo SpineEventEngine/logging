@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,32 +24,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend
+package io.spine.logging
 
-import java.io.Serial
+import io.spine.logging.util.RecursionDepth
 
 /**
- * An exception thrown when a log statement cannot be emitted correctly.
- *
- * This exception should only be thrown by logger backend implementations
- * which have opted not to handle specific issues.
- *
- * Typically, a logger backend would only throw `LoggingException` in response
- * to issues in **test code** or other debugging environments.
- *
- * In **production code**, the backend should be configured
- * to emit a modified log statement which includes the error information.
- *
- * @see LoggerBackend.handleError
- *
- * @see <br><a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/LoggingException.java">
- *      Original Java code of Google Flogger</a> for historical context.
+ * JVM implementation of getCurrentRecursionDepth using the existing RecursionDepth utility.
  */
-public class LoggingException(message: String?) : RuntimeException(message) {
-
-    public companion object {
-        @JvmStatic
-        @Serial
-        private val serialVersionUID: Long = 0L
-    }
-}
+internal actual fun getCurrentRecursionDepth(): Int = RecursionDepth.getCurrentDepth()
