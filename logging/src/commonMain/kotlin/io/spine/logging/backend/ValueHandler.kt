@@ -26,6 +26,8 @@
 
 package io.spine.logging.backend
 
+import io.spine.logging.MetadataKey
+
 /**
  * API for handling metadata key/value pairs individually.
  *
@@ -41,5 +43,5 @@ public fun interface ValueHandler<T : Any, C> {
      * @param value The associated metadata value.
      * @param context An arbitrary context object supplied to the process method.
      */
-    public fun handle(key: io.spine.logging.MetadataKey<T>, value: T, context: C)
+    public fun handle(key: MetadataKey<T>, value: T, context: C)
 }
