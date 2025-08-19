@@ -209,7 +209,7 @@ public operator fun JLevel.compareTo(other: JLevel): Int =
 /**
  * Converts this [LogSite] to the JVM logging counterpart.
  */
-private fun LogSite.toFloggerSite(): JvmLogSite {
+private fun LogSite.toFloggerSite(): LogSite {
     if (this == LogSite.Invalid) {
         return JvmLogSite.invalid
     }

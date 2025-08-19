@@ -56,6 +56,7 @@ import io.spine.logging.MetadataKey
 import java.lang.System.currentTimeMillis
 import io.spine.logging.Level.Companion.INFO
 import io.spine.logging.Level.Companion.WARNING
+import io.spine.logging.LogSite
 import kotlin.time.DurationUnit.MILLISECONDS
 import kotlin.time.DurationUnit.SECONDS
 import kotlin.time.toTimeUnit
@@ -87,7 +88,7 @@ internal class LogContextSpec {
         // and you'd use `logVarargs()`.
         private fun logHelper(
             logger: Middleman,
-            logSite: JvmLogSite,
+            logSite: LogSite,
             n: Int,
             message: String
         ) {

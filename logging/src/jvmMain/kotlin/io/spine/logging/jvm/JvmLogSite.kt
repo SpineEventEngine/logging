@@ -101,7 +101,7 @@ public abstract class JvmLogSite : LogSite, LogSiteKey {
          * cannot be determined.
          */
         @JvmField
-        public val invalid: JvmLogSite = InvalidLogSite
+        public val invalid: LogSite = InvalidLogSite
 
         /**
          * Creates a log site injected from constants held in a class' constant pool.
@@ -133,7 +133,7 @@ public abstract class JvmLogSite : LogSite, LogSiteKey {
             methodName: String,
             encodedLineNumber: Int,
             sourceFileName: String?
-        ): JvmLogSite = InjectedJvmLogSite(
+        ): LogSite = InjectedJvmLogSite(
             internalClassName,
             methodName,
             encodedLineNumber,
@@ -141,7 +141,7 @@ public abstract class JvmLogSite : LogSite, LogSiteKey {
         )
 
         /**
-         * Returns a [JvmLogSite] for the caller of the specified class.
+         * Returns a [LogSite] for the caller of the specified class.
          *
          * This can be used in conjunction with
          * the [io.spine.logging.LoggingApi.withInjectedLogSite] function to
@@ -160,7 +160,7 @@ public abstract class JvmLogSite : LogSite, LogSiteKey {
          *
          * This method should be used for the simple cases where the class in which the logging
          * occurs is a public logging API. If the log statement is in a different class (not the
-         * public logging API) and the [JvmLogSite] instance needs to be passed through several
+         * public logging API) and the [LogSite] instance needs to be passed through several
          * layers, consider using [logSite] instead to avoid too much "magic" in your code.
          *
          * You should also seek to ensure that any API used with this method "looks like a logging
@@ -238,21 +238,21 @@ public abstract class JvmLogSite : LogSite, LogSiteKey {
          * @return The log site of the caller of this method.
          */
         @JvmStatic
-        public fun logSite(): JvmLogSite {
+        public fun logSite(): LogSite {
             // Don't call "callerOf()" to avoid making another stack entry.
             val logSite = Platform.getCallerFinder().findLogSite(Companion::class.java, 0)
             return if (logSite == LogSite.Invalid) invalid else logSite as JvmLogSite
         }
 
         /**
-         * Returns a new [JvmLogSite] which reflects the information in
+         * Returns a new [LogSite] which reflects the information in
          * the given [StackTraceElement], or [invalid] if given `null`.
          *
          * This method is useful when log site information is only available via an external API
          * which returns [StackTraceElement].
          */
         @JvmStatic
-        public fun logSiteFrom(e: StackTraceElement?): JvmLogSite {
+        public fun logSiteFrom(e: StackTraceElement?): LogSite {
             return if (e != null) StackBasedLogSite(e) else invalid
         }
     }
