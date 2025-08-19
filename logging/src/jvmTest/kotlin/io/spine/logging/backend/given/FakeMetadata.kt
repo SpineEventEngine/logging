@@ -27,6 +27,7 @@
 package io.spine.logging.backend.given
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
+import io.spine.logging.MetadataKey
 import io.spine.logging.backend.Metadata
 
 /**
@@ -37,7 +38,7 @@ import io.spine.logging.backend.Metadata
  */
 class FakeMetadata : Metadata() {
 
-    private class KeyValuePair<T : Any>(val key: io.spine.logging.MetadataKey<T>, val value: T)
+    private class KeyValuePair<T : Any>(val key: MetadataKey<T>, val value: T)
 
     private val entries = mutableListOf<KeyValuePair<*>>()
 
@@ -45,18 +46,18 @@ class FakeMetadata : Metadata() {
      * Adds a key/value pair to this [Metadata].
      */
     @CanIgnoreReturnValue
-    fun <T : Any> add(key: io.spine.logging.MetadataKey<T>, value: T): FakeMetadata {
+    fun <T : Any> add(key: MetadataKey<T>, value: T): FakeMetadata {
         entries.add(KeyValuePair(key, value))
         return this
     }
 
     override fun size(): Int = entries.size
 
-    override fun getKey(n: Int): io.spine.logging.MetadataKey<Any> = entries[n].key as io.spine.logging.MetadataKey<Any>
+    override fun getKey(n: Int): MetadataKey<Any> = entries[n].key as MetadataKey<Any>
 
     override fun getValue(n: Int): Any = entries[n].value
 
-    override fun <T : Any> findValue(key: io.spine.logging.MetadataKey<T>): T? {
+    override fun <T : Any> findValue(key: MetadataKey<T>): T? {
         val entry = entries.firstOrNull { it.key == key }
         val casted = key.cast(entry?.value) // It is safe to pass `null` here.
         return casted

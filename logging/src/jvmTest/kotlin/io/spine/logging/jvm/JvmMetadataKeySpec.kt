@@ -161,8 +161,7 @@ internal class JvmMetadataKeySpec {
  * Such is possible if the key is added to a context because all logging will now
  * include that key, even in code, which has no explicit knowledge of it.
  */
-private class ReenteringKey(label: String) :
-    io.spine.logging.MetadataKey<Any>(label, Any::class, true) {
+private class ReenteringKey(label: String) : MetadataKey<Any>(label, Any::class, true) {
 
     override fun emit(value: Any, kvh: KeyValueHandler) {
         val currentDepth = Platform.getCurrentRecursionDepth()
