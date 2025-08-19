@@ -26,13 +26,12 @@
 
 package io.spine.logging
 
+import io.spine.logging.backend.Platform
 import io.spine.logging.jvm.MetadataKey.Companion.repeated
 import io.spine.logging.jvm.MetadataKey.Companion.single
 import io.spine.logging.jvm.Middleman
-import io.spine.logging.backend.Platform
 import io.spine.reflect.CallerFinder
 import kotlin.reflect.KClass
-import kotlin.jvm.javaObjectType
 
 /**
  * Obtains a [JvmLogger] for a given class.

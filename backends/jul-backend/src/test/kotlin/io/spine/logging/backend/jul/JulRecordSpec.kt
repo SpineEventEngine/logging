@@ -32,14 +32,13 @@ import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.KeyValueHandler
+import io.spine.logging.backend.Metadata
 import io.spine.logging.backend.jul.given.StubLogData
 import io.spine.logging.backend.jul.given.StubMetadata
 import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.backend.Metadata
 import io.spine.logging.jvm.context.Tags
 import io.spine.logging.jvm.singleKey
-import io.spine.logging.toLevel
 import java.time.Instant.ofEpochMilli
 import java.util.concurrent.TimeUnit.NANOSECONDS
 import java.util.logging.Level
