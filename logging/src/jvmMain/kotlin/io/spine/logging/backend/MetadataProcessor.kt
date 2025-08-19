@@ -31,32 +31,10 @@ package io.spine.logging.backend
 import io.spine.annotation.VisibleForTesting
 import io.spine.logging.MetadataKey
 import io.spine.logging.backend.LightweightProcessor.Companion.MAX_LIGHTWEIGHT_ELEMENTS
+import io.spine.logging.checkCannotRepeat
 import io.spine.logging.jvm.LogContext
-import java.util.*
-import kotlin.Any
-import kotlin.Boolean
-import kotlin.IllegalArgumentException
-import kotlin.Int
-import kotlin.IntArray
-import kotlin.Suppress
-import kotlin.Unit
-import kotlin.UnsupportedOperationException
-import kotlin.also
-import kotlin.collections.AbstractSet
-import kotlin.collections.ArrayList
-import kotlin.collections.Iterator
-import kotlin.collections.LinkedHashMap
-import kotlin.collections.List
-import kotlin.collections.Map
-import kotlin.collections.MutableIterator
-import kotlin.collections.MutableList
-import kotlin.collections.MutableMap
-import kotlin.collections.Set
 import kotlin.collections.map
-import kotlin.collections.set
-import kotlin.let
 import kotlin.map
-import kotlin.require
 import kotlin.sequences.map
 import kotlin.text.map
 
@@ -208,7 +186,7 @@ private class NoOpProcessor: MetadataProcessor() {
         Unit
     override fun <T : Any> getSingleValue(key: MetadataKey<T>): T? = null
     override fun keyCount(): Int = 0
-    override fun keySet(): Set<MetadataKey<*>> = Collections.emptySet()
+    override fun keySet(): Set<MetadataKey<*>> = setOf()
 }
 
 /**
@@ -314,7 +292,7 @@ private class LightweightProcessor(
     }
 
     override fun <T : Any> getSingleValue(key: MetadataKey<T>): T? {
-        io.spine.logging.checkCannotRepeat(key)
+        checkCannotRepeat(key)
         val index = indexOf(key, keyMap, keyCount)
         // For single keys, the keyMap values are just the value index.
         return if (index >= 0) key.cast(getValue(keyMap[index])) else null
@@ -509,10 +487,10 @@ private class SimpleProcessor(scope: Metadata, logged: Metadata) : MetadataProce
         for (e in map.entries) {
             if (e.key.canRepeat()) {
                 @Suppress("UNCHECKED_CAST")
-                e.setValue(Collections.unmodifiableList(e.value as List<*>))
+                e.setValue(e.value as List<*>)
             }
         }
-        this.map = Collections.unmodifiableMap(map)
+        this.map = map
     }
 
     override fun <C : Any> process(handler: MetadataHandler<C>, context: C) {
@@ -531,7 +509,7 @@ private class SimpleProcessor(scope: Metadata, logged: Metadata) : MetadataProce
     // It's safe to ignore warnings since single keys are only ever 'T' when added to the map.
     @Suppress("UNCHECKED_CAST")
     override fun <T : Any> getSingleValue(key: MetadataKey<T>): T? {
-        io.spine.logging.checkCannotRepeat(key)
+        checkCannotRepeat(key)
         val value: Any? = map[key as MetadataKey<Any>]
         return if (value != null) value as T else null
     }

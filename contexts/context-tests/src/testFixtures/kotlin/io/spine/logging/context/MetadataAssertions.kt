@@ -26,10 +26,11 @@
 
 package io.spine.logging.context
 
-import io.spine.logging.backend.Metadata
 import io.kotest.matchers.collections.shouldContainInOrder
 import io.kotest.matchers.ints.shouldBeExactly
 import io.kotest.matchers.shouldBe
+import io.spine.logging.MetadataKey
+import io.spine.logging.backend.Metadata
 
 /**
  * This file contains Kotest-like assertions for [Metadata].
@@ -57,21 +58,21 @@ infix fun Metadata.shouldHaveSize(number: Int) {
 /**
  * Asserts that this [Metadata] has a [key] with the mapped [values].
  */
-fun <T : Any> Metadata.shouldContainInOrder(key: io.spine.logging.MetadataKey<T>, vararg values: T) {
+fun <T : Any> Metadata.shouldContainInOrder(key: MetadataKey<T>, vararg values: T) {
     valuesOf(key) shouldContainInOrder values.asList()
 }
 
 /**
  * Asserts that this [Metadata] has a [key] to which only a single [value] is mapped.
  */
-fun <T : Any> Metadata.shouldUniquelyContain(key: io.spine.logging.MetadataKey<T>, value: T) {
+fun <T : Any> Metadata.shouldUniquelyContain(key: MetadataKey<T>, value: T) {
     findValue(key) shouldBe value
-    @Suppress("UNCHECKED_CAST") val allKeys: List<io.spine.logging.MetadataKey<T>> =
-        (0..<size()).map { i -> (getKey(i) as io.spine.logging.MetadataKey<T>) }.toList()
+    @Suppress("UNCHECKED_CAST") val allKeys: List<MetadataKey<T>> =
+        (0..<size()).map { i -> (getKey(i) as MetadataKey<T>) }.toList()
     allKeys.indexOf(key) shouldBe allKeys.lastIndexOf(key)
 }
 
-private fun <T : Any> Metadata.valuesOf(key: io.spine.logging.MetadataKey<T>): List<T> {
+private fun <T : Any> Metadata.valuesOf(key: MetadataKey<T>): List<T> {
     val values: MutableList<T> = ArrayList()
     for (n in 0..<size()) {
         if (getKey(n) == key) {
