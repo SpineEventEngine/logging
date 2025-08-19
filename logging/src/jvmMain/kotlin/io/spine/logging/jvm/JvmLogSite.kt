@@ -190,7 +190,7 @@ public abstract class JvmLogSite : LogSite, LogSiteKey {
          *        logging API was not found.
          */
         @JvmStatic
-        public fun callerOf(loggingApi: Class<*>): JvmLogSite {
+        public fun callerOf(loggingApi: Class<*>): LogSite {
             // Can't skip anything here since someone could pass in `LogSite.class`.
             return Platform.getCallerFinder().findLogSite(loggingApi, 0)
         }
@@ -240,7 +240,8 @@ public abstract class JvmLogSite : LogSite, LogSiteKey {
         @JvmStatic
         public fun logSite(): JvmLogSite {
             // Don't call "callerOf()" to avoid making another stack entry.
-            return Platform.getCallerFinder().findLogSite(Companion::class.java, 0)
+            val logSite = Platform.getCallerFinder().findLogSite(Companion::class.java, 0)
+            return if (logSite == LogSite.Invalid) invalid else logSite as JvmLogSite
         }
 
         /**

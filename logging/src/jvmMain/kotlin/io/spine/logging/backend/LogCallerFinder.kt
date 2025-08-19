@@ -29,7 +29,7 @@ package io.spine.logging.backend
 import com.google.errorprone.annotations.Immutable
 import com.google.errorprone.annotations.ThreadSafe
 import io.spine.logging.jvm.AbstractLogger
-import io.spine.logging.jvm.JvmLogSite
+import io.spine.logging.LogSite
 
 /**
  * API for determining the logging class and log statement sites,
@@ -89,8 +89,8 @@ public abstract class LogCallerFinder {
      * @param loggerApi The class containing the log() methods whose caller we need to find.
      * @param stackFramesToSkip The number of method calls which exist on the stack between the
      *        `log()` method, and the point at which this method is invoked.
-     * @return A log site inferred from the stack, or [io.spine.logging.jvm.JvmLogSite.Companion.invalid] if no log site
+     * @return A log site inferred from the stack, or [io.spine.logging.LogSite.Invalid] if no log site
      *         can be determined.
      */
-    public abstract fun findLogSite(loggerApi: Class<*>, stackFramesToSkip: Int): JvmLogSite
+    public abstract fun findLogSite(loggerApi: Class<*>, stackFramesToSkip: Int): LogSite
 }

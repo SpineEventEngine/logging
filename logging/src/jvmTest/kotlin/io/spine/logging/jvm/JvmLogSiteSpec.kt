@@ -32,6 +32,7 @@ import io.spine.logging.jvm.JvmLogSite.Companion.logSiteFrom
 import io.spine.logging.jvm.MyLogUtil.callerLogSite
 import io.spine.logging.jvm.MyLogUtil.callerLogSiteWrapped
 import io.kotest.matchers.shouldBe
+import io.spine.logging.LogSite
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -80,13 +81,13 @@ internal class JvmLogSiteSpec {
 
 private object MyLogUtil {
 
-    val callerLogSite: JvmLogSite
+    val callerLogSite: LogSite
         get() = callerOf(MyLogUtil::class.java)
 
-    val callerLogSiteWrapped: JvmLogSite
+    val callerLogSiteWrapped: LogSite
         get() = callerLogSite
 }
 
-private fun notAllowedCaller(): JvmLogSite {
+private fun notAllowedCaller(): LogSite {
     return JvmLogSite.injectedLogSite("foo", "bar", 42, "baz.kt")
 }

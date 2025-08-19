@@ -30,7 +30,8 @@ import com.google.errorprone.annotations.Immutable;
 import com.google.errorprone.annotations.ThreadSafe;
 import io.spine.logging.backend.LogCallerFinder;
 import io.spine.logging.jvm.AbstractLogger;
-import io.spine.logging.jvm.JvmLogSite;
+import io.spine.logging.LogSite;
+import io.spine.logging.InjectedLogSite;
 
 import static io.spine.reflect.CallerFinder.findCallerOf;
 
@@ -64,13 +65,21 @@ public final class StackBasedCallerFinder extends LogCallerFinder {
   }
 
   @Override
-  public JvmLogSite findLogSite(Class<?> loggerApi, int stackFramesToSkip) {
+  public LogSite findLogSite(Class<?> loggerApi, int stackFramesToSkip) {
     // Skip an additional stack frame because we create the Throwable inside this method, not at
     // the point that this method was invoked (which allows completely alternate implementations
     // to avoid even constructing the Throwable instance).
     var caller = findCallerOf(loggerApi, stackFramesToSkip + 1);
     // Returns INVALID if "caller" is null (no caller found for given API class).
-    return JvmLogSite.logSiteFrom(caller);
+    if (caller == null) {
+      return LogSite.Invalid.INSTANCE;
+    }
+    return new InjectedLogSite(
+        caller.getClassName(),
+        caller.getMethodName(),
+        caller.getFileName(),
+        caller.getLineNumber()
+    );
   }
 
   @Override

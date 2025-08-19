@@ -93,7 +93,7 @@ protected constructor(
     /**
      * The log site information for this log statement (set immediately prior to post-processing).
      */
-    private var logSiteInfo: JvmLogSite? = null
+    private var logSiteInfo: LogSite? = null
 
     /**
      * Rate limit status (only set if rate limiting occurs).
@@ -146,7 +146,7 @@ protected constructor(
     public final override val loggerName: String
         get() = getLogger().getName()
 
-    public final override val logSite: JvmLogSite
+    public final override val logSite: LogSite
         get() = logSiteInfo ?: error(
             "Cannot request log site information prior to `postProcess()`."
         )
