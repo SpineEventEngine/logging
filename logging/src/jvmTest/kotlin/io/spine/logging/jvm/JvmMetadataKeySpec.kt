@@ -32,6 +32,7 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.spine.logging.KeyValueHandler
+import io.spine.logging.MetadataKey
 import io.spine.logging.MetadataKey.Companion.repeated
 import io.spine.logging.MetadataKey.Companion.single
 import io.spine.logging.backend.Platform
@@ -161,7 +162,7 @@ internal class JvmMetadataKeySpec {
  * include that key, even in code, which has no explicit knowledge of it.
  */
 private class ReenteringKey(label: String) :
-    MetadataKey<Any>(label, Any::class, true) {
+    io.spine.logging.MetadataKey<Any>(label, Any::class, true) {
 
     override fun emit(value: Any, kvh: KeyValueHandler) {
         val currentDepth = Platform.getCurrentRecursionDepth()

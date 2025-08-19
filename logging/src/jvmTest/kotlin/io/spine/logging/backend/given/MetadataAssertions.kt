@@ -26,7 +26,6 @@
 
 package io.spine.logging.backend.given
 
-import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.backend.Metadata
 import io.kotest.matchers.collections.shouldContainInOrder
 import io.kotest.matchers.ints.shouldBeExactly
@@ -60,7 +59,7 @@ internal infix fun Metadata.shouldHaveSize(number: Int) {
 /**
  * Asserts that this [Metadata] has a [key] with the mapped [values].
  */
-internal fun <T : Any> Metadata.shouldContainInOrder(key: MetadataKey<T>, vararg values: T) {
+internal fun <T : Any> Metadata.shouldContainInOrder(key: io.spine.logging.MetadataKey<T>, vararg values: T) {
     valuesOf(key) shouldContainInOrder values.asList()
 }
 
@@ -69,35 +68,35 @@ internal fun <T : Any> Metadata.shouldContainInOrder(key: MetadataKey<T>, vararg
  *
  * The given [value] should be the first one, which was mapped to the [key].
  */
-internal fun <T : Any> Metadata.shouldHaveFirstValue(key: MetadataKey<T>, value: T) {
+internal fun <T : Any> Metadata.shouldHaveFirstValue(key: io.spine.logging.MetadataKey<T>, value: T) {
     findValue(key) shouldBe value
 }
 
 /**
  * Asserts that this [Metadata] does NOT HAVE a value for the given [key].
  */
-internal infix fun <T : Any> Metadata.shouldNotContain(key: MetadataKey<T>) {
+internal infix fun <T : Any> Metadata.shouldNotContain(key: io.spine.logging.MetadataKey<T>) {
     findValue(key).shouldBeNull()
 }
 
 /**
  * Asserts that this [Metadata] has one or more values for the given [key]
  */
-internal infix fun <T : Any> Metadata.shouldContain(key: MetadataKey<T>) {
+internal infix fun <T : Any> Metadata.shouldContain(key: io.spine.logging.MetadataKey<T>) {
     findValue(key).shouldNotBeNull()
 }
 
 /**
  * Asserts that this [Metadata] has a [key] to which only a single [value] is mapped.
  */
-internal fun <T : Any> Metadata.shouldUniquelyContain(key: MetadataKey<T>, value: T) {
+internal fun <T : Any> Metadata.shouldUniquelyContain(key: io.spine.logging.MetadataKey<T>, value: T) {
     findValue(key) shouldBe value
-    @Suppress("UNCHECKED_CAST") val allKeys: List<MetadataKey<T>> =
-        (0..<size()).map { i -> (getKey(i) as MetadataKey<T>) }.toList()
+    @Suppress("UNCHECKED_CAST") val allKeys: List<io.spine.logging.MetadataKey<T>> =
+        (0..<size()).map { i -> (getKey(i) as io.spine.logging.MetadataKey<T>) }.toList()
     allKeys.indexOf(key) shouldBe allKeys.lastIndexOf(key)
 }
 
-private fun <T : Any> Metadata.valuesOf(key: MetadataKey<T>): List<T> {
+private fun <T : Any> Metadata.valuesOf(key: io.spine.logging.MetadataKey<T>): List<T> {
     val values: MutableList<T> = ArrayList()
     for (n in 0..<size()) {
         if (getKey(n) == key) {

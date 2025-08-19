@@ -29,10 +29,36 @@
 package io.spine.logging.backend
 
 import io.spine.annotation.VisibleForTesting
+import io.spine.logging.MetadataKey
 import io.spine.logging.backend.LightweightProcessor.Companion.MAX_LIGHTWEIGHT_ELEMENTS
 import io.spine.logging.jvm.LogContext
-import io.spine.logging.jvm.MetadataKey
 import java.util.*
+import kotlin.Any
+import kotlin.Boolean
+import kotlin.IllegalArgumentException
+import kotlin.Int
+import kotlin.IntArray
+import kotlin.Suppress
+import kotlin.Unit
+import kotlin.UnsupportedOperationException
+import kotlin.also
+import kotlin.collections.AbstractSet
+import kotlin.collections.ArrayList
+import kotlin.collections.Iterator
+import kotlin.collections.LinkedHashMap
+import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.MutableIterator
+import kotlin.collections.MutableList
+import kotlin.collections.MutableMap
+import kotlin.collections.Set
+import kotlin.collections.map
+import kotlin.collections.set
+import kotlin.let
+import kotlin.map
+import kotlin.require
+import kotlin.sequences.map
+import kotlin.text.map
 
 /**
  * Processor combining scope and log-site metadata into a single view.

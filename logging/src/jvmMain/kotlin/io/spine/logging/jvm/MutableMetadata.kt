@@ -26,6 +26,7 @@
 
 package io.spine.logging.jvm
 
+import io.spine.logging.MetadataKey
 import io.spine.logging.backend.Metadata
 
 /**
@@ -69,11 +70,11 @@ internal class MutableMetadata : Metadata() {
     override fun size(): Int = keyValueCount
 
     @Suppress("UNCHECKED_CAST")
-    override fun getKey(n: Int): MetadataKey<Any> {
+    override fun getKey(n: Int): io.spine.logging.MetadataKey<Any> {
         if (n >= keyValueCount) {
             throw IndexOutOfBoundsException(n)
         }
-        return keyValuePairs[2 * n] as MetadataKey<Any>
+        return keyValuePairs[2 * n] as io.spine.logging.MetadataKey<Any>
     }
 
     override fun getValue(n: Int): Any {
@@ -92,7 +93,7 @@ internal class MutableMetadata : Metadata() {
         return -1
     }
 
-    override fun <T : Any> findValue(key: MetadataKey<T>): T? {
+    override fun <T : Any> findValue(key: io.spine.logging.MetadataKey<T>): T? {
         val index = indexOf(key)
         return if (index != -1) key.cast(keyValuePairs[(2 * index) + 1]) else null
     }
@@ -105,7 +106,7 @@ internal class MutableMetadata : Metadata() {
      *
      * Otherwise the value is added at the end of the metadata.
      */
-    fun <T : Any> addValue(key: MetadataKey<T>, value: T) {
+    fun <T : Any> addValue(key: io.spine.logging.MetadataKey<T>, value: T) {
         if (!key.canRepeat()) {
             val index = indexOf(key)
             if (index != -1) {

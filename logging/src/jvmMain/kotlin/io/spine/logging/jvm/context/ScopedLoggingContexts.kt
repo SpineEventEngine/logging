@@ -28,7 +28,6 @@ package io.spine.logging.jvm.context
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.logging.StackSize
-import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.Middleman
 import io.spine.logging.jvm.context.ScopedLoggingContexts.newContext
 import kotlin.time.DurationUnit.MINUTES
@@ -147,7 +146,7 @@ public object ScopedLoggingContexts {
      */
     @CanIgnoreReturnValue
     @JvmStatic
-    public fun <T : Any> addMetadata(key: MetadataKey<T>, value: T): Boolean =
+    public fun <T : Any> addMetadata(key: io.spine.logging.MetadataKey<T>, value: T): Boolean =
         warnOnFailure(ScopedLoggingContext.getInstance().addMetadata(key, value))
 
     /**

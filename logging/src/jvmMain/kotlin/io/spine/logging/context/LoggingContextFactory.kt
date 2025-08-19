@@ -179,7 +179,7 @@ private class DelegatingContextBuilder(
         value: T
     ): ScopedLoggingContext.Builder {
         @Suppress("UNCHECKED_CAST")
-        delegate.withMetadata((key as io.spine.logging.jvm.MetadataKey<T>), value)
+        delegate.withMetadata((key as MetadataKey<T>), value)
         return this
     }
 

@@ -28,7 +28,6 @@ package io.spine.logging.jvm.context
 
 import io.spine.logging.StackSize
 import io.spine.logging.jvm.Middleman
-import io.spine.logging.jvm.MetadataKey
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
@@ -109,7 +108,7 @@ private class NoOpScopedLoggingContext : ScopedLoggingContext(), AutoCloseable {
         return super.addTags(tags)
     }
 
-    override fun <T : Any> addMetadata(key: MetadataKey<T>, value: T): Boolean {
+    override fun <T : Any> addMetadata(key: io.spine.logging.MetadataKey<T>, value: T): Boolean {
         logWarningOnceOnly()
         return super.addMetadata(key, value)
     }

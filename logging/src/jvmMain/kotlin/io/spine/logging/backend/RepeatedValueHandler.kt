@@ -26,8 +26,6 @@
 
 package io.spine.logging.backend
 
-import io.spine.logging.jvm.MetadataKey
-
 /**
  * API for handling repeated metadata key/values in a single callback.
  *
@@ -46,5 +44,5 @@ public fun interface RepeatedValueHandler<T : Any, C> {
      *        the scope of this callback.
      * @param context An arbitrary context object supplied to the process method.
      */
-    public fun handle(key: MetadataKey<T>, values: Iterator<T>, context: C)
+    public fun handle(key: io.spine.logging.MetadataKey<T>, values: Iterator<T>, context: C)
 }

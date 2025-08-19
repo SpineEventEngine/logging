@@ -27,6 +27,7 @@
 package io.spine.logging.jvm
 
 import io.spine.logging.KeyValueHandler
+import io.spine.logging.MetadataKey
 
 /**
  * The key associated with a sequence of log site "grouping keys".

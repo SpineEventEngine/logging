@@ -31,7 +31,6 @@ import io.spine.logging.Level
 import io.spine.logging.backend.LogData
 import io.spine.logging.jvm.JvmLogSite
 import io.spine.logging.jvm.LogContext
-import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.toLevel
 import java.util.logging.Level as JLevel
 
@@ -82,7 +81,7 @@ internal class StubLogData : LogData {
     fun setLevel(level: JLevel): StubLogData = setLevel(level.toLevel())
 
     @CanIgnoreReturnValue
-    fun <T : Any> addMetadata(key: MetadataKey<T>, value: Any): StubLogData {
+    fun <T : Any> addMetadata(key: io.spine.logging.MetadataKey<T>, value: Any): StubLogData {
         metadata.add(key, key.cast(value)!!)
         return this
     }

@@ -28,7 +28,6 @@ package io.spine.logging.jvm.context
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import com.google.errorprone.annotations.MustBeClosed
-import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.context.ScopedLoggingContext.Companion.getInstance
 import java.util.concurrent.Callable
 
@@ -120,7 +119,7 @@ public abstract class ScopedLoggingContext protected constructor() {
          * times on a builder.
          */
         @CanIgnoreReturnValue
-        public fun <T : Any> withMetadata(key: MetadataKey<T>, value: T): Builder {
+        public fun <T : Any> withMetadata(key: io.spine.logging.MetadataKey<T>, value: T): Builder {
             if (metadata == null) {
                 metadata = ContextMetadata.builder()
             }
@@ -359,7 +358,7 @@ public abstract class ScopedLoggingContext protected constructor() {
      * a new context, rather than adding it to context visible to multiple threads.
      */
     @CanIgnoreReturnValue
-    public open fun <T : Any> addMetadata(key: MetadataKey<T>, value: T): Boolean {
+    public open fun <T : Any> addMetadata(key: io.spine.logging.MetadataKey<T>, value: T): Boolean {
         //TODO:2025-06-30:alexander.yevsyukov: Investigate why this method does nothing despite
         // the documentation.
         return false

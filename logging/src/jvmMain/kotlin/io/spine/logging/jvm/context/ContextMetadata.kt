@@ -27,9 +27,9 @@
 package io.spine.logging.jvm.context
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
-import io.spine.logging.jvm.MetadataKey
+import io.spine.logging.MetadataKey
 import io.spine.logging.backend.Metadata
-import io.spine.logging.jvm.checkCannotRepeat
+import io.spine.logging.checkCannotRepeat
 import org.jetbrains.annotations.NotNull
 
 /**
@@ -113,7 +113,7 @@ public abstract class ContextMetadata protected constructor() : Metadata() {
     internal abstract fun get(n: Int): Entry<*>
 
     @Suppress("UNCHECKED_CAST")
-    override fun getKey(n: Int): @NotNull MetadataKey<@NotNull Any> =
+    override fun getKey(n: Int): @NotNull MetadataKey<Any> =
         get(n).key as MetadataKey<Any>
 
     override fun getValue(n: Int): Any = get(n).value
@@ -149,7 +149,7 @@ private class ImmutableScopeMetadata(private val entries: Array<Entry<*>?>) : Co
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : Any> findValue(key: MetadataKey<T>): T? {
-        io.spine.logging.checkCannotRepeat(key)
+        checkCannotRepeat(key)
         for (n in entries.indices.reversed()) {
             val e = entries[n]!!
             if (e.key == key) {
@@ -191,7 +191,7 @@ private class SingletonMetadata<T : Any>(key: MetadataKey<T>, value: T) : Contex
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : Any> findValue(key: MetadataKey<T>): T? {
-        io.spine.logging.checkCannotRepeat(key)
+        checkCannotRepeat(key)
         return if (entry.key == key) entry.value as T else null
     }
 
@@ -225,7 +225,7 @@ private object EmptyMetadata : ContextMetadata() {
 
     override fun <T : Any> findValue(key: MetadataKey<T>): T? {
         // For consistency, do the same checks as for non-empty instances.
-        io.spine.logging.checkCannotRepeat(key)
+        checkCannotRepeat(key)
         return null
     }
 

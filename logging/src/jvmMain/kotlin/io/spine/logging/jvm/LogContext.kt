@@ -46,7 +46,7 @@ import io.spine.logging.jvm.context.Tags
 import io.spine.logging.util.Checks.checkNotNull
 import io.spine.reflect.CallerFinder.stackForCallerOf
 import kotlin.time.DurationUnit
-import io.spine.logging.MetadataKey as CommonMetadataKey
+import io.spine.logging.MetadataKey
 
 /**
  * The base context for a logging statement, which implements the base logging API.
@@ -485,7 +485,7 @@ protected constructor(
 
     public override fun withLoggingDomain(domain: LoggingDomain): API = api()
 
-    public final override fun <T : Any> with(key: CommonMetadataKey<T>, value: T?): API {
+    public final override fun <T : Any> with(key: MetadataKey<T>, value: T?): API {
         if (value != null) {
             @Suppress("UNCHECKED_CAST")
             addMetadata(key as MetadataKey<Any>, value as Any)
@@ -493,7 +493,7 @@ protected constructor(
         return api()
     }
 
-    public final override fun with(key: CommonMetadataKey<Boolean>): API = with(key, true)
+    public final override fun with(key: MetadataKey<Boolean>): API = with(key, true)
 
     public override fun <T> per(key: T?, strategy: LogPerBucketingStrategy<in T>): API {
         // Skip calling the bucketer for null so implementations don't need to check.
