@@ -26,8 +26,6 @@
 
 package io.spine.logging.backend
 
-import java.io.Serial
-
 /**
  * An exception thrown when a log statement cannot be emitted correctly.
  *
@@ -45,11 +43,4 @@ import java.io.Serial
  * @see <br><a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/LoggingException.java">
  *      Original Java code of Google Flogger</a> for historical context.
  */
-public class LoggingException(message: String?) : RuntimeException(message) {
-
-    public companion object {
-        @JvmStatic
-        @Serial
-        private val serialVersionUID: Long = 0L
-    }
-}
+public class LoggingException(message: String?) : RuntimeException(message)
