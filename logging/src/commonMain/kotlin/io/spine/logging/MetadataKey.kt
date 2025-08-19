@@ -27,7 +27,9 @@
 package io.spine.logging
 
 import io.spine.annotation.VisibleForTesting
-import io.spine.logging.util.Checks
+import io.spine.logging.MetadataKey.Companion.repeated
+import io.spine.logging.MetadataKey.Companion.single
+import io.spine.logging.util.Checks.checkMetadataIdentifier
 import kotlin.reflect.KClass
 
 /**
@@ -101,12 +103,11 @@ public open class MetadataKey<T : Any>(
     public val canRepeat: Boolean,
     private val isCustom: Boolean
 ) {
-
     /**
      * A short, human-readable text label which will prefix the metadata in cases
      * where it is formatted as part of the log message.
      */
-    public val label: String = Checks.checkMetadataIdentifier(label)
+    public val label: String = checkMetadataIdentifier(label)
 
     /**
      * A 64-bit bloom filter mask for this metadata key, usable by backend implementations
@@ -136,7 +137,9 @@ public open class MetadataKey<T : Any>(
      * Cast an arbitrary value to the type of this key.
      */
     public fun cast(value: Any?): T? {
-        if (value == null) return null
+        if (value == null) {
+            return null
+        }
         return if (clazz.isInstance(value)) {
             @Suppress("UNCHECKED_CAST")
             value as T
@@ -174,7 +177,7 @@ public open class MetadataKey<T : Any>(
      * against unbounded reentrant logging.
      */
     public fun safeEmitRepeated(values: Iterator<T>, kvh: KeyValueHandler) {
-        check(canRepeat) { "non repeating key" }
+        check(canRepeat) { "Non repeating key: `$label`." }
         if (isCustom && getCurrentRecursionDepth() > MAX_CUSTOM_META_DATAKEY_RECURSION_DEPTH) {
             // Recursive logging detected, possibly caused by custom metadata
             // keys triggering reentrant logging.
