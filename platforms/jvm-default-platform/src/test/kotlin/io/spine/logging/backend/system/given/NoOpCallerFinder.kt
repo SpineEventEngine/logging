@@ -28,16 +28,17 @@ package io.spine.logging.backend.system.given
 
 import com.google.errorprone.annotations.Immutable
 import com.google.errorprone.annotations.ThreadSafe
+import io.spine.logging.backend.LogCallerFinder
+import io.spine.logging.backend.Platform
 import io.spine.logging.jvm.AbstractLogger
 import io.spine.logging.jvm.JvmLogSite
-import io.spine.logging.backend.Platform
 
 /**
  * No-op implementation of [Platform.LogCallerFinder].
  */
 @Immutable
 @ThreadSafe
-internal class NoOpCallerFinder : Platform.LogCallerFinder() {
+internal class NoOpCallerFinder : LogCallerFinder() {
 
     /**
      * Throws [IllegalStateException].
