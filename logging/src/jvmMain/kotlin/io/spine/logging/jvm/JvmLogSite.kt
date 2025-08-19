@@ -56,7 +56,7 @@ import io.spine.logging.backend.Platform
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSite.java">
  *     Original Java code of Google Flogger</a> for historical context.
  */
-public abstract class JvmLogSite : LogSiteKey, LogSite {
+public abstract class JvmLogSite : LogSite, LogSiteKey {
 
     /**
      * The name of the class file containing the log statement (or `null` if not known).
@@ -198,7 +198,8 @@ public abstract class JvmLogSite : LogSiteKey, LogSite {
         /**
          * Returns a [JvmLogSite] for the current line of code.
          *
-         * This can be used in conjunction with the [io.spine.logging.LoggingApi.withInjectedLogSite] method to
+         * This can be used in conjunction with
+         * the [io.spine.logging.LoggingApi.withInjectedLogSite] method to
          * implement logging helper methods. In some platforms, log site determination may be
          * unsupported, and in those cases this method will always return the [invalid] instance.
          *
@@ -243,8 +244,8 @@ public abstract class JvmLogSite : LogSiteKey, LogSite {
         }
 
         /**
-         * Returns a new [JvmLogSite] which reflects the information in the given [StackTraceElement],
-         * or [invalid] if given `null`.
+         * Returns a new [JvmLogSite] which reflects the information in
+         * the given [StackTraceElement], or [invalid] if given `null`.
          *
          * This method is useful when log site information is only available via an external API
          * which returns [StackTraceElement].
