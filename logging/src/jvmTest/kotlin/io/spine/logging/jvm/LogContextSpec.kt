@@ -52,6 +52,7 @@ import io.spine.logging.jvm.given.ConfigurableLogger
 import io.spine.logging.jvm.given.FakeLogSite
 import io.spine.logging.jvm.given.iterate
 import io.spine.logging.jvm.given.shouldHaveMessage
+import io.spine.logging.MetadataKey
 import java.lang.System.currentTimeMillis
 import io.spine.logging.Level.Companion.INFO
 import io.spine.logging.Level.Companion.WARNING
@@ -75,8 +76,8 @@ internal class LogContextSpec {
     private val logger = Middleman(backend)
 
     companion object {
-        private val REPEATED_KEY = repeatedKey<String>("str")
-        private val FLAG_KEY = repeatedKey<Boolean>("flag")
+        private val REPEATED_KEY = MetadataKey.repeated<String>("str")
+        private val FLAG_KEY = MetadataKey.repeated<Boolean>("flag")
         private val ONCE_PER_SECOND = newRateLimitPeriod(1, SECONDS)
 
         private const val MESSAGE_LITERAL = "Hello World"

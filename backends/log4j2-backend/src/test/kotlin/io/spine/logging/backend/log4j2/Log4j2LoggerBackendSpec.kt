@@ -28,13 +28,12 @@ package io.spine.logging.backend.log4j2
 
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.logging.MetadataKey
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
 import io.spine.logging.backend.log4j2.given.StubLogData
 import io.spine.logging.backend.log4j2.given.StubLogSite
 import io.spine.logging.jvm.JvmLogSite
 import io.spine.logging.jvm.LogContext.Key
-import io.spine.logging.jvm.repeatedKey
-import io.spine.logging.jvm.singleKey
 import io.spine.logging.toLevel
 import java.util.concurrent.atomic.AtomicInteger
 import org.apache.logging.log4j.LogManager
@@ -64,8 +63,8 @@ internal class Log4j2LoggerBackendSpec {
     private val lastLogged get() = logged.last()
 
     companion object {
-        private val INT_KEY = repeatedKey<Int>("int")
-        private val STR_KEY = singleKey<String>("str")
+        private val INT_KEY = MetadataKey.repeated<Int>("int")
+        private val STR_KEY = MetadataKey.single<String>("str")
         private const val LITERAL = "Hello world"
     }
 

@@ -29,10 +29,9 @@
 package io.spine.logging.backend
 
 import io.spine.annotation.VisibleForTesting
+import io.spine.logging.backend.LightweightProcessor.Companion.MAX_LIGHTWEIGHT_ELEMENTS
 import io.spine.logging.jvm.LogContext
 import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.backend.LightweightProcessor.Companion.MAX_LIGHTWEIGHT_ELEMENTS
-import io.spine.logging.jvm.checkCannotRepeat
 import java.util.*
 
 /**
@@ -289,7 +288,7 @@ private class LightweightProcessor(
     }
 
     override fun <T : Any> getSingleValue(key: MetadataKey<T>): T? {
-        checkCannotRepeat(key)
+        io.spine.logging.checkCannotRepeat(key)
         val index = indexOf(key, keyMap, keyCount)
         // For single keys, the keyMap values are just the value index.
         return if (index >= 0) key.cast(getValue(keyMap[index])) else null
@@ -506,7 +505,7 @@ private class SimpleProcessor(scope: Metadata, logged: Metadata) : MetadataProce
     // It's safe to ignore warnings since single keys are only ever 'T' when added to the map.
     @Suppress("UNCHECKED_CAST")
     override fun <T : Any> getSingleValue(key: MetadataKey<T>): T? {
-        checkCannotRepeat(key)
+        io.spine.logging.checkCannotRepeat(key)
         val value: Any? = map[key as MetadataKey<Any>]
         return if (value != null) value as T else null
     }

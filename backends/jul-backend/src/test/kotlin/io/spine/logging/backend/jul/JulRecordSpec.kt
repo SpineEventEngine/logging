@@ -32,13 +32,12 @@ import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.KeyValueHandler
+import io.spine.logging.MetadataKey
 import io.spine.logging.backend.Metadata
 import io.spine.logging.backend.jul.given.StubLogData
 import io.spine.logging.backend.jul.given.StubMetadata
 import io.spine.logging.jvm.LogContext.Key
-import io.spine.logging.jvm.MetadataKey
 import io.spine.logging.jvm.context.Tags
-import io.spine.logging.jvm.singleKey
 import java.time.Instant.ofEpochMilli
 import java.util.concurrent.TimeUnit.NANOSECONDS
 import java.util.logging.Level
@@ -55,8 +54,8 @@ import org.junit.jupiter.api.Test
 internal class JulRecordSpec {
 
     companion object {
-        private val INT_KEY = singleKey<Int>("int")
-        private val STR_KEY = singleKey<String>("str")
+        private val INT_KEY = MetadataKey.single<Int>("int")
+        private val STR_KEY = MetadataKey.single<String>("str")
         private val PATH_KEY =
             object : MetadataKey<String>("path", String::class, true) {
                 override fun emitRepeated(values: Iterator<String>, kvh: KeyValueHandler) {

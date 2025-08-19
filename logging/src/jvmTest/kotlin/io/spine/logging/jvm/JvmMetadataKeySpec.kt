@@ -32,8 +32,8 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.spine.logging.KeyValueHandler
-import io.spine.logging.jvm.MetadataKey.Companion.repeated
-import io.spine.logging.jvm.MetadataKey.Companion.single
+import io.spine.logging.MetadataKey.Companion.repeated
+import io.spine.logging.MetadataKey.Companion.single
 import io.spine.logging.backend.Platform
 import io.spine.logging.jvm.given.MemoizingKvHandler
 import io.spine.logging.jvm.given.iterate

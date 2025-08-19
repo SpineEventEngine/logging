@@ -24,30 +24,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
+
+import io.spine.logging.util.RecursionDepth
 
 /**
- * Creates a new single [MetadataKey] with the given [label].
- *
- * In JVM, if the given type [T] describes a Java primitive,
- * this method would use a type of the corresponding object wrapper.
- * Thus, making type [T] safe to be used with Java generics, that is
- * the case for metadata keys.
- *
- * @param T type of values that can be associated with this key
+ * JVM implementation of getCurrentRecursionDepth using the existing RecursionDepth utility.
  */
-public inline fun <reified T : Any> singleKey(label: String): MetadataKey<T> =
-    MetadataKey.single(label, T::class)
-
-/**
- * Creates a new repeated [MetadataKey] with the given [label].
- *
- * In JVM, if the given type [T] describes a Java primitive,
- * this method would use a type of the corresponding object wrapper.
- * Thus, making type [T] safe to be used with Java generics, that is
- * the case for metadata keys.
- *
- * @param T type of values that can be associated with this key
- */
-public inline fun <reified T : Any> repeatedKey(label: String): MetadataKey<T> =
-    MetadataKey.repeated(label, T::class)
+internal actual fun getCurrentRecursionDepth(): Int = RecursionDepth.getCurrentDepth()

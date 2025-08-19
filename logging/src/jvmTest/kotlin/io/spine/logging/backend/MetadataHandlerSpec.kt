@@ -29,10 +29,8 @@ package io.spine.logging.backend
 import com.google.common.base.Joiner
 import com.google.common.collect.Iterators
 import io.kotest.matchers.shouldBe
+import io.spine.logging.MetadataKey
 import io.spine.logging.backend.given.FakeMetadata
-import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.repeatedKey
-import io.spine.logging.jvm.singleKey
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -47,7 +45,7 @@ internal class MetadataHandlerSpec {
 
     @Test
     fun `use a default singleton value handler for unknown keys`() {
-        val unknownKey = singleKey<String>("unknown")
+        val unknownKey = MetadataKey.single<String>("unknown")
         val handler = MetadataHandler.builder(::appendUnknownValue)
             .build()
 
@@ -59,8 +57,8 @@ internal class MetadataHandlerSpec {
 
     @Test
     fun `use a singleton value handler for any keys`() {
-        val key = singleKey<String>("key")
-        val rep = repeatedKey<String>("rep")
+        val key = MetadataKey.single<String>("key")
+        val rep = MetadataKey.repeated<String>("rep")
         val handler = MetadataHandler.builder(::appendUnknownValue)
             .addHandler(key, ::appendValue)
             .addHandler(rep, ::appendValue)
@@ -77,7 +75,7 @@ internal class MetadataHandlerSpec {
 
     @Test
     fun `use a repeated value handler for repeated keys`() {
-        val key = repeatedKey<String>("key")
+        val key = MetadataKey.repeated<String>("key")
         val handler = MetadataHandler.builder(::appendUnknownValue)
             .addRepeatedHandler(key, ::appendValues)
             .build()
@@ -92,8 +90,8 @@ internal class MetadataHandlerSpec {
 
     @Test
     fun `use key-specific handlers over the default ones`() {
-        val barKey = repeatedKey<Int>("bar")
-        val fooKey = repeatedKey<String>("foo")
+        val barKey = MetadataKey.repeated<Int>("bar")
+        val fooKey = MetadataKey.repeated<String>("foo")
         val handler = MetadataHandler.builder(::appendUnknownValue)
             .setDefaultRepeatedHandler(::appendUnknownValues)
             .addHandler(fooKey, ::appendValue) // Explicit individual handler takes precedence.
@@ -112,9 +110,9 @@ internal class MetadataHandlerSpec {
 
     @Test
     fun `use multiple value handlers`() {
-        val barKey = repeatedKey<Int>("bar")
-        val fooKey = repeatedKey<String>("foo")
-        val unknownKey = singleKey<String>("unknown")
+        val barKey = MetadataKey.repeated<Int>("bar")
+        val fooKey = MetadataKey.repeated<String>("foo")
+        val unknownKey = MetadataKey.single<String>("unknown")
         val handler = MetadataHandler.builder(::appendUnknownValue)
             .addRepeatedHandler(barKey, ::appendSum)
             .addHandler(fooKey, ::appendValue)
@@ -134,7 +132,7 @@ internal class MetadataHandlerSpec {
 
     @Test
     fun `use the latest specified handler`() {
-        val foo = repeatedKey<String>("foo")
+        val foo = MetadataKey.repeated<String>("foo")
         val handler = MetadataHandler.builder(::appendUnknownValue)
             .addRepeatedHandler(foo, ::appendValues)
             .addHandler(foo, ::appendValue)
@@ -150,7 +148,7 @@ internal class MetadataHandlerSpec {
 
     @Test
     fun `remove previously specified handlers`() {
-        val foo = repeatedKey<String>("foo")
+        val foo = MetadataKey.repeated<String>("foo")
         val builder = MetadataHandler.builder(::appendUnknownValue)
             .addRepeatedHandler(foo, ::appendValues)
 

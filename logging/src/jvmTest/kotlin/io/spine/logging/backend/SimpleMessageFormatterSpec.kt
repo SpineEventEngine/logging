@@ -32,8 +32,7 @@ import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.backend.given.FakeLogData
 import io.spine.logging.backend.given.FakeMetadata
 import io.spine.logging.jvm.context.Tags
-import io.spine.logging.jvm.repeatedKey
-import io.spine.logging.jvm.singleKey
+import io.spine.logging.MetadataKey
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -48,9 +47,9 @@ import org.junit.jupiter.api.Test
 internal class SimpleMessageFormatterSpec {
 
     companion object {
-        private val INT_KEY = repeatedKey<Int>("int")
-        private val BOOL_KEY = singleKey<Boolean>("bool")
-        private val STRING_KEY = singleKey<String>("string")
+        private val INT_KEY = MetadataKey.repeated<Int>("int")
+        private val BOOL_KEY = MetadataKey.single<Boolean>("bool")
+        private val STRING_KEY = MetadataKey.single<String>("string")
         private val EMPTY_SCOPE = Metadata.empty()
         private const val LITERAL = "Hello World"
     }

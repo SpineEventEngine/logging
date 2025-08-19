@@ -27,13 +27,12 @@
 package io.spine.logging.jvm.context
 
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.logging.MetadataKey
 import io.spine.logging.backend.given.shouldBeEmpty
 import io.spine.logging.backend.given.shouldContainInOrder
 import io.spine.logging.backend.given.shouldHaveFirstValue
 import io.spine.logging.backend.given.shouldHaveSize
 import io.spine.logging.backend.given.shouldNotContain
-import io.spine.logging.jvm.repeatedKey
-import io.spine.logging.jvm.singleKey
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -49,9 +48,9 @@ import org.junit.jupiter.api.assertThrows
 internal class ContextMetadataSpec {
 
     companion object {
-        private val FOO_KEY = singleKey<String>("FOO")
-        private val BAR_KEY = repeatedKey<String>("BAR")
-        private val UNUSED_KEY = singleKey<String>("UNUSED")
+        private val FOO_KEY = MetadataKey.single<String>("FOO")
+        private val BAR_KEY = MetadataKey.repeated<String>("BAR")
+        private val UNUSED_KEY = MetadataKey.single<String>("UNUSED")
     }
 
     @Test

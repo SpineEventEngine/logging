@@ -34,9 +34,7 @@ import io.kotest.matchers.ints.shouldBeLessThanOrEqual
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.spine.logging.backend.given.FakeMetadata
-import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.repeatedKey
-import io.spine.logging.jvm.singleKey
+import io.spine.logging.MetadataKey
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
@@ -50,11 +48,11 @@ import org.junit.jupiter.api.Test
 internal abstract class MetadataProcessorSpec(private val factory: ProcessorFactory) {
 
     companion object {
-        private val KEY_1 = singleKey<Any>("K1")
-        private val KEY_2 = singleKey<Any>("K2")
-        private val KEY_3 = singleKey<Any>("K3")
-        private val REP_1 = repeatedKey<Any>("R1")
-        private val REP_2 = repeatedKey<Any>("R2")
+        private val KEY_1 = MetadataKey.single<Any>("K1")
+        private val KEY_2 = MetadataKey.single<Any>("K2")
+        private val KEY_3 = MetadataKey.single<Any>("K3")
+        private val REP_1 = MetadataKey.repeated<Any>("R1")
+        private val REP_2 = MetadataKey.repeated<Any>("R2")
     }
 
     @Nested inner class
@@ -130,7 +128,7 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
         fun `with distinct keys`() {
             val scope = FakeMetadata()
             repeat(28) { i -> // 28 is a max number of entries for the lightweight processor.
-                val key = singleKey<String>("K$i")
+                val key = MetadataKey.single<String>("K$i")
                 val value = "v$i"
                 scope.add(key, value)
             }
@@ -151,7 +149,7 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
         // the same repeated key 14 times. This means (N/2)^2 key accesses.
         val scope = FakeMetadata()
         for (n in 0..13) {
-            val key = singleKey<String>("K$n")
+            val key = MetadataKey.single<String>("K$n")
             val value = "v$n"
             scope.add(key, value)
         }

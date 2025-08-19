@@ -27,8 +27,8 @@
 package io.spine.logging.backend
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
-import io.spine.logging.jvm.MetadataKey
-import io.spine.logging.jvm.checkCannotRepeat
+import io.spine.logging.MetadataKey
+import io.spine.logging.checkCannotRepeat
 
 /**
  * Callback API for logger backend implementations to handle metadata keys/values.

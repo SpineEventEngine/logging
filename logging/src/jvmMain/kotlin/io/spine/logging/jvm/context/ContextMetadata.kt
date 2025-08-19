@@ -149,7 +149,7 @@ private class ImmutableScopeMetadata(private val entries: Array<Entry<*>?>) : Co
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : Any> findValue(key: MetadataKey<T>): T? {
-        checkCannotRepeat(key)
+        io.spine.logging.checkCannotRepeat(key)
         for (n in entries.indices.reversed()) {
             val e = entries[n]!!
             if (e.key == key) {
@@ -191,7 +191,7 @@ private class SingletonMetadata<T : Any>(key: MetadataKey<T>, value: T) : Contex
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : Any> findValue(key: MetadataKey<T>): T? {
-        checkCannotRepeat(key)
+        io.spine.logging.checkCannotRepeat(key)
         return if (entry.key == key) entry.value as T else null
     }
 
@@ -225,7 +225,7 @@ private object EmptyMetadata : ContextMetadata() {
 
     override fun <T : Any> findValue(key: MetadataKey<T>): T? {
         // For consistency, do the same checks as for non-empty instances.
-        checkCannotRepeat(key)
+        io.spine.logging.checkCannotRepeat(key)
         return null
     }
 
