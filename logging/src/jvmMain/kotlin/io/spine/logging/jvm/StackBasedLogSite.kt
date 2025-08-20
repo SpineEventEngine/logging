@@ -26,6 +26,7 @@
 
 package io.spine.logging.jvm
 
+import io.spine.logging.LogSite
 import io.spine.logging.StackTraceElement
 import kotlin.math.max
 
@@ -51,7 +52,7 @@ import kotlin.math.max
  */
 internal class StackBasedLogSite(
     private val element: StackTraceElement
-) : JvmLogSite() {
+) : LogSite() {
 
     override val className: String
         get() = element.className
@@ -62,7 +63,7 @@ internal class StackBasedLogSite(
     /**
      * Prohibits negative numbers (which can appear in stack trace elements) from being returned.
      */
-    override val lineNumber: Int = max(element.lineNumber, UNKNOWN_LINE)
+    override val lineNumber: Int = max(element.lineNumber, LogSite.UNKNOWN_LINE)
 
     override val fileName: String?
         get() = element.fileName
