@@ -65,7 +65,7 @@ public class RecursionDepth private constructor() : Closeable {
             val depth = holder.get()
             if (++depth.value == 0) {
                 throw AssertionError(
-                    "Overflow of RecursionDepth (possible error in core library)"
+                    "Overflow of `RecursionDepth` (possible error in core library)."
                 )
             }
             return depth
@@ -84,6 +84,8 @@ public class RecursionDepth private constructor() : Closeable {
             value -= 1
             return
         }
-        throw AssertionError("Mismatched calls to RecursionDepth (possible error in core library)")
+        throw AssertionError(
+            "Mismatched calls to `RecursionDepth` (possible error in core library)."
+        )
     }
 }
