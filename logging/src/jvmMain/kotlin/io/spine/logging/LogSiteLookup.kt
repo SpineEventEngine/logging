@@ -41,7 +41,7 @@ public actual object LogSiteLookup {
      * the [LogSite.Invalid] instance.
      */
     public actual fun callerOf(loggingApi: KClass<*>): LogSite {
-        return Platform.getCallerFinder().findLogSite(loggingApi.java, 0)
+        return Platform.getCallerFinder().findLogSite(loggingApi, 0)
     }
 
     /**
@@ -52,7 +52,7 @@ public actual object LogSiteLookup {
      */
     public actual fun logSite(): LogSite {
         return Platform.getCallerFinder().findLogSite(
-            LogSiteLookup::class.java,
+            LogSiteLookup::class,
             0
         )
     }

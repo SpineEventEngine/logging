@@ -384,7 +384,7 @@ protected constructor(
             // From the point at which we call inferLogSite() we can skip 1 additional method
             // (the `shouldLog()` method itself) when looking up the stack to find the log() method.
             logSiteInfo = checkNotNull(
-                Platform.getCallerFinder().findLogSite(LogContext::class.java, 1),
+                Platform.getCallerFinder().findLogSite(LogContext::class, 1),
                 "A logger backend must not return a null `LogSite`."
             )
         }

@@ -30,6 +30,7 @@ import com.google.errorprone.annotations.Immutable
 import com.google.errorprone.annotations.ThreadSafe
 import io.spine.logging.jvm.AbstractLogger
 import io.spine.logging.LogSite
+import kotlin.reflect.KClass
 
 /**
  * API for determining the logging class and log statement sites,
@@ -80,7 +81,7 @@ public abstract class LogCallerFinder {
      * @throws IllegalStateException If there was no caller of the specified logged passed
      *         on the stack (which may occur if the logger class was invoked directly by JNI).
      */
-    public abstract fun findLoggingClass(loggerClass: Class<out AbstractLogger<*>>): String
+    public abstract fun findLoggingClass(loggerClass: KClass<out AbstractLogger<*>>): String
 
     /**
      * Returns a LogSite found from the current stack trace for the caller of the log() method
@@ -92,5 +93,5 @@ public abstract class LogCallerFinder {
      * @return A log site inferred from the stack, or [io.spine.logging.LogSite.Invalid] if no log site
      *         can be determined.
      */
-    public abstract fun findLogSite(loggerApi: Class<*>, stackFramesToSkip: Int): LogSite
+    public abstract fun findLogSite(loggerApi: KClass<*>, stackFramesToSkip: Int): LogSite
 }
