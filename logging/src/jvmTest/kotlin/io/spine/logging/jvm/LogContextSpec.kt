@@ -57,6 +57,7 @@ import java.lang.System.currentTimeMillis
 import io.spine.logging.Level.Companion.INFO
 import io.spine.logging.Level.Companion.WARNING
 import io.spine.logging.LogSite
+import io.spine.logging.StackTraceElement
 import kotlin.time.DurationUnit.MILLISECONDS
 import kotlin.time.DurationUnit.SECONDS
 import kotlin.time.toTimeUnit

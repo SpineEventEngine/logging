@@ -30,6 +30,7 @@ import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.collections.shouldNotContainDuplicates
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.spine.logging.StackTraceElement
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 

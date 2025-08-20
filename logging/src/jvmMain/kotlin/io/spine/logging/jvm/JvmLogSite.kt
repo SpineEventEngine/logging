@@ -34,6 +34,7 @@ import io.spine.logging.jvm.JvmLogSite.Companion.callerOf
 import io.spine.logging.jvm.JvmLogSite.Companion.invalid
 import io.spine.logging.jvm.JvmLogSite.Companion.logSite
 import io.spine.logging.backend.Platform
+import io.spine.logging.StackTraceElement
 import kotlin.reflect.KClass
 
 /**

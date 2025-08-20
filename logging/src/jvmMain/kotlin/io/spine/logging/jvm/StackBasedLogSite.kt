@@ -26,10 +26,11 @@
 
 package io.spine.logging.jvm
 
+import io.spine.logging.StackTraceElement
 import kotlin.math.max
 
 /**
- * A stack based log site which uses information from a given [StackTraceElement].
+ * A stack-based log site which uses information from a given [StackTraceElement].
  *
  * Unlike truly unique injected log sites, `StackBasedLogSite` falls back to using
  * the class name, method name and line number for `equals()` and `hashCode()`.
