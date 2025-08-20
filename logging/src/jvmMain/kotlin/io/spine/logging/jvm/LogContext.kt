@@ -36,9 +36,10 @@ import io.spine.logging.LoggingApi
 import io.spine.logging.LoggingDomain
 import io.spine.logging.LoggingScope
 import io.spine.logging.LoggingScopeProvider
+import io.spine.logging.MetadataKey
+import io.spine.logging.MetadataKey.Companion.single
 import io.spine.logging.SpecializedLogSiteKey
 import io.spine.logging.StackSize
-import io.spine.logging.jvm.injectedLogSite
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.Metadata
 import io.spine.logging.backend.Platform
@@ -46,8 +47,6 @@ import io.spine.logging.jvm.context.Tags
 import io.spine.logging.util.Checks.checkNotNull
 import io.spine.reflect.CallerFinder.stackForCallerOf
 import kotlin.time.DurationUnit
-import io.spine.logging.MetadataKey
-import io.spine.logging.MetadataKey.Companion.single
 
 /**
  * The base context for a logging statement, which implements the base logging API.

@@ -28,14 +28,13 @@ package io.spine.logging.backend.system.given
 
 import com.google.errorprone.annotations.Immutable
 import com.google.errorprone.annotations.ThreadSafe
-import io.spine.logging.backend.LogCallerFinder
-import io.spine.logging.backend.Platform
-import io.spine.logging.jvm.AbstractLogger
 import io.spine.logging.LogSite
+import io.spine.logging.backend.LogCallerFinder
+import io.spine.logging.jvm.AbstractLogger
 import kotlin.reflect.KClass
 
 /**
- * No-op implementation of [Platform.LogCallerFinder].
+ * No-op implementation of [LogCallerFinder].
  */
 @Immutable
 @ThreadSafe

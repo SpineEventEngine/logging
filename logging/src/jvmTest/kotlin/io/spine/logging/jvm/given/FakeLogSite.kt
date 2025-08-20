@@ -31,7 +31,7 @@ import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 
 /**
- * A simplified implementation of [JvmLogSite] for testing.
+ * A simplified implementation of [LogSite] for testing.
  *
  * @see <a href="http://rb.gy/wal1a">Original Java code of Google Flogger</a> for historical context.
  */

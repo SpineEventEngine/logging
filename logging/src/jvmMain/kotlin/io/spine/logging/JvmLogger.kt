@@ -27,7 +27,6 @@
 package io.spine.logging
 
 import com.google.errorprone.annotations.CheckReturnValue
-import io.spine.logging.LogSiteLookup
 import io.spine.logging.jvm.Middleman
 import io.spine.logging.jvm.injectedLogSite
 import kotlin.reflect.KClass

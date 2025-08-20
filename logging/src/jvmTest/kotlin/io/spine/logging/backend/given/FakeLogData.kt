@@ -66,24 +66,6 @@ class FakeLogData : LogData {
     }
 
     @CanIgnoreReturnValue
-    fun setTimestampNanos(timestampNanos: Long): FakeLogData {
-        this.timestampNanos = timestampNanos
-        return this
-    }
-
-    @CanIgnoreReturnValue
-    fun setLevel(level: Level): FakeLogData {
-        this.level = level
-        return this
-    }
-
-    @CanIgnoreReturnValue
-    fun setLogSite(logSite: LogSite): FakeLogData {
-        this.logSite = logSite
-        return this
-    }
-
-    @CanIgnoreReturnValue
     fun <T : Any> addMetadata(key: MetadataKey<T>, value: Any): FakeLogData {
         metadata.add(key, key.cast(value)!!)
         return this
