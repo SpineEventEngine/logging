@@ -154,14 +154,14 @@ private class ApiImpl(private val delegate: Middleman.Api): JvmLogger.Api {
 
     override fun log() =
         delegate
-            .withInjectedLogSite(JvmLogSite.callerOf(ApiImpl::class.java))
+            .withInjectedLogSite(JvmLogSite.callerOf(ApiImpl::class))
             .log()
 
     override fun log(message: () -> String?) {
         if (isEnabled()) {
             val prefix = loggingDomain.messagePrefix
             delegate
-                .withInjectedLogSite(JvmLogSite.callerOf(ApiImpl::class.java))
+                .withInjectedLogSite(JvmLogSite.callerOf(ApiImpl::class))
                 .log { prefix + message.invoke() }
         }
     }

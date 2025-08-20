@@ -60,7 +60,7 @@ internal class JvmLogSiteSpec {
 
     @Test
     fun `return 'INVALID' log site if the caller not found`() {
-        callerOf(String::class.java) shouldBe JvmLogSite.invalid
+        callerOf(String::class) shouldBe JvmLogSite.invalid
     }
 
     @Test
@@ -82,7 +82,7 @@ internal class JvmLogSiteSpec {
 private object MyLogUtil {
 
     val callerLogSite: LogSite
-        get() = callerOf(MyLogUtil::class.java)
+        get() = callerOf(MyLogUtil::class)
 
     val callerLogSiteWrapped: LogSite
         get() = callerLogSite

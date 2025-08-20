@@ -34,6 +34,7 @@ import io.spine.logging.jvm.JvmLogSite.Companion.callerOf
 import io.spine.logging.jvm.JvmLogSite.Companion.invalid
 import io.spine.logging.jvm.JvmLogSite.Companion.logSite
 import io.spine.logging.backend.Platform
+import kotlin.reflect.KClass
 
 /**
  * A value type which represents the location of a single log statement.
@@ -153,7 +154,7 @@ public abstract class JvmLogSite : LogSite, LogSiteKey {
          * ```kotlin
          * fun logAndSomethingElse(String message, Object... args) {
          *   logger.atInfo()
-         *       .withInjectedLogSite(callerOf(MyLoggingHelper.class))
+         *       .withInjectedLogSite(callerOf(MyLoggingHelper::class))
          *       .logVarargs(message, args)
          * }
          * ```
@@ -190,9 +191,9 @@ public abstract class JvmLogSite : LogSite, LogSiteKey {
          *        logging API was not found.
          */
         @JvmStatic
-        public fun callerOf(loggingApi: Class<*>): LogSite {
-            // Can't skip anything here since someone could pass in `LogSite.class`.
-            return Platform.getCallerFinder().findLogSite(loggingApi::class, 0)
+        public fun callerOf(loggingApi: KClass<*>): LogSite {
+            // Can't skip anything here since someone could pass in `LogSite::class`.
+            return Platform.getCallerFinder().findLogSite(loggingApi, 0)
         }
 
         /**
