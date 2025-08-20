@@ -30,7 +30,9 @@ import io.spine.logging.backend.Platform
 import kotlin.reflect.KClass
 
 /**
- * Determines log sites for the current line of code using Flogger utils.
+ * Determines log sites for the current line of code using
+ * [LogCallerFinder][io.spine.logging.backend.LogCallerFinder]
+ * obtained from a [Platform].
  */
 public actual object LogSiteLookup {
 
