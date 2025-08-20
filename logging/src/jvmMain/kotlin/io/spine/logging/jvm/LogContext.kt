@@ -38,7 +38,7 @@ import io.spine.logging.LoggingScope
 import io.spine.logging.LoggingScopeProvider
 import io.spine.logging.SpecializedLogSiteKey
 import io.spine.logging.StackSize
-import io.spine.logging.jvm.JvmLogSite.Companion.injectedLogSite
+import io.spine.logging.jvm.injectedLogSite
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.Metadata
 import io.spine.logging.backend.Platform
@@ -389,7 +389,7 @@ protected constructor(
             )
         }
         var logSiteKey: LogSiteKey? = null
-        if (logSiteInfo != JvmLogSite.invalid) {
+        if (logSiteInfo != LogSite.Invalid) {
             logSiteKey = logSiteInfo
             // Log site keys are only modified when we have metadata in the log statement.
             if (_metadata != null && _metadata!!.size() > 0) {
@@ -452,12 +452,7 @@ protected constructor(
         // It MUST be allowed for a caller to specify the "INVALID" log site to disable
         // log site lookup at this log statement.
         if (this.logSiteInfo == null) {
-            val jvmSite = when (logSite) {
-                is JvmLogSite -> logSite
-                is LogSite.Invalid -> JvmLogSite.invalid
-                else -> JvmLogSite.invalid
-            }
-            this.logSiteInfo = jvmSite
+            this.logSiteInfo = logSite
         }
         return api()
     }
