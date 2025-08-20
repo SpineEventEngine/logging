@@ -31,7 +31,7 @@ import com.google.errorprone.annotations.ThreadSafe
 import io.spine.logging.backend.LogCallerFinder
 import io.spine.logging.backend.Platform
 import io.spine.logging.jvm.AbstractLogger
-import io.spine.logging.jvm.JvmLogSite
+import io.spine.logging.LogSite
 import kotlin.reflect.KClass
 
 /**
@@ -50,6 +50,6 @@ internal class NoOpCallerFinder : LogCallerFinder() {
     /**
      * Throws [IllegalStateException].
      */
-    override fun findLogSite(loggerApi: KClass<*>, stackFramesToSkip: Int): JvmLogSite =
+    override fun findLogSite(loggerApi: KClass<*>, stackFramesToSkip: Int): LogSite =
         throw UnsupportedOperationException()
 }

@@ -60,7 +60,7 @@ internal class JvmLogSiteSpec {
 
     @Test
     fun `return 'INVALID' log site if the caller not found`() {
-        callerOf(String::class) shouldBe JvmLogSite.invalid
+        callerOf(String::class) shouldBe LogSite.Invalid
     }
 
     @Test
@@ -89,5 +89,5 @@ private object MyLogUtil {
 }
 
 private fun notAllowedCaller(): LogSite {
-    return JvmLogSite.injectedLogSite("foo", "bar", 42, "baz.kt")
+    return injectedLogSite("foo", "bar", 42, "baz.kt")
 }

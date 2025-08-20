@@ -659,9 +659,9 @@ internal class LogContextSpec {
         // We do not expect this to ever happen in real code though.
         for (i in 0..6) {
             // Log every 2nd (0, 2, 4, 6)
-            logHelper(logger, JvmLogSite.logSite(), 2, "Foo: $i")
+            logHelper(logger, io.spine.logging.LogSiteLookup.logSite(), 2, "Foo: $i")
             // Log every 3rd (0, 3, 6)
-            logHelper(logger, JvmLogSite.logSite(), 3, "Bar: $i")
+            logHelper(logger, io.spine.logging.LogSiteLookup.logSite(), 3, "Bar: $i")
         }
         backend.loggedCount shouldBe 7
     }

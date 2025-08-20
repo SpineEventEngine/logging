@@ -42,8 +42,8 @@ import kotlin.math.max
  * - Line number information is stripped from the class file.
  *
  * This class should not be used directly outside the core Logging libraries.
- * If you need to generate a [JvmLogSite] from a [StackTraceElement], use
- * `JvmLogSite.logSiteFrom(StackTraceElement)` for proper log site creation.
+ * If you need to generate a [LogSite] from a [StackTraceElement], use
+ * `LogSite.logSiteFrom(StackTraceElement)` for proper log site creation.
  *
  * @property element The stack trace element to use for the log site.
  *
