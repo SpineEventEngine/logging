@@ -102,7 +102,7 @@ public abstract class JvmLogSite : LogSite, LogSiteKey {
          * cannot be determined.
          */
         @JvmField
-        public val invalid: LogSite = InvalidLogSite
+        public val invalid: LogSite = LogSite.Invalid
 
         /**
          * Creates a log site injected from constants held in a class' constant pool.
@@ -242,7 +242,11 @@ public abstract class JvmLogSite : LogSite, LogSiteKey {
         public fun logSite(): LogSite {
             // Don't call "callerOf()" to avoid making another stack entry.
             val logSite = Platform.getCallerFinder().findLogSite(Companion::class, 0)
-            return if (logSite == LogSite.Invalid) invalid else logSite as JvmLogSite
+            return if (logSite == LogSite.Invalid) {
+                LogSite.Invalid
+            } else {
+                logSite
+            }
         }
 
         /**
@@ -254,7 +258,11 @@ public abstract class JvmLogSite : LogSite, LogSiteKey {
          */
         @JvmStatic
         public fun logSiteFrom(e: StackTraceElement?): LogSite {
-            return if (e != null) StackBasedLogSite(e) else invalid
+            return if (e != null) {
+                StackBasedLogSite(e)
+            } else {
+                LogSite.Invalid
+            }
         }
     }
 }
