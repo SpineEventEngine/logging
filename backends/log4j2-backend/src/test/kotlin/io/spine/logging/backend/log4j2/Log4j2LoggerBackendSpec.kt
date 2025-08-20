@@ -32,7 +32,7 @@ import io.spine.logging.MetadataKey
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
 import io.spine.logging.backend.log4j2.given.StubLogData
 import io.spine.logging.backend.log4j2.given.StubLogSite
-import io.spine.logging.jvm.JvmLogSite
+import io.spine.logging.LogSite
 import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.toLevel
 import java.util.concurrent.atomic.AtomicInteger
@@ -162,7 +162,7 @@ internal class Log4j2LoggerBackendSpec {
             testLogSite(logSite)
         }
 
-        private fun testLogSite(logSite: JvmLogSite) {
+        private fun testLogSite(logSite: LogSite) {
             val data = StubLogData("")
                 .setLogSite(logSite)
             backend.log(data)

@@ -70,7 +70,7 @@ internal class StackBasedLogSiteSpec {
         val lineNumber = -3 // Can also be unknown, represented with a negative value.
         val logSite = stackBasedLogSite(CLASS_NAME, METHOD_NAME, fileName, lineNumber)
         logSite.fileName.shouldBeNull()
-        logSite.lineNumber shouldBe JvmLogSite.UNKNOWN_LINE
+        logSite.lineNumber shouldBe io.spine.logging.LogSite.UNKNOWN_LINE
     }
 
     @Test

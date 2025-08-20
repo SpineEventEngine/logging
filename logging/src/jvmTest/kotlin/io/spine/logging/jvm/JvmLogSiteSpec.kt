@@ -26,9 +26,8 @@
 
 package io.spine.logging.jvm
 
-import io.spine.logging.jvm.JvmLogSite.Companion.callerOf
-import io.spine.logging.jvm.JvmLogSite.Companion.logSite
-import io.spine.logging.jvm.JvmLogSite.Companion.logSiteFrom
+import io.spine.logging.LogSiteLookup.callerOf
+import io.spine.logging.LogSiteLookup.logSite
 import io.spine.logging.jvm.MyLogUtil.callerLogSite
 import io.spine.logging.jvm.MyLogUtil.callerLogSiteWrapped
 import io.kotest.matchers.shouldBe
@@ -67,7 +66,7 @@ internal class JvmLogSiteSpec {
     @Test
     fun `detect log site using the given stack trace element`() {
         val element = StackTraceElement("class", "method", "file", 42)
-        val logSite = logSiteFrom(element)
+        val logSite = StackBasedLogSite(element)
         logSite.className shouldBe element.className
         logSite.methodName shouldBe element.methodName
         logSite.fileName shouldBe element.fileName

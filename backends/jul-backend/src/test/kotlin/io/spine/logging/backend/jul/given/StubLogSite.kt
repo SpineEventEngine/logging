@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.jul.given
 
-import io.spine.logging.jvm.JvmLogSite
+import io.spine.logging.LogSite
 import java.util.*
 
 /**
@@ -39,7 +39,7 @@ internal class StubLogSite(
     override val methodName: String,
     override val lineNumber: Int,
     private val sourcePath: String?
-) : JvmLogSite() {
+) : LogSite() {
 
     override val fileName: String? = sourcePath
 

@@ -30,7 +30,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.logging.Level
 import io.spine.logging.MetadataKey
 import io.spine.logging.backend.LogData
-import io.spine.logging.jvm.JvmLogSite
+import io.spine.logging.LogSite
 import io.spine.logging.jvm.LogContext
 
 /**
@@ -46,7 +46,7 @@ internal class StubLogData : LogData {
     private var _literalArgument: Any? = null
     override var timestampNanos = 0L
     override val metadata = StubMetadata()
-    override var logSite: JvmLogSite = LOG_SITE
+    override var logSite: LogSite = LOG_SITE
 
     companion object {
         private const val LOGGER_NAME = "io.spine.LoggerName"
@@ -71,7 +71,7 @@ internal class StubLogData : LogData {
     }
 
     @CanIgnoreReturnValue
-    fun setLogSite(logSite: JvmLogSite): StubLogData {
+    fun setLogSite(logSite: LogSite): StubLogData {
         this.logSite = logSite
         return this
     }
