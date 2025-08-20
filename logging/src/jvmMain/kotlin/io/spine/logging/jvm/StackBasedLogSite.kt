@@ -63,7 +63,7 @@ internal class StackBasedLogSite(
     /**
      * Prohibits negative numbers (which can appear in stack trace elements) from being returned.
      */
-    override val lineNumber: Int = max(element.lineNumber, LogSite.UNKNOWN_LINE)
+    override val lineNumber: Int = max(element.lineNumber, UNKNOWN_LINE)
 
     override val fileName: String?
         get() = element.fileName
