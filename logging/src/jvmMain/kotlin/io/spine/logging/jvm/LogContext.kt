@@ -228,22 +228,22 @@ protected constructor(
      * [LogSiteMap]. This will correctly handle "specialized" log-site keys and remove the risk
      * of memory leaks due to retaining unused log site data indefinitely.
      *
-     * Note that the given `logSiteKey` can be more specific than the [JvmLogSite]
-     * of a log statement (i.e. a single log statement can have multiple distinct versions of
-     * its state). See [per] for more information.
+     * Note that the given `logSiteKey` can be more specific than the [LogSite] of a log statement
+     * (i.e., a single log statement can have multiple distinct versions of its state).
+     * See [per] for more information.
      *
      * If a log statement cannot be identified uniquely, then `logSiteKey` will be `null`, and
      * this method must behave exactly as if the corresponding fluent method had not been
      * invoked. On a system in which log site information is *unavailable*:
      *
      * ```kotlin
-     * logger.atInfo().every(100).withCause(e).log("Some message")
+     * logger.atInfo().every(100).withCause(e).log { "Some message" }
      * ```
      *
      * should behave exactly the same as:
      *
      * ```kotlin
-     * logger.atInfo().withCause(e).log("Some message")
+     * logger.atInfo().withCause(e).log { "Some message" }
      * ```
      *
      * ## Rate Limiting and Skipped Logs
