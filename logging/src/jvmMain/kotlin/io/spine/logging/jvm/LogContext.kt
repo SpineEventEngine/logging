@@ -36,9 +36,10 @@ import io.spine.logging.LoggingApi
 import io.spine.logging.LoggingDomain
 import io.spine.logging.LoggingScope
 import io.spine.logging.LoggingScopeProvider
+import io.spine.logging.MetadataKey
+import io.spine.logging.MetadataKey.Companion.single
 import io.spine.logging.SpecializedLogSiteKey
 import io.spine.logging.StackSize
-import io.spine.logging.jvm.JvmLogSite.Companion.injectedLogSite
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.Metadata
 import io.spine.logging.backend.Platform
@@ -46,7 +47,6 @@ import io.spine.logging.jvm.context.Tags
 import io.spine.logging.util.Checks.checkNotNull
 import io.spine.reflect.CallerFinder.stackForCallerOf
 import kotlin.time.DurationUnit
-import io.spine.logging.MetadataKey
 
 /**
  * The base context for a logging statement, which implements the base logging API.
@@ -92,7 +92,7 @@ protected constructor(
     /**
      * The log site information for this log statement (set immediately prior to post-processing).
      */
-    private var logSiteInfo: JvmLogSite? = null
+    private var logSiteInfo: LogSite? = null
 
     /**
      * Rate limit status (only set if rate limiting occurs).
@@ -145,7 +145,7 @@ protected constructor(
     public final override val loggerName: String
         get() = getLogger().getName()
 
-    public final override val logSite: JvmLogSite
+    public final override val logSite: LogSite
         get() = logSiteInfo ?: error(
             "Cannot request log site information prior to `postProcess()`."
         )
@@ -227,22 +227,22 @@ protected constructor(
      * [LogSiteMap]. This will correctly handle "specialized" log-site keys and remove the risk
      * of memory leaks due to retaining unused log site data indefinitely.
      *
-     * Note that the given `logSiteKey` can be more specific than the [JvmLogSite]
-     * of a log statement (i.e. a single log statement can have multiple distinct versions of
-     * its state). See [per] for more information.
+     * Note that the given `logSiteKey` can be more specific than the [LogSite] of a log statement
+     * (i.e., a single log statement can have multiple distinct versions of its state).
+     * See [per] for more information.
      *
      * If a log statement cannot be identified uniquely, then `logSiteKey` will be `null`, and
      * this method must behave exactly as if the corresponding fluent method had not been
      * invoked. On a system in which log site information is *unavailable*:
      *
      * ```kotlin
-     * logger.atInfo().every(100).withCause(e).log("Some message")
+     * logger.atInfo().every(100).withCause(e).log { "Some message" }
      * ```
      *
      * should behave exactly the same as:
      *
      * ```kotlin
-     * logger.atInfo().withCause(e).log("Some message")
+     * logger.atInfo().withCause(e).log { "Some message" }
      * ```
      *
      * ## Rate Limiting and Skipped Logs
@@ -383,12 +383,12 @@ protected constructor(
             // From the point at which we call inferLogSite() we can skip 1 additional method
             // (the `shouldLog()` method itself) when looking up the stack to find the log() method.
             logSiteInfo = checkNotNull(
-                Platform.getCallerFinder().findLogSite(LogContext::class.java, 1),
+                Platform.getCallerFinder().findLogSite(LogContext::class, 1),
                 "A logger backend must not return a null `LogSite`."
             )
         }
         var logSiteKey: LogSiteKey? = null
-        if (logSiteInfo != JvmLogSite.invalid) {
+        if (logSiteInfo != LogSite.Invalid) {
             logSiteKey = logSiteInfo
             // Log site keys are only modified when we have metadata in the log statement.
             if (_metadata != null && _metadata!!.size() > 0) {
@@ -451,12 +451,7 @@ protected constructor(
         // It MUST be allowed for a caller to specify the "INVALID" log site to disable
         // log site lookup at this log statement.
         if (this.logSiteInfo == null) {
-            val jvmSite = when (logSite) {
-                is JvmLogSite -> logSite
-                is LogSite.Invalid -> JvmLogSite.invalid
-                else -> JvmLogSite.invalid
-            }
-            this.logSiteInfo = jvmSite
+            this.logSiteInfo = logSite
         }
         return api()
     }
@@ -594,8 +589,7 @@ protected constructor(
          * This value is set by [io.spine.logging.LoggingApi.withCause].
          */
         @JvmField
-        public val LOG_CAUSE: MetadataKey<Throwable> =
-            MetadataKey.single("cause", Throwable::class)
+        public val LOG_CAUSE: MetadataKey<Throwable> = single<Throwable>("cause")
 
         /**
          * The key associated with a rate limiting counter for "1-in-N" rate limiting.
@@ -603,8 +597,7 @@ protected constructor(
          * The value is set by [io.spine.logging.LoggingApi.every].
          */
         @JvmField
-        public val LOG_EVERY_N: MetadataKey<Int> =
-            MetadataKey.single("ratelimit_count", Int::class)
+        public val LOG_EVERY_N: MetadataKey<Int> = single<Int>("ratelimit_count")
 
         /**
          * The key associated with a rate limiting counter for "1-in-N" randomly sampled rate
@@ -613,8 +606,7 @@ protected constructor(
          * The value is set by [io.spine.logging.LoggingApi.onAverageEvery].
          */
         @JvmField
-        public val LOG_SAMPLE_EVERY_N: MetadataKey<Int> =
-            MetadataKey.single("sampling_count", Int::class)
+        public val LOG_SAMPLE_EVERY_N: MetadataKey<Int> = single<Int>("sampling_count")
 
         /**
          * The key associated with a rate-limiting period for "at most once every N" rate limiting.
@@ -623,7 +615,7 @@ protected constructor(
          */
         @JvmField
         public val LOG_AT_MOST_EVERY: MetadataKey<RateLimitPeriod> =
-            MetadataKey.single("ratelimit_period", RateLimitPeriod::class)
+            single<RateLimitPeriod>("ratelimit_period")
 
         /**
          * The key associated with a count of rate limited logs.
@@ -631,8 +623,7 @@ protected constructor(
          * This is only public so backends can reference the key to control formatting.
          */
         @JvmField
-        public val SKIPPED_LOG_COUNT: MetadataKey<Int> =
-            MetadataKey.single("skipped", Int::class)
+        public val SKIPPED_LOG_COUNT: MetadataKey<Int> = single<Int>("skipped")
 
         /**
          * The key associated with a sequence of log site "grouping keys".
@@ -678,7 +669,7 @@ protected constructor(
          */
         @JvmField
         public val WAS_FORCED: MetadataKey<Boolean> =
-            MetadataKey.single("forced", Boolean::class)
+            single("forced", Boolean::class)
 
         /**
          * The key associated with any injected [Tags].
@@ -717,7 +708,7 @@ protected constructor(
          * statement.
          */
         internal val CONTEXT_STACK_SIZE: MetadataKey<StackSize> =
-            MetadataKey.single("stack_size", StackSize::class)
+            single("stack_size", StackSize::class)
     }
 
     public companion object {

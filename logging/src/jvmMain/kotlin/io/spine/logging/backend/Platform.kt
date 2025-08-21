@@ -27,15 +27,11 @@
 package io.spine.logging.backend
 
 import io.spine.logging.Level
-import io.spine.logging.jvm.AbstractLogger
-import io.spine.logging.jvm.JvmLogSite
 import io.spine.logging.jvm.context.ContextDataProvider
 import io.spine.logging.jvm.context.Tags
 import io.spine.logging.util.RecursionDepth
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import com.google.common.base.Preconditions.checkNotNull
-import com.google.errorprone.annotations.Immutable
-import com.google.errorprone.annotations.ThreadSafe
 import java.lang.reflect.InvocationTargetException
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
@@ -223,66 +219,6 @@ public abstract class Platform {
         @JvmStatic
         public fun getConfigInfo(): String =
             LazyHolder.INSTANCE.getConfigInfoImpl()
-    }
-
-    /**
-     * API for determining the logging class and log statement sites, return from [getCallerFinder].
-     *
-     * These classes are immutable and thread-safe.
-     *
-     * This functionality is not provided directly by the `Platform` API because doing so would
-     * require several additional levels to be added to the stack before the implementation was
-     * reached. This is problematic for Android, which has only limited stack analysis. By allowing
-     * callers to resolve the implementation early and then call an instance directly (this is not
-     * an interface), we reduce the number of elements in the stack before the caller is found.
-     *
-     * ## Essential Implementation Restrictions
-     *
-     * Any implementation of this API *MUST* follow the rules listed below to avoid any risk of
-     * re-entrant code calling during logger initialization. Failure to do so risks creating complex,
-     * hard to debug, issues with Flogger configuration.
-     *
-     * 1. Implementations *MUST NOT* attempt any logging in static methods or constructors.
-     * 2. Implementations *MUST NOT* statically depend on any unknown code.
-     * 3. Implementations *MUST NOT* depend on any unknown code in constructors.
-     *
-     * Note that logging and calling arbitrary unknown code (which might log) are permitted inside
-     * the instance methods of this API, since they are not called during platform initialization.
-     * The
-     * easiest way to achieve this is to simply avoid having any non-trivial static fields or any
-     * instance fields at all in the implementation.
-     *
-     * While this sounds onerous it is not difficult to achieve because this API is a singleton, and
-     * can delay any actual work until its methods are called. For example, if any additional state is
-     * required in the implementation, it can be held via a "lazy holder" to defer initialization.
-     */
-    @Immutable
-    @ThreadSafe
-    public abstract class LogCallerFinder {
-
-        /**
-         * Returns the name of the immediate caller of the given logger class.
-         *
-         * This is useful when determining the class name with which to create a logger backend.
-         *
-         * @param loggerClass The class containing the log() methods whose caller we need to find.
-         * @return The name of the class called the specified logger.
-         * @throws IllegalStateException If there was no caller of the specified logged passed
-         *         on the stack (which may occur if the logger class was invoked directly by JNI).
-         */
-        public abstract fun findLoggingClass(loggerClass: Class<out AbstractLogger<*>>): String
-
-        /**
-         * Returns a LogSite found from the current stack trace for the caller of the log() method
-         * on the given logging class.
-         *
-         * @param loggerApi The class containing the log() methods whose caller we need to find.
-         * @param stackFramesToSkip The number of method calls which exist on the stack between the
-         *        `log()` method, and the point at which this method is invoked.
-         * @return A log site inferred from the stack, or [JvmLogSite.invalid] if no log site
-         *         can be determined.
-         */
-        public abstract fun findLogSite(loggerApi: Class<*>, stackFramesToSkip: Int): JvmLogSite
     }
 
     /**

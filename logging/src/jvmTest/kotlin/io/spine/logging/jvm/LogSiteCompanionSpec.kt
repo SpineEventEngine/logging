@@ -26,23 +26,24 @@
 
 package io.spine.logging.jvm
 
-import io.spine.logging.jvm.JvmLogSite.Companion.callerOf
-import io.spine.logging.jvm.JvmLogSite.Companion.logSite
-import io.spine.logging.jvm.JvmLogSite.Companion.logSiteFrom
+import io.spine.logging.LogSiteLookup.callerOf
+import io.spine.logging.LogSiteLookup.logSite
 import io.spine.logging.jvm.MyLogUtil.callerLogSite
 import io.spine.logging.jvm.MyLogUtil.callerLogSiteWrapped
 import io.kotest.matchers.shouldBe
+import io.spine.logging.LogSite
+import io.spine.logging.StackTraceElement
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for the utility methods in [JvmLogSite.Companion].
+ * Tests for the utility methods in [LogSite.Companion].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/LogSitesTest.java">
  *     Original Java code of Google Flogger</a> for historical context.
  */
-@DisplayName("`JvmLogSite` companion object should")
-internal class JvmLogSiteSpec {
+@DisplayName("`LogSite` companion object should")
+internal class LogSiteCompanionSpec {
 
     @Test
     fun `return log site for the current line of code`() {
@@ -59,13 +60,13 @@ internal class JvmLogSiteSpec {
 
     @Test
     fun `return 'INVALID' log site if the caller not found`() {
-        callerOf(String::class.java) shouldBe JvmLogSite.invalid
+        callerOf(String::class) shouldBe LogSite.Invalid
     }
 
     @Test
     fun `detect log site using the given stack trace element`() {
         val element = StackTraceElement("class", "method", "file", 42)
-        val logSite = logSiteFrom(element)
+        val logSite = StackBasedLogSite(element)
         logSite.className shouldBe element.className
         logSite.methodName shouldBe element.methodName
         logSite.fileName shouldBe element.fileName
@@ -80,13 +81,13 @@ internal class JvmLogSiteSpec {
 
 private object MyLogUtil {
 
-    val callerLogSite: JvmLogSite
-        get() = callerOf(MyLogUtil::class.java)
+    val callerLogSite: LogSite
+        get() = callerOf(MyLogUtil::class)
 
-    val callerLogSiteWrapped: JvmLogSite
+    val callerLogSiteWrapped: LogSite
         get() = callerLogSite
 }
 
-private fun notAllowedCaller(): JvmLogSite {
-    return JvmLogSite.injectedLogSite("foo", "bar", 42, "baz.kt")
+private fun notAllowedCaller(): LogSite {
+    return injectedLogSite("foo", "bar", 42, "baz.kt")
 }

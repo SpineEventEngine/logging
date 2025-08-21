@@ -29,7 +29,7 @@ package io.spine.logging.backend.given
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.logging.Level
 import io.spine.logging.MetadataKey
-import io.spine.logging.jvm.JvmLogSite
+import io.spine.logging.LogSite
 import io.spine.logging.jvm.LogContext
 import io.spine.logging.backend.LogData
 import io.spine.logging.jvm.given.FakeLogSite
@@ -47,7 +47,7 @@ class FakeLogData : LogData {
     private var _literalArgument: Any? = null
     override var timestampNanos = 0L
     override val metadata = FakeMetadata()
-    override var logSite: JvmLogSite = LOG_SITE
+    override var logSite: LogSite = LOG_SITE
 
     companion object {
         private const val LOGGER_NAME = "io.spine.LoggerName"
@@ -63,24 +63,6 @@ class FakeLogData : LogData {
      */
     constructor(literalArgument: Any?) {
         this._literalArgument = literalArgument
-    }
-
-    @CanIgnoreReturnValue
-    fun setTimestampNanos(timestampNanos: Long): FakeLogData {
-        this.timestampNanos = timestampNanos
-        return this
-    }
-
-    @CanIgnoreReturnValue
-    fun setLevel(level: Level): FakeLogData {
-        this.level = level
-        return this
-    }
-
-    @CanIgnoreReturnValue
-    fun setLogSite(logSite: JvmLogSite): FakeLogData {
-        this.logSite = logSite
-        return this
     }
 
     @CanIgnoreReturnValue

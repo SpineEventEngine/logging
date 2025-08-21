@@ -26,6 +26,8 @@
 
 package io.spine.logging.jvm
 
+import io.spine.logging.LogSite
+
 /**
  * A log site implementation used for injected logging information during compile-time or
  * via agents.
@@ -48,7 +50,7 @@ internal class InjectedJvmLogSite(
     private val method: String,
     private val encodedLineNumber: Int,
     sourceFileName: String?
-) : JvmLogSite() {
+) : LogSite() {
 
     /**
      * Cached hash code value for optimized lookups.

@@ -28,9 +28,12 @@ package io.spine.logging.backend.system;
 
 import com.google.errorprone.annotations.Immutable;
 import com.google.errorprone.annotations.ThreadSafe;
+import io.spine.logging.backend.LogCallerFinder;
 import io.spine.logging.jvm.AbstractLogger;
-import io.spine.logging.jvm.JvmLogSite;
-import io.spine.logging.backend.Platform.LogCallerFinder;
+import io.spine.logging.LogSite;
+import io.spine.logging.InjectedLogSite;
+import kotlin.reflect.KClass;
+import kotlin.jvm.JvmClassMappingKt;
 
 import static io.spine.reflect.CallerFinder.findCallerOf;
 
@@ -53,24 +56,36 @@ public final class StackBasedCallerFinder extends LogCallerFinder {
   }
 
   @Override
-  public String findLoggingClass(Class<? extends AbstractLogger<?>> loggerClass) {
+  public String findLoggingClass(KClass<? extends AbstractLogger<?>> loggerClass) {
+    // Convert KClass to Java Class for compatibility with existing findCallerOf method
+    Class<? extends AbstractLogger<?>> javaClass = JvmClassMappingKt.getJavaClass(loggerClass);
     // We can skip at most only 1 method from the analysis, the inferLoggingClass() method itself.
-    var caller = findCallerOf(loggerClass, 1);
+    var caller = findCallerOf(javaClass, 1);
     if (caller != null) {
       // This might contain '$' for inner/nested classes, but that's okay.
       return caller.getClassName();
     }
-    throw new IllegalStateException("no caller found on the stack for: " + loggerClass.getName());
+    throw new IllegalStateException("no caller found on the stack for: " + javaClass.getName());
   }
 
   @Override
-  public JvmLogSite findLogSite(Class<?> loggerApi, int stackFramesToSkip) {
+  public LogSite findLogSite(KClass<?> loggerApi, int stackFramesToSkip) {
+    // Convert KClass to Java Class for compatibility with existing findCallerOf method
+    Class<?> javaClass = JvmClassMappingKt.getJavaClass(loggerApi);
     // Skip an additional stack frame because we create the Throwable inside this method, not at
     // the point that this method was invoked (which allows completely alternate implementations
     // to avoid even constructing the Throwable instance).
-    var caller = findCallerOf(loggerApi, stackFramesToSkip + 1);
+    var caller = findCallerOf(javaClass, stackFramesToSkip + 1);
     // Returns INVALID if "caller" is null (no caller found for given API class).
-    return JvmLogSite.logSiteFrom(caller);
+    if (caller == null) {
+      return LogSite.Invalid.INSTANCE;
+    }
+    return new InjectedLogSite(
+        caller.getClassName(),
+        caller.getMethodName(),
+        caller.getFileName(),
+        caller.getLineNumber()
+    );
   }
 
   @Override

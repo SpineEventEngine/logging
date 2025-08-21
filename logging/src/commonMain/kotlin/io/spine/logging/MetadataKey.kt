@@ -154,9 +154,10 @@ public open class MetadataKey<T : Any>(
     public fun canRepeat(): Boolean = canRepeat
 
     /**
-     * Emits one or more key/value pairs for the given metadata value. Call this method in
-     * preference to using [.emitRepeated] directly to protect against unbounded reentrant
-     * logging.
+     * Emits one or more key/value pairs for the given metadata value.
+     *
+     * Call this method in preference to using [emitRepeated] directly to protect
+     * against unbounded reentrant logging.
      */
     public fun safeEmit(value: T, kvh: KeyValueHandler) {
         if (isCustom && getCurrentRecursionDepth() > MAX_CUSTOM_META_DATAKEY_RECURSION_DEPTH) {
@@ -282,20 +283,15 @@ public open class MetadataKey<T : Any>(
         private const val MAX_CUSTOM_META_DATAKEY_RECURSION_DEPTH = 20
 
         /**
-         * Creates a key for a single piece of metadata. If metadata is set more than once using this
-         * key for the same log statement, the last set value will be the one used, and other values
+         * Creates a key for a single piece of metadata.
+         *
+         * If metadata is set more than once using this key for the same log statement,
+         * the last set value will be the one used, and other values
          * will be ignored (although callers should never rely on this behavior).
          *
          * Key instances behave like singletons, and two key instances with the same label will
          * still be considered distinct. The recommended approach is to always assign `MetadataKey`
          * instances to static final constants.
-         *
-         * When calling from Kotlin, please give preference to `MetadataKeysKt.singleKey()`.
-         * In Kotlin, there's no explicit difference between primitive and object classes.
-         *
-         * When compiling to JVM, it is resolved during the compilation. An accident passing of a
-         * potentially primitive class may lead to a runtime exception because metadata keys
-         * are used with generics.
          */
         @Suppress("UNCHECKED_CAST")
         public fun <T : Any> single(label: String, clazz: KClass<out T>): MetadataKey<T> =
@@ -304,7 +300,8 @@ public open class MetadataKey<T : Any>(
         /**
          * Creates a single instance of [MetadataKey] with the given [label].
          *
-         * @param T The type
+         * @param T The type of the key.
+         * @param label The label of the key.
          * @see [single]
          */
         public inline fun <reified T : Any> single(label: String): MetadataKey<T> =
@@ -319,14 +316,6 @@ public open class MetadataKey<T : Any>(
          * Key instances behave like singletons, and two key instances with the same label will
          * still be considered distinct. The recommended approach is to always assign `MetadataKey`
          * instances to static final constants.
-         *
-         * When calling from Kotlin, give preference to `MetadataKeysKt.repeatedKey()`.
-         *
-         * In Kotlin, there is no explicit difference between primitive and object classes.
-         *
-         * When compiling to JVM, it is resolved during the compilation.
-         * An accident passing of a potentially primitive class may lead to a runtime
-         * exception because metadata keys are used with generics.
          */
         @Suppress("UNCHECKED_CAST")
         public fun <T : Any> repeated(label: String, clazz: KClass<out T>): MetadataKey<T> =
@@ -386,5 +375,5 @@ private fun createBloomFilterMaskFromSystemHashcode(instance: Any): Long {
  * @throws IllegalStateException if the key supports repeated values.
  */
 internal fun checkCannotRepeat(key: MetadataKey<*>) {
-    check(!key.canRepeat) { "key $key does not support repeated values" }
+    check(!key.canRepeat) { "The key `$key` does not support repeated values." }
 }

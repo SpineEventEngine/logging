@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,34 +24,33 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.jul.given
+package io.spine.logging.jvm
 
+import com.google.errorprone.annotations.RestrictedApi
+import io.spine.annotation.Internal
 import io.spine.logging.LogSite
-import java.util.*
 
 /**
- * A simplified implementation of [LogSite] for testing.
+ * Creates a log site injected from constants held in a class' constant pool.
  *
- * @see <a href="http://rb.gy/wal1a">Original Java code of Google Flogger</a> for historical context.
+ * Used for compile-time log site injection, and by the agent.
+ *
+ * This is a non-deprecated replacement for the legacy JvmLogSite.injectedLogSite shim.
  */
-internal class StubLogSite(
-    override val className: String,
-    override val methodName: String,
-    override val lineNumber: Int,
-    private val sourcePath: String?
-) : LogSite() {
-
-    override val fileName: String? = sourcePath
-
-    override fun equals(other: Any?): Boolean {
-        if (other !is StubLogSite) {
-            return false
-        }
-        return className == other.className &&
-                methodName == other.methodName &&
-                lineNumber == other.lineNumber &&
-                sourcePath == other.sourcePath
-    }
-
-    override fun hashCode(): Int = Objects.hash(className, methodName, lineNumber, sourcePath)
-}
+@Internal
+@RestrictedApi(
+    explanation =
+        "This method is only used for log-site injection and should not be called directly.",
+    allowlistAnnotations = [LogSiteInjector::class]
+)
+public fun injectedLogSite(
+    internalClassName: String,
+    methodName: String,
+    encodedLineNumber: Int,
+    sourceFileName: String?
+): LogSite = InjectedJvmLogSite(
+    internalClassName,
+    methodName,
+    encodedLineNumber,
+    sourceFileName
+)

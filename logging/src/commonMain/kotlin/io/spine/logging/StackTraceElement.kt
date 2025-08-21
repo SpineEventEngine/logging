@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,27 +24,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
 /**
- * A singleton [JvmLogSite] instance used to indicate that valid log site information
- * cannot be determined.
+ * Platform-neutral representation of a stack trace element.
  *
- * This can be used to indicate that log site information is not available by injecting it
- * via `MiddlemanApi.withInjectedLogSite` which will suppress any further log site analysis
- * for that log statement. This is also returned if stack trace analysis fails for any reason.
- *
- * If a log statement does end up with invalid log site information, then any fluent logging
- * methods, which rely on being able to look up site-specific metadata will be disabled and
- * essentially become "no ops" for proper error handling.
+ * On JVM, this maps to [java.lang.StackTraceElement] via a typealias.
  */
-internal object InvalidLogSite : JvmLogSite() {
-
-    override val className: String = "<unknown class>"
-
-    override val methodName: String = "<unknown method>"
-
-    override val lineNumber: Int = UNKNOWN_LINE
-
-    override val fileName: String? = null
-}
+public expect class StackTraceElement

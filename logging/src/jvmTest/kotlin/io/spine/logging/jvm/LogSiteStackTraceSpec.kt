@@ -32,6 +32,7 @@ import io.kotest.matchers.throwable.shouldHaveMessage
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 import io.spine.logging.StackSize
+import io.spine.logging.StackTraceElement
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 

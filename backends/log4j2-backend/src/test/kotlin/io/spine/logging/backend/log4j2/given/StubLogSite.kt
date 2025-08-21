@@ -26,11 +26,11 @@
 
 package io.spine.logging.backend.log4j2.given
 
-import io.spine.logging.jvm.JvmLogSite
+import io.spine.logging.LogSite
 import java.util.Objects
 
 /**
- * A simplified implementation of [JvmLogSite] for testing.
+ * A simplified implementation of [LogSite] for testing.
  *
  * @see <a href="http://rb.gy/wal1a">Original Java code of Google Flogger</a>
  *   for historical context.
@@ -40,7 +40,7 @@ internal class StubLogSite(
     override val methodName: String,
     override val lineNumber: Int,
     private val sourcePath: String?
-) : JvmLogSite() {
+) : LogSite() {
 
     override val fileName: String? = sourcePath
 

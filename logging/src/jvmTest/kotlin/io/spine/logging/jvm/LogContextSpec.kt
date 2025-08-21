@@ -56,6 +56,9 @@ import io.spine.logging.MetadataKey
 import java.lang.System.currentTimeMillis
 import io.spine.logging.Level.Companion.INFO
 import io.spine.logging.Level.Companion.WARNING
+import io.spine.logging.LogSite
+import io.spine.logging.LogSiteLookup.logSite
+import io.spine.logging.StackTraceElement
 import kotlin.time.DurationUnit.MILLISECONDS
 import kotlin.time.DurationUnit.SECONDS
 import kotlin.time.toTimeUnit
@@ -87,7 +90,7 @@ internal class LogContextSpec {
         // and you'd use `logVarargs()`.
         private fun logHelper(
             logger: Middleman,
-            logSite: JvmLogSite,
+            logSite: LogSite,
             n: Int,
             message: String
         ) {
@@ -657,9 +660,9 @@ internal class LogContextSpec {
         // We do not expect this to ever happen in real code though.
         for (i in 0..6) {
             // Log every 2nd (0, 2, 4, 6)
-            logHelper(logger, JvmLogSite.logSite(), 2, "Foo: $i")
+            logHelper(logger, logSite(), 2, "Foo: $i")
             // Log every 3rd (0, 3, 6)
-            logHelper(logger, JvmLogSite.logSite(), 3, "Bar: $i")
+            logHelper(logger, logSite(), 3, "Bar: $i")
         }
         backend.loggedCount shouldBe 7
     }

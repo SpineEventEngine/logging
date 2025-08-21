@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,34 +24,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.jul.given
+package io.spine.logging
 
-import io.spine.logging.LogSite
-import java.util.*
-
-/**
- * A simplified implementation of [LogSite] for testing.
- *
- * @see <a href="http://rb.gy/wal1a">Original Java code of Google Flogger</a> for historical context.
- */
-internal class StubLogSite(
-    override val className: String,
-    override val methodName: String,
-    override val lineNumber: Int,
-    private val sourcePath: String?
-) : LogSite() {
-
-    override val fileName: String? = sourcePath
-
-    override fun equals(other: Any?): Boolean {
-        if (other !is StubLogSite) {
-            return false
-        }
-        return className == other.className &&
-                methodName == other.methodName &&
-                lineNumber == other.lineNumber &&
-                sourcePath == other.sourcePath
-    }
-
-    override fun hashCode(): Int = Objects.hash(className, methodName, lineNumber, sourcePath)
-}
+public actual typealias StackTraceElement = java.lang.StackTraceElement

@@ -30,6 +30,8 @@ import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.collections.shouldNotContainDuplicates
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.spine.logging.LogSite.Companion.UNKNOWN_LINE
+import io.spine.logging.StackTraceElement
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -69,7 +71,7 @@ internal class StackBasedLogSiteSpec {
         val lineNumber = -3 // Can also be unknown, represented with a negative value.
         val logSite = stackBasedLogSite(CLASS_NAME, METHOD_NAME, fileName, lineNumber)
         logSite.fileName.shouldBeNull()
-        logSite.lineNumber shouldBe JvmLogSite.UNKNOWN_LINE
+        logSite.lineNumber shouldBe UNKNOWN_LINE
     }
 
     @Test

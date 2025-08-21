@@ -47,29 +47,50 @@ package io.spine.logging
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LogSite.java">
  *     Original Java code of Google Flogger</a> for historical context.
  */
-public interface LogSite {
+public abstract class LogSite : LogSiteKey {
 
     /**
      * Full name of the class containing the log statement.
      */
-    public val className: String
+    public abstract val className: String
 
     /**
      * Name of the method containing the log statement.
      */
-    public val methodName: String
+    public abstract val methodName: String
 
     /**
      * The name of the class file containing the log statement (or `null` if not known).
      *
      * The source file name is optional and strictly for debugging purposes.
      */
-    public val fileName: String?
+    public abstract val fileName: String?
 
     /**
      * Line number of the log statement.
      */
-    public val lineNumber: Int
+    public abstract val lineNumber: Int
+
+    /**
+     * Provides debug information with only the public attributes.
+     */
+    override fun toString(): String = buildString {
+        append("LogSite{ class=")
+        append(className)
+        append(", method=")
+        append(methodName)
+        append(", line=")
+        append(lineNumber)
+        fileName?.let { append(", file=").append(it) }
+        append(" }")
+    }
+
+    public companion object {
+        /**
+         * A value used for line numbers when the true information is not available.
+         */
+        public const val UNKNOWN_LINE: Int = 0
+    }
 
     /**
      * A singleton instance used to indicate that valid log site information
@@ -79,10 +100,10 @@ public interface LogSite {
      * fluent logging methods, which rely on being able to look up site-specific
      * metadata will be disabled and essentially become “no-op.”
      */
-    public object Invalid : LogSite {
+    public object Invalid : LogSite() {
         override val className: String = "<unknown class>"
         override val methodName: String = "<unknown method>"
         override val fileName: String? = null
-        override val lineNumber: Int = 0
+        override val lineNumber: Int = UNKNOWN_LINE
     }
 }

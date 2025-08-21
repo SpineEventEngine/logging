@@ -93,7 +93,7 @@ public class Middleman(backend: LoggerBackend) : AbstractLogger<Middleman.Api>(b
             // NOTE: It is _vital_ that the call to "caller finder" is made directly
             // inside the static factory method.
             // See `getCallerFinder()` for more information.
-            val loggingClass = Platform.getCallerFinder().findLoggingClass(Middleman::class.java)
+            val loggingClass = Platform.getCallerFinder().findLoggingClass(Middleman::class)
             return Middleman(Platform.getBackend(loggingClass))
         }
     }

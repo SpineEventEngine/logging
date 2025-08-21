@@ -28,10 +28,11 @@ package io.spine.logging
 
 import io.spine.logging.backend.Platform
 import kotlin.reflect.KClass
-import io.spine.logging.jvm.JvmLogSite
 
 /**
- * Determines log sites for the current line of code using Flogger utils.
+ * Determines log sites for the current line of code using
+ * [LogCallerFinder][io.spine.logging.backend.LogCallerFinder]
+ * obtained from a [Platform].
  */
 public actual object LogSiteLookup {
 
@@ -42,9 +43,7 @@ public actual object LogSiteLookup {
      * the [LogSite.Invalid] instance.
      */
     public actual fun callerOf(loggingApi: KClass<*>): LogSite {
-        val jvmSite = JvmLogSite.callerOf(loggingApi.java)
-        val logSite = jvmSite.toLogSite()
-        return logSite
+        return Platform.getCallerFinder().findLogSite(loggingApi, 0)
     }
 
     /**
@@ -54,23 +53,9 @@ public actual object LogSiteLookup {
      * the [LogSite.Invalid] instance.
      */
     public actual fun logSite(): LogSite {
-        val platformLogSite = Platform.getCallerFinder().findLogSite(
-            LogSiteLookup::class.java,
+        return Platform.getCallerFinder().findLogSite(
+            LogSiteLookup::class,
             0
         )
-        val logSite = platformLogSite.toLogSite()
-        return logSite
     }
-}
-
-private fun JvmLogSite.toLogSite(): LogSite {
-    if (this == JvmLogSite.invalid) {
-        return LogSite.Invalid
-    }
-    return InjectedLogSite(
-        className = this@toLogSite.className,
-        methodName = this@toLogSite.methodName,
-        fileName = this@toLogSite.fileName,
-        lineNumber = this@toLogSite.lineNumber
-    )
 }

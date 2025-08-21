@@ -35,4 +35,4 @@ public data class InjectedLogSite(
     override val methodName: String,
     override val fileName: String?,
     override val lineNumber: Int,
-) : LogSite
+) : LogSite()
