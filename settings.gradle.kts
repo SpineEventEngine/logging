@@ -64,9 +64,6 @@ includeTest(
     "smoke-test",
 )
 
-includeJvm(
-    "platform-generator",
-)
 
 fun includeBackend(vararg modules: String) = includeTo("backends", modules)
 

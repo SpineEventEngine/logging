@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,10 +24,31 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/**
- * Contains a Java program that generates {@code PlatformProvider} class.
- */
-@CheckReturnValue
-package io.spine.logging.backend.generator;
+package io.spine.logging.backend
 
-import com.google.errorprone.annotations.CheckReturnValue;
+/**
+ * A hard-coded provider of the [Platform] implementation.
+ *
+ * This class replaces the previous bytecode-generated provider and simply
+ * returns an instance of the default JVM platform implementation.
+ */
+public object PlatformProvider {
+
+    /**
+     * Returns the [Platform] instance to be used by the logging system.
+     *
+     * Currently, returns an instance of `io.spine.logging.backend.system.DefaultPlatform`.
+     */
+    @JvmStatic
+    public fun getPlatform(): Platform? {
+        return try {
+            @Suppress("UNCHECKED_CAST")
+            val clazz = Class.forName(
+                "io.spine.logging.backend.system.DefaultPlatform"
+            ) as Class<out Platform>
+            clazz.getDeclaredConstructor().newInstance()
+        } catch (_: Throwable) {
+            null
+        }
+    }
+}
