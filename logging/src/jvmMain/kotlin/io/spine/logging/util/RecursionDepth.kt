@@ -26,8 +26,6 @@
 
 package io.spine.logging.util
 
-import java.io.Closeable
-
 /**
  * A thread local counter, incremented whenever a log statement is being processed by the backend.
  *
@@ -43,9 +41,9 @@ import java.io.Closeable
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/util/RecursionDepth.java">
  *   Original Java code of Google Flogger</a> for historical context.
  */
-public class RecursionDepth private constructor() : Closeable {
+public actual class RecursionDepth actual constructor() : AutoCloseable {
 
-    public companion object {
+    public actual companion object {
 
         private val holder = object : ThreadLocal<RecursionDepth>() {
             override fun initialValue(): RecursionDepth = RecursionDepth()
@@ -55,13 +53,13 @@ public class RecursionDepth private constructor() : Closeable {
          * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
          */
         @JvmStatic
-        public fun getCurrentDepth(): Int = holder.get().value
+        public actual fun getCurrentDepth(): Int = holder.get().value
 
         /**
          * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
          */
         @JvmStatic
-        public fun enterLogStatement(): RecursionDepth {
+        public actual fun enterLogStatement(): RecursionDepth {
             val depth = holder.get()
             if (++depth.value == 0) {
                 throw AssertionError(
@@ -77,9 +75,9 @@ public class RecursionDepth private constructor() : Closeable {
     /**
      * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
      */
-    public fun getValue(): Int = value
+    public actual fun getValue(): Int = value
 
-    override fun close() {
+    public actual override fun close() {
         if (value > 0) {
             value -= 1
             return

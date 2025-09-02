@@ -24,4 +24,37 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-val versionToPublish: String by extra("2.0.0-SNAPSHOT.350")
+package io.spine.logging.util
+
+/**
+ * A platform-neutral API for tracking recursion depth of logging operations.
+ *
+ * Use `Platform.getCurrentRecursionDepth()` to query the current depth from outside
+ * of the core logging internals.
+ *
+ * ### API Note
+ *
+ * This class is an internal detail and must not be used outside the core of the Logging library.
+ */
+public expect class RecursionDepth() : AutoCloseable {
+
+    public companion object {
+
+        /**
+         * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
+         */
+        @JvmStatic
+        public fun getCurrentDepth(): Int
+
+        /**
+         * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
+         */
+        @JvmStatic
+        public fun enterLogStatement(): RecursionDepth
+    }
+
+    /** Do not call this method directly, use `Platform.getCurrentRecursionDepth()`. */
+    public fun getValue(): Int
+
+    override fun close()
+}
