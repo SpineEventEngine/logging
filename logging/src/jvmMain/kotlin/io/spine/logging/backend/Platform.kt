@@ -93,7 +93,7 @@ public abstract class Platform {
          */
         @JvmStatic
         public fun getCallerFinder(): LogCallerFinder =
-            LazyHolder.INSTANCE.getCallerFinderImpl()
+            LazyHolder.platform.getCallerFinderImpl()
 
         /**
          * Returns a logger backend of the given class name for use by a logger.
@@ -110,7 +110,7 @@ public abstract class Platform {
          */
         @JvmStatic
         public fun getBackend(className: String): LoggerBackend =
-            LazyHolder.INSTANCE.getBackendImpl(className)
+            LazyHolder.platform.getBackendImpl(className)
 
         /**
          * Returns the singleton ContextDataProvider from which
@@ -122,7 +122,7 @@ public abstract class Platform {
          */
         @JvmStatic
         public fun getContextDataProvider(): ContextDataProvider =
-            LazyHolder.INSTANCE.getContextDataProviderImpl()
+            LazyHolder.platform.getContextDataProviderImpl()
 
         /**
          * Returns whether the given logger should have logging forced at the specified level.
@@ -197,7 +197,7 @@ public abstract class Platform {
          */
         @JvmStatic
         public fun getCurrentTimeNanos(): Long =
-            LazyHolder.INSTANCE.getCurrentTimeNanosImpl()
+            LazyHolder.platform.getCurrentTimeNanosImpl()
 
         /**
          * Returns a human-readable string describing the platform and its configuration.
@@ -218,7 +218,7 @@ public abstract class Platform {
          */
         @JvmStatic
         public fun getConfigInfo(): String =
-            LazyHolder.INSTANCE.getConfigInfoImpl()
+            LazyHolder.platform.getConfigInfoImpl()
     }
 
     /**
@@ -273,7 +273,7 @@ public abstract class Platform {
 /**
  * Use the lazy holder idiom here to avoid class loading issues. Loading the Platform subclass
  * will trigger static initialization of the Platform class first, which would not be possible if
- * the [INSTANCE] field were a static field in Platform.
+ * the [platform] field were a static field in Platform.
  *
  * This means that any errors in platform loading are deferred until the first time one of the
  * [Platform]'s static methods is invoked.
@@ -284,8 +284,7 @@ private object LazyHolder {
      * Non-final to prevent javac inlining.
      */
     @Suppress("ConstantField")
-    private var defaultPlatform: String =
-        "io.spine.logging.backend.system.DefaultPlatform"
+    private var defaultPlatform: String = "io.spine.logging.backend.system.DefaultPlatform"
 
     /**
      * The first available platform from this list is used. Each platform is defined separately
@@ -299,15 +298,10 @@ private object LazyHolder {
         defaultPlatform
     )
 
-    val INSTANCE: Platform = loadFirstAvailablePlatform(availablePlatforms)
+    val platform: Platform = loadFirstAvailablePlatform(availablePlatforms)
 
     @Suppress("TooGenericExceptionCaught", "InstanceOfCheckForException")
     private fun loadFirstAvailablePlatform(platformClass: Array<String>): Platform {
-        val platform = viaHolder()
-        if (platform != null) {
-            return platform
-        }
-
         val errorMessage = StringBuilder()
         // Try the reflection-based approach as a backup, if the provider isn't available.
         for (clazz in platformClass) {
@@ -328,22 +322,5 @@ private object LazyHolder {
             }
         }
         error(errorMessage.insert(0, "No logging platforms found:").toString())
-    }
-
-    @Suppress("SwallowedException")
-    private fun viaHolder(): Platform? {
-        var platform: Platform? = null
-        // Try the platform provider first if it is available.
-        try {
-            platform = PlatformProvider.getPlatform()
-        } catch (_: NoClassDefFoundError) {
-            // May be an expected error:
-            // The `PlatformProvider` is an optional dependency that can be provided at runtime.
-            // Inside Google we use a generator to create the class file for
-            // it programmatically, but for third-party use cases the provider
-            // could be made available through custom classpath management.
-            // The exception is swallowed intentionally as the provider is optional.
-        }
-        return platform
     }
 }

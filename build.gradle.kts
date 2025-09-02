@@ -56,7 +56,6 @@ spinePublishing {
         "std-context",
         "grpc-context",
         "smoke-test",
-        "platform-generator",
         "jvm-default-platform",
     )
     destinations = with(PublishingRepos) {

@@ -59,12 +59,6 @@ kotlin {
                 implementation(DateTime.lib)
                 implementation(Base.annotations)
                 implementation(Reflect.lib)
-                implementation(
-                    project(
-                        ":platform-generator",
-                        configuration = "generatedPlatformProvider"
-                    )
-                )
                 runtimeOnly(project(":jvm-default-platform"))
             }
         }
