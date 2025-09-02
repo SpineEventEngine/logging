@@ -1,27 +1,4 @@
-## Google Flogger
-
-This directory contains Flogger [modules][flogger-github] built with Gradle.
-
-Original Flogger sources have been repackaged from `com.google.common.*`
-to `io.spine.logging.jvm.*`. It prevents a runtime clash in situations
-when a user has both `spine-logging` and `flogger` on the classpath.
-However, a user is not meant to use two logging libraries simultaneously.
-`flogger` may appear on the classpath as a transitive dependency.
-
-Further, Flogger sources should be migrated to Kotlin and integrated into
-our own codebase.
-
-### Middleware
-
-Contains Flogger Logging API along with classes that handle log statements
-before they are passed to a backend.
-
-Handling of a log statement includes controlling of rate limiting, attachment
-of context and scope metadata, tracking log level restrictions, etc.
-
-From the standpoint of `spine-logging`, this module is middleware for JVM target.
-
-### Platform Generator
+## Platform Generator
 
 API declares `Platform`. It is a configuration point of the logging framework.
 Implementations of this class should handle runtime discovery of injectable services
