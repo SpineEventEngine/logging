@@ -37,7 +37,6 @@ import io.spine.logging.jvm.LogSiteInjector
 import io.spine.logging.jvm.LogSiteStackTrace
 import io.spine.logging.jvm.MutableMetadata
 import io.spine.logging.jvm.RateLimitPeriod
-import io.spine.logging.jvm.RateLimitStatus
 import io.spine.logging.jvm.SamplingRateLimiter
 import io.spine.logging.jvm.context.Tags
 import io.spine.logging.jvm.injectedLogSite

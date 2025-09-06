@@ -24,10 +24,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
-import io.spine.logging.LogSiteKey
 import io.spine.logging.backend.Metadata
+import io.spine.logging.jvm.LogSiteMap
 import kotlinx.atomicfu.atomic
 
 /**
@@ -99,7 +99,7 @@ import kotlinx.atomicfu.atomic
  * }
  * ```
  *
- * The use of [LogSiteMap] ensures a rate limiter instance is held separately for each log
+ * The use of [io.spine.logging.jvm.LogSiteMap] ensures a rate limiter instance is held separately for each log
  * statement, but it also handles complex garbage collection issues around "specialized" log site
  * keys. All rate limiter implementations _must_ use this approach.
  *

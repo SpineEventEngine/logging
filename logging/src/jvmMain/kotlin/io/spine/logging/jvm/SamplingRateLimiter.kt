@@ -28,6 +28,7 @@ package io.spine.logging.jvm
 
 import io.spine.logging.LogContext.Key.LOG_SAMPLE_EVERY_N
 import io.spine.logging.LogSiteKey
+import io.spine.logging.RateLimitStatus
 import io.spine.logging.backend.Metadata
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger

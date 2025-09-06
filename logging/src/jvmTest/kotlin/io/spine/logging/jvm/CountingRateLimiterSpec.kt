@@ -31,8 +31,9 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.LogContext.Key
+import io.spine.logging.RateLimitStatus
 import io.spine.logging.backend.given.FakeMetadata
-import io.spine.logging.jvm.RateLimitStatus.Companion.DISALLOW
+import io.spine.logging.RateLimitStatus.Companion.DISALLOW
 import io.spine.logging.jvm.given.FakeLogSite
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
