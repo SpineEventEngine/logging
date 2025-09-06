@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -79,7 +79,7 @@ public interface LogData {
      * The returned instance is restricted to metadata added at the log site, and will
      * not include any scoped metadata to be applied to the log statement.
      *
-     * To process combined log site and scoped metadata, obtain or create a [MetadataProcessor].
+     * To process combined log site and scoped metadata, obtain or create a [io.spine.logging.backend.MetadataProcessor].
      */
     public val metadata: Metadata
 
