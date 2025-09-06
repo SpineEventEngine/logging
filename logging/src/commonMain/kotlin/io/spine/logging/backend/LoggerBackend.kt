@@ -27,14 +27,13 @@
 package io.spine.logging.backend
 
 import io.spine.logging.Level
-import io.spine.logging.AbstractLogger
 
 /**
  * Interface for all logger backends.
  *
  * ### Implementation Notes
  *
- * Often each [AbstractLogger] instance will be instantiated with a new logger
+ * Often each [io.spine.logging.AbstractLogger] instance will be instantiated with a new logger
  * backend to permit per-class logging behavior. Because of this, it is important
  * that logger backends have as little per-instance state as possible.
  *
