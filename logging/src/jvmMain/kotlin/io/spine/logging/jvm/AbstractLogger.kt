@@ -28,15 +28,19 @@ package io.spine.logging.jvm
 
 import io.spine.logging.Level
 import io.spine.logging.LogSite
+import io.spine.logging.LoggingApi
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.LoggerBackend
 import io.spine.logging.backend.LoggingException
 import io.spine.logging.util.RecursionDepth
-import java.time.Instant
+
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.util.concurrent.TimeUnit.NANOSECONDS
-import io.spine.logging.LoggingApi
+
+import kotlin.time.Duration.Companion.nanoseconds
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
+import kotlin.time.toJavaInstant
 
 /**
  * Base class for the fluent logging API.
@@ -239,9 +243,12 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
         }
     }
 
+    @OptIn(ExperimentalTime::class)
     private fun formatTimestampIso8601(data: LogData): String {
-        val instant = Instant.ofEpochMilli(NANOSECONDS.toMillis(data.timestampNanos))
-        return FORMATTER.format(instant)
+        val instant = Instant.fromEpochMilliseconds(
+            data.timestampNanos.nanoseconds.inWholeMilliseconds
+        )
+        return FORMATTER.format(instant.toJavaInstant())
     }
 }
 
