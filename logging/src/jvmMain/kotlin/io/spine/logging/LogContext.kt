@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,28 +24,26 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
 import io.spine.annotation.VisibleForTesting
-import io.spine.logging.KeyValueHandler
-import io.spine.logging.Level
-import io.spine.logging.LogPerBucketingStrategy
-import io.spine.logging.LogSite
-import io.spine.logging.LogSiteKey
-import io.spine.logging.LoggingApi
-import io.spine.logging.LoggingDomain
-import io.spine.logging.LoggingScope
-import io.spine.logging.LoggingScopeProvider
-import io.spine.logging.MetadataKey
-import io.spine.logging.MetadataKey.Companion.single
-import io.spine.logging.SpecializedLogSiteKey
-import io.spine.logging.StackSize
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.Metadata
 import io.spine.logging.backend.Platform
+import io.spine.logging.jvm.AbstractLogger
+import io.spine.logging.jvm.CountingRateLimiter
+import io.spine.logging.jvm.DurationRateLimiter
+import io.spine.logging.jvm.LogSiteGroupingKey
+import io.spine.logging.jvm.LogSiteInjector
+import io.spine.logging.jvm.LogSiteStackTrace
+import io.spine.logging.jvm.MutableMetadata
+import io.spine.logging.jvm.RateLimitPeriod
+import io.spine.logging.jvm.RateLimitStatus
+import io.spine.logging.jvm.SamplingRateLimiter
 import io.spine.logging.jvm.context.Tags
-import io.spine.logging.util.Checks.checkNotNull
-import io.spine.reflect.CallerFinder.stackForCallerOf
+import io.spine.logging.jvm.injectedLogSite
+import io.spine.logging.util.Checks
+import io.spine.reflect.CallerFinder
 import kotlin.time.DurationUnit
 
 /**
@@ -54,7 +52,7 @@ import kotlin.time.DurationUnit
  * This class is an implementation of the base [LoggingApi] interface and acts as a holder
  * for any state applied to the log statement during the fluent call sequence. The lifecycle of a
  * logging context is very short; it is created by a logger, usually in response to a call to the
- * [AbstractLogger.at] method, and normally lasts only as long as the log statement.
+ * [io.spine.logging.jvm.AbstractLogger.at] method, and normally lasts only as long as the log statement.
  *
  * This class should not be visible to normal users of the logging API and it is only needed when
  * extending the API to add more functionality. In order to extend the logging API and add methods
@@ -106,7 +104,7 @@ protected constructor(
 
     /**
      * Creates a logging context with the specified level, and with a timestamp obtained from the
-     * configured logging [Platform].
+     * configured logging [io.spine.logging.backend.Platform].
      *
      * @param level The log level for this log statement.
      * @param isForced Whether to force this log statement (see [wasForced] for details).
@@ -168,7 +166,7 @@ protected constructor(
      * cast it to any particular implementation.
      */
     public final override val metadata: Metadata
-        get() = _metadata ?: Metadata.empty()
+        get() = _metadata ?: Metadata.Companion.empty()
 
     /**
      * Adds the given key/value pair to this logging context. If the key cannot be repeated, and
@@ -224,7 +222,7 @@ protected constructor(
      * ## Log Site Keys
      *
      * If per log-site information is needed during post-processing, it should be stored using a
-     * [LogSiteMap]. This will correctly handle "specialized" log-site keys and remove the risk
+     * [io.spine.logging.jvm.LogSiteMap]. This will correctly handle "specialized" log-site keys and remove the risk
      * of memory leaks due to retaining unused log site data indefinitely.
      *
      * Note that the given `logSiteKey` can be more specific than the [LogSite] of a log statement
@@ -330,7 +328,7 @@ protected constructor(
                 val context = LogSiteStackTrace(
                     _metadata!!.findValue(Key.LOG_CAUSE),
                     stackSize,
-                    stackForCallerOf(LogContext::class.java, stackSize.maxDepth, 1)
+                    CallerFinder.stackForCallerOf(LogContext::class.java, stackSize.maxDepth, 1)
                 )
                 // The "cause" is a unique metadata key, we must replace any existing value.
                 addMetadata(Key.LOG_CAUSE, context)
@@ -382,7 +380,7 @@ protected constructor(
         if (logSiteInfo == null) {
             // From the point at which we call inferLogSite() we can skip 1 additional method
             // (the `shouldLog()` method itself) when looking up the stack to find the log() method.
-            logSiteInfo = checkNotNull(
+            logSiteInfo = Checks.checkNotNull(
                 Platform.getCallerFinder().findLogSite(LogContext::class, 1),
                 "A logger backend must not return a null `LogSite`."
             )
@@ -401,7 +399,7 @@ protected constructor(
             val skippedLogs = RateLimitStatus.checkStatus(
                 rateLimitStatus!!,
                 logSiteKey,
-                _metadata ?: Metadata.empty()
+                _metadata ?: Metadata.Companion.empty()
             )
             if (shouldLog && skippedLogs > 0) {
                 if (_metadata != null) {
@@ -586,36 +584,39 @@ protected constructor(
         /**
          * The key associated with a [Throwable] cause to be associated with the log message.
          *
-         * This value is set by [io.spine.logging.LoggingApi.withCause].
+         * This value is set by [LoggingApi.withCause].
          */
         @JvmField
-        public val LOG_CAUSE: MetadataKey<Throwable> = single<Throwable>("cause")
+        public val LOG_CAUSE: MetadataKey<Throwable> =
+            MetadataKey.single<Throwable>("cause")
 
         /**
          * The key associated with a rate limiting counter for "1-in-N" rate limiting.
          *
-         * The value is set by [io.spine.logging.LoggingApi.every].
+         * The value is set by [LoggingApi.every].
          */
         @JvmField
-        public val LOG_EVERY_N: MetadataKey<Int> = single<Int>("ratelimit_count")
+        public val LOG_EVERY_N: MetadataKey<Int> =
+            MetadataKey.single<Int>("ratelimit_count")
 
         /**
          * The key associated with a rate limiting counter for "1-in-N" randomly sampled rate
          * limiting.
          *
-         * The value is set by [io.spine.logging.LoggingApi.onAverageEvery].
+         * The value is set by [LoggingApi.onAverageEvery].
          */
         @JvmField
-        public val LOG_SAMPLE_EVERY_N: MetadataKey<Int> = single<Int>("sampling_count")
+        public val LOG_SAMPLE_EVERY_N: MetadataKey<Int> =
+            MetadataKey.single<Int>("sampling_count")
 
         /**
          * The key associated with a rate-limiting period for "at most once every N" rate limiting.
          *
-         * The value is set by [io.spine.logging.LoggingApi.atMostEvery].
+         * The value is set by [LoggingApi.atMostEvery].
          */
         @JvmField
         public val LOG_AT_MOST_EVERY: MetadataKey<RateLimitPeriod> =
-            single<RateLimitPeriod>("ratelimit_period")
+            MetadataKey.single<RateLimitPeriod>("ratelimit_period")
 
         /**
          * The key associated with a count of rate limited logs.
@@ -623,12 +624,13 @@ protected constructor(
          * This is only public so backends can reference the key to control formatting.
          */
         @JvmField
-        public val SKIPPED_LOG_COUNT: MetadataKey<Int> = single<Int>("skipped")
+        public val SKIPPED_LOG_COUNT: MetadataKey<Int> =
+            MetadataKey.single<Int>("skipped")
 
         /**
          * The key associated with a sequence of log site "grouping keys".
          *
-         * @see LogSiteGroupingKey
+         * @see io.spine.logging.jvm.LogSiteGroupingKey
          */
         @JvmField
         public val LOG_SITE_GROUPING_KEY: MetadataKey<Any> = LogSiteGroupingKey()
@@ -669,10 +671,10 @@ protected constructor(
          */
         @JvmField
         public val WAS_FORCED: MetadataKey<Boolean> =
-            single("forced", Boolean::class)
+            MetadataKey.single("forced", Boolean::class)
 
         /**
-         * The key associated with any injected [Tags].
+         * The key associated with any injected [io.spine.logging.jvm.context.Tags].
          *
          * If tags are injected, they are added after post-processing if the log site is enabled.
          * Thus they are not available to the `postProcess()` method itself. The rationale is
@@ -681,7 +683,7 @@ protected constructor(
          *
          * Tags can be added at the log site, although this should rarely be necessary and using
          * normal log message arguments is always the preferred way to indicate unstructured log
-         * data. Users should never build new [Tags] instances just to pass them into a log
+         * data. Users should never build new [io.spine.logging.jvm.context.Tags] instances just to pass them into a log
          * statement.
          */
         @JvmField
@@ -708,7 +710,7 @@ protected constructor(
          * statement.
          */
         internal val CONTEXT_STACK_SIZE: MetadataKey<StackSize> =
-            single("stack_size", StackSize::class)
+            MetadataKey.single("stack_size", StackSize::class)
     }
 
     public companion object {

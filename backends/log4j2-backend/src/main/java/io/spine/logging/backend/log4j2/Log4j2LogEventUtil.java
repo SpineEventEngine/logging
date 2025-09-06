@@ -28,7 +28,7 @@ package io.spine.logging.backend.log4j2;
 
 import io.spine.logging.KeyValueHandler;
 import io.spine.logging.Level;
-import io.spine.logging.jvm.LogContext;
+import io.spine.logging.LogContext;
 import io.spine.logging.MetadataKey;
 import io.spine.logging.backend.LogData;
 import io.spine.logging.backend.MetadataHandler;

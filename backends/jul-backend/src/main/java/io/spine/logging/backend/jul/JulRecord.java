@@ -26,7 +26,7 @@
 
 package io.spine.logging.backend.jul;
 
-import io.spine.logging.jvm.LogContext;
+import io.spine.logging.LogContext;
 import io.spine.logging.backend.LogData;
 import io.spine.logging.backend.Metadata;
 
