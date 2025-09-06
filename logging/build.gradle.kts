@@ -52,14 +52,16 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(Base.annotations)
                 implementation(DateTime.lib)
                 implementation(Reflect.lib)
+                implementation(AtomicFu.lib)
             }
         }
         val jvmMain by getting {
             dependencies {
-                implementation(DateTime.lib)
                 implementation(Base.annotations)
+                implementation(DateTime.lib)
                 implementation(Reflect.lib)
                 implementation(AtomicFu.lib)
                 runtimeOnly(project(":jvm-default-platform"))
