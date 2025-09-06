@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
@@ -33,18 +33,12 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.throwable.shouldHaveMessage
+import io.spine.logging.DurationRateLimiter.Companion.newRateLimitPeriod
 import io.spine.logging.Level.Companion.INFO
 import io.spine.logging.Level.Companion.WARNING
 import io.spine.logging.LogContext.Companion.specializeLogSiteKeyFromMetadata
 import io.spine.logging.LogContext.Key
-import io.spine.logging.LogPerBucketingStrategy
-import io.spine.logging.LogSite
 import io.spine.logging.LogSiteLookup.logSite
-import io.spine.logging.LoggingScope
-import io.spine.logging.LoggingScopeProvider
-import io.spine.logging.MetadataKey
-import io.spine.logging.StackSize
-import io.spine.logging.StackTraceElement
 import io.spine.logging.backend.given.FakeMetadata
 import io.spine.logging.backend.given.shouldContain
 import io.spine.logging.backend.given.shouldContainInOrder
@@ -52,7 +46,7 @@ import io.spine.logging.backend.given.shouldHaveSize
 import io.spine.logging.backend.given.shouldNotContain
 import io.spine.logging.backend.given.shouldUniquelyContain
 import io.spine.logging.backend.probe.MemoizingLoggerBackend
-import io.spine.logging.jvm.DurationRateLimiter.Companion.newRateLimitPeriod
+import io.spine.logging.jvm.Middleman
 import io.spine.logging.jvm.context.Tags
 import io.spine.logging.jvm.given.ConfigurableLogger
 import io.spine.logging.jvm.given.FakeLogSite

@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.ints.shouldBeInRange
@@ -32,7 +32,6 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.spine.logging.LogContext.Key
-import io.spine.logging.RateLimitStatus
 import io.spine.logging.RateLimitStatus.Companion.DISALLOW
 import io.spine.logging.backend.Metadata
 import io.spine.logging.backend.given.FakeMetadata

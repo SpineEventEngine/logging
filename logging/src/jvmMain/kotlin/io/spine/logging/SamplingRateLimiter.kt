@@ -24,12 +24,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
 import io.spine.logging.LogContext.Key.LOG_SAMPLE_EVERY_N
-import io.spine.logging.LogSiteKey
-import io.spine.logging.RateLimitStatus
 import io.spine.logging.backend.Metadata
+import io.spine.logging.jvm.LogSiteMap
 import java.util.*
 import kotlinx.atomicfu.atomic
 

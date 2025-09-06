@@ -24,13 +24,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
 import com.google.errorprone.annotations.ThreadSafe
 import io.spine.logging.LogContext.Key.LOG_AT_MOST_EVERY
-import io.spine.logging.LogSiteKey
-import io.spine.logging.RateLimitStatus
 import io.spine.logging.backend.Metadata
+import io.spine.logging.jvm.LogSiteMap
 import kotlin.math.max
 import kotlin.time.DurationUnit
 import kotlinx.atomicfu.atomic
