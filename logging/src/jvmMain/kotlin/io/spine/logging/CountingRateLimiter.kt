@@ -71,8 +71,9 @@ internal class CountingRateLimiter : RateLimitStatus() {
     /**
      * This function is called to move the limiter out of the "pending" state after a log occurs.
      */
-    override fun reset() =
-        run { invocationCount.value = 0 }
+    override fun reset() {
+        invocationCount.value = 0
+    }
 
     companion object {
 
