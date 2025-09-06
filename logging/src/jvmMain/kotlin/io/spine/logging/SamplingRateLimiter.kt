@@ -29,8 +29,8 @@ package io.spine.logging
 import io.spine.logging.LogContext.Key.LOG_SAMPLE_EVERY_N
 import io.spine.logging.backend.Metadata
 import io.spine.logging.jvm.LogSiteMap
-import java.util.Random
 import kotlinx.atomicfu.atomic
+import kotlin.random.Random
 
 /**
  * Rate limiter to support `onAverageEvery(N)` functionality.
@@ -55,7 +55,7 @@ internal class SamplingRateLimiter : RateLimitStatus() {
      * "bursty" due to the action of other rate limiting mechanisms).
      */
     internal fun sampleOneIn(rateLimitCount: Int): RateLimitStatus {
-        val pending = if (random.get().nextInt(rateLimitCount) == 0) {
+        val pending = if (random.nextInt(rateLimitCount) == 0) {
             pendingCount.incrementAndGet()
         } else {
             val currentValue by pendingCount
@@ -75,10 +75,9 @@ internal class SamplingRateLimiter : RateLimitStatus() {
         }
 
         /**
-         * Even though Random is synchronized, we have to put it in a ThreadLocal to avoid thread
-         * contention. We cannot use `ThreadLocalRandom` (yet) due to JDK level.
+         * Kotlin's Random.Default is thread-safe and does not require ThreadLocal wrapping.
          */
-        private val random = ThreadLocal.withInitial { Random() }
+        private val random: Random = Random.Default
 
         @JvmStatic
         fun check(metadata: Metadata, logSiteKey: LogSiteKey): RateLimitStatus? {
