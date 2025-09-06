@@ -34,13 +34,15 @@ import io.spine.logging.backend.LoggerBackend
 import io.spine.logging.backend.LoggingException
 import io.spine.logging.util.RecursionDepth
 
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-
 import kotlin.time.Duration.Companion.nanoseconds
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
-import kotlin.time.toJavaInstant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.format.DateTimeComponents
+import kotlinx.datetime.format.DateTimeFormat
+import kotlinx.datetime.format.FormatStringsInDatetimeFormats
+import kotlinx.datetime.format.byUnicodePattern
+import kotlinx.datetime.toLocalDateTime
 
 /**
  * Base class for the fluent logging API.
@@ -69,11 +71,12 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
     private companion object {
         private const val MAX_ALLOWED_RECURSION_DEPTH = 100
 
-        @Suppress("SimpleDateFormatWithoutLocale")
         @JvmField
-        val FORMATTER: DateTimeFormatter = DateTimeFormatter
-            .ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-            .withZone(ZoneId.systemDefault())
+        @OptIn(FormatStringsInDatetimeFormats::class)
+        val dateTimeFormat = DateTimeFormat.formatAsKotlinBuilderDsl(
+            DateTimeComponents.Format {
+                byUnicodePattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+            })
     }
 
     /**
@@ -248,7 +251,8 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
         val instant = Instant.fromEpochMilliseconds(
             data.timestampNanos.nanoseconds.inWholeMilliseconds
         )
-        return FORMATTER.format(instant.toJavaInstant())
+        val dateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+        return dateTimeFormat.format(dateTime)
     }
 }
 
