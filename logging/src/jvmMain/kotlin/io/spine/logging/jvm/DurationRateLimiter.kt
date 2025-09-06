@@ -31,9 +31,9 @@ import io.spine.logging.LogContext.Key.LOG_AT_MOST_EVERY
 import io.spine.logging.LogSiteKey
 import io.spine.logging.RateLimitStatus
 import io.spine.logging.backend.Metadata
-import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.max
 import kotlin.time.DurationUnit
+import kotlinx.atomicfu.atomic
 
 /**
  * Rate limiter to support `atMostEvery(N, units)` functionality.
@@ -48,7 +48,7 @@ import kotlin.time.DurationUnit
 @ThreadSafe
 internal class DurationRateLimiter : RateLimitStatus() {
 
-    private val lastTimestampNanos = AtomicLong(-1L)
+    private val lastTimestampNanos = atomic(-1L)
 
     /**
      * Checks whether the current time stamp is after the rate-limiting period and if so,
@@ -66,7 +66,7 @@ internal class DurationRateLimiter : RateLimitStatus() {
         // reset. The value held here is updated to be the most recent negated timestamp, and is
         // negated again (making it positive and setting us into the rate-limiting state) when we
         // are reset.
-        val lastNanos = lastTimestampNanos.get()
+        val lastNanos = lastTimestampNanos.value
         if (lastNanos >= 0) {
             val deadlineNanos = lastNanos + period.toNanos()
             // Check for negative deadline to avoid overflow for ridiculous durations. Assume
@@ -95,7 +95,7 @@ internal class DurationRateLimiter : RateLimitStatus() {
         // Only one thread at a time can reset a rate limiter, so this can be unconditional. We
         // should only be able to get here if the timestamp was set to a negative value above.
         // However use max() to make sure we always move out of the pending state.
-        lastTimestampNanos.set(max(-lastTimestampNanos.get(), 0))
+        lastTimestampNanos.value = max(-lastTimestampNanos.value, 0)
     }
 
     companion object {

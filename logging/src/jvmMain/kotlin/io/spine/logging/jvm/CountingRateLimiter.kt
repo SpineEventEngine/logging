@@ -31,7 +31,7 @@ import io.spine.logging.LogContext.Key.LOG_EVERY_N
 import io.spine.logging.LogSiteKey
 import io.spine.logging.RateLimitStatus
 import io.spine.logging.backend.Metadata
-import java.util.concurrent.atomic.AtomicLong
+import kotlinx.atomicfu.atomic
 
 /**
  * Rate limiter to support `every(N)` capability.
@@ -53,7 +53,7 @@ internal class CountingRateLimiter : RateLimitStatus() {
      * limiter into its pending state immediately. If this is the only limiter used,
      * this corresponds to the first log statement always being emitted.
      */
-    private val invocationCount = AtomicLong(Int.MAX_VALUE.toLong())
+    private val invocationCount = atomic(Int.MAX_VALUE.toLong())
 
     /**
      * Increments the invocation count and returns true if it reached the specified
@@ -73,7 +73,7 @@ internal class CountingRateLimiter : RateLimitStatus() {
      * This function is called to move the limiter out of the "pending" state after a log occurs.
      */
     override fun reset() =
-        invocationCount.set(0)
+        run { invocationCount.value = 0 }
 
     companion object {
 

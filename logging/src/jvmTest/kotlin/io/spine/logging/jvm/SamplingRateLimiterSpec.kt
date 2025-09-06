@@ -60,7 +60,7 @@ internal class SamplingRateLimiterSpec {
         val limiter = SamplingRateLimiter()
 
         // Initially we are not “pending”, so disallow logging for an “impossible” sample rate.
-        limiter.pendingCount.get() shouldBe 0
+        limiter.pendingCount.value shouldBe 0
         limiter.sampleOneIn(Int.MAX_VALUE) shouldBe DISALLOW
 
         repeat(100) {
@@ -68,13 +68,13 @@ internal class SamplingRateLimiterSpec {
         }
 
         // Statistically we should be pending at least once.
-        val pendingCount = limiter.pendingCount.get()
+        val pendingCount = limiter.pendingCount.value
         pendingCount shouldBeGreaterThan 0
 
         // Now we are pending, we allow logging even for an “impossible” sample rate.
         limiter.sampleOneIn(Int.MAX_VALUE) shouldNotBe DISALLOW
         limiter.reset()
-        limiter.pendingCount.get() shouldBe pendingCount - 1
+        limiter.pendingCount.value shouldBe pendingCount - 1
     }
 
     @Test

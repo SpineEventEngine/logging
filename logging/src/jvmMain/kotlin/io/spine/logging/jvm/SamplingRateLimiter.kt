@@ -31,7 +31,7 @@ import io.spine.logging.LogSiteKey
 import io.spine.logging.RateLimitStatus
 import io.spine.logging.backend.Metadata
 import java.util.*
-import java.util.concurrent.atomic.AtomicInteger
+import kotlinx.atomicfu.atomic
 
 /**
  * Rate limiter to support `onAverageEvery(N)` functionality.
@@ -47,7 +47,7 @@ import java.util.concurrent.atomic.AtomicInteger
  */
 internal class SamplingRateLimiter : RateLimitStatus() {
 
-    internal val pendingCount = AtomicInteger()
+    internal val pendingCount = atomic(0)
 
     /**
      * Always "roll the dice" and adjust the count if necessary (even if we were already pending).
@@ -59,7 +59,7 @@ internal class SamplingRateLimiter : RateLimitStatus() {
         val pending = if (random.get().nextInt(rateLimitCount) == 0) {
             pendingCount.incrementAndGet()
         } else {
-            pendingCount.get()
+            pendingCount.value
         }
         return if (pending > 0) this else DISALLOW
     }
