@@ -29,7 +29,7 @@ package io.spine.logging
 import io.spine.logging.LogContext.Key.LOG_SAMPLE_EVERY_N
 import io.spine.logging.backend.Metadata
 import io.spine.logging.jvm.LogSiteMap
-import java.util.*
+import java.util.Random
 import kotlinx.atomicfu.atomic
 
 /**
@@ -58,7 +58,8 @@ internal class SamplingRateLimiter : RateLimitStatus() {
         val pending = if (random.get().nextInt(rateLimitCount) == 0) {
             pendingCount.incrementAndGet()
         } else {
-            pendingCount.value
+            val currentValue by pendingCount
+            currentValue
         }
         return if (pending > 0) this else DISALLOW
     }
@@ -75,7 +76,7 @@ internal class SamplingRateLimiter : RateLimitStatus() {
 
         /**
          * Even though Random is synchronized, we have to put it in a ThreadLocal to avoid thread
-         * contention. We cannot use ThreadLocalRandom (yet) due to JDK level.
+         * contention. We cannot use `ThreadLocalRandom` (yet) due to JDK level.
          */
         private val random = ThreadLocal.withInitial { Random() }
 
