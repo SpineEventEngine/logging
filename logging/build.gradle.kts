@@ -27,6 +27,7 @@
 @file:Suppress("unused") // source set accessed via `by getting`.
 
 import io.spine.dependency.kotlinx.DateTime
+import io.spine.dependency.kotlinx.AtomicFu
 import io.spine.dependency.local.Base
 import io.spine.dependency.local.Reflect
 import io.spine.gradle.publish.SpinePublishing
@@ -60,6 +61,7 @@ kotlin {
                 implementation(DateTime.lib)
                 implementation(Base.annotations)
                 implementation(Reflect.lib)
+                implementation(AtomicFu.lib)
                 runtimeOnly(project(":jvm-default-platform"))
             }
         }

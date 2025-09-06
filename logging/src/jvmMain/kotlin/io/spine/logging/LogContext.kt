@@ -51,7 +51,7 @@ import kotlin.time.DurationUnit
  * This class is an implementation of the base [LoggingApi] interface and acts as a holder
  * for any state applied to the log statement during the fluent call sequence. The lifecycle of a
  * logging context is very short; it is created by a logger, usually in response to a call to the
- * [io.spine.logging.jvm.AbstractLogger.at] method, and normally lasts only as long as the log statement.
+ * [io.spine.logging.AbstractLogger.at] method, and normally lasts only as long as the log statement.
  *
  * This class should not be visible to normal users of the logging API and it is only needed when
  * extending the API to add more functionality. In order to extend the logging API and add methods
