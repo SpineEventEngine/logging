@@ -30,7 +30,6 @@ import io.spine.annotation.VisibleForTesting
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.Metadata
 import io.spine.logging.backend.Platform
-import io.spine.logging.jvm.AbstractLogger
 import io.spine.logging.jvm.CountingRateLimiter
 import io.spine.logging.jvm.DurationRateLimiter
 import io.spine.logging.jvm.LogSiteGroupingKey

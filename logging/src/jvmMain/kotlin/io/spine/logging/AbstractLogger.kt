@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,16 +24,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
-import io.spine.logging.Level
-import io.spine.logging.LogSite
-import io.spine.logging.LoggingApi
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.LoggerBackend
 import io.spine.logging.backend.LoggingException
 import io.spine.logging.util.RecursionDepth
-
 import kotlin.time.Duration.Companion.nanoseconds
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant

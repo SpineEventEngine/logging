@@ -27,7 +27,7 @@
 package io.spine.logging.backend
 
 import io.spine.logging.Level
-import io.spine.logging.jvm.AbstractLogger
+import io.spine.logging.AbstractLogger
 
 /**
  * Interface for all logger backends.

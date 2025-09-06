@@ -29,7 +29,7 @@ package io.spine.logging.backend.system;
 import com.google.errorprone.annotations.Immutable;
 import com.google.errorprone.annotations.ThreadSafe;
 import io.spine.logging.backend.LogCallerFinder;
-import io.spine.logging.jvm.AbstractLogger;
+import io.spine.logging.AbstractLogger;
 import io.spine.logging.LogSite;
 import io.spine.logging.InjectedLogSite;
 import kotlin.reflect.KClass;

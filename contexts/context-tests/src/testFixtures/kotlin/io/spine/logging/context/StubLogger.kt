@@ -31,7 +31,7 @@ import io.spine.logging.LogContext
 import io.spine.logging.LoggingApi
 import io.spine.logging.backend.LoggerBackend
 import io.spine.logging.context.StubLogger.Companion.DEFAULT_TIMESTAMP_NANOS
-import io.spine.logging.jvm.AbstractLogger
+import io.spine.logging.AbstractLogger
 
 /**
  * This logger has specific methods for injecting timestamps.
