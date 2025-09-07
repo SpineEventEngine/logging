@@ -24,45 +24,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.dependency.boms.BomsPlugin
-import io.spine.dependency.lib.Log4j2
-import io.spine.dependency.local.Base
-import io.spine.gradle.publish.SpinePublishing
-import io.spine.gradle.publish.spinePublishing
+package io.spine.testing.gc
 
-plugins {
-    `kmp-module`
-    `kmp-publish`
-}
-apply<BomsPlugin>()
+import io.spine.annotation.TestOnly
 
-group = "io.spine.tools"
-
-// This module configures `spinePublishing` on its own to change a prefix
-// specified by the root project.
-spinePublishing {
-    artifactPrefix = "spine-"
-    destinations = rootProject.the<SpinePublishing>().destinations
-    customPublishing = true
-    dokkaJar {
-        java = false
-    }
-}
-
-kotlin {
-    sourceSets {
-        @Suppress("unused")
-        val commonMain by getting {
-            dependencies {
-                implementation(Base.annotations)
-                implementation(project(":logging"))
-            }
-        }
-        @Suppress("unused")
-        val jvmMain by getting {
-            dependencies {
-                implementation(Log4j2.core)
-            }
-        }
-    }
-}
+/**
+ * Requests the platform to perform garbage collection in tests.
+ *
+ * This is a best-effort hint; platforms may ignore it.
+ */
+@TestOnly
+public expect fun forceGc()

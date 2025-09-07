@@ -26,8 +26,6 @@
 
 package io.spine.logging
 
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.nulls.shouldNotBeNull
@@ -37,6 +35,9 @@ import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 import io.spine.logging.backend.Metadata
 import io.spine.logging.backend.given.FakeMetadata
 import io.spine.logging.jvm.given.FakeLogSite
+import io.spine.testing.gc.forceGc
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -94,7 +95,6 @@ internal class LogSiteMapSpec {
     }
 
     @Test
-    @Suppress("ExplicitGarbageCollectionCall") // Needed in the test.
     fun `remove entries when a scope is garbage collected`() {
         val map = createMap()
 
@@ -105,9 +105,9 @@ internal class LogSiteMapSpec {
         }
 
         // GC should collect the `Scope` reference used in the recursive call.
-        System.gc()
+        forceGc()
         pause(1000)
-        System.gc()
+        forceGc()
 
         // Adding new keys in a different scope triggers tidying up of keys
         // from unreachable scopes.
