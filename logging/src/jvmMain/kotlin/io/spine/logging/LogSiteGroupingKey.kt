@@ -24,10 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
-
-import io.spine.logging.KeyValueHandler
-import io.spine.logging.MetadataKey
+package io.spine.logging
 
 /**
  * The key associated with a sequence of log site "grouping keys".
