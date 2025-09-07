@@ -26,9 +26,12 @@
 
 package io.spine.logging
 
+import kotlin.annotation.AnnotationRetention.BINARY
+import kotlin.annotation.AnnotationTarget.FUNCTION
+
 /**
  * Annotates a method to indicate that it should be used for injecting log site information.
  */
-@Retention(AnnotationRetention.BINARY)
-@Target(AnnotationTarget.FUNCTION)
+@Retention(BINARY)
+@Target(FUNCTION)
 internal annotation class LogSiteInjector
