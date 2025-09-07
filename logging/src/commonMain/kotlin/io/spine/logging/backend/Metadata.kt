@@ -55,7 +55,6 @@ public abstract class Metadata {
         /**
          * Returns an immutable `Metadata` that has no items.
          */
-        @JvmStatic
         public fun empty(): Metadata = EmptyMetadata
     }
 
