@@ -26,6 +26,7 @@
 
 package io.spine.logging
 
+import com.google.errorprone.annotations.ThreadSafe
 import io.spine.logging.LogContext.Key.LOG_SAMPLE_EVERY_N
 import io.spine.logging.backend.Metadata
 import kotlinx.atomicfu.atomic
@@ -34,15 +35,14 @@ import kotlin.random.Random
 /**
  * Rate limiter to support `onAverageEvery(N)` functionality.
  *
- * Instances of this class are created for each unique [io.spine.logging.LogSiteKey] for which rate limiting
- * via the `LOG_SAMPLE_EVERY_N` metadata key is required. This class implements
- * `RateLimitStatus` as a mechanism for resetting its own state.
- *
- * This class is thread safe.
+ * Instances of this class are created for each unique [io.spine.logging.LogSiteKey] for which
+ * rate limiting via the `LOG_SAMPLE_EVERY_N` metadata key is required.
+ * This class implements [RateLimitStatus] as a mechanism for resetting its own state.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/SamplingRateLimiter.java">
  *       Original Java code of Google Flogger</a> for historical context.
  */
+@ThreadSafe
 internal class SamplingRateLimiter : RateLimitStatus() {
 
     internal val pendingCount = atomic(0)
@@ -60,7 +60,11 @@ internal class SamplingRateLimiter : RateLimitStatus() {
             val currentValue by pendingCount
             currentValue
         }
-        return if (pending > 0) this else DISALLOW
+        return if (pending > 0) {
+            this
+        } else {
+            DISALLOW
+        }
     }
 
     override fun reset() {
@@ -73,9 +77,6 @@ internal class SamplingRateLimiter : RateLimitStatus() {
             override fun initialValue(): SamplingRateLimiter = SamplingRateLimiter()
         }
 
-        /**
-         * Kotlin's Random.Default is thread-safe and does not require ThreadLocal wrapping.
-         */
         private val random: Random = Random.Default
 
         @JvmStatic
