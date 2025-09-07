@@ -42,7 +42,7 @@ internal object StaticMethodCaller {
     private const val GET_INSTANCE = "getInstance"
 
     @JvmStatic
-    public fun <T> getInstanceFromSystemProperty(propertyName: String, type: Class<T>): T? =
+    fun <T> getInstanceFromSystemProperty(propertyName: String, type: Class<T>): T? =
         getInstanceFromSystemProperty(propertyName, null, type)
 
     @JvmStatic
