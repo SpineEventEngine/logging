@@ -24,15 +24,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.testing.gc
+package io.spine.logging.testing
 
 import io.spine.annotation.TestOnly
 
 /**
- * Calls [System.gc].
+ * Requests the platform to perform garbage collection in tests.
+ *
+ * This is a best-effort hint; platforms may ignore it.
  */
 @TestOnly
-@Suppress("ExplicitGarbageCollectionCall")
-public actual fun forceGc() {
-    System.gc()
-}
+public expect fun forceGc()
