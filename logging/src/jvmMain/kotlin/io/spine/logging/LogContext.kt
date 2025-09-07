@@ -35,7 +35,9 @@ import io.spine.logging.jvm.LogSiteStackTrace
 import io.spine.logging.jvm.context.Tags
 import io.spine.logging.jvm.injectedLogSite
 import io.spine.logging.util.Checks
+import io.spine.logging.util.Checks.checkNotNull
 import io.spine.reflect.CallerFinder
+import io.spine.reflect.CallerFinder.stackForCallerOf
 import kotlin.time.DurationUnit
 
 /**
@@ -320,7 +322,7 @@ protected constructor(
                 val context = LogSiteStackTrace(
                     _metadata!!.findValue(Key.LOG_CAUSE),
                     stackSize,
-                    CallerFinder.stackForCallerOf(LogContext::class.java, stackSize.maxDepth, 1)
+                    stackForCallerOf(LogContext::class.java, stackSize.maxDepth, 1)
                 )
                 // The "cause" is a unique metadata key, we must replace any existing value.
                 addMetadata(Key.LOG_CAUSE, context)
@@ -372,7 +374,7 @@ protected constructor(
         if (logSiteInfo == null) {
             // From the point at which we call inferLogSite() we can skip 1 additional method
             // (the `shouldLog()` method itself) when looking up the stack to find the log() method.
-            logSiteInfo = Checks.checkNotNull(
+            logSiteInfo = checkNotNull(
                 Platform.getCallerFinder().findLogSite(LogContext::class, 1),
                 "A logger backend must not return a null `LogSite`."
             )
