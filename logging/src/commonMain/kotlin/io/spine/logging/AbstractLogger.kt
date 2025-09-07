@@ -33,6 +33,7 @@ import io.spine.logging.util.RecursionDepth
 import kotlin.time.Duration.Companion.nanoseconds
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
+import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.format.DateTimeComponents
 import kotlinx.datetime.format.DateTimeFormat
@@ -57,22 +58,22 @@ import kotlinx.datetime.toLocalDateTime
 public abstract class AbstractLogger<API : LoggingApi<API>> protected constructor(
     private val backend: LoggerBackend
 ) {
-    /**
-     * An upper bound on the depth of reentrant logging allowed by a looger.
-     *
-     * Logger backends may choose to react to reentrant logging sooner than this,
-     * but once this value is reached, a warning is emitted to stderr, which will not include
-     * any user-provided arguments or metadata (in an attempt to halt recursion).
-     */
     private companion object {
+
+        /**
+         * An upper bound on the depth of reentrant logging allowed by a looger.
+         *
+         * Logger backends may choose to react to reentrant logging sooner than this,
+         * but once this value is reached, a warning is emitted to stderr, which will not include
+         * any user-provided arguments or metadata (in an attempt to halt recursion).
+         */
         private const val MAX_ALLOWED_RECURSION_DEPTH = 100
 
+        /**
+         * The format for date-time values in log data.
+         */
         @JvmField
-        @OptIn(FormatStringsInDatetimeFormats::class)
-        val dateTimeFormat = DateTimeFormat.formatAsKotlinBuilderDsl(
-            DateTimeComponents.Format {
-                byUnicodePattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-            })
+        val dateTimeFormat = LocalDateTime.Formats.ISO
     }
 
     /**
