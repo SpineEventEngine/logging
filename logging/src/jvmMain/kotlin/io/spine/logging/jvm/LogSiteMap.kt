@@ -65,10 +65,11 @@ public abstract class LogSiteMap<V : Any> {
     protected constructor()
 
     /**
-     * Implemented by subclasses to provide a new value for a newly added keys. This value is mapped
-     * to the key and cannot be replaced, so it is expected to be mutable and must be thread safe.
-     * All values in a `LogSiteMap` are expected to be the same type and have the same initial
-     * state.
+     * Implemented by subclasses to provide a new value for a newly added keys.
+     *
+     * This value is mapped to the key and cannot be replaced, so it is expected
+     * to be mutable and must be thread safe. All values in a `LogSiteMap` are
+     * expected to be the same type and have the same initial state.
      */
     protected abstract fun initialValue(): V
 
