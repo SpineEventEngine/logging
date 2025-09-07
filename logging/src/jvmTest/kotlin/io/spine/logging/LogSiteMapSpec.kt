@@ -120,7 +120,9 @@ internal class LogSiteMapSpec {
     }
 }
 
-private class Counter(@Volatile private var value: Int = 0) {
+private class Counter(
+    private var value: Int = 0
+) {
     fun incrementAndGet(): Int = synchronized(this) { ++value }
 }
 
