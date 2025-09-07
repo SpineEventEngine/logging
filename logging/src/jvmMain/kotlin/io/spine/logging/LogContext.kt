@@ -34,9 +34,7 @@ import io.spine.logging.backend.Platform
 import io.spine.logging.jvm.LogSiteStackTrace
 import io.spine.logging.jvm.context.Tags
 import io.spine.logging.jvm.injectedLogSite
-import io.spine.logging.util.Checks
 import io.spine.logging.util.Checks.checkNotNull
-import io.spine.reflect.CallerFinder
 import io.spine.reflect.CallerFinder.stackForCallerOf
 import kotlin.time.DurationUnit
 
@@ -393,7 +391,7 @@ protected constructor(
             val skippedLogs = RateLimitStatus.checkStatus(
                 rateLimitStatus!!,
                 logSiteKey,
-                _metadata ?: Metadata.Companion.empty()
+                _metadata ?: Metadata.empty()
             )
             if (shouldLog && skippedLogs > 0) {
                 if (_metadata != null) {
@@ -664,7 +662,7 @@ protected constructor(
             single("forced", Boolean::class)
 
         /**
-         * The key associated with any injected [io.spine.logging.jvm.context.Tags].
+         * The key associated with any injected [Tags].
          *
          * If tags are injected, they are added after post-processing if the log site is enabled.
          * Thus they are not available to the `postProcess()` method itself. The rationale is
@@ -673,7 +671,7 @@ protected constructor(
          *
          * Tags can be added at the log site, although this should rarely be necessary and using
          * normal log message arguments is always the preferred way to indicate unstructured log
-         * data. Users should never build new [io.spine.logging.jvm.context.Tags] instances just to pass them into a log
+         * data. Users should never build new [Tags] instances just to pass them into a log
          * statement.
          */
         @JvmField
