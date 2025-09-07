@@ -26,6 +26,8 @@
 
 package io.spine.logging
 
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.nulls.shouldNotBeNull
@@ -123,14 +125,8 @@ private class Counter(@Volatile private var value: Int = 0) {
 }
 
 private fun pause(millis: Long) {
-    // Minimal Kotlin-only pause using Object.wait
-    val lock = Object()
-    synchronized(lock) {
-        try {
-            lock.wait(millis)
-        } catch (_: InterruptedException) {
-            // ignore in tests
-        }
+    runBlocking {
+        delay(millis)
     }
 }
 
