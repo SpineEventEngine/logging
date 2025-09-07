@@ -43,13 +43,11 @@ public expect class RecursionDepth() : AutoCloseable {
         /**
          * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
          */
-        @JvmStatic
         public fun getCurrentDepth(): Int
 
         /**
          * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
          */
-        @JvmStatic
         public fun enterLogStatement(): RecursionDepth
     }
 
