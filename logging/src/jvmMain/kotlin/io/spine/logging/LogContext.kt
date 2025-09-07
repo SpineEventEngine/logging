@@ -30,7 +30,6 @@ import io.spine.annotation.VisibleForTesting
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.Metadata
 import io.spine.logging.backend.Platform
-import io.spine.logging.jvm.LogSiteInjector
 import io.spine.logging.jvm.LogSiteStackTrace
 import io.spine.logging.jvm.MutableMetadata
 import io.spine.logging.jvm.context.Tags
