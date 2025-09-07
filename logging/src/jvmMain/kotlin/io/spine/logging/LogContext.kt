@@ -618,7 +618,7 @@ protected constructor(
         /**
          * The key associated with a sequence of log site "grouping keys".
          *
-         * @see io.spine.logging.LogSiteGroupingKey
+         * @see LogSiteGroupingKey
          */
         @JvmField
         public val LOG_SITE_GROUPING_KEY: MetadataKey<Any> = LogSiteGroupingKey()
