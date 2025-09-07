@@ -44,7 +44,7 @@ import kotlin.time.DurationUnit
  * This class is an implementation of the base [LoggingApi] interface and acts as a holder
  * for any state applied to the log statement during the fluent call sequence. The lifecycle of a
  * logging context is very short; it is created by a logger, usually in response to a call to the
- * [io.spine.logging.AbstractLogger.at] method, and normally lasts only as long as the log statement.
+ * [AbstractLogger.at] method, and normally lasts only as long as the log statement.
  *
  * This class should not be visible to normal users of the logging API and it is only needed when
  * extending the API to add more functionality. In order to extend the logging API and add methods
@@ -96,7 +96,7 @@ protected constructor(
 
     /**
      * Creates a logging context with the specified level, and with a timestamp obtained from the
-     * configured logging [io.spine.logging.backend.Platform].
+     * configured logging [Platform].
      *
      * @param level The log level for this log statement.
      * @param isForced Whether to force this log statement (see [wasForced] for details).
@@ -158,7 +158,7 @@ protected constructor(
      * cast it to any particular implementation.
      */
     public final override val metadata: Metadata
-        get() = _metadata ?: Metadata.Companion.empty()
+        get() = _metadata ?: Metadata.empty()
 
     /**
      * Adds the given key/value pair to this logging context. If the key cannot be repeated, and
