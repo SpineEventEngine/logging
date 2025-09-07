@@ -24,15 +24,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
 import io.spine.annotation.TestOnly
-import io.spine.logging.LogContext
-import io.spine.logging.LogSiteKey
-import io.spine.logging.LoggingScope
 import io.spine.logging.backend.Metadata
-import io.spine.logging.util.Checks.checkNotNull
-import java.util.concurrent.ConcurrentHashMap
 
 /**
  * Provides per log site state for stateful fluent logging operations (e.g. rate limiting).
@@ -49,7 +44,7 @@ import java.util.concurrent.ConcurrentHashMap
  * locking (e.g. "synchronized" data structures) due to the risk of causing not trivial and
  * potentially harmful thread contention bottlenecks during logging.
  *
- * This class is intended only for use by fluent logging APIs (subclasses of [LogContext]
+ * This class is intended only for use by fluent logging APIs (subclasses of [LogContext])
  * and only used in the [LogContext.postProcess] method, which supplies the key
  * appropriate for the current log statement.
  *
@@ -60,7 +55,8 @@ import java.util.concurrent.ConcurrentHashMap
  */
 public abstract class LogSiteMap<V : Any> {
 
-    private val concurrentMap = ConcurrentHashMap<LogSiteKey, V>()
+    private val lock = Any()
+    private val map: MutableMap<LogSiteKey, V> = HashMap()
 
     protected constructor()
 
@@ -79,31 +75,35 @@ public abstract class LogSiteMap<V : Any> {
      * This method exists only for testing. Do not make this public.
      */
     @TestOnly
-    internal fun contains(key: LogSiteKey): Boolean = concurrentMap.containsKey(key)
+    internal fun contains(key: LogSiteKey): Boolean = synchronized(lock) { map.containsKey(key) }
 
     /**
-     * Returns the mutable, thread safe, log site state for the given key to be read or updated
+     * Returns the mutable, thread-safe, log site state for the given key to be read or updated
      * during the [LogContext.postProcess] method.
      *
      * Note that due to the possibility of log site key specialization, there may be more than
-     * one value in the map for any given log site. This is intended and allows for things like per
-     * scope rate limiting.
+     * one value in the map for any given log site. This is intended and allows for things like
+     * per-scope rate limiting.
      */
     @Suppress("ReturnCount")
     public operator fun get(key: LogSiteKey, metadata: Metadata): V {
-        var value = concurrentMap[key]
-        if (value != null) {
-            return value
+        var inserted = false
+        val result: V = synchronized(lock) {
+            val existing = map[key]
+            if (existing != null) {
+                existing
+            } else {
+                val created = initialValue()
+                map[key] = created
+                inserted = true
+                created
+            }
         }
-        // Many threads can get here concurrently and attempt to add an initial value.
-        value = checkNotNull(initialValue(), "initial map value")
-        val race = concurrentMap.putIfAbsent(key, value)
-        if (race != null) {
-            return race
+        if (inserted) {
+            // Only the thread that inserted the value adds the removal hook.
+            addRemovalHook(key, metadata)
         }
-        // Only one thread gets here for each log site key added to this map.
-        addRemovalHook(key, metadata)
-        return value
+        return result
     }
 
     @Suppress("LoopWithTooManyJumpStatements")
@@ -119,7 +119,7 @@ public abstract class LogSiteMap<V : Any> {
             }
             if (removalHook == null) {
                 // Non-static inner class references the outer LogSiteMap.
-                removalHook = { concurrentMap.remove(key) }
+                removalHook = { synchronized(lock) { map.remove(key) } }
             }
             groupByKey.doOnClose(removalHook)
         }

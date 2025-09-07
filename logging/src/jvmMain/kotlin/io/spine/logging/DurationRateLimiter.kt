@@ -29,7 +29,6 @@ package io.spine.logging
 import com.google.errorprone.annotations.ThreadSafe
 import io.spine.logging.LogContext.Key.LOG_AT_MOST_EVERY
 import io.spine.logging.backend.Metadata
-import io.spine.logging.jvm.LogSiteMap
 import kotlin.math.max
 import kotlin.time.DurationUnit
 import kotlinx.atomicfu.atomic

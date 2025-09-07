@@ -27,7 +27,6 @@
 package io.spine.logging
 
 import io.spine.logging.backend.Metadata
-import io.spine.logging.jvm.LogSiteMap
 import kotlinx.atomicfu.atomic
 
 /**

@@ -28,7 +28,6 @@ package io.spine.logging
 
 import io.spine.logging.LogContext.Key.LOG_SAMPLE_EVERY_N
 import io.spine.logging.backend.Metadata
-import io.spine.logging.jvm.LogSiteMap
 import kotlinx.atomicfu.atomic
 import kotlin.random.Random
 
