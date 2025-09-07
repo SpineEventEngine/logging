@@ -35,10 +35,6 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
-import kotlinx.datetime.format.DateTimeComponents
-import kotlinx.datetime.format.DateTimeFormat
-import kotlinx.datetime.format.FormatStringsInDatetimeFormats
-import kotlinx.datetime.format.byUnicodePattern
 import kotlinx.datetime.toLocalDateTime
 
 /**
@@ -171,8 +167,9 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
 
     /**
      * Invokes the logging backend to write a log statement, ensuring that all exceptions which
-     * could be caused during logging, including any subsequent error handling, are handled. This method
-     * can only fail due to instances of [LoggingException] or [java.lang.Error] being thrown.
+     * could be caused during logging, including any subsequent error handling, are handled.
+     *
+     * This method can only fail due to instances of [LoggingException] or [Error] being thrown.
      *
      * This method also guards against unbounded reentrant logging, and will suppress further
      * logging if it detects significant recursion has occurred.
@@ -207,7 +204,7 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
             throw allowed
         } catch (badError: RuntimeException) {
             // Don't trust exception toString() method here.
-            reportError("${badError.javaClass.name}: ${badError.message}", data)
+            reportError("${badError::class.qualifiedName}: ${badError.message}", data)
             // However printStackTrace() will invoke toString() on the exception and its causes.
             try {
                 badError.printStackTrace(System.err)
