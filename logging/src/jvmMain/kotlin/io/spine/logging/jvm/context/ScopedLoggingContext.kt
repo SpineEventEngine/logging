@@ -29,6 +29,7 @@ package io.spine.logging.jvm.context
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import com.google.errorprone.annotations.MustBeClosed
 import io.spine.logging.MetadataKey
+import io.spine.logging.context.InvalidLoggingContextStateException
 import io.spine.logging.jvm.context.ScopedLoggingContext.Companion.getInstance
 import java.util.concurrent.Callable
 
