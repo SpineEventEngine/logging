@@ -27,6 +27,7 @@
 package io.spine.logging
 
 import io.spine.annotation.VisibleForTesting
+import io.spine.logging.MetadataKey.Companion.single
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.Metadata
 import io.spine.logging.backend.Platform
@@ -578,8 +579,7 @@ protected constructor(
          * This value is set by [LoggingApi.withCause].
          */
         @JvmField
-        public val LOG_CAUSE: MetadataKey<Throwable> =
-            MetadataKey.single<Throwable>("cause")
+        public val LOG_CAUSE: MetadataKey<Throwable> = single<Throwable>("cause")
 
         /**
          * The key associated with a rate limiting counter for "1-in-N" rate limiting.
@@ -587,8 +587,7 @@ protected constructor(
          * The value is set by [LoggingApi.every].
          */
         @JvmField
-        public val LOG_EVERY_N: MetadataKey<Int> =
-            MetadataKey.single<Int>("ratelimit_count")
+        public val LOG_EVERY_N: MetadataKey<Int> = single<Int>("ratelimit_count")
 
         /**
          * The key associated with a rate limiting counter for "1-in-N" randomly sampled rate
@@ -597,8 +596,7 @@ protected constructor(
          * The value is set by [LoggingApi.onAverageEvery].
          */
         @JvmField
-        public val LOG_SAMPLE_EVERY_N: MetadataKey<Int> =
-            MetadataKey.single<Int>("sampling_count")
+        public val LOG_SAMPLE_EVERY_N: MetadataKey<Int> = single<Int>("sampling_count")
 
         /**
          * The key associated with a rate-limiting period for "at most once every N" rate limiting.
@@ -607,7 +605,7 @@ protected constructor(
          */
         @JvmField
         public val LOG_AT_MOST_EVERY: MetadataKey<RateLimitPeriod> =
-            MetadataKey.single<RateLimitPeriod>("ratelimit_period")
+            single<RateLimitPeriod>("ratelimit_period")
 
         /**
          * The key associated with a count of rate limited logs.
@@ -615,8 +613,7 @@ protected constructor(
          * This is only public so backends can reference the key to control formatting.
          */
         @JvmField
-        public val SKIPPED_LOG_COUNT: MetadataKey<Int> =
-            MetadataKey.single<Int>("skipped")
+        public val SKIPPED_LOG_COUNT: MetadataKey<Int> = single<Int>("skipped")
 
         /**
          * The key associated with a sequence of log site "grouping keys".
@@ -662,7 +659,7 @@ protected constructor(
          */
         @JvmField
         public val WAS_FORCED: MetadataKey<Boolean> =
-            MetadataKey.single("forced", Boolean::class)
+            single("forced", Boolean::class)
 
         /**
          * The key associated with any injected [io.spine.logging.jvm.context.Tags].
@@ -701,7 +698,7 @@ protected constructor(
          * statement.
          */
         internal val CONTEXT_STACK_SIZE: MetadataKey<StackSize> =
-            MetadataKey.single("stack_size", StackSize::class)
+            single("stack_size", StackSize::class)
     }
 
     public companion object {
