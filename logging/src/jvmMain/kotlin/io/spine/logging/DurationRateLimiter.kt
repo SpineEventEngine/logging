@@ -64,7 +64,7 @@ internal class DurationRateLimiter : RateLimitStatus() {
         // reset. The value held here is updated to be the most recent negated timestamp, and is
         // negated again (making it positive and setting us into the rate-limiting state) when we
         // are reset.
-        val lastNanos = lastTimestampNanos.value
+        val lastNanos by lastTimestampNanos
         if (lastNanos >= 0) {
             val deadlineNanos = lastNanos + period.toNanos()
             // Check for negative deadline to avoid overflow for ridiculous durations. Assume
