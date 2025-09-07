@@ -213,8 +213,8 @@ protected constructor(
      * ## Log Site Keys
      *
      * If per log-site information is needed during post-processing, it should be stored using a
-     * [io.spine.logging.jvm.LogSiteMap]. This will correctly handle "specialized" log-site keys and remove the risk
-     * of memory leaks due to retaining unused log site data indefinitely.
+     * [io.spine.logging.LogSiteMap]. This will correctly handle "specialized" log-site keys and
+     * remove the risk of memory leaks due to retaining unused log site data indefinitely.
      *
      * Note that the given `logSiteKey` can be more specific than the [LogSite] of a log statement
      * (i.e., a single log statement can have multiple distinct versions of its state).
@@ -621,7 +621,7 @@ protected constructor(
         /**
          * The key associated with a sequence of log site "grouping keys".
          *
-         * @see io.spine.logging.jvm.LogSiteGroupingKey
+         * @see io.spine.logging.LogSiteGroupingKey
          */
         @JvmField
         public val LOG_SITE_GROUPING_KEY: MetadataKey<Any> = LogSiteGroupingKey()
