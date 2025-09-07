@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
 
-import static io.spine.logging.util.StaticMethodCaller.getInstanceFromSystemProperty;
+import static io.spine.logging.backend.system.StaticMethodCaller.getInstanceFromSystemProperty;
 
 /**
  * The default logger platform for a server-side Java environment.
