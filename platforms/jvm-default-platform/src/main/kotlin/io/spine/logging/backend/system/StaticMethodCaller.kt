@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.util
+package io.spine.logging.backend.system
 
 /**
  * Helper to call a no-arg constructor or static getter to obtain an instance of
@@ -35,21 +35,19 @@ package io.spine.logging.util
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/util/StaticMethodCaller.java">
  *   Original Java code of Google Flogger</a> for historical context.
  */
-public object StaticMethodCaller {
+internal object StaticMethodCaller {
 
     // TODO(cgdecker): Rename this class; eventually perhaps just roll it into DefaultPlatform
 
     private const val GET_INSTANCE = "getInstance"
 
     @JvmStatic
-    public fun <T> getInstanceFromSystemProperty(propertyName: String, type: Class<T>): T? =
+    fun <T> getInstanceFromSystemProperty(propertyName: String, type: Class<T>): T? =
         getInstanceFromSystemProperty(propertyName, null, type)
-
-    //TODO:2025-06-26:alexander.yevsyukov: Migrate this to be a part of the Spine Reflect library.
 
     @JvmStatic
     @Suppress("ReturnCount", "TooGenericExceptionCaught")
-    public fun <T> getInstanceFromSystemProperty(
+    fun <T> getInstanceFromSystemProperty(
         propertyName: String,
         defaultValue: String?,
         type: Class<T>

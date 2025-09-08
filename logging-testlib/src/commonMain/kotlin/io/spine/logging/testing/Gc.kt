@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,11 +24,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging
+package io.spine.logging.testing
 
-import io.spine.logging.util.RecursionDepth
+import io.spine.annotation.TestOnly
 
 /**
- * JVM implementation of getCurrentRecursionDepth using the existing RecursionDepth utility.
+ * Requests the platform to perform garbage collection in tests.
+ *
+ * This is a best-effort hint; platforms may ignore it.
  */
-internal actual fun getCurrentRecursionDepth(): Int = RecursionDepth.getCurrentDepth()
+@TestOnly
+public expect fun forceGc()

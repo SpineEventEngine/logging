@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,25 +24,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging.testing
 
-import io.kotest.matchers.shouldBe
-import kotlin.reflect.KVisibility
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
+import io.spine.annotation.TestOnly
 
 /**
- * Tests for the [LogSiteInjector] annotation.
+ * Calls [System.gc].
  */
-@DisplayName("`LogSiteInjector` annotation should")
-internal class LogSiteInjectorSpec {
-
-    @Test
-    fun `be non-public`() {
-        val logSiteInjectorClass = LogSiteInjector::class
-
-        // Verify that the annotation is internal (non-public).
-        // In Kotlin, internal visibility is the closest equivalent to Java's package-private.
-        logSiteInjectorClass.visibility shouldBe KVisibility.INTERNAL
-    }
+@TestOnly
+@Suppress("ExplicitGarbageCollectionCall")
+public actual fun forceGc() {
+    System.gc()
 }

@@ -29,7 +29,7 @@ package io.spine.logging.jvm.context
 import io.spine.logging.MetadataKey
 import io.spine.logging.StackSize
 import io.spine.logging.jvm.Middleman
-import java.util.concurrent.atomic.AtomicBoolean
+import kotlinx.atomicfu.atomic
 
 /**
  * Fallback context data provider used when no other implementations are available for a platform.
@@ -71,7 +71,7 @@ private class NoOpScopedLoggingContext : ScopedLoggingContext(), AutoCloseable {
         val logger: Middleman = Middleman.forEnclosingClass()
     }
 
-    private val haveWarned = AtomicBoolean()
+    private val haveWarned = atomic(false)
 
     private fun logWarningOnceOnly() {
         if (haveWarned.compareAndSet(false, true)) {

@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
@@ -32,14 +32,12 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
-import io.spine.logging.LogSiteKey
-import io.spine.logging.LoggingScope
 import io.spine.logging.backend.Metadata
 import io.spine.logging.backend.given.FakeMetadata
 import io.spine.logging.jvm.given.FakeLogSite
-import java.lang.Thread.sleep
-import java.util.concurrent.Callable
-import java.util.concurrent.atomic.AtomicInteger
+import io.spine.logging.testing.forceGc
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -97,7 +95,6 @@ internal class LogSiteMapSpec {
     }
 
     @Test
-    @Suppress("ExplicitGarbageCollectionCall") // Needed in the test.
     fun `remove entries when a scope is garbage collected`() {
         val map = createMap()
 
@@ -108,9 +105,9 @@ internal class LogSiteMapSpec {
         }
 
         // GC should collect the `Scope` reference used in the recursive call.
-        System.gc()
-        sleep(1000)
-        System.gc()
+        forceGc()
+        pause(1000)
+        forceGc()
 
         // Adding new keys in a different scope triggers tidying up of keys
         // from unreachable scopes.
@@ -123,16 +120,28 @@ internal class LogSiteMapSpec {
     }
 }
 
-private fun createMap(): LogSiteMap<AtomicInteger> = object : LogSiteMap<AtomicInteger>() {
-    override fun initialValue(): AtomicInteger = AtomicInteger(0)
+private class Counter(
+    private var value: Int = 0
+) {
+    fun incrementAndGet(): Int = synchronized(this) { ++value }
 }
 
-private fun <T> recurseAndCall(n: Int, action: Callable<T>): T {
+private fun pause(millis: Long) {
+    runBlocking {
+        delay(millis)
+    }
+}
+
+private fun createMap(): LogSiteMap<Counter> = object : LogSiteMap<Counter>() {
+    override fun initialValue(): Counter = Counter(0)
+}
+
+private fun <T> recurseAndCall(n: Int, action: () -> T): T {
     val i = n - 1
-    return if (i <= 0) action.call() else recurseAndCall(i, action)
+    return if (i <= 0) action() else recurseAndCall(i, action)
 }
 
-private fun useAndReturnScopedKey(map: LogSiteMap<AtomicInteger>, label: String): LogSiteKey {
+private fun useAndReturnScopedKey(map: LogSiteMap<Counter>, label: String): LogSiteKey {
     val scope = LoggingScope.create(label)
     val metadata = FakeMetadata().add(LogContext.Key.LOG_SITE_GROUPING_KEY, scope)
     val logSite = FakeLogSite("com.example", label, 42, "<unused>")

@@ -28,10 +28,10 @@ package io.spine.logging.backend.log4j2
 
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import io.spine.logging.LogContext.Key
 import io.spine.logging.MetadataKey
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
 import io.spine.logging.backend.log4j2.given.StubLogger
-import io.spine.logging.jvm.LogContext.Key
 import io.spine.logging.jvm.context.ContextDataProvider
 import io.spine.logging.jvm.context.Tags
 import java.util.concurrent.atomic.AtomicInteger

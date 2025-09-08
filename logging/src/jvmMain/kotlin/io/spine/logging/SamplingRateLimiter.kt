@@ -24,29 +24,28 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
-import io.spine.logging.LogSiteKey
-import io.spine.logging.jvm.LogContext.Key.LOG_SAMPLE_EVERY_N
+import com.google.errorprone.annotations.ThreadSafe
+import io.spine.logging.LogContext.Key.LOG_SAMPLE_EVERY_N
 import io.spine.logging.backend.Metadata
-import java.util.Random
-import java.util.concurrent.atomic.AtomicInteger
+import kotlinx.atomicfu.atomic
+import kotlin.random.Random
 
 /**
  * Rate limiter to support `onAverageEvery(N)` functionality.
  *
- * Instances of this class are created for each unique [io.spine.logging.LogSiteKey] for which rate limiting
- * via the `LOG_SAMPLE_EVERY_N` metadata key is required. This class implements
- * `RateLimitStatus` as a mechanism for resetting its own state.
- *
- * This class is thread safe.
+ * Instances of this class are created for each unique [io.spine.logging.LogSiteKey] for which
+ * rate limiting via the `LOG_SAMPLE_EVERY_N` metadata key is required.
+ * This class implements [RateLimitStatus] as a mechanism for resetting its own state.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/SamplingRateLimiter.java">
  *       Original Java code of Google Flogger</a> for historical context.
  */
+@ThreadSafe
 internal class SamplingRateLimiter : RateLimitStatus() {
 
-    internal val pendingCount = AtomicInteger()
+    internal val pendingCount = atomic(0)
 
     /**
      * Always "roll the dice" and adjust the count if necessary (even if we were already pending).
@@ -55,12 +54,17 @@ internal class SamplingRateLimiter : RateLimitStatus() {
      * "bursty" due to the action of other rate limiting mechanisms).
      */
     internal fun sampleOneIn(rateLimitCount: Int): RateLimitStatus {
-        val pending = if (random.get().nextInt(rateLimitCount) == 0) {
+        val pending = if (random.nextInt(rateLimitCount) == 0) {
             pendingCount.incrementAndGet()
         } else {
-            pendingCount.get()
+            val currentValue by pendingCount
+            currentValue
         }
-        return if (pending > 0) this else DISALLOW
+        return if (pending > 0) {
+            this
+        } else {
+            DISALLOW
+        }
     }
 
     override fun reset() {
@@ -73,11 +77,7 @@ internal class SamplingRateLimiter : RateLimitStatus() {
             override fun initialValue(): SamplingRateLimiter = SamplingRateLimiter()
         }
 
-        /**
-         * Even though Random is synchronized, we have to put it in a ThreadLocal to avoid thread
-         * contention. We cannot use ThreadLocalRandom (yet) due to JDK level.
-         */
-        private val random = ThreadLocal.withInitial { Random() }
+        private val random: Random = Random.Default
 
         @JvmStatic
         fun check(metadata: Metadata, logSiteKey: LogSiteKey): RateLimitStatus? {

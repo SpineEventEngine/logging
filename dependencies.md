@@ -1,6 +1,6 @@
 
 
-# Dependencies of `io.spine:spine-logging-context-tests:2.0.0-SNAPSHOT.340`
+# Dependencies of `io.spine:spine-logging-context-tests:2.0.0-SNAPSHOT.350`
 
 ## Runtime
 1.  **Group** : org.jetbrains. **Name** : annotations. **Version** : 26.0.2.
@@ -317,6 +317,14 @@
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -405,14 +413,14 @@
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using 
+This report was generated on **Mon Sep 08 14:17:07 WEST 2025** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-fixtures:2.0.0-SNAPSHOT.340`
+# Dependencies of `io.spine:spine-logging-fixtures:2.0.0-SNAPSHOT.350`
 
 ## Runtime
 ## Compile, tests, and tooling
@@ -997,6 +1005,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -1132,14 +1148,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using 
+This report was generated on **Mon Sep 08 14:17:08 WEST 2025** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-grpc-context:2.0.0-SNAPSHOT.340`
+# Dependencies of `io.spine:spine-logging-grpc-context:2.0.0-SNAPSHOT.350`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -1204,6 +1220,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib. **Version** : 2.1.21.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
@@ -1799,6 +1823,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -1950,14 +1982,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using 
+This report was generated on **Mon Sep 08 14:17:07 WEST 2025** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jul-backend:2.0.0-SNAPSHOT.340`
+# Dependencies of `io.spine:spine-logging-jul-backend:2.0.0-SNAPSHOT.350`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -2014,6 +2046,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib. **Version** : 2.1.21.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
@@ -2601,6 +2641,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -2752,14 +2800,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using 
+This report was generated on **Mon Sep 08 14:17:07 WEST 2025** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-default-platform:2.0.0-SNAPSHOT.340`
+# Dependencies of `io.spine:spine-logging-jvm-default-platform:2.0.0-SNAPSHOT.350`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -2816,6 +2864,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib. **Version** : 2.1.21.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
@@ -3427,6 +3483,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -3598,14 +3662,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using 
+This report was generated on **Mon Sep 08 14:17:07 WEST 2025** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-jul-backend-grpc-context:2.0.0-SNAPSHOT.340`
+# Dependencies of `io.spine:spine-logging-jvm-jul-backend-grpc-context:2.0.0-SNAPSHOT.350`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -4293,6 +4357,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -4448,14 +4520,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using 
+This report was generated on **Mon Sep 08 14:17:07 WEST 2025** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-jul-backend-std-context:2.0.0-SNAPSHOT.340`
+# Dependencies of `io.spine:spine-logging-jvm-jul-backend-std-context:2.0.0-SNAPSHOT.350`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -5135,6 +5207,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -5290,14 +5370,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using 
+This report was generated on **Mon Sep 08 14:17:07 WEST 2025** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-log4j2-backend-std-context:2.0.0-SNAPSHOT.340`
+# Dependencies of `io.spine:spine-logging-jvm-log4j2-backend-std-context:2.0.0-SNAPSHOT.350`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -5977,6 +6057,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -6132,14 +6220,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using 
+This report was generated on **Mon Sep 08 14:17:07 WEST 2025** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-slf4j-jdk14-backend-std-context:2.0.0-SNAPSHOT.340`
+# Dependencies of `io.spine:spine-logging-jvm-slf4j-jdk14-backend-std-context:2.0.0-SNAPSHOT.350`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -6818,6 +6906,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.23.1.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
@@ -6982,14 +7078,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using 
+This report was generated on **Mon Sep 08 14:17:07 WEST 2025** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-slf4j-reload4j-backend-std-context:2.0.0-SNAPSHOT.340`
+# Dependencies of `io.spine:spine-logging-jvm-slf4j-reload4j-backend-std-context:2.0.0-SNAPSHOT.350`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -7673,6 +7769,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -7836,14 +7940,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using 
+This report was generated on **Mon Sep 08 14:17:07 WEST 2025** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-log4j2-backend:2.0.0-SNAPSHOT.340`
+# Dependencies of `io.spine:spine-logging-log4j2-backend:2.0.0-SNAPSHOT.350`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -7908,6 +8012,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib. **Version** : 2.1.21.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
@@ -8511,6 +8623,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -8662,14 +8782,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using 
+This report was generated on **Mon Sep 08 14:17:07 WEST 2025** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging:2.0.0-SNAPSHOT.340`
+# Dependencies of `io.spine:spine-logging:2.0.0-SNAPSHOT.350`
 
 ## Runtime
 ## Compile, tests, and tooling
@@ -9254,9 +9374,13 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.23.1.
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
-     * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
@@ -9397,14 +9521,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using 
+This report was generated on **Mon Sep 08 14:17:06 WEST 2025** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine.tools:spine-logging-testlib:2.0.0-SNAPSHOT.340`
+# Dependencies of `io.spine.tools:spine-logging-testlib:2.0.0-SNAPSHOT.350`
 
 ## Runtime
 ## Compile, tests, and tooling
@@ -9989,6 +10113,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -10124,14 +10256,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using 
+This report was generated on **Mon Sep 08 14:17:07 WEST 2025** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-probe-backend:2.0.0-SNAPSHOT.340`
+# Dependencies of `io.spine:spine-logging-probe-backend:2.0.0-SNAPSHOT.350`
 
 ## Runtime
 1.  **Group** : com.google.auto.service. **Name** : auto-service-annotations. **Version** : 1.1.1.
@@ -10192,6 +10324,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib. **Version** : 2.1.21.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
@@ -10803,6 +10943,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -10974,14 +11122,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using 
+This report was generated on **Mon Sep 08 14:17:07 WEST 2025** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-smoke-test:2.0.0-SNAPSHOT.340`
+# Dependencies of `io.spine:spine-logging-smoke-test:2.0.0-SNAPSHOT.350`
 
 ## Runtime
 1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.18.3.
@@ -11078,6 +11226,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib. **Version** : 2.1.21.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
@@ -11693,6 +11849,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -11844,14 +12008,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using 
+This report was generated on **Mon Sep 08 14:17:07 WEST 2025** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-std-context:2.0.0-SNAPSHOT.340`
+# Dependencies of `io.spine:spine-logging-std-context:2.0.0-SNAPSHOT.350`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -11908,6 +12072,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 1.  **Group** : org.jetbrains.kotlin. **Name** : kotlin-stdlib. **Version** : 2.1.21.
      * **Project URL:** [https://kotlinlang.org/](https://kotlinlang.org/)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
@@ -12495,6 +12667,14 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
      * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+1.  **Group** : org.jetbrains.kotlinx. **Name** : atomicfu-jvm. **Version** : 0.29.0.
+     * **Project URL:** [https://github.com/Kotlin/kotlinx.atomicfu](https://github.com/Kotlin/kotlinx.atomicfu)
+     * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 1.  **Group** : org.jetbrains.kotlinx. **Name** : kotlinx-coroutines-bom. **Version** : 1.10.2.
      * **Project URL:** [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -12646,6 +12826,6 @@ This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Tue Sep 02 16:38:03 WEST 2025** using 
+This report was generated on **Mon Sep 08 14:17:07 WEST 2025** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).

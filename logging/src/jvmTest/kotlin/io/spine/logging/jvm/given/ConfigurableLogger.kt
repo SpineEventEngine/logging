@@ -27,10 +27,10 @@
 package io.spine.logging.jvm.given
 
 import io.spine.logging.Level
+import io.spine.logging.LogContext
 import io.spine.logging.LoggingApi
 import io.spine.logging.backend.LoggerBackend
-import io.spine.logging.jvm.AbstractLogger
-import io.spine.logging.jvm.LogContext
+import io.spine.logging.AbstractLogger
 import io.spine.logging.jvm.given.ConfigurableLogger.Companion.DEFAULT_TIMESTAMP_NANOS
 
 /**

@@ -24,45 +24,42 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.dependency.boms.BomsPlugin
-import io.spine.dependency.lib.Log4j2
-import io.spine.dependency.local.Base
-import io.spine.gradle.publish.SpinePublishing
-import io.spine.gradle.publish.spinePublishing
+package io.spine.logging.util
 
-plugins {
-    `kmp-module`
-    `kmp-publish`
-}
-apply<BomsPlugin>()
+import io.spine.annotation.Internal
 
-group = "io.spine.tools"
+/**
+ * A platform-neutral API for tracking recursion depth of logging operations.
+ *
+ * Use `Platform.getCurrentRecursionDepth()` to query the current depth from outside
+ * of the core logging internals.
+ *
+ * ### API Note
+ *
+ * This class is an internal detail and must not be used outside the core of the Logging library.
+ */
+public expect class RecursionDepth() : AutoCloseable {
 
-// This module configures `spinePublishing` on its own to change a prefix
-// specified by the root project.
-spinePublishing {
-    artifactPrefix = "spine-"
-    destinations = rootProject.the<SpinePublishing>().destinations
-    customPublishing = true
-    dokkaJar {
-        java = false
+    public companion object {
+
+        /**
+         * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
+         */
+        @Internal
+        public fun getCurrentDepth(): Int
+
+        /**
+         * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
+         */
+        @Internal
+        public fun enterLogStatement(): RecursionDepth
     }
-}
 
-kotlin {
-    sourceSets {
-        @Suppress("unused")
-        val commonMain by getting {
-            dependencies {
-                api(Base.annotations)
-                implementation(project(":logging"))
-            }
-        }
-        @Suppress("unused")
-        val jvmMain by getting {
-            dependencies {
-                implementation(Log4j2.core)
-            }
-        }
-    }
+    /**
+     * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
+     */
+    @Internal
+    public fun getValue(): Int
+
+    override fun close()
 }

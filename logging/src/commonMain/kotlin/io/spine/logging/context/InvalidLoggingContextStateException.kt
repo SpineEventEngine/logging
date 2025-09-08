@@ -24,40 +24,20 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging.context
 
-import io.spine.logging.KeyValueHandler
-import io.spine.logging.MetadataKey
+import java.io.Serial
 
 /**
- * The key associated with a sequence of log site "grouping keys".
+ * Thrown if it can be determined that contexts have been closed incorrectly.
  *
- * These serve to specialize the log site key to group the behaviour of stateful
- * operations like rate limiting.
- *
- * This is used by the `per()` methods and is only public so backends can
- * reference the key to control formatting.
+ * Note that the point at which this exception is thrown may not itself be
+ * the point where the mishandling occurred, but simply where it was first detected.
  */
-public open class LogSiteGroupingKey : MetadataKey<Any>("group_by", Any::class, true) {
-
-    override fun emitRepeated(values: Iterator<Any>, kvh: KeyValueHandler) {
-        if (values.hasNext()) {
-            val first = values.next()
-            if (!values.hasNext()) {
-                kvh.handle(label, first)
-            } else {
-                // In the very unlikely case there is more than one aggregation key, emit a list.
-                val value = buildString {
-                    append('[')
-                    append(first)
-                    do {
-                        append(',')
-                        append(values.next())
-                    } while (values.hasNext())
-                    append(']')
-                }
-                kvh.handle(label, value)
-            }
-        }
+public class InvalidLoggingContextStateException(message: String, cause: Throwable) :
+    IllegalStateException(message, cause) {
+    private companion object {
+        @Serial
+        private const val serialVersionUID = 0L
     }
 }

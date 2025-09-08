@@ -30,6 +30,7 @@ import io.spine.annotation.VisibleForTesting
 import io.spine.logging.MetadataKey.Companion.repeated
 import io.spine.logging.MetadataKey.Companion.single
 import io.spine.logging.util.Checks.checkMetadataIdentifier
+import io.spine.logging.util.RecursionDepth
 import kotlin.reflect.KClass
 
 /**
@@ -160,9 +161,7 @@ public open class MetadataKey<T : Any>(
      * against unbounded reentrant logging.
      */
     public fun safeEmit(value: T, kvh: KeyValueHandler) {
-        if (isCustom && getCurrentRecursionDepth() > MAX_CUSTOM_META_DATAKEY_RECURSION_DEPTH) {
-            // Recursive logging detected, possibly caused by custom metadata
-            // keys triggering reentrant logging.
+        if (recursiveLogging()) {
             // To halt recursion, emit the keys in the default non-custom format
             // without invoking user overridable methods.
             kvh.handle(this.label, value)
@@ -179,9 +178,7 @@ public open class MetadataKey<T : Any>(
      */
     public fun safeEmitRepeated(values: Iterator<T>, kvh: KeyValueHandler) {
         check(canRepeat) { "Non repeating key: `$label`." }
-        if (isCustom && getCurrentRecursionDepth() > MAX_CUSTOM_META_DATAKEY_RECURSION_DEPTH) {
-            // Recursive logging detected, possibly caused by custom metadata
-            // keys triggering reentrant logging.
+        if (recursiveLogging()) {
             // To halt recursion, emit the keys in the default non-custom format
             // without invoking user overridable methods.
             while (values.hasNext()) {
@@ -191,6 +188,13 @@ public open class MetadataKey<T : Any>(
             emitRepeated(values, kvh)
         }
     }
+
+    /**
+     * Checks if logging was called recursively, possibly caused by custom metadata
+     * keys triggering reentrant logging.
+     */
+    private fun recursiveLogging(): Boolean =
+        isCustom && RecursionDepth.getCurrentDepth() > MAX_CUSTOM_META_DATAKEY_RECURSION_DEPTH
 
     /**
      * Override this method to provide custom logic for emitting one or more key/value pairs for a
@@ -328,14 +332,6 @@ public open class MetadataKey<T : Any>(
             repeated(label, T::class)
     }
 }
-
-/**
- * Gets the current recursion depth for logging operations.
- *
- * This is a platform-specific operation that may have different implementations
- * across platforms.
- */
-internal expect fun getCurrentRecursionDepth(): Int
 
 /**
  * Creates a [Bloom filter][https://en.wikipedia.org/wiki/Bloom_filter] mask

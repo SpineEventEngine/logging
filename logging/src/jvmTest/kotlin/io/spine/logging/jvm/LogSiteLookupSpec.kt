@@ -32,7 +32,6 @@ import io.spine.logging.jvm.MyLogUtil.callerLogSite
 import io.spine.logging.jvm.MyLogUtil.callerLogSiteWrapped
 import io.kotest.matchers.shouldBe
 import io.spine.logging.LogSite
-import io.spine.logging.StackTraceElement
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -42,8 +41,8 @@ import org.junit.jupiter.api.Test
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/LogSitesTest.java">
  *     Original Java code of Google Flogger</a> for historical context.
  */
-@DisplayName("`LogSite` companion object should")
-internal class LogSiteCompanionSpec {
+@DisplayName("`LogSiteLookup` should")
+internal class LogSiteLookupSpec {
 
     @Test
     fun `return log site for the current line of code`() {
@@ -61,16 +60,6 @@ internal class LogSiteCompanionSpec {
     @Test
     fun `return 'INVALID' log site if the caller not found`() {
         callerOf(String::class) shouldBe LogSite.Invalid
-    }
-
-    @Test
-    fun `detect log site using the given stack trace element`() {
-        val element = StackTraceElement("class", "method", "file", 42)
-        val logSite = StackBasedLogSite(element)
-        logSite.className shouldBe element.className
-        logSite.methodName shouldBe element.methodName
-        logSite.fileName shouldBe element.fileName
-        logSite.lineNumber shouldBe element.lineNumber
     }
 
     @Test

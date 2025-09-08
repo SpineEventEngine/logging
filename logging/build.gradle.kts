@@ -27,6 +27,7 @@
 @file:Suppress("unused") // source set accessed via `by getting`.
 
 import io.spine.dependency.kotlinx.DateTime
+import io.spine.dependency.kotlinx.AtomicFu
 import io.spine.dependency.local.Base
 import io.spine.dependency.local.Reflect
 import io.spine.gradle.publish.SpinePublishing
@@ -51,14 +52,17 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                api(Base.annotations)
+                implementation(DateTime.lib)
                 implementation(Reflect.lib)
+                implementation(AtomicFu.lib)
             }
         }
         val jvmMain by getting {
             dependencies {
                 implementation(DateTime.lib)
-                implementation(Base.annotations)
                 implementation(Reflect.lib)
+                implementation(AtomicFu.lib)
                 runtimeOnly(project(":jvm-default-platform"))
             }
         }

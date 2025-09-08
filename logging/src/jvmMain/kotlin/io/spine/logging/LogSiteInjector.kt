@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,45 +24,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.dependency.boms.BomsPlugin
-import io.spine.dependency.lib.Log4j2
-import io.spine.dependency.local.Base
-import io.spine.gradle.publish.SpinePublishing
-import io.spine.gradle.publish.spinePublishing
+package io.spine.logging
 
-plugins {
-    `kmp-module`
-    `kmp-publish`
-}
-apply<BomsPlugin>()
+import kotlin.annotation.AnnotationRetention.BINARY
+import kotlin.annotation.AnnotationTarget.FUNCTION
 
-group = "io.spine.tools"
-
-// This module configures `spinePublishing` on its own to change a prefix
-// specified by the root project.
-spinePublishing {
-    artifactPrefix = "spine-"
-    destinations = rootProject.the<SpinePublishing>().destinations
-    customPublishing = true
-    dokkaJar {
-        java = false
-    }
-}
-
-kotlin {
-    sourceSets {
-        @Suppress("unused")
-        val commonMain by getting {
-            dependencies {
-                api(Base.annotations)
-                implementation(project(":logging"))
-            }
-        }
-        @Suppress("unused")
-        val jvmMain by getting {
-            dependencies {
-                implementation(Log4j2.core)
-            }
-        }
-    }
-}
+/**
+ * Annotates a method to indicate that it should be used for injecting log site information.
+ */
+@Retention(BINARY)
+@Target(FUNCTION)
+internal annotation class LogSiteInjector

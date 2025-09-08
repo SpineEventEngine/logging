@@ -29,6 +29,7 @@ package io.spine.logging.jvm
 import com.google.errorprone.annotations.RestrictedApi
 import io.spine.annotation.Internal
 import io.spine.logging.LogSite
+import io.spine.logging.LogSiteInjector
 
 /**
  * Creates a log site injected from constants held in a class' constant pool.

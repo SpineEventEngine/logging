@@ -24,26 +24,16 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
 import io.spine.annotation.VisibleForTesting
-import io.spine.logging.KeyValueHandler
-import io.spine.logging.Level
-import io.spine.logging.LogPerBucketingStrategy
-import io.spine.logging.LogSite
-import io.spine.logging.LogSiteKey
-import io.spine.logging.LoggingApi
-import io.spine.logging.LoggingDomain
-import io.spine.logging.LoggingScope
-import io.spine.logging.LoggingScopeProvider
-import io.spine.logging.MetadataKey
 import io.spine.logging.MetadataKey.Companion.single
-import io.spine.logging.SpecializedLogSiteKey
-import io.spine.logging.StackSize
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.Metadata
 import io.spine.logging.backend.Platform
+import io.spine.logging.jvm.LogSiteStackTrace
 import io.spine.logging.jvm.context.Tags
+import io.spine.logging.jvm.injectedLogSite
 import io.spine.logging.util.Checks.checkNotNull
 import io.spine.reflect.CallerFinder.stackForCallerOf
 import kotlin.time.DurationUnit
@@ -224,8 +214,8 @@ protected constructor(
      * ## Log Site Keys
      *
      * If per log-site information is needed during post-processing, it should be stored using a
-     * [LogSiteMap]. This will correctly handle "specialized" log-site keys and remove the risk
-     * of memory leaks due to retaining unused log site data indefinitely.
+     * [io.spine.logging.LogSiteMap]. This will correctly handle "specialized" log-site keys and
+     * remove the risk of memory leaks due to retaining unused log site data indefinitely.
      *
      * Note that the given `logSiteKey` can be more specific than the [LogSite] of a log statement
      * (i.e., a single log statement can have multiple distinct versions of its state).
@@ -586,7 +576,7 @@ protected constructor(
         /**
          * The key associated with a [Throwable] cause to be associated with the log message.
          *
-         * This value is set by [io.spine.logging.LoggingApi.withCause].
+         * This value is set by [LoggingApi.withCause].
          */
         @JvmField
         public val LOG_CAUSE: MetadataKey<Throwable> = single<Throwable>("cause")
@@ -594,7 +584,7 @@ protected constructor(
         /**
          * The key associated with a rate limiting counter for "1-in-N" rate limiting.
          *
-         * The value is set by [io.spine.logging.LoggingApi.every].
+         * The value is set by [LoggingApi.every].
          */
         @JvmField
         public val LOG_EVERY_N: MetadataKey<Int> = single<Int>("ratelimit_count")
@@ -603,7 +593,7 @@ protected constructor(
          * The key associated with a rate limiting counter for "1-in-N" randomly sampled rate
          * limiting.
          *
-         * The value is set by [io.spine.logging.LoggingApi.onAverageEvery].
+         * The value is set by [LoggingApi.onAverageEvery].
          */
         @JvmField
         public val LOG_SAMPLE_EVERY_N: MetadataKey<Int> = single<Int>("sampling_count")
@@ -611,7 +601,7 @@ protected constructor(
         /**
          * The key associated with a rate-limiting period for "at most once every N" rate limiting.
          *
-         * The value is set by [io.spine.logging.LoggingApi.atMostEvery].
+         * The value is set by [LoggingApi.atMostEvery].
          */
         @JvmField
         public val LOG_AT_MOST_EVERY: MetadataKey<RateLimitPeriod> =

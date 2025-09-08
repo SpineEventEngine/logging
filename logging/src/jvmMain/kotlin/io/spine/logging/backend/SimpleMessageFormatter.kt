@@ -29,12 +29,12 @@ package io.spine.logging.backend
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.annotation.Internal
 import io.spine.logging.KeyValueHandler
+import io.spine.logging.LogContext
 import io.spine.logging.MetadataKey
 import io.spine.logging.backend.SimpleMessageFormatter.appendContext
 import io.spine.logging.backend.SimpleMessageFormatter.getLiteralLogMessage
 import io.spine.logging.backend.SimpleMessageFormatter.getSimpleFormatterIgnoring
 import io.spine.logging.backend.SimpleMessageFormatter.mustBeFormatted
-import io.spine.logging.jvm.LogContext
 
 /**
  * A helper object for formatting [LogData] as text.

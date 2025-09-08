@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,17 +53,11 @@ package io.spine.logging.backend
  *
  * ### This is a service type
  *
- * This type is considered a *service type*, and implementations may be loaded from the
- * classpath via [java.util.ServiceLoader] provided the proper service metadata is included in
- * the jar file containing the implementation.
+ * This type is considered a *service type*, and implementations may be loaded using
+ * a platform-specific mechanism from the available classpath.
  *
- * When creating an implementation of this class, you can provide service metadata
- * (and thereby allow users to get your implementation just by including your jar file)
- * by either manually including a `META-INF/services/io.spine.logging.backend.Clock` file
- * containing the name of your implementation class or by annotating your implementation class using
- * [AutoService(Clock::class)](https://github.com/google/auto/tree/master/service).
- * See the documentation of both [java.util.ServiceLoader] and `DefaultPlatform` for
- * more information.
+ * Under JVM, it could be done via the [java.util.ServiceLoader] API provided
+ * the proper service metadata is included in the jar file containing the implementation.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/system/Clock.java">
  *   Original Java code of Google Flogger</a> for historical context.

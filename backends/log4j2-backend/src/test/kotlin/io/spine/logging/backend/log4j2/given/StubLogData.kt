@@ -28,10 +28,10 @@ package io.spine.logging.backend.log4j2.given
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.logging.Level
+import io.spine.logging.LogContext
+import io.spine.logging.LogSite
 import io.spine.logging.MetadataKey
 import io.spine.logging.backend.LogData
-import io.spine.logging.LogSite
-import io.spine.logging.jvm.LogContext
 
 /**
  * A mutable [LogData] fot testing backends and other log handling code.

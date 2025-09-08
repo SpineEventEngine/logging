@@ -24,15 +24,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.ints.shouldBeInRange
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import io.spine.logging.jvm.LogContext.Key
-import io.spine.logging.jvm.RateLimitStatus.Companion.DISALLOW
+import io.spine.logging.LogContext.Key
+import io.spine.logging.RateLimitStatus.Companion.DISALLOW
 import io.spine.logging.backend.Metadata
 import io.spine.logging.backend.given.FakeMetadata
 import io.spine.logging.jvm.given.FakeLogSite
@@ -59,7 +59,7 @@ internal class SamplingRateLimiterSpec {
         val limiter = SamplingRateLimiter()
 
         // Initially we are not “pending”, so disallow logging for an “impossible” sample rate.
-        limiter.pendingCount.get() shouldBe 0
+        limiter.pendingCount.value shouldBe 0
         limiter.sampleOneIn(Int.MAX_VALUE) shouldBe DISALLOW
 
         repeat(100) {
@@ -67,13 +67,13 @@ internal class SamplingRateLimiterSpec {
         }
 
         // Statistically we should be pending at least once.
-        val pendingCount = limiter.pendingCount.get()
+        val pendingCount = limiter.pendingCount.value
         pendingCount shouldBeGreaterThan 0
 
         // Now we are pending, we allow logging even for an “impossible” sample rate.
         limiter.sampleOneIn(Int.MAX_VALUE) shouldNotBe DISALLOW
         limiter.reset()
-        limiter.pendingCount.get() shouldBe pendingCount - 1
+        limiter.pendingCount.value shouldBe pendingCount - 1
     }
 
     @Test

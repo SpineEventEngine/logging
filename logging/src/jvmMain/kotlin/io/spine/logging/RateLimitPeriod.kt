@@ -24,12 +24,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
 import com.google.errorprone.annotations.Immutable
 import com.google.errorprone.annotations.ThreadSafe
-import io.spine.logging.backend.LogData
-import java.util.concurrent.TimeUnit
 import kotlin.time.DurationUnit
 import kotlin.time.toTimeUnit
 
@@ -38,7 +36,7 @@ import kotlin.time.toTimeUnit
  *
  * This corresponds to the
  * [LOG_AT_MOST_EVERY][io.spine.logging.jvm.LogContext.Key.LOG_AT_MOST_EVERY]
- * metadata key in [LogData].
+ * metadata key in [io.spine.logging.backend.LogData].
  *
  * Unlike the metadata for `every(N)`, we need to use a wrapper class here to preserve
  * the time unit information for accurate rate limit calculations.
@@ -62,7 +60,7 @@ public class RateLimitPeriod(
      *
      * ## Implementation note
      *
-     * Since nanoseconds are the smallest level of precision a [TimeUnit] can express,
+     * Since nanoseconds are the smallest level of precision a [DurationUnit] can express,
      * we are guaranteed that `unit.toNanos(n) >= n > 0`. This is important for
      * correctness (see comment in `checkLastTimestamp()`) because it ensures the new
      * timestamp that indicates when logging should occur always differs from the

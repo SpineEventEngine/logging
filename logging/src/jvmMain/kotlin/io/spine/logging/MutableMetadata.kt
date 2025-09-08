@@ -24,13 +24,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
-import io.spine.logging.MetadataKey
 import io.spine.logging.backend.Metadata
 
 /**
- * A [Metadata] with read/write features.
+ * A [io.spine.logging.backend.Metadata] with read/write features.
  */
 internal class MutableMetadata : Metadata() {
 

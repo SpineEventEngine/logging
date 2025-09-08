@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,45 +24,25 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.dependency.boms.BomsPlugin
-import io.spine.dependency.lib.Log4j2
-import io.spine.dependency.local.Base
-import io.spine.gradle.publish.SpinePublishing
-import io.spine.gradle.publish.spinePublishing
+package io.spine.logging
 
-plugins {
-    `kmp-module`
-    `kmp-publish`
-}
-apply<BomsPlugin>()
+import io.kotest.matchers.shouldBe
+import kotlin.reflect.KVisibility
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 
-group = "io.spine.tools"
+/**
+ * Tests for the [LogSiteInjector] annotation.
+ */
+@DisplayName("`LogSiteInjector` annotation should")
+internal class LogSiteInjectorSpec {
 
-// This module configures `spinePublishing` on its own to change a prefix
-// specified by the root project.
-spinePublishing {
-    artifactPrefix = "spine-"
-    destinations = rootProject.the<SpinePublishing>().destinations
-    customPublishing = true
-    dokkaJar {
-        java = false
-    }
-}
+    @Test
+    fun `be non-public`() {
+        val logSiteInjectorClass = LogSiteInjector::class
 
-kotlin {
-    sourceSets {
-        @Suppress("unused")
-        val commonMain by getting {
-            dependencies {
-                api(Base.annotations)
-                implementation(project(":logging"))
-            }
-        }
-        @Suppress("unused")
-        val jvmMain by getting {
-            dependencies {
-                implementation(Log4j2.core)
-            }
-        }
+        // Verify that the annotation is internal (non-public).
+        // In Kotlin, internal visibility is the closest equivalent to Java's package-private.
+        logSiteInjectorClass.visibility shouldBe KVisibility.INTERNAL
     }
 }

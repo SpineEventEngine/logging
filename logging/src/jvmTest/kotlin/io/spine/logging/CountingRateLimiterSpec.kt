@@ -24,14 +24,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
-import io.spine.logging.jvm.LogContext.Key
-import io.spine.logging.jvm.RateLimitStatus.Companion.DISALLOW
+import io.spine.logging.LogContext.Key
+import io.spine.logging.RateLimitStatus.Companion.DISALLOW
 import io.spine.logging.backend.given.FakeMetadata
 import io.spine.logging.jvm.given.FakeLogSite
 import org.junit.jupiter.api.DisplayName

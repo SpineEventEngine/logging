@@ -24,19 +24,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
-import io.spine.logging.Level
-import io.spine.logging.LogSite
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.LoggerBackend
 import io.spine.logging.backend.LoggingException
 import io.spine.logging.util.RecursionDepth
-import java.time.Instant
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-import java.util.concurrent.TimeUnit.NANOSECONDS
-import io.spine.logging.LoggingApi
+import kotlin.time.Duration.Companion.nanoseconds
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 /**
  * Base class for the fluent logging API.
@@ -55,21 +54,22 @@ import io.spine.logging.LoggingApi
 public abstract class AbstractLogger<API : LoggingApi<API>> protected constructor(
     private val backend: LoggerBackend
 ) {
-    /**
-     * An upper bound on the depth of reentrant logging allowed by a looger.
-     *
-     * Logger backends may choose to react to reentrant logging sooner than this,
-     * but once this value is reached, a warning is emitted to stderr, which will not include
-     * any user-provided arguments or metadata (in an attempt to halt recursion).
-     */
     private companion object {
+
+        /**
+         * An upper bound on the depth of reentrant logging allowed by a logger.
+         *
+         * Logger backends may choose to react to reentrant logging sooner than this,
+         * but once this value is reached, a warning is emitted to `stderr`, which will
+         * not include any user-provided arguments or metadata (in an attempt to halt recursion).
+         */
         private const val MAX_ALLOWED_RECURSION_DEPTH = 100
 
-        @Suppress("SimpleDateFormatWithoutLocale")
+        /**
+         * The format for date-time values in log data.
+         */
         @JvmField
-        val FORMATTER: DateTimeFormatter = DateTimeFormatter
-            .ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-            .withZone(ZoneId.systemDefault())
+        val dateTimeFormat = LocalDateTime.Formats.ISO
     }
 
     /**
@@ -167,8 +167,9 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
 
     /**
      * Invokes the logging backend to write a log statement, ensuring that all exceptions which
-     * could be caused during logging, including any subsequent error handling, are handled. This method
-     * can only fail due to instances of [LoggingException] or [java.lang.Error] being thrown.
+     * could be caused during logging, including any subsequent error handling, are handled.
+     *
+     * This method can only fail due to instances of [LoggingException] or [Error] being thrown.
      *
      * This method also guards against unbounded reentrant logging, and will suppress further
      * logging if it detects significant recursion has occurred.
@@ -203,7 +204,7 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
             throw allowed
         } catch (badError: RuntimeException) {
             // Don't trust exception toString() method here.
-            reportError("${badError.javaClass.name}: ${badError.message}", data)
+            reportError("${badError::class.qualifiedName}: ${badError.message}", data)
             // However printStackTrace() will invoke toString() on the exception and its causes.
             try {
                 badError.printStackTrace(System.err)
@@ -239,9 +240,13 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
         }
     }
 
+    @OptIn(ExperimentalTime::class)
     private fun formatTimestampIso8601(data: LogData): String {
-        val instant = Instant.ofEpochMilli(NANOSECONDS.toMillis(data.timestampNanos))
-        return FORMATTER.format(instant)
+        val instant = Instant.fromEpochMilliseconds(
+            data.timestampNanos.nanoseconds.inWholeMilliseconds
+        )
+        val dateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+        return dateTimeFormat.format(dateTime)
     }
 }
 

@@ -34,7 +34,7 @@ import kotlin.time.DurationUnit
 import java.util.logging.Level as JLevel
 
 /**
- * Implements [Middleman] using [Middleman] as the underlying implementation.
+ * Implements [Logger] using [Middleman] as the underlying implementation.
  */
 @CheckReturnValue
 public class JvmLogger(
@@ -83,8 +83,7 @@ private class ApiImpl(private val delegate: Middleman.Api): JvmLogger.Api {
     }
 
     override fun withInjectedLogSite(logSite: LogSite): JvmLogger.Api {
-        val floggerLogSite = logSite.toFloggerSite()
-        delegate.withInjectedLogSite(floggerLogSite)
+        delegate.withInjectedLogSite(logSite)
         return this
     }
 
@@ -204,8 +203,3 @@ public fun JLevel.toLevel(): Level = when (this) {
  */
 public operator fun JLevel.compareTo(other: JLevel): Int =
     intValue().compareTo(other.intValue())
-
-/**
- * Converts this [LogSite] to the JVM logging counterpart.
- */
-private fun LogSite.toFloggerSite(): LogSite = this

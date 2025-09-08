@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,14 +24,31 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.dependency.kotlinx
 
-import kotlin.annotation.AnnotationRetention.BINARY
-import kotlin.annotation.AnnotationTarget.FUNCTION
+import io.spine.dependency.Dependency
 
 /**
- * Annotates a method to indicate that it should be used for injecting log site information.
+ * Kotlin/Multiplatform AtomicFU library.
+ *
+ * https://github.com/Kotlin/kotlinx.atomicfu
  */
-@Retention(BINARY)
-@Target(FUNCTION)
-internal annotation class LogSiteInjector
+object AtomicFu : Dependency() {
+
+    override val version: String = "0.29.0"
+
+    override val group: String = KotlinX.group
+
+    @Suppress("ConstPropertyName") // https://bit.ly/kotlin-prop-names
+    const val module = "atomicfu"
+
+    /**
+     * The base artifact without platform classifier.
+     */
+    val std = "$group:$module"
+
+    override val modules: List<String> = listOf(std)
+
+    /** Convenience: full coordinates with the version for the standard artifact. */
+    val lib: String get() = artifact(std)
+}

@@ -24,12 +24,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
-import io.spine.logging.LogSiteKey
 import io.spine.logging.backend.Metadata
-import java.util.concurrent.atomic.AtomicBoolean
-import java.util.concurrent.atomic.AtomicInteger
+import kotlinx.atomicfu.atomic
 
 /**
  * Status for rate-limiting operations, usable by rate limiters and available to
@@ -133,8 +131,8 @@ public abstract class RateLimitStatus protected constructor() {
      */
     private class LogGuard {
 
-        private val shouldReset = AtomicBoolean()
-        private val pendingLogCount = AtomicInteger()
+        private val shouldReset = atomic(false)
+        private val pendingLogCount = atomic(0)
 
         companion object {
             private val guardMap = object : LogSiteMap<LogGuard>() {
@@ -156,7 +154,7 @@ public abstract class RateLimitStatus protected constructor() {
                 try {
                     status.reset()
                 } finally {
-                    guard.shouldReset.set(false)
+                    guard.shouldReset.value = false
                 }
                 // Subtract the pending count (this might not go to zero if other threads
                 // are incrementing).
