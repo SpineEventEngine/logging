@@ -57,11 +57,11 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
     private companion object {
 
         /**
-         * An upper bound on the depth of reentrant logging allowed by a looger.
+         * An upper bound on the depth of reentrant logging allowed by a logger.
          *
          * Logger backends may choose to react to reentrant logging sooner than this,
-         * but once this value is reached, a warning is emitted to stderr, which will not include
-         * any user-provided arguments or metadata (in an attempt to halt recursion).
+         * but once this value is reached, a warning is emitted to `stderr`, which will
+         * not include any user-provided arguments or metadata (in an attempt to halt recursion).
          */
         private const val MAX_ALLOWED_RECURSION_DEPTH = 100
 
