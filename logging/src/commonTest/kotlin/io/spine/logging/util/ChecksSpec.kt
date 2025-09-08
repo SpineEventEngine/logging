@@ -28,6 +28,7 @@ package io.spine.logging.util
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
+import io.spine.logging.util.Checks.checkMetadataIdentifier
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -37,9 +38,9 @@ internal class ChecksSpec {
 
     @Test
     fun `validate metadata identifier`() {
-        Checks.checkMetadataIdentifier("abc_123") shouldBe "abc_123"
-        shouldThrow<IllegalArgumentException> { Checks.checkMetadataIdentifier("") }
-        shouldThrow<IllegalArgumentException> { Checks.checkMetadataIdentifier("_bad") }
-        shouldThrow<IllegalArgumentException> { Checks.checkMetadataIdentifier("no-dash") }
+        checkMetadataIdentifier("abc_123") shouldBe "abc_123"
+        shouldThrow<IllegalArgumentException> { checkMetadataIdentifier("") }
+        shouldThrow<IllegalArgumentException> { checkMetadataIdentifier("_bad") }
+        shouldThrow<IllegalArgumentException> { checkMetadataIdentifier("no-dash") }
     }
 }
