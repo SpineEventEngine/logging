@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     https://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -24,23 +24,22 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.util
+package io.spine.logging.util
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
-import io.spine.logging.util.Checks.checkMetadataIdentifier
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-/** Tests for [io.spine.logging.util.Checks]. */
+/** Tests for [Checks]. */
 @DisplayName("`Checks` should")
 internal class ChecksSpec {
 
     @Test
     fun `validate metadata identifier`() {
-        checkMetadataIdentifier("abc_123") shouldBe "abc_123"
-        shouldThrow<IllegalArgumentException> { checkMetadataIdentifier("") }
-        shouldThrow<IllegalArgumentException> { checkMetadataIdentifier("_bad") }
-        shouldThrow<IllegalArgumentException> { checkMetadataIdentifier("no-dash") }
+        Checks.checkMetadataIdentifier("abc_123") shouldBe "abc_123"
+        shouldThrow<IllegalArgumentException> { Checks.checkMetadataIdentifier("") }
+        shouldThrow<IllegalArgumentException> { Checks.checkMetadataIdentifier("_bad") }
+        shouldThrow<IllegalArgumentException> { Checks.checkMetadataIdentifier("no-dash") }
     }
 }
