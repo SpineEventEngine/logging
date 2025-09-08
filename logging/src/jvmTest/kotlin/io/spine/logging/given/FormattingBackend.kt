@@ -24,18 +24,36 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.given
+package io.spine.logging.given
 
+import io.spine.logging.Level
 import io.spine.logging.backend.LogData
-import io.kotest.matchers.shouldBe
+import io.spine.logging.backend.LoggerBackend
 
 /**
- * This file contains Kotest-like assertions for [LogData].
+ * A memoizing backend that captures logged messages.
  */
+internal open class FormattingBackend : LoggerBackend() {
 
-/**
- * Asserts that this [LogData] has a given [value] as a literal message.
- */
-internal infix fun LogData.shouldHaveMessage(value: String?) {
-    literalArgument shouldBe value
+    private val mutableLogged = mutableListOf<String>()
+
+    /**
+     * The captured messages that have been logged by this backend.
+     */
+    val logged: List<String> get() = mutableLogged
+
+    override val loggerName: String = "<unused>"
+
+    override fun isLoggable(level: Level): Boolean = true
+
+    /**
+     * Logs the literal argument from the given [LogData].
+     */
+    override fun log(data: LogData) {
+        mutableLogged.add("${data.literalArgument}")
+    }
+
+    // Do not handle any errors in the backend, so we can test
+    // “last resort” error handling.
+    override fun handleError(error: RuntimeException, badData: LogData) = throw error
 }

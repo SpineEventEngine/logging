@@ -24,36 +24,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.given
+package io.spine.logging.given
 
-import io.spine.logging.Level
-import io.spine.logging.backend.LogData
-import io.spine.logging.backend.LoggerBackend
+import io.spine.logging.KeyValueHandler
 
 /**
- * A memoizing backend that captures logged messages.
+ * Remembers all handled key/value pairs.
  */
-internal open class FormattingBackend : LoggerBackend() {
+internal class MemoizingKvHandler : KeyValueHandler {
 
-    private val mutableLogged = mutableListOf<String>()
+    val entries = ArrayList<String>()
 
-    /**
-     * The captured messages that have been logged by this backend.
-     */
-    val logged: List<String> get() = mutableLogged
-
-    override val loggerName: String = "<unused>"
-
-    override fun isLoggable(level: Level): Boolean = true
-
-    /**
-     * Logs the literal argument from the given [LogData].
-     */
-    override fun log(data: LogData) {
-        mutableLogged.add("${data.literalArgument}")
+    override fun handle(key: String, value: Any?) {
+        entries.add("$key=$value")
     }
-
-    // Do not handle any errors in the backend, so we can test
-    // “last resort” error handling.
-    override fun handleError(error: RuntimeException, badData: LogData) = throw error
 }

@@ -32,7 +32,7 @@ import io.spine.logging.LogContext
 import io.spine.logging.LogSite
 import io.spine.logging.MetadataKey
 import io.spine.logging.backend.LogData
-import io.spine.logging.jvm.given.FakeLogSite
+import io.spine.logging.given.FakeLogSite
 
 /**
  * A mutable [LogData] fot testing backends and other log handling code.

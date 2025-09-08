@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ package io.spine.logging.jvm
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.spine.logging.SpecializedLogSiteKey
-import io.spine.logging.jvm.given.FakeLogSite
+import io.spine.logging.given.FakeLogSite
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 

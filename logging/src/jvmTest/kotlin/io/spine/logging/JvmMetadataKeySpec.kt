@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,8 +36,8 @@ import io.spine.logging.MetadataKey
 import io.spine.logging.MetadataKey.Companion.repeated
 import io.spine.logging.MetadataKey.Companion.single
 import io.spine.logging.backend.Platform
-import io.spine.logging.jvm.given.MemoizingKvHandler
-import io.spine.logging.jvm.given.iterate
+import io.spine.logging.given.MemoizingKvHandler
+import io.spine.logging.given.iterate
 import io.spine.logging.util.RecursionDepth
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

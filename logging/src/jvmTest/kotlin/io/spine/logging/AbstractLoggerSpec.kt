@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,8 +35,8 @@ import io.kotest.matchers.string.shouldMatch
 import io.kotest.matchers.string.shouldNotContain
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.LoggingException
-import io.spine.logging.jvm.given.ConfigurableLogger
-import io.spine.logging.jvm.given.FormattingBackend
+import io.spine.logging.given.ConfigurableLogger
+import io.spine.logging.given.FormattingBackend
 import io.spine.logging.testing.tapConsole
 import kotlin.text.RegexOption.DOT_MATCHES_ALL
 import org.junit.jupiter.api.DisplayName

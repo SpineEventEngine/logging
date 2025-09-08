@@ -48,10 +48,10 @@ import io.spine.logging.backend.given.shouldUniquelyContain
 import io.spine.logging.backend.probe.MemoizingLoggerBackend
 import io.spine.logging.jvm.Middleman
 import io.spine.logging.jvm.context.Tags
-import io.spine.logging.jvm.given.ConfigurableLogger
-import io.spine.logging.jvm.given.FakeLogSite
-import io.spine.logging.jvm.given.iterate
-import io.spine.logging.jvm.given.shouldHaveMessage
+import io.spine.logging.given.ConfigurableLogger
+import io.spine.logging.given.FakeLogSite
+import io.spine.logging.given.iterate
+import io.spine.logging.given.shouldHaveMessage
 import java.lang.System.currentTimeMillis
 import kotlin.time.DurationUnit.MILLISECONDS
 import kotlin.time.DurationUnit.SECONDS

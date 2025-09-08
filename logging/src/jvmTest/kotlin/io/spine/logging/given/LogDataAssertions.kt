@@ -24,18 +24,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.given
+package io.spine.logging.given
 
-import io.spine.logging.KeyValueHandler
+import io.spine.logging.backend.LogData
+import io.kotest.matchers.shouldBe
 
 /**
- * Remembers all handled key/value pairs.
+ * This file contains Kotest-like assertions for [LogData].
  */
-internal class MemoizingKvHandler : KeyValueHandler {
 
-    val entries = ArrayList<String>()
-
-    override fun handle(key: String, value: Any?) {
-        entries.add("$key=$value")
-    }
+/**
+ * Asserts that this [LogData] has a given [value] as a literal message.
+ */
+internal infix fun LogData.shouldHaveMessage(value: String?) {
+    literalArgument shouldBe value
 }

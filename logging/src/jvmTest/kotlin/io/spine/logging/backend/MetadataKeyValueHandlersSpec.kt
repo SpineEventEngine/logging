@@ -31,8 +31,8 @@ import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.spine.logging.backend.MetadataKeyValueHandlers.getDefaultHandler
 import io.spine.logging.backend.MetadataKeyValueHandlers.getDefaultRepeatedValueHandler
 import io.spine.logging.backend.MetadataKeyValueHandlers.getDefaultValueHandler
-import io.spine.logging.jvm.given.MemoizingKvHandler
-import io.spine.logging.jvm.given.iterate
+import io.spine.logging.given.MemoizingKvHandler
+import io.spine.logging.given.iterate
 import io.spine.logging.MetadataKey
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
