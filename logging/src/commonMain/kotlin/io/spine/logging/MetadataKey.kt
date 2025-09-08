@@ -190,7 +190,7 @@ public open class MetadataKey<T : Any>(
     }
 
     /**
-     * Checks if logging called recursively, possibly caused by custom metadata
+     * Checks if logging was called recursively, possibly caused by custom metadata
      * keys triggering reentrant logging.
      */
     private fun recursiveLogging(): Boolean =
