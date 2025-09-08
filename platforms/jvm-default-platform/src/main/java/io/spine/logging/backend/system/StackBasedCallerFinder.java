@@ -28,13 +28,14 @@ package io.spine.logging.backend.system;
 
 import com.google.errorprone.annotations.Immutable;
 import com.google.errorprone.annotations.ThreadSafe;
-import io.spine.logging.backend.LogCallerFinder;
 import io.spine.logging.AbstractLogger;
 import io.spine.logging.LogSite;
-import io.spine.logging.InjectedLogSite;
-import kotlin.reflect.KClass;
+import io.spine.logging.LogSiteInjector;
+import io.spine.logging.backend.LogCallerFinder;
 import kotlin.jvm.JvmClassMappingKt;
+import kotlin.reflect.KClass;
 
+import static io.spine.logging.InjectedLogSiteKt.injectedLogSite;
 import static io.spine.reflect.CallerFinder.findCallerOf;
 
 /**
@@ -58,7 +59,7 @@ public final class StackBasedCallerFinder extends LogCallerFinder {
   @Override
   public String findLoggingClass(KClass<? extends AbstractLogger<?>> loggerClass) {
     // Convert KClass to Java Class for compatibility with existing findCallerOf method
-    Class<? extends AbstractLogger<?>> javaClass = JvmClassMappingKt.getJavaClass(loggerClass);
+      var javaClass = JvmClassMappingKt.getJavaClass(loggerClass);
     // We can skip at most only 1 method from the analysis, the inferLoggingClass() method itself.
     var caller = findCallerOf(javaClass, 1);
     if (caller != null) {
@@ -68,10 +69,11 @@ public final class StackBasedCallerFinder extends LogCallerFinder {
     throw new IllegalStateException("no caller found on the stack for: " + javaClass.getName());
   }
 
+  @LogSiteInjector
   @Override
   public LogSite findLogSite(KClass<?> loggerApi, int stackFramesToSkip) {
     // Convert KClass to Java Class for compatibility with existing findCallerOf method
-    Class<?> javaClass = JvmClassMappingKt.getJavaClass(loggerApi);
+    var javaClass = JvmClassMappingKt.getJavaClass(loggerApi);
     // Skip an additional stack frame because we create the Throwable inside this method, not at
     // the point that this method was invoked (which allows completely alternate implementations
     // to avoid even constructing the Throwable instance).
@@ -80,11 +82,11 @@ public final class StackBasedCallerFinder extends LogCallerFinder {
     if (caller == null) {
       return LogSite.Invalid.INSTANCE;
     }
-    return new InjectedLogSite(
+    return injectedLogSite(
         caller.getClassName(),
         caller.getMethodName(),
-        caller.getFileName(),
-        caller.getLineNumber()
+        caller.getLineNumber(),
+        caller.getFileName()
     );
   }
 

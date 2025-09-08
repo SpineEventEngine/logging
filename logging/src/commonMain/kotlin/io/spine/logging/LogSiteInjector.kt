@@ -24,34 +24,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
-
-import com.google.errorprone.annotations.RestrictedApi
-import io.spine.annotation.Internal
-import io.spine.logging.LogSite
-import io.spine.logging.LogSiteInjector
+package io.spine.logging
 
 /**
- * Creates a log site injected from constants held in a class' constant pool.
- *
- * Used for compile-time log site injection, and by the agent.
- *
- * This is a non-deprecated replacement for the legacy JvmLogSite.injectedLogSite shim.
+ * Annotates a method to indicate that it should be used for injecting log site information.
  */
-@Internal
-@RestrictedApi(
-    explanation =
-        "This method is only used for log-site injection and should not be called directly.",
-    allowlistAnnotations = [LogSiteInjector::class]
-)
-public fun injectedLogSite(
-    internalClassName: String,
-    methodName: String,
-    encodedLineNumber: Int,
-    sourceFileName: String?
-): LogSite = InjectedJvmLogSite(
-    internalClassName,
-    methodName,
-    encodedLineNumber,
-    sourceFileName
-)
+@Retention(AnnotationRetention.BINARY)
+@Target(AnnotationTarget.FUNCTION)
+internal annotation class LogSiteInjector

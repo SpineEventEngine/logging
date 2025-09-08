@@ -32,6 +32,7 @@ import io.spine.logging.jvm.MyLogUtil.callerLogSite
 import io.spine.logging.jvm.MyLogUtil.callerLogSiteWrapped
 import io.kotest.matchers.shouldBe
 import io.spine.logging.LogSite
+import io.spine.logging.injectedLogSite
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 

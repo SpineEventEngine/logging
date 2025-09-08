@@ -28,7 +28,6 @@ package io.spine.logging
 
 import com.google.errorprone.annotations.CheckReturnValue
 import io.spine.logging.jvm.Middleman
-import io.spine.logging.jvm.injectedLogSite
 import kotlin.reflect.KClass
 import kotlin.time.DurationUnit
 import java.util.logging.Level as JLevel
