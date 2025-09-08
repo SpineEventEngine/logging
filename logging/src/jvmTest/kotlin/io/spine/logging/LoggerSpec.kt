@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,20 +24,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldNotBeInstanceOf
-import io.spine.logging.LoggingApi
 import io.spine.logging.backend.probe.MemoizingLoggerBackend
-import io.spine.logging.jvm.Middleman.Companion.forEnclosingClass
-import io.spine.logging.Level
+import io.spine.logging.jvm.Middleman
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
- * Tests for [Middleman].
+ * Tests for [io.spine.logging.jvm.Middleman].
  *
  * Fluent loggers are typically very simple classes whose only real
  * responsibility is to be a factory for specific API implementations.
@@ -54,7 +52,7 @@ internal class LoggerSpec {
 
     @Test
     fun `create a logger for enclosing class`() {
-        val logger = forEnclosingClass()
+        val logger = Middleman.Companion.forEnclosingClass()
         val enclosingClass = this::class.java.name
         logger.getName() shouldBe enclosingClass
 
