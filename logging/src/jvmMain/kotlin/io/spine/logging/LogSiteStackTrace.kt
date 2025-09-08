@@ -39,16 +39,11 @@ import java.io.Serial
  *     Original Java code of Google Flogger</a> for historical context.
  */
 @Suppress("ExceptionClassNameDoesntEndWithException")
-public class LogSiteStackTrace(
+public actual class LogSiteStackTrace(
     cause: Throwable?,
     stackSize: StackSize,
     syntheticStackTrace: Array<out StackTraceElement?>
 ) : Exception(stackSize.toString(), cause) {
-
-    public companion object {
-        @Serial
-        private const val serialVersionUID: Long = 0L
-    }
 
     init {
         /*
@@ -66,4 +61,9 @@ public class LogSiteStackTrace(
      */
     @Suppress("NonSynchronizedMethodOverridesSynchronizedMethod")
     override fun fillInStackTrace(): Throwable = this
+
+    public companion object {
+        @Serial
+        private const val serialVersionUID: Long = 0L
+    }
 }
