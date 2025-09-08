@@ -54,7 +54,7 @@ kotlin {
         @Suppress("unused")
         val commonMain by getting {
             dependencies {
-                implementation(Base.annotations)
+                api(Base.annotations)
                 implementation(project(":logging"))
             }
         }
