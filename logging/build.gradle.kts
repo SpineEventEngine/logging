@@ -52,7 +52,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(Base.annotations)
+                api(Base.annotations)
                 implementation(DateTime.lib)
                 implementation(Reflect.lib)
                 implementation(AtomicFu.lib)
@@ -60,7 +60,6 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                implementation(Base.annotations)
                 implementation(DateTime.lib)
                 implementation(Reflect.lib)
                 implementation(AtomicFu.lib)

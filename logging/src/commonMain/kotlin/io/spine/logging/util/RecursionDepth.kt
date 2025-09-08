@@ -26,6 +26,8 @@
 
 package io.spine.logging.util
 
+import io.spine.annotation.Internal
+
 /**
  * A platform-neutral API for tracking recursion depth of logging operations.
  *
@@ -43,15 +45,20 @@ public expect class RecursionDepth() : AutoCloseable {
         /**
          * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
          */
+        @Internal
         public fun getCurrentDepth(): Int
 
         /**
          * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
          */
+        @Internal
         public fun enterLogStatement(): RecursionDepth
     }
 
-    /** Do not call this method directly, use `Platform.getCurrentRecursionDepth()`. */
+    /**
+     * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
+     */
+    @Internal
     public fun getValue(): Int
 
     override fun close()
