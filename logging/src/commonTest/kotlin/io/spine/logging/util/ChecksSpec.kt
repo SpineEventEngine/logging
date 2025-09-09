@@ -32,7 +32,9 @@ import io.spine.logging.util.Checks.checkMetadataIdentifier
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-/** Tests for [Checks]. */
+/**
+ * Tests for [Checks].
+ */
 @DisplayName("`Checks` should")
 internal class ChecksSpec {
 
