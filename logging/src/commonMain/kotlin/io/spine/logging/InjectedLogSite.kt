@@ -72,10 +72,10 @@ public fun injectedLogSite(
  * The class name is stored in the internal JVM format (slash-separated) and converted to
  * the standard dot-separated format when needed for proper identification.
  *
- * @property internalClassName Internal, slash-separated, fully-qualified class name
+ * @property internalClassName an internal, slash-separated, fully-qualified class name
  *           (e.g., `"com/example/Foo$Bar"`).
- * @property method Bare method name without signature information.
- * @property encodedLineNumber line number and per-line log statement index encoded as a single
+ * @property method a bare method name without signature information.
+ * @property encodedLineNumber a line number and per-line log statement index encoded as a single
  *           32-bit value. The low 16-bits is the line number (`0` to `0xFFFF` inclusive) and
  *           the high 16 bits is a log statement index to distinguish multiple statements on
  *           the same line. This becomes important if line numbers are stripped from the class
@@ -127,7 +127,7 @@ internal class InjectedLogSite(
             // all strings should be interned.
             return method == other.method &&
                 encodedLineNumber == other.encodedLineNumber &&
-                // Check classname last because it isn't cached
+                // Check classname last because it isn't cached.
                 className == other.className
         }
         return false
