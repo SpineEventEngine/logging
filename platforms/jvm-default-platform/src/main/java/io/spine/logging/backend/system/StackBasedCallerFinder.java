@@ -59,7 +59,7 @@ public final class StackBasedCallerFinder extends LogCallerFinder {
   @Override
   public String findLoggingClass(KClass<? extends AbstractLogger<?>> loggerClass) {
     // Convert KClass to Java Class for compatibility with existing findCallerOf method
-      var javaClass = JvmClassMappingKt.getJavaClass(loggerClass);
+    var javaClass = JvmClassMappingKt.getJavaClass(loggerClass);
     // We can skip at most only 1 method from the analysis, the inferLoggingClass() method itself.
     var caller = findCallerOf(javaClass, 1);
     if (caller != null) {
