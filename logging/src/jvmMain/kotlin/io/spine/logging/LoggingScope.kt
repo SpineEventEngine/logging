@@ -59,7 +59,7 @@ public actual abstract class LoggingScope protected constructor(private val labe
 
         /**
          * Creates a scope which automatically removes any associated keys
-         * from [io.spine.logging.jvm.LogSiteMap]s when it is garbage collected.
+         * from [LogSiteMap]s when it is garbage collected.
          *
          * The given label is used only for debugging purposes and may appear in log
          * statements, it should not contain any user data or other runtime information.
