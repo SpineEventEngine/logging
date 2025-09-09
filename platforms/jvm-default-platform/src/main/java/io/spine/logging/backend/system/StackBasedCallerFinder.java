@@ -83,7 +83,7 @@ public final class StackBasedCallerFinder extends LogCallerFinder {
       return LogSite.Invalid.INSTANCE;
     }
     return injectedLogSite(
-        caller.getClassName(),
+        caller.getClassName().replace('.', '/'),
         caller.getMethodName(),
         caller.getLineNumber(),
         caller.getFileName()

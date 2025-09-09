@@ -33,6 +33,16 @@ import io.spine.annotation.Internal
  * Creates a log site injected from constants held in a class' constant pool.
  *
  * Used for compile-time log site injection, and by the agent.
+ *
+ * @param internalClassName Internal, slash-separated, fully-qualified class name
+ *        (e.g., `"com/example/Foo$Bar"`).
+ * @param methodName Bare method name without signature information.
+ * @param encodedLineNumber line number and per-line log statement index encoded as a single
+ *        32-bit value. The low 16-bits is the line number (`0` to `0xFFFF` inclusive) and
+ *        the high 16 bits is a log statement index to distinguish multiple statements on
+ *        the same line. This becomes important if line numbers are stripped from the class
+ *        file and everything appears to be on the same line.
+ * @param sourceFileName Optional name of the source file containing the log statement.
  */
 @Internal
 @RestrictedApi(
@@ -65,9 +75,13 @@ public fun injectedLogSite(
  * @property internalClassName Internal, slash-separated, fully-qualified class name
  *           (e.g., `"com/example/Foo$Bar"`).
  * @property method Bare method name without signature information.
- * @property encodedLineNumber A line number with additional uniqueness
- *           encoded in the upper 16 bits.
+ * @property encodedLineNumber line number and per-line log statement index encoded as a single
+ *           32-bit value. The low 16-bits is the line number (`0` to `0xFFFF` inclusive) and
+ *           the high 16 bits is a log statement index to distinguish multiple statements on
+ *           the same line. This becomes important if line numbers are stripped from the class
+ *           file and everything appears to be on the same line.
  * @param sourceFileName The name of the source file containing the log statement.
+ * @see LoggingApi.withInjectedLogSite
  */
 internal class InjectedLogSite(
     private val internalClassName: String,
