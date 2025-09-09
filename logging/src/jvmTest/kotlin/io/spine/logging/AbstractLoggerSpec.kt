@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldBeEmpty
@@ -35,8 +35,8 @@ import io.kotest.matchers.string.shouldMatch
 import io.kotest.matchers.string.shouldNotContain
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.LoggingException
-import io.spine.logging.jvm.given.ConfigurableLogger
-import io.spine.logging.jvm.given.FormattingBackend
+import io.spine.logging.given.ConfigurableLogger
+import io.spine.logging.given.FormattingBackend
 import io.spine.logging.testing.tapConsole
 import kotlin.text.RegexOption.DOT_MATCHES_ALL
 import org.junit.jupiter.api.DisplayName

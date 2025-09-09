@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,36 +24,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.given
-
-import io.spine.logging.Level
-import io.spine.logging.backend.LogData
-import io.spine.logging.backend.LoggerBackend
+package io.spine.logging.given
 
 /**
- * A memoizing backend that captures logged messages.
+ * Contains test environment for Flogger API tests.
  */
-internal open class FormattingBackend : LoggerBackend() {
 
-    private val mutableLogged = mutableListOf<String>()
-
-    /**
-     * The captured messages that have been logged by this backend.
-     */
-    val logged: List<String> get() = mutableLogged
-
-    override val loggerName: String = "<unused>"
-
-    override fun isLoggable(level: Level): Boolean = true
-
-    /**
-     * Logs the literal argument from the given [LogData].
-     */
-    override fun log(data: LogData) {
-        mutableLogged.add("${data.literalArgument}")
-    }
-
-    // Do not handle any errors in the backend, so we can test
-    // “last resort” error handling.
-    override fun handleError(error: RuntimeException, badData: LogData) = throw error
-}
+/**
+ * Creates a new [Iterator] over the given [values].
+ */
+internal fun <T> iterate(vararg values: T): Iterator<T> = listOf(*values).iterator()

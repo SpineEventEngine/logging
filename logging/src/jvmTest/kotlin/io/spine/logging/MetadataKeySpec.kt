@@ -24,20 +24,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import io.spine.logging.KeyValueHandler
-import io.spine.logging.MetadataKey
 import io.spine.logging.MetadataKey.Companion.repeated
 import io.spine.logging.MetadataKey.Companion.single
 import io.spine.logging.backend.Platform
-import io.spine.logging.jvm.given.MemoizingKvHandler
-import io.spine.logging.jvm.given.iterate
+import io.spine.logging.given.iterate
 import io.spine.logging.util.RecursionDepth
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -48,8 +45,8 @@ import org.junit.jupiter.api.Test
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/MetadataKeyTest.java">
  *     Original Java code of Google Flogger</a> for historical context.
  */
-@DisplayName("`JvmMetadataKey` should")
-internal class JvmMetadataKeySpec {
+@DisplayName("`MetadataKey` should")
+internal class MetadataKeySpec {
 
     @Test
     fun `create a key for a single piece of metadata`() {

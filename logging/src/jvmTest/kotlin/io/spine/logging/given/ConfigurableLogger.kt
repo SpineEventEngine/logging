@@ -24,14 +24,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.given
+package io.spine.logging.given
 
 import io.spine.logging.Level
 import io.spine.logging.LogContext
 import io.spine.logging.LoggingApi
 import io.spine.logging.backend.LoggerBackend
 import io.spine.logging.AbstractLogger
-import io.spine.logging.jvm.given.ConfigurableLogger.Companion.DEFAULT_TIMESTAMP_NANOS
+import io.spine.logging.given.ConfigurableLogger.Companion.DEFAULT_TIMESTAMP_NANOS
 
 /**
  * Dynamically reconfigurable logger for testing backend

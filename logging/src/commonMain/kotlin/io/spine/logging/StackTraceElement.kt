@@ -28,7 +28,5 @@ package io.spine.logging
 
 /**
  * Platform-neutral representation of a stack trace element.
- *
- * On JVM, this maps to [java.lang.StackTraceElement] via a typealias.
  */
 public expect class StackTraceElement

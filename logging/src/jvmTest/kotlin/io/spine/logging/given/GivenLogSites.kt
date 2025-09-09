@@ -28,6 +28,7 @@ package io.spine.logging.given
 
 import io.spine.logging.InjectedLogSite
 import io.spine.logging.LogSite
+import io.spine.logging.injectedLogSite
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -40,10 +41,10 @@ import kotlin.uuid.Uuid
 @OptIn(ExperimentalUuidApi::class)
 internal fun randomLogSite(): LogSite {
     val randomLine = (1..700).random()
-    return InjectedLogSite(
-        className = InjectedLogSite::class.qualifiedName!!,
+    return injectedLogSite(
+        internalClassName = InjectedLogSite::class.qualifiedName!!.replace(".", "/"),
         methodName = "callMe_$randomLine",
-        fileName = Uuid.random().toString(),
-        lineNumber = randomLine
+        encodedLineNumber = randomLine,
+        sourceFileName = Uuid.random().toString(),
     )
 }

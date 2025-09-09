@@ -34,7 +34,7 @@ import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 import io.spine.logging.backend.Metadata
 import io.spine.logging.backend.given.FakeMetadata
-import io.spine.logging.jvm.given.FakeLogSite
+import io.spine.logging.given.FakeLogSite
 import io.spine.logging.testing.forceGc
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking

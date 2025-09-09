@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,34 +24,36 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging.given
 
-import com.google.errorprone.annotations.RestrictedApi
-import io.spine.annotation.Internal
-import io.spine.logging.LogSite
-import io.spine.logging.LogSiteInjector
+import io.spine.logging.Level
+import io.spine.logging.backend.LogData
+import io.spine.logging.backend.LoggerBackend
 
 /**
- * Creates a log site injected from constants held in a class' constant pool.
- *
- * Used for compile-time log site injection, and by the agent.
- *
- * This is a non-deprecated replacement for the legacy JvmLogSite.injectedLogSite shim.
+ * A memoizing backend that captures logged messages.
  */
-@Internal
-@RestrictedApi(
-    explanation =
-        "This method is only used for log-site injection and should not be called directly.",
-    allowlistAnnotations = [LogSiteInjector::class]
-)
-public fun injectedLogSite(
-    internalClassName: String,
-    methodName: String,
-    encodedLineNumber: Int,
-    sourceFileName: String?
-): LogSite = InjectedJvmLogSite(
-    internalClassName,
-    methodName,
-    encodedLineNumber,
-    sourceFileName
-)
+internal open class FormattingBackend : LoggerBackend() {
+
+    private val mutableLogged = mutableListOf<String>()
+
+    /**
+     * The captured messages that have been logged by this backend.
+     */
+    val logged: List<String> get() = mutableLogged
+
+    override val loggerName: String = "<unused>"
+
+    override fun isLoggable(level: Level): Boolean = true
+
+    /**
+     * Logs the literal argument from the given [LogData].
+     */
+    override fun log(data: LogData) {
+        mutableLogged.add("${data.literalArgument}")
+    }
+
+    // Do not handle any errors in the backend, so we can test
+    // “last resort” error handling.
+    override fun handleError(error: RuntimeException, badData: LogData) = throw error
+}

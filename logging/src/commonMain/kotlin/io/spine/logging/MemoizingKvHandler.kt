@@ -24,16 +24,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.given
+package io.spine.logging
 
-import io.spine.logging.KeyValueHandler
+import io.spine.annotation.Internal
+import io.spine.annotation.TestOnly
 
 /**
- * Remembers all handled key/value pairs.
+ * A test fixture [KeyValueHandler] that remembers all handled key/value pairs.
  */
-internal class MemoizingKvHandler : KeyValueHandler {
+@TestOnly
+@Internal
+public class MemoizingKvHandler : KeyValueHandler {
 
-    val entries = ArrayList<String>()
+    public val entries: ArrayList<String> = ArrayList()
 
     override fun handle(key: String, value: Any?) {
         entries.add("$key=$value")

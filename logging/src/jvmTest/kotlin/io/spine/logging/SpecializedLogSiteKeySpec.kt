@@ -29,7 +29,7 @@ package io.spine.logging.jvm
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.spine.logging.SpecializedLogSiteKey
-import io.spine.logging.jvm.given.FakeLogSite
+import io.spine.logging.given.FakeLogSite
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 

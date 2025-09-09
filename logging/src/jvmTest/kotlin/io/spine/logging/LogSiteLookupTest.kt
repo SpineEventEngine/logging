@@ -26,15 +26,16 @@ internal class LogSiteLookupTest {
     }
 
     @Test
+    @LogSiteInjector
     fun `find a call site of the current invocation`() {
         val logSite = logSite()
         val stackTrace = (java.lang.Exception() as Throwable).stackTrace
         val callSite = stackTrace[0]
-        val expectedLogSite = InjectedLogSite(
+        val expectedLogSite = injectedLogSite(
             callSite.className,
             callSite.methodName,
+            callSite.lineNumber - 1,
             null,
-            callSite.lineNumber - 1
         )
         logSite shouldBe expectedLogSite
     }

@@ -26,6 +26,8 @@
 
 package io.spine.logging.util
 
+import io.spine.annotation.Internal
+
 /**
  * A thread local counter, incremented whenever a log statement is being processed by the backend.
  *
@@ -52,12 +54,14 @@ public actual class RecursionDepth actual constructor() : AutoCloseable {
         /**
          * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
          */
+        @Internal
         @JvmStatic
         public actual fun getCurrentDepth(): Int = holder.get().value
 
         /**
          * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
          */
+        @Internal
         @JvmStatic
         public actual fun enterLogStatement(): RecursionDepth {
             val depth = holder.get()
@@ -75,6 +79,7 @@ public actual class RecursionDepth actual constructor() : AutoCloseable {
     /**
      * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
      */
+    @Internal
     public actual fun getValue(): Int = value
 
     public actual override fun close() {

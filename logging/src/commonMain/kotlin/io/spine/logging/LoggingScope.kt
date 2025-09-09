@@ -34,10 +34,10 @@ package io.spine.logging
  * the current [ScopedLoggingContext][io.spine.logging.context.ScopedLoggingContext].
  *
  * Stateful fluent logging APIs which need to look up per log site information
- * (e.g., rate limit state) should do so via a [LogSiteMap][io.spine.logging.jvm.LogSiteMap] using
- * the [LogSiteKey] passed into the [io.spine.logging.jvm.LogContext.postProcess] function.
+ * (e.g., rate limit state) should do so via a [LogSiteMap] using
+ * the [LogSiteKey] passed into the [LogContext.postProcess] function.
  *
- * If scopes are present in the log site [Metadata][io.spine.logging.jvm.backend.Metadata]
+ * If scopes are present in the log site [Metadata][io.spine.logging.backend.Metadata]
  * then the log site key provided to the `postProcess()` method will already be specialized
  * to take account of any scopes present.
  *

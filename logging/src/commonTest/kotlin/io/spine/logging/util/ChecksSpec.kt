@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,13 +24,25 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.given
+package io.spine.logging.util
+
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.shouldBe
+import io.spine.logging.util.Checks.checkMetadataIdentifier
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 
 /**
- * Contains test environment for Flogger API tests.
+ * Tests for [Checks].
  */
+@DisplayName("`Checks` should")
+internal class ChecksSpec {
 
-/**
- * Creates a new [Iterator] over the given [values].
- */
-internal fun <T> iterate(vararg values: T): Iterator<T> = listOf(*values).iterator()
+    @Test
+    fun `validate metadata identifier`() {
+        checkMetadataIdentifier("abc_123") shouldBe "abc_123"
+        shouldThrow<IllegalArgumentException> { checkMetadataIdentifier("") }
+        shouldThrow<IllegalArgumentException> { checkMetadataIdentifier("_bad") }
+        shouldThrow<IllegalArgumentException> { checkMetadataIdentifier("no-dash") }
+    }
+}
