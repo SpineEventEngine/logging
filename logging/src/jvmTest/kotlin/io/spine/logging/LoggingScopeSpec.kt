@@ -27,7 +27,6 @@
 package io.spine.logging
 
 import io.kotest.matchers.shouldNotBe
-import io.spine.logging.LoggingScope
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
