@@ -88,7 +88,7 @@ private object StdScopedLoggingContext: ScopedLoggingContext() {
     override fun newContext(scopeType: ScopeType?): Builder = BuilderImpl(scopeType)
 
     override fun addTags(tags: Tags): Boolean {
-        CurrentStdContext.data?.addTags(tags)
+        CurrentStdContext.data?.addTags(tags) ?: return false
         return true
     }
 
