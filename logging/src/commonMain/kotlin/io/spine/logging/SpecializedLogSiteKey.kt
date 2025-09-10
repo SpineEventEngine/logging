@@ -26,22 +26,25 @@
 
 package io.spine.logging
 
+//TODO:2025-09-10:alexander.yevsyukov: Make back `internal`.
+
 /**
- * Used by [LoggingScope] and [LogSiteMap] and in response to
+ * Used by [LoggingScope] and [io.spine.logging.LogSiteMap] and in response to
  * "per()" or "perUnique()" (which is an implicitly unbounded scope).
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/SpecializedLogSiteKey.java">
  *     Original Java code of Google Flogger</a> for historical context.
  */
-internal class SpecializedLogSiteKey private constructor(
+public class SpecializedLogSiteKey private constructor(
     private val delegate: LogSiteKey,
     private val qualifier: Any
 ) : LogSiteKey {
 
-    companion object {
+    public companion object {
 
         @JvmStatic
-        fun of(key: LogSiteKey, qualifier: Any): LogSiteKey = SpecializedLogSiteKey(key, qualifier)
+        public fun of(key: LogSiteKey, qualifier: Any): LogSiteKey =
+            SpecializedLogSiteKey(key, qualifier)
     }
 
     // Equals is dependent on the order in which specialization occurred, even though
