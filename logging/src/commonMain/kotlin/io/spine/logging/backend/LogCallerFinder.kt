@@ -34,7 +34,7 @@ import kotlin.reflect.KClass
 
 /**
  * API for determining the logging class and log statement sites,
- * return from [Platform.getCallerFinder].
+ * return from [io.spine.logging.backend.Platform.Companion.getCallerFinder].
  *
  * These classes are immutable and thread-safe.
  *
