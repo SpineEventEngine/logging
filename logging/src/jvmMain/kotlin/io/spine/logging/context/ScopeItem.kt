@@ -24,9 +24,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.context
+package io.spine.logging.context
 
 import io.spine.logging.LoggingScope
+import io.spine.logging.jvm.context.ScopeType
 
 /**
  * Lightweight internal helper class for context implementations to manage a list of scopes.

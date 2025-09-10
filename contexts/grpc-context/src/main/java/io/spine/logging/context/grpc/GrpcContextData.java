@@ -31,7 +31,7 @@ import io.spine.logging.LoggingScope;
 import io.spine.logging.context.Tags;
 import io.spine.logging.jvm.context.ContextMetadata;
 import io.spine.logging.jvm.context.LogLevelMap;
-import io.spine.logging.jvm.context.ScopeItem;
+import io.spine.logging.context.ScopeItem;
 import io.spine.logging.jvm.context.ScopeType;
 import org.jspecify.annotations.Nullable;
 
