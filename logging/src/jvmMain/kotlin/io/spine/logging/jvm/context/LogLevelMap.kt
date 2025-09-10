@@ -29,6 +29,7 @@ package io.spine.logging.jvm.context
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import com.google.errorprone.annotations.Immutable
 import com.google.errorprone.annotations.ThreadSafe
+import io.spine.logging.context.SegmentTrie
 import java.util.*
 import java.util.logging.Level
 
