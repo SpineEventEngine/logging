@@ -85,8 +85,8 @@ import java.util.concurrent.Callable
  * modifications to an existing, implicit logging context, it should always check the return values
  * of any modification methods called (e.g. [addTags]).
  *
- * @see [Original Java code of Google Flogger](https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/ScopedLoggingContext.java)
- * for historical context.
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/ScopedLoggingContext.java">
+ *     Original Java code of Google Flogger</a> for historical context.
  */
 public abstract class ScopedLoggingContext protected constructor() {
 
