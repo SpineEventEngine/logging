@@ -24,10 +24,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.context
+package io.spine.logging.context
 
 import io.spine.logging.LoggingScope
 import io.spine.logging.LoggingScopeProvider
+import io.spine.logging.jvm.context.ContextDataProvider
 
 /**
  * Singleton keys which identify different types of scopes which scoped contexts can be bound to.
@@ -47,11 +48,11 @@ public class ScopeType private constructor(private val name: String) : LoggingSc
      * Called by ScopedLoggingContext to make a new scope instance when a context is installed.
      */
     internal fun newScope(): LoggingScope {
-        return LoggingScope.create(name)
+        return LoggingScope.Companion.create(name)
     }
 
     override fun getCurrentScope(): LoggingScope? {
-        return ContextDataProvider.getInstance().getScope(this)
+        return ContextDataProvider.Companion.getInstance().getScope(this)
     }
 
     public companion object {

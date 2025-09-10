@@ -32,7 +32,7 @@ import io.spine.logging.backend.Metadata
 import io.spine.logging.context.Tags
 import io.spine.logging.context.toMap
 import io.spine.logging.jvm.context.ContextDataProvider
-import io.spine.logging.jvm.context.ScopeType
+import io.spine.logging.context.ScopeType
 import io.spine.logging.jvm.context.ScopedLoggingContext
 
 /**

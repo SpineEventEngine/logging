@@ -28,6 +28,7 @@ package io.spine.logging.jvm.context
 
 import io.spine.logging.MetadataKey
 import io.spine.logging.StackSize
+import io.spine.logging.context.ScopeType
 import io.spine.logging.context.Tags
 import io.spine.logging.jvm.Middleman
 import kotlinx.atomicfu.atomic

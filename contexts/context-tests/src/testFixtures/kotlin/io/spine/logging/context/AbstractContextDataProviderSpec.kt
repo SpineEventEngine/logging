@@ -41,7 +41,7 @@ import io.spine.logging.backend.Platform
 import io.spine.logging.backend.probe.MemoizingLoggerBackend
 import io.spine.logging.jvm.context.ContextDataProvider
 import io.spine.logging.jvm.context.LogLevelMap
-import io.spine.logging.jvm.context.ScopeType
+import io.spine.logging.context.ScopeType
 import io.spine.logging.jvm.context.ScopedLoggingContext
 import io.spine.logging.jvm.context.ScopedLoggingContexts
 import io.spine.logging.toLevel

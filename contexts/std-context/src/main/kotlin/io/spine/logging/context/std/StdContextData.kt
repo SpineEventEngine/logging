@@ -33,7 +33,7 @@ import io.spine.logging.context.LogLevelMap
 import io.spine.logging.context.ScopeItem
 import io.spine.logging.context.Tags
 import io.spine.logging.jvm.context.ContextMetadata
-import io.spine.logging.jvm.context.ScopeType
+import io.spine.logging.context.ScopeType
 
 /**
  * The data of a scoped logging context with merging capabilities when
