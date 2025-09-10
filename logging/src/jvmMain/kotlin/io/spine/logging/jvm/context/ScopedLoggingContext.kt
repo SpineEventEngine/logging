@@ -345,8 +345,6 @@ public abstract class ScopedLoggingContext protected constructor() {
      */
     @CanIgnoreReturnValue
     public open fun addTags(tags: Tags): Boolean {
-        //TODO:2025-06-30:alexander.yevsyukov: Investigate why this method does nothing despite
-        // the documentation.
         return false
     }
 
@@ -363,8 +361,6 @@ public abstract class ScopedLoggingContext protected constructor() {
      */
     @CanIgnoreReturnValue
     public open fun <T : Any> addMetadata(key: MetadataKey<T>, value: T): Boolean {
-        //TODO:2025-06-30:alexander.yevsyukov: Investigate why this method does nothing despite
-        // the documentation.
         return false
     }
 
@@ -383,8 +379,6 @@ public abstract class ScopedLoggingContext protected constructor() {
      */
     @CanIgnoreReturnValue
     public open fun applyLogLevelMap(logLevelMap: LogLevelMap): Boolean {
-        //TODO:2025-06-30:alexander.yevsyukov: Investigate why this method does nothing despite
-        // the documentation.
         return false
     }
 
