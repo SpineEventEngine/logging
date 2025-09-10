@@ -29,11 +29,11 @@ package io.spine.logging.context.std
 import io.spine.logging.Level
 import io.spine.logging.LoggingScope
 import io.spine.logging.backend.Metadata
+import io.spine.logging.context.Tags
 import io.spine.logging.context.toMap
 import io.spine.logging.jvm.context.ContextDataProvider
 import io.spine.logging.jvm.context.ScopeType
 import io.spine.logging.jvm.context.ScopedLoggingContext
-import io.spine.logging.jvm.context.Tags
 
 /**
  * A basic implementation of [ContextDataProvider].

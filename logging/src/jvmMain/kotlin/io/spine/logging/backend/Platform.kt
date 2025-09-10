@@ -26,13 +26,14 @@
 
 package io.spine.logging.backend
 
-import io.spine.logging.Level
-import io.spine.logging.jvm.context.ContextDataProvider
-import io.spine.logging.jvm.context.Tags
-import io.spine.logging.util.RecursionDepth
-import java.util.concurrent.TimeUnit.MILLISECONDS
 import com.google.common.base.Preconditions.checkNotNull
+import io.spine.logging.Level
+import io.spine.logging.backend.LazyHolder.platform
+import io.spine.logging.context.Tags
+import io.spine.logging.jvm.context.ContextDataProvider
+import io.spine.logging.util.RecursionDepth
 import java.lang.reflect.InvocationTargetException
+import java.util.concurrent.TimeUnit.MILLISECONDS
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 

@@ -32,8 +32,8 @@ import io.spine.logging.LogContext.Key
 import io.spine.logging.MetadataKey
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
 import io.spine.logging.backend.log4j2.given.StubLogger
+import io.spine.logging.context.Tags
 import io.spine.logging.jvm.context.ContextDataProvider
-import io.spine.logging.jvm.context.Tags
 import java.util.concurrent.atomic.AtomicInteger
 import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.LogManager

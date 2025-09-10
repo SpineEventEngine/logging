@@ -28,11 +28,11 @@ package io.spine.logging.context.grpc;
 
 import io.spine.logging.Level;
 import io.spine.logging.LoggingScope;
+import io.spine.logging.context.Tags;
 import io.spine.logging.jvm.context.ContextMetadata;
 import io.spine.logging.jvm.context.LogLevelMap;
 import io.spine.logging.jvm.context.ScopeItem;
 import io.spine.logging.jvm.context.ScopeType;
-import io.spine.logging.jvm.context.Tags;
 import org.jspecify.annotations.Nullable;
 
 import java.util.concurrent.atomic.AtomicReference;

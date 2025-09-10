@@ -29,6 +29,7 @@ package io.spine.logging.jvm.context
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.logging.MetadataKey
 import io.spine.logging.StackSize
+import io.spine.logging.context.Tags
 import io.spine.logging.jvm.Middleman
 import io.spine.logging.jvm.context.ScopedLoggingContexts.newContext
 import kotlin.time.DurationUnit.MINUTES

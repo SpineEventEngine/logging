@@ -27,13 +27,13 @@
 package io.spine.logging.context.std
 
 import io.spine.logging.Level
+import io.spine.logging.LoggingScope
 import io.spine.logging.compareTo
 import io.spine.logging.context.LogLevelMap
-import io.spine.logging.LoggingScope
+import io.spine.logging.context.Tags
 import io.spine.logging.jvm.context.ContextMetadata
-import io.spine.logging.jvm.context.ScopeType
 import io.spine.logging.jvm.context.ScopeItem
-import io.spine.logging.jvm.context.Tags
+import io.spine.logging.jvm.context.ScopeType
 
 /**
  * The data of a scoped logging context with merging capabilities when

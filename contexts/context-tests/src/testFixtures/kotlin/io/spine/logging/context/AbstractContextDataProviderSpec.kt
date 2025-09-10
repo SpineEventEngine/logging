@@ -44,7 +44,6 @@ import io.spine.logging.jvm.context.LogLevelMap
 import io.spine.logging.jvm.context.ScopeType
 import io.spine.logging.jvm.context.ScopedLoggingContext
 import io.spine.logging.jvm.context.ScopedLoggingContexts
-import io.spine.logging.jvm.context.Tags
 import io.spine.logging.toLevel
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName

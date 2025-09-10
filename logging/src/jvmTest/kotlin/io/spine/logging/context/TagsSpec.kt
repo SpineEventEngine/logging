@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.context
+package io.spine.logging.context
 
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.collections.shouldContainInOrder
@@ -41,7 +41,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 /**
- * Tests for [Tags].
+ * Tests for [io.spine.logging.jvm.context.Tags].
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/test/java/com/google/common/flogger/context/TagsTest.java">
  *     Original Java code of Google Flogger</a> for historical context.
@@ -51,13 +51,13 @@ internal class TagsSpec {
 
     @Test
     fun `provide an empty instance`() {
-        Tags.builder().build() shouldBeSameInstanceAs Tags.empty()
-        Tags.empty().asMap().shouldBeEmpty()
+        Tags.Companion.builder().build() shouldBeSameInstanceAs Tags.Companion.empty()
+        Tags.Companion.empty().asMap().shouldBeEmpty()
     }
 
     @Test
     fun `handle a single tag without value`() {
-        val tags = Tags.builder()
+        val tags = Tags.Companion.builder()
             .addTag("foo")
             .build()
         tags.asMap().shouldContain("foo", setOf())
@@ -66,7 +66,7 @@ internal class TagsSpec {
 
     @Test
     fun `handle a single tag with 'String' value`() {
-        val tags = Tags.builder()
+        val tags = Tags.Companion.builder()
             .addTag("foo", "bar")
             .build()
         tags.asMap().shouldContain("foo", setOf("bar"))
@@ -75,7 +75,7 @@ internal class TagsSpec {
 
     @Test
     fun `handle a single tag with escapable 'String' value`() {
-        val tags = Tags.builder()
+        val tags = Tags.Companion.builder()
             .addTag("foo", "\"foo\\bar\"")
             .build()
         tags.asMap().shouldContain("foo", setOf("\"foo\\bar\""))
@@ -84,7 +84,7 @@ internal class TagsSpec {
 
     @Test
     fun `handle a single tag with 'Bool' value`() {
-        val tags = Tags.builder()
+        val tags = Tags.Companion.builder()
             .addTag("foo", true)
             .build()
         tags.asMap().shouldContain("foo", setOf(true))
@@ -93,7 +93,7 @@ internal class TagsSpec {
 
     @Test
     fun `handle a single tag with 'Long' value`() {
-        val tags = Tags.builder()
+        val tags = Tags.Companion.builder()
             .addTag("foo", 42L)
             .build()
         tags.asMap().shouldContain("foo", setOf(42L))
@@ -102,7 +102,7 @@ internal class TagsSpec {
 
     @Test
     fun `handle a single tag with 'Double' value`() {
-        val tags = Tags.builder()
+        val tags = Tags.Companion.builder()
             .addTag("foo", 12.34)
             .build()
         tags.asMap().shouldContain("foo", setOf(12.34))
@@ -113,29 +113,29 @@ internal class TagsSpec {
     fun `fail when given an incorrect tag name`() {
         // An identifier must contain only ASCII letters, digits or underscore.
         assertThrows<IllegalArgumentException> {
-            Tags.builder()
+            Tags.Companion.builder()
                 .addTag("foo!", "bar")
         }
     }
 
     @Test
     fun `not create new instances when merging`() {
-        val tags = Tags.builder()
+        val tags = Tags.Companion.builder()
             .addTag("foo")
             .build()
-        tags.merge(Tags.empty()) shouldBeSameInstanceAs tags
-        Tags.empty().merge(tags) shouldBeSameInstanceAs tags
-        Tags.empty().merge(Tags.empty()) shouldBeSameInstanceAs Tags.empty()
+        tags.merge(Tags.Companion.empty()) shouldBeSameInstanceAs tags
+        Tags.Companion.empty().merge(tags) shouldBeSameInstanceAs tags
+        Tags.Companion.empty().merge(Tags.Companion.empty()) shouldBeSameInstanceAs Tags.Companion.empty()
     }
 
     @Test
     fun `merge with different values for a single key`() {
-        val lhs = Tags.builder()
+        val lhs = Tags.Companion.builder()
             .addTag("foo")
             .addTag("tag", "true")
             .addTag("tag", true)
             .build()
-        val rhs = Tags.builder()
+        val rhs = Tags.Companion.builder()
             .addTag("bar")
             .addTag("tag", 42L)
             .addTag("tag", 42.0)
@@ -149,11 +149,11 @@ internal class TagsSpec {
 
     @Test
     fun `merge with overlapping keys`() {
-        val lhs = Tags.builder()
+        val lhs = Tags.Companion.builder()
             .addTag("tag", "abc")
             .addTag("tag", "def")
             .build()
-        val rhs = Tags.builder()
+        val rhs = Tags.Companion.builder()
             .addTag("tag", "abc")
             .addTag("tag", "xyz")
             .build()
@@ -163,11 +163,11 @@ internal class TagsSpec {
 
     @Test
     fun `merge with its superset`() {
-        val lhs = Tags.builder()
+        val lhs = Tags.Companion.builder()
             .addTag("tag", "abc")
             .addTag("tag", "def")
             .build()
-        val rhs = Tags.builder()
+        val rhs = Tags.Companion.builder()
             .addTag("tag", "abc")
             .build()
         lhs.merge(rhs).asMap().shouldContain("tag", setOf("abc", "def"))
@@ -176,8 +176,8 @@ internal class TagsSpec {
 
     @Test
     fun `merge large numbers of keys`() {
-        val lhs = Tags.builder()
-        val rhs = Tags.builder()
+        val lhs = Tags.Companion.builder()
+        val rhs = Tags.Companion.builder()
 
         repeat(256) { i ->
             val key = "k%02X".format(i)
@@ -199,8 +199,8 @@ internal class TagsSpec {
 
     @Test
     fun `merge large numbers of values`() {
-        val lhs = Tags.builder()
-        val rhs = Tags.builder()
+        val lhs = Tags.Companion.builder()
+        val rhs = Tags.Companion.builder()
 
         repeat(256) { i ->
             val value = "v%02X".format(i)
@@ -226,7 +226,7 @@ internal class TagsSpec {
 
     @Test
     fun `build a new instance with a large number of duplicates`() {
-        val tags = Tags.builder()
+        val tags = Tags.Companion.builder()
 
         repeat(256) {
             tags.addTag("foo")
@@ -249,14 +249,14 @@ internal class TagsSpec {
 
     @Test
     fun `provide 'String' representation`() {
-        "${Tags.builder()}" shouldBe  "{}"
-        "${Tags.builder().addTag("foo").addTag("bar")}" shouldBe "{bar=[], foo=[]}"
-        "${Tags.builder().addTag("foo", "value")}" shouldBe "{foo=[value]}"
-        "${Tags.builder().addTag("foo", "")}" shouldBe  "{foo=[]}"
+        "${Tags.Companion.builder()}" shouldBe "{}"
+        "${Tags.Companion.builder().addTag("foo").addTag("bar")}" shouldBe "{bar=[], foo=[]}"
+        "${Tags.Companion.builder().addTag("foo", "value")}" shouldBe "{foo=[value]}"
+        "${Tags.Companion.builder().addTag("foo", "")}" shouldBe  "{foo=[]}"
 
         // Mixed types will be rare but should be sorted stably in the same order
         // as the tag type enum: boolean < string < integer < double.
-        val mixedTags = Tags.builder()
+        val mixedTags = Tags.Companion.builder()
             .addTag("foo", "bar")
             .addTag("foo", true)
             .addTag("foo", 12.3)
