@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,6 @@
 package io.spine.logging.backend
 
 import io.spine.annotation.VisibleForTesting
-import io.spine.logging.LogContext
 import io.spine.logging.MetadataKey
 import io.spine.logging.backend.LightweightProcessor.Companion.MAX_LIGHTWEIGHT_ELEMENTS
 import io.spine.logging.checkCannotRepeat

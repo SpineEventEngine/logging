@@ -59,9 +59,9 @@ public abstract class LogMessageFormatter {
      *
      * Formatter implementations may be able to implement it more efficiently
      * (e.g., if they can safely detect when no formatting is required).
-     * See also the helper methods in `[SimpleMessageFormatter]`.
+     * See also the helper methods in `[io.spine.logging.backend.SimpleMessageFormatter]`.
      *
-     * @see SimpleMessageFormatter
+     * @see io.spine.logging.backend.SimpleMessageFormatter
      */
     public open fun format(logData: LogData, metadata: MetadataProcessor): String =
         append(logData, metadata, StringBuilder()).toString()
