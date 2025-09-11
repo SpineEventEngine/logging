@@ -32,7 +32,6 @@ import io.spine.logging.backend.LazyHolder.platform
 import io.spine.logging.context.Tags
 import io.spine.logging.jvm.context.ContextDataProvider
 import io.spine.logging.util.RecursionDepth
-import java.lang.reflect.InvocationTargetException
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
@@ -269,9 +268,10 @@ public abstract class Platform {
 }
 
 /**
- * Use the lazy holder idiom here to avoid class loading issues. Loading the Platform subclass
- * will trigger static initialization of the Platform class first, which would not be possible if
- * the [platform] field were a static field in Platform.
+ * Use the lazy holder idiom here to avoid class loading issues.
+ *
+ * Loading the Platform subclass will trigger static initialization of the `Platform` class first,
+ * which would not be possible if the [platform] field were a static field in `Platform`.
  *
  * This means that any errors in platform loading are deferred until the first time one of the
  * [Platform]'s static methods is invoked.
@@ -285,11 +285,13 @@ private object LazyHolder {
     private var defaultPlatform: String = "io.spine.logging.backend.system.DefaultPlatform"
 
     /**
-     * The first available platform from this list is used. Each platform is defined separately
-     * outside of this array so that the IdentifierNameString annotation can be applied to each.
+     * The first available platform from this list is used.
+     *
+     * Each platform is defined separately outside of this array
+     * so that the `IdentifierNameString` annotation can be applied to each.
      * This annotation tells Proguard that these strings refer to class names.
-     * If Proguard decides to obfuscate those classes, it will also obfuscate these strings so
-     * that reflection can still be used.
+     * If Proguard decides to obfuscate those classes, it will also obfuscate
+     * these strings so that reflection can still be used.
      */
     private val availablePlatforms: Array<String> = arrayOf(
         // The fallback/default platform gives a workable, logging backend.
@@ -312,7 +314,11 @@ private object LazyHolder {
                 // we can report something useful.
                 // Unwrap any generic wrapper exceptions for readability here
                 // (extend this as needed).
-                val th = if (e is InvocationTargetException) { e.cause } else { e }
+                val th = if (e::class.simpleName!!.contains("InvocationTargetException")) {
+                    e.cause
+                } else {
+                    e
+                }
                 errorMessage.append('\n')
                     .append(clazz)
                     .append(": ")
