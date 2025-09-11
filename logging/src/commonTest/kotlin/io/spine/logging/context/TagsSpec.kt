@@ -51,13 +51,13 @@ internal class TagsSpec {
 
     @Test
     fun `provide an empty instance`() {
-        Tags.Companion.builder().build() shouldBeSameInstanceAs Tags.Companion.empty()
-        Tags.Companion.empty().asMap().shouldBeEmpty()
+        Tags.builder().build() shouldBeSameInstanceAs Tags.empty()
+        Tags.empty().asMap().shouldBeEmpty()
     }
 
     @Test
     fun `handle a single tag without value`() {
-        val tags = Tags.Companion.builder()
+        val tags = Tags.builder()
             .addTag("foo")
             .build()
         tags.asMap().shouldContain("foo", setOf())
@@ -66,7 +66,7 @@ internal class TagsSpec {
 
     @Test
     fun `handle a single tag with 'String' value`() {
-        val tags = Tags.Companion.builder()
+        val tags = Tags.builder()
             .addTag("foo", "bar")
             .build()
         tags.asMap().shouldContain("foo", setOf("bar"))
@@ -75,7 +75,7 @@ internal class TagsSpec {
 
     @Test
     fun `handle a single tag with escapable 'String' value`() {
-        val tags = Tags.Companion.builder()
+        val tags = Tags.builder()
             .addTag("foo", "\"foo\\bar\"")
             .build()
         tags.asMap().shouldContain("foo", setOf("\"foo\\bar\""))
@@ -84,7 +84,7 @@ internal class TagsSpec {
 
     @Test
     fun `handle a single tag with 'Bool' value`() {
-        val tags = Tags.Companion.builder()
+        val tags = Tags.builder()
             .addTag("foo", true)
             .build()
         tags.asMap().shouldContain("foo", setOf(true))
@@ -93,7 +93,7 @@ internal class TagsSpec {
 
     @Test
     fun `handle a single tag with 'Long' value`() {
-        val tags = Tags.Companion.builder()
+        val tags = Tags.builder()
             .addTag("foo", 42L)
             .build()
         tags.asMap().shouldContain("foo", setOf(42L))
@@ -102,7 +102,7 @@ internal class TagsSpec {
 
     @Test
     fun `handle a single tag with 'Double' value`() {
-        val tags = Tags.Companion.builder()
+        val tags = Tags.builder()
             .addTag("foo", 12.34)
             .build()
         tags.asMap().shouldContain("foo", setOf(12.34))
@@ -113,29 +113,29 @@ internal class TagsSpec {
     fun `fail when given an incorrect tag name`() {
         // An identifier must contain only ASCII letters, digits or underscore.
         assertThrows<IllegalArgumentException> {
-            Tags.Companion.builder()
+            Tags.builder()
                 .addTag("foo!", "bar")
         }
     }
 
     @Test
     fun `not create new instances when merging`() {
-        val tags = Tags.Companion.builder()
+        val tags = Tags.builder()
             .addTag("foo")
             .build()
-        tags.merge(Tags.Companion.empty()) shouldBeSameInstanceAs tags
-        Tags.Companion.empty().merge(tags) shouldBeSameInstanceAs tags
-        Tags.Companion.empty().merge(Tags.Companion.empty()) shouldBeSameInstanceAs Tags.Companion.empty()
+        tags.merge(Tags.empty()) shouldBeSameInstanceAs tags
+        Tags.empty().merge(tags) shouldBeSameInstanceAs tags
+        Tags.empty().merge(Tags.empty()) shouldBeSameInstanceAs Tags.empty()
     }
 
     @Test
     fun `merge with different values for a single key`() {
-        val lhs = Tags.Companion.builder()
+        val lhs = Tags.builder()
             .addTag("foo")
             .addTag("tag", "true")
             .addTag("tag", true)
             .build()
-        val rhs = Tags.Companion.builder()
+        val rhs = Tags.builder()
             .addTag("bar")
             .addTag("tag", 42L)
             .addTag("tag", 42.0)
@@ -149,11 +149,11 @@ internal class TagsSpec {
 
     @Test
     fun `merge with overlapping keys`() {
-        val lhs = Tags.Companion.builder()
+        val lhs = Tags.builder()
             .addTag("tag", "abc")
             .addTag("tag", "def")
             .build()
-        val rhs = Tags.Companion.builder()
+        val rhs = Tags.builder()
             .addTag("tag", "abc")
             .addTag("tag", "xyz")
             .build()
@@ -163,11 +163,11 @@ internal class TagsSpec {
 
     @Test
     fun `merge with its superset`() {
-        val lhs = Tags.Companion.builder()
+        val lhs = Tags.builder()
             .addTag("tag", "abc")
             .addTag("tag", "def")
             .build()
-        val rhs = Tags.Companion.builder()
+        val rhs = Tags.builder()
             .addTag("tag", "abc")
             .build()
         lhs.merge(rhs).asMap().shouldContain("tag", setOf("abc", "def"))
@@ -176,8 +176,8 @@ internal class TagsSpec {
 
     @Test
     fun `merge large numbers of keys`() {
-        val lhs = Tags.Companion.builder()
-        val rhs = Tags.Companion.builder()
+        val lhs = Tags.builder()
+        val rhs = Tags.builder()
 
         repeat(256) { i ->
             val key = "k%02X".format(i)
@@ -199,8 +199,8 @@ internal class TagsSpec {
 
     @Test
     fun `merge large numbers of values`() {
-        val lhs = Tags.Companion.builder()
-        val rhs = Tags.Companion.builder()
+        val lhs = Tags.builder()
+        val rhs = Tags.builder()
 
         repeat(256) { i ->
             val value = "v%02X".format(i)
@@ -226,7 +226,7 @@ internal class TagsSpec {
 
     @Test
     fun `build a new instance with a large number of duplicates`() {
-        val tags = Tags.Companion.builder()
+        val tags = Tags.builder()
 
         repeat(256) {
             tags.addTag("foo")
@@ -249,14 +249,14 @@ internal class TagsSpec {
 
     @Test
     fun `provide 'String' representation`() {
-        "${Tags.Companion.builder()}" shouldBe "{}"
-        "${Tags.Companion.builder().addTag("foo").addTag("bar")}" shouldBe "{bar=[], foo=[]}"
-        "${Tags.Companion.builder().addTag("foo", "value")}" shouldBe "{foo=[value]}"
-        "${Tags.Companion.builder().addTag("foo", "")}" shouldBe  "{foo=[]}"
+        "${Tags.builder()}" shouldBe "{}"
+        "${Tags.builder().addTag("foo").addTag("bar")}" shouldBe "{bar=[], foo=[]}"
+        "${Tags.builder().addTag("foo", "value")}" shouldBe "{foo=[value]}"
+        "${Tags.builder().addTag("foo", "")}" shouldBe  "{foo=[]}"
 
         // Mixed types will be rare but should be sorted stably in the same order
         // as the tag type enum: boolean < string < integer < double.
-        val mixedTags = Tags.Companion.builder()
+        val mixedTags = Tags.builder()
             .addTag("foo", "bar")
             .addTag("foo", true)
             .addTag("foo", 12.3)
