@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,16 +24,16 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.context
+package io.spine.logging.context
 
-import io.spine.logging.jvm.context.LogLevelMap.Companion.create
+import io.spine.logging.context.LogLevelMap.Companion.create
 import io.kotest.matchers.shouldBe
-import java.util.logging.Level
+import io.spine.logging.Level
 
-import java.util.logging.Level.FINE
-import java.util.logging.Level.FINER
-import java.util.logging.Level.INFO
-import java.util.logging.Level.WARNING
+import io.spine.logging.Level.Companion.FINE
+import io.spine.logging.Level.Companion.FINER
+import io.spine.logging.Level.Companion.INFO
+import io.spine.logging.Level.Companion.WARNING
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -95,7 +95,7 @@ internal class LogLevelMapSpec {
     @Test
     fun `provide a builder`() {
         val levelMap = LogLevelMap.builder()
-            .add(FINE, String::class.java)
+            .add(FINE, String::class)
             .add(WARNING, String::class.java.getPackage())
             .setDefault(INFO)
             .build()

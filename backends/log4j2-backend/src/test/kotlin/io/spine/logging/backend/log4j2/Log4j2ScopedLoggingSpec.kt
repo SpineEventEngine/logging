@@ -33,7 +33,7 @@ import io.spine.logging.MetadataKey
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
 import io.spine.logging.backend.log4j2.given.StubLogger
 import io.spine.logging.context.Tags
-import io.spine.logging.jvm.context.ContextDataProvider
+import io.spine.logging.context.ContextDataProvider
 import java.util.concurrent.atomic.AtomicInteger
 import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.LogManager

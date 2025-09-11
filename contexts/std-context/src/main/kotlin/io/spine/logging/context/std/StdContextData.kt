@@ -32,7 +32,7 @@ import io.spine.logging.compareTo
 import io.spine.logging.context.LogLevelMap
 import io.spine.logging.context.ScopeItem
 import io.spine.logging.context.Tags
-import io.spine.logging.jvm.context.ContextMetadata
+import io.spine.logging.context.ContextMetadata
 import io.spine.logging.context.ScopeType
 
 /**

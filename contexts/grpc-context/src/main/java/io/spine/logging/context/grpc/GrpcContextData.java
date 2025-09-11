@@ -28,16 +28,14 @@ package io.spine.logging.context.grpc;
 
 import io.spine.logging.Level;
 import io.spine.logging.LoggingScope;
-import io.spine.logging.context.Tags;
-import io.spine.logging.jvm.context.ContextMetadata;
-import io.spine.logging.jvm.context.LogLevelMap;
+import io.spine.logging.context.ContextMetadata;
+import io.spine.logging.context.LogLevelMap;
 import io.spine.logging.context.ScopeItem;
 import io.spine.logging.context.ScopeType;
+import io.spine.logging.context.Tags;
 import org.jspecify.annotations.Nullable;
 
 import java.util.concurrent.atomic.AtomicReference;
-
-import static io.spine.logging.JvmLoggerKt.toLevel;
 
 /**
  * A mutable thread-safe holder for context-scoped logging information.
@@ -71,7 +69,7 @@ final class GrpcContextData {
     if (context != null) {
       var map = context.logLevelMapRef.get();
       if (map != null) {
-        return map.getLevel(loggerName).intValue() <= level.getValue();
+        return map.getLevel(loggerName).getValue() <= level.getValue();
       }
     }
     return false;
@@ -92,7 +90,7 @@ final class GrpcContextData {
         return null;
     }
     var result = map.getLevel(loggerName);
-    return toLevel(result);
+    return result;
   }
 
   @Nullable

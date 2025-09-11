@@ -36,7 +36,7 @@ import io.spine.logging.backend.system.given.NoOpCallerFinder
 import io.spine.logging.backend.system.given.StubBackendFactoryService
 import io.spine.logging.backend.system.given.StubClockService
 import io.spine.logging.backend.system.given.StubContextDataProviderService
-import io.spine.logging.jvm.context.ContextDataProvider
+import io.spine.logging.context.ContextDataProvider
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 

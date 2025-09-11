@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,13 +24,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.context
+package io.spine.logging.context
 
 import io.spine.logging.MetadataKey
 import io.spine.logging.StackSize
-import io.spine.logging.context.ScopeType
-import io.spine.logging.context.Tags
-import io.spine.logging.jvm.Middleman
+import io.spine.logging.WithLogging
 import kotlinx.atomicfu.atomic
 
 /**
@@ -69,14 +67,12 @@ private class NoOpScopedLoggingContext : ScopedLoggingContext(), AutoCloseable {
     // Since the ContextDataProvider class is loaded during Platform initialization we must be very
     // careful to avoid any attempt to obtain a logger instance until we can be sure logging config
     // is complete.
-    private object LazyLogger {
-        val logger: Middleman = Middleman.forEnclosingClass()
-    }
+    private object LazyLogger : WithLogging
 
     private val haveWarned = atomic(false)
 
     private fun logWarningOnceOnly() {
-        if (haveWarned.compareAndSet(false, true)) {
+        if (haveWarned.compareAndSet(expect = false, update = true)) {
             val defaultPlatform = "io.spine.logging.backend.system.DefaultPlatform"
             LazyLogger.logger
                 .atWarning()
@@ -84,8 +80,9 @@ private class NoOpScopedLoggingContext : ScopedLoggingContext(), AutoCloseable {
                 .log {
                     """
                     Scoped logging contexts are disabled; no context data provider was installed.
-                    To enable scoped logging contexts in your application, see the site-specific Platform class used to configure logging behaviour.
-                    Default Platform: `$defaultPlatform`.
+                    To enable scoped logging contexts in your application, see the site-specific
+                    `Platform` class used to configure logging behaviour.
+                    Default `Platform`: `$defaultPlatform`.
                     """.trimIndent()
                 }
         }

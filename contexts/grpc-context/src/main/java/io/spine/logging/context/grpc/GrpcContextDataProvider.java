@@ -30,10 +30,10 @@ import io.grpc.Context;
 import io.spine.logging.Level;
 import io.spine.logging.LoggingScope;
 import io.spine.logging.context.Tags;
-import io.spine.logging.jvm.context.ContextDataProvider;
-import io.spine.logging.jvm.context.ContextMetadata;
+import io.spine.logging.context.ContextDataProvider;
+import io.spine.logging.context.ContextMetadata;
 import io.spine.logging.context.ScopeType;
-import io.spine.logging.jvm.context.ScopedLoggingContext;
+import io.spine.logging.context.ScopedLoggingContext;
 import org.jspecify.annotations.Nullable;
 
 /**

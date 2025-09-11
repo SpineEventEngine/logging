@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,6 @@ package io.spine.logging.context
 
 import io.spine.logging.LoggingScope
 import io.spine.logging.LoggingScopeProvider
-import io.spine.logging.jvm.context.ContextDataProvider
 
 /**
  * Singleton keys which identify different types of scopes which scoped contexts can be bound to.
@@ -48,11 +47,11 @@ public class ScopeType private constructor(private val name: String) : LoggingSc
      * Called by ScopedLoggingContext to make a new scope instance when a context is installed.
      */
     internal fun newScope(): LoggingScope {
-        return LoggingScope.Companion.create(name)
+        return LoggingScope.create(name)
     }
 
     override fun getCurrentScope(): LoggingScope? {
-        return ContextDataProvider.Companion.getInstance().getScope(this)
+        return ContextDataProvider.getInstance().getScope(this)
     }
 
     public companion object {

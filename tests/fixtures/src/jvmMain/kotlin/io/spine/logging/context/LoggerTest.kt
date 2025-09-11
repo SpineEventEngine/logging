@@ -58,7 +58,7 @@ public abstract class LoggerTest(
             val levelMap = LogLevelMap.create(map)
             val logMessage = "This should not be logged."
             var consoleOutput = ""
-            ScopedLoggingContext.newContext().withLogLevelMap(levelMap).execute {
+            ScopedLoggingContext.getInstance().newContext().withLogLevelMap(levelMap).run {
                 consoleOutput = tapConsole {
                     logger.atError().log {
                         logMessage

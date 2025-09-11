@@ -33,7 +33,7 @@ import io.spine.logging.backend.Clock;
 import io.spine.logging.backend.LoggerBackend;
 import io.spine.logging.backend.Platform;
 import io.spine.logging.backend.LogCallerFinder;
-import io.spine.logging.jvm.context.ContextDataProvider;
+import io.spine.logging.context.ContextDataProvider;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;

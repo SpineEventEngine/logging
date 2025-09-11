@@ -30,8 +30,8 @@ import com.google.auto.service.AutoService
 import io.spine.logging.backend.LoggerBackend
 import io.spine.logging.backend.BackendFactory
 import io.spine.logging.backend.Clock
-import io.spine.logging.jvm.context.ContextDataProvider
-import io.spine.logging.jvm.context.ScopedLoggingContext
+import io.spine.logging.context.ContextDataProvider
+import io.spine.logging.context.ScopedLoggingContext
 
 /**
  * This file contains Java services that are used to test how

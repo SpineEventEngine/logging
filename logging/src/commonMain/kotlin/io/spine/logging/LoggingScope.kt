@@ -50,6 +50,18 @@ package io.spine.logging
  */
 public expect abstract class LoggingScope {
 
+    public companion object {
+
+        /**
+         * Creates a scope which automatically removes any associated keys
+         * from [LogSiteMap]s when it is garbage collected.
+         *
+         * The given label is used only for debugging purposes and may appear in log
+         * statements, it should not contain any user data or other runtime information.
+         */
+        public fun create(label: String): LoggingScope
+    }
+
     /**
      * Returns a specialization of the given key which accounts for this scope instance.
      *

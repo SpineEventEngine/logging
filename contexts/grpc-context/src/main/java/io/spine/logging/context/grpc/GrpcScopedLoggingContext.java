@@ -29,10 +29,10 @@ package io.spine.logging.context.grpc;
 import io.grpc.Context;
 import io.spine.logging.MetadataKey;
 import io.spine.logging.context.Tags;
-import io.spine.logging.jvm.context.ContextMetadata;
-import io.spine.logging.jvm.context.LogLevelMap;
+import io.spine.logging.context.ContextMetadata;
+import io.spine.logging.context.LogLevelMap;
 import io.spine.logging.context.ScopeType;
-import io.spine.logging.jvm.context.ScopedLoggingContext;
+import io.spine.logging.context.ScopedLoggingContext;
 import org.jspecify.annotations.Nullable;
 
 import static io.spine.logging.util.Checks.checkNotNull;

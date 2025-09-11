@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,9 +28,8 @@ package io.spine.logging.backend
 
 import com.google.common.base.Preconditions.checkNotNull
 import io.spine.logging.Level
-import io.spine.logging.backend.LazyHolder.platform
 import io.spine.logging.context.Tags
-import io.spine.logging.jvm.context.ContextDataProvider
+import io.spine.logging.context.ContextDataProvider
 import io.spine.logging.util.RecursionDepth
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.seconds
@@ -84,6 +83,10 @@ public abstract class Platform {
      */
     public companion object {
 
+        private val instance: Platform by lazy {
+            loadPlatform()
+        }
+
         @JvmStatic
         public fun getCurrentRecursionDepth(): Int =
             RecursionDepth.getCurrentDepth()
@@ -93,7 +96,7 @@ public abstract class Platform {
          */
         @JvmStatic
         public fun getCallerFinder(): LogCallerFinder =
-            platform.getCallerFinderImpl()
+            instance.getCallerFinderImpl()
 
         /**
          * Returns a logger backend of the given class name for use by a logger.
@@ -110,11 +113,11 @@ public abstract class Platform {
          */
         @JvmStatic
         public fun getBackend(className: String): LoggerBackend =
-            platform.getBackendImpl(className)
+            instance.getBackendImpl(className)
 
         /**
          * Returns the singleton ContextDataProvider from which
-         * a [ScopedLoggingContext][io.spine.logging.jvm.context.ScopedLoggingContext]
+         * a [ScopedLoggingContext][io.spine.logging.context.ScopedLoggingContext]
          * can be obtained.
          *
          * Platform implementations are required to always provide the same instance here,
@@ -122,7 +125,7 @@ public abstract class Platform {
          */
         @JvmStatic
         public fun getContextDataProvider(): ContextDataProvider =
-            platform.getContextDataProviderImpl()
+            instance.getContextDataProviderImpl()
 
         /**
          * Returns whether the given logger should have logging forced at the specified level.
@@ -194,7 +197,7 @@ public abstract class Platform {
          */
         @JvmStatic
         public fun getCurrentTimeNanos(): Long =
-            platform.getCurrentTimeNanosImpl()
+            instance.getCurrentTimeNanosImpl()
 
         /**
          * Returns a human-readable string describing the platform and its configuration.
@@ -215,7 +218,7 @@ public abstract class Platform {
          */
         @JvmStatic
         public fun getConfigInfo(): String =
-            platform.getConfigInfoImpl()
+            instance.getConfigInfoImpl()
     }
 
     /**
@@ -267,64 +270,4 @@ public abstract class Platform {
     protected abstract fun getConfigInfoImpl(): String
 }
 
-/**
- * Use the lazy holder idiom here to avoid class loading issues.
- *
- * Loading the Platform subclass will trigger static initialization of the `Platform` class first,
- * which would not be possible if the [platform] field were a static field in `Platform`.
- *
- * This means that any errors in platform loading are deferred until the first time one of the
- * [Platform]'s static methods is invoked.
- */
-private object LazyHolder {
-
-    /**
-     * Non-final to prevent javac inlining.
-     */
-    @Suppress("ConstantField")
-    private var defaultPlatform: String = "io.spine.logging.backend.system.DefaultPlatform"
-
-    /**
-     * The first available platform from this list is used.
-     *
-     * Each platform is defined separately outside of this array
-     * so that the `IdentifierNameString` annotation can be applied to each.
-     * This annotation tells Proguard that these strings refer to class names.
-     * If Proguard decides to obfuscate those classes, it will also obfuscate
-     * these strings so that reflection can still be used.
-     */
-    private val availablePlatforms: Array<String> = arrayOf(
-        // The fallback/default platform gives a workable, logging backend.
-        defaultPlatform
-    )
-
-    val platform: Platform = loadFirstAvailablePlatform(availablePlatforms)
-
-    @Suppress("TooGenericExceptionCaught", "InstanceOfCheckForException")
-    private fun loadFirstAvailablePlatform(platformClass: Array<String>): Platform {
-        val errorMessage = StringBuilder()
-        // Try the reflection-based approach as a backup, if the provider isn't available.
-        for (clazz in platformClass) {
-            try {
-                return Class.forName(clazz)
-                    .getConstructor()
-                    .newInstance() as Platform
-            } catch (e: Throwable) {
-                // Catch errors so if we can't find _any_ implementations,
-                // we can report something useful.
-                // Unwrap any generic wrapper exceptions for readability here
-                // (extend this as needed).
-                val th = if (e::class.simpleName!!.contains("InvocationTargetException")) {
-                    e.cause
-                } else {
-                    e
-                }
-                errorMessage.append('\n')
-                    .append(clazz)
-                    .append(": ")
-                    .append(th)
-            }
-        }
-        error(errorMessage.insert(0, "No logging platforms found:").toString())
-    }
-}
+internal expect fun loadPlatform(): Platform

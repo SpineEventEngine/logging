@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,14 +24,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.context
+package io.spine.logging.context
 
 import io.spine.logging.Level
 import io.spine.logging.LoggingScope
 import io.spine.logging.backend.Metadata
 import io.spine.logging.backend.Platform
-import io.spine.logging.context.ScopeType
-import io.spine.logging.context.Tags
 
 /**
  * An API for injecting scoped metadata for log statements (either globally or on
@@ -144,10 +142,10 @@ public abstract class ContextDataProvider {
      * Scoped metadata can be used to provide structured data to log statements or
      * control logging behaviour (in conjunction with a custom logger backend).
      *
-     * Implementations which do not support scoped [Metadata] should not override this
-     * method; the default implementation returns [Metadata.empty].
+     * Implementations which do not support scoped [io.spine.logging.backend.Metadata] should not override this
+     * method; the default implementation returns [io.spine.logging.backend.Metadata.Companion.empty].
      */
-    public open fun getMetadata(): Metadata = Metadata.empty()
+    public open fun getMetadata(): Metadata = Metadata.Companion.empty()
 
     /**
      * Returns the scope instance of the specified type for this context, or `null`

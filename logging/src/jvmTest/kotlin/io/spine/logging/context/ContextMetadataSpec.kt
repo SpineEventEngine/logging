@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.context
+package io.spine.logging.context
 
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.MetadataKey
@@ -33,6 +33,7 @@ import io.spine.logging.backend.given.shouldContainInOrder
 import io.spine.logging.backend.given.shouldHaveFirstValue
 import io.spine.logging.backend.given.shouldHaveSize
 import io.spine.logging.backend.given.shouldNotContain
+import io.spine.logging.context.ContextMetadata
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test

@@ -30,10 +30,9 @@ import io.spine.logging.Level
 import io.spine.logging.LoggingScope
 import io.spine.logging.backend.Metadata
 import io.spine.logging.context.Tags
-import io.spine.logging.context.toMap
-import io.spine.logging.jvm.context.ContextDataProvider
+import io.spine.logging.context.ContextDataProvider
 import io.spine.logging.context.ScopeType
-import io.spine.logging.jvm.context.ScopedLoggingContext
+import io.spine.logging.context.ScopedLoggingContext
 
 /**
  * A basic implementation of [ContextDataProvider].
@@ -103,7 +102,7 @@ private object StdScopedLoggingContext: ScopedLoggingContext() {
             newContextData.apply {
                 addTags(getTags())
                 addMetadata(getMetadata())
-                applyLogLevelMap(getLogLevelMap().toMap())
+                applyLogLevelMap(getLogLevelMap())
             }
             return install(newContextData)
         }
