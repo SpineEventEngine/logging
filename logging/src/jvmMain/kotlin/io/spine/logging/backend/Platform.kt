@@ -33,8 +33,8 @@ import io.spine.logging.context.Tags
 import io.spine.logging.jvm.context.ContextDataProvider
 import io.spine.logging.util.RecursionDepth
 import java.lang.reflect.InvocationTargetException
-import java.util.concurrent.TimeUnit.MILLISECONDS
 import kotlin.time.Clock
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 
 /**
@@ -94,7 +94,7 @@ public abstract class Platform {
          */
         @JvmStatic
         public fun getCallerFinder(): LogCallerFinder =
-            LazyHolder.platform.getCallerFinderImpl()
+            platform.getCallerFinderImpl()
 
         /**
          * Returns a logger backend of the given class name for use by a logger.
@@ -111,7 +111,7 @@ public abstract class Platform {
          */
         @JvmStatic
         public fun getBackend(className: String): LoggerBackend =
-            LazyHolder.platform.getBackendImpl(className)
+            platform.getBackendImpl(className)
 
         /**
          * Returns the singleton ContextDataProvider from which
@@ -123,7 +123,7 @@ public abstract class Platform {
          */
         @JvmStatic
         public fun getContextDataProvider(): ContextDataProvider =
-            LazyHolder.platform.getContextDataProviderImpl()
+            platform.getContextDataProviderImpl()
 
         /**
          * Returns whether the given logger should have logging forced at the specified level.
@@ -163,10 +163,7 @@ public abstract class Platform {
         public fun getMappedLevel(loggerName: String): Level? {
             checkNotNull(loggerName)
             val provider = getContextDataProvider()
-            val result = provider.getMappedLevel(loggerName)
-            if (result == null) {
-                return null
-            }
+            val result = provider.getMappedLevel(loggerName) ?: return null
             return result
         }
 
@@ -198,7 +195,7 @@ public abstract class Platform {
          */
         @JvmStatic
         public fun getCurrentTimeNanos(): Long =
-            LazyHolder.platform.getCurrentTimeNanosImpl()
+            platform.getCurrentTimeNanosImpl()
 
         /**
          * Returns a human-readable string describing the platform and its configuration.
@@ -219,7 +216,7 @@ public abstract class Platform {
          */
         @JvmStatic
         public fun getConfigInfo(): String =
-            LazyHolder.platform.getConfigInfoImpl()
+            platform.getConfigInfoImpl()
     }
 
     /**
@@ -258,7 +255,7 @@ public abstract class Platform {
     @OptIn(ExperimentalTime::class)
     protected open fun getCurrentTimeNanosImpl(): Long {
         return Clock.System.now().let {
-            it.epochSeconds * MILLISECONDS.toNanos(1) + it.nanosecondsOfSecond
+            it.epochSeconds.seconds.inWholeNanoseconds + it.nanosecondsOfSecond
         }
     }
 
