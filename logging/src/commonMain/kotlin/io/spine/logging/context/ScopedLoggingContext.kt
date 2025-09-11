@@ -175,8 +175,8 @@ public abstract class ScopedLoggingContext protected constructor() {
          *
          * @throws InvalidLoggingContextStateException
          *         if the context created during this method cannot
-         *         be closed correctly (e.g., if a nested context has also been opened, but not
-         *         closed).
+         *         be closed correctly (e.g., if a nested context has also been opened,
+         *         but not closed).
          */
         public fun <R> wrap(c: () -> R): () -> R {
             return {
@@ -195,7 +195,7 @@ public abstract class ScopedLoggingContext protected constructor() {
         /**
          * Runs a runnable directly within a new context installed from this builder.
          */
-        public fun run(r: Runnable): Unit =
+        public fun call(r: Runnable): Unit =
             wrap(r).run()
 
         /**
@@ -207,7 +207,8 @@ public abstract class ScopedLoggingContext protected constructor() {
 
         /**
          * Calls a function directly within a new context installed from this builder,
-         * wrapping any thrown exception with a [IllegalStateException] if it's not a [RuntimeException].
+         * wrapping any thrown exception with a [IllegalStateException]
+         * if it's not a [RuntimeException].
          */
         @CanIgnoreReturnValue
         @Suppress("TooGenericExceptionCaught")
@@ -235,7 +236,7 @@ public abstract class ScopedLoggingContext protected constructor() {
          * ```
          *
          * To avoid the need to manage contexts manually, it is strongly recommended that the
-         * helper methods, such as [wrap] or [run] are used to simplify
+         * helper methods, such as [wrap] or [call] are used to simplify
          * the handling of contexts. This method is intended primarily to be overridden by context
          * implementations rather than being invoked as a normal part of context use.
          *

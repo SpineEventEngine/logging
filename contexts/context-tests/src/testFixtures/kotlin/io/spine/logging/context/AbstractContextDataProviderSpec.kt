@@ -134,7 +134,7 @@ abstract class AbstractContextDataProviderSpec {
             contextTags.shouldBeEmpty()
             context.newContext()
                 .withTags(tags)
-                .run {
+                .call {
                     contextTags shouldBe tags.asMap()
                     markCallbackExecuted()
                 }
@@ -148,7 +148,7 @@ abstract class AbstractContextDataProviderSpec {
             contextMetadata.shouldBeEmpty()
             context.newContext()
                 .withMetadata(key, value)
-                .run {
+                .call {
                     // Should be unique because the key is singleton.
                     contextMetadata.shouldUniquelyContain(key, value)
                     markCallbackExecuted()
@@ -166,7 +166,7 @@ abstract class AbstractContextDataProviderSpec {
             contextData.isLoggingForced(logger, level).shouldBeFalse()
             context.newContext()
                 .withLogLevelMap(levelMap)
-                .run {
+                .call {
                     contextData.isLoggingForced(logger, level).shouldBeTrue()
                     markCallbackExecuted()
                 }
@@ -181,13 +181,13 @@ abstract class AbstractContextDataProviderSpec {
             contextTags.shouldBeEmpty()
             context.newContext()
                 .withTags(outerTags)
-                .run {
+                .call {
                     contextTags shouldBe outerTags.asMap()
                     val innerTags = Tags.of(name, value2)
                     val allTags = outerTags.merge(innerTags)
                     context.newContext()
                         .withTags(innerTags)
-                        .run {
+                        .call {
                             // Double-check to be sure.
                             contextTags shouldBe allTags.asMap()
                             contextTags[name] shouldBe setOf(value1, value2)
@@ -218,7 +218,7 @@ abstract class AbstractContextDataProviderSpec {
             context.newContext()
                 .withMetadata(FOO, outerFoo)
                 .withMetadata(BAR, outerBar)
-                .run {
+                .call {
                     // `FOO` is a singleton key, so it should be unique.
                     // `BAR` is repeated, so it can't be asserted as unique.
                     contextMetadata shouldHaveSize 2
@@ -231,7 +231,7 @@ abstract class AbstractContextDataProviderSpec {
                     context.newContext()
                         .withMetadata(FOO, innerFoo)
                         .withMetadata(BAR, innerBar)
-                        .run {
+                        .call {
                             // Note that singleton `FOO` is now asserted as a repeated key.
                             contextMetadata shouldHaveSize 4
                             contextMetadata.shouldContainInOrder(FOO, outerFoo, innerFoo)
@@ -262,7 +262,7 @@ abstract class AbstractContextDataProviderSpec {
             contextData.shouldNotForceLogging(TLevel.FINE, other, fooBar, fooBarBaz)
             context.newContext()
                 .withLogLevelMap(fooBarFine)
-                .run {
+                .call {
                     contextData.shouldForceLogging(TLevel.FINE, fooBar, fooBarBaz)
                     contextData.shouldNotForceLogging(TLevel.FINEST, fooBar, fooBarBaz)
                     contextData.shouldNotForceLogging(TLevel.FINE, other)
@@ -272,7 +272,7 @@ abstract class AbstractContextDataProviderSpec {
 
                     context.newContext()
                         .withLogLevelMap(fooBazFinest)
-                        .run {
+                        .call {
                             contextData.shouldForceLogging(TLevel.FINE, fooBar, fooBarBaz)
                             contextData.shouldForceLogging(TLevel.FINEST, fooBarBaz)
                             contextData.shouldNotForceLogging(TLevel.FINE, other)
@@ -296,13 +296,13 @@ abstract class AbstractContextDataProviderSpec {
             contextData.getScope(BATCH_JOB).shouldBeNull()
 
             context.newContext(SUB_TASK)
-                .run {
+                .call {
                     val subTask = contextData.getScope(SUB_TASK)
                     subTask.shouldNotBeNull()
                     contextData.getScope(BATCH_JOB).shouldBeNull()
 
                     context.newContext(BATCH_JOB)
-                        .run {
+                        .call {
                             contextData.getScope(SUB_TASK) shouldBeSameInstanceAs subTask
                             contextData.getScope(BATCH_JOB).shouldNotBeNull()
                             markCallbackExecuted()
@@ -361,12 +361,12 @@ abstract class AbstractContextDataProviderSpec {
     fun `not create a new scope instance if the same type is bound twice`() {
         contextData.getScope(SUB_TASK).shouldBeNull()
         context.newContext(SUB_TASK)
-            .run {
+            .call {
                 val taskScope = contextData.getScope(SUB_TASK)
                 "$taskScope" shouldBe "sub task"
 
                 context.newContext(SUB_TASK)
-                    .run {
+                    .call {
                         contextData.getScope(SUB_TASK) shouldBeSameInstanceAs taskScope
                         markCallbackExecuted()
                     }
@@ -399,7 +399,8 @@ abstract class AbstractContextDataProviderSpec {
         val map = TLogLevelMap.create(mapOf(loggerName to level))
         TScopedLoggingContext.getInstance()
             .newContext()
-            .withLogLevelMap(map).run {
+            .withLogLevelMap(map)
+            .call {
                 val customLevel = Platform.getMappedLevel(loggerName)
                 customLevel shouldBe level
             }
