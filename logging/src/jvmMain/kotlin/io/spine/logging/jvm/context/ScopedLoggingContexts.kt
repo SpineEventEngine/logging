@@ -29,8 +29,8 @@ package io.spine.logging.jvm.context
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.logging.MetadataKey
 import io.spine.logging.StackSize
+import io.spine.logging.WithLogging
 import io.spine.logging.context.Tags
-import io.spine.logging.jvm.Middleman
 import io.spine.logging.jvm.context.ScopedLoggingContexts.newContext
 import kotlin.time.DurationUnit.MINUTES
 
@@ -43,9 +43,7 @@ import kotlin.time.DurationUnit.MINUTES
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/ScopedLoggingContexts.java"
  *   Original Java code of Google Flogger</a> for historical context.
  */
-public object ScopedLoggingContexts {
-
-    private val logger = Middleman.forEnclosingClass()
+public object ScopedLoggingContexts : WithLogging {
 
     @Suppress("MagicNumber")
     private fun warnOnFailure(wasSuccessful: Boolean): Boolean {
@@ -96,7 +94,7 @@ public object ScopedLoggingContexts {
      * 3. Call this method and check that it succeeded (e.g., logging a
      *    warning if it fails).
      *
-     * The given tags are merged with those of the modified context but
+     * The given tags are merged with those of the modified context, but
      * existing tags will not be overwritten or removed. This is deliberate
      * since two pieces of code may not know about each other and could
      * accidentally use the same tag name; in that situation it is important
@@ -113,8 +111,8 @@ public object ScopedLoggingContexts {
      * @return `false` if there is no current context, or scoped
      *         contexts are not supported.
      */
-    @CanIgnoreReturnValue
     @JvmStatic
+    @CanIgnoreReturnValue
     public fun addTags(tags: Tags): Boolean =
         warnOnFailure(ScopedLoggingContext.getInstance().addTags(tags))
 
@@ -146,8 +144,8 @@ public object ScopedLoggingContexts {
      * @return `false` if there is no current context, or scoped
      *         contexts are not supported.
      */
-    @CanIgnoreReturnValue
     @JvmStatic
+    @CanIgnoreReturnValue
     public fun <T : Any> addMetadata(key: MetadataKey<T>, value: T): Boolean =
         warnOnFailure(ScopedLoggingContext.getInstance().addMetadata(key, value))
 
@@ -177,8 +175,8 @@ public object ScopedLoggingContexts {
      * @return `false` if there is no current context, or scoped
      *         contexts are not supported.
      */
-    @CanIgnoreReturnValue
     @JvmStatic
+    @CanIgnoreReturnValue
     public fun applyLogLevelMap(logLevelMap: LogLevelMap): Boolean {
         return warnOnFailure(ScopedLoggingContext.getInstance().applyLogLevelMap(logLevelMap))
     }
