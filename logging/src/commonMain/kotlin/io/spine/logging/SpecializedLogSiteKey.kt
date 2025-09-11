@@ -31,7 +31,7 @@ package io.spine.logging
  * "per()" or "perUnique()" (which is an implicitly unbounded scope).
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/SpecializedLogSiteKey.java">
- *     Original Java code of Google Flogger</a> for historical context.
+ *     Original Java code</a> for historical context.
  */
 internal class SpecializedLogSiteKey private constructor(
     private val delegate: LogSiteKey,

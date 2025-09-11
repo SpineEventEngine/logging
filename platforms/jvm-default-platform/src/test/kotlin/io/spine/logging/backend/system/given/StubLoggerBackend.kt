@@ -36,7 +36,7 @@ import io.spine.logging.compareTo
  *
  * This class is mutable and not thread-safe.
  *
- * @see <a href="http://rb.gy/r6jjw">Original Java code of Google Flogger</a>
+ * @see <a href="http://rb.gy/r6jjw">Original Java code</a>
  *   for historical context.
  */
 internal class StubLoggerBackend(

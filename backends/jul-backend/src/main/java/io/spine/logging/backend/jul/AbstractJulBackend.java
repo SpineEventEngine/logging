@@ -42,7 +42,7 @@ import static io.spine.logging.JvmLoggerKt.toJavaLogging;
  * <p>This class handles everything except formatting of a log message
  * and metadata.
  *
- * @see <a href="https://rb.gy/jzz7x">Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="https://rb.gy/jzz7x">Original Java code</a> for historical context.
  */
 public abstract class AbstractJulBackend extends LoggerBackend {
   // Set if any attempt at logging via the "forcing" logger fails due to an inability to set the

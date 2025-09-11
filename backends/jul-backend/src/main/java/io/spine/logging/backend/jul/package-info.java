@@ -27,7 +27,7 @@
 /**
  * Contains implementation of {@code java.util.logging} (JUL) backend.
  *
- * @see <a href="https://rb.gy/39mdu">Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="https://rb.gy/39mdu">Original Java code</a> for historical context.
  */
 @CheckReturnValue
 package io.spine.logging.backend.jul;

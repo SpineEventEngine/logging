@@ -36,7 +36,7 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
  * <p>See class documentation in {@link Clock} for important
  * implementation restrictions.
  *
- * @see <a href="https://rb.gy/veqvb">Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="https://rb.gy/veqvb">Original Java code</a> for historical context.
  */
 public final class SystemClock extends Clock {
   private static final SystemClock INSTANCE = new SystemClock();

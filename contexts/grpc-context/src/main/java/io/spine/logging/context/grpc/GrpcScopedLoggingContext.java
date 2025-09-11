@@ -44,7 +44,7 @@ import static io.spine.logging.util.Checks.checkNotNull;
  * {@link GrpcContextDataProvider#getContextApiSingleton()}, which provides
  * application code with a mechanism for controlling logging contexts.
  *
- * @see <a href="https://rb.gy/w1wyu">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/w1wyu">Original Java code</a>
  *   for historical context.
  */
 final class GrpcScopedLoggingContext extends ScopedLoggingContext {

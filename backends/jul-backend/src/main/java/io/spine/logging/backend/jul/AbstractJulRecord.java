@@ -91,7 +91,7 @@ import static java.util.logging.Level.WARNING;
  *       set them is ignored.
  * </ul>
  *
- * @see <a href="https://rb.gy/yrrs4">Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="https://rb.gy/yrrs4">Original Java code</a> for historical context.
  */
 @SuppressWarnings("HardcodedLineSeparator")
 public abstract class AbstractJulRecord extends LogRecord {

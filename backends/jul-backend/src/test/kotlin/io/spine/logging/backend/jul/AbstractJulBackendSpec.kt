@@ -42,7 +42,7 @@ import org.junit.jupiter.api.Test
 /**
  * Tests for [AbstractJulBackend].
  *
- * @see <a href="https://rb.gy/tuo9x">Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="https://rb.gy/tuo9x">Original Java code</a> for historical context.
  */
 @DisplayName("`AbstractJulBackend` should")
 internal class AbstractJulBackendSpec {

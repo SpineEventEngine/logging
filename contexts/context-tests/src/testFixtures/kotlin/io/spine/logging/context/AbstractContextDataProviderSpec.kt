@@ -59,7 +59,7 @@ private typealias LoggerName = String
 /**
  * Set of common tests for [ContextDataProvider]s.
  *
- * @see <a href="https://rb.gy/luq6y">Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="https://rb.gy/luq6y">Original Java code</a> for historical context.
  */
 @Suppress("unused" /* Test functions in an abstract class. */)
 @DisplayName("`ContextDataProvider` should") // This name is to be overridden by inheritors.

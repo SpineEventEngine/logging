@@ -37,7 +37,7 @@ import io.spine.logging.AbstractLogger
  * This logger has specific methods for injecting timestamps.
  *
  * @see <a href="https://rb.gy/smalv">
- *     Original Java code of Google Flogger</a> for historical context.
+ *     Original Java code</a> for historical context.
  */
 internal class StubLogger(backend: LoggerBackend) :
     AbstractLogger<StubLogger.Api>(backend) {

@@ -41,7 +41,7 @@ import io.spine.logging.given.ConfigurableLogger.Companion.DEFAULT_TIMESTAMP_NAN
  * and forcing log statements.
  *
  * @see <a href="https://rb.gy/smalv">
- *     Original Java code of Google Flogger</a> for historical context.
+ *     Original Java code</a> for historical context.
  */
 internal class ConfigurableLogger(backend: LoggerBackend) :
     AbstractLogger<ConfigurableLogger.Api>(backend) {
