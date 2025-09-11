@@ -29,6 +29,8 @@ package io.spine.logging.jvm.context
 import io.kotest.matchers.throwable.shouldHaveMessage
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.spine.logging.context.InvalidLoggingContextStateException
+import io.spine.logging.context.ScopeType
+import io.spine.logging.context.Tags
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

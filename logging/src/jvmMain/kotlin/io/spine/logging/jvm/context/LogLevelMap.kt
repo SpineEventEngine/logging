@@ -29,7 +29,7 @@ package io.spine.logging.jvm.context
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import com.google.errorprone.annotations.Immutable
 import com.google.errorprone.annotations.ThreadSafe
-import java.util.*
+import io.spine.logging.context.SegmentTrie
 import java.util.logging.Level
 
 /**
@@ -39,8 +39,8 @@ import java.util.logging.Level
  *
  * This class is immutable and thread-safe.
  *
- * @see [Original Java code of Google Flogger](https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/LogLevelMap.java)
- * for historical context.
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/LogLevelMap.java">
+ *     Original Java code of Google Flogger</a> for historical context.
  */
 @Immutable
 @ThreadSafe
@@ -146,7 +146,7 @@ public class LogLevelMap private constructor(map: Map<String, Level>, defaultLev
          */
         @JvmStatic
         public fun create(level: Level): LogLevelMap =
-            create(Collections.emptyMap(), level)
+            create(mapOf(), level)
 
         /**
          * Returns a [LogLevelMap] whose entries correspond to the given map, and with the default

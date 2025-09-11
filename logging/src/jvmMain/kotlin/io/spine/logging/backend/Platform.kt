@@ -26,14 +26,14 @@
 
 package io.spine.logging.backend
 
-import io.spine.logging.Level
-import io.spine.logging.jvm.context.ContextDataProvider
-import io.spine.logging.jvm.context.Tags
-import io.spine.logging.util.RecursionDepth
-import java.util.concurrent.TimeUnit.MILLISECONDS
 import com.google.common.base.Preconditions.checkNotNull
-import java.lang.reflect.InvocationTargetException
+import io.spine.logging.Level
+import io.spine.logging.backend.LazyHolder.platform
+import io.spine.logging.context.Tags
+import io.spine.logging.jvm.context.ContextDataProvider
+import io.spine.logging.util.RecursionDepth
 import kotlin.time.Clock
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 
 /**
@@ -93,7 +93,7 @@ public abstract class Platform {
          */
         @JvmStatic
         public fun getCallerFinder(): LogCallerFinder =
-            LazyHolder.platform.getCallerFinderImpl()
+            platform.getCallerFinderImpl()
 
         /**
          * Returns a logger backend of the given class name for use by a logger.
@@ -110,7 +110,7 @@ public abstract class Platform {
          */
         @JvmStatic
         public fun getBackend(className: String): LoggerBackend =
-            LazyHolder.platform.getBackendImpl(className)
+            platform.getBackendImpl(className)
 
         /**
          * Returns the singleton ContextDataProvider from which
@@ -122,7 +122,7 @@ public abstract class Platform {
          */
         @JvmStatic
         public fun getContextDataProvider(): ContextDataProvider =
-            LazyHolder.platform.getContextDataProviderImpl()
+            platform.getContextDataProviderImpl()
 
         /**
          * Returns whether the given logger should have logging forced at the specified level.
@@ -162,10 +162,7 @@ public abstract class Platform {
         public fun getMappedLevel(loggerName: String): Level? {
             checkNotNull(loggerName)
             val provider = getContextDataProvider()
-            val result = provider.getMappedLevel(loggerName)
-            if (result == null) {
-                return null
-            }
+            val result = provider.getMappedLevel(loggerName) ?: return null
             return result
         }
 
@@ -197,7 +194,7 @@ public abstract class Platform {
          */
         @JvmStatic
         public fun getCurrentTimeNanos(): Long =
-            LazyHolder.platform.getCurrentTimeNanosImpl()
+            platform.getCurrentTimeNanosImpl()
 
         /**
          * Returns a human-readable string describing the platform and its configuration.
@@ -218,7 +215,7 @@ public abstract class Platform {
          */
         @JvmStatic
         public fun getConfigInfo(): String =
-            LazyHolder.platform.getConfigInfoImpl()
+            platform.getConfigInfoImpl()
     }
 
     /**
@@ -257,7 +254,7 @@ public abstract class Platform {
     @OptIn(ExperimentalTime::class)
     protected open fun getCurrentTimeNanosImpl(): Long {
         return Clock.System.now().let {
-            it.epochSeconds * MILLISECONDS.toNanos(1) + it.nanosecondsOfSecond
+            it.epochSeconds.seconds.inWholeNanoseconds + it.nanosecondsOfSecond
         }
     }
 
@@ -271,9 +268,10 @@ public abstract class Platform {
 }
 
 /**
- * Use the lazy holder idiom here to avoid class loading issues. Loading the Platform subclass
- * will trigger static initialization of the Platform class first, which would not be possible if
- * the [platform] field were a static field in Platform.
+ * Use the lazy holder idiom here to avoid class loading issues.
+ *
+ * Loading the Platform subclass will trigger static initialization of the `Platform` class first,
+ * which would not be possible if the [platform] field were a static field in `Platform`.
  *
  * This means that any errors in platform loading are deferred until the first time one of the
  * [Platform]'s static methods is invoked.
@@ -287,11 +285,13 @@ private object LazyHolder {
     private var defaultPlatform: String = "io.spine.logging.backend.system.DefaultPlatform"
 
     /**
-     * The first available platform from this list is used. Each platform is defined separately
-     * outside of this array so that the IdentifierNameString annotation can be applied to each.
+     * The first available platform from this list is used.
+     *
+     * Each platform is defined separately outside of this array
+     * so that the `IdentifierNameString` annotation can be applied to each.
      * This annotation tells Proguard that these strings refer to class names.
-     * If Proguard decides to obfuscate those classes, it will also obfuscate these strings so
-     * that reflection can still be used.
+     * If Proguard decides to obfuscate those classes, it will also obfuscate
+     * these strings so that reflection can still be used.
      */
     private val availablePlatforms: Array<String> = arrayOf(
         // The fallback/default platform gives a workable, logging backend.
@@ -314,7 +314,11 @@ private object LazyHolder {
                 // we can report something useful.
                 // Unwrap any generic wrapper exceptions for readability here
                 // (extend this as needed).
-                val th = if (e is InvocationTargetException) { e.cause } else { e }
+                val th = if (e::class.simpleName!!.contains("InvocationTargetException")) {
+                    e.cause
+                } else {
+                    e
+                }
                 errorMessage.append('\n')
                     .append(clazz)
                     .append(": ")

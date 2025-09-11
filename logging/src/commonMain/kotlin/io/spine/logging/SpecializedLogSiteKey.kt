@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,8 @@ internal class SpecializedLogSiteKey private constructor(
     companion object {
 
         @JvmStatic
-        fun of(key: LogSiteKey, qualifier: Any): LogSiteKey = SpecializedLogSiteKey(key, qualifier)
+        public fun of(key: LogSiteKey, qualifier: Any): LogSiteKey =
+            SpecializedLogSiteKey(key, qualifier)
     }
 
     // Equals is dependent on the order in which specialization occurred, even though

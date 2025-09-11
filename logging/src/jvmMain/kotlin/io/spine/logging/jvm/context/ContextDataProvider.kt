@@ -30,6 +30,8 @@ import io.spine.logging.Level
 import io.spine.logging.LoggingScope
 import io.spine.logging.backend.Metadata
 import io.spine.logging.backend.Platform
+import io.spine.logging.context.ScopeType
+import io.spine.logging.context.Tags
 
 /**
  * An API for injecting scoped metadata for log statements (either globally or on

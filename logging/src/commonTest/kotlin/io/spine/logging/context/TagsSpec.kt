@@ -24,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm.context
+package io.spine.logging.context
 
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.collections.shouldContainInOrder
@@ -249,7 +249,7 @@ internal class TagsSpec {
 
     @Test
     fun `provide 'String' representation`() {
-        "${Tags.builder()}" shouldBe  "{}"
+        "${Tags.builder()}" shouldBe "{}"
         "${Tags.builder().addTag("foo").addTag("bar")}" shouldBe "{bar=[], foo=[]}"
         "${Tags.builder().addTag("foo", "value")}" shouldBe "{foo=[value]}"
         "${Tags.builder().addTag("foo", "")}" shouldBe  "{foo=[]}"

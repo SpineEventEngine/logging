@@ -30,6 +30,8 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue
 import com.google.errorprone.annotations.MustBeClosed
 import io.spine.logging.MetadataKey
 import io.spine.logging.context.InvalidLoggingContextStateException
+import io.spine.logging.context.ScopeType
+import io.spine.logging.context.Tags
 import io.spine.logging.jvm.context.ScopedLoggingContext.Companion.getInstance
 import java.util.concurrent.Callable
 
@@ -83,8 +85,8 @@ import java.util.concurrent.Callable
  * modifications to an existing, implicit logging context, it should always check the return values
  * of any modification methods called (e.g. [addTags]).
  *
- * @see [Original Java code of Google Flogger](https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/ScopedLoggingContext.java)
- * for historical context.
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/ScopedLoggingContext.java">
+ *     Original Java code of Google Flogger</a> for historical context.
  */
 public abstract class ScopedLoggingContext protected constructor() {
 
@@ -343,8 +345,6 @@ public abstract class ScopedLoggingContext protected constructor() {
      */
     @CanIgnoreReturnValue
     public open fun addTags(tags: Tags): Boolean {
-        //TODO:2025-06-30:alexander.yevsyukov: Investigate why this method does nothing despite
-        // the documentation.
         return false
     }
 
@@ -361,8 +361,6 @@ public abstract class ScopedLoggingContext protected constructor() {
      */
     @CanIgnoreReturnValue
     public open fun <T : Any> addMetadata(key: MetadataKey<T>, value: T): Boolean {
-        //TODO:2025-06-30:alexander.yevsyukov: Investigate why this method does nothing despite
-        // the documentation.
         return false
     }
 
@@ -381,8 +379,6 @@ public abstract class ScopedLoggingContext protected constructor() {
      */
     @CanIgnoreReturnValue
     public open fun applyLogLevelMap(logLevelMap: LogLevelMap): Boolean {
-        //TODO:2025-06-30:alexander.yevsyukov: Investigate why this method does nothing despite
-        // the documentation.
         return false
     }
 

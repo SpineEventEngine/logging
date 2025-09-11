@@ -59,7 +59,7 @@ public abstract class LogMessageFormatter {
      *
      * Formatter implementations may be able to implement it more efficiently
      * (e.g., if they can safely detect when no formatting is required).
-     * See also the helper methods in `[SimpleMessageFormatter]`.
+     * See also the helper methods in [SimpleMessageFormatter].
      *
      * @see SimpleMessageFormatter
      */
