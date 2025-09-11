@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,13 +26,13 @@
 
 package io.spine.logging.backend
 
+/**
+ * Loads `io.spine.logging.backend.system.DefaultPlatform` by its class name.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/Platform.java">
+ *   Original Java code</a> for historical context.
+ */
 internal actual fun loadPlatform(): Platform {
-
-    /**
-     * Non-final to prevent javac inlining.
-     */
-    @Suppress("ConstantField")
-    val defaultPlatform = "io.spine.logging.backend.system.DefaultPlatform"
 
     /**
      * The first available platform from this list is used.
@@ -45,7 +45,7 @@ internal actual fun loadPlatform(): Platform {
      */
     val availablePlatforms: Array<String> = arrayOf(
         // The fallback/default platform gives a workable, logging backend.
-        defaultPlatform
+        "io.spine.logging.backend.system.DefaultPlatform"
     )
 
     val platform: Platform = loadFirstAvailablePlatform(availablePlatforms)
