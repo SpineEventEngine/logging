@@ -33,7 +33,7 @@ import io.spine.logging.context.InvalidLoggingContextStateException
 import io.spine.logging.context.ScopeType
 import io.spine.logging.context.Tags
 import io.spine.logging.jvm.context.ScopedLoggingContext.Companion.getInstance
-import java.util.concurrent.Callable
+// Migrated off java.util.concurrent.Callable to Kotlin function types
 
 /**
  * A user-facing API for creating and modifying scoped logging contexts in applications.
@@ -171,7 +171,7 @@ public abstract class ScopedLoggingContext protected constructor() {
         }
 
         /**
-         * Wraps a callable so it will execute within a new context based on
+         * Wraps a function so it will execute within a new context based on
          * the state of the builder.
          *
          * Note that each time this runnable is executed, a new context will be installed extending
@@ -182,12 +182,12 @@ public abstract class ScopedLoggingContext protected constructor() {
          *         be closed correctly (e.g., if a nested context has also been opened, but not
          *         closed).
          */
-        public fun <R> wrap(c: Callable<R>): Callable<R> {
-            return Callable {
+        public fun <R> wrap(c: () -> R): () -> R {
+            return {
                 val context = install()
                 var hasError = true
                 try {
-                    val result = c.call()
+                    val result = c()
                     hasError = false
                     result
                 } finally {
@@ -203,20 +203,19 @@ public abstract class ScopedLoggingContext protected constructor() {
             wrap(r).run()
 
         /**
-         * Calls a [Callable] directly within a new context installed from this builder.
+         * Calls a function directly within a new context installed from this builder.
          */
         @CanIgnoreReturnValue
-        @Throws(Exception::class)
-        public fun <R> call(c: Callable<R>): R =
-            wrap(c).call()
+        public fun <R> call(c: () -> R): R =
+            wrap(c)()
 
         /**
-         * Calls a [Callable] directly within a new context installed from this builder,
-         * wrapping any checked exceptions with a [RuntimeException].
+         * Calls a function directly within a new context installed from this builder,
+         * wrapping any thrown exception with a [IllegalStateException] if it's not a [RuntimeException].
          */
         @CanIgnoreReturnValue
         @Suppress("TooGenericExceptionCaught")
-        public fun <R> callUnchecked(c: Callable<R>): R = try {
+        public fun <R> callUnchecked(c: () -> R): R = try {
             call(c)
         } catch (e: RuntimeException) {
             throw e
