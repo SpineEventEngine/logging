@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,8 +23,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-@file:Suppress("MaxLineLength")
 
 package io.spine.logging.backend
 
@@ -359,30 +357,37 @@ private class LightweightProcessor(
         var count = 0
         for (n in 0 until keyMap.size) {
             val key = getKey(n)
-            // Use the bloom filter mask to get a quick true-negative test for whether we've seen this
-            // key before. Most keys are distinct and this test is very reliable up to 10-15 keys, so
+            // Use the bloom filter mask to get a quick true-negative test for whether
+            // we've seen this key before.
+            // Most keys are distinct and this test is very reliable up to 10-15 keys, so
             // it saves building a HashSet or similar to track the set of unique keys.
             val oldMask = bloomFilterMask
             bloomFilterMask = bloomFilterMask or key.bloomFilterMask
             if (bloomFilterMask == oldMask) {
-                // Very probably a duplicate key. This is rare compared to distinct keys, but will happen
-                // (e.g. for repeated keys with several values). Now we find the index of the key (since
-                // we need to update that element in the keyMap array). This is a linear search but in
-                // normal usage should happen once or twice over a small set (e.g. 5 distinct elements).
+                // Very probably a duplicate key. This is rare compared to distinct keys,
+                // but will happen (e.g. for repeated keys with several values).
+                // Now we find the index of the key (since we need to update that element
+                // in the keyMap array).
+                // This is a linear search but in normal usage should happen once or
+                // twice over a small set (e.g. 5 distinct elements).
                 // It is still expected to be faster/cheaper than creating and populating a HashSet.
                 //
-                // NOTE: It is impossible to get here if (n == 0) because the key's bloom filter must have
-                // at least one bit set so can never equal the initial mask first time round the loop.
+                // NOTE: It is impossible to get here if (n == 0) because the key's bloom
+                // filter must have at least one bit set so can never equal the initial
+                // mask first time round the loop.
                 val i = indexOf(key, keyMap, count)
                 // If the index is -1, it wasn't actually in the set and this was a false-positive.
                 if (i != -1) {
-                    // Definitely duplicate key. The key could still be non-repeating though since it might
-                    // appear in both scope and logged metadata exactly once:
-                    // * For non-repeating keys, just replace the existing map value with the new index.
-                    // * For repeated keys, keep the index in the low 5-bits and set a new bit in the mask.
+                    // Definitely duplicate key. The key could still be non-repeating though
+                    // since it might appear in both scope and logged metadata exactly once:
+                    //  * For non-repeating keys, just replace the existing map value
+                    //    with the new index.
+                    //  * For repeated keys, keep the index in the low 5-bits and set
+                    //    a new bit in the mask.
                     //
-                    // Since we can never see (n == 0) here, we encode index 1 at bit 5 (hence "n + 4", not
-                    // "n + 5" below). This trick just gives us the ability to store one more index.
+                    // Since we can never see (n == 0) here, we encode index 1 at bit 5
+                    // (hence "n + 4", not "n + 5" below).
+                    // This trick just gives us the ability to store one more index.
                     keyMap[i] = if (key.canRepeat()) keyMap[i] or (1 shl (n + 4)) else n
                     continue
                 }
@@ -437,8 +442,8 @@ private class LightweightProcessor(
             // Get the first element index (lowest 5 bits, 0-27).
             this.nextIndex = valueIndices and 0x1F
             // Adjust keymap indices mask so bit-0 represents the index *after* the first element.
-            // This adjustment is 5 (rather than the 4 with which indices are encoded) because we are
-            // shifting past the first index.
+            // This adjustment is 5 (rather than the 4 with which indices are encoded)
+            // because we are shifting past the first index.
             this.mask = valueIndices ushr (5 + nextIndex)
         }
 
