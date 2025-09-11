@@ -68,7 +68,7 @@ public abstract class BaseLogLevelMapTest: AbstractLogLevelMapTest() {
      * of [ScopedLoggingContext] for the details.
      */
     override fun configureBuilder(builder: LogLevelMap.Builder) {
-        builder.run {
+        with(builder) {
             // Custom logging level, which is above `INFO`.
             setDefault(ANNOUNCEMENT)
             add(DEBUG, L1Direct::class)
