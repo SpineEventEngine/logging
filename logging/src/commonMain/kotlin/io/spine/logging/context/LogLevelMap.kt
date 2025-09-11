@@ -94,10 +94,15 @@ public class LogLevelMap private constructor(map: Map<String, Level>, defaultLev
         private val map = mutableMapOf<String, Level>()
         private var defaultLevel = Level.OFF
 
-        private fun put(name: String, level: Level) {
-            val alreadyMapped = map.put(name, level)
+        /**
+         * Associates the given [loggerName] with the logging [level].
+         *
+         * @throws IllegalArgumentException if the entry for [loggerName] already exists.
+         */
+        public fun put(loggerName: String, level: Level) {
+            val alreadyMapped = map.put(loggerName, level)
             require (alreadyMapped == null) {
-                "Duplicate entry for class/package: `$name`, level: `$alreadyMapped`."
+                "Duplicate entry for class/package: `$loggerName`, level: `$alreadyMapped`."
             }
         }
 
@@ -119,17 +124,6 @@ public class LogLevelMap private constructor(map: Map<String, Level>, defaultLev
         public fun add(level: Level, vararg packageNames: String): Builder {
             for (pkg in packageNames) {
                 put(pkg, level)
-            }
-            return this
-        }
-
-        /**
-         * Adds the given packages at the specified log level.
-         */
-        @CanIgnoreReturnValue
-        public fun add(level: Level, vararg packages: Package): Builder {
-            for (pkg in packages) {
-                put(pkg.name, level)
             }
             return this
         }
