@@ -193,12 +193,6 @@ public abstract class ScopedLoggingContext protected constructor() {
         }
 
         /**
-         * Runs a runnable directly within a new context installed from this builder.
-         */
-        public fun call(r: Runnable): Unit =
-            wrap(r).run()
-
-        /**
          * Calls a function directly within a new context installed from this builder.
          */
         @CanIgnoreReturnValue
