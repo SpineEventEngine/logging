@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +26,6 @@
 
 package io.spine.logging
 
-//TODO:2025-09-10:alexander.yevsyukov: Make back `internal`.
-
 /**
  * Used by [LoggingScope] and [io.spine.logging.LogSiteMap] and in response to
  * "per()" or "perUnique()" (which is an implicitly unbounded scope).
@@ -35,12 +33,12 @@ package io.spine.logging
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/SpecializedLogSiteKey.java">
  *     Original Java code of Google Flogger</a> for historical context.
  */
-public class SpecializedLogSiteKey private constructor(
+internal class SpecializedLogSiteKey private constructor(
     private val delegate: LogSiteKey,
     private val qualifier: Any
 ) : LogSiteKey {
 
-    public companion object {
+    companion object {
 
         @JvmStatic
         public fun of(key: LogSiteKey, qualifier: Any): LogSiteKey =
