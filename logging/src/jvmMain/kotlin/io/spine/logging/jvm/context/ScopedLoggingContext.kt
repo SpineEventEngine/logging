@@ -33,7 +33,6 @@ import io.spine.logging.context.InvalidLoggingContextStateException
 import io.spine.logging.context.ScopeType
 import io.spine.logging.context.Tags
 import io.spine.logging.jvm.context.ScopedLoggingContext.Companion.getInstance
-// Migrated off java.util.concurrent.Callable to Kotlin function types
 
 /**
  * A user-facing API for creating and modifying scoped logging contexts in applications.
