@@ -33,7 +33,6 @@ import io.spine.logging.backend.given.shouldContainInOrder
 import io.spine.logging.backend.given.shouldHaveFirstValue
 import io.spine.logging.backend.given.shouldHaveSize
 import io.spine.logging.backend.given.shouldNotContain
-import io.spine.logging.context.ContextMetadata
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -49,9 +48,9 @@ import org.junit.jupiter.api.assertThrows
 internal class ContextMetadataSpec {
 
     companion object {
-        private val FOO_KEY = MetadataKey.single<String>("FOO")
-        private val BAR_KEY = MetadataKey.repeated<String>("BAR")
-        private val UNUSED_KEY = MetadataKey.single<String>("UNUSED")
+        private val FOO_KEY = MetadataKey.Companion.single<String>("FOO")
+        private val BAR_KEY = MetadataKey.Companion.repeated<String>("BAR")
+        private val UNUSED_KEY = MetadataKey.Companion.single<String>("UNUSED")
     }
 
     @Test
@@ -92,7 +91,8 @@ internal class ContextMetadataSpec {
         }
     }
 
-    @Nested inner class
+    @Nested
+    inner class
     `concatenate with` {
 
         @Test
