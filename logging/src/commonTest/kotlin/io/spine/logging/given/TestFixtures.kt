@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,11 +26,17 @@
 
 package io.spine.logging.given
 
-/**
- * Contains test environment for Flogger API tests.
- */
+import io.spine.logging.backend.LogData
+import io.kotest.matchers.shouldBe
 
 /**
  * Creates a new [Iterator] over the given [values].
  */
 internal fun <T> iterate(vararg values: T): Iterator<T> = listOf(*values).iterator()
+
+/**
+ * Asserts that this [LogData] has a given [value] as a literal message.
+ */
+internal infix fun LogData.shouldHaveMessage(value: String?) {
+    literalArgument shouldBe value
+}
