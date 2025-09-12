@@ -112,7 +112,12 @@ public class LogLevelMap private constructor(map: Map<String, Level>, defaultLev
         @CanIgnoreReturnValue
         public fun add(level: Level, vararg classes: KClass<*>): Builder {
             for (cls in classes) {
-                put(cls.qualifiedName!!, level)
+                val name = cls.qualifiedName
+                require(name != null) {
+                    "Cannot add the class `${cls}` because it does not have" +
+                            " a qualified name (it may be local or anonymous)."
+                }
+                put(name, level)
             }
             return this
         }
