@@ -108,6 +108,12 @@ public class LogLevelMap private constructor(map: Map<String, Level>, defaultLev
 
         /**
          * Adds the given classes at the specified log level.
+         *
+         * @param level The logging level to assign for the given [classes]
+         * @param classes The classes to assign the logging [level]. Each class must have
+         *   a [qualified name][KClass.qualifiedName].
+         * @throws IllegalArgumentException if one of the [classes] does not have
+         *   a [qualified name][KClass.qualifiedName].
          */
         @CanIgnoreReturnValue
         public fun add(level: Level, vararg classes: KClass<*>): Builder {
@@ -124,6 +130,9 @@ public class LogLevelMap private constructor(map: Map<String, Level>, defaultLev
 
         /**
          * Adds the given package names at the specified level.
+         *
+         * @param level The logging level to assign for the given [packageNames].
+         * @param packageNames The names of the packages to assign the logging [level]
          */
         @CanIgnoreReturnValue
         public fun add(level: Level, vararg packageNames: String): Builder {
