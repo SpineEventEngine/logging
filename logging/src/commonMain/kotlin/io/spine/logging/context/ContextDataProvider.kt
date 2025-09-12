@@ -142,8 +142,8 @@ public abstract class ContextDataProvider {
      * Scoped metadata can be used to provide structured data to log statements or
      * control logging behaviour (in conjunction with a custom logger backend).
      *
-     * Implementations which do not support scoped [io.spine.logging.backend.Metadata] should not override this
-     * method; the default implementation returns [io.spine.logging.backend.Metadata.Companion.empty].
+     * Implementations which do not support scoped [Metadata] should not override this
+     * method; the default implementation returns [Metadata.Companion.empty].
      */
     public open fun getMetadata(): Metadata = Metadata.Companion.empty()
 
