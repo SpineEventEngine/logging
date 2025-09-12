@@ -24,15 +24,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.jvm
+package io.spine.logging
 
+import io.kotest.matchers.shouldBe
 import io.spine.logging.LogSiteLookup.callerOf
 import io.spine.logging.LogSiteLookup.logSite
-import io.spine.logging.jvm.MyLogUtil.callerLogSite
-import io.spine.logging.jvm.MyLogUtil.callerLogSiteWrapped
-import io.kotest.matchers.shouldBe
-import io.spine.logging.LogSite
-import io.spine.logging.injectedLogSite
+import io.spine.logging.MyLogUtil.callerLogSite
+import io.spine.logging.MyLogUtil.callerLogSiteWrapped
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
