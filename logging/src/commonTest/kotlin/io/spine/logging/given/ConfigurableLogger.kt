@@ -26,12 +26,11 @@
 
 package io.spine.logging.given
 
+import io.spine.logging.AbstractLogger
 import io.spine.logging.Level
 import io.spine.logging.LogContext
 import io.spine.logging.LoggingApi
 import io.spine.logging.backend.LoggerBackend
-import io.spine.logging.AbstractLogger
-import io.spine.logging.given.ConfigurableLogger.Companion.DEFAULT_TIMESTAMP_NANOS
 
 /**
  * Dynamically reconfigurable logger for testing backend
@@ -87,4 +86,3 @@ internal class ConfigurableLogger(backend: LoggerBackend) :
         override fun noOp(): Api = throw UnsupportedOperationException()
     }
 }
-
