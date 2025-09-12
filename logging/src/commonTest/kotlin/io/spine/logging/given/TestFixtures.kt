@@ -28,6 +28,11 @@ package io.spine.logging.given
 
 import io.spine.logging.backend.LogData
 import io.kotest.matchers.shouldBe
+import io.spine.logging.InjectedLogSite
+import io.spine.logging.LogSite
+import io.spine.logging.injectedLogSite
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 /**
  * Creates a new [Iterator] over the given [values].
@@ -39,4 +44,21 @@ internal fun <T> iterate(vararg values: T): Iterator<T> = listOf(*values).iterat
  */
 internal infix fun LogData.shouldHaveMessage(value: String?) {
     literalArgument shouldBe value
+}
+
+/**
+ * Generates a random [LogSite].
+ *
+ * All returned sites will have the same class, but different method names
+ * and line numbers.
+ */
+@OptIn(ExperimentalUuidApi::class)
+internal fun randomLogSite(): LogSite {
+    val randomLine = (1..700).random()
+    return injectedLogSite(
+        internalClassName = InjectedLogSite::class.qualifiedName!!.replace(".", "/"),
+        methodName = "callMe_$randomLine",
+        encodedLineNumber = randomLine,
+        sourceFileName = Uuid.random().toString(),
+    )
 }
