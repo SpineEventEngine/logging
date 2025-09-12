@@ -101,7 +101,7 @@ internal class LogLevelMapSpec {
     fun `provide builder API`() {
         val map = logLevelMap {
             add(DEBUG, String::class)
-            add(WARNING, String::class.java.packageName)
+            add(WARNING, "java.lang")
             setDefault(INFO)
         }
         map.run {
