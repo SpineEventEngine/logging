@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,8 +27,7 @@
 package io.spine.logging.given
 
 import io.spine.logging.LogSite
-import java.util.Objects
-import java.util.concurrent.atomic.AtomicInteger
+import kotlinx.atomicfu.atomic
 
 /**
  * A simplified implementation of [io.spine.logging.LogSite] for testing.
@@ -49,8 +48,8 @@ internal class FakeLogSite(
         private const val SOURCE_FILE = "com/example/ClassName.java"
         private const val LINE_NUMBER = 124
 
-        private val uid = AtomicInteger()
-        private val uniqueMethod = { "doAct" + uid.incrementAndGet() }
+        private val uid = atomic(0)
+        private fun uniqueMethod(): String = "doAct" + uid.incrementAndGet()
 
         /**
          * Creates a unique instance to be used as a key
@@ -69,5 +68,11 @@ internal class FakeLogSite(
                 sourcePath == other.sourcePath
     }
 
-    override fun hashCode(): Int = Objects.hash(className, methodName, lineNumber, sourcePath)
+    override fun hashCode(): Int {
+        var result = className.hashCode()
+        result = 31 * result + methodName.hashCode()
+        result = 31 * result + lineNumber
+        result = 31 * result + (sourcePath?.hashCode() ?: 0)
+        return result
+    }
 }
