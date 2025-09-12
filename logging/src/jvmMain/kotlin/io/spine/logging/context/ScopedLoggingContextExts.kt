@@ -32,4 +32,3 @@ package io.spine.logging.context
 public fun ScopedLoggingContext.Builder.call(r: Runnable) {
     wrap(r).run()
 }
-
