@@ -65,7 +65,8 @@ public actual class RecursionDepth actual constructor() : AutoCloseable {
         @JvmStatic
         public actual fun enterLogStatement(): RecursionDepth {
             val depth = holder.get()
-            if (++depth.value == 0) {
+            depth.value += 1
+            if (depth.value == 0) {
                 throw AssertionError(
                     "Overflow of `RecursionDepth` (possible error in core library)."
                 )
