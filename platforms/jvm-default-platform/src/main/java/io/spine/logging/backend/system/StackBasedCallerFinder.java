@@ -44,7 +44,7 @@ import static io.spine.reflect.CallerFinder.findCallerOf;
  * <p>See class documentation in {@link LogCallerFinder} for important
  * implementation restrictions.
  *
- * @see <a href="https://rb.gy/qozq3">Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="https://rb.gy/qozq3">Original Java code</a> for historical context.
  */
 @Immutable
 @ThreadSafe

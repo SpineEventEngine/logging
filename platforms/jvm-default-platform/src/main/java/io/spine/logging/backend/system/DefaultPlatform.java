@@ -33,7 +33,7 @@ import io.spine.logging.backend.Clock;
 import io.spine.logging.backend.LoggerBackend;
 import io.spine.logging.backend.Platform;
 import io.spine.logging.backend.LogCallerFinder;
-import io.spine.logging.jvm.context.ContextDataProvider;
+import io.spine.logging.context.ContextDataProvider;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -80,7 +80,7 @@ import static io.spine.logging.backend.system.StaticMethodCaller.getInstanceFrom
  * | {@link Clock}          | {@code flogger.clock}           | {@link SystemClock}, a millisecond-precision clock |
  * </pre>
  *
- * @see <a href="http://rb.gy/nnjac">Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="http://rb.gy/nnjac">Original Java code</a> for historical context.
  */
 // Non-final for testing.
 public class DefaultPlatform extends Platform {

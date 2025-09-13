@@ -55,7 +55,7 @@ public actual abstract class LoggingScope protected constructor(private val labe
      */
     override fun toString(): String = label
 
-    public companion object {
+    public actual companion object {
 
         /**
          * Creates a scope which automatically removes any associated keys
@@ -65,7 +65,7 @@ public actual abstract class LoggingScope protected constructor(private val labe
          * statements, it should not contain any user data or other runtime information.
          */
         @JvmStatic
-        public fun create(label: String): LoggingScope = WeakScope(label)
+        public actual fun create(label: String): LoggingScope = WeakScope(label)
     }
 
     @VisibleForTesting

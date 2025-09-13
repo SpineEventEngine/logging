@@ -46,9 +46,21 @@ package io.spine.logging
  * that log statement will not be used in any maps.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LoggingScope.java">
- *       Original Java code of Google Flogger</a> for historical context.
+ *       Original Java code</a> for historical context.
  */
 public expect abstract class LoggingScope {
+
+    public companion object {
+
+        /**
+         * Creates a scope which automatically removes any associated keys
+         * from [LogSiteMap]s when it is garbage collected.
+         *
+         * The given label is used only for debugging purposes and may appear in log
+         * statements, it should not contain any user data or other runtime information.
+         */
+        public fun create(label: String): LoggingScope
+    }
 
     /**
      * Returns a specialization of the given key which accounts for this scope instance.

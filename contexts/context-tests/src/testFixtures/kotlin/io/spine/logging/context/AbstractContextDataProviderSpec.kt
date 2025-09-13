@@ -39,11 +39,11 @@ import io.spine.logging.MetadataKey
 import io.spine.logging.backend.Metadata
 import io.spine.logging.backend.Platform
 import io.spine.logging.backend.probe.MemoizingLoggerBackend
-import io.spine.logging.jvm.context.ContextDataProvider
-import io.spine.logging.jvm.context.LogLevelMap
+import io.spine.logging.context.ContextDataProvider
+import io.spine.logging.context.LogLevelMap
 import io.spine.logging.context.ScopeType
-import io.spine.logging.jvm.context.ScopedLoggingContext
-import io.spine.logging.jvm.context.ScopedLoggingContexts
+import io.spine.logging.context.ScopedLoggingContext
+import io.spine.logging.context.ScopedLoggingContexts
 import io.spine.logging.toLevel
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -59,7 +59,7 @@ private typealias LoggerName = String
 /**
  * Set of common tests for [ContextDataProvider]s.
  *
- * @see <a href="https://rb.gy/luq6y">Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="https://rb.gy/luq6y">Original Java code</a> for historical context.
  */
 @Suppress("unused" /* Test functions in an abstract class. */)
 @DisplayName("`ContextDataProvider` should") // This name is to be overridden by inheritors.
@@ -134,7 +134,7 @@ abstract class AbstractContextDataProviderSpec {
             contextTags.shouldBeEmpty()
             context.newContext()
                 .withTags(tags)
-                .run {
+                .call {
                     contextTags shouldBe tags.asMap()
                     markCallbackExecuted()
                 }
@@ -148,7 +148,7 @@ abstract class AbstractContextDataProviderSpec {
             contextMetadata.shouldBeEmpty()
             context.newContext()
                 .withMetadata(key, value)
-                .run {
+                .call {
                     // Should be unique because the key is singleton.
                     contextMetadata.shouldUniquelyContain(key, value)
                     markCallbackExecuted()
@@ -159,14 +159,14 @@ abstract class AbstractContextDataProviderSpec {
 
         @Test
         fun `with a log level map`() {
-            val defaultLevel = JLevel.FINE
+            val defaultLevel = TLevel.FINE
             val mapping = "foo.bar" to defaultLevel
             val levelMap = LogLevelMap.create(mapOf(mapping), defaultLevel)
             val (logger, level) = mapping
             contextData.isLoggingForced(logger, level).shouldBeFalse()
             context.newContext()
                 .withLogLevelMap(levelMap)
-                .run {
+                .call {
                     contextData.isLoggingForced(logger, level).shouldBeTrue()
                     markCallbackExecuted()
                 }
@@ -181,13 +181,13 @@ abstract class AbstractContextDataProviderSpec {
             contextTags.shouldBeEmpty()
             context.newContext()
                 .withTags(outerTags)
-                .run {
+                .call {
                     contextTags shouldBe outerTags.asMap()
                     val innerTags = Tags.of(name, value2)
                     val allTags = outerTags.merge(innerTags)
                     context.newContext()
                         .withTags(innerTags)
-                        .run {
+                        .call {
                             // Double-check to be sure.
                             contextTags shouldBe allTags.asMap()
                             contextTags[name] shouldBe setOf(value1, value2)
@@ -218,7 +218,7 @@ abstract class AbstractContextDataProviderSpec {
             context.newContext()
                 .withMetadata(FOO, outerFoo)
                 .withMetadata(BAR, outerBar)
-                .run {
+                .call {
                     // `FOO` is a singleton key, so it should be unique.
                     // `BAR` is repeated, so it can't be asserted as unique.
                     contextMetadata shouldHaveSize 2
@@ -231,7 +231,7 @@ abstract class AbstractContextDataProviderSpec {
                     context.newContext()
                         .withMetadata(FOO, innerFoo)
                         .withMetadata(BAR, innerBar)
-                        .run {
+                        .call {
                             // Note that singleton `FOO` is now asserted as a repeated key.
                             contextMetadata shouldHaveSize 4
                             contextMetadata.shouldContainInOrder(FOO, outerFoo, innerFoo)
@@ -257,36 +257,36 @@ abstract class AbstractContextDataProviderSpec {
             val (other, fooBar, fooBarBaz) = listOf("other.package", "foo.bar", "foo.bar.Baz")
 
             // Everything in "foo.bar" gets at least FINE logging.
-            val fooBarFine = levelMap(fooBar to JLevel.FINE)
+            val fooBarFine = levelMap(fooBar to TLevel.FINE)
 
-            contextData.shouldNotForceLogging(JLevel.FINE, other, fooBar, fooBarBaz)
+            contextData.shouldNotForceLogging(TLevel.FINE, other, fooBar, fooBarBaz)
             context.newContext()
                 .withLogLevelMap(fooBarFine)
-                .run {
-                    contextData.shouldForceLogging(JLevel.FINE, fooBar, fooBarBaz)
-                    contextData.shouldNotForceLogging(JLevel.FINEST, fooBar, fooBarBaz)
-                    contextData.shouldNotForceLogging(JLevel.FINE, other)
+                .call {
+                    contextData.shouldForceLogging(TLevel.FINE, fooBar, fooBarBaz)
+                    contextData.shouldNotForceLogging(TLevel.FINEST, fooBar, fooBarBaz)
+                    contextData.shouldNotForceLogging(TLevel.FINE, other)
 
                     // Everything in "foo.bar.Baz" gets at least FINEST logging.
-                    val fooBazFinest = levelMap(fooBarBaz to JLevel.FINEST)
+                    val fooBazFinest = levelMap(fooBarBaz to TLevel.FINEST)
 
                     context.newContext()
                         .withLogLevelMap(fooBazFinest)
-                        .run {
-                            contextData.shouldForceLogging(JLevel.FINE, fooBar, fooBarBaz)
-                            contextData.shouldForceLogging(JLevel.FINEST, fooBarBaz)
-                            contextData.shouldNotForceLogging(JLevel.FINE, other)
+                        .call {
+                            contextData.shouldForceLogging(TLevel.FINE, fooBar, fooBarBaz)
+                            contextData.shouldForceLogging(TLevel.FINEST, fooBarBaz)
+                            contextData.shouldNotForceLogging(TLevel.FINE, other)
                             markCallbackExecuted()
                         }
 
                     // Everything is restored after a scope.
-                    contextData.shouldForceLogging(JLevel.FINE, fooBar, fooBarBaz)
-                    contextData.shouldNotForceLogging(JLevel.FINEST, fooBar, fooBarBaz)
-                    contextData.shouldNotForceLogging(JLevel.FINE, other)
+                    contextData.shouldForceLogging(TLevel.FINE, fooBar, fooBarBaz)
+                    contextData.shouldNotForceLogging(TLevel.FINEST, fooBar, fooBarBaz)
+                    contextData.shouldNotForceLogging(TLevel.FINE, other)
                 }
 
             // Everything is restored after a scope.
-            contextData.shouldNotForceLogging(JLevel.FINE, other, fooBar, fooBarBaz)
+            contextData.shouldNotForceLogging(TLevel.FINE, other, fooBar, fooBarBaz)
             checkCallbackWasExecuted()
         }
 
@@ -296,13 +296,13 @@ abstract class AbstractContextDataProviderSpec {
             contextData.getScope(BATCH_JOB).shouldBeNull()
 
             context.newContext(SUB_TASK)
-                .run {
+                .call {
                     val subTask = contextData.getScope(SUB_TASK)
                     subTask.shouldNotBeNull()
                     contextData.getScope(BATCH_JOB).shouldBeNull()
 
                     context.newContext(BATCH_JOB)
-                        .run {
+                        .call {
                             contextData.getScope(SUB_TASK) shouldBeSameInstanceAs subTask
                             contextData.getScope(BATCH_JOB).shouldNotBeNull()
                             markCallbackExecuted()
@@ -361,12 +361,12 @@ abstract class AbstractContextDataProviderSpec {
     fun `not create a new scope instance if the same type is bound twice`() {
         contextData.getScope(SUB_TASK).shouldBeNull()
         context.newContext(SUB_TASK)
-            .run {
+            .call {
                 val taskScope = contextData.getScope(SUB_TASK)
                 "$taskScope" shouldBe "sub task"
 
                 context.newContext(SUB_TASK)
-                    .run {
+                    .call {
                         contextData.getScope(SUB_TASK) shouldBeSameInstanceAs taskScope
                         markCallbackExecuted()
                     }
@@ -397,10 +397,13 @@ abstract class AbstractContextDataProviderSpec {
         val loggerName = this::class.java.name
         val level = TLevel.DEBUG
         val map = TLogLevelMap.create(mapOf(loggerName to level))
-        TScopedLoggingContext.newContext().withLogLevelMap(map).execute {
-            val customLevel = Platform.getMappedLevel(loggerName)
-            customLevel shouldBe level
-        }
+        TScopedLoggingContext.getInstance()
+            .newContext()
+            .withLogLevelMap(map)
+            .call {
+                val customLevel = Platform.getMappedLevel(loggerName)
+                customLevel shouldBe level
+            }
     }
 }
 
@@ -410,25 +413,25 @@ abstract class AbstractContextDataProviderSpec {
  *
  * Otherwise, returns `false`.
  */
-private fun ContextDataProvider.isLoggingForced(logger: LoggerName, level: JLevel): Boolean {
+private fun ContextDataProvider.isLoggingForced(logger: LoggerName, level: TLevel): Boolean {
     // We expect that by default the specified level is disabled,
     // and the context itself would force the logging.
     val isEnabledByLevel = false
-    val isForced = shouldForceLogging(logger, level.toLevel(), isEnabledByLevel)
+    val isForced = shouldForceLogging(logger, level, isEnabledByLevel)
     return isForced
 }
 
-private fun ContextDataProvider.shouldForceLogging(level: JLevel, vararg loggers: LoggerName) =
+private fun ContextDataProvider.shouldForceLogging(level: TLevel, vararg loggers: LoggerName) =
     loggers.forEach { logger ->
         isLoggingForced(logger, level).shouldBeTrue()
     }
 
-private fun ContextDataProvider.shouldNotForceLogging(level: JLevel, vararg loggers: LoggerName) =
+private fun ContextDataProvider.shouldNotForceLogging(level: TLevel, vararg loggers: LoggerName) =
     loggers.forEach { logger ->
         isLoggingForced(logger, level).shouldBeFalse()
     }
 
 private fun levelMap(
-    mapping: Pair<LoggerName, JLevel>,
-    defaultLevel: JLevel = JLevel.INFO
+    mapping: Pair<LoggerName, TLevel>,
+    defaultLevel: TLevel = TLevel.INFO
 ): LogLevelMap = LogLevelMap.create(mapOf(mapping), defaultLevel)

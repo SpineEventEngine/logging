@@ -58,7 +58,7 @@ import kotlin.text.map
  * All metadata processing must be done in the logging thread.
  *
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/backend/MetadataProcessor.java">
- *   Original Java code of Google Flogger</a> for historical context.
+ *   Original Java code</a> for historical context.
  */
 public abstract class MetadataProcessor {
 

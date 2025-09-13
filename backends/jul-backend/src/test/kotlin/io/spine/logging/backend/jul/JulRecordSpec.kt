@@ -48,7 +48,7 @@ import org.junit.jupiter.api.Test
 /**
  * Tests [JulRecord].
  *
- * @see <a href="https://rb.gy/4cncp">Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="https://rb.gy/4cncp">Original Java code</a> for historical context.
  */
 @DisplayName("`JulRecord` should")
 internal class JulRecordSpec {

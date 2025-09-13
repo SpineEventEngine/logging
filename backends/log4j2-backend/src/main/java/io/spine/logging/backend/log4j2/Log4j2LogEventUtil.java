@@ -35,7 +35,7 @@ import io.spine.logging.backend.MetadataHandler;
 import io.spine.logging.backend.Platform;
 import io.spine.logging.backend.SimpleMessageFormatter;
 import io.spine.logging.context.Tags;
-import io.spine.logging.jvm.context.ScopedLoggingContext;
+import io.spine.logging.context.ScopedLoggingContext;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.DefaultConfiguration;

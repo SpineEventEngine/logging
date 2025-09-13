@@ -38,7 +38,7 @@ import java.util.logging.Level as JLevel
 /**
  * A mutable [LogData] fot testing backends and other log handling code.
  *
- * @see <a href="http://rb.gy/z2i0q">Original Java code of Google Flogger</a>
+ * @see <a href="http://rb.gy/z2i0q">Original Java code</a>
  *   for historical context.
  */
 @Suppress("TooManyFunctions") // Many getters and setters.

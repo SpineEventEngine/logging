@@ -32,7 +32,7 @@ import java.util.*
 /**
  * A simplified implementation of [LogSite] for testing.
  *
- * @see <a href="http://rb.gy/wal1a">Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="http://rb.gy/wal1a">Original Java code</a> for historical context.
  */
 internal class StubLogSite(
     override val className: String,

@@ -36,7 +36,7 @@ import io.spine.logging.backend.system.given.NoOpCallerFinder
 import io.spine.logging.backend.system.given.StubBackendFactoryService
 import io.spine.logging.backend.system.given.StubClockService
 import io.spine.logging.backend.system.given.StubContextDataProviderService
-import io.spine.logging.jvm.context.ContextDataProvider
+import io.spine.logging.context.ContextDataProvider
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -48,7 +48,7 @@ import org.junit.jupiter.api.Test
  * the singleton behavior, since the precise platform loaded at runtime
  * can vary in details.
  *
- * @see <a href="https://rb.gy/550xu">Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="https://rb.gy/550xu">Original Java code</a> for historical context.
  */
 @DisplayName("`DefaultPlatform` should")
 internal class DefaultPlatformSpec {

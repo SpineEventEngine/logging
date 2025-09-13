@@ -29,10 +29,10 @@ package io.spine.logging.context.grpc;
 import io.grpc.Context;
 import io.spine.logging.MetadataKey;
 import io.spine.logging.context.Tags;
-import io.spine.logging.jvm.context.ContextMetadata;
-import io.spine.logging.jvm.context.LogLevelMap;
+import io.spine.logging.context.ContextMetadata;
+import io.spine.logging.context.LogLevelMap;
 import io.spine.logging.context.ScopeType;
-import io.spine.logging.jvm.context.ScopedLoggingContext;
+import io.spine.logging.context.ScopedLoggingContext;
 import org.jspecify.annotations.Nullable;
 
 import static io.spine.logging.util.Checks.checkNotNull;
@@ -44,7 +44,7 @@ import static io.spine.logging.util.Checks.checkNotNull;
  * {@link GrpcContextDataProvider#getContextApiSingleton()}, which provides
  * application code with a mechanism for controlling logging contexts.
  *
- * @see <a href="https://rb.gy/w1wyu">Original Java code of Google Flogger</a>
+ * @see <a href="https://rb.gy/w1wyu">Original Java code</a>
  *   for historical context.
  */
 final class GrpcScopedLoggingContext extends ScopedLoggingContext {

@@ -30,7 +30,7 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.optional.shouldBePresent
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.spine.logging.context.AbstractContextDataProviderSpec
-import io.spine.logging.jvm.context.ContextDataProvider
+import io.spine.logging.context.ContextDataProvider
 import java.util.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test
 /**
  * Tests for [GrpcContextDataProvider].
  *
- * @see <a href="https://rb.gy/hccpy">Original Java code of Google Flogger</a> for historical context.
+ * @see <a href="https://rb.gy/hccpy">Original Java code</a> for historical context.
  */
 @DisplayName("`GrpcContextDataProvider` should")
 internal class GrpcContextDataProviderSpec : AbstractContextDataProviderSpec() {

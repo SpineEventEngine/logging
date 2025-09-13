@@ -59,7 +59,9 @@ public abstract class AbstractLogLevelMapTest(
             configureBuilder(it)
             it.build()
         }
-        val context = ScopedLoggingContext.newContext().withLogLevelMap(map)
+        val context = ScopedLoggingContext.getInstance()
+            .newContext()
+            .withLogLevelMap(map)
         return context
     }
 
