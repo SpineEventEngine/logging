@@ -26,8 +26,23 @@
 
 package io.spine.logging
 
+import io.spine.annotation.TestOnly
+
 /**
  * Platform-neutral marker for a bucketing strategy used by
  * [LoggingApi.per(key, strategy)][LoggingApi.per].
  */
-public expect abstract class LogPerBucketingStrategy<T>
+public expect abstract class LogPerBucketingStrategy<T> {
+
+    internal fun doApply(key: T): Any?
+
+    /**
+     * Access to the [apply] method for testing purposes.
+     *
+     * This method is not part of the public API and should not be used by client code.
+     */
+    @TestOnly
+    internal fun applyForTesting(key: T): Any?
+}
+
+

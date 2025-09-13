@@ -30,4 +30,15 @@ package io.spine.logging
  * A synthetic exception which can be attached to log statements when additional stack trace
  * information is required in log files or via tools such as ECatcher.
  */
-public expect class LogSiteStackTrace
+@Suppress("UtilityClassWithPublicConstructor")
+public expect class LogSiteStackTrace : Throwable {
+
+    public companion object {
+
+        public fun create(
+            cause: Throwable?,
+            stackSize: StackSize,
+            syntheticStackTrace: Array<out StackTraceElement?>
+        ): LogSiteStackTrace
+    }
+}

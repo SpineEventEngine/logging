@@ -26,7 +26,16 @@
 
 package io.spine.logging
 
+import java.lang.StackTraceElement
+import kotlin.reflect.KClass
+
 /**
  * Platform-neutral representation of a stack trace element.
  */
 public expect class StackTraceElement
+
+public expect fun stackForCallerOf(
+    target: KClass<*>,
+    maxDepth: Int,
+    skip: Int
+): Array<io.spine.logging.StackTraceElement>

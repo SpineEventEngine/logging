@@ -62,8 +62,17 @@ public actual class LogSiteStackTrace(
     @Suppress("NonSynchronizedMethodOverridesSynchronizedMethod")
     override fun fillInStackTrace(): Throwable = this
 
-    public companion object {
+    public actual companion object {
+
         @Serial
         private const val serialVersionUID: Long = 0L
+
+        public actual fun create(
+            cause: Throwable?,
+            stackSize: StackSize,
+            syntheticStackTrace: Array<out StackTraceElement?>
+        ): LogSiteStackTrace {
+            return LogSiteStackTrace(cause, stackSize, syntheticStackTrace)
+        }
     }
 }

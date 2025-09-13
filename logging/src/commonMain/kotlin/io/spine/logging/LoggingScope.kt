@@ -94,4 +94,14 @@ public expect abstract class LoggingScope {
      * all the currently active scopes which apply to it.
      */
     protected abstract fun onClose(removalHook: () -> Unit)
+
+    /**
+     * Opens [specialize] for the package.
+     */
+    internal fun doSpecialize(key: LogSiteKey): LogSiteKey
+
+    /**
+     * Opens access to [onClose] for the package.
+     */
+    internal fun doOnClose(removalHook: () -> Unit)
 }

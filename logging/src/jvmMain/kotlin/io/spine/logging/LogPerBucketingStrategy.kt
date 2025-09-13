@@ -94,7 +94,7 @@ public actual abstract class LogPerBucketingStrategy<T> protected constructor(
      */
     protected abstract fun apply(key: T): Any?
 
-    internal fun doApply(key: T): Any? = apply(key)
+    internal actual fun doApply(key: T): Any? = apply(key)
 
     /**
      * Access to the [apply] method for testing purposes.
@@ -102,7 +102,7 @@ public actual abstract class LogPerBucketingStrategy<T> protected constructor(
      * This method is not part of the public API and should not be used by client code.
      */
     @TestOnly
-    internal fun applyForTesting(key: T): Any? = apply(key)
+    internal actual fun applyForTesting(key: T): Any? = apply(key)
 
     override fun toString(): String =
         "${LogPerBucketingStrategy::class.java.simpleName}[$name]"

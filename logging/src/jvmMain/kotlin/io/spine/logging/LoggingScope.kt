@@ -43,12 +43,12 @@ public actual abstract class LoggingScope protected constructor(private val labe
     /**
      * Opens [specialize] for the package.
      */
-    internal fun doSpecialize(key: LogSiteKey): LogSiteKey = specialize(key)
+    internal actual fun doSpecialize(key: LogSiteKey): LogSiteKey = specialize(key)
 
     /**
      * Opens access to [onClose] for the package.
      */
-    internal fun doOnClose(removalHook: () -> Unit) = onClose(removalHook)
+    internal actual fun doOnClose(removalHook: () -> Unit) = onClose(removalHook)
 
     /**
      * Returns the [label] of this scope.

@@ -26,4 +26,14 @@
 
 package io.spine.logging
 
+import io.spine.reflect.CallerFinder
+import kotlin.reflect.KClass
+
 public actual typealias StackTraceElement = java.lang.StackTraceElement
+
+public actual fun stackForCallerOf(
+    target: KClass<*>,
+    maxDepth: Int,
+    skip: Int
+): Array<StackTraceElement> = CallerFinder.stackForCallerOf(target.java, maxDepth, skip)
+
