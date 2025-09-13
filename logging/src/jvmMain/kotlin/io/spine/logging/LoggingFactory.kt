@@ -72,10 +72,10 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
         repeatedMetadataKey(label, type.kotlin)
 
     private fun createForClass(cls: Class<*>): JvmLogger {
-        val floggerBackend = Platform.getBackend(cls.name)
-        val flogger = Middleman(floggerBackend)
+        val loggerBackend = Platform.getBackend(cls.name)
+        val loggerImpl = Middleman(loggerBackend)
         // As for now, `JvmLogger` just delegates actual work to Flogger.
-        return JvmLogger(cls.kotlin, flogger)
+        return JvmLogger(cls.kotlin, loggerImpl)
     }
 
     @JvmStatic
