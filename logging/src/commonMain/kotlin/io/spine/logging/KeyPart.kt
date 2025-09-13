@@ -55,6 +55,11 @@ public expect class KeyPart {
     public companion object {
 
         /**
+         * Creates a new instance for the given [scope].
+         */
+        public fun create(scope: LoggingScope): KeyPart
+
+        /**
          * Removes keys that are no longer in use from the internal storage.
          *
          * This helps prevent memory leaks by cleaning up abandoned key references.

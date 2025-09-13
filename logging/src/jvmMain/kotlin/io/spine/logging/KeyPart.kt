@@ -41,7 +41,7 @@ import java.util.concurrent.ConcurrentLinkedQueue
  * @see <a href="https://github.com/google/flogger/blob/2c7d806b08217993fea229d833a6f8b748591b45/api/src/main/java/com/google/common/flogger/LoggingScope.java#L143">
  *     Original Flogger code</a> for historic reference.
  */
-public actual class KeyPart internal constructor(scope: LoggingScope) :
+public actual class KeyPart private constructor(scope: LoggingScope) :
     WeakReference<LoggingScope>(scope, queue) {
 
     private val onCloseHooks = ConcurrentLinkedQueue<() -> Unit>()
@@ -64,6 +64,8 @@ public actual class KeyPart internal constructor(scope: LoggingScope) :
     }
 
     public actual companion object {
+
+        public actual fun create(scope: LoggingScope): KeyPart = KeyPart(scope)
 
         /**
          * The singleton reference queue of the logging scopes.
