@@ -53,26 +53,26 @@ internal class LogSiteStackTraceSpec {
 
     @Test
     fun `return message containing the requested stack size`() {
-        val trace = LogSiteStackTrace(null, StackSize.FULL, arrayOfNulls(0))
+        val trace = LogSiteStackTrace.create(null, StackSize.FULL, arrayOfNulls(0))
         trace shouldHaveMessage "FULL"
     }
 
     @Test
     fun `return the given cause`() {
         val cause = RuntimeException()
-        val trace = LogSiteStackTrace(cause, StackSize.SMALL, arrayOfNulls(0))
+        val trace = LogSiteStackTrace.create(cause, StackSize.SMALL, arrayOfNulls(0))
         trace.cause shouldBeSameInstanceAs cause
     }
 
     @Test
     fun `allow nullable cause`() {
-        val trace = LogSiteStackTrace(null, StackSize.NONE, arrayOfNulls(0))
+        val trace = LogSiteStackTrace.create(null, StackSize.NONE, arrayOfNulls(0))
         trace.cause.shouldBeNull()
     }
 
     @Test
     fun `return the given stack trace`() {
-        val trace = LogSiteStackTrace(null, StackSize.SMALL, FAKE_STACK)
+        val trace = LogSiteStackTrace.create(null, StackSize.SMALL, FAKE_STACK)
         trace.stackTrace shouldNotBeSameInstanceAs FAKE_STACK
         trace.stackTrace shouldBe FAKE_STACK
     }

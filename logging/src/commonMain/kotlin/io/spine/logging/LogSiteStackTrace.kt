@@ -35,6 +35,9 @@ public expect class LogSiteStackTrace : Throwable {
 
     public companion object {
 
+        /**
+         * Creates a new log stack trace instance with the given properties.
+         */
         public fun create(
             cause: Throwable?,
             stackSize: StackSize,

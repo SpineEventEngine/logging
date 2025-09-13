@@ -39,7 +39,7 @@ import java.io.Serial
  *     Original Java code</a> for historical context.
  */
 @Suppress("ExceptionClassNameDoesntEndWithException")
-public actual class LogSiteStackTrace(
+public actual class LogSiteStackTrace private constructor(
     cause: Throwable?,
     stackSize: StackSize,
     syntheticStackTrace: Array<out StackTraceElement?>
