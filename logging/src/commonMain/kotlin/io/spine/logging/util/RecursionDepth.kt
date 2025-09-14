@@ -102,12 +102,12 @@ public class RecursionDepth private constructor() : CoroutineContext.Element, Au
         public fun enterLogStatement(): RecursionDepth {
             val ctx = CurrentContext.get()
             val depth = ctx[Key] ?: RecursionDepth()
-            depth.value += 1
-            if (depth.value == 0) {
+            if (depth.value == Int.MAX_VALUE) {
                 throw AssertionError(
                     "Overflow of `RecursionDepth` (possible error in core library)."
                 )
             }
+            depth.value += 1
             CurrentContext.set(ctx + depth)
             return depth
         }
