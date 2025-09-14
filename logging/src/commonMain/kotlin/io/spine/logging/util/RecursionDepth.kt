@@ -27,39 +27,89 @@
 package io.spine.logging.util
 
 import io.spine.annotation.Internal
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 
 /**
  * A platform-neutral API for tracking recursion depth of logging operations.
  *
- * Use `Platform.getCurrentRecursionDepth()` to query the current depth from outside
+ * The current recursion depth is stored as a [CoroutineContext.Element] which makes it
+ * coroutine-friendly while remaining platform-neutral.
+ *
+ * Use `Platform.getCurrentRecursionDepth()` to query the current depth from the outside
  * of the core logging internals.
  *
- * ### API Note
- *
- * This class is an internal detail and must not be used outside the core of the Logging library.
+ * API Note: This class is an internal detail and must not be used outside the core of
+ * the Logging library. Backends which need to know the recursion depth should call
+ * `io.spine.logging.backend.Platform.getCurrentRecursionDepth()`.
  */
-public expect class RecursionDepth() : AutoCloseable {
+public class RecursionDepth private constructor() : CoroutineContext.Element, AutoCloseable {
 
-    public companion object {
+    override val key: CoroutineContext.Key<*> get() = Key
 
-        /**
-         * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
-         */
-        @Internal
-        public fun getCurrentDepth(): Int
-
-        /**
-         * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
-         */
-        @Internal
-        public fun enterLogStatement(): RecursionDepth
-    }
+    private var value: Int = 0
 
     /**
      * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
      */
     @Internal
-    public fun getValue(): Int
+    public fun getValue(): Int = value
 
-    override fun close()
+    override fun close() {
+        if (value > 0) {
+            value -= 1
+            if (value == 0) {
+                // Remove the element from the current context when it reaches zero.
+                CurrentContext.set(CurrentContext.get().minusKey(Key))
+            }
+            return
+        }
+        throw AssertionError(
+            "Mismatched calls to `RecursionDepth` (possible error in core library)."
+        )
+    }
+
+    /**
+     * The [CoroutineContext.Key] for managing [RecursionDepth] in a [CoroutineContext].
+     */
+    public companion object Key : CoroutineContext.Key<RecursionDepth> {
+
+        /**
+         *  Holds the current coroutine context for logging operations.
+         *
+         * The recursion depth itself is stored inside the context element, not in this holder.
+         */
+        private object CurrentContext {
+            private var holder: CoroutineContext = EmptyCoroutineContext
+            fun get(): CoroutineContext = holder
+            fun set(ctx: CoroutineContext) {
+                holder = ctx
+            }
+        }
+
+        /**
+         * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
+         */
+        @Internal
+        @JvmStatic
+        public fun getCurrentDepth(): Int = CurrentContext.get()[Key]?.value ?: 0
+
+        /**
+         * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
+         */
+        @Internal
+        @JvmStatic
+        public fun enterLogStatement(): RecursionDepth {
+            val ctx = CurrentContext.get()
+            val depth = ctx[Key] ?: RecursionDepth()
+            depth.value += 1
+            if (depth.value == 0) {
+                throw AssertionError(
+                    "Overflow of `RecursionDepth` (possible error in core library)."
+                )
+            }
+            CurrentContext.set(ctx + depth)
+            return depth
+        }
+    }
 }
