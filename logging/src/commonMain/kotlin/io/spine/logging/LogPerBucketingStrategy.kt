@@ -105,7 +105,7 @@ public abstract class LogPerBucketingStrategy<T> protected constructor(
     internal fun applyForTesting(key: T): Any? = apply(key)
 
     override fun toString(): String =
-        "${LogPerBucketingStrategy::class.java.simpleName}[$name]"
+        "${LogPerBucketingStrategy::class.simpleName}[$name]"
 
     public companion object {
 
@@ -122,7 +122,7 @@ public abstract class LogPerBucketingStrategy<T> protected constructor(
          * are effectively singletons.
          */
         private val BY_CLASS = object : LogPerBucketingStrategy<Any>("ByClass") {
-            override fun apply(key: Any): Any = key.javaClass
+            override fun apply(key: Any): Any = key::class
         }
 
         /**
@@ -131,8 +131,8 @@ public abstract class LogPerBucketingStrategy<T> protected constructor(
          * are effectively singletons.
          */
         private val BY_CLASS_NAME = object : LogPerBucketingStrategy<Any>("ByClassName") {
-            override fun apply(key: Any): Any = key.javaClass.name /* This is a naturally interned
-                value, so no need to call `intern()`. */
+            override fun apply(key: Any): Any = key::class.qualifiedName!!
+                /* This is a naturally interned value, so no need to call `intern()`. */
         }
 
         /**
