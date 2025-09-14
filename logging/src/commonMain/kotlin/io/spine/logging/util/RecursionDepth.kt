@@ -64,9 +64,7 @@ public class RecursionDepth private constructor() : CoroutineContext.Element, Au
             }
             return
         }
-        throw AssertionError(
-            "Mismatched calls to `RecursionDepth` (possible error in core library)."
-        )
+        error("Mismatched calls to `RecursionDepth`.")
     }
 
 
@@ -105,7 +103,7 @@ public class RecursionDepth private constructor() : CoroutineContext.Element, Au
             val depth = ctx[Key] ?: RecursionDepth()
             depth.value += 1
             if (depth.value == 0) {
-                error("Negative `RecursionDepth` (-1) encountered.")
+                error("`RecursionDepth` with -1 value encountered.")
             }
             CurrentContext.set(ctx + depth)
             return depth
