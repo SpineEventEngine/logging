@@ -39,45 +39,90 @@ public class KeyPart private constructor(scope: LoggingScope) {
 
     private val ref = WeakRef(scope)
 
-    //TODO:2025-09-14:alexander.yevsyukov: Guard for concurrency access.
+    /**
+     * The concurrency lock for accessing [onCloseHooks].
+     */
+    private val hookLock = Any()
+
+    /**
+     * The list of functions to execute when the instance is [closed][close].
+     */
     private val onCloseHooks = mutableListOf<() -> Unit>()
 
+    /**
+     * Adds the function to be executed when the instance is [closed][close].
+     */
     public fun addOnCloseHook(hook: () -> Unit) {
-        onCloseHooks += hook
+        synchronized(hookLock) {
+            onCloseHooks += hook
+        }
     }
 
-    // If this were ever too "bursty" due to removal of many keys for the same scope,
-    // we could modify this code to process only a maximum number of removals each time
-    // and keep a single "in progress" `KeyPart` around until the next time.
+    /**
+     * Executes clean-up functions previously added by the [addOnCloseHook] functions.
+     */
     public fun close() {
+        // If this were ever too "bursty" due to removal of many keys for the same scope,
+        // we could modify this code to process only a maximum number of removals each time
+        // and keep a single "in progress" `KeyPart` around until the next time.
+
         // This executes once for each map entry created in the enclosing scope.
         // It is very dependent on logging usage in the scope and theoretically unbounded.
-        val it = onCloseHooks.iterator()
-        while (it.hasNext()) {
-            it.next().invoke()
-            it.remove()
+        val hooksToRun: List<() -> Unit> = synchronized(hookLock) {
+            // Snapshot and clear under lock to avoid concurrent modification.
+            val copy = onCloseHooks.toList()
+            onCloseHooks.clear()
+            copy
+        }
+        // Invoke hooks outside the lock to avoid holding the lock during the user code.
+        for (hook in hooksToRun) {
+            hook.invoke()
         }
     }
 
     public companion object {
 
-        //TODO:2025-09-14:alexander.yevsyukov: Guard for concurrency access.
+        /**
+         * The lock for accessing [registry].
+         */
+        private val registryLock = Any()
+
+        /**
+         * Contains [KeyPart] instances produced by the [create] function.
+         */
         private val registry = mutableSetOf<KeyPart>()
 
         public fun create(scope: LoggingScope): KeyPart =
-            KeyPart(scope).also { registry += it }
+            KeyPart(scope).also { key ->
+                synchronized(registryLock) {
+                    registry += key
+                }
+            }
 
+        /**
+         * Removes the keys that already do not have referenced scopes.
+         */
         public fun removeUnusedKeys() {
             // There are always more specialized keys than entries in the reference queue,
             // so the queue should be empty most of the time we get here.
 
+            // Snapshot the registry to avoid concurrent modification during iteration.
+            val snapshot: List<KeyPart> = synchronized(registryLock) {
+                registry.toList()
+            }
+
             val dead = ArrayList<KeyPart>()
-            for (k in registry) {
-                if (k.ref.get() == null) dead += k
+            for (k in snapshot) {
+                if (k.ref.get() == null) {
+                    dead += k
+                }
             }
             for (k in dead) {
+                // Close outside the registry lock.
                 k.close()
-                registry.remove(k)
+                synchronized(registryLock) {
+                    registry.remove(k)
+                }
             }
         }
     }
