@@ -35,35 +35,50 @@ package io.spine.logging
  * @see <a href="https://github.com/google/flogger/blob/2c7d806b08217993fea229d833a6f8b748591b45/api/src/main/java/com/google/common/flogger/LoggingScope.java#L143">
  *     Original Flogger code</a> for historic reference.
  */
-public expect class KeyPart {
+public class KeyPart private constructor(scope: LoggingScope) {
 
-    /**
-     * Adds a hook that will be executed when this key part is closed.
-     *
-     * @param hook the function to execute on close
-     */
-    @Suppress("unused") // the parameter is used by `actual` impl.
-    public fun addOnCloseHook(hook: () -> Unit)
+    private val ref = WeakRef(scope)
 
-    /**
-     * Closes this key part and executes all registered close hooks.
-     *
-     * After closing, the key part becomes invalid and should not be used.
-     */
-    public fun close()
+    //TODO:2025-09-14:alexander.yevsyukov: Guard for concurrency access.
+    private val onCloseHooks = mutableListOf<() -> Unit>()
+
+    public fun addOnCloseHook(hook: () -> Unit) {
+        onCloseHooks += hook
+    }
+
+    // If this were ever too "bursty" due to removal of many keys for the same scope,
+    // we could modify this code to process only a maximum number of removals each time
+    // and keep a single "in progress" `KeyPart` around until the next time.
+    public fun close() {
+        // This executes once for each map entry created in the enclosing scope.
+        // It is very dependent on logging usage in the scope and theoretically unbounded.
+        val it = onCloseHooks.iterator()
+        while (it.hasNext()) {
+            it.next().invoke()
+            it.remove()
+        }
+    }
 
     public companion object {
 
-        /**
-         * Creates a new instance for the given [scope].
-         */
-        public fun create(scope: LoggingScope): KeyPart
+        //TODO:2025-09-14:alexander.yevsyukov: Guard for concurrency access.
+        private val registry = mutableSetOf<KeyPart>()
 
-        /**
-         * Removes keys that are no longer in use from the internal storage.
-         *
-         * This helps prevent memory leaks by cleaning up abandoned key references.
-         */
-        public fun removeUnusedKeys()
+        public fun create(scope: LoggingScope): KeyPart =
+            KeyPart(scope).also { registry += it }
+
+        public fun removeUnusedKeys() {
+            // There are always more specialized keys than entries in the reference queue,
+            // so the queue should be empty most of the time we get here.
+
+            val dead = ArrayList<KeyPart>()
+            for (k in registry) {
+                if (k.ref.get() == null) dead += k
+            }
+            for (k in dead) {
+                k.close()
+                registry.remove(k)
+            }
+        }
     }
 }
