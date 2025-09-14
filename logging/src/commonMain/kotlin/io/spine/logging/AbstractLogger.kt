@@ -184,7 +184,7 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
                 if (depth.getValue() <= MAX_ALLOWED_RECURSION_DEPTH) {
                     backend.log(data)
                 } else {
-                    reportError("unbounded recursion in log statement", data)
+                    reportError("Unbounded recursion in log statement (depth: $depth).", data)
                 }
             }
         } catch (logError: RuntimeException) {
