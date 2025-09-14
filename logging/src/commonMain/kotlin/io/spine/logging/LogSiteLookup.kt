@@ -42,9 +42,8 @@ public object LogSiteLookup {
      * If log site determination is unsupported, this method returns
      * the [LogSite.Invalid] instance.
      */
-    public fun callerOf(loggingApi: KClass<*>): LogSite {
-        return Platform.Companion.getCallerFinder().findLogSite(loggingApi, 0)
-    }
+    public fun callerOf(loggingApi: KClass<*>): LogSite =
+        Platform.getCallerFinder().findLogSite(loggingApi, 0)
 
     /**
      * Returns a [LogSite] for the current line of code.
@@ -52,10 +51,6 @@ public object LogSiteLookup {
      * If log site determination is unsupported, this method returns
      * the [LogSite.Invalid] instance.
      */
-    public fun logSite(): LogSite {
-        return Platform.Companion.getCallerFinder().findLogSite(
-            LogSiteLookup::class,
-            0
-        )
-    }
+    public fun logSite(): LogSite =
+        Platform.getCallerFinder().findLogSite(LogSiteLookup::class, 0)
 }
