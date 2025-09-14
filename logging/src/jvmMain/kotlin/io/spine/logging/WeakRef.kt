@@ -30,7 +30,7 @@ import java.lang.ref.ReferenceQueue
 import java.lang.ref.WeakReference
 
 /**
- * JVM implementation of the `WeekRef` class.
+ * JVM implementation of the `WeakRef` class.
  */
 internal actual class WeakRef<T : Any> actual constructor(referent: T) {
 
