@@ -26,7 +26,6 @@
 
 package io.spine.logging
 
-import java.lang.StackTraceElement
 import kotlin.reflect.KClass
 
 /**
@@ -34,8 +33,15 @@ import kotlin.reflect.KClass
  */
 public expect class StackTraceElement
 
+/**
+ * Creates a stack trace array with [io.spine.logging.StackTraceElement] for the given arguments.
+ *
+ * @param target The class who is the caller the returned stack trace will start at.
+ * @param maxDepth The maximum size of the returned stack (pass -1 for the complete stack).
+ * @param skip The minimum number of stack frames to skip before looking for callers.
+ */
 public expect fun stackForCallerOf(
     target: KClass<*>,
     maxDepth: Int,
     skip: Int
-): Array<io.spine.logging.StackTraceElement>
+): Array<StackTraceElement>
