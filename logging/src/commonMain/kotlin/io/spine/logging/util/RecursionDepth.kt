@@ -69,11 +69,12 @@ public class RecursionDepth private constructor() : CoroutineContext.Element, Au
         )
     }
 
+
+
     /**
      * The [CoroutineContext.Key] for managing [RecursionDepth] in a [CoroutineContext].
      */
     public companion object Key : CoroutineContext.Key<RecursionDepth> {
-
         /**
          *  Holds the current coroutine context for logging operations.
          *
@@ -109,5 +110,24 @@ public class RecursionDepth private constructor() : CoroutineContext.Element, Au
             CurrentContext.set(ctx + depth)
             return depth
         }
+
+    }
+
+    override fun toString(): String {
+        return "RecursionDepth(value=$value)"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null) return false
+        if (this::class != other::class) return false
+
+        other as RecursionDepth
+
+        return value == other.value
+    }
+
+    override fun hashCode(): Int {
+        return value
     }
 }
