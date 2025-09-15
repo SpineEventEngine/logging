@@ -80,9 +80,7 @@ public abstract class AbstractJulBackend : LoggerBackend {
             // In all cases we still call the filter (if one exists) even though we ignore the result.
             // Use a local variable to avoid race conditions where the filter can be unset at any time.
             val filter = logger.filter
-            if (filter != null) {
-                filter.isLoggable(record)
-            }
+            filter?.isLoggable(record)
             if (logger.javaClass == Logger::class.java || cannotUseForcingLogger) {
                 publish(logger, record)
             } else {
