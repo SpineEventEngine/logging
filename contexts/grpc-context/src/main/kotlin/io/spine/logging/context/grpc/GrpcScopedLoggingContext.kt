@@ -49,9 +49,11 @@ internal class GrpcScopedLoggingContext(private val provider: GrpcContextDataPro
         override fun install(): AutoCloseable {
             val newContextData =
                 GrpcContextData(GrpcContextDataProvider.currentContext(), scopeType, provider)
-            newContextData.addTags(getTags())
-            newContextData.addMetadata(getMetadata())
-            newContextData.applyLogLevelMap(getLogLevelMap())
+            newContextData.run {
+                addTags(getTags())
+                addMetadata(getMetadata())
+                applyLogLevelMap(getLogLevelMap())
+            }
             return installContextData(newContextData)
         }
     }
