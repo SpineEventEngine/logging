@@ -33,6 +33,8 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
  * Default millisecond precision clock.
  *
  * See class documentation in [Clock] for important implementation restrictions.
+ *
+ * @see <a href="https://rb.gy/zghcm">Original Java code</a> for historical context.
  */
 public class SystemClock private constructor() : Clock() {
 
