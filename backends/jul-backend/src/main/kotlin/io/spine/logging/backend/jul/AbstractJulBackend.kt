@@ -45,6 +45,9 @@ public abstract class AbstractJulBackend : LoggerBackend {
 
     private val logger: Logger
 
+    /**
+     * Creates an abstract backend for the given [Logger].
+     */
     internal constructor(logger: Logger) {
         this.logger = logger
     }
