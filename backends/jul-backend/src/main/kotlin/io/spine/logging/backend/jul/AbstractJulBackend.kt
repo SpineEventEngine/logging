@@ -45,11 +45,7 @@ public abstract class AbstractJulBackend : LoggerBackend {
 
     private val logger: Logger
 
-    // Internal constructor used by legacy callers - should be updated to just pass in the logging
-    // class name. This needs work to handle anonymous loggers however (if that's ever supported).
-    // TODO:2023-09-14:yevhenii.nadtochii: Should become `internal` when migrated to Kotlin.
-    // See issue: https://github.com/SpineEventEngine/logging/issues/47
-    protected constructor(logger: Logger) {
+    internal constructor(logger: Logger) {
         this.logger = logger
     }
 
@@ -60,12 +56,7 @@ public abstract class AbstractJulBackend : LoggerBackend {
      * standard JDK logger namespace by converting '$' to '.'.
      */
     protected constructor(loggingClass: String) : this(
-        Logger.getLogger(
-            loggingClass.replace(
-                '$',
-                '.'
-            )
-        )
+        Logger.getLogger(loggingClass.replace('$', '.'))
     )
 
     public override val loggerName: String?
