@@ -24,6 +24,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+@file:JvmName("Levels")
+
 package io.spine.logging
 
 import java.util.logging.Level as JLevel
