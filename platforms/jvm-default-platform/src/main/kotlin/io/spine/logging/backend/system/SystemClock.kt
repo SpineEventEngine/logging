@@ -34,7 +34,8 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
  *
  * See class documentation in [Clock] for important implementation restrictions.
  *
- * @see <a href="https://rb.gy/zghcm">Original Java code</a> for historical context.
+ * @see <a href="https://github.com/google/flogger/blob/a57c9b13104be26fa577da9dc089f41d33f5201a/api/src/main/java/com/google/common/flogger/backend/system/SystemClock.java#L26">
+ *     Original Java code</a> for historical context.
  */
 public class SystemClock private constructor() : Clock() {
 
