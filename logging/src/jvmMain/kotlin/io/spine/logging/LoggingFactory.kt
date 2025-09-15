@@ -34,18 +34,23 @@ import kotlin.reflect.KClass
 /**
  * Obtains a [JvmLogger] for a given class.
  */
-public actual object LoggingFactory: ClassValue<JvmLogger>() {
+public actual object LoggingFactory {
+
+    /**
+     * Associates a [JvmLogger] with a Java class.
+     */
+    public object LoggerClassValue : ClassValue<JvmLogger>() {
+        override fun computeValue(cls: Class<*>): JvmLogger =
+            createForClass(cls)
+    }
 
     @JvmStatic
     @JvmName("getLogger") // Set the name explicitly to avoid the synthetic `$logging` suffix.
     public actual fun <API: LoggingApi<API>> loggerFor(cls: KClass<*>): Logger<API> {
         @Suppress("UNCHECKED_CAST") // Safe as `JvmLogger.Api`
-        val result = get(cls.java) as Logger<API>
+        val result = LoggerClassValue.get(cls.java) as Logger<API>
         return result
     }
-
-    override fun computeValue(cls: Class<*>): JvmLogger =
-        createForClass(cls)
 
     @JvmStatic
     public actual fun loggingDomainOf(cls: KClass<*>): LoggingDomain =
@@ -85,7 +90,7 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
         val callerStackElement = CallerFinder.findCallerOf(factoryClass, 0)
         val callerClassName = callerStackElement!!.className
         val callerClass = Class.forName(callerClassName)
-        val result = get(callerClass) as Logger<API>
+        val result = LoggerClassValue.get(callerClass) as Logger<API>
         return result
     }
 }
