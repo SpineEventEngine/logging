@@ -30,7 +30,6 @@ import com.google.errorprone.annotations.CheckReturnValue
 import io.spine.logging.jvm.Middleman
 import kotlin.reflect.KClass
 import kotlin.time.DurationUnit
-import java.util.logging.Level as JLevel
 
 /**
  * Implements [Logger] using [Middleman] as the underlying implementation.
@@ -163,42 +162,3 @@ private class ApiImpl(private val delegate: Middleman.Api): JvmLogger.Api {
         }
     }
 }
-
-/**
- * Maps [Level] values to its Java logging counterparts.
- *
- * @see [JLevel.toLevel]
- */
-public fun Level.toJavaLogging(): JLevel = when (this) {
-    Level.DEBUG -> JLevel.FINE
-    Level.INFO -> JLevel.INFO
-    Level.WARNING -> JLevel.WARNING
-    Level.ERROR -> JLevel.SEVERE
-    Level.ALL -> JLevel.ALL
-    else -> ConvertedLevel(this)
-}
-
-/**
- * Opens the constructor of [JLevel] for creating converting instance.
- */
-@Suppress("serial")
-private class ConvertedLevel(level: Level): JLevel(level.name, level.value)
-
-/**
- * Converts Java logging level to [Level].
- *
- * @see [Level.toJavaLogging]
- */
-public fun JLevel.toLevel(): Level = when (this) {
-    JLevel.FINE -> Level.DEBUG
-    JLevel.INFO -> Level.INFO
-    JLevel.WARNING -> Level.WARNING
-    JLevel.SEVERE -> Level.ERROR
-    else -> Level(name, intValue())
-}
-
-/**
- * Compares Java logging levels using their [values][JLevel.intValue].
- */
-public operator fun JLevel.compareTo(other: JLevel): Int =
-    intValue().compareTo(other.intValue())
