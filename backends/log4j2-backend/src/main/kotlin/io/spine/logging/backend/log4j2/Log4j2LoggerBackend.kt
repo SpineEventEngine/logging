@@ -40,14 +40,14 @@ internal class Log4j2LoggerBackend(private val logger: Logger) : LoggerBackend()
         get() = logger.name
 
     override fun isLoggable(level: Level): Boolean =
-        logger.isEnabled(Log4j2LogEventUtil.toLog4jLevel(level))
+        logger.isEnabled(level.toLog4j())
 
-    override fun log(logData: LogData) {
+    override fun log(data: LogData) {
         // The caller must ensure isLoggable() is checked before calling this method.
-        logger.get().log(Log4j2LogEventUtil.toLog4jLogEvent(logger.name, logData))
+        logger.get().log(toLog4jLogEvent(logger.name, data))
     }
 
     override fun handleError(error: RuntimeException, badData: LogData) {
-        logger.get().log(Log4j2LogEventUtil.toLog4jLogEvent(logger.name, error, badData))
+        logger.get().log(toLog4jLogEvent(logger.name, error, badData))
     }
 }
