@@ -26,6 +26,8 @@
 
 package io.spine.logging
 
+import io.spine.annotation.VisibleForTesting
+
 /**
  * An opaque scope marker which can be attached to log sites to provide "per scope" behaviour
  * for stateful logging operations (e.g., rate limiting).
@@ -48,19 +50,7 @@ package io.spine.logging
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/LoggingScope.java">
  *       Original Java code</a> for historical context.
  */
-public expect abstract class LoggingScope {
-
-    public companion object {
-
-        /**
-         * Creates a scope which automatically removes any associated keys
-         * from [LogSiteMap]s when it is garbage collected.
-         *
-         * The given label is used only for debugging purposes and may appear in log
-         * statements, it should not contain any user data or other runtime information.
-         */
-        public fun create(label: String): LoggingScope
-    }
+public abstract class LoggingScope protected constructor(private val label: String) {
 
     /**
      * Returns a specialization of the given key which accounts for this scope instance.
@@ -94,4 +84,65 @@ public expect abstract class LoggingScope {
      * all the currently active scopes which apply to it.
      */
     protected abstract fun onClose(removalHook: () -> Unit)
+
+    /**
+     * Opens [specialize] for the package.
+     */
+    internal fun doSpecialize(key: LogSiteKey): LogSiteKey = specialize(key)
+
+    /**
+     * Opens access to [onClose] for the package.
+     */
+    internal fun doOnClose(removalHook: () -> Unit) = onClose(removalHook)
+
+    /**
+     * Returns the [label] of this scope.
+     */
+    override fun toString(): String = label
+
+    public companion object {
+
+        /**
+         * Creates a scope which automatically removes any associated keys
+         * from [LogSiteMap]s when it is garbage collected.
+         *
+         * The given label is used only for debugging purposes and may appear in log
+         * statements, it should not contain any user data or other runtime information.
+         */
+        @JvmStatic
+        public fun create(label: String): LoggingScope = WeakScope(label)
+    }
+
+    @VisibleForTesting
+    internal class WeakScope(label: String) : LoggingScope(label) {
+
+        /**
+         * Do NOT reference the Scope directly from a specialized key, use the "key part"
+         * to avoid the key part weak reference is enqueued which triggers tidy up at the next
+         * call to `specializeForScopesIn()` where scopes are used.
+         *
+         * This must be unique per scope since it acts as a qualifier within specialized
+         * log site keys. Using a different weak reference per specialized key would not work
+         * (which is part of the reason we also need the "on close" queue as well as
+         * the reference queue).
+         */
+        private val keyPart: KeyPart = KeyPart.create(this)
+
+        override fun specialize(key: LogSiteKey): LogSiteKey =
+            SpecializedLogSiteKey.of(key, keyPart)
+
+        override fun onClose(removalHook: () -> Unit) {
+            // Clear the reference queue about as often as we would add a new key to a map.
+            // This should still mean that the queue is almost always empty when we check
+            // it (since we expect more than one specialized log site key per scope) and it
+            // avoids spamming the queue clearance loop for every log statement and avoids
+            // class loading the reference queue until we know scopes have been used.
+            KeyPart.removeUnusedKeys()
+            keyPart.addOnCloseHook(removalHook)
+        }
+
+        internal fun closeForTesting() {
+            keyPart.close()
+        }
+    }
 }

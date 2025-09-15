@@ -35,8 +35,8 @@ import kotlin.time.toTimeUnit
  * Immutable metadata for rate limiting based on a fixed count.
  *
  * This corresponds to the
- * [LOG_AT_MOST_EVERY][io.spine.logging.jvm.LogContext.Key.LOG_AT_MOST_EVERY]
- * metadata key in [io.spine.logging.backend.LogData].
+ * [LOG_AT_MOST_EVERY][LogContext.Key.LOG_AT_MOST_EVERY]
+ * metadata key in [LogData][io.spine.logging.backend.LogData].
  *
  * Unlike the metadata for `every(N)`, we need to use a wrapper class here to preserve
  * the time unit information for accurate rate limit calculations.

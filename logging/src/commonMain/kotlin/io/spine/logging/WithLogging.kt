@@ -26,6 +26,8 @@
 
 package io.spine.logging
 
+import io.spine.logging.LoggingFactory.loggerFor
+
 /**
  * Provides [Logger] instance as a property.
  *
@@ -64,11 +66,17 @@ package io.spine.logging
  * As for now, providing a default implementation for a property makes it
  * impossible to customize accessing of a logger in target implementations.
  */
-public expect interface WithLogging {
+public interface WithLogging {
 
     /**
      * Returns the logger created for this class.
      */
-    @Suppress("RedundantModalityModifier") // `open` is required for the JVM impl. to override.
-    public open val logger: Logger<*>
+    public val logger: Logger<*>
+        get() = loggerFor(this::class)
+
+    /**
+     * Convenience method for obtaining the logger created for this class
+     * when calling from Java code, avoiding the `get` prefix.
+     */
+    public fun logger(): Logger<*> = logger
 }

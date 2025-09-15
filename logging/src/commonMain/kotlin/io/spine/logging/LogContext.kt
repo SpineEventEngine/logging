@@ -33,7 +33,6 @@ import io.spine.logging.backend.Metadata
 import io.spine.logging.backend.Platform
 import io.spine.logging.context.Tags
 import io.spine.logging.util.Checks.checkNotNull
-import io.spine.reflect.CallerFinder.stackForCallerOf
 import kotlin.time.DurationUnit
 
 /**
@@ -315,10 +314,10 @@ protected constructor(
                 //
                 // By skipping the initial code inside this method, we don't trigger any stack
                 // capture until after the "log" method.
-                val context = LogSiteStackTrace(
+                val context = LogSiteStackTrace.create(
                     _metadata!!.findValue(Key.LOG_CAUSE),
                     stackSize,
-                    stackForCallerOf(LogContext::class.java, stackSize.maxDepth, 1)
+                    stackForCallerOf(LogContext::class, stackSize.maxDepth, 1)
                 )
                 // The "cause" is a unique metadata key, we must replace any existing value.
                 addMetadata(Key.LOG_CAUSE, context)

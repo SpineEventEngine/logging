@@ -35,30 +35,95 @@ package io.spine.logging
  * @see <a href="https://github.com/google/flogger/blob/2c7d806b08217993fea229d833a6f8b748591b45/api/src/main/java/com/google/common/flogger/LoggingScope.java#L143">
  *     Original Flogger code</a> for historic reference.
  */
-public expect class KeyPart {
+public class KeyPart private constructor(scope: LoggingScope) {
+
+    private val ref = WeakRef(scope)
 
     /**
-     * Adds a hook that will be executed when this key part is closed.
-     *
-     * @param hook the function to execute on close
+     * The concurrency lock for accessing [onCloseHooks].
      */
-    @Suppress("unused") // the parameter is used by `actual` impl.
-    public fun addOnCloseHook(hook: () -> Unit)
+    private val hookLock = Any()
 
     /**
-     * Closes this key part and executes all registered close hooks.
-     *
-     * After closing, the key part becomes invalid and should not be used.
+     * The list of functions to execute when the instance is [closed][close].
      */
-    public fun close()
+    private val onCloseHooks = mutableListOf<() -> Unit>()
+
+    /**
+     * Adds the function to be executed when the instance is [closed][close].
+     */
+    public fun addOnCloseHook(hook: () -> Unit) {
+        synchronized(hookLock) {
+            onCloseHooks += hook
+        }
+    }
+
+    /**
+     * Executes clean-up functions previously added by the [addOnCloseHook] functions.
+     */
+    public fun close() {
+        // If this were ever too "bursty" due to removal of many keys for the same scope,
+        // we could modify this code to process only a maximum number of removals each time
+        // and keep a single "in progress" `KeyPart` around until the next time.
+
+        // This executes once for each map entry created in the enclosing scope.
+        // It is very dependent on logging usage in the scope and theoretically unbounded.
+        val hooksToRun: List<() -> Unit> = synchronized(hookLock) {
+            // Snapshot and clear under lock to avoid concurrent modification.
+            val copy = onCloseHooks.toList()
+            onCloseHooks.clear()
+            copy
+        }
+        // Invoke hooks outside the lock to avoid holding the lock during the user code.
+        for (hook in hooksToRun) {
+            hook.invoke()
+        }
+    }
 
     public companion object {
 
         /**
-         * Removes keys that are no longer in use from the internal storage.
-         *
-         * This helps prevent memory leaks by cleaning up abandoned key references.
+         * The lock for accessing [registry].
          */
-        public fun removeUnusedKeys()
+        private val registryLock = Any()
+
+        /**
+         * Contains [KeyPart] instances produced by the [create] function.
+         */
+        private val registry = mutableSetOf<KeyPart>()
+
+        public fun create(scope: LoggingScope): KeyPart =
+            KeyPart(scope).also { key ->
+                synchronized(registryLock) {
+                    registry += key
+                }
+            }
+
+        /**
+         * Removes the keys that already do not have referenced scopes.
+         */
+        public fun removeUnusedKeys() {
+            // There are always more specialized keys than entries in the reference queue,
+            // so the queue should be empty most of the time we get here.
+
+            // Snapshot the registry to avoid concurrent modification during iteration.
+            val snapshot: List<KeyPart> = synchronized(registryLock) {
+                registry.toList()
+            }
+
+            val dead = ArrayList<KeyPart>()
+            for (k in snapshot) {
+                if (k.ref.get() == null) {
+                    dead += k
+                }
+            }
+            for (k in dead) {
+                // Close outside the registry lock.
+                k.close()
+                synchronized(registryLock) {
+                    registry.remove(k)
+                }
+            }
+        }
     }
 }

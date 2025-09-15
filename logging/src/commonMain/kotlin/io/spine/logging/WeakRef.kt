@@ -26,4 +26,20 @@
 
 package io.spine.logging
 
-public actual typealias StackTraceElement = java.lang.StackTraceElement
+/**
+ * A weak reference holder that manages references which can be garbage collected.
+ *
+ * This class provides platform-specific implementation of weak references,
+ * which allow objects to be garbage collected when they are no longer strongly
+ * referenced elsewhere in the application.
+ *
+ * @param T The type of the referenced object.
+ * @property referent The object to be weakly referenced.
+ */
+internal expect class WeakRef<T : Any>(referent: T) {
+
+    /**
+     * Returns the referent object, or `null` if it has been garbage collected.
+     */
+    fun get(): T?
+}

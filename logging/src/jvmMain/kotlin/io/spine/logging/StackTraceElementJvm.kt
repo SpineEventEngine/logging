@@ -26,36 +26,13 @@
 
 package io.spine.logging
 
-import io.spine.logging.backend.Platform
+import io.spine.reflect.CallerFinder
 import kotlin.reflect.KClass
 
-/**
- * Determines log sites for the current line of code using
- * [LogCallerFinder][io.spine.logging.backend.LogCallerFinder]
- * obtained from a [Platform].
- */
-public actual object LogSiteLookup {
+public actual typealias StackTraceElement = java.lang.StackTraceElement
 
-    /**
-     * Returns a [LogSite] for the caller of the specified class.
-     *
-     * If log site determination is unsupported, this method returns
-     * the [LogSite.Invalid] instance.
-     */
-    public actual fun callerOf(loggingApi: KClass<*>): LogSite {
-        return Platform.getCallerFinder().findLogSite(loggingApi, 0)
-    }
-
-    /**
-     * Returns a [LogSite] for the current line of code.
-     *
-     * If log site determination is unsupported, this method returns
-     * the [LogSite.Invalid] instance.
-     */
-    public actual fun logSite(): LogSite {
-        return Platform.getCallerFinder().findLogSite(
-            LogSiteLookup::class,
-            0
-        )
-    }
-}
+public actual fun stackForCallerOf(
+    target: KClass<*>,
+    maxDepth: Int,
+    skip: Int
+): Array<StackTraceElement> = CallerFinder.stackForCallerOf(target.java, maxDepth, skip)
