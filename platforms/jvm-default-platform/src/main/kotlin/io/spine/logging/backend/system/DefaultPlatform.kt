@@ -59,9 +59,9 @@ import java.util.ServiceLoader
  *    invoking either the named no-arg static method or the public no-arg constructor.
  *
  * The services used by this platform are the following:
- *  - [BackendFactory] (system property `flogger.backend_factory`) — [JulBackendFactory] by default.
- *  - [ContextDataProvider] (system property `flogger.logging_context`) — No-op provider by default.
- *  - [Clock] (system property `flogger.clock`) — [SystemClock],
+ *  - [BackendFactory] (system property `spine.logging.backend_factory`) — [JulBackendFactory] by default.
+ *  - [ContextDataProvider] (system property `spine.logging.logging_context`) — No-op provider by default.
+ *  - [Clock] (system property `spine.logging.clock`) — [SystemClock],
  *    a millisecond-precision clock by default.
  */
 public open class DefaultPlatform : Platform {
@@ -136,9 +136,9 @@ public open class DefaultPlatform : Platform {
         getConfigInfoImpl()
 
     public companion object {
-        private const val BACKEND_FACTORY = "flogger.backend_factory"
-        private const val CONTEXT_DATA_PROVIDER = "flogger.logging_context"
-        private const val CLOCK = "flogger.clock"
+        private const val BACKEND_FACTORY = "spine.logging.backend_factory"
+        private const val CONTEXT_DATA_PROVIDER = "spine.logging.logging_context"
+        private const val CLOCK = "spine.logging.clock"
 
         @JvmStatic
         private fun <S> loadService(serviceType: Class<S>, systemProperty: String): S? {

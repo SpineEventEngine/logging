@@ -34,13 +34,13 @@ import org.apache.logging.log4j.core.Logger
 /**
  * Backend factory for Log4j2.
  *
- * When using io.spine.logging.backend.system.DefaultPlatform, this factory will automatically be
- * used if it is included on the classpath, and no other implementation of BackendFactory (other
- * than the default implementation) is present.
+ * When using `io.spine.logging.backend.system.DefaultPlatform`, this factory will
+ * automatically be used if it is included on the classpath, and no other implementation
+ * of `BackendFactory` (other than the default implementation) is present.
  *
  * To specify it more explicitly or to work around an issue where multiple backend implementations
- * are on the classpath, you can set flogger.backend_factory system property to
- * io.spine.logging.backend.log4j2.Log4j2BackendFactory.
+ * are on the classpath, you can set `spine.logging.backend_factory` system property to
+ * `io.spine.logging.backend.log4j2.Log4j2BackendFactory`.
  */
 public class Log4j2BackendFactory : BackendFactory() {
 
