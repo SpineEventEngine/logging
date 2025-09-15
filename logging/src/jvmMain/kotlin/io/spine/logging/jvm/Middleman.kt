@@ -31,8 +31,10 @@ import io.spine.logging.AbstractLogger
 import io.spine.logging.Level
 import io.spine.logging.LogContext
 import io.spine.logging.LoggingApi
+import io.spine.logging.LoggingFactory.loggingDomainOf
 import io.spine.logging.backend.LoggerBackend
 import io.spine.logging.backend.Platform
+import kotlin.reflect.KClass
 
 /**
  * The default implementation of [AbstractLogger] which returns the basic [LoggingApi]
@@ -54,7 +56,10 @@ import io.spine.logging.backend.Platform
  * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/FluentLogger.java">
  *     Original Java code</a> for historical context.
  */
-public class Middleman(backend: LoggerBackend) : AbstractLogger<Middleman.Api>(backend) {
+public class Middleman(
+    protected val cls: KClass<*>,
+    backend: LoggerBackend
+) : AbstractLogger<Middleman.Api>(backend) {
 
     /**
      * The non-wildcard, fully specified, logging API for this logger. Fluent logger implementations
@@ -85,19 +90,6 @@ public class Middleman(backend: LoggerBackend) : AbstractLogger<Middleman.Api>(b
         @VisibleForTesting
         @JvmField
         internal val NO_OP = NoOp()
-
-        /**
-         * Returns a new logger instance which parses log messages using `printf` format
-         * for the enclosing class using the system default logging backend.
-         */
-        @JvmStatic
-        public fun forEnclosingClass(): Middleman {
-            // NOTE: It is _vital_ that the call to "caller finder" is made directly
-            // inside the static factory method.
-            // See `getCallerFinder()` for more information.
-            val loggingClass = Platform.getCallerFinder().findLoggingClass(Middleman::class)
-            return Middleman(Platform.getBackend(loggingClass))
-        }
     }
 
     override fun at(level: Level): Api {
@@ -108,7 +100,16 @@ public class Middleman(backend: LoggerBackend) : AbstractLogger<Middleman.Api>(b
         }
         val isLoggable = isLoggable(level)
         val isForced = Platform.shouldForceLogging(loggerName, level, isLoggable)
-        return if (isLoggable || isForced) Context(level, isForced) else NO_OP
+        return if (isLoggable || isForced) {
+            Context(level, isForced).also {
+                val loggingDomain = loggingDomainOf(cls)
+                if (!loggingDomain.name.isEmpty()) {
+                    it.withLoggingDomain(loggingDomain)
+                }
+            }
+        } else {
+            NO_OP
+        }
     }
 
     /**

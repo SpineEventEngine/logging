@@ -51,24 +51,9 @@ import org.junit.jupiter.api.Test
 internal class LoggerSpec {
 
     @Test
-    fun `create a logger for enclosing class`() {
-        val logger = Middleman.Companion.forEnclosingClass()
-        val enclosingClass = this::class.java.name
-        logger.getName() shouldBe enclosingClass
-
-        // Note that this one-to-one binding of loggers and backends is not
-        // strictly necessary, and in the future it is plausible that a configured
-        // backend factory might return backends shared with many loggers.
-        // In that situation, the logger name must still be the enclosing class name
-        // (held separately by the logger itself) while the backend name could differ.
-        val backend = logger.getBackend()
-        backend.loggerName shouldBe enclosingClass
-    }
-
-    @Test
     fun `provide a no-op API for disabled levels`() {
         val backend = MemoizingLoggerBackend()
-        val logger = Middleman(backend)
+        val logger = Middleman(this::class, backend)
         backend.setLevel(Level.INFO)
 
         // Down to and including the configured log level are not no-op instances.

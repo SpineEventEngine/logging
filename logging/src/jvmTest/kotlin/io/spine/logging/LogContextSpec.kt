@@ -70,7 +70,7 @@ import org.junit.jupiter.api.Test
 internal class LogContextSpec {
 
     private val backend = MemoizingLoggerBackend()
-    private val logger = Middleman(backend)
+    private val logger = Middleman(this::class, backend)
 
     companion object {
         private val REPEATED_KEY = MetadataKey.repeated<String>("str")

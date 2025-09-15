@@ -78,7 +78,7 @@ public actual object LoggingFactory {
 
     private fun createForClass(cls: Class<*>): JvmLogger {
         val loggerBackend = Platform.getBackend(cls.name)
-        val loggerImpl = Middleman(loggerBackend)
+        val loggerImpl = Middleman(cls.kotlin, loggerBackend)
         // As for now, `JvmLogger` just delegates actual work to Flogger.
         return JvmLogger(cls.kotlin, loggerImpl)
     }
