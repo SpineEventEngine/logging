@@ -98,7 +98,7 @@ public class Logger(
         return if (isLoggable || isForced) {
             Context(level, isForced).also {
                 val loggingDomain = loggingDomainOf(cls)
-                if (!loggingDomain.name.isEmpty()) {
+                if (loggingDomain.name.isNotEmpty()) {
                     it.withLoggingDomain(loggingDomain)
                 }
             }
