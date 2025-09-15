@@ -101,11 +101,11 @@ final class ValueQueue implements Iterable<Object> {
 
     /**
      * Helper method for creating and initializing a value queue with a non-nullable value. If value
-     * is an instance of Tags, each tag will be added to the value queue.
+     * is an instance of `Tags`, each tag will be added to the value queue.
      */
     static ValueQueue appendValueToNewQueue(Object value) {
         var valueQueue = new ValueQueue();
-        ValueQueue.emit(null, value, (k, v) -> valueQueue.put(v));
+        ValueQueue.emit("", value, (k, v) -> valueQueue.put(v));
         return valueQueue;
     }
 
