@@ -92,7 +92,7 @@ class JavaLoggingFactoryTest {
         void anonymousClass() {
             var anonymous =  new Supplier<>() {
                 @Override
-                public Logger<?> get() {
+                public Logger get() {
                     return LoggingFactory.forEnclosingClass();
                 }
             };

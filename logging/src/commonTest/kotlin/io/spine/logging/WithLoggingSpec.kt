@@ -26,13 +26,14 @@
 
 package io.spine.logging
 
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 @DisplayName("`WithLogging` interface should")
-internal class WithLoggingSpec {
+internal class WithLoggingSpec : WithLogging {
 
     @Test
     fun `provide the same logger associated with a class`() {
@@ -41,6 +42,22 @@ internal class WithLoggingSpec {
         val usedLogger = instance.logger
         usedLogger shouldNotBe null
         usedLogger shouldBeSameInstanceAs instance.logger
+    }
+
+    @Test
+    fun `provide shortcut properties for logging level methods of 'Logger'`() {
+        (atError is Logger.NoOp) shouldBe false
+        (atSevere is Logger.NoOp) shouldBe false
+        (atWarning is Logger.NoOp) shouldBe false
+        (atInfo is Logger.NoOp) shouldBe false
+
+        // Levels below `INFO`.
+        (atConfig is Logger.NoOp) shouldBe true
+        (atDebug is Logger.NoOp) shouldBe true
+        (atFine is Logger.NoOp) shouldBe true
+        (atFiner is Logger.NoOp) shouldBe true
+        (atTrace is Logger.NoOp) shouldBe true
+        (atFinest is Logger.NoOp) shouldBe true
     }
 }
 

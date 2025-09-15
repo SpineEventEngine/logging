@@ -51,7 +51,6 @@ import io.spine.logging.given.ConfigurableLogger
 import io.spine.logging.given.FakeLogSite
 import io.spine.logging.given.iterate
 import io.spine.logging.given.shouldHaveMessage
-import io.spine.logging.jvm.Middleman
 import java.lang.System.currentTimeMillis
 import kotlin.time.DurationUnit.MILLISECONDS
 import kotlin.time.DurationUnit.SECONDS
@@ -70,7 +69,7 @@ import org.junit.jupiter.api.Test
 internal class LogContextSpec {
 
     private val backend = MemoizingLoggerBackend()
-    private val logger = Middleman(backend)
+    private val logger = Logger(this::class, backend)
 
     companion object {
         private val REPEATED_KEY = MetadataKey.repeated<String>("str")
@@ -83,7 +82,7 @@ internal class LogContextSpec {
         // In normal use, the logger would never need to be passed in,
         // and you'd use `logVarargs()`.
         private fun logHelper(
-            logger: Middleman,
+            logger: Logger,
             logSite: LogSite,
             n: Int,
             message: String

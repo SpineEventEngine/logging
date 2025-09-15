@@ -37,12 +37,12 @@ public enum LoggingEnum {
 
     ONE, TWO, THREE;
 
-    private static final Logger<?> logger = LoggingFactory.forEnclosingClass();
+    private static final Logger logger = LoggingFactory.forEnclosingClass();
 
     /**
      * Returns a logger used by this enum.
      */
-    public static Logger<?> usedLogger() {
+    public static Logger usedLogger() {
         return logger;
     }
 }

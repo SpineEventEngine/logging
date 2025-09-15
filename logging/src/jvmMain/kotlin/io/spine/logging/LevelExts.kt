@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,29 +24,47 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.given;
+@file:JvmName("Levels")
 
-import io.spine.logging.Logger;
-import io.spine.logging.LoggingFactory;
+package io.spine.logging
+
+import java.util.logging.Level as JLevel
 
 /**
- * A test utility class that gets a logger using
- * {@link LoggingFactory#forEnclosingClass() LoggingFactory.forEnclosingClass()}.
+ * Maps [Level] values to its Java logging counterparts.
+ *
+ * @see [JLevel.toLevel]
  */
-public final class LoggingUtilityB {
-
-    private static final Logger logger = LoggingFactory.forEnclosingClass();
-
-    /**
-     * Prevents instantiation of this utility class.
-     */
-    private LoggingUtilityB() {
-    }
-
-    /**
-     * Returns a logger used by this utility.
-     */
-    public static Logger usedLogger() {
-        return logger;
-    }
+public fun Level.toJavaLogging(): JLevel = when (this) {
+    Level.DEBUG -> JLevel.FINE
+    Level.INFO -> JLevel.INFO
+    Level.WARNING -> JLevel.WARNING
+    Level.ERROR -> JLevel.SEVERE
+    Level.ALL -> JLevel.ALL
+    else -> ConvertedLevel(this)
 }
+
+/**
+ * Opens the constructor of [JLevel] for creating converting instance.
+ */
+@Suppress("serial")
+private class ConvertedLevel(level: Level) : JLevel(level.name, level.value)
+
+/**
+ * Converts Java logging level to [Level].
+ *
+ * @see [Level.toJavaLogging]
+ */
+public fun JLevel.toLevel(): Level = when (this) {
+    JLevel.FINE -> Level.DEBUG
+    JLevel.INFO -> Level.INFO
+    JLevel.WARNING -> Level.WARNING
+    JLevel.SEVERE -> Level.ERROR
+    else -> Level(name, intValue())
+}
+
+/**
+ * Compares Java logging levels using their [values][JLevel.intValue].
+ */
+public operator fun JLevel.compareTo(other: JLevel): Int =
+    intValue().compareTo(other.intValue())

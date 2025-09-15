@@ -27,25 +27,28 @@
 package io.spine.logging
 
 import io.spine.logging.backend.Platform
-import io.spine.logging.jvm.Middleman
 import io.spine.reflect.CallerFinder
 import kotlin.reflect.KClass
 
 /**
- * Obtains a [JvmLogger] for a given class.
+ * Obtains a [Logger] for a given class.
  */
-public actual object LoggingFactory: ClassValue<JvmLogger>() {
+public actual object LoggingFactory {
+
+    /**
+     * Associates a [Logger] with a Java class.
+     */
+    public object LoggerClassValue : ClassValue<Logger>() {
+        override fun computeValue(cls: Class<*>): Logger =
+            createForClass(cls)
+    }
 
     @JvmStatic
     @JvmName("getLogger") // Set the name explicitly to avoid the synthetic `$logging` suffix.
-    public actual fun <API: LoggingApi<API>> loggerFor(cls: KClass<*>): Logger<API> {
-        @Suppress("UNCHECKED_CAST") // Safe as `JvmLogger.Api`
-        val result = get(cls.java) as Logger<API>
+    public actual fun loggerFor(cls: KClass<*>): Logger {
+        val result = LoggerClassValue.get(cls.java)
         return result
     }
-
-    override fun computeValue(cls: Class<*>): JvmLogger =
-        createForClass(cls)
 
     @JvmStatic
     public actual fun loggingDomainOf(cls: KClass<*>): LoggingDomain =
@@ -71,21 +74,18 @@ public actual object LoggingFactory: ClassValue<JvmLogger>() {
     public fun <T : Any> repeatedMetadataKey(label: String, type: Class<T>): MetadataKey<T> =
         repeatedMetadataKey(label, type.kotlin)
 
-    private fun createForClass(cls: Class<*>): JvmLogger {
+    private fun createForClass(cls: Class<*>): Logger {
         val loggerBackend = Platform.getBackend(cls.name)
-        val loggerImpl = Middleman(loggerBackend)
-        // As for now, `JvmLogger` just delegates actual work to Flogger.
-        return JvmLogger(cls.kotlin, loggerImpl)
+        return Logger(cls.kotlin, loggerBackend)
     }
 
     @JvmStatic
-    @Suppress("UNCHECKED_CAST") // `JvmLogger` is casted to `Logger<API>`.
-    public actual fun <API : LoggingApi<API>> forEnclosingClass(): Logger<API> {
+    public actual fun forEnclosingClass(): Logger {
         val factoryClass = LoggingFactory::class.java
         val callerStackElement = CallerFinder.findCallerOf(factoryClass, 0)
         val callerClassName = callerStackElement!!.className
         val callerClass = Class.forName(callerClassName)
-        val result = get(callerClass) as Logger<API>
+        val result = LoggerClassValue.get(callerClass)
         return result
     }
 }

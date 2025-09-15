@@ -38,7 +38,7 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.LogRecord;
 
-import static io.spine.logging.JvmLoggerKt.toJavaLogging;
+import static io.spine.logging.Levels.toJavaLogging;
 import static java.time.Instant.ofEpochMilli;
 import static java.util.Objects.requireNonNullElse;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;

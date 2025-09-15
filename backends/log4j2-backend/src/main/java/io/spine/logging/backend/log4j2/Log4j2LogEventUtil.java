@@ -49,7 +49,7 @@ import org.apache.logging.log4j.util.StringMap;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static io.spine.logging.JvmLoggerKt.toLevel;
+import static io.spine.logging.Levels.toLevel;
 import static io.spine.logging.backend.MetadataProcessor.forScopeAndLogSite;
 import static java.util.Objects.requireNonNull;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;

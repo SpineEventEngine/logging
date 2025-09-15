@@ -35,7 +35,7 @@ import io.spine.logging.LoggingFactory;
  */
 public final class LoggingUtility {
 
-    private static final Logger<?> logger = LoggingFactory.forEnclosingClass();
+    private static final Logger logger = LoggingFactory.forEnclosingClass();
 
     /**
      * Prevents instantiation of this utility class.
@@ -46,7 +46,7 @@ public final class LoggingUtility {
     /**
      * Returns a logger used by this utility.
      */
-    public static Logger<?> usedLogger() {
+    public static Logger usedLogger() {
         return logger;
     }
 
@@ -56,7 +56,7 @@ public final class LoggingUtility {
      */
     public static final class NestedUtility {
 
-        private static final Logger<?> logger = LoggingFactory.forEnclosingClass();
+        private static final Logger logger = LoggingFactory.forEnclosingClass();
 
         /**
          * Prevents instantiation of this utility class.
@@ -67,7 +67,7 @@ public final class LoggingUtility {
         /**
          * Returns a logger used by this utility.
          */
-        public static Logger<?> usedLogger() {
+        public static Logger usedLogger() {
             return logger;
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,84 +26,98 @@
 
 package io.spine.logging
 
+import io.spine.annotation.VisibleForTesting
 import io.spine.logging.LoggingFactory.loggingDomainOf
+import io.spine.logging.backend.LoggerBackend
+import io.spine.logging.backend.Platform
 import kotlin.reflect.KClass
 
 /**
- * Base class for fluent API loggers.
+ * The default implementation of [AbstractLogger] which returns the basic [LoggingApi]
+ * and uses the default parser and system configured backend.
  *
- * A logger is a factory of fluent logging [API] instances,
- * which allow building log statements via method chaining.
+ * Note that when extending the logging API or specifying a new parser, you will need to create a
+ * new logger class (rather than extending this one). Unlike the [LogContext] class,
+ * which must be extended in order to modify the logging API, this class is not generified and thus
+ * cannot be modified to produce a different logging API.
  *
- * @param [API] The logging API provided by this logger.
- * @param [cls] The class which is going to perform the logging operations using this logger.
- * @see [LoggingApi]
+ * The choice to prevent direct extension of loggers was made to ensure that users
+ * of a specific logger implementation always get the same behavior.
+ *
+ * @property cls The class for which this logger works.
+ *
+ * @param backend The backend for this logger.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/FluentLogger.java">
+ *     Original Java code</a> for historical context.
  */
-public abstract class Logger<API: LoggingApi<API>>(
-    protected val cls: KClass<*>
-) {
+public class Logger(
+    private val cls: KClass<*>,
+    backend: LoggerBackend
+) : AbstractLogger<Logger.Api>(backend) {
+
     /**
-     * Returns a fluent logging [API] for the specified level of logging.
+     * The non-wildcard, fully specified, logging API for this logger. Fluent logger implementations
+     * should specify a non-wildcard API like this with which to generify the abstract logger.
      *
-     * If the specified level of logging is disabled at this point, the method
-     * returns a "no-op" instance which silently ignores further calls to the logging [API].
+     * It is possible to add methods to this logger-specific API directly, but it is recommended that
+     * a separate top-level API and LogContext is created, allowing it to be shared by other
+     * implementations.
      */
-    public fun at(level: Level): API {
-        val api = createApi(level)
-        if (!api.isEnabled()) {
-            return api
+    public interface Api : LoggingApi<Api>
+
+    /**
+     * The non-wildcard, fully specified, no-op API implementation. This is required to provide a
+     * no-op implementation whose type is compatible with this logger's API.
+     */
+    internal class NoOp : LoggingApi.NoOp<Api>(), Api
+
+    public companion object {
+
+        /**
+         * Singleton instance of the no-op API.
+         *
+         * This variable is purposefully declared as an instance of the [NoOp] type
+         * instead of the [Api] type. This helps ProGuard optimization recognize the type of
+         * this field easier. This allows ProGuard to strip away low-level logs in Android apps in
+         * fewer optimization passes. Do not change this to 'Api', or any less specific type.
+         */
+        @VisibleForTesting
+        @JvmField
+        internal val NO_OP = NoOp()
+    }
+
+    override fun at(level: Level): Api {
+        val loggerName = getName()
+        val mappedLevel = Platform.getMappedLevel(loggerName)
+        if (Level.OFF == mappedLevel) {
+            return NO_OP
         }
-        val loggingDomain = loggingDomainOf(cls)
-        return if (loggingDomain.name.isEmpty()) {
-            api
+        val isLoggable = isLoggable(level)
+        val isForced = Platform.shouldForceLogging(loggerName, level, isLoggable)
+        return if (isLoggable || isForced) {
+            Context(level, isForced).also {
+                val loggingDomain = loggingDomainOf(cls)
+                if (loggingDomain.name.isNotEmpty()) {
+                    it.withLoggingDomain(loggingDomain)
+                }
+            }
         } else {
-            api.withLoggingDomain(loggingDomain)
+            NO_OP
         }
     }
 
     /**
-     * Creates a new [API] instance with the given level.
-     *
-     * If a logger implementation determines that logging is definitely disabled
-     * at this point, the implementation should return an instance of a class
-     * extending [LoggingApi.NoOp] which would be a non-wildcard, fully specified, no-op
-     * implementation of the [API] type.
+     * Logging context implementing the fully specified API for this logger.
      */
-    protected abstract fun createApi(level: Level): API
+    @VisibleForTesting
+    internal inner class Context(level: Level, isForced: Boolean) :
+        LogContext<Logger, Api>(level, isForced), Api {
 
-    /*
-     * IMPLEMENTATION NOTE
-     *
-     * The following methods are not implemented as extension functions in order to
-     * preserve the calling site, which is supposed to be set by `createApi()` method
-     * of the concrete logger implementation.
-     *
-     * Had we implemented these methods as extension functions, the calling site would
-     * be `LoggerKt` class, which is not what we want.
-     */
+        override fun getLogger(): Logger = this@Logger
 
-    /**
-     * A convenience method for `at(Level.TRACE)`.
-     */
-    public fun atTrace(): API = at(Level.TRACE)
+        override fun api(): Api = this
 
-    /**
-     * A convenience method for `at(Level.DEBUG)`.
-     */
-    public fun atDebug(): API = at(Level.DEBUG)
-
-    /**
-     * A convenience method for `at(Level.INFO)`.
-     */
-    public fun atInfo(): API = at(Level.INFO)
-
-    /**
-     * A convenience method for `at(Level.WARNING)`.
-     */
-    public fun atWarning(): API = at(Level.WARNING)
-
-    /**
-     * A convenience method for `at(Level.ERROR)`.
-     */
-    public fun atError(): API = at(Level.ERROR)
+        override fun noOp(): Api = NO_OP
+    }
 }

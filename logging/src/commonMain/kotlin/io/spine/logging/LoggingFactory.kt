@@ -38,14 +38,14 @@ public expect object LoggingFactory {
      *
      * The implementation should return the same logger instance for the same class.
      */
-    public fun <API: LoggingApi<API>> forEnclosingClass(): Logger<API>
+    public fun forEnclosingClass(): Logger
 
     /**
      * Obtains the logger for the given class.
      *
      * The implementation should return the same logger instance for the same class.
      */
-    public fun <API: LoggingApi<API>> loggerFor(cls: KClass<*>): Logger<API>
+    public fun loggerFor(cls: KClass<*>): Logger
 
     /**
      * Obtains a logging domain for the given class.
