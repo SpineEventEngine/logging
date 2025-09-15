@@ -44,11 +44,6 @@ import kotlin.reflect.KClass
  * The choice to prevent direct extension of loggers was made to ensure that users
  * of a specific logger implementation always get the same behavior.
  *
- * ### API Note
- *
- * It is expected that this class is going to be merged with `io.spine.logging.JvmLogger` of
- * the `logging` module.
- *
  * @property cls The class for which this logger works.
  *
  * @param backend The backend for this logger.
