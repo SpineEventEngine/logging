@@ -210,7 +210,7 @@ private fun createContextMap(logData: LogData): StringMap {
         requireNonNull(value)
         contextData.putValue(
             key,
-            ValueQueue.maybeWrap(value, contextData.getValue(key))
+            ValueQueue.maybeWrap(value!!, contextData.getValue(key))
         )
     }
     metadataProcessor.process(HANDLER, kvh)

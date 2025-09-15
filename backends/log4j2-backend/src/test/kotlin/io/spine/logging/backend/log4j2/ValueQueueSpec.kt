@@ -31,8 +31,8 @@ import io.kotest.matchers.collections.shouldContainInOrder
 import io.kotest.matchers.collections.shouldHaveSingleElement
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldBeSameInstanceAs
-import io.spine.logging.backend.log4j2.ValueQueue.appendValueToNewQueue
-import io.spine.logging.backend.log4j2.ValueQueue.maybeWrap
+import io.spine.logging.backend.log4j2.ValueQueue.Companion.appendValueToNewQueue
+import io.spine.logging.backend.log4j2.ValueQueue.Companion.maybeWrap
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -93,14 +93,5 @@ internal class ValueQueueSpec {
         val existingValue = null
         val queue = maybeWrap(value, existingValue)
         queue shouldBeSameInstanceAs value
-    }
-
-    @Test
-    fun `throw when given a 'null' value`() {
-        val value = null
-        val existingValue = null
-        shouldThrow<IllegalStateException> {
-            maybeWrap(value, existingValue)
-        }
     }
 }
