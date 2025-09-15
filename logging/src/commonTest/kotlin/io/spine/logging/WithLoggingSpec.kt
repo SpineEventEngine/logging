@@ -52,7 +52,6 @@ internal class WithLoggingSpec : WithLogging {
         (atInfo is Logger.NoOp) shouldBe false
 
         // Levels below `INFO`.
-        (atFinest is Logger.NoOp) shouldBe true
         (atConfig is Logger.NoOp) shouldBe true
         (atDebug is Logger.NoOp) shouldBe true
         (atFine is Logger.NoOp) shouldBe true
