@@ -86,7 +86,7 @@ public abstract class AbstractLoggingSmokeTest {
     public fun `log using instance of 'JvmLogger'`() {
         val loggingClass = AbstractLoggingSmokeTest::class
         val logger = LoggingFactory.loggerFor(loggingClass).also {
-            it::class shouldBe JvmLogger::class
+            it::class shouldBe Logger::class
         }
         val output = tapJavaLogging {
             logger.atInfo()

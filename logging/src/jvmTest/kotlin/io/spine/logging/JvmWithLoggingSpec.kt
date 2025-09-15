@@ -38,7 +38,7 @@ internal class JvmWithLoggingSpec {
         class LoggingClass : WithLogging
         val instance = LoggingClass()
         val usedLogger = instance.logger
-        usedLogger::class shouldBe JvmLogger::class
+        usedLogger::class shouldBe Logger::class
     }
 }
 

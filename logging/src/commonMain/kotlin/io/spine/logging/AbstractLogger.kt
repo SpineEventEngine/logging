@@ -99,6 +99,11 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
     public fun atSevere(): API = at(Level.SEVERE)
 
     /**
+     * A convenience method for at([Level.ERROR]).
+     */
+    public fun atError(): API = at(Level.ERROR)
+
+    /**
      * A convenience method for at([Level.WARNING]).
      */
     public fun atWarning(): API = at(Level.WARNING)
@@ -119,9 +124,19 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
     public fun atFine(): API = at(Level.FINE)
 
     /**
+     * A convenience method for at([Level.DEBUG]).
+     */
+    public fun atDebug(): API = at(Level.DEBUG)
+
+    /**
      * A convenience method for at([Level.FINER]).
      */
     public fun atFiner(): API = at(Level.FINER)
+
+    /**
+     * A convenience method for at([Level.TRACE]).
+     */
+    public fun atTrace(): API = at(Level.TRACE)
 
     /**
      * A convenience method for at([Level.FINEST]).

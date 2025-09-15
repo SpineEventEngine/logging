@@ -59,12 +59,12 @@ internal class JvmLoggerSpec {
     @Test
     fun `create no-op instance when logging level is too low`() {
         // The default level (with Java logging as the backend) is `INFO`.
-        (logger.atTrace() is LoggingApi.NoOp) shouldBe true
-        (logger.atDebug() is LoggingApi.NoOp) shouldBe true
+        (logger.atTrace() is Logger.NoOp) shouldBe true
+        (logger.atDebug() is Logger.NoOp) shouldBe true
 
-        (logger.atInfo() is LoggingApi.NoOp) shouldBe false
-        (logger.atWarning() is LoggingApi.NoOp) shouldBe false
-        (logger.atError() is LoggingApi.NoOp) shouldBe false
+        (logger.atInfo() is Logger.NoOp) shouldBe false
+        (logger.atWarning() is Logger.NoOp) shouldBe false
+        (logger.atError() is Logger.NoOp) shouldBe false
     }
 
     @Test

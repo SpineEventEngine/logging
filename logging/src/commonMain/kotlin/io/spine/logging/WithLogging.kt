@@ -53,7 +53,7 @@ import io.spine.logging.LoggingFactory.loggerFor
  * import io.spine.logging.LoggingFactory.loggerFor
  *
  * public actual interface WithLogging {
- *     public actual val logger: Logger<*>
+ *     public actual val logger: Logger
  *         get() = loggerFor(this::class)
  * }
  * ```
@@ -71,12 +71,12 @@ public interface WithLogging {
     /**
      * Returns the logger created for this class.
      */
-    public val logger: Logger<*>
+    public val logger: Logger
         get() = loggerFor(this::class)
 
     /**
      * Convenience method for obtaining the logger created for this class
      * when calling from Java code, avoiding the `get` prefix.
      */
-    public fun logger(): Logger<*> = logger
+    public fun logger(): Logger = logger
 }

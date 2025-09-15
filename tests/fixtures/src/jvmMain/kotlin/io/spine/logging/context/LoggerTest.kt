@@ -49,7 +49,7 @@ public abstract class LoggerTest(
     /**
      * The logger under the test, which is created for the [given class][cls].
      */
-    protected val logger: Logger<*> = LoggingFactory.forEnclosingClass()
+    protected val logger: Logger = LoggingFactory.forEnclosingClass()
 
     init {
         @Suppress("LeakingThis")
