@@ -103,9 +103,9 @@ public abstract class AbstractJulBackend : LoggerBackend {
         }
     }
 
-    // WARNING: This code will fail for anonymous loggers (getName() == null) and when Flogger
-    // supports anonymous loggers it must ensure that this code path is avoided by not allowing
-    // subclasses of Logger to be used.
+    // WARNING: This code will fail for anonymous loggers `(getName() == null)` and
+    // when/if the Logging library supports anonymous loggers it must ensure that
+    // this code path is avoided by not allowing subclasses of `Logger` to be used.
     internal fun forceLoggingViaChildLogger(record: LogRecord) {
         val forcingLogger = getForcingLogger(logger)
         try {
