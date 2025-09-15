@@ -36,35 +36,16 @@ import io.spine.logging.LoggingFactory.loggerFor
  * Usage example:
  *
  * ```kotlin
- * import io.spine.logging.WithLogging
- *
  * class MyClass : WithLogging {
  *     fun doAction() {
  *         logger.atInfo().log { "Action is in progress." }
+ *
+ *         // Or, via the level shortcut property:
+ *
+ *         atInfo.log { "Action is in progress." }
  *     }
  * }
  * ```
- *
- * ### Note for actual implementations
- *
- * Actual implementations are meant to take a logger from [LoggingFactory]:
- *
- * ```kotlin
- * import io.spine.logging.LoggingFactory.loggerFor
- *
- * public actual interface WithLogging {
- *     public actual val logger: Logger
- *         get() = loggerFor(this::class)
- * }
- * ```
- *
- * Indeed, this interface could have a default implementation of [WithLogging.logger]
- * if default implementations for expected interfaces have been supported.
- * Take a look at [KT-20427](https://youtrack.jetbrains.com/issue/KT-20427/Allow-expect-declarations-with-a-default-implementation)
- * for details.
- *
- * As for now, providing a default implementation for a property makes it
- * impossible to customize accessing of a logger in target implementations.
  */
 public interface WithLogging {
 
@@ -79,4 +60,54 @@ public interface WithLogging {
      * when calling from Java code, avoiding the `get` prefix.
      */
     public fun logger(): Logger = logger
+
+    /**
+     * The shortcut for `logger.atError()`.
+     */
+    public val atError: Logger.Api get() = logger.atError()
+
+    /**
+     * The shortcut for `logger.atSevere()`.
+     */
+    public val atSevere: Logger.Api get() = logger.atSevere()
+
+    /**
+     * The shortcut for `logger.atWarning()`.
+     */
+    public val atWarning: Logger.Api get() = logger.atWarning()
+
+    /**
+     * The shortcut for `logger.atInfo()`.
+     */
+    public val atInfo: Logger.Api get() = logger.atInfo()
+
+    /**
+     * The shortcut for `logger.atConfig()`.
+     */
+    public val atConfig: Logger.Api get() = logger.atConfig()
+
+    /**
+     * The shortcut for `logger.atDebug()`.
+     */
+    public val atDebug: Logger.Api get() = logger.atDebug()
+
+    /**
+     * The shortcut for `logger.atFine()`.
+     */
+    public val atFine: Logger.Api get() = logger.atFine()
+
+    /**
+     * The shortcut for `logger.atFiner()`.
+     */
+    public val atFiner: Logger.Api get() = logger.atFiner()
+
+    /**
+     * The shortcut for `logger.atTrace()`.
+     */
+    public val atTrace: Logger.Api get() = logger.atTrace()
+
+    /**
+     * The shortcut for `logger.atFinest()`.
+     */
+    public val atFinest: Logger.Api get() = logger.atFinest()
 }
