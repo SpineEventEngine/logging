@@ -128,7 +128,7 @@ public abstract class AbstractJulBackend extends LoggerBackend {
       //
       // In all cases we still call the filter (if one exists) even though we ignore the result.
       // Use a local variable to avoid race conditions where the filter can be unset at any time.
-        var filter = logger.getFilter();
+      var filter = logger.getFilter();
       if (filter != null) {
         filter.isLoggable(record);
       }
@@ -183,7 +183,7 @@ public abstract class AbstractJulBackend extends LoggerBackend {
   // subclasses of Logger to be used.
   void forceLoggingViaChildLogger(LogRecord record) {
     // Assume that nobody else will configure or manipulate loggers with this "secret" name.
-      var forcingLogger = getForcingLogger(logger);
+    var forcingLogger = getForcingLogger(logger);
 
     // This logger can be garbage collected at any time, so we must always reset any configuration.
     // This code is subject to a bunch of unlikely race conditions if the logger is manipulated
