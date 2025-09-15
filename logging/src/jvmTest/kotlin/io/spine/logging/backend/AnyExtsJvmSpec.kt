@@ -32,7 +32,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
-@DisplayName("Any? extensions under JVM should")
+@DisplayName("`Any?` extensions under JVM should")
 internal class AnyExtsJvmSpec {
 
     @Nested inner class
