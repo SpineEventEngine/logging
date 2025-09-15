@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +42,53 @@ import java.util.logging.LogRecord
 
 /**
  * Abstract base for `java.util.logging` (JUL) log records.
+ *
+ * This class supports three distinct modes of operation, depending on the state of the message
+ * and/or parameters:
+ *
+ * ## Non-null message, `null` or empty parameters
+ *
+ * This state is reached either when [getMessage] is first called, or if an explicit
+ * non-null message is set via [setMessage] (without setting any parameters).
+ * In this state, the message is considered to be formatted, and just returned
+ * via [getMessage].
+ *
+ * ## Non-null message, non-empty parameters
+ *
+ * This state is only reached if a user calls both [setMessage] and [setParameters].
+ * In this state the message is treated as is it were a brace-format log
+ * message, and no formatting is attempted.
+ * Any relationship between this value, and the log message
+ * implied by the contained [LogData] and [Metadata] is lost.
+ *
+ * For many reasons it is never a good idea for users to modify unknown [LogRecord]
+ * instances, but this does happen occasionally, so this class supports that in a best effort way,
+ * but users are always recommended to copy [LogRecord] instances if they need
+ * to modify them.
+ *
+ * ## Corollary
+ *
+ * Because of the defined states above there are a few small, but necessary, changes to
+ * behaviour in this class as compared to the "vanilla" JDK [LogRecord].
+ *
+ * * Since the "message" field being `null` indicates a private state, calling
+ *   `setMessage(null)` from outside this class is equivalent to calling `setMessage("")`,
+ *   and will not reset the instance to its initial "unformatted" state.
+ *   This is within specification for [LogRecord] since the documentation for
+ *   [getMessage] says that a return value of `null` is equivalent to the empty string.
+ *
+ * * Setting the parameters to `null` from outside this class will reset the parameters to
+ *   a static singleton empty array. From outside this class, [getParameters] is never
+ *   observed to contain `null`. This is also within specification for [LogRecord].
+ *
+ * * Setting parameters from outside this class (to any value) will also result in the log
+ *   message being formatted and cached (if it hadn't been set already). This is to avoid
+ *   situations in which parameters are set, but the underlying message is still `null`.
+ *
+ * * `ResourceBundles` are not supported by `AbstractLogRecord` and any attempt to
+ *   set them is ignored.
+ *
+ * @see <a href="https://rb.gy/yrrs4">Original Java code</a> for historical context.
  */
 @Suppress("HardcodedLineSeparator")
 public abstract class AbstractJulRecord : LogRecord {
