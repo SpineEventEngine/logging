@@ -91,6 +91,8 @@ protected constructor(
      */
     private var literalArg: String? = null
 
+    private var loggingDomain: LoggingDomain? = null
+
     /**
      * Creates a logging context with the specified level, and with a timestamp obtained from the
      * configured logging [Platform].
@@ -411,7 +413,8 @@ protected constructor(
      * This method takes a single string parameter as it's always called with one string argument.
      */
     private fun logImpl(arg: String?) {
-        this.literalArg = arg
+        val prefix = loggingDomain?.messagePrefix ?: ""
+        this.literalArg = prefix + arg
 
         // Right at the end of processing add any tags injected by the platform.
         // Any tags supplied at the log site are merged with the injected tags
@@ -465,7 +468,10 @@ protected constructor(
         return wasForced() || getLogger().doIsLoggable(level)
     }
 
-    public override fun withLoggingDomain(domain: LoggingDomain): API = api()
+    public override fun withLoggingDomain(domain: LoggingDomain): API {
+        this.loggingDomain = domain
+        return api()
+    }
 
     public final override fun <T : Any> with(key: MetadataKey<T>, value: T?): API {
         if (value != null) {
