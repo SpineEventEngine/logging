@@ -1,0 +1,61 @@
+/*
+ * Copyright 2023, The Flogger Authors; 2023, TeamDev. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Redistribution and use in source and/or binary forms, with or without
+ * modification, must retain the above copyright notice and the following
+ * disclaimer.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+package io.spine.logging.backend.log4j2
+
+import io.spine.logging.backend.BackendFactory
+import io.spine.logging.backend.LoggerBackend
+import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.core.Logger
+
+/**
+ * Backend factory for Log4j2.
+ *
+ * When using io.spine.logging.backend.system.DefaultPlatform, this factory will automatically be
+ * used if it is included on the classpath, and no other implementation of BackendFactory (other
+ * than the default implementation) is present.
+ *
+ * To specify it more explicitly or to work around an issue where multiple backend implementations
+ * are on the classpath, you can set flogger.backend_factory system property to
+ * io.spine.logging.backend.log4j2.Log4j2BackendFactory.
+ */
+public class Log4j2BackendFactory : BackendFactory() {
+
+    override fun create(loggingClass: String): LoggerBackend {
+        // Compute the logger name the same way as in SimpleBackendFactory.
+        val name = loggingClass.replace('$', '.')
+
+        // There is log4j.Logger interface and log4j.core.Logger implementation.
+        // Implementation exposes more methods that are needed by the backend.
+        // So, we have to cast an interface back to its implementation.
+        val logger = LogManager.getLogger(name) as Logger
+
+        return Log4j2LoggerBackend(logger)
+    }
+
+    /** Returns a fully-qualified name of this class. */
+    override fun toString(): String = javaClass.name
+}

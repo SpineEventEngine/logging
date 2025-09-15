@@ -24,48 +24,30 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.log4j2;
+package io.spine.logging.backend.log4j2
 
-import io.spine.logging.Level;
-import io.spine.logging.backend.LogData;
-import io.spine.logging.backend.LoggerBackend;
-import org.apache.logging.log4j.core.Logger;
-
-import static io.spine.logging.backend.log4j2.Log4j2LogEventUtil.toLog4jLevel;
-import static io.spine.logging.backend.log4j2.Log4j2LogEventUtil.toLog4jLogEvent;
+import io.spine.logging.Level
+import io.spine.logging.backend.LogData
+import io.spine.logging.backend.LoggerBackend
+import org.apache.logging.log4j.core.Logger
 
 /**
  * A logging backend that uses Log4j2 to output log statements.
  */
-final class Log4j2LoggerBackend extends LoggerBackend {
+internal class Log4j2LoggerBackend(private val logger: Logger) : LoggerBackend() {
 
-  private final Logger logger;
+    override val loggerName: String?
+        get() = logger.name
 
-  // VisibleForTesting
-  Log4j2LoggerBackend(Logger logger) {
-    this.logger = logger;
-  }
+    override fun isLoggable(level: Level): Boolean =
+        logger.isEnabled(Log4j2LogEventUtil.toLog4jLevel(level))
 
-  @Override
-  public String getLoggerName() {
-    return logger.getName();
-  }
+    override fun log(logData: LogData) {
+        // The caller must ensure isLoggable() is checked before calling this method.
+        logger.get().log(Log4j2LogEventUtil.toLog4jLogEvent(logger.name, logData))
+    }
 
-  @Override
-  public boolean isLoggable(Level level) {
-    return logger.isEnabled(toLog4jLevel(level));
-  }
-
-  @Override
-  public void log(LogData logData) {
-    // The caller is responsible to call `isLoggable()` before calling
-    // this method to ensure that only messages above the given
-    // threshold are logged.
-    logger.get().log(toLog4jLogEvent(logger.getName(), logData));
-  }
-
-  @Override
-  public void handleError(RuntimeException error, LogData badData) {
-    logger.get().log(toLog4jLogEvent(logger.getName(), error, badData));
-  }
+    override fun handleError(error: RuntimeException, badData: LogData) {
+        logger.get().log(Log4j2LogEventUtil.toLog4jLogEvent(logger.name, error, badData))
+    }
 }
