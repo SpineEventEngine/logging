@@ -36,4 +36,3 @@ public actual fun stackForCallerOf(
     maxDepth: Int,
     skip: Int
 ): Array<StackTraceElement> = CallerFinder.stackForCallerOf(target.java, maxDepth, skip)
-
