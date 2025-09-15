@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2023, TeamDev. All rights reserved.
+ * Copyright 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,16 +24,27 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/**
- * Contains the default logger platform implementation for a server-side
- * Java environment.
- *
- * <p>Although {@code system} is not the best name for this package,
- * the better option, {@code default}, is reserved by Java and cannot be used here.
- *
- * @see <a href="https://rb.gy/39mdu">Original Java code</a> for historical context.
- */
-@CheckReturnValue
-package io.spine.logging.backend.system;
+package io.spine.logging.backend.system
 
-import com.google.errorprone.annotations.CheckReturnValue;
+import io.spine.logging.backend.Clock
+import java.util.concurrent.TimeUnit.MILLISECONDS
+
+/**
+ * Default millisecond precision clock.
+ *
+ * See class documentation in [Clock] for important implementation restrictions.
+ */
+public class SystemClock private constructor() : Clock() {
+
+    public override fun getCurrentTimeNanos(): Long =
+        MILLISECONDS.toNanos(System.currentTimeMillis())
+
+    override fun toString(): String = "Default millisecond precision clock"
+
+    public companion object {
+        private val INSTANCE: SystemClock = SystemClock()
+        /** Called during logging platform initialization; MUST NOT call any code that might log. */
+        @JvmStatic
+        public fun getInstance(): SystemClock = INSTANCE
+    }
+}
