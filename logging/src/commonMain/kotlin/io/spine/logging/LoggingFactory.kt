@@ -31,6 +31,7 @@ import kotlin.reflect.KClass
 /**
  * A factory for logging objects.
  */
+@Suppress("unused") // parameters are used in actual classes, but not here.
 public expect object LoggingFactory {
 
     /**

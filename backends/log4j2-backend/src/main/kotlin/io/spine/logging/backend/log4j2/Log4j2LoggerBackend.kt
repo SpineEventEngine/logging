@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,4 +24,30 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-val versionToPublish: String by extra("2.0.0-SNAPSHOT.410")
+package io.spine.logging.backend.log4j2
+
+import io.spine.logging.Level
+import io.spine.logging.backend.LogData
+import io.spine.logging.backend.LoggerBackend
+import org.apache.logging.log4j.core.Logger
+
+/**
+ * A logging backend that uses Log4j2 to output log statements.
+ */
+internal class Log4j2LoggerBackend(private val logger: Logger) : LoggerBackend() {
+
+    override val loggerName: String?
+        get() = logger.name
+
+    override fun isLoggable(level: Level): Boolean =
+        logger.isEnabled(level.toLog4j())
+
+    override fun log(data: LogData) {
+        // The caller must ensure isLoggable() is checked before calling this method.
+        logger.get().log(toLog4jLogEvent(logger.name, data))
+    }
+
+    override fun handleError(error: RuntimeException, badData: LogData) {
+        logger.get().log(toLog4jLogEvent(logger.name, error, badData))
+    }
+}

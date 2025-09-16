@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,4 +24,30 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-val versionToPublish: String by extra("2.0.0-SNAPSHOT.410")
+package io.spine.logging.backend.system
+
+import io.spine.logging.backend.Clock
+import java.util.concurrent.TimeUnit.MILLISECONDS
+
+/**
+ * Default millisecond precision clock.
+ *
+ * See class documentation in [Clock] for important implementation restrictions.
+ *
+ * @see <a href="https://github.com/google/flogger/blob/a57c9b13104be26fa577da9dc089f41d33f5201a/api/src/main/java/com/google/common/flogger/backend/system/SystemClock.java#L26">
+ *     Original Java code</a> for historical context.
+ */
+public class SystemClock private constructor() : Clock() {
+
+    public override fun getCurrentTimeNanos(): Long =
+        MILLISECONDS.toNanos(System.currentTimeMillis())
+
+    override fun toString(): String = "Default millisecond precision clock"
+
+    public companion object {
+        private val INSTANCE: SystemClock = SystemClock()
+        /** Called during logging platform initialization; MUST NOT call any code that might log. */
+        @JvmStatic
+        public fun getInstance(): SystemClock = INSTANCE
+    }
+}
