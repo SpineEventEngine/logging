@@ -81,6 +81,7 @@ allprojects {
             resolutionStrategy {
                 force(
                     Base.lib,
+                    Base.annotations,
                     ToolBase.lib,
                     Logging.lib,
                     Validation.runtime,
