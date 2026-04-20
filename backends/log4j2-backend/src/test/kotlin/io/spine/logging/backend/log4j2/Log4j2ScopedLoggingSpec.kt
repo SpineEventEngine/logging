@@ -48,10 +48,10 @@ import org.junit.jupiter.api.Test
 
 /**
  * Tests for interaction between
- * [ScopedLoggingContext][io.spine.logging.jvm.context.ScopedLoggingContext]
+ * [ScopedLoggingContext][io.spine.logging.context.ScopedLoggingContext]
  * and [Log4j2LoggerBackend].
  *
- * [ScopedLoggingContext][io.spine.logging.jvm.context.ScopedLoggingContext] is abstract.
+ * [ScopedLoggingContext][io.spine.logging.context.ScopedLoggingContext] is abstract.
  * To test it with the Log4j backend, a concrete implementation is needed.
  *
  * This test suite uses
