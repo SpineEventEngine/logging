@@ -389,14 +389,14 @@ public interface LoggingApi<API: LoggingApi<API>> {
      * Aggregates stateful logging with respect to a scoped context determined by the given scope
      * provider.
      *
-     * When [io.spine.logging.jvm.context.ScopedLoggingContext] is used to create a context,
-     * it can be bound to a [io.spine.logging.jvm.context.ScopeType]. For example:
+     * When [io.spine.logging.context.ScopedLoggingContext] is used to create a context,
+     * it can be bound to a [io.spine.logging.context.ScopeType]. For example:
      *
      * ```kotlin
      * ScopedLoggingContexts.newContext(REQUEST).run { scopedMethod(x, y, z) }
      * ```
      *
-     * where [io.spine.logging.jvm.context.ScopeType.REQUEST] defines the scope
+     * where [io.spine.logging.context.ScopeType.REQUEST] defines the scope
      * type for the context in which `scopedMethod()` is called. Within this context, the scope
      * associated with the `REQUEST` type can then be used to aggregate logging behavior:
      *
@@ -405,9 +405,9 @@ public interface LoggingApi<API: LoggingApi<API>> {
      * ```
      *
      * New scope types can be created for specific subtasks using
-     * [ScopeType.create][io.spine.logging.jvm.context.ScopeType.create]
+     * [ScopeType.create][io.spine.logging.context.ScopeType.create]
      * but it is recommended to use shared constants
-     * (such as [ScopeType.REQUEST][io.spine.logging.jvm.context.ScopeType.REQUEST])
+     * (such as [ScopeType.REQUEST][io.spine.logging.context.ScopeType.REQUEST])
      * wherever feasible to avoid confusion.
      *
      * Note that in order for the request scope to be applied to a log statement,
