@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2024, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,28 +24,34 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import org.jetbrains.dokka.gradle.DokkaTaskPartial
+import io.spine.dependency.local.Base
+import io.spine.dependency.local.Validation
+import io.spine.gradle.report.license.LicenseReporter
 
 plugins {
-    id("org.jetbrains.dokka") // Cannot use `Dokka` dependency object here yet.
+    java
+    `java-test-fixtures`
+    id("module-testing")
 }
+LicenseReporter.generateReportIn(project)
 
 dependencies {
-    useDokkaForKotlinAsJava()
-    useDokkaWithSpineExtensions()
-}
+    arrayOf(
+        Base.lib,
+        Validation.runtime
+    ).forEach {
+        testFixturesImplementation(it)?.because(
+            """
+            We do not apply CoreJvm Compiler Gradle plugin which adds
+            the `implementation` dependency on Validation runtime automatically 
+            (see `Project.configureValidation()` function in `CompilerConfigPlugin.kt`).
+            
+            In a test module we use vanilla `protoc` (via ProtoTap) and then run codegen
+            using the Spine Compiler `Pipeline` and the plugins of the module under the test.
 
-afterEvaluate {
-    dokka {
-        configureForKotlin(
-            project,
-            DocumentationSettings.SourceLink.url
+            Because of this we need to add the dependencies above explicitly for the
+            generated code of test fixtures to compile.                
+            """.trimIndent()
         )
-    }
-}
-
-tasks.withType<DokkaTaskPartial>().configureEach {
-    onlyIf {
-        isInPublishingGraph()
     }
 }

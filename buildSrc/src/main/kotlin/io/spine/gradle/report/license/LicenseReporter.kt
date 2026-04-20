@@ -29,6 +29,7 @@ package io.spine.gradle.report.license
 import com.github.jk1.license.LicenseReportExtension
 import com.github.jk1.license.LicenseReportExtension.ALL
 import com.github.jk1.license.LicenseReportPlugin
+import io.spine.dependency.local.Spine
 import io.spine.gradle.applyPlugin
 import io.spine.gradle.getTask
 import java.io.File
@@ -85,10 +86,10 @@ object LicenseReporter {
         with(project.the<LicenseReportExtension>()) {
             outputDir = reportOutputDir.absolutePath
             excludeGroups = arrayOf(
-                "io.spine",
+                Spine.group,
                 "io.spine.gcloud",
                 "io.spine.protodata",
-                "io.spine.tools",
+                Spine.toolsGroup,
                 "io.spine.validation"
             )
             configurations = ALL
@@ -151,11 +152,18 @@ object LicenseReporter {
         sourceProjects: Iterable<Project>,
         rootProject: Project
     ) {
-        val paths = sourceProjects.map {
-            val buildDir = it.layout.buildDirectory.asFile.get()
-            "$buildDir/${Paths.relativePath}/${Paths.outputFilename}"
-        }
-        println("Merging the license reports from the all projects.")
+        val paths = sourceProjects
+            .map {
+                val buildDir = it.layout.buildDirectory.asFile.get()
+                "$buildDir/${Paths.relativePath}/${Paths.outputFilename}"
+            }.filter {
+                val exists = File(it).exists()
+                if (!exists) {
+                    rootProject.logger.debug("License report file not found: $it")
+                }
+                exists
+            }
+        println("Merging the license reports from all projects.")
         val mergedContent = paths.joinToString("\n\n\n") { (File(it)).readText() }
         val output = File("${rootProject.rootDir}/${Paths.outputFilename}")
         output.writeText(mergedContent)

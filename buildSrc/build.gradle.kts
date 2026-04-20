@@ -24,6 +24,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 /**
  * This script uses two declarations of the constant [licenseReportVersion] because
  * currently there is no way to define a constant _before_ a build script of `buildSrc`.
@@ -34,9 +36,6 @@ plugins {
     java
     groovy
     `kotlin-dsl`
-
-    // https://github.com/jk1/Gradle-License-Report/releases
-    id("com.github.jk1.dependency-license-report").version("2.7")
 }
 
 repositories {
@@ -63,7 +62,12 @@ val jacksonVersion = "2.18.3"
  */
 val googleAuthToolVersion = "2.1.5"
 
-val licenseReportVersion = "2.7"
+/**
+ * Generates reports about the licenses of the dependencies for a Gradle project.
+ *
+ * https://github.com/jk1/Gradle-License-Report
+ */
+val licenseReportVersion = "3.1.2"
 
 val grGitVersion = "4.1.1"
 
@@ -73,7 +77,7 @@ val grGitVersion = "4.1.1"
  * This version may change from the [version of Kotlin][io.spine.dependency.lib.Kotlin.version]
  * used by the project.
  */
-val kotlinEmbeddedVersion = "2.1.21"
+val kotlinEmbeddedVersion = "2.3.20"
 
 /**
  * The version of Guava used in `buildSrc`.
@@ -81,7 +85,7 @@ val kotlinEmbeddedVersion = "2.1.21"
  * Always use the same version as the one specified in [io.spine.dependency.lib.Guava].
  * Otherwise, when testing Gradle plugins, clashes may occur.
  */
-val guavaVersion = "33.4.8-jre"
+val guavaVersion = "33.5.0-jre"
 
 /**
  * The version of ErrorProne Gradle plugin.
@@ -101,7 +105,7 @@ val errorPronePluginVersion = "4.2.0"
  * @see <a href="https://github.com/google/protobuf-gradle-plugin/releases">
  *     Protobuf Gradle Plugins Releases</a>
  */
-val protobufPluginVersion = "0.9.5"
+val protobufPluginVersion = "0.9.6"
 
 /**
  * The version of Dokka Gradle Plugins.
@@ -111,7 +115,7 @@ val protobufPluginVersion = "0.9.5"
  * @see <a href="https://github.com/Kotlin/dokka/releases">
  *     Dokka Releases</a>
  */
-val dokkaVersion = "2.0.0"
+val dokkaVersion = "2.1.0"
 
 /**
  * The version of Detekt Gradle Plugin.
@@ -126,11 +130,6 @@ val detektVersion = "1.23.8"
 val kotestJvmPluginVersion = "0.4.10"
 
 /**
- * @see [io.spine.dependency.test.Kotest.MultiplatformGradlePlugin]
- */
-val kotestMultiplatformPluginVersion = "5.9.1"
-
-/**
  * @see [io.spine.dependency.test.Kover]
  */
 val koverVersion = "0.9.1"
@@ -140,9 +139,23 @@ val koverVersion = "0.9.1"
  *
  * `7.1.2` is the last version compatible with Gradle 7.x. Newer versions require Gradle v8.x.
  *
- * @see <a href="https://github.com/johnrengelman/shadow/releases">Shadow Plugin releases</a>
+ * @see <a href="https://github.com/GradleUp/shadow">Shadow Plugin releases</a>
  */
-val shadowVersion = "8.3.6"
+val shadowVersion = "9.4.1"
+
+/**
+ * The version of JUnit used to test the build scripts.
+ *
+ * @see [io.spine.dependency.test.JUnit]
+ */
+val junitVersion = "6.0.3"
+
+/**
+ * The version of Kotest used to test the build scripts.
+ *
+ * @see [io.spine.dependency.test.Kotest]
+ */
+val kotestVersion = "6.1.10"
 
 configurations.all {
     resolutionStrategy {
@@ -155,6 +168,17 @@ configurations.all {
             "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlinEmbeddedVersion",
             "org.jetbrains.kotlin:kotlin-reflect:$kotlinEmbeddedVersion"
         )
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
     }
 }
 
@@ -172,7 +196,6 @@ dependencies {
         "com.gradleup.shadow:shadow-gradle-plugin:$shadowVersion",
         "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion",
         "io.kotest:kotest-gradle-plugin:$kotestJvmPluginVersion",
-        "io.kotest:kotest-framework-multiplatform-plugin-gradle:$kotestMultiplatformPluginVersion",
         // https://github.com/srikanth-lingala/zip4j
         "net.lingala.zip4j:zip4j:2.10.0",
         "net.ltgt.gradle:gradle-errorprone-plugin:$errorPronePluginVersion",
@@ -185,6 +208,15 @@ dependencies {
     ).forEach {
         implementation(it)
     }
+
+    testImplementation(platform("org.junit:junit-bom:$junitVersion"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 dependOnBuildSrcJar()

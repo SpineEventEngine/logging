@@ -384,7 +384,7 @@ abstract class AbstractContextDataProviderSpec {
      * Please note that we use the top-level API of Spine Logging
      * e.g., [io.spine.logging.Level], instead of [java.util.logging.Level], or
      * [io.spine.logging.context.LogLevelMap], instead of
-     * [io.spine.logging.jvm.context.LogLevelMap].
+     * [io.spine.logging.context.LogLevelMap].
      * We do so because we want to test how the code works from the level of user's code
      * rather than implementation details.
      *

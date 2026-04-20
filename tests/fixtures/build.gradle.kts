@@ -40,8 +40,8 @@ kotlin {
                 implementation(Reflect.lib)
                 api(project(":logging-testlib"))
                 api(Kotest.assertions)
-                api(Kotest.frameworkApi)
                 api(Kotest.frameworkEngine)
+                api(Kotest.common)
             }
         }
     }

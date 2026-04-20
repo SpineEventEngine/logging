@@ -26,7 +26,7 @@
 
 package io.spine.gradle.publish
 
-import dokkaKotlinJar
+import htmlDocsJar
 import io.spine.gradle.isSnapshot
 import io.spine.gradle.repo.Repository
 import io.spine.gradle.sourceSets
@@ -36,6 +36,7 @@ import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.publish.PublicationContainer
 import org.gradle.api.publish.PublishingExtension
+import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.tasks.TaskContainer
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.api.tasks.bundling.Jar
@@ -231,7 +232,7 @@ fun TaskContainer.excludeGoogleProtoFromArtifacts() {
  * Java and Kotlin sources are default to `main` source set since it is created by `java` plugin.
  * For Proto sources to be included – [special treatment][protoSources] is needed.
  */
-internal fun Project.sourcesJar(): TaskProvider<Jar> = tasks.getOrCreate("sourcesJar") {
+fun Project.sourcesJar(): TaskProvider<Jar> = tasks.getOrCreate("sourcesJar") {
     dependOnGenerateProto()
     archiveClassifier.set("sources")
     from(sourceSets["main"].allSource) // Puts Java and Kotlin sources.
@@ -245,7 +246,7 @@ internal fun Project.sourcesJar(): TaskProvider<Jar> = tasks.getOrCreate("source
  * The output of this task is a `jar` archive. The archive contains only
  * [Proto sources][protoSources] from `main` source set.
  */
-internal fun Project.protoJar(): TaskProvider<Jar> = tasks.getOrCreate("protoJar") {
+fun Project.protoJar(): TaskProvider<Jar> = tasks.getOrCreate("protoJar") {
     dependOnGenerateProto()
     archiveClassifier.set("proto")
     from(protoSources())
@@ -271,9 +272,9 @@ internal fun Project.testJar(): TaskProvider<Jar> = tasks.getOrCreate("testJar")
  */
 fun Project.javadocJar(): TaskProvider<Jar> = tasks.getOrCreate("javadocJar") {
     archiveClassifier.set("javadoc")
-    val javadocFiles = layout.buildDirectory.files("/docs/javadoc")
+    val javadocFiles = layout.buildDirectory.dir("dokka/javadoc")
     from(javadocFiles)
-    dependsOn("javadoc")
+    dependsOn("dokkaGeneratePublicationJavadoc")
 }
 
 internal fun TaskContainer.getOrCreate(name: String, init: Jar.() -> Unit): TaskProvider<Jar> =
@@ -300,12 +301,12 @@ internal fun Project.artifacts(jarFlags: JarFlags): Set<TaskProvider<Jar>> {
         tasks.add(sourcesJar())
     }
 
-    if (jarFlags.javadocJar) {
-        tasks.add(javadocJar())
-    }
+    tasks.add(javadocJar())
+    tasks.add(htmlDocsJar())
+
 
     // We don't want to have an empty "proto.jar" when a project doesn't have any Proto files.
-    if (hasProto() && jarFlags.publishProtoJar) {
+    if (hasProto()) {
         tasks.add(protoJar())
     }
 
@@ -315,9 +316,22 @@ internal fun Project.artifacts(jarFlags: JarFlags): Set<TaskProvider<Jar>> {
         tasks.add(testJar())
     }
 
-    if (jarFlags.publishDokkaKotlinJar) {
-        tasks.add(dokkaKotlinJar())
-    }
-
     return tasks
+}
+
+/**
+ * Adds the source code and documentation JARs to the publication.
+ */
+@Suppress("unused")
+fun MavenPublication.addSourceAndDocJars(project: Project) {
+    val tasks = mutableSetOf<TaskProvider<Jar>>()
+    tasks.add(project.sourcesJar())
+    tasks.add(project.javadocJar())
+    tasks.add(project.htmlDocsJar())
+    if (project.hasProto()) {
+        tasks.add(project.protoJar())
+    }
+    tasks.forEach {
+        artifact(it)
+    }
 }

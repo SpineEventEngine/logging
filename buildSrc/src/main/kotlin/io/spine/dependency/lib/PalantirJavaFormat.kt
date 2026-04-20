@@ -24,17 +24,20 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.dependency.local
+package io.spine.dependency.lib
+
+import io.spine.dependency.Dependency
 
 /**
- * Spine Reflect library.
+ * Palantir Java Format.
  *
- * @see <a href="https://github.com/SpineEventEngine/text">spine-text</a>
+ * @see <a href="https://github.com/palantir/palantir-java-format">GitHub Repo</a>
  */
-@Suppress("ConstPropertyName")
-object Text {
-    const val version = "2.0.0-SNAPSHOT.6"
-    const val group = Spine.group
-    const val artifact = "spine-text"
-    const val lib = "$group:$artifact:$version"
+object PalantirJavaFormat : Dependency() {
+
+    override val group = "com.palantir.javaformat"
+    override val version = "2.75.0"
+    override val modules: List<String> = listOf("$group:palantir-java-format")
+
+    val lib = artifact(modules[0])
 }

@@ -65,7 +65,7 @@ public interface LogData {
      * Returns the log site data for the current log statement.
      *
      * @throws IllegalStateException
-     *   if called prior to the [io.spine.logging.jvm.LogContext.postProcess] function being called.
+     *   if called prior to the [io.spine.logging.LogContext.postProcess] function being called.
      */
     public val logSite: LogSite
 

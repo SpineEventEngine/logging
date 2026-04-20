@@ -29,7 +29,7 @@ package io.spine.logging.context
 import given.map.LoggingTestFixture
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.core.test.TestCase
-import io.kotest.core.test.TestResult
+import io.kotest.engine.test.TestResult
 import io.spine.logging.Level
 import io.spine.logging.testing.Recorder
 import io.spine.logging.testing.checkLogging

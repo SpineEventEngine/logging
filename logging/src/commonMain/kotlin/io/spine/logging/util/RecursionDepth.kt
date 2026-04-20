@@ -33,7 +33,7 @@ import kotlin.coroutines.EmptyCoroutineContext
 /**
  * A platform-neutral API for tracking recursion depth of logging operations.
  *
- * The current recursion depth is stored as a [CoroutineContext.Element] which makes it
+ * The current recursion depth is stored as a `CoroutineContext.Element` which makes it
  * coroutine-friendly while remaining platform-neutral.
  *
  * Use `Platform.getCurrentRecursionDepth()` to query the current depth from the outside
@@ -70,7 +70,7 @@ public class RecursionDepth private constructor() : CoroutineContext.Element, Au
 
 
     /**
-     * The [CoroutineContext.Key] for managing [RecursionDepth] in a [CoroutineContext].
+     * The `CoroutineContext.Key` for managing [RecursionDepth] in a `CoroutineContext`.
      */
     public companion object Key : CoroutineContext.Key<RecursionDepth> {
         /**

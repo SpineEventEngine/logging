@@ -58,16 +58,22 @@ abstract class Dependency {
     /**
      * The [modules] given with the [version].
      */
-    final val artifacts: Map<String, String> by lazy {
+    val artifacts: Map<String, String> by lazy {
         modules.associateWith { "$it:$version" }
     }
 
     /**
-     * Obtains full Maven coordinates for the requested [module].
+     * Obtains full Maven coordinates for the requested [module] and [version].
      */
-    fun artifact(module: String): String = artifacts[module] ?: error(
-        "The dependency `${this::class.simpleName}` does not declare a module `$module`."
-    )
+    fun artifact(module: String, version: String = ""): String {
+        return if (version.isEmpty()) {
+            artifacts[module] ?: error(
+                "The dependency `${this::class.simpleName}` does not declare a module `$module`."
+            )
+        } else {
+           "$module:$version"
+        }
+    }
 
     /**
      * Forces all artifacts of this dependency using the given resolution strategy.
@@ -114,3 +120,19 @@ private fun ResolutionStrategy.forceWithLogging(
     force(artifact)
     project.log { "Forced the version of `$artifact` in " + configuration.diagSuffix(project) }
 }
+
+/**
+ * Obtains full Maven coordinates for the requested [module].
+ *
+ * This extension allows referencing properties of the [Dependency],
+ * upon which it is invoked.
+ *
+ * An example usage:
+ *
+ * ```
+ * // Supposing there is `Ksp.symbolProcessingApi: String` property declared.
+ * Ksp.artifact { symbolProcessingApi }
+ * ```
+ */
+fun <T : Dependency> T.artifact(module: T.() -> String): String =
+    artifact(module())

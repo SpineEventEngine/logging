@@ -37,8 +37,8 @@ package io.spine.dependency.local
     "MemberVisibilityCanBePrivate" /* The properties are used directly by other subprojects. */,
 )
 object ProtoTap {
-    const val group = "io.spine.tools"
-    const val version = "0.10.0"
+    const val group = Spine.toolsGroup
+    const val version = "0.14.0"
     const val gradlePluginId = "io.spine.prototap"
     const val api = "$group:prototap-api:$version"
     const val gradlePlugin = "$group:prototap-gradle-plugin:$version"

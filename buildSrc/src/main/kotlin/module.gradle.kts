@@ -24,25 +24,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.dependency.local
-
-/**
- * Dependencies on `core-java` modules.
- *
- * See [`SpineEventEngine/core-java`](https://github.com/SpineEventEngine/core-java/).
- */
-@Suppress("ConstPropertyName", "unused")
-object CoreJava {
-    const val group = Spine.group
-    const val version = "2.0.0-SNAPSHOT.316"
-
-    const val coreArtifact = "spine-core"
-    const val clientArtifact = "spine-client"
-    const val serverArtifact = "spine-server"
-
-    const val core = "$group:$coreArtifact:$version"
-    const val client = "$group:$clientArtifact:$version"
-    const val server = "$group:$serverArtifact:$version"
-
-    const val testUtilServer = "${Spine.toolsGroup}:spine-testutil-server:$version"
-}
+// This is a template file for an actual script which should be
+// defined by a project to which `config` is applied.
+//
+// The reason for having this file is that it is referenced as
+// a plugin in `uber-jar-module.gradle.kts`

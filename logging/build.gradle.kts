@@ -32,6 +32,7 @@ import io.spine.dependency.local.Base
 import io.spine.dependency.local.Reflect
 import io.spine.gradle.publish.SpinePublishing
 import io.spine.gradle.publish.spinePublishing
+import io.spine.gradle.testing.registerTestTasks
 
 plugins {
     `kmp-module`
@@ -41,11 +42,9 @@ plugins {
 // This module configures `spinePublishing` on its own to change a prefix
 // specified by the root project.
 spinePublishing {
+    artifactPrefix = "spine-"
     destinations = rootProject.the<SpinePublishing>().destinations
     customPublishing = true
-    dokkaJar {
-        java = false
-    }
 }
 
 kotlin {
@@ -74,3 +73,5 @@ kotlin {
         }
     }
 }
+
+tasks.registerTestTasks()

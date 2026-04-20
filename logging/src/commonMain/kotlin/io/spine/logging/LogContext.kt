@@ -43,7 +43,7 @@ import kotlin.time.DurationUnit
  * logging context is very short; it is created by a logger, usually in response to a call to the
  * [AbstractLogger.at] method, and normally lasts only as long as the log statement.
  *
- * This class should not be visible to normal users of the logging API and it is only needed when
+ * This class should not be visible to normal users of the logging API, and it is only needed when
  * extending the API to add more functionality. In order to extend the logging API and add methods
  * to the fluent call chain, the `LoggingApi` interface should be extended to add any new
  * methods, and this class should be extended to implement them. A new logger class will then be
@@ -436,7 +436,7 @@ protected constructor(
     // ---- Log site injection (used by pre-processors and special cases) ----
 
     public final override fun withInjectedLogSite(logSite: LogSite): API {
-        // First call wins (since auto-injection will typically target the `log()` method at
+        // The first call wins (since auto-injection will typically target the `log()` method at
         // the end of the chain and might not check for previous explicit injection).
         // It MUST be allowed for a caller to specify the "INVALID" log site to disable
         // log site lookup at this log statement.

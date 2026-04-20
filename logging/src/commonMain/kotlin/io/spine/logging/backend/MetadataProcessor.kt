@@ -30,10 +30,6 @@ import io.spine.annotation.VisibleForTesting
 import io.spine.logging.MetadataKey
 import io.spine.logging.backend.LightweightProcessor.Companion.MAX_LIGHTWEIGHT_ELEMENTS
 import io.spine.logging.checkCannotRepeat
-import kotlin.collections.map
-import kotlin.map
-import kotlin.sequences.map
-import kotlin.text.map
 
 /**
  * Processor combining scope and log-site metadata into a single view.
@@ -124,12 +120,12 @@ public abstract class MetadataProcessor {
      *   preceding log-site values.
      *
      * Note that equal or identical repeated values are permitted, and no "deduplication" is
-     * performed. This is very much in contrast to the [io.spine.logging.jvm.context.Tags]
-     * mechanism, which de-duplicates mappings and reorders keys and values to generate a
+     * performed. This is very much in contrast to the [io.spine.logging.context.Tags]
+     * mechanism, which deduplicates mappings and reorders keys and values to generate a
      * minimal, canonical representation.
      *
      * Furthermore, scope-supplied tags will be a single value in the scope metadata, keyed with
-     * the [LogContext.Key.TAGS] key.
+     * the [io.spine.logging.LogContext.Key.TAGS] key.
      *
      * @param handler The metadata handler to be called back.
      * @param context Arbitrary context instance to be passed into each callback.
@@ -523,7 +519,7 @@ private class SimpleProcessor(scope: Metadata, logged: Metadata) : MetadataProce
 }
 
 /**
- * Adds all key-value pairs from the given [metadata] into the [map].
+ * Adds all key-value pairs from the given [metadata] into this map.
  *
  * Unlike [LightweightProcessor], this function eagerly copies references from
  * the [Metadata] and casts values to their key-types early, ensuring safe casting
@@ -532,7 +528,7 @@ private class SimpleProcessor(scope: Metadata, logged: Metadata) : MetadataProce
  * For repeatable keys, values are collected into mutable lists. For singleton keys,
  * any existing value is replaced with the new value.
  *
- * @param map The mutable map to add metadata entries to.
+ * @receiver The mutable map to add metadata entries to.
  * @param metadata The metadata entries to add.
  */
 private fun MutableMap<MetadataKey<Any>, Any>.addTo(metadata: Metadata) {
