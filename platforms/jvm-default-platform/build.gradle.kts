@@ -48,7 +48,6 @@ java {
     disableLinters() // Due to non-migrated Flogger sources.
 }
 
-
 /**
  * Specifies explicit dependencies between tasks.
  *
@@ -60,7 +59,7 @@ java {
  * the missed dependencies on our own.
  */
 afterEvaluate {
-    // `kaptKotlin` task is created after the configuration phase,
+    // `kspKotlin` task is created after the configuration phase,
     // so we have to use the `afterEvaluate` block.
     val kspKotlin by tasks.existing
     @Suppress("unused")

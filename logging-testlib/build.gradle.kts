@@ -27,6 +27,7 @@
 import io.spine.dependency.boms.BomsPlugin
 import io.spine.dependency.lib.Log4j2
 import io.spine.dependency.local.Base
+import io.spine.gradle.testing.registerTestTasks
 
 plugins {
     `kmp-module`
@@ -54,14 +55,4 @@ kotlin {
     }
 }
 
-tasks {
-    withType<Test>().configureEach {
-        filter {
-            // There could be cases with no matching tests.
-            // E.g., tests could be based on Kotest, which has custom task types and names.
-            isFailOnNoMatchingTests = false
-            includeTestsMatching("*Test")
-            includeTestsMatching("*Spec")
-        }
-    }
-}
+tasks.registerTestTasks()
