@@ -523,7 +523,7 @@ private class SimpleProcessor(scope: Metadata, logged: Metadata) : MetadataProce
 }
 
 /**
- * Adds all key-value pairs from the given [metadata] into the [map].
+ * Adds all key-value pairs from the given [metadata] into this map.
  *
  * Unlike [LightweightProcessor], this function eagerly copies references from
  * the [Metadata] and casts values to their key-types early, ensuring safe casting

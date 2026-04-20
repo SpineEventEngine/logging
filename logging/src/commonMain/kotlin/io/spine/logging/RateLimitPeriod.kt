@@ -60,7 +60,7 @@ public class RateLimitPeriod(
      *
      * ## Implementation note
      *
-     * Since nanoseconds are the smallest level of precision a [kotlin.time.DurationUnit]
+     * Since nanoseconds are the smallest level of precision a `DurationUnit`
      * can express, we are guaranteed that `unit.toNanos(n) >= n > 0`.
      * This is important for correctness (see comment in `checkLastTimestamp()`) because
      * it ensures the new timestamp that indicates when logging should occur always differs

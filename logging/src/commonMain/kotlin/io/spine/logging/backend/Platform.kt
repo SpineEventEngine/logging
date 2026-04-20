@@ -251,7 +251,7 @@ public abstract class Platform {
     /**
      * Returns the current time in nanoseconds for this platform implementation.
      *
-     * This default implementation uses [kotlin.time.Clock.System.now] to
+     * This default implementation uses `Clock.System.now` to
      * provide the nanoseconds precision.
      */
     @OptIn(ExperimentalTime::class)
