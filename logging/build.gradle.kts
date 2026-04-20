@@ -43,9 +43,6 @@ plugins {
 spinePublishing {
     destinations = rootProject.the<SpinePublishing>().destinations
     customPublishing = true
-    dokkaJar {
-        java = false
-    }
 }
 
 kotlin {
@@ -74,3 +71,16 @@ kotlin {
         }
     }
 }
+
+tasks {
+    withType<Test>().configureEach {
+        filter {
+            // There could be cases with no matching tests.
+            // E.g., tests could be based on Kotest, which has custom task types and names.
+            isFailOnNoMatchingTests = false
+            includeTestsMatching("*Test")
+            includeTestsMatching("*Spec")
+        }
+    }
+}
+

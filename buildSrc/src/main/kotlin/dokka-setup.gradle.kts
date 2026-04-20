@@ -24,30 +24,34 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.dependency.lib.Protobuf
-import io.spine.gradle.protobuf.setup
+import org.jetbrains.dokka.gradle.tasks.DokkaBaseTask
 
 plugins {
-    id("java-library")
-    id("com.google.protobuf")
+    id("org.jetbrains.dokka") // Cannot use `Dokka` dependency object here yet.
+    id("org.jetbrains.dokka-javadoc")
 }
 
-// For generating test fixtures. See `src/test/proto`.
-protobuf {
-    configurations.excludeProtobufLite()
-    protoc {
-        artifact = Protobuf.compiler
-    }
+dependencies {
+    useDokkaWithSpineExtensions()
+}
 
-    afterEvaluate {
-        // Walk the collection of tasks to force the execution
-        // of the `configureEach` operations earlier.
-        // This hack allows to avoid `ConcurrentModificationException` on
-        // creating `kspKotlin` task.
-        generateProtoTasks.all().size
+tasks.withType<DokkaBaseTask>().configureEach {
+    onlyIf {
+        isInPublishingGraph()
     }
+}
 
-    generateProtoTasks.all().configureEach {
-        setup()
+afterEvaluate {
+    dokka {
+        configureForKotlin(
+            project,
+            DocumentationSettings.SourceLink.url(project)
+        )
+    }
+    val kspKotlin = tasks.findByName("kspKotlin")
+    kspKotlin?.let {
+        tasks.withType<DokkaBaseTask>().configureEach {
+            dependsOn(kspKotlin)
+        }
     }
 }

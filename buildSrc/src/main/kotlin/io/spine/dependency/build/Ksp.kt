@@ -35,10 +35,12 @@ import io.spine.dependency.Dependency
  */
 @Suppress("unused")
 object Ksp : Dependency() {
-    override val version = "2.1.21-2.0.2"
+    override val version = "2.3.6"
+    val dogfoodingVersion = version
     override val group = "com.google.devtools.ksp"
 
     const val id = "com.google.devtools.ksp"
+    const val gradlePluginArtifactName = "com.google.devtools.ksp.gradle.plugin"
 
     val symbolProcessingApi = "$group:symbol-processing-api"
     val symbolProcessing = "$group:symbol-processing"

@@ -8,7 +8,13 @@
       "Bash(./gradlew:*)",
       "Bash(find:*)",
       "Bash(ls:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "WebSearch",
+      "WebFetch(domain:kotest.io)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:slack-chats.kotlinlang.org)",
+      "WebFetch(domain:central.sonatype.com)",
+      "Bash(jar tf:*)"
     ],
     "deny": []
   }

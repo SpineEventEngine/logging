@@ -99,6 +99,15 @@ val RepositoryHandler.intellijReleases: MavenArtifactRepository
 val RepositoryHandler.jetBrainsCacheRedirector: MavenArtifactRepository
     get() = maven("https://cache-redirector.jetbrains.com/intellij-dependencies")
 
+val RepositoryHandler.intellijDependencies: MavenArtifactRepository
+    get() = maven("https://packages.jetbrains.team/maven/p/ij/intellij-dependencies") {
+        content {
+            includeGroupByRegex("com\\.jetbrains.*")
+            includeGroupByRegex("org\\.jetbrains.*")
+            includeGroupByRegex("com\\.intellij.*")
+        }
+    }
+
 /**
  * Applies repositories commonly used by Spine Event Engine projects.
  */
@@ -124,6 +133,7 @@ fun RepositoryHandler.standardToSpineSdk() {
 
     intellijReleases
     jetBrainsCacheRedirector
+    intellijDependencies
 
     maven {
         url = URI(Repos.sonatypeSnapshots)

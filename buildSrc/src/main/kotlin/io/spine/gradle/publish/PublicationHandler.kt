@@ -27,8 +27,10 @@
 package io.spine.gradle.publish
 
 import LicenseSettings
+import io.spine.gradle.artifactId
 import io.spine.gradle.isSnapshot
 import io.spine.gradle.repo.Repository
+import io.spine.gradle.report.pom.InceptionYear
 import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.invocation.BuildInvocationDetails
@@ -52,7 +54,7 @@ private const val MAVEN_PUBLISH = "maven-publish"
  *   the [`spinePublishing`][io.spine.gradle.publish.SpinePublishing.destinations]
  *   extension applied to the subproject.
  */
-internal sealed class PublicationHandler(
+sealed class PublicationHandler(
     protected val project: Project,
     protected var destinations: Set<Repository>
 ) {
@@ -124,33 +126,42 @@ internal sealed class PublicationHandler(
     }
 
     /**
-     * Copies the attributes of Gradle [Project] to this [MavenPublication].
+     * Copies the attributes of the [project] to this [MavenPublication].
      *
      * The following project attributes are copied:
      *  * [group][Project.getGroup];
      *  * [version][Project.getVersion];
      *  * [description][Project.getDescription].
      *
-     * Also, this function adds the [artifactPrefix][SpinePublishing.artifactPrefix] to
-     * the [artifactId][MavenPublication.setArtifactId] of this publication,
-     * if the prefix is not added yet.
+     * The [artifactId] of the publication is copied from the project
+     * [extension property][io.spine.gradle.artifactId] of the same name.
      *
-     * Finally, the Apache Software License 2.0 is set as the only license
-     * under which the published artifact is distributed.
+     * The Apache Software License 2.0 is set as the only license
+     * under which the published artifact is distributed via [LicenseSettings]
+     *
+     * The source control management attributes are obtained from [DocumentationSettings].
+     *
+     * @see LicenseSettings
+     * @see DocumentationSettings
      */
     protected fun MavenPublication.copyProjectAttributes() {
         groupId = project.group.toString()
-        val prefix = project.spinePublishing.artifactPrefix
-        if (!artifactId.startsWith(prefix)) {
-            artifactId = prefix + artifactId
-        }
+        artifactId = project.artifactId
         version = project.version.toString()
         pom.description.set(project.description)
-
+        pom.inceptionYear.set(InceptionYear.value)
         pom.licenses {
             license {
                 name.set(LicenseSettings.name)
                 url.set(LicenseSettings.url)
+                distribution.set(LicenseSettings.url)
+            }
+        }
+        pom.scm {
+            DocumentationSettings.run {
+                url.set(repoUrl(project))
+                connection.set(connectionUrl(project))
+                developerConnection.set(developerConnectionUrl(project))
             }
         }
     }

@@ -33,7 +33,7 @@ import java.util.function.BinaryOperator
  * A reference to a value kept as [AtomicReference] which provides
  * a [merging][mergeFrom] operation.
  */
-internal abstract class ScopedReference<T>(initialValue: T?) {
+internal abstract class ScopedReference<T : Any>(initialValue: T?) {
 
     private val value: AtomicReference<T?>
 
@@ -54,10 +54,12 @@ internal abstract class ScopedReference<T>(initialValue: T?) {
      */
     fun mergeFrom(delta: T?) {
         if (delta != null) {
-            val operator = BinaryOperator<T?> { t, u ->
-                t?.let { merge(it, u) } ?: u
-            }
-            value.accumulateAndGet(delta, operator)
+            var current: T?
+            var next: T
+            do {
+                current = value.get()
+                next = current?.let { merge(it, delta) } ?: delta
+            } while (!value.compareAndSet(current, next))
         }
     }
 

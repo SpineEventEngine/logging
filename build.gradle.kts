@@ -50,6 +50,7 @@ apply(from = "$rootDir/version.gradle.kts")
 
 spinePublishing {
     artifactPrefix = "spine-logging-"
+    toolArtifactPrefix = "NONE"
     modules = setOf(
         "log4j2-backend",
         "jul-backend",
@@ -63,9 +64,6 @@ spinePublishing {
             cloudArtifactRegistry,
             gitHub("logging")
         )
-    }
-    dokkaJar {
-        java = false
     }
 }
 

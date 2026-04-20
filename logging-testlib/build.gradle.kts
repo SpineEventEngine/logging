@@ -27,8 +27,6 @@
 import io.spine.dependency.boms.BomsPlugin
 import io.spine.dependency.lib.Log4j2
 import io.spine.dependency.local.Base
-import io.spine.gradle.publish.SpinePublishing
-import io.spine.gradle.publish.spinePublishing
 
 plugins {
     `kmp-module`
@@ -37,17 +35,6 @@ plugins {
 apply<BomsPlugin>()
 
 group = "io.spine.tools"
-
-// This module configures `spinePublishing` on its own to change a prefix
-// specified by the root project.
-spinePublishing {
-    artifactPrefix = "spine-"
-    destinations = rootProject.the<SpinePublishing>().destinations
-    customPublishing = true
-    dokkaJar {
-        java = false
-    }
-}
 
 kotlin {
     sourceSets {
@@ -63,6 +50,18 @@ kotlin {
             dependencies {
                 implementation(Log4j2.core)
             }
+        }
+    }
+}
+
+tasks {
+    withType<Test>().configureEach {
+        filter {
+            // There could be cases with no matching tests.
+            // E.g., tests could be based on Kotest, which has custom task types and names.
+            isFailOnNoMatchingTests = false
+            includeTestsMatching("*Test")
+            includeTestsMatching("*Spec")
         }
     }
 }

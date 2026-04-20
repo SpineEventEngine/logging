@@ -30,6 +30,7 @@ import io.spine.dependency.build.Dokka
 import io.spine.dependency.build.ErrorProne
 import io.spine.dependency.build.JSpecify
 import io.spine.dependency.lib.Guava
+import io.spine.dependency.lib.Kotlin
 import io.spine.dependency.lib.Protobuf
 import io.spine.dependency.local.Reflect
 import io.spine.dependency.test.Jacoco
@@ -46,11 +47,9 @@ plugins {
     id("net.ltgt.errorprone")
     id("pmd-settings")
     id("project-report")
-    id("dokka-for-java")
     kotlin("jvm")
-    id("io.kotest")
     id("detekt-code-analysis")
-    id("dokka-for-kotlin")
+    id("dokka-setup")
     id("org.jetbrains.kotlinx.kover")
     id("module-testing")
 }
@@ -133,6 +132,7 @@ fun Module.forceConfigurations() {
         all {
             resolutionStrategy {
                 force(
+                    Kotlin.bom,
                     Dokka.BasePlugin.lib,
                     Reflect.lib,
                 )
@@ -161,9 +161,7 @@ fun Module.setTaskDependencies(generatedDir: String) {
 }
 
 fun Module.configureGitHubPages() {
-    val docletVersion = project.version.toString()
-    updateGitHubPages(docletVersion) {
-        allowInternalJavadoc.set(true)
+    updateGitHubPages {
         rootFolder.set(rootDir)
     }
 }

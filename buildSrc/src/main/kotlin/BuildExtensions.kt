@@ -31,15 +31,18 @@ import io.spine.dependency.build.GradleDoctor
 import io.spine.dependency.build.Ksp
 import io.spine.dependency.build.PluginPublishPlugin
 import io.spine.dependency.lib.Protobuf
+import io.spine.dependency.local.Compiler
+import io.spine.dependency.local.CoreJvmCompiler
 import io.spine.dependency.local.McJava
-import io.spine.dependency.local.ProtoData
 import io.spine.dependency.local.ProtoTap
 import io.spine.dependency.test.Kotest
 import io.spine.dependency.test.Kover
 import io.spine.gradle.repo.standardToSpineSdk
 import org.gradle.api.Project
 import org.gradle.api.Task
+import org.gradle.api.file.DuplicatesStrategy
 import org.gradle.api.tasks.JavaExec
+import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.ScriptHandlerScope
 import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependencySpec
@@ -80,36 +83,42 @@ val ScriptHandlerScope.protobuf: Protobuf
     get() = Protobuf
 
 /**
+ * Shortcut to [CoreJvmCompiler] dependency object for using under `buildScript`.
+ */
+val ScriptHandlerScope.coreJvmCompiler: CoreJvmCompiler
+    get() = CoreJvmCompiler
+
+/**
  * Shortcut to [McJava] dependency object for using under `buildScript`.
  */
 val ScriptHandlerScope.mcJava: McJava
     get() = McJava
 
 /**
- * Shortcut to [McJava] dependency object.
+ * Shortcut to [CoreJvmCompiler] dependency object.
  *
  * This plugin is not published to Gradle Portal and cannot be applied directly to a project.
  * Firstly, it should be put to buildscript's classpath and then applied by ID only.
  */
-val PluginDependenciesSpec.mcJava: McJava
-    get() = McJava
+val PluginDependenciesSpec.coreJvmCompiler: CoreJvmCompiler
+    get() = CoreJvmCompiler
 
 /**
- * Shortcut to [ProtoData] dependency object for using under `buildscript`.
+ * Shortcut to [Compiler] dependency object for using under `buildscript`.
  */
-val ScriptHandlerScope.protoData: ProtoData
-    get() = ProtoData
+val ScriptHandlerScope.spineCompiler: Compiler
+    get() = Compiler
 
 /**
- * Shortcut to [ProtoData] dependency object.
+ * Shortcut to [Compiler] dependency object.
  *
  * This plugin is published at Gradle Plugin Portal.
  * But when used in a pair with [mcJava], it cannot be applied directly to a project.
- * It is so, because [mcJava] uses [protoData] as its dependency.
+ * It is so, because [mcJava] uses [spineCompiler] as its dependency.
  * And the buildscript's classpath ends up with both of them.
  */
-val PluginDependenciesSpec.protoData: ProtoData
-    get() = ProtoData
+val PluginDependenciesSpec.spineCompiler: Compiler
+    get() = Compiler
 
 /**
  * Provides shortcuts for applying plugins from our dependency objects.
@@ -147,26 +156,26 @@ val PluginDependenciesSpec.`gradle-doctor`: PluginDependencySpec
     get() = id(GradleDoctor.pluginId).version(GradleDoctor.version)
 
 val PluginDependenciesSpec.kotest: PluginDependencySpec
-    get() = Kotest.MultiplatformGradlePlugin.let {
-        return id(it.id).version(it.version)
+    get() = Kotest.let {
+        return id(it.gradlePluginId).version(it.version)
     }
 
 val PluginDependenciesSpec.kover: PluginDependencySpec
     get() = id(Kover.id).version(Kover.version)
 
 val PluginDependenciesSpec.ksp: PluginDependencySpec
-    get() = id(Ksp.id).version(Ksp.version)
+    get() = id(Ksp.id).version(Ksp.dogfoodingVersion)
 
 val PluginDependenciesSpec.`plugin-publish`: PluginDependencySpec
     get() = id(PluginPublishPlugin.id).version(PluginPublishPlugin.version)
 
 /**
  * Configures the dependencies between third-party Gradle tasks
- * and those defined via ProtoData and Spine Model Compiler.
+ * and those defined via the Spine Compiler and its plugins.
  *
  * It is required to avoid warnings in build logs, detecting the undeclared
  * usage of Spine-specific task output by other tasks,
- * e.g., the output of `launchProtoData` is used by `compileKotlin`.
+ * e.g., the output of `launchSpineCompiler` is used by `compileKotlin`.
  */
 @Suppress("unused")
 fun Project.configureTaskDependencies() {
@@ -190,43 +199,36 @@ fun Project.configureTaskDependencies() {
     }
 
     afterEvaluate {
-        val launchProtoData = "launchProtoData"
-        val launchTestProtoData = "launchTestProtoData"
         val generateProto = "generateProto"
         val createVersionFile = "createVersionFile"
         val compileKotlin = "compileKotlin"
         compileKotlin.run {
             dependOn(generateProto)
-            dependOn(launchProtoData)
         }
         val compileTestKotlin = "compileTestKotlin"
-        compileTestKotlin.dependOn(launchTestProtoData)
         val sourcesJar = "sourcesJar"
         val kspKotlin = "kspKotlin"
         sourcesJar.run {
             dependOn(generateProto)
-            dependOn(launchProtoData)
             dependOn(kspKotlin)
             dependOn(createVersionFile)
             dependOn("prepareProtocConfigVersions")
         }
-        val dokkaHtml = "dokkaHtml"
-        dokkaHtml.run {
+        val dokkaGenerate = "dokkaGenerate"
+        dokkaGenerate.run {
             dependOn(generateProto)
-            dependOn(launchProtoData)
             dependOn(kspKotlin)
         }
-        val dokkaJavadoc = "dokkaJavadoc"
-        dokkaJavadoc.run {
-            dependOn(launchProtoData)
-            dependOn(kspKotlin)
-        }
+        val dokkaGeneratePublicationJavadoc = "dokkaGeneratePublicationJavadoc"
+        dokkaGeneratePublicationJavadoc.dependOn(kspKotlin)
         "publishPluginJar".dependOn(createVersionFile)
         compileKotlin.dependOn(kspKotlin)
         compileTestKotlin.dependOn("kspTestKotlin")
         "compileTestFixturesKotlin".dependOn("kspTestFixturesKotlin")
-        "javadocJar".dependOn(dokkaHtml)
-        "dokkaKotlinJar".dependOn(dokkaJavadoc)
+        "javadocJar".dependOn(dokkaGeneratePublicationJavadoc)
+        "htmlDocsJar".dependOn(dokkaGenerate)
+
+        "kspTestKotlin".dependOn("launchTestSpineCompiler")
     }
 }
 
@@ -297,31 +299,58 @@ fun Project.setRemoteDebug(taskName: String, enabled: Boolean = true) {
 }
 
 /**
- * Sets remote debug options for the `launchProtoData` task.
+ * Sets remote debug options for the `launchSpineCompiler` task.
  *
  * @param enabled if `true` the task will be suspended.
  *
  * @see remoteDebug
  */
-fun Project.protoDataRemoteDebug(enabled: Boolean = true) =
-    setRemoteDebug("launchProtoData", enabled)
+fun Project.spineCompilerRemoteDebug(enabled: Boolean = true) =
+    setRemoteDebug("launchSpineCompiler", enabled)
 
 /**
- * Sets remote debug options for the `launchTestProtoData` task.
+ * Sets remote debug options for the `launchTestSpineCompiler` task.
  *
  * @param enabled if `true` the task will be suspended.
  *
  * @see remoteDebug
  */
-fun Project.testProtoDataRemoteDebug(enabled: Boolean = true) =
-    setRemoteDebug("launchTestProtoData", enabled)
+fun Project.testSpineCompilerRemoteDebug(enabled: Boolean = true) =
+    setRemoteDebug("launchTestSpineCompiler", enabled)
 
 /**
- * Sets remote debug options for the `launchTestFixturesProtoData` task.
+ * Sets remote debug options for the `launchTestFixturesSpineCompiler` task.
  *
  * @param enabled if `true` the task will be suspended.
  *
  * @see remoteDebug
  */
-fun Project.testFixturesProtoDataRemoteDebug(enabled: Boolean = true) =
-    setRemoteDebug("launchTestFixturesProtoData", enabled)
+fun Project.testFixturesSpineCompilerRemoteDebug(enabled: Boolean = true) =
+    setRemoteDebug("launchTestFixturesSpineCompiler", enabled)
+
+/**
+ * Parts of names of configurations to be excluded by
+ * `artifactMeta/excludeConfigurations/containing` in the modules
+ * where `io.spine.atifact-meta` plugin is applied.
+ */
+val buildToolConfigurations: Array<String> = arrayOf(
+    "detekt",
+    "jacoco",
+    "pmd",
+    "checkstyle",
+    "checkerframework",
+    "ksp",
+    "dokka",
+)
+
+/**
+ * Make the `sourcesJar` task accept duplicated input which seems to occur
+ * somewhere inside Protobuf Gradle Plugin.
+ */
+fun Project.allowDuplicationInSourcesJar() {
+    tasks.withType(Jar::class.java).configureEach {
+        if (name == "sourcesJar") {
+            duplicatesStrategy = DuplicatesStrategy.INCLUDE
+        }
+    }
+}
