@@ -30,6 +30,7 @@ import io.spine.dependency.build.Dokka
 import io.spine.dependency.build.ErrorProne
 import io.spine.dependency.build.JSpecify
 import io.spine.dependency.lib.Guava
+import io.spine.dependency.lib.Jackson
 import io.spine.dependency.lib.Kotlin
 import io.spine.dependency.lib.Protobuf
 import io.spine.dependency.local.Reflect
@@ -131,7 +132,12 @@ fun Module.forceConfigurations() {
         excludeProtobufLite()
         all {
             resolutionStrategy {
+                val cfg = this@all
+                val rs = this@resolutionStrategy
+                Jackson.forceArtifacts(project, cfg, rs)
+                Jackson.DataFormat.forceArtifacts(project, cfg, rs)
                 force(
+                    Jackson.annotations,
                     Kotlin.bom,
                     Dokka.BasePlugin.lib,
                     Reflect.lib,

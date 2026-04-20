@@ -25,6 +25,7 @@
  */
 
 import io.spine.dependency.boms.BomsPlugin
+import io.spine.dependency.lib.Jackson
 import io.spine.dependency.lib.Kotlin
 import io.spine.dependency.local.Reflect
 import io.spine.dependency.local.TestLib
@@ -83,6 +84,10 @@ fun Project.forceConfigurations() {
         forceVersions()
         all {
             resolutionStrategy {
+                val cfg = this@all
+                val rs = this@resolutionStrategy
+                Jackson.forceArtifacts(project, cfg, rs)
+                Jackson.DataFormat.forceArtifacts(project, cfg, rs)
                 force(
                     Kotlin.bom,
                     Reflect.lib
