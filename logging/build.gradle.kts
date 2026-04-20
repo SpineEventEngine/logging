@@ -42,6 +42,7 @@ plugins {
 // This module configures `spinePublishing` on its own to change a prefix
 // specified by the root project.
 spinePublishing {
+    artifactPrefix = "spine-"
     destinations = rootProject.the<SpinePublishing>().destinations
     customPublishing = true
 }
@@ -74,4 +75,3 @@ kotlin {
 }
 
 tasks.registerTestTasks()
-
