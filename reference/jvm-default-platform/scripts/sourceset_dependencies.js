@@ -1,0 +1,1 @@
+sourceset_dependencies='{":jvm-default-platform/main":[]}'
