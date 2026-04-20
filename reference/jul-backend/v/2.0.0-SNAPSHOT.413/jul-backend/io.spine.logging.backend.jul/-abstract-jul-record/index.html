@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>AbstractJulRecord</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+        <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+      if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      } else {
+        const savedDarkMode = JSON.parse(storage)
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/safe-local-storage_blocking.js"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer="defer"></script>
+<link href="../../../images/logo-icon.svg">
+<link href="../../../styles/custom-styles.css" rel="Stylesheet">
+</head>
+<body>
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+            <a class="library-name--link" href="../../../index.html" tabindex="1">
+                    jul-backend
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+2.0.0-SNAPSHOT.413        </div>
+        <div class="navigation-controls">
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector jvm-like" data-active="" aria-pressed="true"
+                        data-filter=":jul-backend/main">jvm</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":jul-backend/main"
+                                       data-filter=":jul-backend/main"/>
+                                <span class="checkbox--icon"></span>
+                                jvm
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </ul>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config='{"defaultSize": 280, "minSize": 200, "maxSize": 400}'>
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                    data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
+                            <span>
+                                    jul-backend
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="jul-backend::io.spine.logging.backend.jul/AbstractJulRecord///PointingToDeclaration//359441910">
+  <div class="breadcrumbs"><a href="../../../index.html">jul-backend</a><span class="delimiter">/</span><a href="../index.html">io.spine.logging.backend.jul</a><span class="delimiter">/</span><span class="current">AbstractJulRecord</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Abstract</span><wbr></wbr><span>Jul</span><wbr></wbr><span><span>Record</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":jul-backend/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">class </span><a href="index.html">AbstractJulRecord</a> : <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.logging/java/util/logging/LogRecord.html">LogRecord</a><span class="source-link-wrapper"><span class="source-link" data-element-type="source-link">(<a href="https://github.com/SpineEventEngine/spine-logging/tree/master/jul-backend/src/main/kotlin/io/spine/logging/backend/jul/AbstractJulRecord.kt#L94">source</a>)</span></span></div><p class="paragraph">Abstract base for <code class="lang-kotlin">java.util.logging</code> (JUL) log records.</p><p class="paragraph">This class supports three distinct modes of operation, depending on the state of the message and/or parameters:</p><h2 class="">Non-null message, <code class="lang-kotlin">null</code> or empty parameters</h2><p class="paragraph">This state is reached either when <a href="get-message.html">getMessage</a> is first called, or if an explicit non-null message is set via <a href="set-message.html">setMessage</a> (without setting any parameters). In this state, the message is considered to be formatted, and just returned via <a href="get-message.html">getMessage</a>.</p><h2 class="">Non-null message, non-empty parameters</h2><p class="paragraph">This state is only reached if a user calls both <a href="set-message.html">setMessage</a> and <a href="set-parameters.html">setParameters</a>. In this state the message is treated as is it were a brace-format log message, and no formatting is attempted. Any relationship between this value, and the log message implied by the contained <span data-unresolved-link="io.spine.logging.backend/LogData///PointingToDeclaration/">LogData</span> and <span data-unresolved-link="io.spine.logging.backend/Metadata///PointingToDeclaration/">Metadata</span> is lost.</p><p class="paragraph">For many reasons it is never a good idea for users to modify unknown <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.logging/java/util/logging/LogRecord.html">LogRecord</a> instances, but this does happen occasionally, so this class supports that in a best effort way, but users are always recommended to copy <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.logging/java/util/logging/LogRecord.html">LogRecord</a> instances if they need to modify them.</p><h2 class="">Corollary</h2><p class="paragraph">Because of the defined states above there are a few small, but necessary, changes to behaviour in this class as compared to the &quot;vanilla&quot; JDK <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.logging/java/util/logging/LogRecord.html">LogRecord</a>.</p><ul><li><p class="paragraph">Since the &quot;message&quot; field being <code class="lang-kotlin">null</code> indicates a private state, calling <code class="lang-kotlin">setMessage(null)</code> from outside this class is equivalent to calling <code class="lang-kotlin">setMessage(&quot;&quot;)</code>, and will not reset the instance to its initial &quot;unformatted&quot; state. This is within specification for <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.logging/java/util/logging/LogRecord.html">LogRecord</a> since the documentation for <a href="get-message.html">getMessage</a> says that a return value of <code class="lang-kotlin">null</code> is equivalent to the empty string.</p></li><li><p class="paragraph">Setting the parameters to <code class="lang-kotlin">null</code> from outside this class will reset the parameters to a static singleton empty array. From outside this class, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.logging/java/util/logging/LogRecord.html#getParameters()">getParameters</a> is never observed to contain <code class="lang-kotlin">null</code>. This is also within specification for <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.logging/java/util/logging/LogRecord.html">LogRecord</a>.</p></li><li><p class="paragraph">Setting parameters from outside this class (to any value) will also result in the log message being formatted and cached (if it hadn't been set already). This is to avoid situations in which parameters are set, but the underlying message is still <code class="lang-kotlin">null</code>.</p></li><li><p class="paragraph"><code class="lang-kotlin">ResourceBundles</code> are not supported by <code class="lang-kotlin">AbstractLogRecord</code> and any attempt to set them is ignored.</p></li></ul><h4 class="tableheader">See also</h4><div class="table"><div class="table-row table-row_content" data-filterable-current=":jul-backend/main" data-filterable-set=":jul-backend/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div></div></span></div><div><div class="title"><p class="paragraph"><a href="https://rb.gy/yrrs4">Original Java code</a> for historical context.</p></div></div></div></div></div><h4 class="tableheader">Inheritors</h4><div class="table"><div class="table-row table-row_content" data-filterable-current=":jul-backend/main" data-filterable-set=":jul-backend/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="../-jul-record/index.html">JulRecord</a></div></span></div><div></div></div></div></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="tableheader">Constructors</h2>
+        <div class="table"><a data-name="-731755990%2FConstructors%2F359441910" anchor-label="AbstractJulRecord" id="-731755990%2FConstructors%2F359441910" data-filterable-set=":jul-backend/main"></a>
+          <div class="table-row table-row_content" data-togglable="CONSTRUCTOR" data-filterable-current=":jul-backend/main" data-filterable-set=":jul-backend/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-abstract-jul-record.html"><span>Abstract</span><wbr></wbr><span>Jul</span><wbr></wbr><span><span>Record</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-731755990%2FConstructors%2F359441910"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":jul-backend/main"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">data<span class="token operator">: </span><span data-unresolved-link="io.spine.logging.backend/LogData///PointingToDeclaration/">LogData</span><span class="token punctuation">, </span></span><span class="parameter ">scope<span class="token operator">: </span><span data-unresolved-link="io.spine.logging.backend/Metadata///PointingToDeclaration/">Metadata</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Constructs a log record for normal logging without filling in format-specific fields. Subclasses calling this constructor are expected to additionally call <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.logging/java/util/logging/LogRecord.html#setThrown(kotlin.Throwable)">setThrown</a> and perhaps <a href="set-message.html">setMessage</a> (depending on whether eager message caching is desired).</p></div><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">error<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-runtime-exception/index.html">RuntimeException</a><span class="token punctuation">, </span></span><span class="parameter ">data<span class="token operator">: </span><span data-unresolved-link="io.spine.logging.backend/LogData///PointingToDeclaration/">LogData</span><span class="token punctuation">, </span></span><span class="parameter ">scope<span class="token operator">: </span><span data-unresolved-link="io.spine.logging.backend/Metadata///PointingToDeclaration/">Metadata</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Constructs a log record in response to an exception during a previous logging attempt.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="tableheader">Properties</h2>
+        <div class="table"><a data-name="-460468545%2FProperties%2F359441910" anchor-label="message" id="-460468545%2FProperties%2F359441910" data-filterable-set=":jul-backend/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":jul-backend/main" data-filterable-set=":jul-backend/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="message.html"><span><span>message</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-460468545%2FProperties%2F359441910"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":jul-backend/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">var </span><a href="message.html">message</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="tableheader">Functions</h2>
+        <div class="table"><a data-name="-2129763300%2FFunctions%2F359441910" anchor-label="getLogData" id="-2129763300%2FFunctions%2F359441910" data-filterable-set=":jul-backend/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":jul-backend/main" data-filterable-set=":jul-backend/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-log-data.html"><span>get</span><wbr></wbr><span>Log</span><wbr></wbr><span><span>Data</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2129763300%2FFunctions%2F359441910"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":jul-backend/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="get-log-data.html"><span class="token function">getLogData</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="io.spine.logging.backend/LogData///PointingToDeclaration/">LogData</span></div><div class="brief "><p class="paragraph">Returns the <span data-unresolved-link="io.spine.logging.backend/LogData///PointingToDeclaration/">LogData</span> instance encapsulating the current fluent log statement.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1410466845%2FFunctions%2F359441910" anchor-label="getLogMessageFormatter" id="-1410466845%2FFunctions%2F359441910" data-filterable-set=":jul-backend/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":jul-backend/main" data-filterable-set=":jul-backend/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-log-message-formatter.html"><span>get</span><wbr></wbr><span>Log</span><wbr></wbr><span>Message</span><wbr></wbr><span><span>Formatter</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1410466845%2FFunctions%2F359441910"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":jul-backend/main"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="get-log-message-formatter.html"><span class="token function">getLogMessageFormatter</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="io.spine.logging.backend/LogMessageFormatter///PointingToDeclaration/">LogMessageFormatter</span></div><div class="brief "><p class="paragraph">Returns the formatter used when formatting <span data-unresolved-link="io.spine.logging.backend/LogData///PointingToDeclaration/">LogData</span>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-198098109%2FFunctions%2F359441910" anchor-label="getMessage" id="-198098109%2FFunctions%2F359441910" data-filterable-set=":jul-backend/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":jul-backend/main" data-filterable-set=":jul-backend/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-message.html"><span>get</span><wbr></wbr><span><span>Message</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-198098109%2FFunctions%2F359441910"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":jul-backend/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-message.html"><span class="token function">getMessage</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="861769831%2FFunctions%2F359441910" anchor-label="getMetadataProcessor" id="861769831%2FFunctions%2F359441910" data-filterable-set=":jul-backend/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":jul-backend/main" data-filterable-set=":jul-backend/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-metadata-processor.html"><span>get</span><wbr></wbr><span>Metadata</span><wbr></wbr><span><span>Processor</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="861769831%2FFunctions%2F359441910"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":jul-backend/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="get-metadata-processor.html"><span class="token function">getMetadataProcessor</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="io.spine.logging.backend/MetadataProcessor///PointingToDeclaration/">MetadataProcessor</span></div><div class="brief "><p class="paragraph">Returns the immutable <span data-unresolved-link="io.spine.logging.backend/MetadataProcessor///PointingToDeclaration/">MetadataProcessor</span> which provides a unified view of scope and log site metadata.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1072746386%2FFunctions%2F359441910" anchor-label="setMessage" id="-1072746386%2FFunctions%2F359441910" data-filterable-set=":jul-backend/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":jul-backend/main" data-filterable-set=":jul-backend/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-message.html"><span>set</span><wbr></wbr><span><span>Message</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1072746386%2FFunctions%2F359441910"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":jul-backend/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="set-message.html"><span class="token function">setMessage</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">message<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1778063592%2FFunctions%2F359441910" anchor-label="setParameters" id="-1778063592%2FFunctions%2F359441910" data-filterable-set=":jul-backend/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":jul-backend/main" data-filterable-set=":jul-backend/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-parameters.html"><span>set</span><wbr></wbr><span><span>Parameters</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1778063592%2FFunctions%2F359441910"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":jul-backend/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="set-parameters.html"><span class="token function">setParameters</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">parameters<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span class="token operator">&lt;</span><span class="token keyword">out </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span><span class="token operator">?</span></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-741090401%2FFunctions%2F359441910" anchor-label="setResourceBundle" id="-741090401%2FFunctions%2F359441910" data-filterable-set=":jul-backend/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":jul-backend/main" data-filterable-set=":jul-backend/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-resource-bundle.html"><span>set</span><wbr></wbr><span>Resource</span><wbr></wbr><span><span>Bundle</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-741090401%2FFunctions%2F359441910"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":jul-backend/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="set-resource-bundle.html"><span class="token function">setResourceBundle</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">bundle<span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ResourceBundle.html">ResourceBundle</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">No-op.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1470328440%2FFunctions%2F359441910" anchor-label="setResourceBundleName" id="-1470328440%2FFunctions%2F359441910" data-filterable-set=":jul-backend/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":jul-backend/main" data-filterable-set=":jul-backend/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-resource-bundle-name.html"><span>set</span><wbr></wbr><span>Resource</span><wbr></wbr><span>Bundle</span><wbr></wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1470328440%2FFunctions%2F359441910"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":jul-backend/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="set-resource-bundle-name.html"><span class="token function">setResourceBundleName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">No-op.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1099078968%2FFunctions%2F359441910" anchor-label="toString" id="-1099078968%2FFunctions%2F359441910" data-filterable-set=":jul-backend/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":jul-backend/main" data-filterable-set=":jul-backend/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="to-string.html"><span>to</span><wbr></wbr><span><span>String</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1099078968%2FFunctions%2F359441910"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":jul-backend/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="to-string.html"><span class="token function">toString</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>Copyright 2026, TeamDev</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
