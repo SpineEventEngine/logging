@@ -31,7 +31,7 @@ package io.spine.logging
  *
  * This interface is only intended to be implemented by logger backend classes as part of handling
  * metadata, and should not be used in any general application code, other than to implement
- * the [io.spine.logging.jvm.MetadataKey.emit] method in this class.
+ * the [io.spine.logging.MetadataKey.emit] method in this class.
  */
 public fun interface KeyValueHandler {
 
