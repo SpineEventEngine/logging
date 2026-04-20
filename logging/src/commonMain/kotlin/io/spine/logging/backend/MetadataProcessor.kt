@@ -30,10 +30,6 @@ import io.spine.annotation.VisibleForTesting
 import io.spine.logging.MetadataKey
 import io.spine.logging.backend.LightweightProcessor.Companion.MAX_LIGHTWEIGHT_ELEMENTS
 import io.spine.logging.checkCannotRepeat
-import kotlin.collections.map
-import kotlin.map
-import kotlin.sequences.map
-import kotlin.text.map
 
 /**
  * Processor combining scope and log-site metadata into a single view.
