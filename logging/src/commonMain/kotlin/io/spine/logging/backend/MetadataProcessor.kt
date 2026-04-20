@@ -125,11 +125,11 @@ public abstract class MetadataProcessor {
      *
      * Note that equal or identical repeated values are permitted, and no "deduplication" is
      * performed. This is very much in contrast to the [io.spine.logging.context.Tags]
-     * mechanism, which de-duplicates mappings and reorders keys and values to generate a
+     * mechanism, which deduplicates mappings and reorders keys and values to generate a
      * minimal, canonical representation.
      *
      * Furthermore, scope-supplied tags will be a single value in the scope metadata, keyed with
-     * the [LogContext.Key.TAGS] key.
+     * the [io.spine.logging.LogContext.Key.TAGS] key.
      *
      * @param handler The metadata handler to be called back.
      * @param context Arbitrary context instance to be passed into each callback.
@@ -532,7 +532,7 @@ private class SimpleProcessor(scope: Metadata, logged: Metadata) : MetadataProce
  * For repeatable keys, values are collected into mutable lists. For singleton keys,
  * any existing value is replaced with the new value.
  *
- * @param map The mutable map to add metadata entries to.
+ * @receiver The mutable map to add metadata entries to.
  * @param metadata The metadata entries to add.
  */
 private fun MutableMap<MetadataKey<Any>, Any>.addTo(metadata: Metadata) {
