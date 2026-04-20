@@ -50,7 +50,7 @@ import io.spine.logging.backend.Platform
  * the jar file containing the implementation. When creating an implementation of this class, you
  * can provide service metadata (and thereby allow users to get your implementation just by
  * including your jar file) by either manually including
- * a `META-INF/services/io.spine.logging.jvm.context.ContextDataProvider` file
+ * a `META-INF/services/io.spine.logging.context.ContextDataProvider` file
  * containing the name of your implementation class or by annotating your implementation class
  * using [`@AutoService(ContextDataProvider.class)`](https://github.com/google/auto/tree/master/service).
  * See the documentation of both [java.util.ServiceLoader] and `DefaultPlatform`

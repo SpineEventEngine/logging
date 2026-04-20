@@ -151,7 +151,7 @@ public abstract class Platform {
 
         /**
          * Obtains a custom logging level set for the logger with the given name via
-         * a [io.spine.logging.jvm.context.LogLevelMap] set in the current logging context.
+         * a [io.spine.logging.context.LogLevelMap] set in the current logging context.
          *
          * The method returns `null` if:
          * - There is no current logging context installed.

@@ -124,7 +124,7 @@ public abstract class MetadataProcessor {
      *   preceding log-site values.
      *
      * Note that equal or identical repeated values are permitted, and no "deduplication" is
-     * performed. This is very much in contrast to the [io.spine.logging.jvm.context.Tags]
+     * performed. This is very much in contrast to the [io.spine.logging.context.Tags]
      * mechanism, which de-duplicates mappings and reorders keys and values to generate a
      * minimal, canonical representation.
      *
