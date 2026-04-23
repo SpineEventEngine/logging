@@ -1,0 +1,11 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:io.spine.logging.backend.log4j2////PointingToDeclaration/log4j2-backend/io.spine.logging.backend.log4j2/index.html
+$dokka.location:io.spine.logging.backend.log4j2//toLog4j/io.spine.logging.Level#/PointingToDeclaration/log4j2-backend/io.spine.logging.backend.log4j2/to-log4j.html
+$dokka.location:io.spine.logging.backend.log4j2//toLog4jLogEvent/#kotlin.String#io.spine.logging.backend.LogData/PointingToDeclaration/log4j2-backend/io.spine.logging.backend.log4j2/to-log4j-log-event.html
+$dokka.location:io.spine.logging.backend.log4j2//toLog4jLogEvent/#kotlin.String#java.lang.RuntimeException#io.spine.logging.backend.LogData/PointingToDeclaration/log4j2-backend/io.spine.logging.backend.log4j2/to-log4j-log-event.html
+$dokka.location:io.spine.logging.backend.log4j2/Log4j2BackendFactory///PointingToDeclaration/log4j2-backend/io.spine.logging.backend.log4j2/-log4j2-backend-factory/index.html
+$dokka.location:io.spine.logging.backend.log4j2/Log4j2BackendFactory/Log4j2BackendFactory/#/PointingToDeclaration/log4j2-backend/io.spine.logging.backend.log4j2/-log4j2-backend-factory/-log4j2-backend-factory.html
+$dokka.location:io.spine.logging.backend.log4j2/Log4j2BackendFactory/create/#kotlin.String/PointingToDeclaration/log4j2-backend/io.spine.logging.backend.log4j2/-log4j2-backend-factory/create.html
+$dokka.location:io.spine.logging.backend.log4j2/Log4j2BackendFactory/toString/#/PointingToDeclaration/log4j2-backend/io.spine.logging.backend.log4j2/-log4j2-backend-factory/to-string.html
+io.spine.logging.backend.log4j2
