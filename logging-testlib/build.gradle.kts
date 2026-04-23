@@ -27,6 +27,8 @@
 import io.spine.dependency.boms.BomsPlugin
 import io.spine.dependency.lib.Log4j2
 import io.spine.dependency.local.Base
+import io.spine.gradle.publish.SpinePublishing
+import io.spine.gradle.publish.spinePublishing
 import io.spine.gradle.testing.registerTestTasks
 
 plugins {
@@ -36,6 +38,13 @@ plugins {
 apply<BomsPlugin>()
 
 group = "io.spine.tools"
+
+spinePublishing {
+    artifactPrefix = ""
+    toolArtifactPrefix = "NONE"
+    destinations = rootProject.the<SpinePublishing>().destinations
+    customPublishing = true
+}
 
 kotlin {
     sourceSets {
