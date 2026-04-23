@@ -40,17 +40,32 @@ To get a logger, one can use the following:
 1. Make a logging class implement `WithLogging` interface.
 2. Get a logger from `LoggingFactory`.
 
-The interface provides a default property `logger` that returns a logger
+### Logging via `WithLogging` interface
+
+The interface provides the property `logger` that returns a logger
 for the implementing class or object:
 
 ```kotlin
 class Example : WithLogging {
     fun doSomething() {
-        logger.atWarning() // Call to the default property of `WithLogging`.
+        logger.atWarning()
             .log { "..." }
     }
 }
 ```
+
+The `WithLogging` interface also provides shortcut properties for each logging level
+that provide the most compact way to invoke the logging API:
+
+```kotlin
+class Example : WithLogging {
+    fun doSomething() {
+        atWarning.log { "..." }
+    }
+}
+```
+
+### Obtaining a logger via `LoggingFactory`
 
 `LoggingFactory` has two methods that return a logger for the enclosing class
 and for the given `KClass`:
