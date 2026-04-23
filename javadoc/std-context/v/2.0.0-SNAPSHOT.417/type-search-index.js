@@ -1,0 +1,1 @@
+var typeSearchIndex = [{"p":"io.spine.logging.context.std","l":"StdContextDataProvider","url":"io/spine/logging/context/std/StdContextDataProvider.html"}, {"l":"All classes","url":"allclasses.html"}]
