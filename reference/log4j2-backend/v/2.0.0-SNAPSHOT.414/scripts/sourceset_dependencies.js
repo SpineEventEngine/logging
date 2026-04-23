@@ -1,0 +1,1 @@
+sourceset_dependencies='{":log4j2-backend/main":[]}'
