@@ -25,7 +25,9 @@
  */
 
 import io.spine.dependency.build.Dokka
+import io.spine.dependency.kotlinx.DateTime
 import io.spine.dependency.lib.Jackson
+import io.spine.dependency.lib.Kotlin
 import io.spine.dependency.local.Base
 import io.spine.dependency.local.Logging
 import io.spine.dependency.local.ToolBase
@@ -78,14 +80,16 @@ allprojects {
             exclude("io.spine:spine-validate")
             resolutionStrategy {
                 force(
+                    Kotlin.bom,
+                    DateTime.lib,
+                    Jackson.bom,
+                    JUnit.bom,
+                    Dokka.BasePlugin.lib,
                     Base.lib,
                     Base.annotations,
                     ToolBase.lib,
                     Logging.lib,
                     Validation.runtime,
-                    Dokka.BasePlugin.lib,
-                    Jackson.bom,
-                    JUnit.bom,
                 )
             }
         }
