@@ -72,16 +72,16 @@ installed.close()
 
 ## What is mapped
 
-| Spine `LogData` | OpenTelemetry log record |
-|---|---|
-| rendered message (without the `[CONTEXT …]` suffix) | `body` |
-| `level` | `severityNumber` (numeric threshold) and `severityText` (the level name) |
-| `timestampNanos` | `timestamp` (epoch nanoseconds) |
-| `LogContext.Key.LOG_CAUSE` | `exception` (recorded as `exception.*` attributes) |
-| `logSite` | `code.namespace`, `code.function`, `code.filepath`, `code.lineno` |
-| scope + log-site metadata | attributes, namespaced `spine.<label>` (repeated → list) |
-| `Tags` from `ScopedLoggingContext` | `spine.tag.<name>` attributes |
-| the active span | trace/span ids (the record is emitted with the implicit context) |
+| Spine `LogData`                                     | OpenTelemetry log record                                                 |
+|-----------------------------------------------------|--------------------------------------------------------------------------|
+| rendered message (without the `[CONTEXT …]` suffix) | `body`                                                                   |
+| `level`                                             | `severityNumber` (numeric threshold) and `severityText` (the level name) |
+| `timestampNanos`                                    | `timestamp` (epoch nanoseconds)                                          |
+| `LogContext.Key.LOG_CAUSE`                          | `exception` (recorded as `exception.*` attributes)                       |
+| `logSite`                                           | `code.namespace`, `code.function`, `code.filepath`, `code.lineno`        |
+| scope + log-site metadata                           | attributes, namespaced `spine.<label>` (repeated → list)                 |
+| `Tags` from `ScopedLoggingContext`                  | `spine.tag.<name>` attributes                                            |
+| the active span                                     | trace/span ids (the record is emitted with the implicit context)         |
 
 Metadata is emitted as **structured attributes**, not folded into the message text, so a
 downstream collector sees Spine's bounded-context, aggregate id, user, etc. as queryable
