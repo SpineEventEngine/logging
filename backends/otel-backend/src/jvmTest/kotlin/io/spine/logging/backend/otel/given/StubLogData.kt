@@ -74,7 +74,7 @@ internal class StubLogData(literalArgument: Any?) : LogData {
 
     @CanIgnoreReturnValue
     fun <T : Any> addMetadata(key: MetadataKey<T>, value: Any): StubLogData {
-        metadata.add(key, key.cast(value)!!)
+        metadata.add(key, requireNotNull(key.cast(value)) { "Value is not of the key's type." })
         return this
     }
 

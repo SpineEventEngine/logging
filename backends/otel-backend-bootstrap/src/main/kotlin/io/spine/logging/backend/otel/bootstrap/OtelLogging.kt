@@ -59,7 +59,7 @@ public object OtelLogging {
      * OTLP/HTTP to [endpoint] and installs it into [OtelBackendSettings].
      *
      * @param endpoint The OTLP/HTTP endpoint. Defaults to [DEFAULT_OTLP_HTTP_ENDPOINT].
-     * @return a handle that uninstalls the backend when closed.
+     * @return A handle that uninstalls the backend when closed.
      */
     public fun installOtlpHttp(endpoint: String = DEFAULT_OTLP_HTTP_ENDPOINT): AutoCloseable {
         val openTelemetry = createOpenTelemetry {

@@ -69,8 +69,8 @@ import io.spine.logging.backend.otel.logEvent
 class Checkout : WithLogging {
     fun complete(orderId: String) {
         logEvent("acme.orders.OrderCompleted")
-        // Attributes are added the usual way, via the fluent API and metadata keys:
-        // logger.atInfo().with(ORDER_ID, orderId).with(EVENT_NAME, name).log { … }
+        // Attributes are added via the fluent API and metadata keys:
+        // logger.atInfo().with(ORDER_ID, orderId).log { … }
     }
 }
 ```

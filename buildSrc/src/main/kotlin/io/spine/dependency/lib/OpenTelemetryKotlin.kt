@@ -41,6 +41,7 @@ import io.spine.dependency.Dependency
  * @see <a href="https://github.com/open-telemetry/opentelemetry-kotlin">opentelemetry-kotlin</a>
  * @see <a href="https://opentelemetry.io/docs/languages/kotlin/">Kotlin docs</a>
  */
+// https://github.com/open-telemetry/opentelemetry-kotlin
 @Suppress("unused")
 object OpenTelemetryKotlin : Dependency() {
 

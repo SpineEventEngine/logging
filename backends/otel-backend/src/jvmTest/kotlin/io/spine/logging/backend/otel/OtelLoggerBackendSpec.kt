@@ -28,6 +28,7 @@
 
 package io.spine.logging.backend.otel
 
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.maps.shouldContainKey
 import io.kotest.matchers.maps.shouldNotContainKey
@@ -40,6 +41,7 @@ import io.opentelemetry.kotlin.logging.SeverityNumber
 import io.spine.logging.Level
 import io.spine.logging.LogContext
 import io.spine.logging.MetadataKey
+import io.spine.logging.context.Tags
 import io.spine.logging.WithLogging
 import io.spine.logging.backend.otel.given.NoOpSpanProcessor
 import io.spine.logging.backend.otel.given.RecordingLogRecordProcessor
@@ -160,6 +162,46 @@ internal class OtelLoggerBackendSpec {
     }
 
     @Test
+    fun `map boolean and double attribute values`() {
+        backend.log(
+            StubLogData(LITERAL)
+                .addMetadata(BOOL_KEY, true)
+                .addMetadata(DOUBLE_KEY, 1.5)
+        )
+        with(lastRecord.attributes) {
+            this["spine.enabled"] shouldBe true
+            this["spine.ratio"] shouldBe 1.5
+        }
+    }
+
+    @Test
+    fun `expand tags into namespaced attributes`() {
+        val tags = Tags.builder()
+            .addTag("flag")             // Label-only → recorded as presence.
+            .addTag("user", "alice")    // Single value.
+            .addTag("ids", "a")         // Multiple values → list.
+            .addTag("ids", "b")
+            .build()
+        backend.log(StubLogData(LITERAL).addMetadata(LogContext.Key.TAGS, tags))
+        with(lastRecord.attributes) {
+            this["spine.tag.flag"] shouldBe true
+            this["spine.tag.user"] shouldBe "alice"
+            (this["spine.tag.ids"] as List<*>) shouldContainExactlyInAnyOrder listOf("a", "b")
+        }
+    }
+
+    @Test
+    fun `record a backend error via handleError`() {
+        backend.handleError(RuntimeException("boom"), StubLogData(LITERAL))
+        with(lastRecord) {
+            severityNumber shouldBe SeverityNumber.ERROR
+            severityText shouldBe SeverityNumber.ERROR.name
+            attributes shouldContainKey "spine.logging.bad_data"
+            attributes["exception.message"] shouldBe "boom"
+        }
+    }
+
+    @Test
     fun `correlate the record with the active span`() {
         val otel = createOpenTelemetry {
             tracerProvider { export { NoOpSpanProcessor() } }
@@ -216,5 +258,7 @@ internal class OtelLoggerBackendSpec {
         private const val TIMESTAMP_NANOS = 1_234_567_890L
         private val STR_KEY = MetadataKey.single<String>("str")
         private val INT_KEY = MetadataKey.repeated<Int>("int")
+        private val BOOL_KEY = MetadataKey.single<Boolean>("enabled")
+        private val DOUBLE_KEY = MetadataKey.single<Double>("ratio")
     }
 }
