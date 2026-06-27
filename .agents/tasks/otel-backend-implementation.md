@@ -2,7 +2,7 @@
 slug: otel-backend-implementation
 branch: otel
 owner: claude
-status: draft
+status: in-progress
 started: 2026-06-27
 related-memories: []
 ---
@@ -118,58 +118,46 @@ backends/otel-backend-bootstrap/   ← OPTIONAL, Phase 2 (jvmMain SDK init, turn
 
 ## Plan
 
-### Phase 0 — spike: native SDK end-to-end on JVM (de-risk)
-- [ ] Copy `core-jvm`'s `OpenTelemetryKotlin.kt` into
-      `buildSrc/src/main/kotlin/io/spine/dependency/lib/`; confirm the shape against
-      the `dependency-audit` skill. Add `AutoService`/`AutoServiceKsp` usage check —
-      both already exist ([`Auto.kt`](buildSrc/src/main/kotlin/io/spine/dependency/lib/Auto.kt), [`Ksp.kt`](buildSrc/src/main/kotlin/io/spine/dependency/build/Ksp.kt)).
-- [ ] Register the module: add `"otel-backend"` to `includeBackend(...)` in
+### Phase 0 — spike: native SDK end-to-end on JVM (de-risk) ✅
+- [x] Copy `core-jvm`'s `OpenTelemetryKotlin.kt` into
+      [`buildSrc/.../lib/OpenTelemetryKotlin.kt`](buildSrc/src/main/kotlin/io/spine/dependency/lib/OpenTelemetryKotlin.kt)
+      (0.4.0; api/noop/core/implementation/compat). `AutoService`/`AutoServiceKsp` already exist.
+- [x] Register the module: `"otel-backend"` added to `includeBackend(...)` in
       [`settings.gradle.kts`](settings.gradle.kts).
-- [ ] Create `backends/otel-backend/build.gradle.kts`: `plugins { kmp-module; ksp }`;
-      `commonMain` → `api(OpenTelemetryKotlin.api)` + `noop` + `project(":logging")`;
-      `jvmMain` → `AutoService.annotations`; `kspJvm(AutoServiceKsp.processor)`;
-      `jvmTest` → `OpenTelemetryKotlin.core` + `.implementation` + `logging-testlib` +
-      `runtimeOnly(project(":jvm-default-platform"))`. Add `@OptIn(ExperimentalApi::class)`.
-- [ ] **Verify the logs SDK DSL with `api-discovery` on `:implementation` 0.4.0** —
-      confirm the `createOpenTelemetry { loggerProvider { export { … } } }` shape and the
-      `LogRecordProcessor`/exporter type (the api cache only has `:api`, not the SDK).
-      Also confirm the **`emit(timestamp)` unit** (epoch nanos vs millis).
-- [ ] Build a `RecordingLogRecordProcessor` (mirror `core-jvm`'s `RecordingSpanProcessor`),
-      wire `createOpenTelemetry { loggerProvider { export { it } } }`, call
-      `OtelBackendSettings.use(...)`, log once through Spine, assert the record round-trips
-      (severity + body). This throwaway proof becomes the first real test.
+- [x] [`build.gradle.kts`](backends/otel-backend/build.gradle.kts): `plugins { kmp-module; ksp }`;
+      `commonMain` → `api(OpenTelemetryKotlin.api)` + `noop` + `:logging`; `jvmMain` →
+      `AutoService.annotations` + `kspJvm(AutoServiceKsp.processor)`; `jvmTest` → `core` +
+      `implementation` + `logging-testlib` + `runtimeOnly(:jvm-default-platform)`.
+      **Two build wrinkles found & fixed:** (1) KSP-on-KMP works via `kspJvm` (no fallback
+      needed); (2) `kmp-module` does NOT put the JUnit Platform on `jvmTest` (only
+      `jvm-module` configures the `test` task), so added an explicit
+      `tasks.named<Test>("jvmTest") { useJUnitPlatform() }`.
+- [x] **Logs SDK DSL + timestamp unit confirmed** (upstream `v0.4.0` source):
+      `createOpenTelemetry { loggerProvider { export { processor } } }`,
+      `LogRecordProcessor.onEmit(ReadWriteLogRecord, Context)`, `ReadableLogRecord`
+      getters, and `emit(timestamp)` = **epoch nanoseconds** (passes through unchanged).
+- [x] [`RecordingLogRecordProcessor`](backends/otel-backend/src/jvmTest/kotlin/io/spine/logging/backend/otel/given/RecordingLogRecordProcessor.kt)
+      (mirrors `core-jvm`'s `RecordingSpanProcessor`) drives the end-to-end test — no
+      in-memory-exporter artifact needed.
 
-### Phase 1 — production backend
-- [ ] `commonMain/OtelBackendSettings.kt`: `@Volatile private var instance = NoopOpenTelemetry`;
-      `fun use(openTelemetry: OpenTelemetry)`; `internal fun current()`. No-op default,
-      drop-before-`use`. KDoc it as a new convention (correction C6).
-- [ ] `commonMain/SeverityMapping.kt`: numeric-threshold `Level.toSeverityNumber()`
-      (report §5.1) → `FATAL/ERROR/WARN/INFO/DEBUG4(CONFIG)/DEBUG/TRACE2/TRACE`.
-- [ ] `commonMain/OtelLoggerBackend.kt`:
-      - `isLoggable(level)` → `logger.enabled(severityNumber = level.toSeverityNumber())`.
-      - `log(data)` → `MetadataProcessor.forScopeAndLogSite(Platform.getInjectedMetadata(), data.metadata)`;
-        `body = getLiteralLogMessage(data)`; `severityNumber`/`severityText = data.level.name`;
-        `exception = metadata.getSingleValue(LogContext.Key.LOG_CAUSE)`;
-        `timestamp = data.timestampNanos` (**unit confirmed in Phase 0**);
-        `context = null` (⇒ implicit/active context, per the `emit` KDoc);
-        `attributes = { applyAttributes(data, metadata) }`.
-      - `handleError(error, badData)` → emit an ERROR record carrying `badData.toString()`.
-- [ ] `commonMain/AttributeMapping.kt`: a `MetadataHandler<AttributesMutator>` via
-      `MetadataHandler.builder()`:
-      - LogSite → `code.namespace`/`code.function`/`code.filepath`/`code.lineno`.
-      - `handle(...)`: skip `LOG_CAUSE`; namespace keys `spine.<label>`; type-switch with
-        widening — `Boolean→setBooleanAttribute`, `Int/Short/Byte/Long→setLongAttribute`,
-        `Float/Double→setDoubleAttribute`, `String→setStringAttribute`, else `toString()`.
-      - `handleRepeated(key, values, ctx)`: accumulate into the matching `*ListAttribute`.
-      - `Tags` (from `ScopedLoggingContext`): surface as `spine.tag.<name>` (mirror `LogEvents.kt`).
-- [ ] `jvmMain/OtelBackendFactory.kt`: `@AutoService(BackendFactory::class) class … : BackendFactory()`;
-      `name = loggingClass.replace('$', '.')`,
-      `OtelBackendSettings.current().loggerProvider.getLogger(name)`, return
-      `OtelLoggerBackend(logger, loggerName = name)`; override `toString()`.
-- [ ] Tests (`jvmTest`, Kotest + JUnit5, `internal` `*Spec`, `@DisplayName`): severity
-      mapping; body has **no** `[CONTEXT …]`; attributes namespaced + repeated→list +
-      widened numerics; throwable recorded; logger-name routing; `isLoggable` gating;
-      `@AutoService` discovery (record captured through the full Spine→DefaultPlatform path).
+### Phase 1 — production backend ✅
+- [x] [`OtelBackendSettings.kt`](backends/otel-backend/src/commonMain/kotlin/io/spine/logging/backend/otel/OtelBackendSettings.kt):
+      `@Volatile` holder, `NoopOpenTelemetry` default, `use()`/`current()`. Documented as new convention.
+- [x] [`SeverityMapping.kt`](backends/otel-backend/src/commonMain/kotlin/io/spine/logging/backend/otel/SeverityMapping.kt):
+      numeric-threshold `Level.toSeverityNumber()`; CONFIG → `DEBUG4`.
+- [x] [`OtelLoggerBackend.kt`](backends/otel-backend/src/commonMain/kotlin/io/spine/logging/backend/otel/OtelLoggerBackend.kt):
+      `isLoggable` via `enabled`; `log` maps body (`getLiteralLogMessage`), severity, nanos
+      timestamp, cause→exception, attributes; implicit context for correlation; `handleError`.
+- [x] [`AttributeMapping.kt`](backends/otel-backend/src/commonMain/kotlin/io/spine/logging/backend/otel/AttributeMapping.kt):
+      `MetadataHandler.builder()` with default single + `setDefaultRepeatedHandler`
+      (repeated→`*ListAttribute`), `.ignoring(LOG_CAUSE)`, `value is Tags` → `spine.tag.<name>`;
+      LogSite → `code.*`; numeric widening (no `Int`/`Float` setters in `AttributesMutator`).
+- [x] [`OtelBackendFactory.kt`](backends/otel-backend/src/jvmMain/kotlin/io/spine/logging/backend/otel/OtelBackendFactory.kt):
+      `@AutoService(BackendFactory::class)`; resolves the logger from `OtelBackendSettings`.
+- [x] [`OtelLoggerBackendSpec`](backends/otel-backend/src/jvmTest/kotlin/io/spine/logging/backend/otel/OtelLoggerBackendSpec.kt) —
+      **10 tests, all passing**: body, no `[CONTEXT]`, severity number+text, `code.*`,
+      `spine.*` single + repeated→list, cause→`exception.*` (not `spine.cause`), timestamp
+      passthrough, and factory resolution via `OtelBackendSettings`.
 
 ### Phase 2 — bootstrap module + correlation hardening
 - [ ] `backends/otel-backend-bootstrap` (kmp-module, jvmMain SDK init): read config,
@@ -235,5 +223,9 @@ backends/otel-backend-bootstrap/   ← OPTIONAL, Phase 2 (jvmMain SDK init, turn
   (proven in `core-jvm/server-otel`) and **`@AutoService` + KSP** registration. Module
   retargeted to **`kmp-module`** (JVM only) with the mapping in `commonMain` to minimise
   future KMP migration. Verified the real 0.4.0 Logs API from the api-discovery cache
-  and the `core-jvm` `OpenTelemetryKotlin` dep object / native-SDK test pattern; updated
-  the dependency, build, and testing steps accordingly. Awaiting approval to execute.
+  and the `core-jvm` `OpenTelemetryKotlin` dep object / native-SDK test pattern.
+- 2026-06-27 — **Phases 0 & 1 implemented and verified.** `./gradlew :otel-backend:build`
+  is green (compile + detekt + kover + license); `:otel-backend:jvmTest` runs **10/10
+  passing** (had to JDK-17 the build and add `useJUnitPlatform()` to the kmp `jvmTest`).
+  KSP emits the `@AutoService` service file naming `OtelBackendFactory`. Timestamp unit
+  and logs SDK DSL confirmed against upstream `v0.4.0`. Phases 2–3 remain.

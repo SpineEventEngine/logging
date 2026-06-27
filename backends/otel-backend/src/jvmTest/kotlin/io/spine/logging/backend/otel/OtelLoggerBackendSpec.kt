@@ -1,0 +1,169 @@
+/*
+ * Copyright 2026, TeamDev. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Redistribution and use in source and/or binary forms, with or without
+ * modification, must retain the above copyright notice and the following
+ * disclaimer.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+@file:OptIn(ExperimentalApi::class)
+
+package io.spine.logging.backend.otel
+
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.maps.shouldContainKey
+import io.kotest.matchers.maps.shouldNotContainKey
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldNotContain
+import io.opentelemetry.kotlin.ExperimentalApi
+import io.opentelemetry.kotlin.createOpenTelemetry
+import io.opentelemetry.kotlin.logging.SeverityNumber
+import io.spine.logging.Level
+import io.spine.logging.LogContext
+import io.spine.logging.MetadataKey
+import io.spine.logging.backend.otel.given.RecordingLogRecordProcessor
+import io.spine.logging.backend.otel.given.StubLogData
+import io.spine.logging.backend.otel.given.StubLogSite
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+
+@DisplayName("`OtelLoggerBackend` should")
+internal class OtelLoggerBackendSpec {
+
+    private lateinit var processor: RecordingLogRecordProcessor
+    private lateinit var backend: OtelLoggerBackend
+    private val lastRecord get() = processor.records.last()
+
+    @BeforeEach
+    fun setUp() {
+        processor = RecordingLogRecordProcessor()
+        val otel = createOpenTelemetry {
+            loggerProvider {
+                export { processor }
+            }
+        }
+        val logger = otel.loggerProvider.getLogger(LOGGER_NAME)
+        backend = OtelLoggerBackend(logger, LOGGER_NAME)
+    }
+
+    @Test
+    fun `emit a literal message as the record body`() {
+        backend.log(StubLogData(LITERAL))
+        lastRecord.body shouldBe LITERAL
+    }
+
+    @Test
+    fun `not append the context block to the body`() {
+        backend.log(StubLogData(LITERAL).addMetadata(STR_KEY, "value"))
+        val body = lastRecord.body
+        body shouldBe LITERAL
+        (body as String) shouldNotContain "[CONTEXT"
+    }
+
+    @Test
+    fun `set the severity text from the level name`() {
+        backend.log(StubLogData(LITERAL).setLevel(Level.WARNING))
+        lastRecord.severityText shouldBe "WARNING"
+    }
+
+    @Test
+    fun `map a level to a severity number`() {
+        val expected = mapOf(
+            Level.FINEST to SeverityNumber.TRACE,
+            Level.FINER to SeverityNumber.TRACE2,
+            Level.DEBUG to SeverityNumber.DEBUG,
+            Level.CONFIG to SeverityNumber.DEBUG4,
+            Level.INFO to SeverityNumber.INFO,
+            Level.WARNING to SeverityNumber.WARN,
+            Level.ERROR to SeverityNumber.ERROR,
+            Level.FATAL to SeverityNumber.FATAL,
+        )
+        expected.forEach { (level, severity) ->
+            backend.log(StubLogData(level.name).setLevel(level))
+            lastRecord.severityNumber shouldBe severity
+        }
+    }
+
+    @Test
+    fun `record the log site as code attributes`() {
+        val site = StubLogSite("com.acme.Service", "handle", 42, "Service.kt")
+        backend.log(StubLogData(LITERAL).setLogSite(site))
+        with(lastRecord.attributes) {
+            this["code.namespace"] shouldBe "com.acme.Service"
+            this["code.function"] shouldBe "handle"
+            this["code.filepath"] shouldBe "Service.kt"
+            this["code.lineno"] shouldBe 42L
+        }
+    }
+
+    @Test
+    fun `namespace custom metadata under 'spine'`() {
+        backend.log(StubLogData(LITERAL).addMetadata(STR_KEY, "value"))
+        lastRecord.attributes["spine.str"] shouldBe "value"
+    }
+
+    @Test
+    fun `collect repeated metadata into a list`() {
+        backend.log(
+            StubLogData(LITERAL)
+                .addMetadata(INT_KEY, 1)
+                .addMetadata(INT_KEY, 2)
+        )
+        lastRecord.attributes["spine.int"] shouldBe listOf(1L, 2L)
+    }
+
+    @Test
+    fun `record the cause as an exception, not an attribute`() {
+        val cause = RuntimeException("Boom")
+        backend.log(StubLogData(LITERAL).addMetadata(LogContext.Key.LOG_CAUSE, cause))
+        with(lastRecord.attributes) {
+            this shouldContainKey "exception.message"
+            this["exception.message"] shouldBe "Boom"
+            this shouldNotContainKey "spine.cause"
+        }
+    }
+
+    @Test
+    fun `pass the timestamp through unchanged`() {
+        backend.log(StubLogData(LITERAL).setTimestampNanos(TIMESTAMP_NANOS))
+        lastRecord.timestamp shouldBe TIMESTAMP_NANOS
+    }
+
+    @Test
+    fun `resolve the injected OpenTelemetry instance via the factory`() {
+        OtelBackendSettings.use(
+            createOpenTelemetry { loggerProvider { export { processor } } }
+        )
+        val created = OtelBackendFactory().create("io.spine.Foo\$Bar")
+        created.loggerName shouldBe "io.spine.Foo.Bar"
+        created.log(StubLogData(LITERAL))
+        processor.records shouldHaveSize 1
+    }
+
+    companion object {
+        private const val LOGGER_NAME = "io.spine.LoggerName"
+        private const val LITERAL = "Hello world"
+        private const val TIMESTAMP_NANOS = 1_234_567_890L
+        private val STR_KEY = MetadataKey.single<String>("str")
+        private val INT_KEY = MetadataKey.repeated<Int>("int")
+    }
+}

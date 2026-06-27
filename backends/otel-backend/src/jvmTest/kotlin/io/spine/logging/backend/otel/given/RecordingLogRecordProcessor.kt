@@ -24,58 +24,37 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
+@file:OptIn(ExperimentalApi::class)
+
+package io.spine.logging.backend.otel.given
+
+import io.opentelemetry.kotlin.ExperimentalApi
+import io.opentelemetry.kotlin.context.Context
+import io.opentelemetry.kotlin.export.OperationResultCode
+import io.opentelemetry.kotlin.logging.export.LogRecordProcessor
+import io.opentelemetry.kotlin.logging.model.ReadWriteLogRecord
+import io.opentelemetry.kotlin.logging.model.ReadableLogRecord
+import java.util.Collections.synchronizedList
+
+/**
+ * A [LogRecordProcessor] that records every emitted log record in memory,
+ * for assertions in tests.
+ */
+internal class RecordingLogRecordProcessor : LogRecordProcessor {
+
+    private val recorded: MutableList<ReadableLogRecord> = synchronizedList(mutableListOf())
+
+    /**
+     * An immutable snapshot of the records emitted so far.
+     */
+    val records: List<ReadableLogRecord>
+        get() = synchronized(recorded) { recorded.toList() }
+
+    override fun onEmit(log: ReadWriteLogRecord, context: Context) {
+        recorded.add(log)
     }
-}
 
-rootProject.name = "logging"
+    override suspend fun forceFlush(): OperationResultCode = OperationResultCode.Success
 
-include(
-    "logging",
-    "logging-testlib",
-)
-
-includeBackend(
-    "log4j2-backend",
-    "jul-backend",
-    "probe-backend",
-    "otel-backend",
-)
-
-includeContext(
-    "context-tests",
-    "grpc-context",
-    "std-context",
-)
-
-includePlatform(
-    "jvm-default-platform"
-)
-
-includeTest(
-    "fixtures",
-    "jvm-jul-backend-std-context",
-    "jvm-jul-backend-grpc-context",
-    "jvm-log4j2-backend-std-context",
-    "jvm-slf4j-jdk14-backend-std-context",
-    "jvm-slf4j-reload4j-backend-std-context",
-    "smoke-test",
-)
-
-fun includeBackend(vararg modules: String) = includeTo("backends", modules)
-
-fun includeContext(vararg modules: String) = includeTo("contexts", modules)
-
-fun includePlatform(vararg modules: String) = includeTo("platforms", modules)
-
-fun includeTest(vararg modules: String) = includeTo("tests", modules)
-
-fun includeJvm(vararg modules: String) = includeTo("jvm", modules)
-
-fun includeTo(directory: String, modules: Array<out String>) = modules.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("$directory/$name")
+    override suspend fun shutdown(): OperationResultCode = OperationResultCode.Success
 }
