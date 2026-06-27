@@ -67,8 +67,8 @@ internal class OtelLoggerBackendSpec {
                 export { processor }
             }
         }
-        val logger = otel.loggerProvider.getLogger(LOGGER_NAME)
-        backend = OtelLoggerBackend(logger, LOGGER_NAME)
+        OtelBackendSettings.use(otel)
+        backend = OtelLoggerBackend(LOGGER_NAME)
     }
 
     @AfterEach
@@ -207,7 +207,8 @@ internal class OtelLoggerBackendSpec {
             tracerProvider { export { NoOpSpanProcessor() } }
             loggerProvider { export { processor } }
         }
-        val correlated = OtelLoggerBackend(otel.loggerProvider.getLogger(LOGGER_NAME), LOGGER_NAME)
+        OtelBackendSettings.use(otel)
+        val correlated = OtelLoggerBackend(LOGGER_NAME)
         val span = otel.tracerProvider.getTracer(LOGGER_NAME).startSpan("unit")
         val scope = otel.context.implicit().storeSpan(span).attach()
         try {

@@ -27,12 +27,24 @@
 import io.spine.dependency.lib.AutoService
 import io.spine.dependency.lib.AutoServiceKsp
 import io.spine.dependency.lib.OpenTelemetryKotlin
+import io.spine.gradle.publish.SpinePublishing
+import io.spine.gradle.publish.spinePublishing
 import io.spine.gradle.testing.registerTestTasks
 import org.gradle.api.tasks.testing.Test
 
 plugins {
     `kmp-module`
+    `kmp-publish`
     ksp
+}
+
+// `kmp-module` publications are configured by `kmp-publish` (the `spinePublishing`
+// extension does not yet support Kotlin Multiplatform). The artifact is published as
+// `spine-logging-otel-backend`, matching the prefix used by the root project.
+spinePublishing {
+    artifactPrefix = "spine-logging-"
+    destinations = rootProject.the<SpinePublishing>().destinations
+    customPublishing = true
 }
 
 kotlin {

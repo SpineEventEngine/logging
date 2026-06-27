@@ -51,8 +51,7 @@ public class OtelBackendFactory : BackendFactory() {
 
     override fun create(loggingClass: String): LoggerBackend {
         val name = loggingClass.replace('$', '.')
-        val logger = OtelBackendSettings.current().loggerProvider.getLogger(name)
-        return OtelLoggerBackend(logger, loggerName = name)
+        return OtelLoggerBackend(name)
     }
 
     /** Returns a fully-qualified name of this class. */

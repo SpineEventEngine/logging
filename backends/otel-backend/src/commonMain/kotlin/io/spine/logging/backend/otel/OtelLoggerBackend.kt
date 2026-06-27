@@ -56,13 +56,36 @@ import io.spine.logging.backend.SimpleMessageFormatter
  * left implicit (`context = null`), so the SDK stamps the current span's
  * trace and span identifiers onto the record.
  *
- * @param logger The OpenTelemetry logger to emit records with.
- * @param loggerName The instrumentation scope name, used by the SPI.
+ * The underlying OpenTelemetry [Logger] is resolved from [OtelBackendSettings] on
+ * every call rather than captured once. The platform caches a backend per logging
+ * class, so a backend may be created (for example, when a class first logs) before
+ * the application installs the SDK via [OtelBackendSettings.use]; resolving lazily
+ * lets such a backend pick up the instance once it is installed, and also lets it
+ * follow a later replacement (for example, the bootstrap restoring the no-op
+ * instance on shutdown).
+ *
+ * @param scopeName The instrumentation scope name (the logging class name with `$`
+ *   replaced by `.`), used both as the SPI [loggerName] and as the OpenTelemetry
+ *   logger name.
  */
 internal class OtelLoggerBackend(
-    private val logger: Logger,
-    override val loggerName: String?,
+    private val scopeName: String,
 ) : LoggerBackend() {
+
+    override val loggerName: String?
+        get() = scopeName
+
+    /**
+     * The OpenTelemetry logger, resolved from the currently installed instance.
+     *
+     * It is read on every access rather than captured once, so that installing or
+     * replacing the `OpenTelemetry` instance via [OtelBackendSettings] after this
+     * backend was created (the platform caches a backend per logging class) takes
+     * effect for subsequent records. The provider caches loggers by name, so the
+     * lookup is cheap.
+     */
+    private val logger: Logger
+        get() = OtelBackendSettings.current().loggerProvider.getLogger(scopeName)
 
     override fun isLoggable(level: Level): Boolean =
         logger.enabled(severityNumber = level.toSeverityNumber())
