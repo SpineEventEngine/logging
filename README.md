@@ -16,10 +16,12 @@ and the introduction of fluent logging API in [SLF4J v2.0.0][fluent-slf4j].
 
 ## Current status: Experimental
 
-Please note that this library is still in the experimental phase of development,
-and hence, its API may undergo significant changes. As such, we advise using
-this library cautiously in your projects until it has reached a stable
-release stage.
+This library is actively used across the SpineEventEngine family of projects, and its
+JVM API is expected to be stable enough for use in JVM-based projects.
+
+The status remains **Experimental** because we are evolving the library toward Kotlin
+Multiplatform (KMP). That work may introduce API changes, so until it settles we advise
+JVM users to pin a specific version and review the release notes before upgrading.
 
 ## Simple example
 
@@ -94,6 +96,8 @@ The following backends are available:
 
 * `io.spine:spine-logging-jul-backend` – the default JUL-based backend.
 * `io.spine:spine-logging-log4j2-backend` – Log4j2 backend.
+* `io.spine:spine-logging-otel-backend` – OpenTelemetry backend.
+  See [the OpenTelemetry backend guide](docs/otel-backend.md).
 
 The default backend is supplied along the logging library itself. To use it,
 one just needs to not supply any other backend. Then JUL backend will be
