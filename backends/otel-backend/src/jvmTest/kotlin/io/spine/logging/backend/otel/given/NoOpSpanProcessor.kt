@@ -24,59 +24,34 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-    }
-}
+@file:OptIn(ExperimentalApi::class)
 
-rootProject.name = "logging"
+package io.spine.logging.backend.otel.given
 
-include(
-    "logging",
-    "logging-testlib",
-)
+import io.opentelemetry.kotlin.ExperimentalApi
+import io.opentelemetry.kotlin.context.Context
+import io.opentelemetry.kotlin.export.OperationResultCode
+import io.opentelemetry.kotlin.tracing.export.SpanProcessor
+import io.opentelemetry.kotlin.tracing.model.ReadWriteSpan
+import io.opentelemetry.kotlin.tracing.model.ReadableSpan
 
-includeBackend(
-    "log4j2-backend",
-    "jul-backend",
-    "probe-backend",
-    "otel-backend",
-    "otel-backend-bootstrap",
-)
+/**
+ * A [SpanProcessor] that does nothing, used only to obtain a real SDK tracer
+ * (which assigns valid span contexts) in trace-correlation tests.
+ */
+internal class NoOpSpanProcessor : SpanProcessor {
 
-includeContext(
-    "context-tests",
-    "grpc-context",
-    "std-context",
-)
+    override fun onStart(span: ReadWriteSpan, parentContext: Context): Unit = Unit
 
-includePlatform(
-    "jvm-default-platform"
-)
+    override fun onEnding(span: ReadWriteSpan): Unit = Unit
 
-includeTest(
-    "fixtures",
-    "jvm-jul-backend-std-context",
-    "jvm-jul-backend-grpc-context",
-    "jvm-log4j2-backend-std-context",
-    "jvm-slf4j-jdk14-backend-std-context",
-    "jvm-slf4j-reload4j-backend-std-context",
-    "smoke-test",
-)
+    override fun onEnd(span: ReadableSpan): Unit = Unit
 
-fun includeBackend(vararg modules: String) = includeTo("backends", modules)
+    override fun isStartRequired(): Boolean = false
 
-fun includeContext(vararg modules: String) = includeTo("contexts", modules)
+    override fun isEndRequired(): Boolean = false
 
-fun includePlatform(vararg modules: String) = includeTo("platforms", modules)
+    override suspend fun forceFlush(): OperationResultCode = OperationResultCode.Success
 
-fun includeTest(vararg modules: String) = includeTo("tests", modules)
-
-fun includeJvm(vararg modules: String) = includeTo("jvm", modules)
-
-fun includeTo(directory: String, modules: Array<out String>) = modules.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("$directory/$name")
+    override suspend fun shutdown(): OperationResultCode = OperationResultCode.Success
 }

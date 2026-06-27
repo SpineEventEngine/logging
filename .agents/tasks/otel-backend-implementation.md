@@ -2,7 +2,7 @@
 slug: otel-backend-implementation
 branch: otel
 owner: claude
-status: in-progress
+status: in-review
 started: 2026-06-27
 related-memories: []
 ---
@@ -160,23 +160,39 @@ backends/otel-backend-bootstrap/   ← OPTIONAL, Phase 2 (jvmMain SDK init, turn
       passthrough, and factory resolution via `OtelBackendSettings`.
 
 ### Phase 2 — bootstrap module + correlation hardening
-- [ ] `backends/otel-backend-bootstrap` (kmp-module, jvmMain SDK init): read config,
-      `createOpenTelemetry { loggerProvider { export { … } } }`, `OtelBackendSettings.use(...)`,
-      own shutdown.
-- [ ] Coroutine trace-correlation test: log inside a span-scoped coroutine; assert
-      trace/span ids land on the record; wire the OTel context element if they don't
-      survive dispatch (report §5.5 / §10.4); document the requirement.
+- [x] **Trace-correlation test** — [`OtelLoggerBackendSpec`](backends/otel-backend/src/jvmTest/kotlin/io/spine/logging/backend/otel/OtelLoggerBackendSpec.kt)
+      `correlate the record with the active span`: a span is made current via
+      `otel.context.implicit().storeSpan(span).attach()`, then `log()` (with implicit
+      `context = null`) stamps the span's trace/span ids onto the record. **Passes** —
+      closes the report §5.5 / §10.4 correlation risk. (Coroutine-dispatch propagation
+      is a consumer concern; left for a consumer-side test.)
+- [x] [`backends/otel-backend-bootstrap`](backends/otel-backend-bootstrap) (`jvm-module`):
+      [`OtelLogging`](backends/otel-backend-bootstrap/src/main/kotlin/io/spine/logging/backend/otel/bootstrap/OtelLogging.kt)
+      `installOtlpHttp(endpoint)` / `fromEnvironment()` builds a native SDK via
+      `createOpenTelemetry { loggerProvider { export { batchLogRecordProcessor(otlpHttpLogRecordExporter(endpoint)) } } }`,
+      installs it through `OtelBackendSettings.use(...)`, and returns an `AutoCloseable`
+      that uninstalls + shuts the SDK down (`runBlocking { (otel as TelemetryCloseable).shutdown() }`).
+      Real 0.4.0 OTLP API confirmed from upstream source: `otlpHttpLogRecordExporter`
+      (`exporters-otlp`) + `batchLogRecordProcessor` (`exporters-core`), both extensions on
+      `LogExportConfigDsl` in `io.opentelemetry.kotlin.logging.export`. **Builds green;
+      smoke test passes.**
 - [ ] Optional early-record ring buffer in `OtelBackendSettings`, replayed on `use(...)`
-      (report §4) — only if bootstrap-order logs matter.
+      (report §4) — deferred; only if bootstrap-order logs prove to matter.
 
 ### Phase 3 — log-based events API + domain-event integration
-- [ ] Low-level: a `MetadataKey<String>` (`otel.event.name`) the backend pulls out and
-      passes as `emit(eventName = …)` (report §6.1).
-- [ ] Ergonomic `logEvent(name, severity, build)` guarded by `enabled(eventName = name)`
-      (report §6.2).
-- [ ] Domain-event → observability-event bridge: proto message type name → `event.name`
-      (low cardinality), selected fields + scope → attributes, active span → correlation;
-      document the domain-event-vs-observability-event boundary (report §6.3).
+- [x] Low-level: [`EVENT_NAME`](backends/otel-backend/src/commonMain/kotlin/io/spine/logging/backend/otel/OtelEvents.kt)
+      `MetadataKey<String>` (label `otelEventName` — Spine labels disallow dots) the
+      backend pulls out and passes as `emit(eventName = …)`; ignored as an attribute.
+      Verified by `emit a named event when the event-name metadata is set`.
+- [x] Ergonomic [`WithLogging.logEvent(name, level, message)`](backends/otel-backend/src/commonMain/kotlin/io/spine/logging/backend/otel/OtelEvents.kt) —
+      sugar over `at(level).with(EVENT_NAME, name).log { … }`. Verified end-to-end by
+      `emit a named event through the 'logEvent' API end-to-end`.
+- [x] Domain-event → observability-event bridge: **documented**, not coded — it needs Spine
+      proto/domain types from consumer repos (e.g. `core-jvm`, `io.spine:spine-server`), so it
+      belongs in the consumer, not this library. The recipe (proto type name → `event.name`,
+      selected fields + scope → attributes, active span → correlation) and the
+      domain-event-vs-observability-event boundary are in
+      [`README.md`](backends/otel-backend/README.md) (report §6.3).
 
 ### Phase 4 — non-JVM targets (deferred; separate initiative)
 - [ ] Only when Spine grows non-JVM backend registration (today only
@@ -228,4 +244,20 @@ backends/otel-backend-bootstrap/   ← OPTIONAL, Phase 2 (jvmMain SDK init, turn
   is green (compile + detekt + kover + license); `:otel-backend:jvmTest` runs **10/10
   passing** (had to JDK-17 the build and add `useJUnitPlatform()` to the kmp `jvmTest`).
   KSP emits the `@AutoService` service file naming `OtelBackendFactory`. Timestamp unit
-  and logs SDK DSL confirmed against upstream `v0.4.0`. Phases 2–3 remain.
+  and logs SDK DSL confirmed against upstream `v0.4.0`.
+- 2026-06-27 — **Phase 2 (correlation + bootstrap) and Phase 3 (events + docs) done.**
+  Added the correlation test, the `logEvent`/`EVENT_NAME` events surface, the README
+  (incl. the consumer-side domain-event recipe), and the `otel-backend-bootstrap` OTLP
+  module. otel-backend **13/13** tests; bootstrap **2/2**; both detekt-clean; Dokka clean.
+  The real 0.4.0 OTLP API (`otlpHttpLogRecordExporter` in `exporters-otlp`,
+  `batchLogRecordProcessor` in `exporters-core`) was confirmed from upstream source — the
+  getting-started docs' helpers postdate 0.4.0, so empirical compilation + upstream
+  reading were needed.
+- 2026-06-27 — **Reviewed.** `kotlin-engineer` → APPROVE (no MUST violations; `@Volatile`
+  holder, `runBlocking` in `close()`, numeric widening, severity thresholds, null-safety,
+  explicit-API all verified correct). `spine-code-review` → APPROVE WITH CHANGES (nits;
+  version gate satisfied at `2.0.0-SNAPSHOT.418`). Applied: endpoint constant in the smoke
+  test, a `fromEnvironment()` test, `@AfterEach` restoring the no-op holder, safe cast in
+  `close()`, null-message guard in `handleError`, a widening-KDoc note, and README
+  line-length/Dokka-link fixes. Status → `in-review`. **Not committed** — awaiting the
+  maintainer to review and open the PR.

@@ -73,8 +73,10 @@ internal class OtelLoggerBackend(
             data.metadata
         )
         val cause = metadata.getSingleValue(LogContext.Key.LOG_CAUSE)
+        val eventName = metadata.getSingleValue(EVENT_NAME)
         logger.emit(
             body = SimpleMessageFormatter.getLiteralLogMessage(data),
+            eventName = eventName,
             timestamp = data.timestampNanos,
             severityNumber = data.level.toSeverityNumber(),
             severityText = data.level.name,
@@ -88,7 +90,7 @@ internal class OtelLoggerBackend(
 
     override fun handleError(error: RuntimeException, badData: LogData) {
         logger.emit(
-            body = "Spine logging backend error: ${error.message}",
+            body = "Spine logging backend error: ${error.message ?: error}",
             severityNumber = SeverityNumber.ERROR,
             severityText = SeverityNumber.ERROR.name,
             exception = error,

@@ -34,14 +34,18 @@ import io.kotest.matchers.maps.shouldNotContainKey
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldNotContain
 import io.opentelemetry.kotlin.ExperimentalApi
+import io.opentelemetry.kotlin.NoopOpenTelemetry
 import io.opentelemetry.kotlin.createOpenTelemetry
 import io.opentelemetry.kotlin.logging.SeverityNumber
 import io.spine.logging.Level
 import io.spine.logging.LogContext
 import io.spine.logging.MetadataKey
+import io.spine.logging.WithLogging
+import io.spine.logging.backend.otel.given.NoOpSpanProcessor
 import io.spine.logging.backend.otel.given.RecordingLogRecordProcessor
 import io.spine.logging.backend.otel.given.StubLogData
 import io.spine.logging.backend.otel.given.StubLogSite
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -63,6 +67,13 @@ internal class OtelLoggerBackendSpec {
         }
         val logger = otel.loggerProvider.getLogger(LOGGER_NAME)
         backend = OtelLoggerBackend(logger, LOGGER_NAME)
+    }
+
+    @AfterEach
+    fun tearDown() {
+        // The settings holder is a global singleton; restore the default so a test
+        // that injects an instance does not leak it into later tests.
+        OtelBackendSettings.use(NoopOpenTelemetry)
     }
 
     @Test
@@ -149,6 +160,44 @@ internal class OtelLoggerBackendSpec {
     }
 
     @Test
+    fun `correlate the record with the active span`() {
+        val otel = createOpenTelemetry {
+            tracerProvider { export { NoOpSpanProcessor() } }
+            loggerProvider { export { processor } }
+        }
+        val correlated = OtelLoggerBackend(otel.loggerProvider.getLogger(LOGGER_NAME), LOGGER_NAME)
+        val span = otel.tracerProvider.getTracer(LOGGER_NAME).startSpan("unit")
+        val scope = otel.context.implicit().storeSpan(span).attach()
+        try {
+            correlated.log(StubLogData(LITERAL))
+        } finally {
+            scope.detach()
+            span.end()
+        }
+        with(processor.records.last().spanContext) {
+            isValid shouldBe true
+            traceId shouldBe span.spanContext.traceId
+            spanId shouldBe span.spanContext.spanId
+        }
+    }
+
+    @Test
+    fun `emit a named event when the event-name metadata is set`() {
+        backend.log(StubLogData(LITERAL).addMetadata(EVENT_NAME, "checkout.completed"))
+        lastRecord.eventName shouldBe "checkout.completed"
+        lastRecord.attributes shouldNotContainKey "spine.otelEventName"
+    }
+
+    @Test
+    fun `emit a named event through the 'logEvent' API end-to-end`() {
+        OtelBackendSettings.use(
+            createOpenTelemetry { loggerProvider { export { processor } } }
+        )
+        EventSource().logEvent("checkout.completed")
+        processor.records.last().eventName shouldBe "checkout.completed"
+    }
+
+    @Test
     fun `resolve the injected OpenTelemetry instance via the factory`() {
         OtelBackendSettings.use(
             createOpenTelemetry { loggerProvider { export { processor } } }
@@ -158,6 +207,8 @@ internal class OtelLoggerBackendSpec {
         created.log(StubLogData(LITERAL))
         processor.records shouldHaveSize 1
     }
+
+    private class EventSource : WithLogging
 
     companion object {
         private const val LOGGER_NAME = "io.spine.LoggerName"

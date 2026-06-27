@@ -82,9 +82,14 @@ private val attributeHandler: MetadataHandler<AttributesMutator> =
         mutator.putTags(tags)
     }.ignoring(
         // The cause is emitted as the record's exception, not as an attribute.
-        LogContext.Key.LOG_CAUSE
+        LogContext.Key.LOG_CAUSE,
+        // The event name is emitted via `Logger.emit(eventName = …)`, not as an attribute.
+        EVENT_NAME
     ).build()
 
+// OpenTelemetry attributes have only `Long` and `Double` numeric types, so `Int`/`Short`/
+// `Byte` widen to `Long` and `Float` widens to `Double` — the original Kotlin type is not
+// preserved on the wire.
 private fun AttributesMutator.putValue(name: String, value: Any) {
     when (value) {
         is Boolean -> setBooleanAttribute(name, value)

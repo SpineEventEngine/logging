@@ -35,7 +35,7 @@ import io.opentelemetry.kotlin.OpenTelemetry
 /**
  * Holds the [OpenTelemetry] instance the backend emits log records with.
  *
- * The Spine backend SPI constructs a [OtelBackendFactory] without arguments
+ * The Spine backend SPI constructs the `OtelBackendFactory` without arguments
  * (via `ServiceLoader` on the JVM), so the instance cannot be supplied through
  * the factory constructor. Instead, the application injects it here once, at
  * startup, before any logging happens:

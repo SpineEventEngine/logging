@@ -24,59 +24,25 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-    }
+import io.spine.dependency.kotlinx.Coroutines
+import io.spine.dependency.lib.OpenTelemetryKotlin
+
+plugins {
+    `jvm-module`
 }
 
-rootProject.name = "logging"
+dependencies {
+    // The backend whose `OpenTelemetry` instance this module installs.
+    implementation(project(":otel-backend"))
 
-include(
-    "logging",
-    "logging-testlib",
-)
+    // The native Kotlin SDK entry point (`createOpenTelemetry { … }`), the export
+    // machinery (`batchLogRecordProcessor`), and the OTLP exporters. Only this
+    // bootstrap depends on them; the backend stays API-only.
+    implementation(OpenTelemetryKotlin.implementation)
+    implementation(OpenTelemetryKotlin.exportersCore)
+    implementation(OpenTelemetryKotlin.exportersOtlp)
+    implementation(OpenTelemetryKotlin.noop)
 
-includeBackend(
-    "log4j2-backend",
-    "jul-backend",
-    "probe-backend",
-    "otel-backend",
-    "otel-backend-bootstrap",
-)
-
-includeContext(
-    "context-tests",
-    "grpc-context",
-    "std-context",
-)
-
-includePlatform(
-    "jvm-default-platform"
-)
-
-includeTest(
-    "fixtures",
-    "jvm-jul-backend-std-context",
-    "jvm-jul-backend-grpc-context",
-    "jvm-log4j2-backend-std-context",
-    "jvm-slf4j-jdk14-backend-std-context",
-    "jvm-slf4j-reload4j-backend-std-context",
-    "smoke-test",
-)
-
-fun includeBackend(vararg modules: String) = includeTo("backends", modules)
-
-fun includeContext(vararg modules: String) = includeTo("contexts", modules)
-
-fun includePlatform(vararg modules: String) = includeTo("platforms", modules)
-
-fun includeTest(vararg modules: String) = includeTo("tests", modules)
-
-fun includeJvm(vararg modules: String) = includeTo("jvm", modules)
-
-fun includeTo(directory: String, modules: Array<out String>) = modules.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("$directory/$name")
+    // `runBlocking`, to invoke the SDK's suspending `shutdown()` from `close()`.
+    implementation(Coroutines.core)
 }

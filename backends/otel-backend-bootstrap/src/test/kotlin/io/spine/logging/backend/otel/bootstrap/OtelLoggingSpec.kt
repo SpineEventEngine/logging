@@ -24,59 +24,32 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
+package io.spine.logging.backend.otel.bootstrap
+
+import io.kotest.assertions.throwables.shouldNotThrowAny
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+
+@DisplayName("`OtelLogging` should")
+internal class OtelLoggingSpec {
+
+    @Test
+    fun `build, install and shut down an OTLP HTTP pipeline`() {
+        shouldNotThrowAny {
+            // No collector is listening; the batch processor exports asynchronously,
+            // so construction, installation and shutdown must all succeed regardless.
+            val installed = OtelLogging.installOtlpHttp(OtelLogging.DEFAULT_OTLP_HTTP_ENDPOINT)
+            installed.close()
+        }
     }
-}
 
-rootProject.name = "logging"
-
-include(
-    "logging",
-    "logging-testlib",
-)
-
-includeBackend(
-    "log4j2-backend",
-    "jul-backend",
-    "probe-backend",
-    "otel-backend",
-    "otel-backend-bootstrap",
-)
-
-includeContext(
-    "context-tests",
-    "grpc-context",
-    "std-context",
-)
-
-includePlatform(
-    "jvm-default-platform"
-)
-
-includeTest(
-    "fixtures",
-    "jvm-jul-backend-std-context",
-    "jvm-jul-backend-grpc-context",
-    "jvm-log4j2-backend-std-context",
-    "jvm-slf4j-jdk14-backend-std-context",
-    "jvm-slf4j-reload4j-backend-std-context",
-    "smoke-test",
-)
-
-fun includeBackend(vararg modules: String) = includeTo("backends", modules)
-
-fun includeContext(vararg modules: String) = includeTo("contexts", modules)
-
-fun includePlatform(vararg modules: String) = includeTo("platforms", modules)
-
-fun includeTest(vararg modules: String) = includeTo("tests", modules)
-
-fun includeJvm(vararg modules: String) = includeTo("jvm", modules)
-
-fun includeTo(directory: String, modules: Array<out String>) = modules.forEach { name ->
-    include(name)
-    project(":$name").projectDir = file("$directory/$name")
+    @Test
+    fun `install from the environment, falling back to the default endpoint`() {
+        shouldNotThrowAny {
+            // With `OTEL_EXPORTER_OTLP_ENDPOINT` unset, this exercises the fallback
+            // to the default endpoint.
+            val installed = OtelLogging.fromEnvironment()
+            installed.close()
+        }
+    }
 }

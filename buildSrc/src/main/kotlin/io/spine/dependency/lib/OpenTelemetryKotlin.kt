@@ -82,11 +82,27 @@ object OpenTelemetryKotlin : Dependency() {
      */
     val compat = "$group:compat:$version"
 
+    /**
+     * Core export machinery: the `batchLogRecordProcessor` / `simpleLogRecordProcessor`
+     * DSL builders that wrap a `LogRecordExporter` into a `LogRecordProcessor`.
+     */
+    val exportersCore = "$group:exporters-core:$version"
+
+    /**
+     * OTLP exporters (HTTP, via Ktor), including the OTLP log-record exporter.
+     *
+     * Used only by a bootstrap that wires a real export pipeline; the backend
+     * itself needs only the [api].
+     */
+    val exportersOtlp = "$group:exporters-otlp:$version"
+
     override val modules: List<String> = listOf(
         "$group:api",
         "$group:noop",
         "$group:core",
         "$group:implementation",
         "$group:compat",
+        "$group:exporters-core",
+        "$group:exporters-otlp",
     )
 }
