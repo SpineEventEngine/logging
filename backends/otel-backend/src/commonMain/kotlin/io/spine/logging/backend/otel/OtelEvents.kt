@@ -50,7 +50,8 @@ public val EVENT_NAME: MetadataKey<String> = MetadataKey.single<String>("otelEve
  *
  * An event is an ordinary log statement that carries the [EVENT_NAME] metadata;
  * the OpenTelemetry backend maps it to `Logger.emit(eventName = name)`. Guarded by
- * the level, so a disabled event costs nothing.
+ * the level, so a disabled event costs nothing — [message] is evaluated only when
+ * the event is actually emitted.
  *
  * The [name] should be low-cardinality (for example, `acme.orders.OrderPlaced`),
  * per the OpenTelemetry event semantic conventions — dynamic values belong in
@@ -58,14 +59,15 @@ public val EVENT_NAME: MetadataKey<String> = MetadataKey.single<String>("otelEve
  *
  * @param name The event name.
  * @param level The severity of the event. Defaults to [Level.INFO].
- * @param message The record body. Defaults to [name].
+ * @param message Supplies the record body, evaluated lazily only when the event is
+ *   enabled. Defaults to the [name].
  */
 public fun WithLogging.logEvent(
     name: String,
     level: Level = Level.INFO,
-    message: String = name,
+    message: () -> String = { name },
 ) {
     logger.at(level)
         .with(EVENT_NAME, name)
-        .log { message }
+        .log(message)
 }

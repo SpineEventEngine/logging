@@ -237,7 +237,22 @@ internal class OtelLoggerBackendSpec {
             createOpenTelemetry { loggerProvider { export { processor } } }
         )
         EventSource().logEvent("checkout.completed")
-        processor.records.last().eventName shouldBe "checkout.completed"
+        with(processor.records.last()) {
+            eventName shouldBe "checkout.completed"
+            body shouldBe "checkout.completed"
+        }
+    }
+
+    @Test
+    fun `use the lazily supplied message as the event body`() {
+        OtelBackendSettings.use(
+            createOpenTelemetry { loggerProvider { export { processor } } }
+        )
+        EventSource().logEvent("checkout.completed") { "Checkout finished." }
+        with(processor.records.last()) {
+            eventName shouldBe "checkout.completed"
+            body shouldBe "Checkout finished."
+        }
     }
 
     @Test
