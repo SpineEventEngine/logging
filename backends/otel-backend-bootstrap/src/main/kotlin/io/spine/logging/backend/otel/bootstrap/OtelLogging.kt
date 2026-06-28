@@ -94,25 +94,38 @@ public object OtelLogging {
         return AutoCloseable {
             // Stop routing new records to this SDK, then flush and shut it down.
             OtelBackendSettings.use(NoopOpenTelemetry)
-            // Report failures via JUL: the Spine OTel backend has just been pointed at the
-            // no-op instance, so logging through it here would itself be dropped.
-            val logger = Logger.getLogger(OtelLogging::class.java.name)
-            val closeable = openTelemetry as? TelemetryCloseable
-            if (closeable == null) {
-                // `createOpenTelemetry` returns a `TelemetryCloseable` today; reaching here
-                // would mean the factory changed and the SDK was NOT shut down — don't hide it.
-                logger.warning(
-                    "The OpenTelemetry SDK is not a TelemetryCloseable; it was not shut down, " +
-                        "so buffered log records may not have been exported."
-                )
-            } else if (runBlocking { closeable.shutdown() } == OperationResultCode.Failure) {
-                // A failed flush/shutdown means buffered records may be lost.
-                logger.warning(
-                    "The OpenTelemetry SDK reported a failure while shutting down; " +
-                        "some buffered log records may not have been exported."
-                )
-            }
+            val result =
+                if (openTelemetry is TelemetryCloseable) runBlocking { openTelemetry.shutdown() }
+                else null
+            reportShutdown(openTelemetry, result)
         }
+    }
+
+    /**
+     * Warns, via JUL, when the SDK could not be shut down cleanly: it is not a
+     * [TelemetryCloseable] (so it was never shut down), or its `shutdown()` reported a
+     * failure. Either way buffered records may be lost, so the outcome must not pass
+     * silently — JUL is used because the Spine OTel backend has just been pointed at the
+     * no-op instance, so logging through it here would itself be dropped.
+     *
+     * Exposed as `internal` (with an injectable [logger]) so both outcomes can be verified
+     * without provoking a real SDK failure.
+     */
+    internal fun reportShutdown(
+        sdk: Any,
+        result: OperationResultCode?,
+        logger: Logger = Logger.getLogger(OtelLogging::class.java.name),
+    ) {
+        val warning = when {
+            sdk !is TelemetryCloseable ->
+                "The OpenTelemetry SDK is not a TelemetryCloseable; it was not shut down, " +
+                    "so buffered log records may not have been exported."
+            result == OperationResultCode.Failure ->
+                "The OpenTelemetry SDK reported a failure while shutting down; " +
+                    "some buffered log records may not have been exported."
+            else -> return
+        }
+        logger.warning(warning)
     }
 
     /**

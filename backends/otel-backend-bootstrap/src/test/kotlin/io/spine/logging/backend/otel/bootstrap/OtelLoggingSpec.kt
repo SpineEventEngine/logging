@@ -24,11 +24,22 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+@file:OptIn(ExperimentalApi::class)
+
 package io.spine.logging.backend.otel.bootstrap
 
 import io.kotest.assertions.throwables.shouldNotThrowAny
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldContain
+import io.opentelemetry.kotlin.ExperimentalApi
+import io.opentelemetry.kotlin.export.OperationResultCode
+import io.opentelemetry.kotlin.export.TelemetryCloseable
 import java.net.ServerSocket
+import java.util.logging.Handler
+import java.util.logging.Level
+import java.util.logging.LogRecord
+import java.util.logging.Logger
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -81,6 +92,62 @@ internal class OtelLoggingSpec {
         }
     }
 
+    @Test
+    fun `install via the no-arg overload and from the environment`() {
+        shouldNotThrowAny {
+            // Both resolve to the default endpoint. Nothing is listening and no records are
+            // emitted, so this exercises the wiring without exporting anything.
+            OtelLogging.installOtlpHttp().close()
+            OtelLogging.fromEnvironment().close()
+        }
+    }
+
+    @Test
+    fun `warn when the SDK is not closeable`() {
+        val (logger, records) = capturingLogger()
+        OtelLogging.reportShutdown(sdk = Any(), result = null, logger = logger)
+        records shouldHaveSize 1
+        records.first().level shouldBe Level.WARNING
+        records.first().message shouldContain "not a TelemetryCloseable"
+    }
+
+    @Test
+    fun `warn when shutdown reports a failure`() {
+        val (logger, records) = capturingLogger()
+        OtelLogging.reportShutdown(closeableSdk, OperationResultCode.Failure, logger)
+        records shouldHaveSize 1
+        records.first().message shouldContain "reported a failure"
+    }
+
+    @Test
+    fun `stay silent on a successful shutdown`() {
+        val (logger, records) = capturingLogger()
+        OtelLogging.reportShutdown(closeableSdk, OperationResultCode.Success, logger)
+        records shouldHaveSize 0
+    }
+
     /** Returns a currently-free local TCP port. */
     private fun freePort(): Int = ServerSocket(0).use { it.localPort }
+
+    /** A logger that records what it publishes, with parent handlers disabled. */
+    private fun capturingLogger(): Pair<Logger, List<LogRecord>> {
+        val records = mutableListOf<LogRecord>()
+        val logger = Logger.getAnonymousLogger().apply {
+            useParentHandlers = false
+            addHandler(object : Handler() {
+                override fun publish(record: LogRecord) { records += record }
+                override fun flush() = Unit
+                override fun close() = Unit
+            })
+        }
+        return logger to records
+    }
+
+    private companion object {
+        /** A minimal `TelemetryCloseable` SDK stub for shutdown-reporting tests. */
+        private val closeableSdk = object : TelemetryCloseable {
+            override suspend fun forceFlush() = OperationResultCode.Success
+            override suspend fun shutdown() = OperationResultCode.Success
+        }
+    }
 }
