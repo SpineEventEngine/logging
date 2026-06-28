@@ -251,6 +251,51 @@ internal class OtelLoggerBackendSpec {
         processor.records shouldHaveSize 1
     }
 
+    @Test
+    fun `map single numeric and non-primitive attribute values`() {
+        backend.log(
+            StubLogData(LITERAL)
+                .addMetadata(LONG_KEY, 7L)
+                .addMetadata(CHAR_KEY, 'x')
+        )
+        with(lastRecord.attributes) {
+            this["spine.count"] shouldBe 7L
+            this["spine.symbol"] shouldBe "x"
+        }
+    }
+
+    @Test
+    fun `collect repeated attribute values by type`() {
+        backend.log(
+            StubLogData(LITERAL)
+                .addMetadata(BOOL_LIST_KEY, true).addMetadata(BOOL_LIST_KEY, false)
+                .addMetadata(DOUBLE_LIST_KEY, 1.5).addMetadata(DOUBLE_LIST_KEY, 2.5)
+                .addMetadata(STRING_LIST_KEY, "a").addMetadata(STRING_LIST_KEY, "b")
+                .addMetadata(CHAR_LIST_KEY, 'a').addMetadata(CHAR_LIST_KEY, 'b')
+        )
+        with(lastRecord.attributes) {
+            (this["spine.flags"] as List<*>) shouldContainExactlyInAnyOrder listOf(true, false)
+            (this["spine.ratios"] as List<*>) shouldContainExactlyInAnyOrder listOf(1.5, 2.5)
+            (this["spine.names"] as List<*>) shouldContainExactlyInAnyOrder listOf("a", "b")
+            (this["spine.symbols"] as List<*>) shouldContainExactlyInAnyOrder listOf("a", "b")
+        }
+    }
+
+    @Test
+    fun `omit the line number and source file when unknown`() {
+        backend.log(StubLogData(LITERAL).setLogSite(StubLogSite("C", "m", 0, null)))
+        with(lastRecord.attributes) {
+            this shouldNotContainKey "code.lineno"
+            this shouldNotContainKey "code.filepath"
+        }
+    }
+
+    @Test
+    fun `report its fully-qualified class name from the factory's 'toString'`() {
+        OtelBackendFactory().toString() shouldBe
+            "io.spine.logging.backend.otel.OtelBackendFactory"
+    }
+
     private class EventSource : WithLogging
 
     companion object {
@@ -261,5 +306,11 @@ internal class OtelLoggerBackendSpec {
         private val INT_KEY = MetadataKey.repeated<Int>("int")
         private val BOOL_KEY = MetadataKey.single<Boolean>("enabled")
         private val DOUBLE_KEY = MetadataKey.single<Double>("ratio")
+        private val LONG_KEY = MetadataKey.single<Long>("count")
+        private val CHAR_KEY = MetadataKey.single<Char>("symbol")
+        private val BOOL_LIST_KEY = MetadataKey.repeated<Boolean>("flags")
+        private val DOUBLE_LIST_KEY = MetadataKey.repeated<Double>("ratios")
+        private val STRING_LIST_KEY = MetadataKey.repeated<String>("names")
+        private val CHAR_LIST_KEY = MetadataKey.repeated<Char>("symbols")
     }
 }

@@ -44,6 +44,14 @@ internal class OtelLoggingSpec {
     }
 
     @Test
+    fun `install using the default endpoint`() {
+        shouldNotThrowAny {
+            val installed = OtelLogging.installOtlpHttp()
+            installed.close()
+        }
+    }
+
+    @Test
     fun `install from the environment, falling back to the default endpoint`() {
         shouldNotThrowAny {
             // With `OTEL_EXPORTER_OTLP_ENDPOINT` unset, this exercises the fallback
