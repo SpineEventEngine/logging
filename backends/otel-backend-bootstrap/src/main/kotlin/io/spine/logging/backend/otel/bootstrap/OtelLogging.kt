@@ -35,6 +35,7 @@ import io.opentelemetry.kotlin.export.OperationResultCode
 import io.opentelemetry.kotlin.export.TelemetryCloseable
 import io.opentelemetry.kotlin.logging.export.batchLogRecordProcessor
 import io.opentelemetry.kotlin.logging.export.otlpHttpLogRecordExporter
+import io.spine.annotation.VisibleForTesting
 import io.spine.logging.backend.otel.OtelBackendSettings
 import java.util.logging.Logger
 import kotlinx.coroutines.runBlocking
@@ -111,6 +112,7 @@ public object OtelLogging {
      * Exposed as `internal` (with an injectable [logger]) so both outcomes can be verified
      * without provoking a real SDK failure.
      */
+    @VisibleForTesting
     internal fun reportShutdown(
         sdk: Any,
         result: OperationResultCode?,
