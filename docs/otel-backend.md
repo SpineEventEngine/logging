@@ -65,7 +65,8 @@ for you, returning a handle that uninstalls the backend and shuts the SDK down w
 ```kotlin
 import io.spine.logging.backend.otel.bootstrap.OtelLogging
 
-// Reads `OTEL_EXPORTER_OTLP_ENDPOINT`, falling back to `http://localhost:4318`.
+// Prefers `OTEL_EXPORTER_OTLP_LOGS_ENDPOINT`, then `OTEL_EXPORTER_OTLP_ENDPOINT`,
+// falling back to `http://localhost:4318`.
 val installed = OtelLogging.fromEnvironment()
 
 // Or with an explicit endpoint:

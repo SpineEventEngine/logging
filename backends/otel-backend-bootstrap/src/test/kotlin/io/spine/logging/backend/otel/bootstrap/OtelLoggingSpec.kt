@@ -44,6 +44,31 @@ internal class OtelLoggingSpec {
     }
 
     @Test
+    fun `prefer the logs-specific endpoint over the generic one`() {
+        val resolved = OtelLogging.endpointFromEnvironment {
+            when (it) {
+                "OTEL_EXPORTER_OTLP_LOGS_ENDPOINT" -> "http://logs:4318"
+                "OTEL_EXPORTER_OTLP_ENDPOINT" -> "http://generic:4318"
+                else -> null
+            }
+        }
+        resolved shouldBe "http://logs:4318"
+    }
+
+    @Test
+    fun `use the generic endpoint when no logs-specific one is set`() {
+        val resolved = OtelLogging.endpointFromEnvironment {
+            if (it == "OTEL_EXPORTER_OTLP_ENDPOINT") "http://generic:4318" else null
+        }
+        resolved shouldBe "http://generic:4318"
+    }
+
+    @Test
+    fun `fall back to the default when no endpoint variable is set`() {
+        OtelLogging.endpointFromEnvironment { null } shouldBe OtelLogging.DEFAULT_OTLP_HTTP_ENDPOINT
+    }
+
+    @Test
     fun `build, install and shut down an OTLP HTTP pipeline`() {
         shouldNotThrowAny {
             // Aim the exporter at a free local port rather than the well-known 4318:

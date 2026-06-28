@@ -62,7 +62,14 @@ public object OtelLogging {
     public const val DEFAULT_OTLP_HTTP_ENDPOINT: String = "http://localhost:4318"
 
     /**
-     * The environment variable that overrides [DEFAULT_OTLP_HTTP_ENDPOINT].
+     * The signal-specific environment variable that overrides
+     * [DEFAULT_OTLP_HTTP_ENDPOINT], taking precedence over [OTLP_ENDPOINT_ENV].
+     */
+    private const val OTLP_LOGS_ENDPOINT_ENV: String = "OTEL_EXPORTER_OTLP_LOGS_ENDPOINT"
+
+    /**
+     * The generic OTLP environment variable that overrides [DEFAULT_OTLP_HTTP_ENDPOINT]
+     * when [OTLP_LOGS_ENDPOINT_ENV] is not set.
      */
     private const val OTLP_ENDPOINT_ENV: String = "OTEL_EXPORTER_OTLP_ENDPOINT"
 
@@ -109,21 +116,34 @@ public object OtelLogging {
     }
 
     /**
-     * Installs an OTLP/HTTP pipeline using the endpoint from the
-     * `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable, falling back to
-     * [DEFAULT_OTLP_HTTP_ENDPOINT] when it is not set.
+     * Installs an OTLP/HTTP pipeline using the endpoint resolved from the environment.
+     *
+     * The signal-specific `OTEL_EXPORTER_OTLP_LOGS_ENDPOINT` takes precedence over the
+     * generic `OTEL_EXPORTER_OTLP_ENDPOINT`, falling back to [DEFAULT_OTLP_HTTP_ENDPOINT]
+     * when neither is set.
      */
     public fun fromEnvironment(): AutoCloseable =
         installOtlpHttp(endpointFromEnvironment())
 
     /**
-     * Resolves the OTLP/HTTP endpoint from the `OTEL_EXPORTER_OTLP_ENDPOINT`
-     * environment variable, falling back to [DEFAULT_OTLP_HTTP_ENDPOINT] when it is
-     * not set.
+     * Resolves the OTLP/HTTP base endpoint from the environment, preferring the
+     * signal-specific [OTLP_LOGS_ENDPOINT_ENV] over the generic [OTLP_ENDPOINT_ENV] and
+     * falling back to [DEFAULT_OTLP_HTTP_ENDPOINT] when neither is set.
      *
-     * Exposed as `internal` so the resolution can be verified without building an
-     * exporter or touching the network.
+     * The value is treated as a base URL: the exporter appends the OTLP/HTTP logs path
+     * (`/v1/logs`) to it, just as it does for the default.
+     *
+     * Exposed as `internal` so the resolution can be verified without touching the real
+     * environment or the network.
      */
     internal fun endpointFromEnvironment(): String =
-        System.getenv(OTLP_ENDPOINT_ENV) ?: DEFAULT_OTLP_HTTP_ENDPOINT
+        endpointFromEnvironment { System.getenv(it) }
+
+    /**
+     * Resolves the endpoint as [endpointFromEnvironment], looking variables up through
+     * [getenv]. Separated so the precedence can be tested without mutating the process
+     * environment.
+     */
+    internal fun endpointFromEnvironment(getenv: (String) -> String?): String =
+        getenv(OTLP_LOGS_ENDPOINT_ENV) ?: getenv(OTLP_ENDPOINT_ENV) ?: DEFAULT_OTLP_HTTP_ENDPOINT
 }
