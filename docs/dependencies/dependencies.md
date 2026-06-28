@@ -1,6 +1,6 @@
 
 
-# Dependencies of `io.spine:spine-logging-context-tests:2.0.0-SNAPSHOT.418`
+# Dependencies of `io.spine:spine-logging-context-tests:2.0.0-SNAPSHOT.419`
 
 ## Runtime
 1.  **Group** : org.jetbrains. **Name** : annotations. **Version** : 26.1.0.
@@ -441,14 +441,14 @@
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using 
+This report was generated on **Sun Jun 28 21:04:41 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-fixtures:2.0.0-SNAPSHOT.418`
+# Dependencies of `io.spine:spine-logging-fixtures:2.0.0-SNAPSHOT.419`
 
 ## Runtime
 ## Compile, tests, and tooling
@@ -1240,14 +1240,14 @@ This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using 
+This report was generated on **Sun Jun 28 21:04:42 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-grpc-context:2.0.0-SNAPSHOT.418`
+# Dependencies of `io.spine:spine-logging-grpc-context:2.0.0-SNAPSHOT.419`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -2094,14 +2094,14 @@ This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using 
+This report was generated on **Sun Jun 28 21:04:41 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jul-backend:2.0.0-SNAPSHOT.418`
+# Dependencies of `io.spine:spine-logging-jul-backend:2.0.0-SNAPSHOT.419`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -2932,14 +2932,14 @@ This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using 
+This report was generated on **Sun Jun 28 21:04:42 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-default-platform:2.0.0-SNAPSHOT.418`
+# Dependencies of `io.spine:spine-logging-jvm-default-platform:2.0.0-SNAPSHOT.419`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -3786,14 +3786,14 @@ This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using 
+This report was generated on **Sun Jun 28 21:04:41 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-jul-backend-grpc-context:2.0.0-SNAPSHOT.418`
+# Dependencies of `io.spine:spine-logging-jvm-jul-backend-grpc-context:2.0.0-SNAPSHOT.419`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -4692,14 +4692,14 @@ This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using 
+This report was generated on **Sun Jun 28 21:04:41 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-jul-backend-std-context:2.0.0-SNAPSHOT.418`
+# Dependencies of `io.spine:spine-logging-jvm-jul-backend-std-context:2.0.0-SNAPSHOT.419`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -5590,14 +5590,14 @@ This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using 
+This report was generated on **Sun Jun 28 21:04:41 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-log4j2-backend-std-context:2.0.0-SNAPSHOT.418`
+# Dependencies of `io.spine:spine-logging-jvm-log4j2-backend-std-context:2.0.0-SNAPSHOT.419`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -6508,14 +6508,14 @@ This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using 
+This report was generated on **Sun Jun 28 21:04:41 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-slf4j-jdk14-backend-std-context:2.0.0-SNAPSHOT.418`
+# Dependencies of `io.spine:spine-logging-jvm-slf4j-jdk14-backend-std-context:2.0.0-SNAPSHOT.419`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -7414,14 +7414,14 @@ This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using 
+This report was generated on **Sun Jun 28 21:04:41 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-slf4j-reload4j-backend-std-context:2.0.0-SNAPSHOT.418`
+# Dependencies of `io.spine:spine-logging-jvm-slf4j-reload4j-backend-std-context:2.0.0-SNAPSHOT.419`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -8324,14 +8324,14 @@ This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using 
+This report was generated on **Sun Jun 28 21:04:41 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-log4j2-backend:2.0.0-SNAPSHOT.418`
+# Dependencies of `io.spine:spine-logging-log4j2-backend:2.0.0-SNAPSHOT.419`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -9206,14 +9206,14 @@ This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using 
+This report was generated on **Sun Jun 28 21:04:41 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging:2.0.0-SNAPSHOT.418`
+# Dependencies of `io.spine:spine-logging:2.0.0-SNAPSHOT.419`
 
 ## Runtime
 ## Compile, tests, and tooling
@@ -10013,14 +10013,14 @@ This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using 
+This report was generated on **Sun Jun 28 21:04:42 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine.tools:logging-testlib:2.0.0-SNAPSHOT.418`
+# Dependencies of `io.spine.tools:logging-testlib:2.0.0-SNAPSHOT.419`
 
 ## Runtime
 ## Compile, tests, and tooling
@@ -10832,14 +10832,14 @@ This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using 
+This report was generated on **Sun Jun 28 21:04:41 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-otel-backend:2.0.0-SNAPSHOT.418`
+# Dependencies of `io.spine:spine-logging-otel-backend:2.0.0-SNAPSHOT.419`
 
 ## Runtime
 ## Compile, tests, and tooling
@@ -11739,14 +11739,14 @@ This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using 
+This report was generated on **Sun Jun 28 21:04:42 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-otel-backend-bootstrap:2.0.0-SNAPSHOT.418`
+# Dependencies of `io.spine:spine-logging-otel-backend-bootstrap:2.0.0-SNAPSHOT.419`
 
 ## Runtime
 1.  **Group** : com.google.auto.service. **Name** : auto-service-annotations. **Version** : 1.1.1.
@@ -13157,14 +13157,14 @@ This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using 
+This report was generated on **Sun Jun 28 21:04:41 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-probe-backend:2.0.0-SNAPSHOT.418`
+# Dependencies of `io.spine:spine-logging-probe-backend:2.0.0-SNAPSHOT.419`
 
 ## Runtime
 1.  **Group** : com.google.auto.service. **Name** : auto-service-annotations. **Version** : 1.1.1.
@@ -14015,14 +14015,14 @@ This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using 
+This report was generated on **Sun Jun 28 21:04:41 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-smoke-test:2.0.0-SNAPSHOT.418`
+# Dependencies of `io.spine:spine-logging-smoke-test:2.0.0-SNAPSHOT.419`
 
 ## Runtime
 1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.0.
@@ -14921,14 +14921,14 @@ This report was generated on **Sun Jun 28 17:14:26 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Sun Jun 28 17:14:27 WEST 2026** using 
+This report was generated on **Sun Jun 28 21:04:41 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-std-context:2.0.0-SNAPSHOT.418`
+# Dependencies of `io.spine:spine-logging-std-context:2.0.0-SNAPSHOT.419`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -15759,6 +15759,6 @@ This report was generated on **Sun Jun 28 17:14:27 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Sun Jun 28 17:14:27 WEST 2026** using 
+This report was generated on **Sun Jun 28 21:04:42 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
