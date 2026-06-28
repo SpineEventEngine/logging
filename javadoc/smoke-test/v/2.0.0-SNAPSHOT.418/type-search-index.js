@@ -1,0 +1,1 @@
+var typeSearchIndex = [{"p":"io.spine.logging","l":"AbstractLoggingSmokeTest","url":"io/spine/logging/AbstractLoggingSmokeTest.html"}, {"l":"All classes","url":"allclasses.html"}]
