@@ -103,13 +103,15 @@ private fun AttributesMutator.putValues(name: String, values: Iterator<Any>) {
     if (list.isEmpty()) {
         return
     }
-    when (list.first()) {
-        is Boolean -> setBooleanListAttribute(name, list.map { it as Boolean })
-        is Byte, is Short, is Int, is Long ->
+    // Dispatch on the whole list, not just its first element: a `repeated<Any>` key may
+    // hold mixed types, so fall back to a string list rather than risk a `ClassCastException`.
+    when {
+        list.all { it is Boolean } -> setBooleanListAttribute(name, list.map { it as Boolean })
+        list.all { it is Byte || it is Short || it is Int || it is Long } ->
             setLongListAttribute(name, list.map { (it as Number).toLong() })
-        is Float, is Double ->
+        list.all { it is Float || it is Double } ->
             setDoubleListAttribute(name, list.map { (it as Number).toDouble() })
-        is String -> setStringListAttribute(name, list.map { it as String })
+        list.all { it is String } -> setStringListAttribute(name, list.map { it as String })
         else -> setStringListAttribute(name, list.map { it.toString() })
     }
 }

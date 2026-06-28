@@ -86,16 +86,21 @@ public object OtelLogging {
         OtelBackendSettings.use(openTelemetry)
         return AutoCloseable {
             // Stop routing new records to this SDK, then flush and shut it down.
-            // The SDK instance created by `createOpenTelemetry` is a `TelemetryCloseable`;
-            // the safe cast future-proofs against the factory ever returning otherwise.
             OtelBackendSettings.use(NoopOpenTelemetry)
-            val result = runBlocking { (openTelemetry as? TelemetryCloseable)?.shutdown() }
-            if (result == OperationResultCode.Failure) {
-                // A failed flush/shutdown means buffered records may be lost; do not let
-                // it pass silently. Report via JUL: the Spine OTel backend has just been
-                // pointed at the no-op instance, so logging through it here would itself
-                // be dropped.
-                Logger.getLogger(OtelLogging::class.java.name).warning(
+            // Report failures via JUL: the Spine OTel backend has just been pointed at the
+            // no-op instance, so logging through it here would itself be dropped.
+            val logger = Logger.getLogger(OtelLogging::class.java.name)
+            val closeable = openTelemetry as? TelemetryCloseable
+            if (closeable == null) {
+                // `createOpenTelemetry` returns a `TelemetryCloseable` today; reaching here
+                // would mean the factory changed and the SDK was NOT shut down — don't hide it.
+                logger.warning(
+                    "The OpenTelemetry SDK is not a TelemetryCloseable; it was not shut down, " +
+                        "so buffered log records may not have been exported."
+                )
+            } else if (runBlocking { closeable.shutdown() } == OperationResultCode.Failure) {
+                // A failed flush/shutdown means buffered records may be lost.
+                logger.warning(
                     "The OpenTelemetry SDK reported a failure while shutting down; " +
                         "some buffered log records may not have been exported."
                 )

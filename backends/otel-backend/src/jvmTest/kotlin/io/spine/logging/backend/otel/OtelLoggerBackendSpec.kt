@@ -297,6 +297,16 @@ internal class OtelLoggerBackendSpec {
     }
 
     @Test
+    fun `fall back to a string list for repeated values of mixed types`() {
+        backend.log(
+            StubLogData(LITERAL)
+                .addMetadata(MIXED_LIST_KEY, 1)
+                .addMetadata(MIXED_LIST_KEY, "two")
+        )
+        (lastRecord.attributes["mixed"] as List<*>) shouldContainExactlyInAnyOrder listOf("1", "two")
+    }
+
+    @Test
     fun `omit the line number and source file when unknown`() {
         backend.log(StubLogData(LITERAL).setLogSite(StubLogSite("C", "m", 0, null)))
         with(lastRecord.attributes) {
@@ -327,5 +337,6 @@ internal class OtelLoggerBackendSpec {
         private val DOUBLE_LIST_KEY = MetadataKey.repeated<Double>("ratios")
         private val STRING_LIST_KEY = MetadataKey.repeated<String>("names")
         private val CHAR_LIST_KEY = MetadataKey.repeated<Char>("symbols")
+        private val MIXED_LIST_KEY = MetadataKey.repeated<Any>("mixed")
     }
 }

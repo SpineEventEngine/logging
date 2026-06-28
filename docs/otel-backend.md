@@ -23,6 +23,11 @@ dependencies {
 }
 ```
 
+`runtimeOnly` is enough when the backend is selected purely via `ServiceLoader`. If your
+code calls the backend's API directly — `OtelBackendSettings.use(...)` (see below) or the
+`logEvent` helper — depend on it with `implementation` instead, so those types are on the
+compile classpath.
+
 Keep exactly **one** backend on the classpath. If several are present, select this one
 explicitly with the `spine.logging.backend_factory` system property:
 
