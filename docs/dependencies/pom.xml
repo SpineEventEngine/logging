@@ -9,7 +9,7 @@ all modules and does not describe the project structure per-subproject.
  
  -->
 <groupId>io.spine</groupId>
-<artifactId>logging</artifactId>
+<artifactId>spine-logging</artifactId>
 <version>2.0.0-SNAPSHOT.418</version>
 
 <inceptionYear>2015</inceptionYear>
