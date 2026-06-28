@@ -35,7 +35,7 @@ import io.spine.logging.WithLogging
  *
  * When a log statement carries this key, the backend emits the record as a
  * log-based *event* — `Logger.emit(eventName = …)` — rather than a plain log
- * record, and the key itself is not duplicated as a `spine.*` attribute.
+ * record, and the key itself is not duplicated as an attribute.
  *
  * This plays the role of the `otel.event.name` key recognized by the OpenTelemetry
  * Logback and Log4j appenders. The Spine metadata label must be a plain identifier

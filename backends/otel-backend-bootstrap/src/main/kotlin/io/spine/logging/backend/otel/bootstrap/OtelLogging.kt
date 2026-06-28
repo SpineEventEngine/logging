@@ -31,10 +31,12 @@ package io.spine.logging.backend.otel.bootstrap
 import io.opentelemetry.kotlin.ExperimentalApi
 import io.opentelemetry.kotlin.NoopOpenTelemetry
 import io.opentelemetry.kotlin.createOpenTelemetry
+import io.opentelemetry.kotlin.export.OperationResultCode
 import io.opentelemetry.kotlin.export.TelemetryCloseable
 import io.opentelemetry.kotlin.logging.export.batchLogRecordProcessor
 import io.opentelemetry.kotlin.logging.export.otlpHttpLogRecordExporter
 import io.spine.logging.backend.otel.OtelBackendSettings
+import java.util.logging.Logger
 import kotlinx.coroutines.runBlocking
 
 /**
@@ -51,8 +53,18 @@ public object OtelLogging {
 
     /**
      * The default OTLP/HTTP endpoint of a local OpenTelemetry Collector.
+     *
+     * Port `4318` is the OpenTelemetry-standard OTLP/HTTP port, so this default
+     * matches a collector started with stock settings. When your collector listens
+     * elsewhere, override it: pass an explicit endpoint to [installOtlpHttp], or set
+     * the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable and use [fromEnvironment].
      */
     public const val DEFAULT_OTLP_HTTP_ENDPOINT: String = "http://localhost:4318"
+
+    /**
+     * The environment variable that overrides [DEFAULT_OTLP_HTTP_ENDPOINT].
+     */
+    private const val OTLP_ENDPOINT_ENV: String = "OTEL_EXPORTER_OTLP_ENDPOINT"
 
     /**
      * Builds a native Kotlin OpenTelemetry SDK that exports log records over
@@ -77,7 +89,17 @@ public object OtelLogging {
             // The SDK instance created by `createOpenTelemetry` is a `TelemetryCloseable`;
             // the safe cast future-proofs against the factory ever returning otherwise.
             OtelBackendSettings.use(NoopOpenTelemetry)
-            runBlocking { (openTelemetry as? TelemetryCloseable)?.shutdown() }
+            val result = runBlocking { (openTelemetry as? TelemetryCloseable)?.shutdown() }
+            if (result == OperationResultCode.Failure) {
+                // A failed flush/shutdown means buffered records may be lost; do not let
+                // it pass silently. Report via JUL: the Spine OTel backend has just been
+                // pointed at the no-op instance, so logging through it here would itself
+                // be dropped.
+                Logger.getLogger(OtelLogging::class.java.name).warning(
+                    "The OpenTelemetry SDK reported a failure while shutting down; " +
+                        "some buffered log records may not have been exported."
+                )
+            }
         }
     }
 
@@ -86,9 +108,17 @@ public object OtelLogging {
      * `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable, falling back to
      * [DEFAULT_OTLP_HTTP_ENDPOINT] when it is not set.
      */
-    public fun fromEnvironment(): AutoCloseable {
-        val endpoint = System.getenv("OTEL_EXPORTER_OTLP_ENDPOINT")
-            ?: DEFAULT_OTLP_HTTP_ENDPOINT
-        return installOtlpHttp(endpoint)
-    }
+    public fun fromEnvironment(): AutoCloseable =
+        installOtlpHttp(endpointFromEnvironment())
+
+    /**
+     * Resolves the OTLP/HTTP endpoint from the `OTEL_EXPORTER_OTLP_ENDPOINT`
+     * environment variable, falling back to [DEFAULT_OTLP_HTTP_ENDPOINT] when it is
+     * not set.
+     *
+     * Exposed as `internal` so the resolution can be verified without building an
+     * exporter or touching the network.
+     */
+    internal fun endpointFromEnvironment(): String =
+        System.getenv(OTLP_ENDPOINT_ENV) ?: DEFAULT_OTLP_HTTP_ENDPOINT
 }

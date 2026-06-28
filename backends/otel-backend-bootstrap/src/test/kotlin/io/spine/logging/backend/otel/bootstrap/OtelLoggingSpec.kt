@@ -27,6 +27,8 @@
 package io.spine.logging.backend.otel.bootstrap
 
 import io.kotest.assertions.throwables.shouldNotThrowAny
+import io.kotest.matchers.shouldBe
+import java.net.ServerSocket
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -34,30 +36,26 @@ import org.junit.jupiter.api.Test
 internal class OtelLoggingSpec {
 
     @Test
+    fun `resolve the default endpoint when the environment variable is unset`() {
+        // `OTEL_EXPORTER_OTLP_ENDPOINT` is not set in the test JVM, so resolution
+        // falls back to the default. This is pure logic: no exporter is built and no
+        // port is touched.
+        OtelLogging.endpointFromEnvironment() shouldBe OtelLogging.DEFAULT_OTLP_HTTP_ENDPOINT
+    }
+
+    @Test
     fun `build, install and shut down an OTLP HTTP pipeline`() {
         shouldNotThrowAny {
-            // No collector is listening; the batch processor exports asynchronously,
-            // so construction, installation and shutdown must all succeed regardless.
-            val installed = OtelLogging.installOtlpHttp(OtelLogging.DEFAULT_OTLP_HTTP_ENDPOINT)
+            // Aim the exporter at a free local port rather than the well-known 4318:
+            // the test must not collide with — or accidentally export into — a real
+            // collector or a parallel suite on the standard port. The batch processor
+            // exports asynchronously, so construction, installation and shutdown all
+            // succeed whether or not anything is listening.
+            val installed = OtelLogging.installOtlpHttp("http://localhost:${freePort()}")
             installed.close()
         }
     }
 
-    @Test
-    fun `install using the default endpoint`() {
-        shouldNotThrowAny {
-            val installed = OtelLogging.installOtlpHttp()
-            installed.close()
-        }
-    }
-
-    @Test
-    fun `install from the environment, falling back to the default endpoint`() {
-        shouldNotThrowAny {
-            // With `OTEL_EXPORTER_OTLP_ENDPOINT` unset, this exercises the fallback
-            // to the default endpoint.
-            val installed = OtelLogging.fromEnvironment()
-            installed.close()
-        }
-    }
+    /** Returns a currently-free local TCP port. */
+    private fun freePort(): Int = ServerSocket(0).use { it.localPort }
 }

@@ -45,8 +45,7 @@ import org.apache.logging.log4j.core.Logger
 public class Log4j2BackendFactory : BackendFactory() {
 
     override fun create(loggingClass: String): LoggerBackend {
-        // Compute the logger name the same way as in SimpleBackendFactory.
-        val name = loggingClass.replace('$', '.')
+        val name = loggerName(loggingClass)
 
         // There is log4j.Logger interface and log4j.core.Logger implementation.
         // Implementation exposes more methods that are needed by the backend.

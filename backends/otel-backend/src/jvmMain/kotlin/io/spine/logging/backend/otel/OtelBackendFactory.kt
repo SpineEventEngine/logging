@@ -43,14 +43,15 @@ import io.spine.logging.backend.LoggerBackend
  * several backends are present, set the `spine.logging.backend_factory` system
  * property to this class' fully-qualified name.
  *
- * The instrumentation scope name passed to the logger provider is the logging
- * class name with `$` replaced by `.`, matching the other Spine backends.
+ * The instrumentation scope name passed to the logger provider is the logging class
+ * name converted by the shared `loggerName` convention of [BackendFactory] (`$`
+ * replaced by `.`), matching the other Spine Logging backends.
  */
 @AutoService(BackendFactory::class)
 public class OtelBackendFactory : BackendFactory() {
 
     override fun create(loggingClass: String): LoggerBackend {
-        val name = loggingClass.replace('$', '.')
+        val name = loggerName(loggingClass)
         return OtelLoggerBackend(name)
     }
 

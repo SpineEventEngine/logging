@@ -35,7 +35,8 @@ import io.spine.logging.backend.LoggerBackend
  */
 public class JulBackendFactory: BackendFactory() {
 
-    public override fun create(loggingClass: String): LoggerBackend = JulBackend(loggingClass)
+    public override fun create(loggingClass: String): LoggerBackend =
+        JulBackend(loggerName(loggingClass))
 
     /**
      * Returns a fully-qualified name of this class.
