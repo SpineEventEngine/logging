@@ -72,7 +72,7 @@ internal class OtelLoggerBackend(
     private val scopeName: String,
 ) : LoggerBackend() {
 
-    override val loggerName: String?
+    override val loggerName: String
         get() = scopeName
 
     /**
