@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@
  */
 
 import io.spine.dependency.boms.BomsPlugin
+import io.spine.dependency.isDokka
 import io.spine.dependency.lib.Jackson
 import io.spine.dependency.lib.Kotlin
 import io.spine.dependency.local.Reflect
@@ -83,6 +84,9 @@ fun Project.forceConfigurations() {
     with(configurations) {
         forceVersions()
         all {
+            if (isDokka) {
+                return@all
+            }
             resolutionStrategy {
                 val cfg = this@all
                 val rs = this@resolutionStrategy
