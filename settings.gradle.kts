@@ -31,7 +31,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "spine-logging"
+rootProject.name = "logging"
 
 include(
     "logging",
