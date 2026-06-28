@@ -79,8 +79,8 @@ installed.close()
 | `timestampNanos`                                    | `timestamp` (epoch nanoseconds)                                          |
 | `LogContext.Key.LOG_CAUSE`                          | `exception` (recorded as `exception.*` attributes)                       |
 | `logSite`                                           | `code.namespace`, `code.function`, `code.filepath`, `code.lineno`        |
-| scope + log-site metadata                           | attributes, namespaced `spine.<label>` (repeated → list)                 |
-| `Tags` from `ScopedLoggingContext`                  | `spine.tag.<name>` attributes                                            |
+| scope + log-site metadata                           | attributes, named `<label>` (repeated → list)                 |
+| `Tags` from `ScopedLoggingContext`                  | `tag.<name>` attributes                                            |
 | the active span                                     | trace/span ids (the record is emitted with the implicit context)         |
 
 Metadata is emitted as **structured attributes**, not folded into the message text, so a

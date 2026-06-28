@@ -129,9 +129,9 @@ internal class OtelLoggerBackendSpec {
     }
 
     @Test
-    fun `namespace custom metadata under 'spine'`() {
+    fun `record custom metadata as an attribute named after its label`() {
         backend.log(StubLogData(LITERAL).addMetadata(STR_KEY, "value"))
-        lastRecord.attributes["spine.str"] shouldBe "value"
+        lastRecord.attributes["str"] shouldBe "value"
     }
 
     @Test
@@ -141,7 +141,7 @@ internal class OtelLoggerBackendSpec {
                 .addMetadata(INT_KEY, 1)
                 .addMetadata(INT_KEY, 2)
         )
-        lastRecord.attributes["spine.int"] shouldBe listOf(1L, 2L)
+        lastRecord.attributes["int"] shouldBe listOf(1L, 2L)
     }
 
     @Test
@@ -151,7 +151,7 @@ internal class OtelLoggerBackendSpec {
         with(lastRecord.attributes) {
             this shouldContainKey "exception.message"
             this["exception.message"] shouldBe "Boom"
-            this shouldNotContainKey "spine.cause"
+            this shouldNotContainKey "cause"
         }
     }
 
@@ -169,8 +169,8 @@ internal class OtelLoggerBackendSpec {
                 .addMetadata(DOUBLE_KEY, 1.5)
         )
         with(lastRecord.attributes) {
-            this["spine.enabled"] shouldBe true
-            this["spine.ratio"] shouldBe 1.5
+            this["enabled"] shouldBe true
+            this["ratio"] shouldBe 1.5
         }
     }
 
@@ -184,9 +184,9 @@ internal class OtelLoggerBackendSpec {
             .build()
         backend.log(StubLogData(LITERAL).addMetadata(LogContext.Key.TAGS, tags))
         with(lastRecord.attributes) {
-            this["spine.tag.flag"] shouldBe true
-            this["spine.tag.user"] shouldBe "alice"
-            (this["spine.tag.ids"] as List<*>) shouldContainExactlyInAnyOrder listOf("a", "b")
+            this["tag.flag"] shouldBe true
+            this["tag.user"] shouldBe "alice"
+            (this["tag.ids"] as List<*>) shouldContainExactlyInAnyOrder listOf("a", "b")
         }
     }
 
@@ -228,7 +228,7 @@ internal class OtelLoggerBackendSpec {
     fun `emit a named event when the event-name metadata is set`() {
         backend.log(StubLogData(LITERAL).addMetadata(EVENT_NAME, "checkout.completed"))
         lastRecord.eventName shouldBe "checkout.completed"
-        lastRecord.attributes shouldNotContainKey "spine.otelEventName"
+        lastRecord.attributes shouldNotContainKey "otelEventName"
     }
 
     @Test
@@ -259,8 +259,8 @@ internal class OtelLoggerBackendSpec {
                 .addMetadata(CHAR_KEY, 'x')
         )
         with(lastRecord.attributes) {
-            this["spine.count"] shouldBe 7L
-            this["spine.symbol"] shouldBe "x"
+            this["count"] shouldBe 7L
+            this["symbol"] shouldBe "x"
         }
     }
 
@@ -274,10 +274,10 @@ internal class OtelLoggerBackendSpec {
                 .addMetadata(CHAR_LIST_KEY, 'a').addMetadata(CHAR_LIST_KEY, 'b')
         )
         with(lastRecord.attributes) {
-            (this["spine.flags"] as List<*>) shouldContainExactlyInAnyOrder listOf(true, false)
-            (this["spine.ratios"] as List<*>) shouldContainExactlyInAnyOrder listOf(1.5, 2.5)
-            (this["spine.names"] as List<*>) shouldContainExactlyInAnyOrder listOf("a", "b")
-            (this["spine.symbols"] as List<*>) shouldContainExactlyInAnyOrder listOf("a", "b")
+            (this["flags"] as List<*>) shouldContainExactlyInAnyOrder listOf(true, false)
+            (this["ratios"] as List<*>) shouldContainExactlyInAnyOrder listOf(1.5, 2.5)
+            (this["names"] as List<*>) shouldContainExactlyInAnyOrder listOf("a", "b")
+            (this["symbols"] as List<*>) shouldContainExactlyInAnyOrder listOf("a", "b")
         }
     }
 

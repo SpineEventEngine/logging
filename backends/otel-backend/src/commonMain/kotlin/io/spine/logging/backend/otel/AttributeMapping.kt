@@ -37,15 +37,14 @@ import io.spine.logging.backend.MetadataProcessor
 import io.spine.logging.context.Tags
 
 /**
- * The prefix applied to Spine metadata keys so they never collide with
- * OpenTelemetry semantic-convention attribute names.
- */
-private const val SPINE_PREFIX = "spine."
-
-/**
  * The prefix applied to individual [Tags] entries.
+ *
+ * Tag names and metadata-key labels share the same identifier namespace — both are
+ * validated by `checkMetadataIdentifier` — so a tag and a metadata key with the same
+ * name would otherwise map to the same attribute and overwrite each other. The `tag.`
+ * prefix keeps tags in their own namespace.
  */
-private const val TAG_PREFIX = "spine.tag."
+private const val TAG_PREFIX = "tag."
 
 /**
  * Records the log site of the given [data] as OpenTelemetry `code.*`
@@ -64,10 +63,9 @@ internal fun AttributesMutator.putLogSite(data: LogData) {
 /**
  * Records the scope and log-site [metadata] as attributes.
  *
- * The throwable carried under [LogContext.Key.LOG_CAUSE] is ignored here,
- * as it is emitted as the log record's exception. [Tags] are expanded into
- * individual `spine.tag.<name>` attributes; all other keys are namespaced
- * under `spine.<label>`.
+ * Each key becomes an attribute named after its label. The throwable carried under
+ * [LogContext.Key.LOG_CAUSE] is ignored here, as it is emitted as the log record's
+ * exception; [Tags] are expanded into individual `tag.<name>` attributes.
  */
 internal fun AttributesMutator.putMetadata(metadata: MetadataProcessor) {
     metadata.process(attributeHandler, this)
@@ -75,9 +73,9 @@ internal fun AttributesMutator.putMetadata(metadata: MetadataProcessor) {
 
 private val attributeHandler: MetadataHandler<AttributesMutator> =
     MetadataHandler.builder<AttributesMutator> { key, value, mutator ->
-        mutator.putValue(SPINE_PREFIX + key.label, value)
+        mutator.putValue(key.label, value)
     }.setDefaultRepeatedHandler { key, values, mutator ->
-        mutator.putValues(SPINE_PREFIX + key.label, values)
+        mutator.putValues(key.label, values)
     }.addHandler(LogContext.Key.TAGS) { _, tags, mutator ->
         mutator.putTags(tags)
     }.ignoring(
