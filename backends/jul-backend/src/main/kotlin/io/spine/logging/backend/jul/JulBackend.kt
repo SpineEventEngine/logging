@@ -44,11 +44,9 @@ import java.util.logging.Logger
  *
  * It allows forced publishing of logging records.
  *
- * @param loggingClass A name of the logger created for this backend.
- *        A better name for the parameter would be `loggerName`, but we keep the naming
- *        consistent with the API we extend. Please also see the constructor
- *        of `AbstractBackend` which accepts `String` for the operation with
- *        the given class name.
+ * @param loggingClass The name of the logger created for this backend, already derived
+ *        from the logging class by [JulBackendFactory]. A better name for the parameter
+ *        would be `loggerName`, but we keep it consistent with the API we extend.
  * @see AbstractJulBackend
  */
 internal class JulBackend(loggingClass: String): AbstractJulBackend(loggingClass) {

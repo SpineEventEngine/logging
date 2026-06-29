@@ -1,0 +1,89 @@
+/*
+ * Copyright 2026, TeamDev. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Redistribution and use in source and/or binary forms, with or without
+ * modification, must retain the above copyright notice and the following
+ * disclaimer.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+package io.spine.logging.backend.otel.given
+
+import com.google.errorprone.annotations.CanIgnoreReturnValue
+import io.spine.logging.Level
+import io.spine.logging.LogContext
+import io.spine.logging.LogSite
+import io.spine.logging.MetadataKey
+import io.spine.logging.backend.LogData
+
+/**
+ * A mutable [LogData] for testing backends and other log-handling code.
+ */
+@Suppress("TooManyFunctions") // Many getters and setters.
+internal class StubLogData(literalArgument: Any?) : LogData {
+
+    override var level: Level = Level.INFO
+    private val _literalArgument: Any? = literalArgument
+    override var timestampNanos = 0L
+    override val metadata = StubMetadata()
+    override var logSite: LogSite = LOG_SITE
+
+    companion object {
+        private const val LOGGER_NAME = "io.spine.LoggerName"
+        private const val LOGGING_CLASS = "io.spine.FakeClass"
+        private const val LOGGING_METHOD = "doAct"
+        private const val LINE_NUMBER = 123
+        private const val SOURCE_FILE = "src/io/spine/FakeClass.java"
+        private val LOG_SITE = StubLogSite(LOGGING_CLASS, LOGGING_METHOD, LINE_NUMBER, SOURCE_FILE)
+    }
+
+    @CanIgnoreReturnValue
+    fun setLevel(level: Level): StubLogData {
+        this.level = level
+        return this
+    }
+
+    @CanIgnoreReturnValue
+    fun setLogSite(logSite: LogSite): StubLogData {
+        this.logSite = logSite
+        return this
+    }
+
+    @CanIgnoreReturnValue
+    fun setTimestampNanos(value: Long): StubLogData {
+        this.timestampNanos = value
+        return this
+    }
+
+    @CanIgnoreReturnValue
+    fun <T : Any> addMetadata(key: MetadataKey<T>, value: Any): StubLogData {
+        metadata.add(key, requireNotNull(key.cast(value)) { "Value is not of the key's type." })
+        return this
+    }
+
+    override val loggerName: String
+        get() = LOGGER_NAME
+
+    override fun wasForced(): Boolean =
+        metadata.findValue(LogContext.Key.WAS_FORCED) == true
+
+    override val literalArgument: Any?
+        get() = _literalArgument
+}

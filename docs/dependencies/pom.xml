@@ -9,8 +9,8 @@ all modules and does not describe the project structure per-subproject.
  
  -->
 <groupId>io.spine</groupId>
-<artifactId>spine-logging</artifactId>
-<version>2.0.0-SNAPSHOT.418</version>
+<artifactId>logging</artifactId>
+<version>2.0.0-SNAPSHOT.419</version>
 
 <inceptionYear>2015</inceptionYear>
 
@@ -77,6 +77,30 @@ all modules and does not describe the project structure per-subproject.
     <scope>compile</scope>
   </dependency>
   <dependency>
+    <groupId>io.opentelemetry.kotlin</groupId>
+    <artifactId>exporters-core</artifactId>
+    <version>0.4.0</version>
+    <scope>compile</scope>
+  </dependency>
+  <dependency>
+    <groupId>io.opentelemetry.kotlin</groupId>
+    <artifactId>exporters-otlp</artifactId>
+    <version>0.4.0</version>
+    <scope>compile</scope>
+  </dependency>
+  <dependency>
+    <groupId>io.opentelemetry.kotlin</groupId>
+    <artifactId>implementation</artifactId>
+    <version>0.4.0</version>
+    <scope>compile</scope>
+  </dependency>
+  <dependency>
+    <groupId>io.opentelemetry.kotlin</groupId>
+    <artifactId>noop</artifactId>
+    <version>0.4.0</version>
+    <scope>compile</scope>
+  </dependency>
+  <dependency>
     <groupId>io.spine</groupId>
     <artifactId>spine-annotations</artifactId>
     <version>2.0.0-SNAPSHOT.421</version>
@@ -109,6 +133,12 @@ all modules and does not describe the project structure per-subproject.
   <dependency>
     <groupId>org.jetbrains.kotlinx</groupId>
     <artifactId>kotlinx-coroutines-bom</artifactId>
+    <version>1.10.2</version>
+    <scope>compile</scope>
+  </dependency>
+  <dependency>
+    <groupId>org.jetbrains.kotlinx</groupId>
+    <artifactId>kotlinx-coroutines-core</artifactId>
     <version>1.10.2</version>
     <scope>compile</scope>
   </dependency>
@@ -229,6 +259,16 @@ all modules and does not describe the project structure per-subproject.
     <groupId>io.kotest</groupId>
     <artifactId>kotest-runner-junit5-jvm</artifactId>
     <version>6.1.11</version>
+  </dependency>
+  <dependency>
+    <groupId>io.opentelemetry.kotlin</groupId>
+    <artifactId>api</artifactId>
+    <version>0.4.0</version>
+  </dependency>
+  <dependency>
+    <groupId>io.opentelemetry.kotlin</groupId>
+    <artifactId>core</artifactId>
+    <version>0.4.0</version>
   </dependency>
   <dependency>
     <groupId>io.spine.tools</groupId>

@@ -76,7 +76,19 @@ public abstract class BackendFactory {
      * rather than the internal binary format `"com/example/Foo$Bar"`).
      *
      * @param loggingClass The fully-qualified name of the Java class to which the logger is
-     *        associated. The logger name is derived from this string in a backend-specific way.
+     *        associated. The logger name is derived from this string in a backend-specific
+     *        way, commonly via `loggerName`.
      */
     public abstract fun create(loggingClass: String): LoggerBackend
+
+    /**
+     * Derives a backend logger name from the given [loggingClass].
+     *
+     * Nested and inner classes arrive with `$` separating the enclosing class from the
+     * nested one (for example, `com.example.Foo$Bar`). Backends name their loggers with
+     * dots, so this replaces `$` with `.`. It is the single naming convention shared by
+     * the Spine Logging backends; implementations should derive their logger name through
+     * it rather than re-implementing the replacement.
+     */
+    protected fun loggerName(loggingClass: String): String = loggingClass.replace('$', '.')
 }

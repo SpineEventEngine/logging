@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,22 +24,39 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.jul
+package io.spine.logging.backend.otel.given
 
-import io.spine.logging.backend.BackendFactory
-import io.spine.logging.backend.LoggerBackend
+import com.google.errorprone.annotations.CanIgnoreReturnValue
+import io.spine.logging.MetadataKey
+import io.spine.logging.backend.Metadata
 
 /**
- * A [BackendFactory] producing [LoggerBackend] which supports publishing
- * of logging records according to configured [LogLevelMap][io.spine.logging.context.LogLevelMap].
+ * A mutable [Metadata] implementation for testing logging backends.
  */
-public class JulBackendFactory: BackendFactory() {
+internal class StubMetadata : Metadata() {
 
-    public override fun create(loggingClass: String): LoggerBackend =
-        JulBackend(loggerName(loggingClass))
+    private class KeyValuePair<T : Any>(val key: MetadataKey<T>, val value: T)
+
+    private val entries = mutableListOf<KeyValuePair<*>>()
 
     /**
-     * Returns a fully-qualified name of this class.
+     * Adds a key/value pair to this [Metadata].
      */
-    override fun toString(): String = javaClass.name
+    @CanIgnoreReturnValue
+    fun <T : Any> add(key: MetadataKey<T>, value: T): StubMetadata {
+        entries.add(KeyValuePair(key, value))
+        return this
+    }
+
+    override fun size(): Int = entries.size
+
+    @Suppress("UNCHECKED_CAST")
+    override fun getKey(n: Int): MetadataKey<Any> = entries[n].key as MetadataKey<Any>
+
+    override fun getValue(n: Int): Any = entries[n].value
+
+    override fun <T : Any> findValue(key: MetadataKey<T>): T? {
+        val entry = entries.firstOrNull { it.key == key }
+        return key.cast(entry?.value)
+    }
 }

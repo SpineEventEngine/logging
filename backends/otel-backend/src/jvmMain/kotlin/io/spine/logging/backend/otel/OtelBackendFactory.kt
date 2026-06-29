@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2023, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,35 +24,35 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.log4j2
+@file:OptIn(ExperimentalApi::class)
 
+package io.spine.logging.backend.otel
+
+import com.google.auto.service.AutoService
+import io.opentelemetry.kotlin.ExperimentalApi
 import io.spine.logging.backend.BackendFactory
 import io.spine.logging.backend.LoggerBackend
-import org.apache.logging.log4j.LogManager
-import org.apache.logging.log4j.core.Logger
 
 /**
- * Backend factory for Log4j2.
+ * Creates [OtelLoggerBackend] instances backed by the [OpenTelemetry]
+ * [io.opentelemetry.kotlin.logging.Logger] resolved from [OtelBackendSettings].
  *
- * When using `io.spine.logging.backend.system.DefaultPlatform`, this factory will
- * automatically be used if it is included on the classpath, and no other implementation
- * of `BackendFactory` (other than the default implementation) is present.
+ * When using `io.spine.logging.backend.system.DefaultPlatform`, this factory is
+ * picked up automatically via `ServiceLoader` (registered by `@AutoService`) if
+ * it is the only [BackendFactory] on the classpath. To select it explicitly when
+ * several backends are present, set the `spine.logging.backend_factory` system
+ * property to this class' fully-qualified name.
  *
- * To specify it more explicitly or to work around an issue where multiple backend implementations
- * are on the classpath, you can set `spine.logging.backend_factory` system property to
- * `io.spine.logging.backend.log4j2.Log4j2BackendFactory`.
+ * The instrumentation scope name passed to the logger provider is the logging class
+ * name converted by the shared `loggerName` convention of [BackendFactory] (`$`
+ * replaced by `.`), matching the other Spine Logging backends.
  */
-public class Log4j2BackendFactory : BackendFactory() {
+@AutoService(BackendFactory::class)
+public class OtelBackendFactory : BackendFactory() {
 
     override fun create(loggingClass: String): LoggerBackend {
         val name = loggerName(loggingClass)
-
-        // There is log4j.Logger interface and log4j.core.Logger implementation.
-        // Implementation exposes more methods that are needed by the backend.
-        // So, we have to cast an interface back to its implementation.
-        val logger = LogManager.getLogger(name) as Logger
-
-        return Log4j2LoggerBackend(logger)
+        return OtelLoggerBackend(name)
     }
 
     /** Returns a fully-qualified name of this class. */

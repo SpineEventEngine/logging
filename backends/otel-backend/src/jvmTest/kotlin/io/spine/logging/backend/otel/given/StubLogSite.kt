@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,22 +24,32 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.jul
+package io.spine.logging.backend.otel.given
 
-import io.spine.logging.backend.BackendFactory
-import io.spine.logging.backend.LoggerBackend
+import io.spine.logging.LogSite
+import java.util.Objects
 
 /**
- * A [BackendFactory] producing [LoggerBackend] which supports publishing
- * of logging records according to configured [LogLevelMap][io.spine.logging.context.LogLevelMap].
+ * A simplified implementation of [LogSite] for testing.
  */
-public class JulBackendFactory: BackendFactory() {
+internal class StubLogSite(
+    override val className: String,
+    override val methodName: String,
+    override val lineNumber: Int,
+    private val sourcePath: String?
+) : LogSite() {
 
-    public override fun create(loggingClass: String): LoggerBackend =
-        JulBackend(loggerName(loggingClass))
+    override val fileName: String? = sourcePath
 
-    /**
-     * Returns a fully-qualified name of this class.
-     */
-    override fun toString(): String = javaClass.name
+    override fun equals(other: Any?): Boolean {
+        if (other !is StubLogSite) {
+            return false
+        }
+        return className == other.className &&
+                methodName == other.methodName &&
+                lineNumber == other.lineNumber &&
+                sourcePath == other.sourcePath
+    }
+
+    override fun hashCode(): Int = Objects.hash(className, methodName, lineNumber, sourcePath)
 }

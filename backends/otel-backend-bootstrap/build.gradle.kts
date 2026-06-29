@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,22 +24,25 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.jul
+import io.spine.dependency.kotlinx.Coroutines
+import io.spine.dependency.lib.OpenTelemetryKotlin
 
-import io.spine.logging.backend.BackendFactory
-import io.spine.logging.backend.LoggerBackend
+plugins {
+    `jvm-module`
+}
 
-/**
- * A [BackendFactory] producing [LoggerBackend] which supports publishing
- * of logging records according to configured [LogLevelMap][io.spine.logging.context.LogLevelMap].
- */
-public class JulBackendFactory: BackendFactory() {
+dependencies {
+    // The backend whose `OpenTelemetry` instance this module installs.
+    implementation(project(":otel-backend"))
 
-    public override fun create(loggingClass: String): LoggerBackend =
-        JulBackend(loggerName(loggingClass))
+    // The native Kotlin SDK entry point (`createOpenTelemetry { … }`), the export
+    // machinery (`batchLogRecordProcessor`), and the OTLP exporters. Only this
+    // bootstrap depends on them; the backend stays API-only.
+    implementation(OpenTelemetryKotlin.implementation)
+    implementation(OpenTelemetryKotlin.exportersCore)
+    implementation(OpenTelemetryKotlin.exportersOtlp)
+    implementation(OpenTelemetryKotlin.noop)
 
-    /**
-     * Returns a fully-qualified name of this class.
-     */
-    override fun toString(): String = javaClass.name
+    // `runBlocking`, to invoke the SDK's suspending `shutdown()` from `close()`.
+    implementation(Coroutines.core)
 }

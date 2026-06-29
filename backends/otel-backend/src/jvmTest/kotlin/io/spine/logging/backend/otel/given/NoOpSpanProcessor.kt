@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,22 +24,34 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.jul
+@file:OptIn(ExperimentalApi::class)
 
-import io.spine.logging.backend.BackendFactory
-import io.spine.logging.backend.LoggerBackend
+package io.spine.logging.backend.otel.given
+
+import io.opentelemetry.kotlin.ExperimentalApi
+import io.opentelemetry.kotlin.context.Context
+import io.opentelemetry.kotlin.export.OperationResultCode
+import io.opentelemetry.kotlin.tracing.export.SpanProcessor
+import io.opentelemetry.kotlin.tracing.model.ReadWriteSpan
+import io.opentelemetry.kotlin.tracing.model.ReadableSpan
 
 /**
- * A [BackendFactory] producing [LoggerBackend] which supports publishing
- * of logging records according to configured [LogLevelMap][io.spine.logging.context.LogLevelMap].
+ * A [SpanProcessor] that does nothing, used only to obtain a real SDK tracer
+ * (which assigns valid span contexts) in trace-correlation tests.
  */
-public class JulBackendFactory: BackendFactory() {
+internal class NoOpSpanProcessor : SpanProcessor {
 
-    public override fun create(loggingClass: String): LoggerBackend =
-        JulBackend(loggerName(loggingClass))
+    override fun onStart(span: ReadWriteSpan, parentContext: Context): Unit = Unit
 
-    /**
-     * Returns a fully-qualified name of this class.
-     */
-    override fun toString(): String = javaClass.name
+    override fun onEnding(span: ReadWriteSpan): Unit = Unit
+
+    override fun onEnd(span: ReadableSpan): Unit = Unit
+
+    override fun isStartRequired(): Boolean = false
+
+    override fun isEndRequired(): Boolean = false
+
+    override suspend fun forceFlush(): OperationResultCode = OperationResultCode.Success
+
+    override suspend fun shutdown(): OperationResultCode = OperationResultCode.Success
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,22 +24,37 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.logging.backend.jul
+@file:OptIn(ExperimentalApi::class)
 
-import io.spine.logging.backend.BackendFactory
-import io.spine.logging.backend.LoggerBackend
+package io.spine.logging.backend.otel.given
+
+import io.opentelemetry.kotlin.ExperimentalApi
+import io.opentelemetry.kotlin.context.Context
+import io.opentelemetry.kotlin.export.OperationResultCode
+import io.opentelemetry.kotlin.logging.export.LogRecordProcessor
+import io.opentelemetry.kotlin.logging.model.ReadWriteLogRecord
+import io.opentelemetry.kotlin.logging.model.ReadableLogRecord
+import java.util.Collections.synchronizedList
 
 /**
- * A [BackendFactory] producing [LoggerBackend] which supports publishing
- * of logging records according to configured [LogLevelMap][io.spine.logging.context.LogLevelMap].
+ * A [LogRecordProcessor] that records every emitted log record in memory,
+ * for assertions in tests.
  */
-public class JulBackendFactory: BackendFactory() {
+internal class RecordingLogRecordProcessor : LogRecordProcessor {
 
-    public override fun create(loggingClass: String): LoggerBackend =
-        JulBackend(loggerName(loggingClass))
+    private val recorded: MutableList<ReadableLogRecord> = synchronizedList(mutableListOf())
 
     /**
-     * Returns a fully-qualified name of this class.
+     * An immutable snapshot of the records emitted so far.
      */
-    override fun toString(): String = javaClass.name
+    val records: List<ReadableLogRecord>
+        get() = synchronized(recorded) { recorded.toList() }
+
+    override fun onEmit(log: ReadWriteLogRecord, context: Context) {
+        recorded.add(log)
+    }
+
+    override suspend fun forceFlush(): OperationResultCode = OperationResultCode.Success
+
+    override suspend fun shutdown(): OperationResultCode = OperationResultCode.Success
 }

@@ -53,13 +53,14 @@ public abstract class AbstractJulBackend : LoggerBackend {
     }
 
     /**
-     * Constructs an abstract backend for the given class name.
+     * Constructs an abstract backend for the logger named [loggingClass].
      *
-     * Nested or inner class names (containing '$') are converted to names matching the
-     * standard JDK logger namespace by converting '$' to '.'.
+     * The name is used as given: callers pass a logger name already derived from the
+     * logging class through the shared `BackendFactory.loggerName` convention
+     * (`$` replaced by `.`).
      */
     protected constructor(loggingClass: String) : this(
-        Logger.getLogger(loggingClass.replace('$', '.'))
+        Logger.getLogger(loggingClass)
     )
 
     public override val loggerName: String?
