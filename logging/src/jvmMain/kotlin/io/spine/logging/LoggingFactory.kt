@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,8 +61,8 @@ public actual object LoggingFactory {
     ): MetadataKey<T> = MetadataKey.single(label, valueClass)
 
     @JvmStatic
-    public fun <T: Any> singleMetadataKey(label: String, type: Class<T>): MetadataKey<T> =
-        singleMetadataKey(label, type.kotlin)
+    public fun <T : Any> singleMetadataKey(label: String, valueClass: Class<T>): MetadataKey<T> =
+        singleMetadataKey(label, valueClass.kotlin)
 
     @JvmStatic
     public actual fun <T : Any> repeatedMetadataKey(
@@ -71,8 +71,8 @@ public actual object LoggingFactory {
     ): MetadataKey<T> = MetadataKey.repeated(label, valueClass)
 
     @JvmStatic
-    public fun <T : Any> repeatedMetadataKey(label: String, type: Class<T>): MetadataKey<T> =
-        repeatedMetadataKey(label, type.kotlin)
+    public fun <T : Any> repeatedMetadataKey(label: String, valueClass: Class<T>): MetadataKey<T> =
+        repeatedMetadataKey(label, valueClass.kotlin)
 
     private fun createForClass(cls: Class<*>): Logger {
         val loggerBackend = Platform.getBackend(cls.name)
