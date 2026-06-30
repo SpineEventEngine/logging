@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,6 +63,14 @@ import kotlin.reflect.KClass
  * Ideally a separate class would be defined to hold only the keys, since this allows keys
  * to be loaded very early in the logging platform lifecycle without risking any static
  * initialization issues.
+ *
+ * A key can be created either through a factory function — [single] or [repeated] on this
+ * class, or `singleMetadataKey` / `repeatedMetadataKey` on
+ * [LoggingFactory] — or by subclassing this class to
+ * customize value formatting (see the protected constructor and the [emit] methods below).
+ * Both kinds of keys are accepted wherever a `MetadataKey` is expected, including the
+ * `withMetadata` method of the
+ * [ScopedLoggingContext.Builder][io.spine.logging.context.ScopedLoggingContext.Builder].
  *
  * Custom subclasses of `MetadataKey` which override either of the protected [.emit] methods
  * should take care to avoid calling any code, which might trigger logging since this could lead

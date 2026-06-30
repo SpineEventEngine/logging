@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -87,6 +87,15 @@ abstract class AbstractContextDataProviderSpec {
     private companion object {
         private val FOO = MetadataKey.single<String>("foo")
         private val BAR = MetadataKey.repeated<String>("bar")
+
+        /**
+         * A custom [MetadataKey] created by subclassing rather than via the factory
+         * functions, reproducing the scenario from
+         * [issue #70](https://github.com/SpineEventEngine/logging/issues/70).
+         */
+        private val CUSTOM =
+            object : MetadataKey<String>("custom", String::class, canRepeat = false) {}
+
         private val SUB_TASK = ScopeType.create("sub task")
         private val BATCH_JOB = ScopeType.create("batch job")
     }
@@ -151,6 +160,30 @@ abstract class AbstractContextDataProviderSpec {
                 .call {
                     // Should be unique because the key is singleton.
                     contextMetadata.shouldUniquelyContain(key, value)
+                    markCallbackExecuted()
+                }
+            contextMetadata.shouldBeEmpty()
+            checkCallbackWasExecuted()
+        }
+
+        /**
+         * Verifies that a custom [MetadataKey] — created by subclassing rather than via
+         * the factory functions — can be attached to a context and is delivered to the
+         * context metadata.
+         *
+         * This is a regression test for
+         * [issue #70](https://github.com/SpineEventEngine/logging/issues/70), where
+         * passing a custom key to `withMetadata` used to throw a `ClassCastException`
+         * on the JVM.
+         */
+        @Test
+        fun `with a custom metadata key`() {
+            val value = "custom-value"
+            contextMetadata.shouldBeEmpty()
+            context.newContext()
+                .withMetadata(CUSTOM, value)
+                .call {
+                    contextMetadata.shouldUniquelyContain(CUSTOM, value)
                     markCallbackExecuted()
                 }
             contextMetadata.shouldBeEmpty()
