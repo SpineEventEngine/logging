@@ -30,7 +30,6 @@ import io.spine.dependency.lib.OpenTelemetryKotlin
 import io.spine.gradle.publish.SpinePublishing
 import io.spine.gradle.publish.spinePublishing
 import io.spine.gradle.testing.registerTestTasks
-import org.gradle.api.tasks.testing.Test
 
 plugins {
     `kmp-module`
