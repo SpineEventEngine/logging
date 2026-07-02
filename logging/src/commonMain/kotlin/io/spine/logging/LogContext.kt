@@ -408,7 +408,7 @@ protected constructor(
     }
 
     /**
-     * Make the backend logging call.
+     * Makes the backend logging call.
      *
      * The given [message] is evaluated within the recursion guard of the logger,
      * so that a throwing or reentrant `toString()` of a logged value cannot escape
@@ -428,7 +428,8 @@ protected constructor(
             }
             addMetadata(Key.TAGS, finalTags)
         }
-        // Pass the log data to the backend (it should not be modified after this point).
+        // Pass the log data to the backend. The message is completed within the
+        // recursion guard of `write()`; the data must not be modified after that.
         getLogger().write(this) {
             // A `null` message is passed to the backend unmodified.
             literalArg = message()?.let { (loggingDomain?.messagePrefix ?: "") + it }

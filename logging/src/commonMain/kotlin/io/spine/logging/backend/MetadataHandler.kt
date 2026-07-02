@@ -145,6 +145,7 @@ public abstract class MetadataHandler<C : Any> {
          * @param handler The repeated value handler to be invoked once for all associated values.
          * @param T The key/value type.
          * @return The builder instance for chaining.
+         * @throws IllegalArgumentException if the given key does not support repeated values.
          */
         @CanIgnoreReturnValue
         public fun <T : Any> addRepeatedHandler(

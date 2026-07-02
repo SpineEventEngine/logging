@@ -1,5 +1,5 @@
 /*
- * Copyright 2026, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -145,6 +145,7 @@ public open class MetadataKey<T : Any>(
     /**
      * Casts an arbitrary value to the type of this key.
      *
+     * @return The value cast to the key type, or `null` if the given value is `null`.
      * @throws ClassCastException if the given value is not an instance of the key type.
      */
     public fun cast(value: Any?): T? {
@@ -155,9 +156,11 @@ public open class MetadataKey<T : Any>(
             @Suppress("UNCHECKED_CAST")
             return value as T
         }
+        // Do not interpolate the value itself: its `toString()` is user code
+        // and must not be invoked on this error path.
         throw ClassCastException(
-            "The value `$value` cannot be cast to `${clazz.qualifiedName}`" +
-                    " required by the key `$this`."
+            "A value of the type `${value.javaClass.name}` cannot be cast to" +
+                    " `${clazz.qualifiedName}` required by the key `$this`."
         )
     }
 

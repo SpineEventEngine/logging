@@ -579,7 +579,7 @@ private fun <T : Any, C : Any> MetadataHandler<C>.dispatch(
  *
  * The lists built by [MutableMap.addTo] are mutable, and exposing their iterators directly
  * would allow a handler to remove values. Like [LightweightProcessor.ValueIterator], this
- * wrapper satisfies casting to a mutable iterator but throws from [remove].
+ * wrapper can be cast to a mutable iterator, but throws from [remove].
  */
 private class UnmodifiableIterator<T>(
     private val delegate: Iterator<T>
