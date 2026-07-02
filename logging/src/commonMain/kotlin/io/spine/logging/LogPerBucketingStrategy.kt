@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -122,7 +122,7 @@ public abstract class LogPerBucketingStrategy<T> protected constructor(
          * are effectively singletons.
          */
         private val BY_CLASS = object : LogPerBucketingStrategy<Any>("ByClass") {
-            override fun apply(key: Any): Any = key::class
+            override fun apply(key: Any): Any = key.javaClass
         }
 
         /**
@@ -131,7 +131,7 @@ public abstract class LogPerBucketingStrategy<T> protected constructor(
          * are effectively singletons.
          */
         private val BY_CLASS_NAME = object : LogPerBucketingStrategy<Any>("ByClassName") {
-            override fun apply(key: Any): Any = key::class.qualifiedName!!
+            override fun apply(key: Any): Any = key.javaClass.name
                 /* This is a naturally interned value, so no need to call `intern()`. */
         }
 

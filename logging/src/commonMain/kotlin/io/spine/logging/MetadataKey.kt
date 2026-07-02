@@ -143,18 +143,22 @@ public open class MetadataKey<T : Any>(
             this(label, clazz, canRepeat, true)
 
     /**
-     * Cast an arbitrary value to the type of this key.
+     * Casts an arbitrary value to the type of this key.
+     *
+     * @throws ClassCastException if the given value is not an instance of the key type.
      */
     public fun cast(value: Any?): T? {
         if (value == null) {
             return null
         }
-        return if (clazz.isInstance(value)) {
+        if (clazz.isInstance(value)) {
             @Suppress("UNCHECKED_CAST")
-            value as T
-        } else {
-            null
+            return value as T
         }
+        throw ClassCastException(
+            "The value `$value` cannot be cast to `${clazz.qualifiedName}`" +
+                    " required by the key `$this`."
+        )
     }
 
     /**
@@ -376,8 +380,8 @@ private fun createBloomFilterMaskFromSystemHashcode(instance: Any): Long {
  * Checks that a metadata key cannot be used for repeated values.
  *
  * @param key The metadata key to check.
- * @throws IllegalStateException if the key supports repeated values.
+ * @throws IllegalArgumentException if the key supports repeated values.
  */
 internal fun checkCannotRepeat(key: MetadataKey<*>) {
-    check(!key.canRepeat) { "The key `$key` does not support repeated values." }
+    require(!key.canRepeat) { "The key `$key` must be single-valued." }
 }

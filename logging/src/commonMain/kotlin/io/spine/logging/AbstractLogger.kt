@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,8 +33,12 @@ import io.spine.logging.util.RecursionDepth
 import kotlin.time.Duration.Companion.nanoseconds
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.UtcOffset
+import kotlinx.datetime.format.char
+import kotlinx.datetime.offsetAt
 import kotlinx.datetime.toLocalDateTime
 
 /**
@@ -66,10 +70,32 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
         private const val MAX_ALLOWED_RECURSION_DEPTH = 100
 
         /**
-         * The format for date-time values in log data.
+         * The format for the local date-time part of timestamps in log data.
+         *
+         * Produces an ISO 8601 date-time with milliseconds, e.g., `2026-07-02T00:29:31.123`.
          */
         @JvmField
-        val dateTimeFormat = LocalDateTime.Formats.ISO
+        val dateTimeFormat = LocalDateTime.Format {
+            date(LocalDate.Formats.ISO)
+            char('T')
+            hour()
+            char(':')
+            minute()
+            char(':')
+            second()
+            char('.')
+            secondFraction(3)
+        }
+
+        /**
+         * The format for the four-digit UTC offset part of timestamps in log data,
+         * e.g., `+0100`.
+         */
+        @JvmField
+        val offsetFormat = UtcOffset.Format {
+            offsetHours()
+            offsetMinutesOfHour()
+        }
     }
 
     /**
@@ -114,9 +140,9 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
     public fun atInfo(): API = at(Level.INFO)
 
     /**
-     * A convenience method for at([Level.INFO]).
+     * A convenience method for at([Level.CONFIG]).
      */
-    public fun atConfig(): API = at(Level.INFO)
+    public fun atConfig(): API = at(Level.CONFIG)
 
     /**
      * A convenience method for at([Level.FINE]).
@@ -188,15 +214,23 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
      *
      * This method also guards against unbounded reentrant logging, and will suppress further
      * logging if it detects significant recursion has occurred.
+     *
+     * @param data The log statement data.
+     * @param prepare Completes [data] within the recursion guard right before the backend call.
+     *   Use it for evaluation which may invoke user code, such as computing a lazy log message,
+     *   so that exceptions and reentrant logging it causes are handled the same way as those
+     *   coming from the backend.
      */
+    @JvmOverloads
     @Suppress("TooGenericExceptionCaught")
-    public fun write(data: LogData) {
+    public fun write(data: LogData, prepare: () -> Unit = {}) {
         // Note: Recursion checking should not be in the `LoggerBackend`.
         // There are many backends and they can call into other backends.
         // We only want the counter incremented per log statement.
         try {
             RecursionDepth.enterLogStatement().use { depth ->
                 if (depth.getValue() <= MAX_ALLOWED_RECURSION_DEPTH) {
+                    prepare()
                     backend.log(data)
                 } else {
                     reportError(
@@ -262,8 +296,10 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
         val instant = Instant.fromEpochMilliseconds(
             data.timestampNanos.nanoseconds.inWholeMilliseconds
         )
-        val dateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
-        return dateTimeFormat.format(dateTime)
+        val zone = TimeZone.currentSystemDefault()
+        val dateTime = instant.toLocalDateTime(zone)
+        val offset = zone.offsetAt(instant)
+        return dateTimeFormat.format(dateTime) + offsetFormat.format(offset)
     }
 }
 

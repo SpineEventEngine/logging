@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,6 +39,7 @@ import io.spine.logging.Level.Companion.WARNING
 import io.spine.logging.LogContext.Companion.specializeLogSiteKeyFromMetadata
 import io.spine.logging.LogContext.Key
 import io.spine.logging.LogSiteLookup.logSite
+import io.spine.logging.backend.SimpleMessageFormatter
 import io.spine.logging.backend.given.FakeMetadata
 import io.spine.logging.backend.given.shouldContain
 import io.spine.logging.backend.given.shouldContainInOrder
@@ -112,9 +113,6 @@ internal class LogContextSpec {
         backend.lastLogged.metadata.shouldUniquelyContain(Key.LOG_CAUSE, cause)
         backend.lastLogged shouldHaveMessage MESSAGE_LITERAL
     }
-
-
-
 
     @Test
     fun `accept a literal message`() {
@@ -576,8 +574,6 @@ internal class LogContextSpec {
         backend.lastLogged.shouldHaveMessage("")
     }
 
-
-
     /**
      * Tests that a `null` literal is passed unmodified to the backend
      * without throwing an exception.
@@ -593,7 +589,9 @@ internal class LogContextSpec {
     fun `log 'null' if given message is 'null'`() {
         logger.atInfo().log { null }
         backend.lastLogged.let {
-            it shouldHaveMessage ("<null>")
+            it shouldHaveMessage null
+            // The literal is rendered as the text `null` when formatted.
+            SimpleMessageFormatter.getLiteralLogMessage(it) shouldBe "null"
         }
     }
 

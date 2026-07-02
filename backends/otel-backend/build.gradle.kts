@@ -95,12 +95,3 @@ dependencies {
 // Registers the `fastTest`/`slowTest` tasks and the `*Spec`/`*Test` filter,
 // matching the core `logging` module.
 tasks.registerTestTasks()
-
-// The `kmp-module` convention does not put the JUnit Platform on the JVM test
-// task (it configures only the `jvm-module` `test` task), so enable it here.
-tasks.named<Test>("jvmTest") {
-    useJUnitPlatform()
-    testLogging {
-        events("passed", "skipped", "failed")
-    }
-}
