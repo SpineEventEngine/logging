@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,14 +38,14 @@ package io.spine.logging
  *
  * ```kotlin
  * public object MyLoggingLevels {
- *    public val CONFIG: Level = Level("CONFIG", 700)
+ *    public val NOTICE: Level = Level("NOTICE", 850)
  *    ...
  * }
  * ```
  * You may also want to add an extension function for the [Logger] class to
- * use thew new level:
+ * use the new level:
  * ```
- * public fun <API: LoggingApi<API>> Logger<API>.atConfig(): API = at(MyLoggingLevels.CONFIG)
+ * public fun <API: LoggingApi<API>> Logger<API>.atNotice(): API = at(MyLoggingLevels.NOTICE)
  * ```
  * If the new logging level needs to be converted to a level of underlying logging backend
  * a [LevelConverter] must be [registered][LevelConverter.register] prior to
