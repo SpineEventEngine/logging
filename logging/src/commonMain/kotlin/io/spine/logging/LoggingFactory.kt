@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -85,9 +85,8 @@ public expect object LoggingFactory {
 /**
  * Obtains a name of a logger to be used for this class.
  *
- * For a fully-qualified class, its name will be used.
- * Otherwise, if a class has a simple name, it will be used.
- * If a class does not have a simple name, the string representation
- * of the class will be returned.
+ * The name matches the name of the logger created by [LoggingFactory.loggerFor]
+ * for this class: it is the name of the Java class, which may differ from
+ * the Kotlin qualified name (e.g., `java.lang.String` for `String::class`).
  */
-internal fun KClass<*>.toLoggerName(): String = qualifiedName?:simpleName?:toString()
+internal fun KClass<*>.toLoggerName(): String = java.name

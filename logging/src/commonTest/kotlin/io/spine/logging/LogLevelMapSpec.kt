@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -105,7 +105,9 @@ internal class LogLevelMapSpec {
             setDefault(INFO)
         }
         map.run {
-            levelOf(String::class.qualifiedName!!) shouldBe DEBUG
+            // Classes are registered under the names of their JVM loggers,
+            // which use Java class names, e.g. `java.lang.String`.
+            levelOf(String::class.java.name) shouldBe DEBUG
             levelOf(String::class) shouldBe DEBUG
             levelOf("java.lang") shouldBe WARNING
             levelOf("io.spine") shouldBe INFO
@@ -119,7 +121,8 @@ internal class LogLevelMapSpec {
             add(WARNING, Int::class)
         }
         val map2 = logLevelMap {
-            add(DEBUG, "kotlin.collections")
+            // `List::class` maps to `java.util.List` on the JVM.
+            add(DEBUG, "java.util")
         }
         val merged = map1.merge(map2)
 

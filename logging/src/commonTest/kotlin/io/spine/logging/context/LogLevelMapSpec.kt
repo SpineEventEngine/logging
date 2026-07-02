@@ -101,11 +101,10 @@ internal class LogLevelMapSpec {
             .build()
         levelMap["com.google"] shouldBe INFO
         levelMap["java.lang"] shouldBe WARNING
-        // Classes are registered under their Kotlin qualified names, matching
-        // the logger names produced by `LoggingFactory`. For the mapped type
-        // `String::class` this is `kotlin.String`, not `java.lang.String`.
-        levelMap["kotlin.String"] shouldBe FINE
-        levelMap["java.lang.String"] shouldBe WARNING
+        // Classes are registered under the names of the loggers created for
+        // them, which on the JVM are Java class names: `java.lang.String`
+        // rather than the Kotlin name `kotlin.String`.
+        levelMap["java.lang.String"] shouldBe FINE
     }
 }
 

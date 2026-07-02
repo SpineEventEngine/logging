@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -109,21 +109,17 @@ public class LogLevelMap private constructor(map: Map<String, Level>, defaultLev
         /**
          * Adds the given classes at the specified log level.
          *
-         * @param level The logging level to assign for the given [classes]
-         * @param classes The classes to assign the logging [level]. Each class must have
-         *   a [qualified name][KClass.qualifiedName].
-         * @throws IllegalArgumentException if one of the [classes] does not have
-         *   a [qualified name][KClass.qualifiedName].
+         * Each class is registered under the name of the logger which
+         * [LoggingFactory][io.spine.logging.LoggingFactory] creates for it,
+         * so the level applies to the logging done by that class.
+         *
+         * @param level The logging level to assign for the given [classes].
+         * @param classes The classes to assign the logging [level].
          */
         @CanIgnoreReturnValue
         public fun add(level: Level, vararg classes: KClass<*>): Builder {
             for (cls in classes) {
-                val name = cls.qualifiedName
-                require(name != null) {
-                    "Cannot add the class `${cls}` because it does not have" +
-                            " a qualified name (it may be local or anonymous)."
-                }
-                put(name, level)
+                put(cls.toLoggerName(), level)
             }
             return this
         }
