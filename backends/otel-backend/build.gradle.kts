@@ -47,9 +47,8 @@ spinePublishing {
 }
 
 kotlin {
-    @Suppress("unused") // Source set `val`s are used implicitly.
     sourceSets {
-        val commonMain by getting {
+        getByName("commonMain") {
             dependencies {
                 // The Spine logging backend SPI.
                 api(project(":logging"))
@@ -62,13 +61,13 @@ kotlin {
                 implementation(OpenTelemetryKotlin.noop)
             }
         }
-        val jvmMain by getting {
+        getByName("jvmMain") {
             dependencies {
                 // `@AutoService` registers the JVM `BackendFactory` for `ServiceLoader`.
                 implementation(AutoService.annotations)
             }
         }
-        val jvmTest by getting {
+        getByName("jvmTest") {
             dependencies {
                 // The native Kotlin OpenTelemetry SDK, used only by tests to build an
                 // `OpenTelemetry` instance with a recording log-record processor.

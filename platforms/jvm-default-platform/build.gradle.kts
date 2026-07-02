@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,9 +61,8 @@ java {
 afterEvaluate {
     // `kspKotlin` task is created after the configuration phase,
     // so we have to use the `afterEvaluate` block.
-    val kspKotlin by tasks.existing
-    @Suppress("unused")
-    val dokkaHtml by tasks.existing {
+    val kspKotlin = tasks.named("kspKotlin")
+    tasks.named("dokkaHtml") {
         dependsOn(kspKotlin)
     }
 }

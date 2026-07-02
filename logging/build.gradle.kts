@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,8 +24,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-@file:Suppress("unused") // source set accessed via `by getting`.
-
 import io.spine.dependency.kotlinx.DateTime
 import io.spine.dependency.kotlinx.AtomicFu
 import io.spine.dependency.local.Base
@@ -49,7 +47,7 @@ spinePublishing {
 
 kotlin {
     sourceSets {
-        val commonMain by getting {
+        getByName("commonMain") {
             dependencies {
                 api(Base.annotations)
                 implementation(DateTime.lib)
@@ -57,7 +55,7 @@ kotlin {
                 implementation(AtomicFu.lib)
             }
         }
-        val jvmMain by getting {
+        getByName("jvmMain") {
             dependencies {
                 implementation(DateTime.lib)
                 implementation(Reflect.lib)
@@ -65,7 +63,7 @@ kotlin {
                 runtimeOnly(project(":jvm-default-platform"))
             }
         }
-        val jvmTest by getting {
+        getByName("jvmTest") {
             dependencies {
                 implementation(project(":probe-backend"))
                 implementation(project(":logging-testlib"))
