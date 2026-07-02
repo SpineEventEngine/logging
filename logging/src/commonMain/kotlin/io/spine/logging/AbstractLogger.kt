@@ -88,8 +88,7 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
         }
 
         /**
-         * The format for the four-digit UTC offset part of timestamps in log data,
-         * e.g., `+0100`.
+         * The format for the four-digit UTC offset part of timestamps in log data, e.g., `+0100`.
          */
         @JvmField
         val offsetFormat = UtcOffset.Format {
@@ -217,9 +216,9 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
      *
      * @param data The log statement data.
      * @param prepare Completes [data] within the recursion guard right before the backend call.
-     *   Use it for evaluation which may invoke user code, such as computing a lazy log message,
-     *   so that exceptions and reentrant logging it causes are handled the same way as those
-     *   coming from the backend.
+     *   Use it for work that may invoke user code, such as computing a lazy log message,
+     *   so that any exceptions or reentrant logging it triggers are handled the same way
+     *   as those coming from the backend.
      */
     @JvmOverloads
     @Suppress("TooGenericExceptionCaught")

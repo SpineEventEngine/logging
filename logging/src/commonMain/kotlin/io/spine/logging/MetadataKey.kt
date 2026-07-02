@@ -29,6 +29,7 @@ package io.spine.logging
 import io.spine.annotation.VisibleForTesting
 import io.spine.logging.MetadataKey.Companion.repeated
 import io.spine.logging.MetadataKey.Companion.single
+import io.spine.logging.backend.safeToString
 import io.spine.logging.util.Checks.checkMetadataIdentifier
 import io.spine.logging.util.RecursionDepth
 import kotlin.reflect.KClass
@@ -145,7 +146,8 @@ public open class MetadataKey<T : Any>(
     /**
      * Casts an arbitrary value to the type of this key.
      *
-     * @return The value cast to the key type, or `null` if the given value is `null`.
+     * A `null` value is returned as `null`.
+     *
      * @throws ClassCastException if the given value is not an instance of the key type.
      */
     public fun cast(value: Any?): T? {
@@ -156,11 +158,9 @@ public open class MetadataKey<T : Any>(
             @Suppress("UNCHECKED_CAST")
             return value as T
         }
-        // Do not interpolate the value itself: its `toString()` is user code
-        // and must not be invoked on this error path.
         throw ClassCastException(
-            "A value of the type `${value.javaClass.name}` cannot be cast to" +
-                    " `${clazz.qualifiedName}` required by the key `$this`."
+            "The value `${value.safeToString()}` cannot be cast to `${clazz.qualifiedName}`" +
+                    " required by the key `$this`."
         )
     }
 

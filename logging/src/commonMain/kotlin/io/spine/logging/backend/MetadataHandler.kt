@@ -145,14 +145,14 @@ public abstract class MetadataHandler<C : Any> {
          * @param handler The repeated value handler to be invoked once for all associated values.
          * @param T The key/value type.
          * @return The builder instance for chaining.
-         * @throws IllegalArgumentException if the given key does not support repeated values.
+         * @throws IllegalArgumentException if the key does not support repeated values.
          */
         @CanIgnoreReturnValue
         public fun <T : Any> addRepeatedHandler(
             key: MetadataKey<out T>,
             handler: RepeatedValueHandler<T, in C>
         ): Builder<C> {
-            require(key.canRepeat()) { "The key `$key` must support repeated values." }
+            require(key.canRepeat) { "The key `$key` must support repeated values." }
             singleValueHandlers.remove(key)
             @Suppress("UNCHECKED_CAST")
             repeatedValueHandlers[key] = handler as RepeatedValueHandler<*, in C>
