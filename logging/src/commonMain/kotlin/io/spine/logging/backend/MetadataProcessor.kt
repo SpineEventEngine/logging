@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2026, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -577,9 +577,9 @@ private fun <T : Any, C : Any> MetadataHandler<C>.dispatch(
 /**
  * Guards values of repeated keys from modification by handlers (required for correctness).
  *
- * The lists built by [MutableMap.addTo] are mutable, and exposing their iterators directly
- * would allow a handler to remove values. Like [LightweightProcessor.ValueIterator], this
- * wrapper satisfies casting to a mutable iterator but throws from [remove].
+ * The lists built by [addTo] are mutable, and exposing their iterators directly
+ * would allow a handler to remove values. Like [LightweightProcessor.ValueIterator],
+ * this wrapper can still be cast to a mutable iterator, but throws from [remove].
  */
 private class UnmodifiableIterator<T>(
     private val delegate: Iterator<T>
@@ -590,6 +590,6 @@ private class UnmodifiableIterator<T>(
     override fun next(): T = delegate.next()
 
     override fun remove() {
-        throw UnsupportedOperationException()
+        throw UnsupportedOperationException("Metadata values cannot be removed.")
     }
 }

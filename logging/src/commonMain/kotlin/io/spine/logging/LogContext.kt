@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2026, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -408,7 +408,7 @@ protected constructor(
     }
 
     /**
-     * Make the backend logging call.
+     * Makes the backend logging call.
      *
      * The given [message] is evaluated within the recursion guard of the logger,
      * so that a throwing or reentrant `toString()` of a logged value cannot escape
@@ -428,7 +428,8 @@ protected constructor(
             }
             addMetadata(Key.TAGS, finalTags)
         }
-        // Pass the log data to the backend (it should not be modified after this point).
+        // Pass the log data to the backend (it must not be modified once the message
+        // is completed by the `prepare` block below).
         getLogger().write(this) {
             // A `null` message is passed to the backend unmodified.
             literalArg = message()?.let { (loggingDomain?.messagePrefix ?: "") + it }

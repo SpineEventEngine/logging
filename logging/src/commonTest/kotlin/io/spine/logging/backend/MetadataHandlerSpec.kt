@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@ package io.spine.logging.backend
 
 import com.google.common.base.Joiner
 import com.google.common.collect.Iterators
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.spine.logging.MetadataKey
 import io.spine.logging.backend.given.FakeMetadata
@@ -162,6 +163,15 @@ internal class MetadataHandlerSpec {
 
         val withoutFooHandler = builder.removeHandlers(foo).build()
         process(withoutFooHandler, scope, logged) shouldBe "foo=<<hello>> foo=<<world>>"
+    }
+
+    @Test
+    fun `reject a repeated value handler for a single-valued key`() {
+        val single = MetadataKey.single<String>("single")
+        shouldThrow<IllegalArgumentException> {
+            MetadataHandler.builder(::appendUnknownValue)
+                .addRepeatedHandler(single, ::appendValues)
+        }
     }
 }
 
