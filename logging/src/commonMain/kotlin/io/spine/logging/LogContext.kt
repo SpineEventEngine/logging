@@ -429,7 +429,7 @@ protected constructor(
             addMetadata(Key.TAGS, finalTags)
         }
         // Pass the log data to the backend (it must not be modified once the message
-        // is completed by the `prepare` block below).
+        // is completed by the `completeData` block below).
         getLogger().write(this) {
             // A `null` message is passed to the backend unmodified.
             literalArg = message()?.let { (loggingDomain?.messagePrefix ?: "") + it }

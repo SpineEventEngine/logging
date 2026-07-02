@@ -215,21 +215,21 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
      * logging if it detects significant recursion has occurred.
      *
      * @param data The log statement data.
-     * @param prepare Completes [data] within the recursion guard right before the backend call.
-     *   Use it for work that may invoke user code, such as computing a lazy log message,
-     *   so that any exceptions or reentrant logging it triggers are handled the same way
-     *   as those coming from the backend.
+     * @param completeData Completes [data] within the recursion guard right before
+     *   the backend call. Use it for work that may invoke user code, such as computing
+     *   a lazy log message, so that any exceptions or reentrant logging it triggers are
+     *   handled the same way as those coming from the backend.
      */
     @JvmOverloads
     @Suppress("TooGenericExceptionCaught")
-    public fun write(data: LogData, prepare: () -> Unit = {}) {
+    public fun write(data: LogData, completeData: () -> Unit = {}) {
         // Note: Recursion checking should not be in the `LoggerBackend`.
         // There are many backends and they can call into other backends.
         // We only want the counter incremented per log statement.
         try {
             RecursionDepth.enterLogStatement().use { depth ->
                 if (depth.getValue() <= MAX_ALLOWED_RECURSION_DEPTH) {
-                    prepare()
+                    completeData()
                     backend.log(data)
                 } else {
                     reportError(
