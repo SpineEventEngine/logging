@@ -109,6 +109,7 @@ fun Project.forceConfigurations() {
  * It configures KMP, in which Kotlin for JVM is only one of
  * possible targets.
  */
+@Suppress("UNUSED_VARIABLE") // Avoid warnings for source set vars.
 kotlin {
     // Enables explicit API mode for any Kotlin sources within the module.
     explicitApi()
