@@ -365,7 +365,7 @@ internal class LogContextSpec {
                 logged[0].metadata.shouldHaveSize(2)
                 logged[0].metadata.shouldUniquelyContain(
                     Key.LOG_SITE_GROUPING_KEY,
-                    IllegalArgumentException::class.java
+                    IllegalArgumentException::class
                 )
                 logged[0].metadata.shouldUniquelyContain(
                     Key.LOG_AT_MOST_EVERY,
@@ -375,7 +375,7 @@ internal class LogContextSpec {
                 logged[1].metadata.shouldHaveSize(2)
                 logged[1].metadata.shouldUniquelyContain(
                     Key.LOG_SITE_GROUPING_KEY,
-                    NullPointerException::class.java
+                    NullPointerException::class
                 )
                 logged[1].metadata.shouldUniquelyContain(
                     Key.LOG_AT_MOST_EVERY,

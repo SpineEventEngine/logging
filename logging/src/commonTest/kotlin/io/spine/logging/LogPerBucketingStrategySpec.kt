@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,17 +58,20 @@ internal class LogPerBucketingStrategySpec {
     fun `aggregates keys by class`() {
         val anyKey = Any()
         val strategy = LogPerBucketingStrategy.byClass()
-        strategy.applyForTesting(anyKey) shouldBeSameInstanceAs anyKey.javaClass
+        // `key::class` creates a new `KClass` wrapper on each evaluation,
+        // so the keys are compared by equality rather than by identity.
+        strategy.applyForTesting(anyKey) shouldBe anyKey::class
         "$strategy" shouldBe "LogPerBucketingStrategy[ByClass]"
     }
 
     @Test
     fun `aggregates keys by class name`() {
-        class NotASystemClass
         val anyKey = NotASystemClass()
-        val className = NotASystemClass::class.java.name
+        val className = NotASystemClass::class.qualifiedName!!
         val strategy = LogPerBucketingStrategy.byClassName()
-        strategy.applyForTesting(anyKey) shouldBeSameInstanceAs className
+        // The qualified name is computed anew on each evaluation,
+        // so the keys are compared by equality rather than by identity.
+        strategy.applyForTesting(anyKey) shouldBe className
         "$strategy" shouldBe "LogPerBucketingStrategy[ByClassName]"
     }
 
@@ -99,4 +102,13 @@ internal class LogPerBucketingStrategySpec {
         strategy(257).applyForTesting(key) shouldBe 128
         "${strategy(10)}" shouldBe "LogPerBucketingStrategy[ByHashCode(10)]"
     }
+
+    /**
+     * A key class for the `byClassName()` test.
+     *
+     * The strategy relies on [qualified names][kotlin.reflect.KClass.qualifiedName],
+     * which are `null` for local and anonymous classes, so this class is declared
+     * as a member.
+     */
+    private class NotASystemClass
 }
