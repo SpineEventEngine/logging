@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2019, The Flogger Authors; 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.string.shouldBeEmpty
 import io.kotest.matchers.string.shouldContain
+import io.kotest.matchers.string.shouldContainIgnoringCase
 import io.kotest.matchers.string.shouldMatch
 import io.kotest.matchers.string.shouldNotContain
 import io.spine.logging.backend.LogData
@@ -141,7 +142,7 @@ internal class AbstractLoggerSpec {
         output shouldMatch TIMESTAMP_PREFIX
         output shouldContain LOGGING_ERROR
         output shouldContain this::class.simpleName!!
-        output shouldContain "unbounded recursion in log statement"
+        output shouldContainIgnoringCase "unbounded recursion in log statement"
     }
 
     @Test

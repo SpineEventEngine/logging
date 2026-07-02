@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,7 +70,9 @@ internal class LoggingCompatibilityTest {
     fun `accepting array as 'varargs'`() {
         val output = tapConsole {
             val args = arrayOf<Any?>("arg1", "arg2")
-            logger.atInfo().logVarargs("Message with array: %s %s", args)
+            // Unlike Java, Kotlin requires the spread operator to pass
+            // an array as `vararg` arguments.
+            logger.atInfo().logVarargs("Message with array: %s %s", *args)
         }
         output shouldContain "Message with array: arg1 arg2"
     }

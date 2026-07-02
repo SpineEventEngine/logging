@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -410,12 +410,11 @@ protected constructor(
     /**
      * Make the backend logging call.
      *
-     * This method takes a single string parameter as it's always called with one string argument.
+     * The given [message] is evaluated within the recursion guard of the logger,
+     * so that a throwing or reentrant `toString()` of a logged value cannot escape
+     * the error handling of [AbstractLogger.write].
      */
-    private fun logImpl(arg: String?) {
-        val prefix = loggingDomain?.messagePrefix ?: ""
-        this.literalArg = prefix + arg
-
+    private fun logImpl(message: () -> String?) {
         // Right at the end of processing add any tags injected by the platform.
         // Any tags supplied at the log site are merged with the injected tags
         // (though this should be very rare).
@@ -429,8 +428,11 @@ protected constructor(
             }
             addMetadata(Key.TAGS, finalTags)
         }
-        // Pass the completed log data to the backend (it should not be modified after this point).
-        getLogger().write(this)
+        // Pass the log data to the backend (it should not be modified after this point).
+        getLogger().write(this) {
+            // A `null` message is passed to the backend unmodified.
+            literalArg = message()?.let { (loggingDomain?.messagePrefix ?: "") + it }
+        }
     }
 
     // ---- Log site injection (used by pre-processors and special cases) ----
@@ -558,16 +560,15 @@ protected constructor(
 
     public final override fun log() {
         if (shouldLog()) {
-            logImpl("")
+            logImpl { "" }
         }
     }
 
     public final override fun log(message: () -> String?) {
         if (shouldLog()) {
-            logImpl(message())
+            logImpl(message)
         }
     }
-
 
     /**
      * The predefined metadata keys used by the default logging API.

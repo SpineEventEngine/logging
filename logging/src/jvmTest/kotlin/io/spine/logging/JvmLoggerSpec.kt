@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -76,8 +76,11 @@ internal class JvmLoggerSpec {
             System.err.println(consoleCheck)
         }
         consoleOutput shouldContain consoleCheck
-        val expectedMethodReference = "produce the output with the name of" +
-                " the logging class and calling method"
+        // The log statement above sits in the `tapConsole` lambda, so the calling
+        // method is reported as the synthetic lambda method, which carries
+        // the sanitized name of this test method.
+        val expectedMethodReference = "produce_the_output_with_the_name_of" +
+                "_the_logging_class_and_calling_method"
         consoleOutput shouldContain this::class.java.name
         consoleOutput shouldContain expectedMsg
         consoleOutput shouldContain expectedMethodReference
@@ -293,11 +296,14 @@ internal class JvmLoggerSpec {
             val totalDuration = (invocations - 1) * intervalMillis
             val consoleOutput = tapConsole {
                 var i = 1
-                (0..totalDuration step intervalMillis).forEach { millis ->
+                (0..totalDuration step intervalMillis).forEach { _ ->
+                    // Count invocations eagerly: the message lambda is only
+                    // evaluated for statements which actually log.
+                    val invocation = i++
                     logger.atInfo()
                         .every(invocationLimit)
                         .atMostEvery(timeLimitMillis, MILLISECONDS)
-                        .log { numberedMessage(i++) }
+                        .log { numberedMessage(invocation) }
                     sleep(intervalMillis)
                 }
             }
@@ -363,10 +369,13 @@ internal class JvmLoggerSpec {
             var invoked = 0
             val consoleOutput = tapConsole {
                 for (millis in 0..totalDuration step intervalMillis) {
+                    // Count invocations eagerly: the message lambda is only
+                    // evaluated for statements which actually log.
+                    val invocation = ++invoked
                     logger.atInfo()
                         .every(invocationLimit)
                         .atMostEvery(timeLimitMillis, MILLISECONDS)
-                        .log { timeAndSerialStamp(++invoked, millis) }
+                        .log { timeAndSerialStamp(invocation, millis) }
                     sleep(intervalMillis)
                 }
             }

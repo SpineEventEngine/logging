@@ -43,14 +43,33 @@ Recorded as the "Collateral finding" in
       `:logging-testlib:jvmTest` now runs 3 tests (pass);
       `:tests:fixtures` has no test sources (NO-SOURCE)
 
-## Follow-up required before this can merge
+## Latent-failure triage (resolved)
 
-`:logging:jvmTest` surfaces **25 latent test failures** (232 run,
+Enabling the platform surfaced **25 latent test failures** (232 run,
 207 pass) — behavior drift accumulated while the task silently ran
-nothing. At least 8 failures reference repeated-value `MetadataKey`
-semantics changed by the `custom-metadata` PR (#144). Others:
-`AbstractLoggerSpec` exception reporting, `LogLevelMap` builder levels,
-`LogContextSpec` null-literal handling, varargs format extension.
-Some may be production regressions, not test bugs — each needs
-case-by-case triage. CI will be red on this branch (and in any repo
-the floated config reaches) until they are fixed.
+nothing. They were triaged in a dedicated session; its fixes were
+adopted onto this branch. `:logging:jvmTest` now passes 232/232.
+
+Production bugs found and fixed by the triage (tests were right):
+
+- `AbstractLogger.atConfig()` delegated to `Level.INFO` instead of
+  `Level.CONFIG`.
+- `MetadataHandler.Builder.addRepeatedHandler` had inverted validation
+  (rejected repeatable keys instead of requiring them; drift from the
+  `custom-metadata` PR #144).
+- `MetadataKey.cast()` returned `null` instead of throwing the
+  documented `ClassCastException`; `checkCannotRepeat` threw
+  `IllegalStateException` where callers expect `IllegalArgumentException`.
+- `SimpleProcessor` "wrapped" repeated-value lists with a no-op cast;
+  handlers could mutate them. Replaced with an unmodifiable iterator.
+- `ScopedLoggingContext.Builder` lacked a member `run(Runnable)`, so
+  Kotlin's stdlib `run` extension executed blocks *without installing
+  the context*.
+- Lazy log messages were evaluated outside the recursion guard of
+  `AbstractLogger.write`, so throwing/reentrant `toString()` escaped
+  error handling; timestamps lacked millis and UTC offset.
+
+Test-side fixes (production was right): logger-name expectations
+(`kotlin.String` vs `java.lang.String`), synthetic lambda method names,
+eager invocation counting for rate-limiter specs, Kotlin spread
+operator for `logVarargs`, updated message-text expectations.
