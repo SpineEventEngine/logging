@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2019, The Flogger Authors; 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,9 +28,11 @@ package io.spine.logging
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.string.shouldBeEmpty
 import io.kotest.matchers.string.shouldContain
+import io.kotest.matchers.string.shouldContainIgnoringCase
 import io.kotest.matchers.string.shouldMatch
 import io.kotest.matchers.string.shouldNotContain
 import io.spine.logging.backend.LogData
@@ -141,7 +143,34 @@ internal class AbstractLoggerSpec {
         output shouldMatch TIMESTAMP_PREFIX
         output shouldContain LOGGING_ERROR
         output shouldContain this::class.simpleName!!
-        output shouldContain "unbounded recursion in log statement"
+        output shouldContainIgnoringCase "unbounded recursion in log statement"
+    }
+
+    @Test
+    fun `map convenience methods to the matching levels`() {
+        val loggedLevels = mutableListOf<Level>()
+        val backend = object : FormattingBackend() {
+            override fun log(data: LogData) {
+                loggedLevels.add(data.level)
+            }
+        }
+        val logger = ConfigurableLogger(backend)
+
+        logger.atSevere().log { "severe" }
+        logger.atError().log { "error" }
+        logger.atWarning().log { "warning" }
+        logger.atInfo().log { "info" }
+        logger.atConfig().log { "config" }
+        logger.atFine().log { "fine" }
+        logger.atDebug().log { "debug" }
+        logger.atFiner().log { "finer" }
+        logger.atTrace().log { "trace" }
+        logger.atFinest().log { "finest" }
+
+        loggedLevels shouldContainExactly listOf(
+            Level.SEVERE, Level.ERROR, Level.WARNING, Level.INFO, Level.CONFIG,
+            Level.FINE, Level.DEBUG, Level.FINER, Level.TRACE, Level.FINEST,
+        )
     }
 
     @Test

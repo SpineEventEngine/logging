@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2019, The Flogger Authors; 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -101,7 +101,11 @@ internal class LogLevelMapSpec {
             .build()
         levelMap["com.google"] shouldBe INFO
         levelMap["java.lang"] shouldBe WARNING
-        levelMap["java.lang.String"] shouldBe FINE
+        // Classes are registered under their Kotlin qualified names, matching
+        // the logger names produced by `LoggingFactory`. For the mapped type
+        // `String::class` this is `kotlin.String`, not `java.lang.String`.
+        levelMap["kotlin.String"] shouldBe FINE
+        levelMap["java.lang.String"] shouldBe WARNING
     }
 }
 

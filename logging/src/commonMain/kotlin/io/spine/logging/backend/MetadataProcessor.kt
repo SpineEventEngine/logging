@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -483,13 +483,6 @@ private class SimpleProcessor(scope: Metadata, logged: Metadata) : MetadataProce
         val map = LinkedHashMap<MetadataKey<Any>, Any>()
         map.addTo(scope)
         map.addTo(logged)
-        // Wrap any repeated value lists to make them unmodifiable (required for correctness).
-        for (e in map.entries) {
-            if (e.key.canRepeat()) {
-                @Suppress("UNCHECKED_CAST")
-                e.setValue(e.value as List<*>)
-            }
-        }
         this.map = map
     }
 
@@ -574,9 +567,29 @@ private fun <T : Any, C : Any> MetadataHandler<C>.dispatch(
 ) {
     if (key.canRepeat()) {
         @Suppress("UNCHECKED_CAST")
-        handleRepeated(key, (value as MutableList<T>).iterator(), context)
+        handleRepeated(key, UnmodifiableIterator((value as List<T>).iterator()), context)
     } else {
         @Suppress("UNCHECKED_CAST")
         handle(key, (value as T), context)
+    }
+}
+
+/**
+ * Guards values of repeated keys from modification by handlers (required for correctness).
+ *
+ * The lists built by [addTo] are mutable, and exposing their iterators directly
+ * would allow a handler to remove values. Like [LightweightProcessor.ValueIterator],
+ * this wrapper can still be cast to a mutable iterator, but throws from [remove].
+ */
+private class UnmodifiableIterator<T>(
+    private val delegate: Iterator<T>
+) : MutableIterator<T> {
+
+    override fun hasNext(): Boolean = delegate.hasNext()
+
+    override fun next(): T = delegate.next()
+
+    override fun remove() {
+        throw UnsupportedOperationException("Metadata values cannot be removed.")
     }
 }

@@ -30,7 +30,6 @@ import io.spine.dependency.lib.OpenTelemetryKotlin
 import io.spine.gradle.publish.SpinePublishing
 import io.spine.gradle.publish.spinePublishing
 import io.spine.gradle.testing.registerTestTasks
-import org.gradle.api.tasks.testing.Test
 
 plugins {
     `kmp-module`
@@ -48,9 +47,8 @@ spinePublishing {
 }
 
 kotlin {
-    @Suppress("unused") // Source set `val`s are used implicitly.
     sourceSets {
-        val commonMain by getting {
+        getByName("commonMain") {
             dependencies {
                 // The Spine logging backend SPI.
                 api(project(":logging"))
@@ -63,13 +61,13 @@ kotlin {
                 implementation(OpenTelemetryKotlin.noop)
             }
         }
-        val jvmMain by getting {
+        getByName("jvmMain") {
             dependencies {
                 // `@AutoService` registers the JVM `BackendFactory` for `ServiceLoader`.
                 implementation(AutoService.annotations)
             }
         }
-        val jvmTest by getting {
+        getByName("jvmTest") {
             dependencies {
                 // The native Kotlin OpenTelemetry SDK, used only by tests to build an
                 // `OpenTelemetry` instance with a recording log-record processor.
@@ -95,12 +93,3 @@ dependencies {
 // Registers the `fastTest`/`slowTest` tasks and the `*Spec`/`*Test` filter,
 // matching the core `logging` module.
 tasks.registerTestTasks()
-
-// The `kmp-module` convention does not put the JUnit Platform on the JVM test
-// task (it configures only the `jvm-module` `test` task), so enable it here.
-tasks.named<Test>("jvmTest") {
-    useJUnitPlatform()
-    testLogging {
-        events("passed", "skipped", "failed")
-    }
-}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,6 @@ package io.spine.logging.backend
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue
 import io.spine.logging.MetadataKey
-import io.spine.logging.checkCannotRepeat
 
 /**
  * Callback API for logger backend implementations to handle metadata keys/values.
@@ -146,13 +145,14 @@ public abstract class MetadataHandler<C : Any> {
          * @param handler The repeated value handler to be invoked once for all associated values.
          * @param T The key/value type.
          * @return The builder instance for chaining.
+         * @throws IllegalArgumentException if the key does not support repeated values.
          */
         @CanIgnoreReturnValue
         public fun <T : Any> addRepeatedHandler(
             key: MetadataKey<out T>,
             handler: RepeatedValueHandler<T, in C>
         ): Builder<C> {
-            checkCannotRepeat(key)
+            require(key.canRepeat) { "The key `$key` must support repeated values." }
             singleValueHandlers.remove(key)
             @Suppress("UNCHECKED_CAST")
             repeatedValueHandlers[key] = handler as RepeatedValueHandler<*, in C>

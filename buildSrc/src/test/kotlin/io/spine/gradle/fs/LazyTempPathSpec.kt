@@ -24,42 +24,46 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import io.spine.dependency.boms.BomsPlugin
-import io.spine.dependency.lib.Log4j2
-import io.spine.dependency.local.Base
-import io.spine.gradle.publish.SpinePublishing
-import io.spine.gradle.publish.spinePublishing
-import io.spine.gradle.testing.registerTestTasks
+package io.spine.gradle.fs
 
-plugins {
-    `kmp-module`
-    `kmp-publish`
-}
-apply<BomsPlugin>()
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldContain
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 
-group = "io.spine.tools"
+@DisplayName("`LazyTempPath` should")
+class LazyTempPathSpec {
 
-spinePublishing {
-    artifactPrefix = ""
-    toolArtifactPrefix = "NONE"
-    destinations = rootProject.the<SpinePublishing>().destinations
-    customPublishing = true
-}
+    @Test
+    fun `create the directory on the first use`() {
+        val directory = LazyTempPath("created").toFile()
 
-kotlin {
-    sourceSets {
-        getByName("commonMain") {
-            dependencies {
-                api(Base.annotations)
-                implementation(project(":logging"))
-            }
-        }
-        getByName("jvmMain") {
-            dependencies {
-                implementation(Log4j2.core)
-            }
-        }
+        directory.exists() shouldBe true
+        directory.isDirectory shouldBe true
+    }
+
+    @Test
+    fun `create the directory under the system temporary directory`() {
+        val path = LazyTempPath("under-tmp").toString()
+
+        path shouldContain systemTempDir()
+    }
+
+    @Test
+    fun `create the directory under a folder named after its package`() {
+        val path = LazyTempPath("under-base").toString()
+
+        path shouldContain LazyTempPath::class.java.packageName
+    }
+
+    @Test
+    fun `place all instances under the same base directory`() {
+        val first = LazyTempPath("first").toFile()
+        val second = LazyTempPath("second").toFile()
+
+        first.parentFile shouldBe second.parentFile
+        first.parentFile.toString() shouldBe SpineTempDir.path.toString()
     }
 }
 
-tasks.registerTestTasks()
+private fun systemTempDir(): String = System.getProperty("java.io.tmpdir")

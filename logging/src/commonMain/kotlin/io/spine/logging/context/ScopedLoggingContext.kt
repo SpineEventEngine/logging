@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2025, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -191,6 +191,21 @@ public abstract class ScopedLoggingContext protected constructor() {
                 }
             }
         }
+
+        /**
+         * Runs a runnable directly within a new context installed from this builder.
+         *
+         * Being a member, this method takes precedence over the [run][kotlin.run]
+         * extension from the standard library, which would otherwise execute
+         * the block without installing the context.
+         *
+         * @throws InvalidLoggingContextStateException
+         *         if the context created during this method cannot
+         *         be closed correctly (e.g., if a nested context has also been opened,
+         *         but not closed).
+         */
+        public fun run(r: Runnable): Unit =
+            wrap(r).run()
 
         /**
          * Calls a function directly within a new context installed from this builder.

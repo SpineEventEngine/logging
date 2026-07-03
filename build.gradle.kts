@@ -105,6 +105,6 @@ gradle.projectsEvaluated {
 
 dependencies {
     productionModules.forEach {
-        dokka(it)
+        dokka(project(it.path))
     }
 }
