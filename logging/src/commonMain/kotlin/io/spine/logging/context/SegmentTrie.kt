@@ -246,8 +246,8 @@ private class SortedTrie<T>(
      *
      * By allowing a known existing lower bound for the prefix length to be provided, this method
      * can skip re-comparing the beginning of values repeatedly when used in a binary search.
-     * The given lower bound value is expected to be the result of previous calls to this function (or
-     * `0`).
+     * The given lower bound value is expected to be the result of previous calls to this
+     * function (or `0`).
      *
      * @param lhs first value to compare.
      * @param rhs second value to compare.

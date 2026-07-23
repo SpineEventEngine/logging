@@ -97,8 +97,8 @@ internal class AbstractLoggerSpec {
     }
 
     /**
-     * Tests a worst-case scenario whereby object's `toString()` method throws
-     * an exception, which itself throws an exception on `toString()` call.
+     * Tests a worst-case scenario whereby an object's `toString()` method throws
+     * an exception, which itself throws an exception on a `toString()` call.
      */
     @Test
     fun `report nested exceptions`() {
