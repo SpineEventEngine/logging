@@ -1,6 +1,6 @@
 
 
-# Dependencies of `io.spine:spine-logging-context-tests:2.0.0-SNAPSHOT.422`
+# Dependencies of `io.spine:spine-logging-context-tests:2.0.0-SNAPSHOT.423`
 
 ## Runtime
 1.  **Group** : org.jetbrains. **Name** : annotations. **Version** : 26.1.0.
@@ -20,7 +20,7 @@
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -29,22 +29,22 @@
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-core](https://github.com/FasterXML/jackson-core)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-dataformat-xml](https://github.com/FasterXML/jackson-dataformat-xml)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-module-kotlin](https://github.com/FasterXML/jackson-module-kotlin)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -70,12 +70,11 @@
      * **Project URL:** [https://github.com/google/gson](https://github.com/google/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.36.0.
-     * **Project URL:** [https://errorprone.info/error_prone_type_annotations](https://errorprone.info/error_prone_type_annotations)
+1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.42.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
@@ -441,18 +440,18 @@
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using 
+This report was generated on **Thu Jul 23 18:08:54 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-fixtures:2.0.0-SNAPSHOT.422`
+# Dependencies of `io.spine:spine-logging-fixtures:2.0.0-SNAPSHOT.423`
 
 ## Runtime
 ## Compile, tests, and tooling
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -461,22 +460,22 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-core](https://github.com/FasterXML/jackson-core)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-dataformat-xml](https://github.com/FasterXML/jackson-dataformat-xml)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-module-kotlin](https://github.com/FasterXML/jackson-module-kotlin)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -510,12 +509,11 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson](https://github.com/google/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.36.0.
-     * **Project URL:** [https://errorprone.info/error_prone_type_annotations](https://errorprone.info/error_prone_type_annotations)
+1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.42.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
@@ -1240,14 +1238,14 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using 
+This report was generated on **Thu Jul 23 18:08:55 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-grpc-context:2.0.0-SNAPSHOT.422`
+# Dependencies of `io.spine:spine-logging-grpc-context:2.0.0-SNAPSHOT.423`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -1258,7 +1256,7 @@ This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson](https://github.com/google/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -1338,7 +1336,7 @@ This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -1347,22 +1345,22 @@ This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-core](https://github.com/FasterXML/jackson-core)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-dataformat-xml](https://github.com/FasterXML/jackson-dataformat-xml)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-module-kotlin](https://github.com/FasterXML/jackson-module-kotlin)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -1408,11 +1406,11 @@ This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson/gson](https://github.com/google/gson/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotation](https://errorprone.info/error_prone_annotation)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -1420,16 +1418,15 @@ This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_check_api](https://errorprone.info/error_prone_check_api)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_core](https://errorprone.info/error_prone_core)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.36.0.
-     * **Project URL:** [https://errorprone.info/error_prone_type_annotations](https://errorprone.info/error_prone_type_annotations)
+1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.42.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
@@ -1440,7 +1437,7 @@ This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using
      * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
      * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.19.1.
+1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.27.0.
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.3.
@@ -2094,14 +2091,14 @@ This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using 
+This report was generated on **Thu Jul 23 18:08:55 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jul-backend:2.0.0-SNAPSHOT.422`
+# Dependencies of `io.spine:spine-logging-jul-backend:2.0.0-SNAPSHOT.423`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -2112,7 +2109,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson](https://github.com/google/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -2184,7 +2181,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -2193,22 +2190,22 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-core](https://github.com/FasterXML/jackson-core)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-dataformat-xml](https://github.com/FasterXML/jackson-dataformat-xml)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-module-kotlin](https://github.com/FasterXML/jackson-module-kotlin)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -2254,11 +2251,11 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson/gson](https://github.com/google/gson/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotation](https://errorprone.info/error_prone_annotation)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -2266,16 +2263,15 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_check_api](https://errorprone.info/error_prone_check_api)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_core](https://errorprone.info/error_prone_core)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.36.0.
-     * **Project URL:** [https://errorprone.info/error_prone_type_annotations](https://errorprone.info/error_prone_type_annotations)
+1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.42.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
@@ -2286,7 +2282,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
      * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.19.1.
+1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.27.0.
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.3.
@@ -2932,14 +2928,14 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using 
+This report was generated on **Thu Jul 23 18:08:55 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-default-platform:2.0.0-SNAPSHOT.422`
+# Dependencies of `io.spine:spine-logging-jvm-default-platform:2.0.0-SNAPSHOT.423`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -2950,7 +2946,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson](https://github.com/google/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -3022,7 +3018,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -3031,22 +3027,22 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-core](https://github.com/FasterXML/jackson-core)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-dataformat-xml](https://github.com/FasterXML/jackson-dataformat-xml)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-module-kotlin](https://github.com/FasterXML/jackson-module-kotlin)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -3096,11 +3092,11 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://goo.gle/ksp](https://goo.gle/ksp)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotation](https://errorprone.info/error_prone_annotation)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -3108,16 +3104,15 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_check_api](https://errorprone.info/error_prone_check_api)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_core](https://errorprone.info/error_prone_core)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.36.0.
-     * **Project URL:** [https://errorprone.info/error_prone_type_annotations](https://errorprone.info/error_prone_type_annotations)
+1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.42.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
@@ -3128,7 +3123,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
      * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.19.1.
+1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.27.0.
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.3.
@@ -3786,14 +3781,14 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using 
+This report was generated on **Thu Jul 23 18:08:55 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-jul-backend-grpc-context:2.0.0-SNAPSHOT.422`
+# Dependencies of `io.spine:spine-logging-jvm-jul-backend-grpc-context:2.0.0-SNAPSHOT.423`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -3804,7 +3799,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson](https://github.com/google/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -3856,7 +3851,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -3865,22 +3860,22 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-core](https://github.com/FasterXML/jackson-core)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-dataformat-xml](https://github.com/FasterXML/jackson-dataformat-xml)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-module-kotlin](https://github.com/FasterXML/jackson-module-kotlin)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -3926,11 +3921,11 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson/gson](https://github.com/google/gson/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotation](https://errorprone.info/error_prone_annotation)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -3938,16 +3933,15 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_check_api](https://errorprone.info/error_prone_check_api)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_core](https://errorprone.info/error_prone_core)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.36.0.
-     * **Project URL:** [https://errorprone.info/error_prone_type_annotations](https://errorprone.info/error_prone_type_annotations)
+1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.42.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
@@ -3958,7 +3952,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
      * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.19.1.
+1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.27.0.
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.3.
@@ -4692,14 +4686,14 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using 
+This report was generated on **Thu Jul 23 18:08:55 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-jul-backend-std-context:2.0.0-SNAPSHOT.422`
+# Dependencies of `io.spine:spine-logging-jvm-jul-backend-std-context:2.0.0-SNAPSHOT.423`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -4710,7 +4704,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson](https://github.com/google/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -4762,7 +4756,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -4771,22 +4765,22 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-core](https://github.com/FasterXML/jackson-core)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-dataformat-xml](https://github.com/FasterXML/jackson-dataformat-xml)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-module-kotlin](https://github.com/FasterXML/jackson-module-kotlin)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -4832,11 +4826,11 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson/gson](https://github.com/google/gson/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotation](https://errorprone.info/error_prone_annotation)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -4844,16 +4838,15 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_check_api](https://errorprone.info/error_prone_check_api)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_core](https://errorprone.info/error_prone_core)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.36.0.
-     * **Project URL:** [https://errorprone.info/error_prone_type_annotations](https://errorprone.info/error_prone_type_annotations)
+1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.42.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
@@ -4864,7 +4857,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
      * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.19.1.
+1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.27.0.
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.3.
@@ -5590,14 +5583,14 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using 
+This report was generated on **Thu Jul 23 18:08:55 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-log4j2-backend-std-context:2.0.0-SNAPSHOT.422`
+# Dependencies of `io.spine:spine-logging-jvm-log4j2-backend-std-context:2.0.0-SNAPSHOT.423`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -5608,7 +5601,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson](https://github.com/google/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -5664,7 +5657,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://bnd.bndtools.org/](https://bnd.bndtools.org/)
      * **License:** [(Apache-2.0 OR EPL-2.0)](https://opensource.org/licenses/Apache-2.0,https://opensource.org/licenses/EPL-2.0)
 
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -5673,22 +5666,22 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-core](https://github.com/FasterXML/jackson-core)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-dataformat-xml](https://github.com/FasterXML/jackson-dataformat-xml)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-module-kotlin](https://github.com/FasterXML/jackson-module-kotlin)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -5734,11 +5727,11 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson/gson](https://github.com/google/gson/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotation](https://errorprone.info/error_prone_annotation)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -5746,16 +5739,15 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_check_api](https://errorprone.info/error_prone_check_api)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_core](https://errorprone.info/error_prone_core)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.36.0.
-     * **Project URL:** [https://errorprone.info/error_prone_type_annotations](https://errorprone.info/error_prone_type_annotations)
+1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.42.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
@@ -5766,7 +5758,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
      * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.19.1.
+1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.27.0.
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.3.
@@ -6508,14 +6500,14 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using 
+This report was generated on **Thu Jul 23 18:08:55 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-slf4j-jdk14-backend-std-context:2.0.0-SNAPSHOT.422`
+# Dependencies of `io.spine:spine-logging-jvm-slf4j-jdk14-backend-std-context:2.0.0-SNAPSHOT.423`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -6526,7 +6518,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson](https://github.com/google/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -6578,7 +6570,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -6587,22 +6579,22 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-core](https://github.com/FasterXML/jackson-core)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-dataformat-xml](https://github.com/FasterXML/jackson-dataformat-xml)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-module-kotlin](https://github.com/FasterXML/jackson-module-kotlin)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -6648,11 +6640,11 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson/gson](https://github.com/google/gson/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotation](https://errorprone.info/error_prone_annotation)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -6660,16 +6652,15 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_check_api](https://errorprone.info/error_prone_check_api)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_core](https://errorprone.info/error_prone_core)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.36.0.
-     * **Project URL:** [https://errorprone.info/error_prone_type_annotations](https://errorprone.info/error_prone_type_annotations)
+1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.42.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
@@ -6680,7 +6671,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
      * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.19.1.
+1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.27.0.
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.3.
@@ -7414,14 +7405,14 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using 
+This report was generated on **Thu Jul 23 18:08:55 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-jvm-slf4j-reload4j-backend-std-context:2.0.0-SNAPSHOT.422`
+# Dependencies of `io.spine:spine-logging-jvm-slf4j-reload4j-backend-std-context:2.0.0-SNAPSHOT.423`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -7432,7 +7423,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson](https://github.com/google/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -7488,7 +7479,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://reload4j.qos.ch](https://reload4j.qos.ch)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -7497,22 +7488,22 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-core](https://github.com/FasterXML/jackson-core)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-dataformat-xml](https://github.com/FasterXML/jackson-dataformat-xml)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-module-kotlin](https://github.com/FasterXML/jackson-module-kotlin)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -7558,11 +7549,11 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson/gson](https://github.com/google/gson/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotation](https://errorprone.info/error_prone_annotation)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -7570,16 +7561,15 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_check_api](https://errorprone.info/error_prone_check_api)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_core](https://errorprone.info/error_prone_core)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.36.0.
-     * **Project URL:** [https://errorprone.info/error_prone_type_annotations](https://errorprone.info/error_prone_type_annotations)
+1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.42.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
@@ -7590,7 +7580,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
      * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.19.1.
+1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.27.0.
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.3.
@@ -8324,14 +8314,14 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using 
+This report was generated on **Thu Jul 23 18:08:55 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-log4j2-backend:2.0.0-SNAPSHOT.422`
+# Dependencies of `io.spine:spine-logging-log4j2-backend:2.0.0-SNAPSHOT.423`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -8342,7 +8332,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson](https://github.com/google/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -8426,7 +8416,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://bnd.bndtools.org/](https://bnd.bndtools.org/)
      * **License:** [(Apache-2.0 OR EPL-2.0)](https://opensource.org/licenses/Apache-2.0,https://opensource.org/licenses/EPL-2.0)
 
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -8435,22 +8425,22 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-core](https://github.com/FasterXML/jackson-core)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-dataformat-xml](https://github.com/FasterXML/jackson-dataformat-xml)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-module-kotlin](https://github.com/FasterXML/jackson-module-kotlin)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -8496,11 +8486,11 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson/gson](https://github.com/google/gson/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotation](https://errorprone.info/error_prone_annotation)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -8508,16 +8498,15 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_check_api](https://errorprone.info/error_prone_check_api)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_core](https://errorprone.info/error_prone_core)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.36.0.
-     * **Project URL:** [https://errorprone.info/error_prone_type_annotations](https://errorprone.info/error_prone_type_annotations)
+1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.42.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
@@ -8528,7 +8517,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
      * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.19.1.
+1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.27.0.
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.3.
@@ -9206,18 +9195,18 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using 
+This report was generated on **Thu Jul 23 18:08:55 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging:2.0.0-SNAPSHOT.422`
+# Dependencies of `io.spine:spine-logging:2.0.0-SNAPSHOT.423`
 
 ## Runtime
 ## Compile, tests, and tooling
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -9226,22 +9215,22 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-core](https://github.com/FasterXML/jackson-core)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-dataformat-xml](https://github.com/FasterXML/jackson-dataformat-xml)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-module-kotlin](https://github.com/FasterXML/jackson-module-kotlin)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -9283,7 +9272,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson/gson](https://github.com/google/gson/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -9291,8 +9280,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.36.0.
-     * **Project URL:** [https://errorprone.info/error_prone_type_annotations](https://errorprone.info/error_prone_type_annotations)
+1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.42.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
@@ -10013,14 +10001,14 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using 
+This report was generated on **Thu Jul 23 18:08:55 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine.tools:logging-testlib:2.0.0-SNAPSHOT.422`
+# Dependencies of `io.spine.tools:logging-testlib:2.0.0-SNAPSHOT.423`
 
 ## Runtime
 ## Compile, tests, and tooling
@@ -10028,7 +10016,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://bnd.bndtools.org/](https://bnd.bndtools.org/)
      * **License:** [(Apache-2.0 OR EPL-2.0)](https://opensource.org/licenses/Apache-2.0,https://opensource.org/licenses/EPL-2.0)
 
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -10037,22 +10025,22 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-core](https://github.com/FasterXML/jackson-core)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-dataformat-xml](https://github.com/FasterXML/jackson-dataformat-xml)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-module-kotlin](https://github.com/FasterXML/jackson-module-kotlin)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -10090,7 +10078,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson/gson](https://github.com/google/gson/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -10098,8 +10086,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.36.0.
-     * **Project URL:** [https://errorprone.info/error_prone_type_annotations](https://errorprone.info/error_prone_type_annotations)
+1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.42.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
@@ -10832,18 +10819,18 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using 
+This report was generated on **Thu Jul 23 18:08:55 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-otel-backend:2.0.0-SNAPSHOT.422`
+# Dependencies of `io.spine:spine-logging-otel-backend:2.0.0-SNAPSHOT.423`
 
 ## Runtime
 ## Compile, tests, and tooling
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -10852,22 +10839,22 @@ This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-core](https://github.com/FasterXML/jackson-core)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-dataformat-xml](https://github.com/FasterXML/jackson-dataformat-xml)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-module-kotlin](https://github.com/FasterXML/jackson-module-kotlin)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -10913,7 +10900,7 @@ This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using
      * **Project URL:** [https://goo.gle/ksp](https://goo.gle/ksp)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -10921,8 +10908,7 @@ This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.36.0.
-     * **Project URL:** [https://errorprone.info/error_prone_type_annotations](https://errorprone.info/error_prone_type_annotations)
+1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.42.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
@@ -11739,14 +11725,14 @@ This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using 
+This report was generated on **Thu Jul 23 18:08:56 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-otel-backend-bootstrap:2.0.0-SNAPSHOT.422`
+# Dependencies of `io.spine:spine-logging-otel-backend-bootstrap:2.0.0-SNAPSHOT.423`
 
 ## Runtime
 1.  **Group** : com.google.auto.service. **Name** : auto-service-annotations. **Version** : 1.1.1.
@@ -11761,7 +11747,7 @@ This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson](https://github.com/google/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -12125,7 +12111,7 @@ This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using
      * **License:** [MIT](https://opensource.org/license/mit)
 
 ## Compile, tests, and tooling
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -12134,22 +12120,22 @@ This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-core](https://github.com/FasterXML/jackson-core)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-dataformat-xml](https://github.com/FasterXML/jackson-dataformat-xml)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-module-kotlin](https://github.com/FasterXML/jackson-module-kotlin)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -12195,11 +12181,11 @@ This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson/gson](https://github.com/google/gson/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotation](https://errorprone.info/error_prone_annotation)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -12207,16 +12193,15 @@ This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_check_api](https://errorprone.info/error_prone_check_api)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_core](https://errorprone.info/error_prone_core)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.36.0.
-     * **Project URL:** [https://errorprone.info/error_prone_type_annotations](https://errorprone.info/error_prone_type_annotations)
+1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.42.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
@@ -12227,7 +12212,7 @@ This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using
      * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
      * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.19.1.
+1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.27.0.
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.3.
@@ -13157,14 +13142,14 @@ This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using 
+This report was generated on **Thu Jul 23 18:08:57 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-probe-backend:2.0.0-SNAPSHOT.422`
+# Dependencies of `io.spine:spine-logging-probe-backend:2.0.0-SNAPSHOT.423`
 
 ## Runtime
 1.  **Group** : com.google.auto.service. **Name** : auto-service-annotations. **Version** : 1.1.1.
@@ -13179,7 +13164,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson](https://github.com/google/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -13251,7 +13236,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -13260,22 +13245,22 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-core](https://github.com/FasterXML/jackson-core)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-dataformat-xml](https://github.com/FasterXML/jackson-dataformat-xml)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-module-kotlin](https://github.com/FasterXML/jackson-module-kotlin)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -13325,11 +13310,11 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://goo.gle/ksp](https://goo.gle/ksp)
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotation](https://errorprone.info/error_prone_annotation)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -13337,16 +13322,15 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_check_api](https://errorprone.info/error_prone_check_api)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_core](https://errorprone.info/error_prone_core)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.36.0.
-     * **Project URL:** [https://errorprone.info/error_prone_type_annotations](https://errorprone.info/error_prone_type_annotations)
+1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.42.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
@@ -13357,7 +13341,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
      * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.19.1.
+1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.27.0.
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.3.
@@ -14015,17 +13999,17 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using 
+This report was generated on **Thu Jul 23 18:08:55 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-smoke-test:2.0.0-SNAPSHOT.422`
+# Dependencies of `io.spine:spine-logging-smoke-test:2.0.0-SNAPSHOT.423`
 
 ## Runtime
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -14038,7 +14022,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson](https://github.com/google/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -14173,7 +14157,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **License:** [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -14182,22 +14166,22 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-core](https://github.com/FasterXML/jackson-core)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-dataformat-xml](https://github.com/FasterXML/jackson-dataformat-xml)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-module-kotlin](https://github.com/FasterXML/jackson-module-kotlin)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -14243,11 +14227,11 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson/gson](https://github.com/google/gson/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotation](https://errorprone.info/error_prone_annotation)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -14255,16 +14239,15 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_check_api](https://errorprone.info/error_prone_check_api)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_core](https://errorprone.info/error_prone_core)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.36.0.
-     * **Project URL:** [https://errorprone.info/error_prone_type_annotations](https://errorprone.info/error_prone_type_annotations)
+1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.42.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
@@ -14275,7 +14258,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
      * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.19.1.
+1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.27.0.
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.3.
@@ -14921,14 +14904,14 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using 
+This report was generated on **Thu Jul 23 18:08:55 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
 
 
 
 
-# Dependencies of `io.spine:spine-logging-std-context:2.0.0-SNAPSHOT.422`
+# Dependencies of `io.spine:spine-logging-std-context:2.0.0-SNAPSHOT.423`
 
 ## Runtime
 1.  **Group** : com.google.code.findbugs. **Name** : jsr305. **Version** : 3.0.2.
@@ -14939,7 +14922,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson](https://github.com/google/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -15011,7 +14994,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **License:** [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ## Compile, tests, and tooling
-1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson. **Name** : jackson-bom. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-bom](https://github.com/FasterXML/jackson-bom)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -15020,22 +15003,22 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-core. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-core](https://github.com/FasterXML/jackson-core)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.core. **Name** : jackson-databind. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.dataformat. **Name** : jackson-dataformat-xml. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-dataformat-xml](https://github.com/FasterXML/jackson-dataformat-xml)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.0.
+1.  **Group** : com.fasterxml.jackson.module. **Name** : jackson-module-kotlin. **Version** : 2.22.1.
      * **Project URL:** [https://github.com/FasterXML/jackson-module-kotlin](https://github.com/FasterXML/jackson-module-kotlin)
      * **License:** [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
      * **License:** [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -15081,11 +15064,11 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/gson/gson](https://github.com/google/gson/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotation](https://errorprone.info/error_prone_annotation)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -15093,16 +15076,15 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://errorprone.info/error_prone_annotations](https://errorprone.info/error_prone_annotations)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_check_api](https://errorprone.info/error_prone_check_api)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.36.0.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.42.0.
      * **Project URL:** [https://errorprone.info/error_prone_core](https://errorprone.info/error_prone_core)
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.36.0.
-     * **Project URL:** [https://errorprone.info/error_prone_type_annotations](https://errorprone.info/error_prone_type_annotations)
+1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.42.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
@@ -15113,7 +15095,7 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
      * **Project URL:** [https://github.com/google/flogger](https://github.com/google/flogger)
      * **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.19.1.
+1.  **Group** : com.google.googlejavaformat. **Name** : google-java-format. **Version** : 1.27.0.
      * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.guava. **Name** : failureaccess. **Version** : 1.0.3.
@@ -15759,6 +15741,6 @@ This report was generated on **Thu Jul 02 23:33:02 WEST 2026** using
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Thu Jul 02 23:33:03 WEST 2026** using 
+This report was generated on **Thu Jul 23 18:08:55 WEST 2026** using 
 [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under 
 [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
