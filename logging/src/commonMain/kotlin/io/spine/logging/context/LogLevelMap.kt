@@ -214,7 +214,7 @@ public fun LogLevelMap.levelOf(cls: KClass<*>): Level = levelOf(cls.toLoggerName
 
 /**
  * Builds a new [LogLevelMap] by populating a newly created [LogLevelMap.Builder]
- * using providing [builderAction].
+ * using [builderAction].
  */
 public fun logLevelMap(builderAction: LogLevelMap.Builder.() -> Unit): LogLevelMap {
     val builder = LogLevelMap.builder()

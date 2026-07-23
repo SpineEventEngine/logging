@@ -107,7 +107,7 @@ public abstract class LoggerBackend {
      * If a backend chooses to propagate an error (e.g., when testing or debugging),
      * it must wrap it in [LoggingException] to avoid it being re-caught.
      *
-     * @param error the exception throw when `badData` was initially logged.
+     * @param error the exception thrown when `badData` was initially logged.
      * @param badData the original `LogData` instance that caused an error.
      *        It is not expected that simply trying to log this again will succeed, and error
      *        handlers must be careful in how they handle this instance, its arguments and metadata.

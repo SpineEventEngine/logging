@@ -55,7 +55,7 @@ import org.junit.jupiter.api.Test
  * ## Implementation details
  *
  * Tests assert the logged messages using [tapJavaLogging] util. This util writes
- * a stream of the logged messages into a plain [String], which then makes possible
+ * a stream of the logged messages into a plain [String], which then makes it possible
  * to assert the result.
  *
  * The messages are captured by a custom Java Logging Handler. This approach is less

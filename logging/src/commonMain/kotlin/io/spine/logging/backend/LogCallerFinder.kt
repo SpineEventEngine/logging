@@ -34,7 +34,7 @@ import kotlin.reflect.KClass
 
 /**
  * API for determining the logging class and log statement sites,
- * return from [Platform.getCallerFinder].
+ * returned from [Platform.getCallerFinder].
  *
  * These classes are immutable and thread-safe.
  *
@@ -77,8 +77,8 @@ public abstract class LogCallerFinder {
      * This is useful when determining the class name with which to create a logger backend.
      *
      * @param loggerClass The class containing the log() methods whose caller we need to find.
-     * @return The name of the class called the specified logger.
-     * @throws IllegalStateException If there was no caller of the specified logged passed
+     * @return The name of the class that called the specified logger.
+     * @throws IllegalStateException If there was no caller of the specified logger passed
      *         on the stack (which may occur if the logger class was invoked directly by JNI).
      */
     public abstract fun findLoggingClass(loggerClass: KClass<out AbstractLogger<*>>): String

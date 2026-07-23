@@ -102,7 +102,7 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
      *
      * If a logger implementation determines that logging is definitely disabled at this point,
      * then this method is expected to return a "no-op" implementation of that logging API.
-     * This, in turn, will result in all further calls made for the log statement to
+     * This, in turn, will result in all further calls made for the log statement
      * being silently ignored.
      *
      * A simple implementation of this method in a concrete subclass might look like:

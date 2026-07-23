@@ -71,7 +71,7 @@ public object MetadataKeyValueHandlers {
      * This is convenient for generic metadata processing when used in conjunction with
      * something like [KeyValueFormatter].
      *
-     * The returned builder can be built immediately or customized further to handler some keys
+     * The returned builder can be built immediately or customized further to handle some keys
      * specially (e.g., allowing keys/values to modify logging behaviour).
      *
      * @return a builder configured with the default key/value handlers and ignored keys.

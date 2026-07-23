@@ -30,7 +30,7 @@ import io.spine.logging.MetadataKey
 
 /**
  * A sequence of metadata key/value pairs that can be associated to a log statement,
- * either directly via methods in the fluent API, of as part of a scoped logging context.
+ * either directly via methods in the fluent API, or as part of a scoped logging context.
  *
  * Metadata keys can be "single valued" or "repeating" based on [MetadataKey.canRepeat],
  * but it is permitted for a `Metadata` implementation to retain multiple single valued
@@ -67,7 +67,7 @@ public abstract class Metadata {
     /**
      * Returns the key for the Nth piece of metadata.
      *
-     * @throws IndexOutOfBoundsException if either `n` is negative or `n` is greater
+     * @throws IndexOutOfBoundsException if either `n` is negative or `n` is greater than
      *   or equal to `getCount()`.
      */
     public abstract fun getKey(n: Int): MetadataKey<Any>
@@ -75,7 +75,7 @@ public abstract class Metadata {
     /**
      * Returns the non-null value for the Nth piece of metadata.
      *
-     * @throws IndexOutOfBoundsException if either `n` is negative or `n` is greater
+     * @throws IndexOutOfBoundsException if either `n` is negative or `n` is greater than
      *  or equal to `getCount()`.
      */
     public abstract fun getValue(n: Int): Any

@@ -35,7 +35,7 @@ import io.spine.logging.LogSite
  * Some metadata is expected to be available for all log statements (such as the log level or a
  * timestamp) whereas other data is optional (class/method name for example).
  *
- * As well providing the common logging metadata, customized loggers can choose to add arbitrary
+ * As well as providing the common logging metadata, customized loggers can choose to add arbitrary
  * key/value pairs to the log data. It is up to each logging backend implementation to decide how
  * it interprets this data using the hierarchical key.
  *

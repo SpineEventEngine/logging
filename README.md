@@ -142,7 +142,7 @@ class Example : WithLogging {
 // INFO: Call #7 [CONTEXT ratelimit_count=7 skipped=6 ]
 ```
 
-Also, a user can attach its own metadata. For instance, you can attach
+Also, a user can attach their own metadata. For instance, you can attach
 a user ID to all log records for the current request, or force logging
 level if the requested URL contains a debug parameter.
 

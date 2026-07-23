@@ -200,7 +200,7 @@ public class Tags private constructor(private val map: LightweightTagMap) {
             }
             // Safe, even for a reused builder, because we never care
             // about the original value order.
-            // We/ could deduplicate here to guard against pathological use,
+            // We could deduplicate here to guard against pathological use,
             // but it should never matter.
             keyValuePairs.sort()
             return Tags(LightweightTagMap(keyValuePairs))
@@ -281,7 +281,7 @@ private data class KeyValuePair(
  * Allowed types of tag values.
  *
  * This ensures that tag values have well-known semantics and can
- * always be formatted in a clearly and unambiguously.
+ * always be formatted clearly and unambiguously.
  *
  * The ordering of elements in this enum should not change as it defines the sort order between
  * values of different types. New elements need not be added at the end though.
@@ -691,7 +691,7 @@ private class LightweightTagMap : AbstractMap<String, Set<Any?>> {
     }
 
     /**
-     * Common logic to decide if we're wasting too much off an array and need to "right size" it.
+     * Common logic to decide if we're wasting too much of an array and need to "right size" it.
      *
      * @return `true` if more than 10% wasted in a non-trivial sized array.
      */

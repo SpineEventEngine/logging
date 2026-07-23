@@ -464,7 +464,7 @@ protected constructor(
 
     public final override fun isEnabled(): Boolean {
         // We can't guarantee that all logger implementations will return instances of this class
-        // _only_ when logging is enabled, so if would be potentially unsafe to just return
+        // _only_ when logging is enabled, so it would be potentially unsafe to just return
         // `true` here.
         // It's not worth caching this result in the instance because calls to this
         // method should be rare and they are only going to be made once per instance anyway.

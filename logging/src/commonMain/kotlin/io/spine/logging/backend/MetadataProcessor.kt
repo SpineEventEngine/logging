@@ -183,7 +183,7 @@ private class NoOpProcessor: MetadataProcessor() {
 }
 
 /**
- * The metadata processor involved when the number of metadata elements is less or
+ * The metadata processor involved when the number of metadata elements is less than or
  * equal to [MAX_LIGHTWEIGHT_ELEMENTS].
  *
  * The values in the [keyMap] array are structured as:
@@ -200,7 +200,7 @@ private class NoOpProcessor: MetadataProcessor() {
  * Obviously, this could be extended to a `long`, but the bloom filter is only efficient up to
  * about 10-15 elements (and that's a super rare case anyway).
  *
- * At some point it is just not worth trying to squeeze anymore value from this class, and
+ * At some point it is just not worth trying to squeeze any more value from this class, and
  * the [SimpleProcessor] should be used instead (we might even want to switch before hitting
  * 28 elements depending on performance).
  */
@@ -420,7 +420,7 @@ private class LightweightProcessor(
      *
      * ### Implementation note
      * This could be made a reusable instance (reset between callbacks) if we wanted to
-     * same a little on allocations. However, this is a fixed-size instance, and repeated
+     * save a little on allocations. However, this is a fixed-size instance, and repeated
      * keys are a fairly unusual use case.
      */
     @Suppress("MagicNumber")

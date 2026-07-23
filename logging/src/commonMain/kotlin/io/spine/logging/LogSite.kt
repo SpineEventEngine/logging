@@ -35,12 +35,12 @@ package io.spine.logging
  * For example, the logging [facade][LoggingApi] allows configuring of
  * a logging statement to be emitted only if a specific condition is satisfied.
  * Consider the [LoggingApi.atMostEvery] method, which configures a log statement
- * to perform actual logging no often than once per the specified period when
+ * to perform actual logging no more often than once per the specified period when
  * called multiple times. To achieve this, the facade needs to track
  * previous invocations, and this information is part of metadata that is stored
  * for each statement.
  *
- * Usually, this type if filled from a stack trace until it is injected
+ * Usually, this type is filled from a stack trace until it is injected
  * [manually][LoggingApi.withInjectedLogSite], or the used backend provides
  * its own mechanism to determine a log site.
  *

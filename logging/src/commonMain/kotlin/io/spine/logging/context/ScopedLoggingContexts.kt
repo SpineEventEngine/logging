@@ -39,7 +39,7 @@ import kotlin.time.DurationUnit.MINUTES
  * [ScopedLoggingContext] that would be returned by
  * [ScopedLoggingContext.getInstance].
  *
- * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/ScopedLoggingContexts.java"
+ * @see <a href="https://github.com/google/flogger/blob/cb9e836a897d36a78309ee8badf5cad4e6a2d3d8/api/src/main/java/com/google/common/flogger/context/ScopedLoggingContexts.java">
  *   Original Java code</a> for historical context.
  */
 public object ScopedLoggingContexts : WithLogging {
@@ -124,7 +124,7 @@ public object ScopedLoggingContexts : WithLogging {
      *
      * 1. Call or wrap a new context with metadata added to it.
      * 2. [ScopedLoggingContext.Builder.install] a new
-     *   context and close it when you it exits (e.g., if you are using
+     *   context and close it when it exits (e.g., if you are using
      *   callbacks to listen to state changes in a task).
      *   However, it is vital that the returned [AutoCloseable] is always closed.
      * 3. Call this method and check it succeeded (e.g., logging a warning if it fails).
@@ -157,7 +157,7 @@ public object ScopedLoggingContexts : WithLogging {
      *
      * 1. Call or wrap a new context with metadata added to it.
      * 2. [ScopedLoggingContext.Builder.install] a new
-     *   context and close it when you it exits (e.g., if you are using
+     *   context and close it when it exits (e.g., if you are using
      *   callbacks to listen to state changes in a task).
      *   However, it is vital that the returned [AutoCloseable] is always closed.
      * 3. Call this method and check that it succeeded (e.g., logging a warning if it fails).

@@ -82,7 +82,7 @@ public abstract class ContextDataProvider {
     /**
      * Returns whether the given logger should have logging forced at the specified level.
      *
-     * When logging is forced for a log statement, it will be emitted regardless or
+     * When logging is forced for a log statement, it will be emitted regardless of
      * the normal log level configuration of the logger and ignoring any rate limiting or
      * other filtering.
      *

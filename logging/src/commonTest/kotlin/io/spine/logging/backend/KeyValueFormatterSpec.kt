@@ -100,7 +100,7 @@ internal class KeyValueFormatterSpec {
         format("x", null) shouldBe "x=true"
 
         // Enums are currently quoted, but wouldn't need to be if the `name()`
-        // rather than `toString()` was used to generate to value.
+        // rather than `toString()` was used to generate the value.
         format("x", Foo.BAR) shouldBe "x=\"BAR\""
 
         // Strings, characters and unknown types are quoted.
