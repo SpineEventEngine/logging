@@ -120,7 +120,7 @@ public abstract class AbstractJulBackend : LoggerBackend {
             Logger.getLogger("").log(
                 SEVERE.toJavaLogging(),
                 """
-                Forcing log statements with has been partially disabled.
+                Forcing log statements has been partially disabled.
                 The Logging library cannot modify logger log levels, which is necessary to
                 force log statements. This is likely due to an installed `SecurityManager`.
                 Forced log statements will still be published directly to log handlers, but
