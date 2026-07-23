@@ -65,7 +65,7 @@ public fun tapConsole(action: () -> Unit): String {
  *
  * Not restoring the streams does not affect our current testing requirements.
  * However, for more extensive testing scenarios that also involve console output
- * interception and complex interactions with Java Logging framework's quirks,
+ * interception and complex interactions with the Java Logging framework's quirks,
  * this could potentially create issues.
  */
 public object ConsoleTap {
@@ -127,7 +127,7 @@ private class RedirectingPrintStream(initial: PrintStream): PrintStream(initial)
 }
 
 /**
- * A [PrintStream] which stores the output in a byte array and allows to retrieve it.
+ * A [PrintStream] that stores the output in a byte array and allows retrieving it.
  *
  * @param size The initial size of the underlying byte array, which grows as needed.
  */

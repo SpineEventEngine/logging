@@ -121,8 +121,8 @@ public abstract class BaseLogLevelMapTest: AbstractLogLevelMapTest() {
                 message shouldContain "From fixture 1."
             }
 
-            // `L2Direct` is the class which is directly in the package mentioned in the map.
-            // The class has its own logging level. Logging at lower level should not occur.
+            // `L2Direct` is the class that is directly in the package mentioned in the map.
+            // The class has its own logging level. Logging at a lower level should not occur.
             val records2 = recorders[2].records
             val samePackageClass = fixtures[2]
             samePackageClass.logAt(TRACE, "Fixture 2 at TRACE.")
@@ -138,7 +138,7 @@ public abstract class BaseLogLevelMapTest: AbstractLogLevelMapTest() {
 }
 
 /**
- * The fixture which is not mentioned in log level map, and package of which
+ * The fixture that is not mentioned in the log level map, and the package of which
  * is outside the package hierarchy configured in the map.
  *
  * The class must be public so that Kotlin Reflection is able to call its constructor.

@@ -27,7 +27,7 @@
 package io.spine.logging
 
 /**
- * A part of a log site key which has singleton semantics per logging scope.
+ * A part of a log site key that has singleton semantics per logging scope.
  *
  * This class is responsible for managing the lifecycle and cleanup of log site keys.
  * It ensures that key references are properly maintained and cleaned up when no longer needed.

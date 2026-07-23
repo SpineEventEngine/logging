@@ -70,7 +70,7 @@ public abstract class ContextMetadata protected constructor() : Metadata() {
         private val entries = ArrayList<Entry<*>>(2)
 
         /**
-         * Add a single metadata key/value pair to the builder.
+         * Adds a single metadata key/value pair to the builder.
          */
         @CanIgnoreReturnValue
         public fun <T : Any> add(key: MetadataKey<T>, value: T): Builder {
@@ -127,7 +127,7 @@ public abstract class ContextMetadata protected constructor() : Metadata() {
         public fun builder(): Builder = Builder()
 
         /**
-         * Returns a space efficient [ContextMetadata] containing a single value.
+         * Returns a space-efficient [ContextMetadata] containing a single value.
          */
         @JvmStatic
         public fun <T : Any> singleton(key: MetadataKey<T>, value: T): ContextMetadata =

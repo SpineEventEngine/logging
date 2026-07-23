@@ -127,7 +127,7 @@ internal class KeyValueFormatterSpec {
 
         /*
         Windows and Linux differently handle this replacement character.
-        So, the test relies on its HEX code instead of hard-coded literal.
+        So, the test relies on its HEX code instead of a hard-coded literal.
          */
         val replacementChar = '\uFFFD'
         format("x", "Unsafe\u0000Chars") shouldBe "x=\"Unsafe" + replacementChar + "Chars\""

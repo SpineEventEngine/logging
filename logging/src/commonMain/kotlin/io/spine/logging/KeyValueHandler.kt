@@ -36,7 +36,7 @@ package io.spine.logging
 public fun interface KeyValueHandler {
 
     /**
-     * Handles a single key/value a pair of contextual metadata for a log statement.
+     * Handles a single key/value pair of contextual metadata for a log statement.
      */
     public fun handle(key: String, value: Any?)
 }

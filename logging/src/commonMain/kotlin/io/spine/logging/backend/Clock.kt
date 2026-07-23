@@ -36,7 +36,7 @@ package io.spine.logging.backend
  *
  * Any implementation of this API **MUST** follow the rules listed below to avoid any risk of
  * re-entrant code calling during logger initialization. Failure to do so risks creating complex,
- * hard to debug, issues with Flogger configuration.
+ * hard-to-debug, issues with Flogger configuration.
  *
  * 1. Implementations **MUST NOT** attempt any logging in static methods or constructors.
  * 2. Implementations **MUST NOT** statically depend on any unknown code.
@@ -47,7 +47,7 @@ package io.spine.logging.backend
  * easiest way to achieve this is to simply avoid having any non-trivial static fields or any
  * instance fields at all in the implementation.
  *
- * While this sounds onerous it's not difficult to achieve because this API is a singleton, and
+ * While this sounds onerous, it's not difficult to achieve because this API is a singleton, and
  * can delay any actual work until its methods are called. For example if any additional state is
  * required in the implementation, it can be held via a "lazy holder" to defer initialization.
  *

@@ -30,7 +30,7 @@ import io.spine.logging.backend.LogData
 
 /**
  * Runs the given [action], capturing all log data that are passed
- * to backend by the API.
+ * to the backend by the API.
  *
  * To make this work, please create a logger instance inside of [action].
  * This method captures log data for loggers that are both created and used
@@ -77,7 +77,7 @@ public inline fun captureLogData(action: () -> Unit): List<LogData> {
     }
 
     // Several loggers could have been created within the `action`.
-    // Each logger spawns its own instance of backend.
+    // Each logger spawns its own instance of a backend.
     val loggedFromAllBackends = memoizingFactory.createdBackends.flatMap { it.logged }
     return loggedFromAllBackends
 }

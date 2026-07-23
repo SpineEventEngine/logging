@@ -38,7 +38,7 @@ import io.spine.logging.context.ScopedLoggingContext
  * A basic implementation of [ContextDataProvider].
  *
  * Loaded via [ServiceLoader][java.util.ServiceLoader] by the logging facade
- * in runtime.
+ * at runtime.
  */
 public class StdContextDataProvider: ContextDataProvider() {
 
@@ -92,7 +92,7 @@ private object StdScopedLoggingContext: ScopedLoggingContext() {
     }
 
     /**
-     * A [ScopedLoggingContext.Builder] which creates a new [StdContextData]
+     * A [ScopedLoggingContext.Builder] that creates a new [StdContextData]
      * and installs it.
      */
     class BuilderImpl(private val scopeType: ScopeType?) : Builder() {

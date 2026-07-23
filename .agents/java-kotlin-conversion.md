@@ -9,7 +9,7 @@
                                                                       
 ## Treating nullability
 
-* Use nullable Kotlin type only if the type in Java is annotated as `@Nullable`.
+* Use a nullable Kotlin type only if the type in Java is annotated as `@Nullable`.
 
 ## Efficient Conversion Workflow
 
@@ -32,7 +32,7 @@
 * Be cautious with Java wildcards (`? extends`, `? super`) conversion to Kotlin's `out` and `in` type parameters.
 * Ensure proper handling of Java static initialization blocks in Kotlin companion objects.
 * Verify that Java overloaded methods convert correctly with appropriate default parameter values in Kotlin.
-* Remember that Kotlin has smart casts which can eliminate explicit type casting needed in Java.
+* Remember that Kotlin has smart casts that can eliminate explicit type casting needed in Java.
 
 ## Documentation Conversion
 

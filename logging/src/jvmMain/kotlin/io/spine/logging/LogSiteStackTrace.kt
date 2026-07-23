@@ -29,7 +29,7 @@ package io.spine.logging
 import java.io.Serial
 
 /**
- * A synthetic exception which can be attached to log statements when additional stack trace
+ * A synthetic exception that can be attached to log statements when additional stack trace
  * information is required in log files or via tools such as ECatcher.
  *
  * The name of this class may become relied upon implicitly by tools such as ECatcher.

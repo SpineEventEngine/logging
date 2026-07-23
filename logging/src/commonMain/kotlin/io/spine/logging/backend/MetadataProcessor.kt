@@ -61,7 +61,7 @@ public abstract class MetadataProcessor {
     public companion object {
 
         /**
-         * Immutable empty processor which never handles any metadata.
+         * Immutable empty processor that never handles any metadata.
          */
         private val EMPTY_PROCESSOR = NoOpProcessor()
 
@@ -169,7 +169,7 @@ public abstract class MetadataProcessor {
 }
 
 /**
- * Immutable no-op processor which never handles any metadata.
+ * Immutable no-op processor that never handles any metadata.
  */
 private class NoOpProcessor: MetadataProcessor() {
 
@@ -226,8 +226,8 @@ private class LightweightProcessor(
 
     init {
         // We can never have more distinct keys, so this never needs resizing.
-        // This should be the only variable sized allocation required by this algorithm.
-        // When duplicate keys exist some elements at the end of the array will be unused,
+        // This should be the only variable-sized allocation required by this algorithm.
+        // When duplicate keys exist, some elements at the end of the array will be unused,
         // but the array is typically small and it is common for all keys to be distinct,
         // so "right sizing" the array wouldn't be worth it.
         val maxKeyCount = scope.size() + logged.size()
@@ -296,7 +296,7 @@ private class LightweightProcessor(
     override fun keySet(): Set<MetadataKey<*>> {
 
         // We may want to cache this, since it's effectively immutable,
-        // but it's also a small and likely short lived instance,
+        // but it's also a small and likely short-lived instance,
         // so quite possibly not worth it for the cost of another field.
         return object : AbstractSet<MetadataKey<*>>() {
 
@@ -420,7 +420,7 @@ private class LightweightProcessor(
      *
      * ### Implementation note
      * This could be made a reusable instance (reset between callbacks) if we wanted to
-     * same a little on allocations. However, this is a fixed size instance, and repeated
+     * same a little on allocations. However, this is a fixed-size instance, and repeated
      * keys are a fairly unusual use case.
      */
     @Suppress("MagicNumber")
@@ -469,7 +469,7 @@ private class LightweightProcessor(
 }
 
 /**
- * A simple version of a metadata processor which allocates "large" data structures.
+ * A simple version of a metadata processor that allocates "large" data structures.
  *
  * This is needed when a large number of metadata elements need processing.
  * It should behave exactly the same as the [LightweightProcessor] if

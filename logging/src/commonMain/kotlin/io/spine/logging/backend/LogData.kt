@@ -87,7 +87,7 @@ public interface LogData {
      * Returns whether this log statement should be emitted regardless of its log
      * level or any other properties.
      *
-     * This allows extensions of `LogContext` or `LoggingBackend` which implement
+     * This allows extensions of `LogContext` or `LoggingBackend` that implement
      * additional filtering or rate-limiting fluent methods to easily check whether
      * a log statement was forced.
      *

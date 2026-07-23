@@ -71,7 +71,7 @@ internal class AbstractLoggerSpec {
         /**
          * Matches ISO 8601 date/time format.
          *
-         * [DOT_MATCHES_ALL] option makes `.*` match line terminators as well.
+         * The [DOT_MATCHES_ALL] option makes `.*` match line terminators as well.
          *
          * @see <a href="https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html">SimpleDateFormat</a>
          */
@@ -97,7 +97,7 @@ internal class AbstractLoggerSpec {
     }
 
     /**
-     * Tests a worst case scenario whereby object's `toString()` method throws
+     * Tests a worst-case scenario whereby object's `toString()` method throws
      * an exception, which itself throws an exception on `toString()` call.
      */
     @Test

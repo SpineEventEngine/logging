@@ -42,7 +42,7 @@ internal class MemoizingHandler(
 ) : StreamHandler(out, SimpleFormatter()) {
 
     /**
-     * Return the remembered messages concatenated to a single string.
+     * Returns the remembered messages concatenated to a single string.
      */
     fun result(): String {
         flush()

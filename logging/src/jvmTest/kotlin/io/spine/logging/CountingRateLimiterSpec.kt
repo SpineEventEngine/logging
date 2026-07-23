@@ -52,7 +52,7 @@ internal class CountingRateLimiterSpec {
 
     @Test
     fun `return 'null' if the corresponding metadata key is not present`() {
-        // Not supplying `LOG_EVERY_N` metadata key ignores rate limiting by returning null.
+        // Not supplying the `LOG_EVERY_N` metadata key ignores rate limiting by returning null.
         val metadata = FakeMetadata()
         val logSite = FakeLogSite.unique()
         CountingRateLimiter.check(metadata, logSite).shouldBeNull()

@@ -3,7 +3,7 @@
 **Note:** This is a specific backend implementation that is designed to be used in tests.
 
 The probe backend provides a backend factory that can switch
-the current backend implementation on runtime.
+the current backend implementation at runtime.
 The logging facade does not provide such a capability.
 Take a look at `DynamicBackendFactory` for details.
 

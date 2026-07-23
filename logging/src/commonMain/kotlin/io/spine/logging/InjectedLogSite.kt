@@ -34,7 +34,7 @@ import io.spine.annotation.Internal
  *
  * Used for compile-time log site injection, and by the agent.
  *
- * @param internalClassName An internal, slash-separated, fully-qualified class name
+ * @param internalClassName An internal, slash-separated, fully qualified class name
  *        (e.g., `"com/example/Foo$Bar"`).
  * @param methodName A bare method name without signature information.
  * @param encodedLineNumber A line number and per-line log statement index encoded as a single
@@ -72,7 +72,7 @@ public fun injectedLogSite(
  * The class name is stored in the internal JVM format (slash-separated) and converted to
  * the standard dot-separated format when needed for proper identification.
  *
- * @property internalClassName An internal, slash-separated, fully-qualified class name
+ * @property internalClassName An internal, slash-separated, fully qualified class name
  *           (e.g., `"com/example/Foo$Bar"`).
  * @property method A bare method name without signature information.
  * @property encodedLineNumber A line number and per-line log statement index encoded as a single
@@ -97,7 +97,7 @@ internal class InjectedLogSite(
     private var hashcode = 0
 
     /**
-     * Obtains dot-separated class name.
+     * Obtains the dot-separated class name.
      *
      * ## Implementation note
      *

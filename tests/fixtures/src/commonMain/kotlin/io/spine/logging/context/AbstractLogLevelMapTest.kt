@@ -52,7 +52,7 @@ public abstract class AbstractLogLevelMapTest(
 
     /**
      * Creates and populates the builder of a scoped logging context
-     * delegating the configuration of the builder to [configureBuilder] method.
+     * delegating the configuration of the builder to the [configureBuilder] method.
      */
     private fun createContext(): ScopedLoggingContext.Builder {
         val map = LogLevelMap.builder().let {

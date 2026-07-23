@@ -135,7 +135,7 @@ public object ScopedLoggingContexts : WithLogging {
      * values for the same metadata key from multiple threads, since that may
      * create non-deterministic ordering. It is recommended (where possible)
      * to add metadata when building a new context, rather than adding it to
-     * context visible to multiple threads.
+     * a context visible to multiple threads.
      *
      * @param T The type of the metadata value.
      * @param key The metadata key.

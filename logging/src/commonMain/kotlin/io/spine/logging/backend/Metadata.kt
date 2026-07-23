@@ -29,7 +29,7 @@ package io.spine.logging.backend
 import io.spine.logging.MetadataKey
 
 /**
- * A sequence of metadata key/value pairs which can be associated to a log statement,
+ * A sequence of metadata key/value pairs that can be associated to a log statement,
  * either directly via methods in the fluent API, of as part of a scoped logging context.
  *
  * Metadata keys can be "single valued" or "repeating" based on [MetadataKey.canRepeat],
@@ -37,7 +37,7 @@ import io.spine.logging.MetadataKey
  * keys, and in that situation the key at the largest index is the one that should be used.
  *
  * Multiple `Metadata` instances can be merged, in order, to provide a final sequence for
- * a log statement. When `Metadata` instance are merged, the result is just the concatenation
+ * a log statement. When `Metadata` instances are merged, the result is just the concatenation
  * of the sequence of key/value pairs, and this is what results in the potential for multiple
  * single valued keys to exist.
  *

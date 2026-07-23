@@ -78,7 +78,7 @@ internal class JulBackend(loggingClass: String): AbstractJulBackend(loggingClass
      * are involved.
      *
      * When a [parent logger][Logger.getParent] has a higher level
-     * (which is [Level.INFO][java.util.logging.Level.INFO] by default) its handler has
+     * (which is [Level.INFO][java.util.logging.Level.INFO] by default), its handler has
      * this level too. Because of this the method [Handler.isLoggable] filters
      * out the record.
      *
@@ -91,7 +91,7 @@ internal class JulBackend(loggingClass: String): AbstractJulBackend(loggingClass
      * @see publishForced
      */
     private fun doLog(record: LogRecord, wasForced: Boolean) {
-        // If not forced, do work as usually.
+        // If not forced, do work as usual.
         if (!wasForced || isLoggable(record.level.toLevel())) {
             logger.log(record)
             return
@@ -107,7 +107,7 @@ internal class JulBackend(loggingClass: String): AbstractJulBackend(loggingClass
 /**
  * Publishes the given [record] using the handlers of the [logger].
  *
- * If the logger is configured to [use parent handlers][Logger.getUseParentHandlers]
+ * If the logger is configured to [use parent handlers][Logger.getUseParentHandlers],
  * propagates publishing to the [parent logger][Logger.getParent] too.
  */
 private fun publishForced(logger: Logger, record: LogRecord) {

@@ -62,12 +62,12 @@ dependencies {
     testImplementation(project(":fixtures"))
 
     /**
-     * Adds `log4j2` backend and the default context to the classpath.
+     * Adds the `log4j2` backend and the default context to the classpath.
      *
      * The logging `Platform` discovers backend and context implementations
      * automatically via Java's `ServiceLoader`. A user doesn't need to
      * interact with “hard” classes from these dependencies. So, they are
-     * usually added to [runtimeOnly] configuration.
+     * usually added to the [runtimeOnly] configuration.
      *
      * But for this test, it is important to make sure that the actually
      * discovered implementations match the test expectations. With a small

@@ -15,7 +15,7 @@ As of now, it is only applicable to JVM modules. It is because testing involves 
 of JUL-based backend. This backend is default and allows easier interception of the logged
 text for further assertion.
 
-Take a look at `AbstractLoggingSmokeTest` for usage example.
+Take a look at `AbstractLoggingSmokeTest` for a usage example.
 
 Please note, the presence of `spine-logging` and `spine-logging-backend` is expected because
 the `jvm-module` script plugin, which configures Gradle, is applied to Spine JVM modules.

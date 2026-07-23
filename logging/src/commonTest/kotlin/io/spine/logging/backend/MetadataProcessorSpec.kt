@@ -145,7 +145,7 @@ internal abstract class MetadataProcessorSpec(private val factory: ProcessorFact
     @Test
     fun `withstand worst case performance scenario`() {
         // Since duplicated keys need to have their index looked up (linear scan),
-        // the worst case scenario for performance is 14 distinct keys, followed by
+        // the worst-case scenario for performance is 14 distinct keys, followed by
         // the same repeated key 14 times. This means (N/2)^2 key accesses.
         val scope = FakeMetadata()
         for (n in 0..13) {
@@ -208,7 +208,7 @@ fun interface ProcessorFactory {
 }
 
 /**
- * Processes the given [metadata], collecting the all formatted entries as strings.
+ * Processes the given [metadata], collecting all the formatted entries as strings.
  */
 private fun entries(metadata: MetadataProcessor): List<String> {
     val entries = arrayListOf<String>()

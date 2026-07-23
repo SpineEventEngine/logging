@@ -48,7 +48,7 @@ internal class NoOpContextDataProvider private constructor() : ContextDataProvid
 
         /**
          * Returns a singleton "no op" instance of the context data provider
-         * API which logs a warning if used in code which attempts to set context
+         * API that logs a warning if used in code that attempts to set context
          * information or modify scopes.
          *
          * This is intended for use by platform implementations in cases
@@ -64,7 +64,7 @@ internal class NoOpContextDataProvider private constructor() : ContextDataProvid
 
 private class NoOpScopedLoggingContext : ScopedLoggingContext(), AutoCloseable {
 
-    // Since the ContextDataProvider class is loaded during Platform initialization we must be very
+    // Since the ContextDataProvider class is loaded during Platform initialization, we must be very
     // careful to avoid any attempt to obtain a logger instance until we can be sure logging config
     // is complete.
     private object LazyLogger : WithLogging

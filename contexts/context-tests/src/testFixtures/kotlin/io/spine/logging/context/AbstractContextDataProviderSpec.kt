@@ -359,7 +359,7 @@ abstract class AbstractContextDataProviderSpec {
      * in the same way as [Tags].
      *
      * The code below only needs to be tested by one “real” implementation
-     * to get coverage as tags merging is not done directly by data provider.
+     * to get coverage as tags merging is not done directly by the data provider.
      *
      * Please note, it is needed to add tags manually inside a context to check
      * if there is a “real” context data provider installed. We can't use

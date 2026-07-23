@@ -51,21 +51,21 @@ public object MetadataKeyValueHandlers {
         }
 
     /**
-     * Returns a singleton value handler which dispatches metadata to a [KeyValueHandler].
+     * Returns a singleton value handler that dispatches metadata to a [KeyValueHandler].
      */
     @JvmStatic
     public fun getDefaultValueHandler(): ValueHandler<Any, KeyValueHandler> =
         EMIT_METADATA
 
     /**
-     * Returns a singleton value handler which dispatches metadata to a [KeyValueHandler].
+     * Returns a singleton value handler that dispatches metadata to a [KeyValueHandler].
      */
     @JvmStatic
     public fun getDefaultRepeatedValueHandler(): RepeatedValueHandler<Any, KeyValueHandler> =
         EMIT_REPEATED_METADATA
 
     /**
-     * Returns a new [MetadataHandler.Builder] which handles all non-ignored
+     * Returns a new [MetadataHandler.Builder] that handles all non-ignored
      * metadata keys by dispatching their values to the key itself.
      *
      * This is convenient for generic metadata processing when used in conjunction with
@@ -85,7 +85,7 @@ public object MetadataKeyValueHandlers {
             .ignoring(ignored)
 
     /**
-     * Returns a new [MetadataHandler] which handles all non-ignored
+     * Returns a new [MetadataHandler] that handles all non-ignored
      * metadata keys by dispatching their values to the key itself.
      *
      * This is convenient for generic metadata processing when used in

@@ -8,7 +8,7 @@
 Spine Logging is a versatile library designed for Kotlin and Java projects,
 with a potential for multi-platform use.
 
-As of now, only JVM target is supported, with a JavaScript implementation
+As of now, only the JVM target is supported, with a JavaScript implementation
 being our priority for future development.
 
 API and implementation are largely inspired by [Google Flogger][flogger],
@@ -34,12 +34,12 @@ dependencies {
 ```
 
 In this case, the default logging backend will be used. It outputs log records
-to the console using `java.util.logging` (JUL) framework.
+to the console using the `java.util.logging` (JUL) framework.
 
 All logging operations are done with an instance of `io.spine.logging.Logger`.
 To get a logger, one can use the following:
 
-1. Make a logging class implement `WithLogging` interface.
+1. Make a logging class implement the `WithLogging` interface.
 2. Get a logger from `LoggingFactory`.
 
 ### Logging via `WithLogging` interface
@@ -100,10 +100,10 @@ The following backends are available:
   See [the OpenTelemetry backend guide](docs/otel-backend.md).
 
 The default backend is supplied along the logging library itself. To use it,
-one just needs to not supply any other backend. Then JUL backend will be
+one just needs to not supply any other backend. Then the JUL backend will be
 used automatically.
 
-For other backends, put a chosen one to `runtimeOnly` configuration,
+For other backends, put a chosen one to the `runtimeOnly` configuration,
 and the logging library will discover it in the runtime.
 
 An example usage of Log4j2 backend:

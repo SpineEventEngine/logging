@@ -40,8 +40,8 @@ import kotlin.time.DurationUnit
  * statement) and return the same API for chaining.
  *
  * The exceptions to this are:
- * - Methods which return a NoOp implementation of the API in order to disable logging.
- * - Methods which return an alternate API in order to implement context-specific grammar (though
+ * - Methods that return a NoOp implementation of the API in order to disable logging.
+ * - Methods that return an alternate API in order to implement context-specific grammar (though
  *   these alternate APIs should always return the original logging API eventually).
  *
  * A hypothetical example of a context-specific grammar might be:
@@ -292,7 +292,7 @@ public interface LoggingApi<API: LoggingApi<API>> {
      * This method allows an additional qualifier to be given which allows for
      * different conditional state for each unique qualifier.
      *
-     * This only makes a difference for log statements which use persistent state
+     * This only makes a difference for log statements that use persistent state
      * to control conditional behaviour (e.g., [atMostEvery] or [every]).
      *
      * This is the most general form of log aggregation and allows any keys to be used,
@@ -357,7 +357,7 @@ public interface LoggingApi<API: LoggingApi<API>> {
      * This method allows an additional qualifier to be given which allows for
      * different conditional state for each unique qualifier.
      *
-     * This only makes a difference for log statements which use persistent state
+     * This only makes a difference for log statements that use persistent state
      * to control conditional behaviour (e.g., [atMostEvery] or [every]).
      *
      * This method is most useful in helping to avoid cases where a rare
@@ -472,7 +472,7 @@ public interface LoggingApi<API: LoggingApi<API>> {
      *
      * - Keys that are recognised by specific logger backends (typically to control logging
      *   behaviour in some way).
-     * - Key value pairs which are explicitly extracted from logs by tools.
+     * - Key-value pairs that are explicitly extracted from logs by tools.
      *
      * This method is just an alias for `with(key, true)` to improve readability.
      *
@@ -589,7 +589,7 @@ public interface LoggingApi<API: LoggingApi<API>> {
     ): API
 
     /**
-     * An implementation of [LoggingApi] which does nothing, discarding all parameters.
+     * An implementation of [LoggingApi] that does nothing, discarding all parameters.
      *
      * Extending classes are likely to be non-wildcard, fully specified, no-op
      * implementations of the [API].

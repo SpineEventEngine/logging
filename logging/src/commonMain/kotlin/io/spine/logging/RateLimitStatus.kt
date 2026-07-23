@@ -35,9 +35,9 @@ import kotlinx.atomicfu.atomic
  *
  * ## Design Notes
  *
- * The purpose of this class is to allow rate limiters to behave in a way which
+ * The purpose of this class is to allow rate limiters to behave in a way that
  * is consistent when multiple rate limiters are combined for a single log statement.
- * If you are writing a rate limiter for logging which you want to "play well" with
+ * If you are writing a rate limiter for logging that you want to "play well" with
  * other rate limiters, it is essential that you understand how `RateLimitStatus`
  * is designed to work.
  *
@@ -126,7 +126,7 @@ public abstract class RateLimitStatus protected constructor() {
      * Note that the skipped count is tracked via the "log site key" and there may be several
      * keys for a single log site (e.g., due to use of the `per(...)` methods).
      *
-     * This is consistent with everywhere else which handles log site specific state,
+     * This is consistent with everywhere else that handles log site specific state,
      * but does make it a little less obvious what the skipped count refers to at first glance.
      */
     private class LogGuard {
@@ -172,7 +172,7 @@ public abstract class RateLimitStatus protected constructor() {
      * Note: This method is never invoked concurrently with another `reset()` operation,
      * but it can be concurrent with calls to update rate limiter state.
      * Thus, it must be thread safe in general, but can assume it is the only reset operation
-     * active for the limiter which returned it.
+     * active for the limiter that returned it.
      */
     internal abstract fun reset()
 

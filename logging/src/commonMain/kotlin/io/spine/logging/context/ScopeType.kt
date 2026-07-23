@@ -30,7 +30,7 @@ import io.spine.logging.LoggingScope
 import io.spine.logging.LoggingScopeProvider
 
 /**
- * Singleton keys which identify different types of scopes which scoped contexts can be bound to.
+ * Singleton keys that identify different types of scopes that scoped contexts can be bound to.
  *
  * To bind a context to a scope type, create the context with that type:
  *

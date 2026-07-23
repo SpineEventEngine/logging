@@ -29,7 +29,7 @@ package io.spine.logging
 import kotlin.annotation.AnnotationTarget.CLASS
 
 /**
- * An annotation for classes which define a logging domain for loggers
+ * An annotation for classes that define a logging domain for loggers
  * created for the class.
  *
  * Logging statements for classes with the same logging domain are

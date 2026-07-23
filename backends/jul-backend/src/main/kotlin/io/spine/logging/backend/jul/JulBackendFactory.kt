@@ -30,7 +30,7 @@ import io.spine.logging.backend.BackendFactory
 import io.spine.logging.backend.LoggerBackend
 
 /**
- * A [BackendFactory] producing [LoggerBackend] which supports publishing
+ * A [BackendFactory] producing [LoggerBackend] that supports publishing
  * of logging records according to configured [LogLevelMap][io.spine.logging.context.LogLevelMap].
  */
 public class JulBackendFactory: BackendFactory() {

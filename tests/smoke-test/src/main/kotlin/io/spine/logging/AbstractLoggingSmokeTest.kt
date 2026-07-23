@@ -32,7 +32,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 /**
- * Tests the most fundamental functionality of `spine-logging` library.
+ * Tests the most fundamental functionality of the `spine-logging` library.
  *
  * This test suite is meant to be implemented in particular Spine modules
  * to verify the actual logging is happening in real conditions.
@@ -46,7 +46,7 @@ import org.junit.jupiter.api.Test
  * class LoggingSmokeTest : AbstractLoggingSmokeTest()
  * ```
  *
- * Make sure, `spine-logging-smoke-test` library is on test classpath:
+ * Make sure, the `spine-logging-smoke-test` library is on the test classpath:
  *
  * ```
  * testImplementation(Spine.Logging.smokeTest)

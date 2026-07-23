@@ -86,7 +86,7 @@ public abstract class ContextDataProvider {
      * the normal log level configuration of the logger and ignoring any rate limiting or
      * other filtering.
      *
-     * Implementations which do not support forced logging should not override this method;
+     * Implementations that do not support forced logging should not override this method;
      * the default implementation returns `false`.
      *
      * `loggerName` can be used to look up specific configuration, such as log level,
@@ -131,7 +131,7 @@ public abstract class ContextDataProvider {
      * These tags can be used to provide additional contextual metadata
      * to log statements (e.g., request IDs).
      *
-     * Implementations which do not support scoped [Tags] should not override this method;
+     * Implementations that do not support scoped [Tags] should not override this method;
      * the default implementation returns [Tags.empty].
      */
     public open fun getTags(): Tags = Tags.empty()
@@ -142,7 +142,7 @@ public abstract class ContextDataProvider {
      * Scoped metadata can be used to provide structured data to log statements or
      * control logging behaviour (in conjunction with a custom logger backend).
      *
-     * Implementations which do not support scoped [Metadata] should not override this
+     * Implementations that do not support scoped [Metadata] should not override this
      * method; the default implementation returns [Metadata.Companion.empty].
      */
     public open fun getMetadata(): Metadata = Metadata.Companion.empty()
@@ -153,7 +153,7 @@ public abstract class ContextDataProvider {
      *
      * This method searches parent contexts as well.
      *
-     * Implementations which do not support scope types should return `null`,
+     * Implementations that do not support scope types should return `null`,
      * which can be achieved by using the default method.
      */
     public open fun getScope(type: ScopeType): LoggingScope? = null
@@ -174,7 +174,7 @@ public abstract class ContextDataProvider {
 
         /**
          * Returns the singleton no-op context data provider, which can be used by platform
-         * implementations which do not support `ScopedLoggingContext` for some reason.
+         * implementations that do not support `ScopedLoggingContext` for some reason.
          *
          * The returned provider has no effect and returns empty/default data in all cases.
          *

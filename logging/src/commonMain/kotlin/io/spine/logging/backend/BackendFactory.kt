@@ -36,7 +36,7 @@ package io.spine.logging.backend
  *
  * Any implementation of this API **MUST** follow the rules listed below to avoid any risk of
  * re-entrant code calling during logger initialization. Failure to do so risks creating complex,
- * hard to debug, issues with Flogger configuration.
+ * hard-to-debug, issues with Flogger configuration.
  *
  * 1. Implementations **MUST NOT** attempt any logging in static methods or constructors.
  * 2. Implementations **MUST NOT** statically depend on any unknown code.
