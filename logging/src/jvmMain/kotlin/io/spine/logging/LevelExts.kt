@@ -45,7 +45,7 @@ public fun Level.toJavaLogging(): JLevel = when (this) {
 }
 
 /**
- * Opens the constructor of [JLevel] for creating a converting instance.
+ * Opens the constructor of [JLevel] for creating a converted instance.
  */
 @Suppress("serial")
 private class ConvertedLevel(level: Level) : JLevel(level.name, level.value)

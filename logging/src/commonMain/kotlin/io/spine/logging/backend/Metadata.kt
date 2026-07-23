@@ -68,7 +68,7 @@ public abstract class Metadata {
      * Returns the key for the Nth piece of metadata.
      *
      * @throws IndexOutOfBoundsException if either `n` is negative or `n` is greater than
-     *   or equal to `getCount()`.
+     *   or equal to `size()`.
      */
     public abstract fun getKey(n: Int): MetadataKey<Any>
 
@@ -76,7 +76,7 @@ public abstract class Metadata {
      * Returns the non-null value for the Nth piece of metadata.
      *
      * @throws IndexOutOfBoundsException if either `n` is negative or `n` is greater than
-     *  or equal to `getCount()`.
+     *  or equal to `size()`.
      */
     public abstract fun getValue(n: Int): Any
 
