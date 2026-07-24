@@ -1,0 +1,24 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:io.spine.logging.backend.system////PointingToDeclaration/jvm-default-platform/io.spine.logging.backend.system/index.html
+$dokka.location:io.spine.logging.backend.system/DefaultPlatform.Companion///PointingToDeclaration/jvm-default-platform/io.spine.logging.backend.system/-default-platform/-companion/index.html
+$dokka.location:io.spine.logging.backend.system/DefaultPlatform///PointingToDeclaration/jvm-default-platform/io.spine.logging.backend.system/-default-platform/index.html
+$dokka.location:io.spine.logging.backend.system/DefaultPlatform/DefaultPlatform/#/PointingToDeclaration/jvm-default-platform/io.spine.logging.backend.system/-default-platform/-default-platform.html
+$dokka.location:io.spine.logging.backend.system/DefaultPlatform/DefaultPlatform/#io.spine.logging.backend.BackendFactory#io.spine.logging.context.ContextDataProvider#io.spine.logging.backend.Clock#io.spine.logging.backend.LogCallerFinder/PointingToDeclaration/jvm-default-platform/io.spine.logging.backend.system/-default-platform/-default-platform.html
+$dokka.location:io.spine.logging.backend.system/DefaultPlatform/getBackendImpl/#kotlin.String/PointingToDeclaration/jvm-default-platform/io.spine.logging.backend.system/-default-platform/get-backend-impl.html
+$dokka.location:io.spine.logging.backend.system/DefaultPlatform/getCallerFinderImpl/#/PointingToDeclaration/jvm-default-platform/io.spine.logging.backend.system/-default-platform/get-caller-finder-impl.html
+$dokka.location:io.spine.logging.backend.system/DefaultPlatform/getConfigInfoImpl/#/PointingToDeclaration/jvm-default-platform/io.spine.logging.backend.system/-default-platform/get-config-info-impl.html
+$dokka.location:io.spine.logging.backend.system/DefaultPlatform/getContextDataProviderImpl/#/PointingToDeclaration/jvm-default-platform/io.spine.logging.backend.system/-default-platform/get-context-data-provider-impl.html
+$dokka.location:io.spine.logging.backend.system/DefaultPlatform/getCurrentTimeNanosImpl/#/PointingToDeclaration/jvm-default-platform/io.spine.logging.backend.system/-default-platform/get-current-time-nanos-impl.html
+$dokka.location:io.spine.logging.backend.system/StackBasedCallerFinder.Companion///PointingToDeclaration/jvm-default-platform/io.spine.logging.backend.system/-stack-based-caller-finder/-companion/index.html
+$dokka.location:io.spine.logging.backend.system/StackBasedCallerFinder.Companion/getInstance/#/PointingToDeclaration/jvm-default-platform/io.spine.logging.backend.system/-stack-based-caller-finder/-companion/get-instance.html
+$dokka.location:io.spine.logging.backend.system/StackBasedCallerFinder///PointingToDeclaration/jvm-default-platform/io.spine.logging.backend.system/-stack-based-caller-finder/index.html
+$dokka.location:io.spine.logging.backend.system/StackBasedCallerFinder/findLogSite/#kotlin.reflect.KClass[*]#kotlin.Int/PointingToDeclaration/jvm-default-platform/io.spine.logging.backend.system/-stack-based-caller-finder/find-log-site.html
+$dokka.location:io.spine.logging.backend.system/StackBasedCallerFinder/findLoggingClass/#kotlin.reflect.KClass[io.spine.logging.AbstractLogger[*]]/PointingToDeclaration/jvm-default-platform/io.spine.logging.backend.system/-stack-based-caller-finder/find-logging-class.html
+$dokka.location:io.spine.logging.backend.system/StackBasedCallerFinder/toString/#/PointingToDeclaration/jvm-default-platform/io.spine.logging.backend.system/-stack-based-caller-finder/to-string.html
+$dokka.location:io.spine.logging.backend.system/SystemClock.Companion///PointingToDeclaration/jvm-default-platform/io.spine.logging.backend.system/-system-clock/-companion/index.html
+$dokka.location:io.spine.logging.backend.system/SystemClock.Companion/getInstance/#/PointingToDeclaration/jvm-default-platform/io.spine.logging.backend.system/-system-clock/-companion/get-instance.html
+$dokka.location:io.spine.logging.backend.system/SystemClock///PointingToDeclaration/jvm-default-platform/io.spine.logging.backend.system/-system-clock/index.html
+$dokka.location:io.spine.logging.backend.system/SystemClock/getCurrentTimeNanos/#/PointingToDeclaration/jvm-default-platform/io.spine.logging.backend.system/-system-clock/get-current-time-nanos.html
+$dokka.location:io.spine.logging.backend.system/SystemClock/toString/#/PointingToDeclaration/jvm-default-platform/io.spine.logging.backend.system/-system-clock/to-string.html
+io.spine.logging.backend.system
