@@ -55,7 +55,7 @@ import kotlin.math.min
 internal abstract class SegmentTrie<T>(private val defaultValue: T) {
 
     /**
-     * Returns the value of the entry which most closely matches the given key.
+     * Returns the value of the entry that most closely matches the given key.
      */
     abstract fun find(key: String): T
 
@@ -104,7 +104,7 @@ private class SingletonTrie<T>(
 ) : SegmentTrie<T>(defaultValue) {
 
     override fun find(key: String): T {
-        // Remember that just being a prefix isn't enough, it must match up to the end of a segment.
+        // Remember that just being a prefix isn't enough; it must match up to the end of a segment.
         return if (key.startsWith(this.key) &&
             (key.length == this.key.length || key[this.key.length] == separator)
         ) {
@@ -118,7 +118,7 @@ private class SingletonTrie<T>(
 }
 
 /**
- * General purpose implementation using a custom binary search to reduce
+ * General-purpose implementation using a custom binary search to reduce
  * repeated re-comparing of keys.
  *
  * Nothing in or called by the "find" method is allowed to allocate any memory.
@@ -218,7 +218,7 @@ private class SortedTrie<T>(
      * Determines if a given candidate value `p` is the parent of a key `k`.
      *
      * We know that `p < k` (lexicographically) and (importantly) `p != k`.
-     * We also know that `len` is common prefix length.
+     * We also know that `len` is the common prefix length.
      *
      * Thus, either:
      * - The common prefix is a strict prefix of k (i.e. `k.length() > len`).
@@ -246,8 +246,8 @@ private class SortedTrie<T>(
      *
      * By allowing a known existing lower bound for the prefix length to be provided, this method
      * can skip re-comparing the beginning of values repeatedly when used in a binary search.
-     * The given lower bound value is expected to be the result of previous calls this function (or
-     * `0`).
+     * The given lower bound value is expected to be the result of previous calls to this
+     * function (or `0`).
      *
      * @param lhs first value to compare.
      * @param rhs second value to compare.

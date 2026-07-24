@@ -585,7 +585,7 @@ Implications:
 ## 11. Phased plan
 
 - **Phase 0 — JVM-via-compat spike.** Backend on JVM only, `OpenTelemetry` provided as
-  `javaOtel.toOtelKotlinApi()`. Validate the full path (Spine log → OTLP → backend of choice)against
+  `javaOtel.toOtelKotlinApi()`. Validate the full path (Spine log → OTLP → backend of choice) against
   the mature Java SDK. Lowest risk; proves the mapping before touching KMP.
 - **Phase 1 — KMP commonMain backend (`:api`).** Move the mapping into `commonMain`, JVM target
   registered via `ServiceLoader`, SDK injected by the app. Severity, body, metadata→attributes,

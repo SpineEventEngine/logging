@@ -32,10 +32,10 @@ import io.spine.logging.backend.jul.JulBackendFactory
 
 /**
  * A factory that delegates backends creation to another factory
- * and allows changing of the underlying factory in runtime.
+ * and allows changing of the underlying factory at runtime.
  *
  * In general, the logging facade doesn't provide a mechanism for changing
- * the underlying backend factory in runtime. It shouldn't make any sense
+ * the underlying backend factory at runtime. It shouldn't make any sense
  * in real code. But for tests, it can be handy.
  *
  * Different tests may need different backend stubs to perform their assertions.

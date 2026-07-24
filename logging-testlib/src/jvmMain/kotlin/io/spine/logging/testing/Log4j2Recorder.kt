@@ -116,7 +116,7 @@ private class Log4jLogData(val event: LogEvent): LogData {
  * A reasonably high value to be used for the range calculations instead of
  * [Int.MAX_VALUE] or [Int.MIN_VALUE] used as high/low bounds in logging frameworks.
  *
- * This is a safe assumption that log levels are defined withing this range,
+ * This is a safe assumption that log levels are defined within this range,
  * especially for tests.
  */
 private const val BOUND = 1200 // java.util.logging.Level.intValue() + 1000
@@ -142,7 +142,7 @@ private val forceRegistration = Log4jLevelConverter
 public fun Level.toLog4j2(): L4jLevel = convert(this)
 
 /**
- * Converts this Log4j2 level to Spine Logging level.
+ * Converts this Log4j2 level to a Spine Logging level.
  *
  * This function is used in tests and thus is `internal`.
  */

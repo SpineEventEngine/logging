@@ -102,7 +102,7 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
      *
      * If a logger implementation determines that logging is definitely disabled at this point,
      * then this method is expected to return a "no-op" implementation of that logging API.
-     * This, in turn, will result in all further calls made for the log statement to
+     * This, in turn, will result in all further calls made for the log statement
      * being silently ignored.
      *
      * A simple implementation of this method in a concrete subclass might look like:
@@ -206,7 +206,7 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
     public fun getBackend(): LoggerBackend = backend
 
     /**
-     * Invokes the logging backend to write a log statement, ensuring that all exceptions which
+     * Invokes the logging backend to write a log statement, ensuring that all exceptions that
      * could be caused during logging, including any subsequent error handling, are handled.
      *
      * This method can only fail due to instances of [LoggingException] or [Error] being thrown.
@@ -243,7 +243,7 @@ public abstract class AbstractLogger<API : LoggingApi<API>> protected constructo
     }
 
     /**
-     * Only allow `LoggingException` and `Errors` to escape this method.
+     * Only allows `LoggingException` and `Errors` to escape this method.
      */
     @Suppress("UseOfSystemOutOrSystemErr", "TooGenericExceptionCaught", "PrintStackTrace")
     private fun handleErrorRobustly(logError: RuntimeException, data: LogData) {

@@ -27,7 +27,7 @@
 package io.spine.logging
 
 /**
- * A synthetic exception which can be attached to log statements when additional stack trace
+ * A synthetic exception that can be attached to log statements when additional stack trace
  * information is required in log files or via tools such as ECatcher.
  */
 @Suppress("UtilityClassWithPublicConstructor")

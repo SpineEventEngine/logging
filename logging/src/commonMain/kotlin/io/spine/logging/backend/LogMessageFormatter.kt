@@ -43,7 +43,7 @@ public abstract class LogMessageFormatter {
     // TODO(dbeaumont): This [class] needs to either move into "system" or be extended somehow.
     // This is currently tightly coupled with the JDK log handler behaviour
     // (by virtue of what data is expected to be used for formatting) so it is
-    // not suitable as a general purpose API yet.
+    // not suitable as a general-purpose API yet.
 
     /**
      * Returns a formatted representation of the log message and metadata.

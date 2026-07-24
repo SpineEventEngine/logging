@@ -70,7 +70,7 @@ public abstract class AbstractJulBackend : LoggerBackend {
 
     /**
      * Logs the given record using this backend. If [wasForced] is set, the backend will make a
-     * best effort attempt to bypass any log level restrictions in the underlying Java [Logger],
+     * best-effort attempt to bypass any log level restrictions in the underlying Java [Logger],
      * but there are circumstances in which this can fail.
      */
     public fun log(record: LogRecord, wasForced: Boolean) {
@@ -108,7 +108,7 @@ public abstract class AbstractJulBackend : LoggerBackend {
      * Forces logging via a child logger, bypassing the parent handlers.
      *
      * WARNING: This code will fail for anonymous loggers `(getName() == null)` and
-     * when/if the Logging library supports anonymous loggers it must ensure that
+     * when/if the Logging library supports anonymous loggers, it must ensure that
      * this code path is avoided by not allowing subclasses of `Logger` to be used.
      */
     internal fun forceLoggingViaChildLogger(record: LogRecord) {
@@ -120,7 +120,7 @@ public abstract class AbstractJulBackend : LoggerBackend {
             Logger.getLogger("").log(
                 SEVERE.toJavaLogging(),
                 """
-                Forcing log statements with has been partially disabled.
+                Forcing log statements has been partially disabled.
                 The Logging library cannot modify logger log levels, which is necessary to
                 force log statements. This is likely due to an installed `SecurityManager`.
                 Forced log statements will still be published directly to log handlers, but

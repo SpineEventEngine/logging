@@ -85,7 +85,7 @@ public class LogLevelMap private constructor(map: Map<String, Level>, defaultLev
     }
 
     /**
-     * Builder for log level map which uses type safe class/package keys (but requires that they be
+     * Builder for log level map that uses type-safe class/package keys (but requires that they be
      * present in the JVM at the time the map is created). To set up a [LogLevelMap] with only
      * class/package names, use [LogLevelMap.create] with a map and level or just a map.
      */
@@ -163,7 +163,7 @@ public class LogLevelMap private constructor(map: Map<String, Level>, defaultLev
         public fun builder(): Builder = Builder()
 
         /**
-         * Returns an empty [LogLevelMap] with a single default level which
+         * Returns an empty [LogLevelMap] with a single default level that
          * will apply to all loggers.
          */
         @JvmStatic
@@ -214,7 +214,7 @@ public fun LogLevelMap.levelOf(cls: KClass<*>): Level = levelOf(cls.toLoggerName
 
 /**
  * Builds a new [LogLevelMap] by populating a newly created [LogLevelMap.Builder]
- * using providing [builderAction].
+ * using [builderAction].
  */
 public fun logLevelMap(builderAction: LogLevelMap.Builder.() -> Unit): LogLevelMap {
     val builder = LogLevelMap.builder()

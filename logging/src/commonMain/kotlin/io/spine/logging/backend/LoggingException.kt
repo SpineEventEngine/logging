@@ -30,13 +30,13 @@ package io.spine.logging.backend
  * An exception thrown when a log statement cannot be emitted correctly.
  *
  * This exception should only be thrown by logger backend implementations
- * which have opted not to handle specific issues.
+ * that have opted not to handle specific issues.
  *
  * Typically, a logger backend would only throw `LoggingException` in response
  * to issues in **test code** or other debugging environments.
  *
  * In **production code**, the backend should be configured
- * to emit a modified log statement which includes the error information.
+ * to emit a modified log statement that includes the error information.
  *
  * @see LoggerBackend.handleError
  *

@@ -29,7 +29,7 @@ package io.spine.logging
 import io.spine.logging.LoggingFactory.loggerFor
 
 /**
- * Provides [Logger] instance as a property.
+ * Provides a [Logger] instance as a property.
  *
  * Implement this interface when logging is needed.
  *

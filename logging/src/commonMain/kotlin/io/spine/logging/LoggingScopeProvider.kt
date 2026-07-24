@@ -30,7 +30,7 @@ package io.spine.logging
  * Provides a scope to a log statement via the [LogContext.per] method.
  *
  * This interface exists to avoid needing to pass specific instances of [LoggingScope]
- * around in user code. The scope provider can lookup the correct scope instance for the current
+ * around in user code. The scope provider can look up the correct scope instance for the current
  * thread, and different providers can provide different types of scope.
  * E.g., you can have a provider for "request" scopes, and a provider for "subtask" scopes.
  *
@@ -40,7 +40,7 @@ package io.spine.logging
 public fun interface LoggingScopeProvider {
 
     /**
-     * Returns the current scope (most likely via global or thread local state) or `null` if
+     * Returns the current scope (most likely via global or thread-local state) or `null` if
      * there is no current scope.
      */
     public fun getCurrentScope(): LoggingScope?

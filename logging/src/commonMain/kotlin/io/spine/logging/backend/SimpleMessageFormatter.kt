@@ -43,7 +43,7 @@ import io.spine.logging.backend.SimpleMessageFormatter.mustBeFormatted
  * Note however, that it makes several assumptions regarding metadata and formatting,
  * which may not apply to every text-based logging backend.
  *
- * This primarily exists to support both the JDK logging classes and text only Android backends.
+ * This primarily exists to support both the JDK logging classes and text-only Android backends.
  * Code in here may be factored out as necessary to support other use cases in the future.
  *
  * If a text-based logger backend is not performance-critical, then it should just append the log
@@ -93,7 +93,7 @@ public object SimpleMessageFormatter {
     public fun getDefaultFormatter(): LogMessageFormatter = defaultFormatter
 
     /**
-     * Returns a log message formatter which formats log messages in the form:
+     * Returns a log message formatter that formats log messages in the form:
      *
      * ```
      * Log message [CONTEXT key="value" id=42 ]
@@ -168,7 +168,7 @@ public object SimpleMessageFormatter {
         logData.literalArgument.safeToString()
 
     /**
-     * An internal helper function for logger backends which are aggressively
+     * An internal helper function for logger backends that are aggressively
      * optimized for performance.
      *
      * This function is a best-effort optimization and should not be necessary for most
@@ -178,8 +178,8 @@ public object SimpleMessageFormatter {
      * default message formatting performed by the other methods in this class would
      * just result in the literal log message being used, with no additional formatting.
      *
-     * If this method returns `false` then the literal log message can be obtained via
-     * [getLiteralLogMessage], otherwise it must be formatted manually.
+     * If this method returns `false`, then the literal log message can be obtained via
+     * [getLiteralLogMessage]; otherwise it must be formatted manually.
      *
      * By calling this class it is possible to more easily detect cases where using
      * buffers to format the log message is not required.

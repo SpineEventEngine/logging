@@ -35,7 +35,7 @@ import io.spine.logging.backend.BackendFactory
  * [ServiceLoader][java.util.ServiceLoader].
  *
  * Each service should have a public no-args constructor to be used
- * by the loader. Which is not a case for object declarations, as they
+ * by the loader. Which is not the case for object declarations, as they
  * do not have any constructors at all.
  *
  * Until [KT-25892](https://youtrack.jetbrains.com/issue/KT-25892/Allow-objects-to-be-loaded-via-ServiceLoader-or-similar-API)
@@ -53,7 +53,7 @@ import io.spine.logging.backend.BackendFactory
 public class DynamicBackendFactoryService : BackendFactory() {
 
     /**
-     * Delegates actual backend creation to [DynamicBackendFactory] object.
+     * Delegates actual backend creation to the [DynamicBackendFactory] object.
      */
     override fun create(loggingClass: String): LoggerBackend =
         DynamicBackendFactory.create(loggingClass)

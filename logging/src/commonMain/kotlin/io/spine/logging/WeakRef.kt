@@ -27,7 +27,7 @@
 package io.spine.logging
 
 /**
- * A weak reference holder that manages references which can be garbage collected.
+ * A weak reference holder that manages references that can be garbage collected.
  *
  * This class provides platform-specific implementation of weak references,
  * which allow objects to be garbage collected when they are no longer strongly

@@ -34,7 +34,7 @@ import kotlin.reflect.KClass
 
 /**
  * API for determining the logging class and log statement sites,
- * return from [Platform.getCallerFinder].
+ * returned from [Platform.getCallerFinder].
  *
  * These classes are immutable and thread-safe.
  *
@@ -48,7 +48,7 @@ import kotlin.reflect.KClass
  *
  * Any implementation of this API *MUST* follow the rules listed below to avoid any risk of
  * re-entrant code calling during logger initialization. Failure to do so risks creating complex,
- * hard to debug, issues with Flogger configuration.
+ * hard-to-debug, issues with Flogger configuration.
  *
  * 1. Implementations *MUST NOT* attempt any logging in static methods or constructors.
  * 2. Implementations *MUST NOT* statically depend on any unknown code.
@@ -60,7 +60,7 @@ import kotlin.reflect.KClass
  * easiest way to achieve this is to simply avoid having any non-trivial static fields or any
  * instance fields at all in the implementation.
  *
- * While this sounds onerous it is not difficult to achieve because this API is a singleton, and
+ * While this sounds onerous, it is not difficult to achieve because this API is a singleton, and
  * can delay any actual work until its methods are called. For example, if any additional state is
  * required in the implementation, it can be held via a "lazy holder" to defer initialization.
  *
@@ -77,8 +77,8 @@ public abstract class LogCallerFinder {
      * This is useful when determining the class name with which to create a logger backend.
      *
      * @param loggerClass The class containing the log() methods whose caller we need to find.
-     * @return The name of the class called the specified logger.
-     * @throws IllegalStateException If there was no caller of the specified logged passed
+     * @return The name of the class that called the specified logger.
+     * @throws IllegalStateException If there was no caller of the specified logger passed
      *         on the stack (which may occur if the logger class was invoked directly by JNI).
      */
     public abstract fun findLoggingClass(loggerClass: KClass<out AbstractLogger<*>>): String
@@ -88,7 +88,7 @@ public abstract class LogCallerFinder {
      * on the given logging class.
      *
      * @param loggerApi The class containing the log() methods whose caller we need to find.
-     * @param stackFramesToSkip The number of method calls which exist on the stack between the
+     * @param stackFramesToSkip The number of method calls that exist on the stack between the
      *        `log()` method, and the point at which this method is invoked.
      * @return A log site inferred from the stack, or [io.spine.logging.LogSite.Invalid] if no log site
      *         can be determined.

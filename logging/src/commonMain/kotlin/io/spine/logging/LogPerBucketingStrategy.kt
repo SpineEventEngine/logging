@@ -45,18 +45,18 @@ import io.spine.annotation.TestOnly
  * This multiplies the amount of memory that is retained indefinitely by
  * any use of [LoggingApi.per].
  *
- * One way to handle arbitrary key types would be to create a strategy which
+ * One way to handle arbitrary key types would be to create a strategy that
  * "interns" instances in some way, to produce singleton identifiers.
  *
  * Unfortunately, interning can itself be a cause of unbounded memory leaks,
  * so a bucketing strategy wishing to perform interning should probably
- * support a user defined maximum capacity to limit the overall risk.
+ * support a user-defined maximum capacity to limit the overall risk.
  *
  * If too many instances are seen, the strategy should begin to return `null`
  * (and log an appropriate warning).
  *
  * The additional complexity created by this approach really tells us that
- * types which require interning in order to be used as aggregation keys
+ * types that require interning in order to be used as aggregation keys
  * should be considered unsuitable, and callers should seek alternatives.
  *
  * @param name The name of this strategy, used for debugging purposes.
@@ -127,7 +127,7 @@ public abstract class LogPerBucketingStrategy<T> protected constructor(
 
         /**
          * This is a "safe" strategy as far as memory use is concerned, because a class object
-         * returns the same string instance every time its called, and class objects
+         * returns the same string instance every time it's called, and class objects
          * are effectively singletons.
          */
         private val BY_CLASS_NAME = object : LogPerBucketingStrategy<Any>("ByClassName") {
@@ -155,7 +155,7 @@ public abstract class LogPerBucketingStrategy<T> protected constructor(
         public fun knownBounded(): LogPerBucketingStrategy<Any> = KNOWN_BOUNDED
 
         /**
-         * A strategy which uses the [Class] of the given key for log aggregation.
+         * A strategy that uses the [Class] of the given key for log aggregation.
          *
          * This is useful when you need to aggregate over specific exceptions or similar
          * type-distinguished instances.
@@ -170,7 +170,7 @@ public abstract class LogPerBucketingStrategy<T> protected constructor(
         public fun byClass(): LogPerBucketingStrategy<Any> = BY_CLASS
 
         /**
-         * A strategy which uses the [Class] name of the given key for log aggregation.
+         * A strategy that uses the [Class] name of the given key for log aggregation.
          *
          * This is useful when you need to aggregate over specific exceptions or similar
          * type-distinguished instances.
@@ -190,7 +190,7 @@ public abstract class LogPerBucketingStrategy<T> protected constructor(
          * Unlike [knownBounded], this strategy maps keys to a bounded set of identifiers, and
          * permits the use of non-singleton keys in [LoggingApi.per].
          *
-         * If keys outside this set are used this strategy returns `null`, and
+         * If keys outside this set are used, this strategy returns `null`, and
          * log aggregation will not occur.
          *
          * Duplicates in [knownKeys] are ignored.
@@ -221,7 +221,7 @@ public abstract class LogPerBucketingStrategy<T> protected constructor(
         }
 
         /**
-         * A strategy which uses the [hashCode] of a given key, modulo [maxBuckets], for
+         * A strategy that uses the [hashCode] of a given key, modulo [maxBuckets], for
          * log aggregation.
          *
          * This is a fallback strategy for cases where the set of possible values is
@@ -248,7 +248,7 @@ public abstract class LogPerBucketingStrategy<T> protected constructor(
          * the typical expected number of unique keys.
          *
          * To avoid unwanted allocation at log sites, users are strongly encouraged to assign the
-         * returned value to a static field and pass that to any log statements which need it.
+         * returned value to a static field and pass that to any log statements that need it.
          */
         @JvmStatic
         public fun byHashCode(maxBuckets: Int): LogPerBucketingStrategy<Any> {

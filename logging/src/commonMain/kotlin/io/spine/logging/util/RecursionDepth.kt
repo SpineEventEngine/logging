@@ -40,7 +40,7 @@ import kotlin.coroutines.EmptyCoroutineContext
  * of the core logging internals.
  *
  * API Note: This class is an internal detail and must not be used outside the core of
- * the Logging library. Backends which need to know the recursion depth should call
+ * the Logging library. Backends that need to know the recursion depth should call
  * `io.spine.logging.backend.Platform.getCurrentRecursionDepth()`.
  */
 public class RecursionDepth private constructor() : CoroutineContext.Element, AutoCloseable {
@@ -50,7 +50,7 @@ public class RecursionDepth private constructor() : CoroutineContext.Element, Au
     private var value: Int = 0
 
     /**
-     * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
+     * Do not call this method directly; use `Platform.getCurrentRecursionDepth()`.
      */
     @Internal
     public fun getValue(): Int = value
@@ -66,8 +66,6 @@ public class RecursionDepth private constructor() : CoroutineContext.Element, Au
         }
         error("Mismatched calls to `RecursionDepth`.")
     }
-
-
 
     /**
      * The `CoroutineContext.Key` for managing [RecursionDepth] in a `CoroutineContext`.
@@ -87,14 +85,14 @@ public class RecursionDepth private constructor() : CoroutineContext.Element, Au
         }
 
         /**
-         * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
+         * Do not call this method directly; use `Platform.getCurrentRecursionDepth()`.
          */
         @Internal
         @JvmStatic
         public fun getCurrentDepth(): Int = CurrentContext.get()[Key]?.value ?: 0
 
         /**
-         * Do not call this method directly, use `Platform.getCurrentRecursionDepth()`.
+         * Do not call this method directly; use `Platform.getCurrentRecursionDepth()`.
          */
         @Internal
         @JvmStatic

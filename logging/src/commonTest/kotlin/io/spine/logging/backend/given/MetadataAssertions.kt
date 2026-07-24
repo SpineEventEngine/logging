@@ -81,7 +81,7 @@ internal infix fun <T : Any> Metadata.shouldNotContain(key: MetadataKey<T>) {
 }
 
 /**
- * Asserts that this [Metadata] has one or more values for the given [key]
+ * Asserts that this [Metadata] has one or more values for the given [key].
  */
 internal infix fun <T : Any> Metadata.shouldContain(key: MetadataKey<T>) {
     findValue(key).shouldNotBeNull()

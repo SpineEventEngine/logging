@@ -29,13 +29,13 @@ package io.spine.logging
 import io.spine.annotation.VisibleForTesting
 
 /**
- * An opaque scope marker which can be attached to log sites to provide "per scope" behaviour
+ * An opaque scope marker that can be attached to log sites to provide "per scope" behaviour
  * for stateful logging operations (e.g., rate limiting).
  *
  * Scopes are provided via the [LoggingScopeProvider] interface and found by looking for
  * the current [ScopedLoggingContext][io.spine.logging.context.ScopedLoggingContext].
  *
- * Stateful fluent logging APIs which need to look up per log site information
+ * Stateful fluent logging APIs that need to look up per log site information
  * (e.g., rate limit state) should do so via a [LogSiteMap] using
  * the [LogSiteKey] passed into the [LogContext.postProcess] function.
  *
@@ -53,7 +53,7 @@ import io.spine.annotation.VisibleForTesting
 public abstract class LoggingScope protected constructor(private val label: String) {
 
     /**
-     * Returns a specialization of the given key which accounts for this scope instance.
+     * Returns a specialization of the given key that accounts for this scope instance.
      *
      * Two specialized keys should compare as [equals] if and only if they are
      * specializations from the same log site, with the same sequence of scopes applied.
@@ -72,7 +72,7 @@ public abstract class LoggingScope protected constructor(private val label: Stri
     protected abstract fun specialize(key: LogSiteKey): LogSiteKey
 
     /**
-     * Registers "hooks" which should be called when this scope is "closed".
+     * Registers "hooks" that should be called when this scope is "closed".
      *
      * The hooks are intended to remove the keys associated with this scope from any data
      * structures they may be held in, to avoid leaking allocations.
@@ -81,7 +81,7 @@ public abstract class LoggingScope protected constructor(private val label: Stri
      * closed will remove it from any associated data structures.
      *
      * Conceptually, the scope that a log site is called from is the intersection of
-     * all the currently active scopes which apply to it.
+     * all the currently active scopes that apply to it.
      */
     protected abstract fun onClose(removalHook: () -> Unit)
 
@@ -103,11 +103,11 @@ public abstract class LoggingScope protected constructor(private val label: Stri
     public companion object {
 
         /**
-         * Creates a scope which automatically removes any associated keys
+         * Creates a scope that automatically removes any associated keys
          * from [LogSiteMap]s when it is garbage collected.
          *
          * The given label is used only for debugging purposes and may appear in log
-         * statements, it should not contain any user data or other runtime information.
+         * statements; it should not contain any user data or other runtime information.
          */
         @JvmStatic
         public fun create(label: String): LoggingScope = WeakScope(label)

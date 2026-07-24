@@ -56,13 +56,13 @@ import java.util.logging.LogRecord
  * ## Non-null message, non-empty parameters
  *
  * This state is only reached if a user calls both [setMessage] and [setParameters].
- * In this state the message is treated as is it were a brace-format log
+ * In this state the message is treated as if it were a brace-format log
  * message, and no formatting is attempted.
  * Any relationship between this value, and the log message
  * implied by the contained [LogData] and [Metadata] is lost.
  *
  * For many reasons it is never a good idea for users to modify unknown [LogRecord]
- * instances, but this does happen occasionally, so this class supports that in a best effort way,
+ * instances, but this does happen occasionally, so this class supports that in a best-effort way,
  * but users are always recommended to copy [LogRecord] instances if they need
  * to modify them.
  *
@@ -175,7 +175,7 @@ public abstract class AbstractJulRecord : LogRecord {
     public fun getLogData(): LogData = data
 
     /**
-     * Returns the immutable [MetadataProcessor] which provides a unified view of scope and log site metadata.
+     * Returns the immutable [MetadataProcessor] that provides a unified view of scope and log site metadata.
      */
     public fun getMetadataProcessor(): MetadataProcessor = metadata
 

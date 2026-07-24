@@ -62,7 +62,7 @@ public abstract class Platform {
      * Returns the current depth of recursion for logging in the current thread.
      *
      * This method is intended only for use by logging backends or the core of the Logging library.
-     * It needs to be called by code which is invoking user code that might trigger
+     * It needs to be called by code that is invoking user code that might trigger
      * reentrant logging.
      *
      * - A value of 1 means that this thread is in a normal log statement.
@@ -135,7 +135,7 @@ public abstract class Platform {
          * or other filtering.
          *
          * This method is intended to be invoked unconditionally from a fluent logger's
-         * `at(Level)` method to permit overriding of default logging behavior.
+         * `at(Level)` method to permit overriding of default logging behaviour.
          *
          * @param loggerName The fully qualified logger name (e.g., "com.example.SomeClass").
          * @param level The level of the log statement being invoked.
@@ -225,7 +225,7 @@ public abstract class Platform {
      * Returns the implementation of [LogCallerFinder] for this platform.
      *
      * Platform implementations must provide their own [LogCallerFinder]
-     * which handles stack trace analysis in a platform-specific way.
+     * that handles stack trace analysis in a platform-specific way.
      */
     protected abstract fun getCallerFinderImpl(): LogCallerFinder
 

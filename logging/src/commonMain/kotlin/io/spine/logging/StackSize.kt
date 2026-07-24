@@ -42,14 +42,14 @@ package io.spine.logging
 public enum class StackSize(public val maxDepth: Int) {
 
     /**
-     * Produces a small stack suitable for finer grained debugging.
+     * Produces a small stack suitable for finer-grained debugging.
      *
      * For performance reasons, this is the only stack size suitable for log statements at
      * level `INFO` or finer, but it may also be useful for `WARNING` level log statements
      * in cases where context is not as important. For `SEVERE` log statements, it is
      * advised to use a stack size of [MEDIUM] or above.
      *
-     * Requesting a small stack trace for log statements which occur under normal
+     * Requesting a small stack trace for log statements that occur under normal
      * circumstances is acceptable but may affect performance. Consider using
      * [LoggingApi.withStackTrace] in conjunction with rate-limiting methods,
      * such as [LoggingApi.atMostEvery], to mitigate performance issues.
@@ -66,7 +66,7 @@ public enum class StackSize(public val maxDepth: Int) {
      * trace elements in a `MEDIUM` stack to provide sufficient debugging context in most
      * cases.
      *
-     * Requesting a medium stack trace for any log statements which can occur regularly
+     * Requesting a medium stack trace for any log statements that can occur regularly
      * under normal circumstances is not recommended.
      *
      * The current maximum size of a `MEDIUM` stack trace is 20 elements, but this
@@ -77,10 +77,10 @@ public enum class StackSize(public val maxDepth: Int) {
     /**
      * Produces a large stack suitable for providing highly detailed contextual information.
      *
-     * This is most useful for `SEVERE` log statements which might be processed by external
+     * This is most useful for `SEVERE` log statements that might be processed by external
      * tools and subject to automated analysis.
      *
-     * Requesting a large stack trace for any log statement which can occur under normal
+     * Requesting a large stack trace for any log statement that can occur under normal
      * circumstances is not recommended.
      *
      * The current maximum size of a `LARGE` stack trace is 50 elements, but this
@@ -94,7 +94,7 @@ public enum class StackSize(public val maxDepth: Int) {
      * This is included for situations in which it is known that the uppermost elements
      * of the stack are definitely required for analysis.
      *
-     * Requesting a full stack trace for any log statement which can occur under normal
+     * Requesting a full stack trace for any log statement that can occur under normal
      * circumstances is not recommended.
      */
     FULL(-1),

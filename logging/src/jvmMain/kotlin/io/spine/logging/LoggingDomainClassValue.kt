@@ -41,7 +41,7 @@ import kotlin.reflect.full.findAnnotation
  *   3. As a package annotation (of the type [JvmLoggingDomain]) for the package
  *      of the given class, or "parent" packages from innermost to outermost.
  *
- * When [JvmLoggingDomain] is found it is converted to [LoggingDomain] instance.
+ * When [JvmLoggingDomain] is found, it is converted to a [LoggingDomain] instance.
  */
 internal object LoggingDomainClassValue: ClassValue<LoggingDomain>() {
 
@@ -75,7 +75,7 @@ internal object LoggingDomainClassValue: ClassValue<LoggingDomain>() {
 private inline fun <reified T: Annotation> Class<*>.findWithNesting(): T? {
 
     // `kotlin.reflect.findAnnotation()` throws an error on an attempt
-    // to be called upon Java anonymous class. Anyway, the domain annotation
+    // to be called upon a Java anonymous class. Anyway, the domain annotation
     // can't be applied to local members.
     if (!isAnonymousClass) {
         kotlin.findAnnotation<T>()?.let {
@@ -95,6 +95,6 @@ private inline fun <reified T: Annotation> Class<*>.findWithNesting(): T? {
 }
 
 /**
- * Converts this [JvmLoggingDomain] instance to [LoggingDomain] instance.
+ * Converts this [JvmLoggingDomain] instance to a [LoggingDomain] instance.
  */
 private fun JvmLoggingDomain.toLoggingDomain(): LoggingDomain = LoggingDomain(value)

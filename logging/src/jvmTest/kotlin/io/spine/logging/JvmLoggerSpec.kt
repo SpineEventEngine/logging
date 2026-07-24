@@ -298,7 +298,7 @@ internal class JvmLoggerSpec {
                 var i = 1
                 (0..totalDuration step intervalMillis).forEach { _ ->
                     // Count invocations eagerly: the message lambda is only
-                    // evaluated for statements which actually log.
+                    // evaluated for statements that actually log.
                     val invocation = i++
                     logger.atInfo()
                         .every(invocationLimit)
@@ -370,7 +370,7 @@ internal class JvmLoggerSpec {
             val consoleOutput = tapConsole {
                 for (millis in 0..totalDuration step intervalMillis) {
                     // Count invocations eagerly: the message lambda is only
-                    // evaluated for statements which actually log.
+                    // evaluated for statements that actually log.
                     val invocation = ++invoked
                     logger.atInfo()
                         .every(invocationLimit)

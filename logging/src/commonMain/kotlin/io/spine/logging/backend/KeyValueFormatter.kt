@@ -51,7 +51,7 @@ import io.spine.logging.KeyValueHandler
  * - If no key/value pairs are handled, the log message is unchanged (no prefix is added).
  * - Keys can be repeated.
  * - Key labels do not need quoting.
- * - String-like values are properly quoted and escaped (e.g. \", \\, \n, \t)
+ * - String-like values are properly quoted and escaped (e.g. \", \\, \n, \t).
  * - Unsafe control characters in string-like values are replaced by U+FFFD (�).
  * - All key/value pairs are on the "same line" of the log message.
  *
@@ -125,7 +125,7 @@ public class KeyValueFormatter(
         /**
          * Helper method to emit metadata key/value pairs in a format consistent with JSON.
          *
-         * String values which need to be quoted are JSON escaped, while other values are appended
+         * String values that need to be quoted are JSON escaped, while other values are appended
          * without quoting or escaping. Labels are expected to be JSON "safe", and are never quoted.
          *
          * This format is compatible with various "lightweight" JSON representations.

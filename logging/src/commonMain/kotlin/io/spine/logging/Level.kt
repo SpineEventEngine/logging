@@ -29,7 +29,7 @@ package io.spine.logging
 /**
  * Level of logging in an application.
  *
- * Implemented as data class rather than enum to allow for custom logging level values.
+ * Implemented as a data class rather than an enum to allow for custom logging level values.
  * Please see the companion object for the standard levels.
  *
  * ## Adding custom levels
@@ -47,7 +47,7 @@ package io.spine.logging
  * ```
  * public fun <API: LoggingApi<API>> Logger<API>.atNotice(): API = at(MyLoggingLevels.NOTICE)
  * ```
- * If the new logging level needs to be converted to a level of underlying logging backend
+ * If the new logging level needs to be converted to a level of the underlying logging backend,
  * a [LevelConverter] must be [registered][LevelConverter.register] prior to
  * performing the [conversion][LevelConverter.convert].
  *

@@ -85,7 +85,7 @@ public abstract class MetadataHandler<C : Any> {
     }
 
     /**
-     * Builder for a map-based [MetadataHandler] which allows handlers to
+     * Builder for a map-based [MetadataHandler] that allows handlers to
      * be associated with individual callbacks.
      *
      * @param C The context type.
@@ -250,7 +250,7 @@ public abstract class MetadataHandler<C : Any> {
          * which can result in repeated keys being seen more than once.
          *
          * A default handler is required because no handler can know the complete set of
-         * keys which might be available and it is very undesirable to drop unknown keys.
+         * keys that might be available and it is very undesirable to drop unknown keys.
          *
          * If default repeated values should be handled together,
          * [Builder.setDefaultRepeatedHandler] should be called as well.

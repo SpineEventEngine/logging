@@ -43,7 +43,7 @@ import io.spine.logging.context.ScopedLoggingContext.Companion.getInstance
  * - Forcing logging at a finer level for a specific request
  *   (e.g., based on a URL debug parameter).
  *
- * Contexts are nestable and new contexts can be added to provide additional metadata which will
+ * Contexts are nestable and new contexts can be added to provide additional metadata that will
  * be available to logging as long as the context is installed.
  *
  * Note that in the current API contexts are also modifiable after creation, but this usage is
@@ -52,7 +52,7 @@ import io.spine.logging.context.ScopedLoggingContext.Companion.getInstance
  * added to a context when it is being used concurrently by multiple threads.
  *
  * Note that since logging contexts are designed to be modified by code in libraries and helper
- * functions which do not know about each other, the data structures and behaviour of logging
+ * functions that do not know about each other, the data structures and behaviour of logging
  * contexts are carefully designed to avoid any accidental "undoing" of existing behaviour.
  * In particular:
  *
@@ -76,7 +76,7 @@ import io.spine.logging.context.ScopedLoggingContext.Companion.getInstance
  * Context support and automatic propagation is heavily reliant on Java platform capabilities,
  * and precise behaviour is likely to differ between runtime environments or frameworks. Context
  * propagation may not behave the same everywhere, and in some situations logging contexts may not
- * be supported at all. Methods which attempt to affect a context state may do nothing in some
+ * be supported at all. Methods that attempt to affect a context state may do nothing in some
  * environments or when called at some points in an application. If application code relies on
  * modifications to an existing, implicit logging context, it should always check the return values
  * of any modification methods called (e.g. [addTags]).
@@ -216,7 +216,7 @@ public abstract class ScopedLoggingContext protected constructor() {
 
         /**
          * Calls a function directly within a new context installed from this builder,
-         * wrapping any thrown exception with a [IllegalStateException]
+         * wrapping any thrown exception with an [IllegalStateException]
          * if it's not a [RuntimeException].
          */
         @CanIgnoreReturnValue
@@ -253,7 +253,7 @@ public abstract class ScopedLoggingContext protected constructor() {
          * context is opened, and restore the previous state when it terminates.
          *
          * Note that the returned [AutoCloseable] is not required to enforce the
-         * correct closure of nested contexts, and while it is permitted to throw a
+         * correct closure of nested contexts, and while it is permitted to throw an
          * [InvalidLoggingContextStateException] in the face of mismatched or invalid usage,
          * it is not required.
          */
@@ -291,7 +291,7 @@ public abstract class ScopedLoggingContext protected constructor() {
      * val result = ctx.newContext().withTags(Tags.of("my_tag", someValue)).call { MyClass.doFoo() }
      * ```
      *
-     * Implementations of this API must return a subclass of [Builder] which can install
+     * Implementations of this API must return a subclass of [Builder] that can install
      * all necessary metadata into a new context from the builder's current state.
      *
      * Note for users: if you do not need an instance of `ScopedLoggingContext` for some
@@ -313,7 +313,7 @@ public abstract class ScopedLoggingContext protected constructor() {
      * This method is the same as [newContext] except it additionally binds a new
      * [ScopeType] instance to the newly created context.
      * This allows log statements to control stateful logging operations (e.g., rate limiting)
-     * using [io.spine.logging.LoggingApi.per] method.
+     * using the [io.spine.logging.LoggingApi.per] method.
      *
      * Note for users: if you do not need an instance of `ScopedLoggingContext` for some
      * reason such as testability (injecting it, for example), consider using the static methods in
@@ -362,7 +362,7 @@ public abstract class ScopedLoggingContext protected constructor() {
      * since that may create non-deterministic ordering.
      *
      * It is recommended (where possible) to add metadata when building
-     * a new context, rather than adding it to context visible to multiple threads.
+     * a new context, rather than adding it to a context visible to multiple threads.
      */
     @CanIgnoreReturnValue
     public open fun <T : Any> addMetadata(key: MetadataKey<T>, value: T): Boolean {
@@ -399,7 +399,7 @@ public abstract class ScopedLoggingContext protected constructor() {
          *
          * This is a singleton value and need not be cached by callers.
          * If logging contexts are not supported, this method will return
-         * an empty context implementation which has no effect.
+         * an empty context implementation that has no effect.
          */
         @JvmStatic
         public fun getInstance(): ScopedLoggingContext =
@@ -419,7 +419,7 @@ public abstract class ScopedLoggingContext protected constructor() {
             try {
                 context.close()
             } catch (e: RuntimeException) {
-                // This method is always called from a `finally` block which may
+                // This method is always called from a `finally` block that may
                 // be about to rethrow a user exception, so ignore any errors
                 // during `close()` if that's the case.
                 if (!callerHasError) {

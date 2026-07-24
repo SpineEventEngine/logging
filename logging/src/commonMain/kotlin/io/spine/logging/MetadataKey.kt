@@ -37,7 +37,7 @@ import kotlin.reflect.KClass
 /**
  * A key for logging semi-structured metadata values.
  *
- * Metadata keys can be used to provide log statements with strongly typed values which can be
+ * Metadata keys can be used to provide log statements with strongly typed values that can be
  * read and interpreted by logging backends or other logs related tools. This mechanism is
  * intended for values with specific semantics and should not be seen as a replacement for
  * logging arguments as part of a formatted log message.
@@ -73,14 +73,14 @@ import kotlin.reflect.KClass
  * `withMetadata` method of the
  * [ScopedLoggingContext.Builder][io.spine.logging.context.ScopedLoggingContext.Builder].
  *
- * Custom subclasses of `MetadataKey` which override either of the protected [.emit] methods
+ * Custom subclasses of `MetadataKey` that override either of the protected [.emit] methods
  * should take care to avoid calling any code, which might trigger logging since this could lead
  * to unexpected recursion, especially if the key is being logged as part of a
  * `ScopedLoggingContext`. While there is protection against unbounded reentrant logging in
  * the logging framework, it is still best practice to avoid it where possible.
  *
  * Metadata keys are passed to a log statement via the `with()` method, so it can aid
- * readability to choose a name for the constant field which reads "fluently" as part of the log
+ * readability to choose a name for the constant field that reads "fluently" as part of the log
  * statement. For example:
  *
  * ```
@@ -114,7 +114,7 @@ public open class MetadataKey<T : Any>(
     private val isCustom: Boolean
 ) {
     /**
-     * A short, human-readable text label which will prefix the metadata in cases
+     * A short, human-readable text label that will prefix the metadata in cases
      * where it is formatted as part of the log message.
      */
     public val label: String = checkMetadataIdentifier(label)
@@ -231,7 +231,7 @@ public open class MetadataKey<T : Any>(
      *
      * * Calling any code, which could log using the same `MetadataKey` instance (unless you
      *   implement protection against reentrant calling in this method).
-     * * Calling code which might block (e.g., performing file I/O or acquiring locks).
+     * * Calling code that might block (e.g., performing file I/O or acquiring locks).
      * * * Allocating non-trivial amounts of memory (e.g., recording values in an unbounded data
      *   structure).
      *
@@ -271,7 +271,7 @@ public open class MetadataKey<T : Any>(
         emitRepeated(values, kvh)
 
     /**
-     * Prevent subclasses using `toString()` for anything unexpected.
+     * Prevents subclasses using `toString()` for anything unexpected.
      */
     override fun toString(): String =
         this::class.qualifiedName + '/' + label + '[' + clazz.qualifiedName + ']'

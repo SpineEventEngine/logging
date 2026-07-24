@@ -117,7 +117,7 @@ internal class MutableMetadata : Metadata() {
         if (2 * (keyValueCount + 1) > keyValuePairs.size) {
             // Use doubling here (this code should almost never be hit in normal
             // usage and the total number of items should always stay relatively small.
-            // If this resizing algorithm is ever modified it is vital that the new value
+            // If this resizing algorithm is ever modified, it is vital that the new value
             // is always an even number.
             keyValuePairs = keyValuePairs.copyOf(2 * keyValuePairs.size)
         }

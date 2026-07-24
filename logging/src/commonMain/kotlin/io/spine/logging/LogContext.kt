@@ -117,7 +117,7 @@ protected constructor(
     protected abstract fun api(): API
 
     /**
-     * Returns the logger which created this context.
+     * Returns the logger that created this context.
      *
      * This is implemented as an abstract method to save a field in every context.
      */
@@ -186,7 +186,7 @@ protected constructor(
     }
 
     /**
-     * A callback which can be overridden to implement post processing of logging contexts prior to
+     * A callback that can be overridden to implement post processing of logging contexts prior to
      * passing them to the backend.
      *
      * ## Basic Responsibilities
@@ -248,7 +248,7 @@ protected constructor(
      * However, in most cases `postProcess()` is only expected to return `false` due to
      * rate limiting.
      *
-     * If rate limiters are used there are still situations in which `postProcess()` can
+     * If rate limiters are used, there are still situations in which `postProcess()` can
      * return `true`, but logging will not occur. This is due to race conditions around the
      * resetting of rate limiter state. A `postProcess()` method can "early exit" as soon as
      * `shouldLog` is false, but should assume logging will occur while it remains `true`.
@@ -267,7 +267,7 @@ protected constructor(
      * The default implementation of this method enforces the rate limits as set
      * by [every] and [atMostEvery].
      *
-     * @param logSiteKey The key used to lookup persistent, per log statement, state.
+     * @param logSiteKey The key used to look up persistent, per log statement, state.
      * @return true if logging should be attempted (usually based on rate limiter state).
      */
     protected open fun postProcess(logSiteKey: LogSiteKey?): Boolean {
@@ -321,7 +321,7 @@ protected constructor(
                     stackSize,
                     stackForCallerOf(LogContext::class, stackSize.maxDepth, 1)
                 )
-                // The "cause" is a unique metadata key, we must replace any existing value.
+                // The "cause" is a unique metadata key; we must replace any existing value.
                 addMetadata(Key.LOG_CAUSE, context)
             }
         }
@@ -331,7 +331,7 @@ protected constructor(
 
     /**
      * Callback to allow custom log contexts to apply additional rate limiting behaviour.
-     * This should be called from within an overriden `postProcess()` method.
+     * This should be called from within an overridden `postProcess()` method.
      * Typically, this is invoked after calling `super.postProcess(logSiteKey)`, such as:
      *
      * ```kotlin
@@ -464,7 +464,7 @@ protected constructor(
 
     public final override fun isEnabled(): Boolean {
         // We can't guarantee that all logger implementations will return instances of this class
-        // _only_ when logging is enabled, so if would be potentially unsafe to just return
+        // _only_ when logging is enabled, so it would be potentially unsafe to just return
         // `true` here.
         // It's not worth caching this result in the instance because calls to this
         // method should be rare and they are only going to be made once per instance anyway.
@@ -542,7 +542,7 @@ protected constructor(
         }
         require(n >= 0) { "Rate limit period cannot be negative: $n." }
 
-        // Rate limiting with a zero length period is a no-op, but if the time unit is
+        // Rate limiting with a zero-length period is a no-op, but if the time unit is
         // nanoseconds then the value is rounded up inside the rate limit object.
         if (n > 0) {
             addMetadata(
@@ -658,7 +658,7 @@ protected constructor(
          * statement for other callers.
          *
          * The decision of whether to force a log statement is expected to be made based upon
-         * debug values provided by the logger which come from a scope greater than the log
+         * debug values provided by the logger that come from a scope greater than the log
          * statement itself. Thus it makes no sense to provide a public method to set this value
          * programmatically for a log statement.
          */
@@ -671,7 +671,7 @@ protected constructor(
          *
          * If tags are injected, they are added after post-processing if the log site is enabled.
          * Thus they are not available to the `postProcess()` method itself. The rationale is
-         * that a log statement's behavior should only be affected by code at the log site (other
+         * that a log statement's behaviour should only be affected by code at the log site (other
          * than "forcing" log statements, which is slightly a special case).
          *
          * Tags can be added at the log site, although this should rarely be necessary and using

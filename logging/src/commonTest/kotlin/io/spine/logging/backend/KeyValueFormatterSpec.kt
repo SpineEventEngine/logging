@@ -100,7 +100,7 @@ internal class KeyValueFormatterSpec {
         format("x", null) shouldBe "x=true"
 
         // Enums are currently quoted, but wouldn't need to be if the `name()`
-        // rather than `toString()` was used to generate to value.
+        // rather than `toString()` was used to generate the value.
         format("x", Foo.BAR) shouldBe "x=\"BAR\""
 
         // Strings, characters and unknown types are quoted.
@@ -127,7 +127,7 @@ internal class KeyValueFormatterSpec {
 
         /*
         Windows and Linux differently handle this replacement character.
-        So, the test relies on its HEX code instead of hard-coded literal.
+        So, the test relies on its HEX code instead of a hard-coded literal.
          */
         val replacementChar = '\uFFFD'
         format("x", "Unsafe\u0000Chars") shouldBe "x=\"Unsafe" + replacementChar + "Chars\""

@@ -103,7 +103,7 @@ internal class ValueQueue private constructor() : Iterable<Any> {
             return if (existingValue == null) {
                 value
             } else {
-                // This should only rarely happen, so a few small allocations seems acceptable.
+                // This should only rarely happen, so a few small allocations seem acceptable.
                 val existingQueue = existingValue as? ValueQueue ?: newQueue(existingValue)
                 existingQueue.put(value)
                 existingQueue
@@ -136,7 +136,7 @@ internal class ValueQueue private constructor() : Iterable<Any> {
          * Emits a metadata label/value pair to a given KeyValueHandler,
          * handling Tags values specially.
          *
-         * Tags are key-value mappings which cannot be modified or replaced.
+         * Tags are key-value mappings that cannot be modified or replaced.
          * If you add the tag mapping "foo" -> true and later add "foo" -> false,
          * you get "foo" mapped to both true and false.
          * This is deliberate since the key space for tags is global and the risk

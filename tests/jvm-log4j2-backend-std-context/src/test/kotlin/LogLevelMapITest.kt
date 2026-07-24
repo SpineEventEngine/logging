@@ -36,7 +36,7 @@ import org.junit.jupiter.api.Test
 
 /**
  * This is a non-abstract integration test of [LogLevelMap][io.spine.logging.context.LogLevelMap]
- * executed in the project in which logging backend is based on Log4j2.
+ * executed in the project in which the logging backend is based on Log4j2.
  *
  * Please see `build.gradle.kts` of this module for the details.
  */

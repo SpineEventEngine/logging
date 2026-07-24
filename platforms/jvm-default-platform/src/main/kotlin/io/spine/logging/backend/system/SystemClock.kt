@@ -30,7 +30,7 @@ import io.spine.logging.backend.Clock
 import java.util.concurrent.TimeUnit.MILLISECONDS
 
 /**
- * Default millisecond precision clock.
+ * Default millisecond-precision clock.
  *
  * See class documentation in [Clock] for important implementation restrictions.
  *

@@ -30,7 +30,7 @@ import java.util.concurrent.atomic.AtomicReference
 import java.util.function.BinaryOperator
 
 /**
- * A reference to a value kept as [AtomicReference] which provides
+ * A reference to a value kept as [AtomicReference] that provides
  * a [merging][mergeFrom] operation.
  */
 internal abstract class ScopedReference<T : Any>(initialValue: T?) {
@@ -49,7 +49,7 @@ internal abstract class ScopedReference<T : Any>(initialValue: T?) {
     /**
      * Merges the given [delta] into the referenced value.
      *
-     * If the current value is `null` the [delta] becomes the new value.
+     * If the current value is `null`, the [delta] becomes the new value.
      * Otherwise, it is [merged][merge] with the current one.
      */
     fun mergeFrom(delta: T?) {

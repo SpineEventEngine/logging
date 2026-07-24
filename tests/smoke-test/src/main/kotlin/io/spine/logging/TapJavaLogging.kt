@@ -30,7 +30,7 @@ import java.util.logging.Logger
 
 /**
  * Executes the given [action] and returns the text logged with
- * [Java Logging][Logger] backend.
+ * the [Java Logging][Logger] backend.
  */
 internal fun tapJavaLogging(action: () -> Unit): String {
     val memoizingHandler = MemoizingHandler()

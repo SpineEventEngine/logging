@@ -38,15 +38,15 @@ import io.spine.logging.Level
  * that logger backends have as little per-instance state as possible.
  *
  * It is also essential that no implementation of `LoggerBackend`
- * ever holds onto user supplied objects (especially log statement arguments)
+ * ever holds onto user-supplied objects (especially log statement arguments)
  * after the `log()` or `handleError()` methods to which they
  * were passed have exited.
  *
  * This means that **ALL** formatting or serialization of log statement arguments or
  * metadata values **MUST** be completed inside the log method itself.
- * If the backend needs to perform asynchronous I/O operations it can do so
+ * If the backend needs to perform asynchronous I/O operations, it can do so
  * by constructing a serialized form of the [LogData] instance and
- * enqueing that for processing.
+ * enqueuing that for processing.
  *
  * Note also that this restriction is **NOT** purely about mutable arguments (which could
  * change before formatting occurs and produce incorrect output), but also stops log statements from
@@ -104,16 +104,16 @@ public abstract class LoggerBackend {
      * Typically, a backend would handle an error by logging an alternative representation of
      * the "bad" log data, being careful not to allow any more exceptions to occur.
      *
-     * If a backend chooses to propagate an error (e.g., when testing or debugging)
+     * If a backend chooses to propagate an error (e.g., when testing or debugging),
      * it must wrap it in [LoggingException] to avoid it being re-caught.
      *
-     * @param error the exception throw when `badData` was initially logged.
-     * @param badData the original `LogData` instance which caused an error.
+     * @param error the exception thrown when `badData` was initially logged.
+     * @param badData the original `LogData` instance that caused an error.
      *        It is not expected that simply trying to log this again will succeed, and error
      *        handlers must be careful in how they handle this instance, its arguments and metadata.
      *        References to `badData` must not be held after the `handleError` invocation returns.
      *
-     * @throws LoggingException to indicate an error which should be propagated into user code.
+     * @throws LoggingException to indicate an error that should be propagated into user code.
      */
     public abstract fun handleError(error: RuntimeException, badData: LogData)
 }

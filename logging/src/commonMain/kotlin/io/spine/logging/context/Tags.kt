@@ -35,7 +35,7 @@ import io.spine.logging.util.Checks.checkMetadataIdentifier
 private data class SimpleEntry<K, V>(override val key: K, override val value: V) : Map.Entry<K, V>
 
 /**
- * Immutable tags which can be attached to log statements via
+ * Immutable tags that can be attached to log statements via
  * platform-specific injection mechanisms.
  *
  * A tag is either a "simple" tag, added via [Builder.addTag] or a tag with a
@@ -46,7 +46,7 @@ private data class SimpleEntry<K, V>(override val key: K, override val value: V)
  * `Tags` instance. In other words it never matters in which order two `Tags` instances
  * are merged.
  *
- * When tags are merged, the result is the union of the values. This is easier to explain When
+ * When tags are merged, the result is the union of the values. This is easier to explain when
  * thinking of tags as a `Map<String, Set<Object>>`, where "merging" means taking the union of
  * the `Set` associated with the tag name. In particular, for a given tag name:
  *
@@ -200,7 +200,7 @@ public class Tags private constructor(private val map: LightweightTagMap) {
             }
             // Safe, even for a reused builder, because we never care
             // about the original value order.
-            // We/ could deduplicate here to guard against pathological use,
+            // We could deduplicate here to guard against pathological use,
             // but it should never matter.
             keyValuePairs.sort()
             return Tags(LightweightTagMap(keyValuePairs))
@@ -247,7 +247,7 @@ public class Tags private constructor(private val map: LightweightTagMap) {
         map.hashCode().inv()
 
     /**
-     * Returns human-readable representation of the tags.
+     * Returns a human-readable representation of the tags.
      *
      * This is not a stable representation and may change over time.
      * If you need to format tags reliably for logging, you should not
@@ -281,7 +281,7 @@ private data class KeyValuePair(
  * Allowed types of tag values.
  *
  * This ensures that tag values have well-known semantics and can
- * always be formatted in a clearly and unambiguously.
+ * always be formatted clearly and unambiguously.
  *
  * The ordering of elements in this enum should not change as it defines the sort order between
  * values of different types. New elements need not be added at the end though.
@@ -464,7 +464,7 @@ private class LightweightTagMap : AbstractMap<String, Set<Any?>> {
     // ---- Helpers for making a tag map from the builder. ----
 
     /**
-     * Count the unique keys for a sorted list of key-value pairs.
+     * Counts the unique keys for a sorted list of key-value pairs.
      */
     private fun countMapEntries(sortedPairs: List<KeyValuePair>): Int {
         var key: String? = null
@@ -526,7 +526,7 @@ private class LightweightTagMap : AbstractMap<String, Set<Any?>> {
     ): Int {
         // Merge values starting at the first safe offset after the largest possible number of
         // entries. We may need to copy elements later to remove any gap due to duplicate keys.
-        // If the values are copied down we must remember to re-adjust the offsets as well.
+        // If the values are copied down, we must remember to re-adjust the offsets as well.
         var valueStart = maxEntryCount
         // The first offset is the start of the first values segment.
         offsets[0] = valueStart
@@ -667,7 +667,7 @@ private class LightweightTagMap : AbstractMap<String, Set<Any?>> {
     }
 
     /**
-     * Resize the value array if necessary.
+     * Resizes the value array if necessary.
      */
     private fun maybeResizeElementArray(array: Array<Any?>, bestLength: Int): Array<Any?> {
         return if (mustResize(array.size, bestLength)) {
@@ -678,7 +678,7 @@ private class LightweightTagMap : AbstractMap<String, Set<Any?>> {
     }
 
     /**
-     * Resize the value array if necessary (separate since int[] and Object[] are not compatible).
+     * Resizes the value array if necessary (separate since int[] and Object[] are not compatible).
      */
     private fun maybeResizeOffsetsArray(offsets: IntArray): IntArray {
         // Remember we must account for the extra final offset (the end of the final segment).
@@ -691,7 +691,7 @@ private class LightweightTagMap : AbstractMap<String, Set<Any?>> {
     }
 
     /**
-     * Common logic to decide if we're wasting too much off an array and need to "right size" it.
+     * Common logic to decide if we're wasting too much of an array and need to "right size" it.
      *
      * @return `true` if more than 10% wasted in a non-trivial sized array.
      */
@@ -726,7 +726,7 @@ private class LightweightTagMap : AbstractMap<String, Set<Any?>> {
         get() = entrySet
 
     /**
-     * A lightweight set based on an range in an array.
+     * A lightweight set based on a range in an array.
      *
      * This assumes (but does not enforce) that the elements in the array are
      * ordered according to the comparator.
