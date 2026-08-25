@@ -30,7 +30,6 @@ import io.spine.dependency.lib.Jackson
 import io.spine.dependency.lib.Kotlin
 import io.spine.dependency.local.Base
 import io.spine.dependency.local.Logging
-import io.spine.dependency.local.ToolBase
 import io.spine.dependency.local.Validation
 import io.spine.dependency.test.JUnit
 import io.spine.gradle.publish.PublishingRepos
