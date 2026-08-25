@@ -78,7 +78,6 @@ allprojects {
     configurations {
         forceVersions()
         all {
-            exclude("io.spine:spine-validate")
             resolutionStrategy {
                 force(
                     Kotlin.bom,
@@ -88,7 +87,6 @@ allprojects {
                     Dokka.BasePlugin.lib,
                     Base.lib,
                     Base.annotations,
-                    ToolBase.lib,
                     Logging.lib,
                     Validation.runtime,
                 )
