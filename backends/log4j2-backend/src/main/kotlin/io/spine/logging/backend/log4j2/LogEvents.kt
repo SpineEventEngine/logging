@@ -40,7 +40,6 @@ import io.spine.logging.backend.SimpleMessageFormatter
 import io.spine.logging.context.ScopedLoggingContext
 import io.spine.logging.context.Tags
 import io.spine.logging.toLevel
-import java.util.Objects.requireNonNull
 import java.util.concurrent.TimeUnit.NANOSECONDS
 import java.util.concurrent.TimeUnit.SECONDS
 import java.util.logging.Level.FINE
@@ -159,7 +158,6 @@ private fun toLog4jEvent(
         .build()
 }
 
-@Suppress("NAME_SHADOWING")
 private fun getInstant(timestampNanos: Long): Instant {
     val instant = MutableInstant()
     val epochSeconds = NANOSECONDS.toSeconds(timestampNanos)
@@ -241,10 +239,10 @@ private fun createContextMap(logData: LogData): StringMap {
 
     val contextData = ContextDataFactory.createContextData(metadataProcessor.keyCount())
     val kvh = KeyValueHandler { key, value ->
-        requireNonNull(value)
+        requireNotNull(value)
         contextData.putValue(
             key,
-            ValueQueue.maybeWrap(value!!, contextData.getValue(key))
+            ValueQueue.maybeWrap(value, contextData.getValue(key))
         )
     }
     metadataProcessor.process(HANDLER, kvh)
