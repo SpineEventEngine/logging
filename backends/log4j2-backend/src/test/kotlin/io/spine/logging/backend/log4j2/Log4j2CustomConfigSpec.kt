@@ -37,30 +37,31 @@ import io.spine.logging.backend.log4j2.given.createLogger
 import io.spine.logging.backend.log4j2.given.formatted
 import org.apache.logging.log4j.core.LogEvent
 import org.apache.logging.log4j.core.LoggerContext
-import org.apache.logging.log4j.core.config.Configurator
 import org.apache.logging.log4j.core.config.DefaultConfiguration
 import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilderFactory
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.parallel.Isolated
 
 /**
  * Tests for [Log4j2LoggerBackend] running under a custom Log4j2 configuration.
  *
- * Unlike [Log4j2LoggerBackendSpec], which runs under [DefaultConfiguration],
- * these tests install a programmatically built configuration first, taking
- * the code path used when an application provides its own `log4j2.xml`.
+ * Unlike [Log4j2LoggerBackendSpec], whose loggers belong to the default
+ * context, these tests create the logger in a private [LoggerContext] started
+ * with a programmatically built configuration, taking the code path used when
+ * an application provides its own `log4j2.xml`. The global logger context is
+ * never reconfigured: the backend decides the formatting by the configuration
+ * of the context owning its logger.
  *
  * With a custom configuration, the log message must not carry
  * the `[CONTEXT ... ]` suffix: the metadata goes to the context data map
  * of the log event, where a user-defined layout can render it, e.g., via `%X`.
  */
-@Isolated // Mutates the Log4j2 configuration, which is a process-global state.
 @DisplayName("Under a custom Log4j2 configuration, `Log4j2LoggerBackend` should")
 internal class Log4j2CustomConfigSpec {
 
+    private lateinit var loggerContext: LoggerContext
     private lateinit var backend: Log4j2LoggerBackend
     private lateinit var logged: List<LogEvent>
     private val lastLogged get() = logged.last()
@@ -72,32 +73,27 @@ internal class Log4j2CustomConfigSpec {
     }
 
     @BeforeEach
-    fun installCustomConfiguration() {
+    fun startCustomContext() {
+        val suiteName = Log4j2CustomConfigSpec::class.java.simpleName
         val config = ConfigurationBuilderFactory.newConfigurationBuilder()
-            .setConfigurationName(Log4j2CustomConfigSpec::class.java.simpleName)
+            .setConfigurationName(suiteName)
             .build()
-        Configurator.reconfigure(config)
+        loggerContext = LoggerContext(suiteName)
+        loggerContext.start(config)
         val appender = MemoizingAppender()
-        val logger = createLogger(Log4j2CustomConfigSpec::class, appender)
+        val logger = loggerContext.createLogger(Log4j2CustomConfigSpec::class, appender)
         backend = Log4j2LoggerBackend(logger)
         logged = appender.events
     }
 
-    /**
-     * Returns Log4j2 to the automatically resolved configuration.
-     *
-     * Since the test classpath contains no configuration file, this brings
-     * [DefaultConfiguration] back, as expected by the sibling specs.
-     */
     @AfterEach
-    fun restoreDefaultConfiguration() {
-        Configurator.reconfigure()
+    fun stopCustomContext() {
+        loggerContext.stop()
     }
 
     @Test
     fun `run against a non-default configuration`() {
-        val config = LoggerContext.getContext(false).configuration
-        config.shouldNotBeInstanceOf<DefaultConfiguration>()
+        loggerContext.configuration.shouldNotBeInstanceOf<DefaultConfiguration>()
     }
 
     @Test
@@ -142,5 +138,24 @@ internal class Log4j2CustomConfigSpec {
         // The `cause` also lands in the context data map, mirroring
         // the upstream Flogger behavior.
         lastLogged.contextData.toMap() shouldBe mapOf(Key.LOG_CAUSE.label to "$cause")
+    }
+
+    @Test
+    fun `decide the formatting per the context of the logger`() {
+        // This backend's logger lives in the private context with
+        // the custom configuration: the message stays plain.
+        val custom = StubLogData(LITERAL).addMetadata(STR_KEY, "custom")
+        backend.log(custom)
+        lastLogged.formatted shouldBe LITERAL
+
+        // A backend whose logger lives in the default context takes
+        // the `DefaultConfiguration` branch in the same JVM.
+        val defaultAppender = MemoizingAppender()
+        val defaultLogger = createLogger(Log4j2CustomConfigSpec::class, defaultAppender)
+        val defaultBackend = Log4j2LoggerBackend(defaultLogger)
+        val plain = StubLogData(LITERAL).addMetadata(STR_KEY, "default")
+        defaultBackend.log(plain)
+        defaultAppender.events.last().formatted shouldBe
+                "$LITERAL [CONTEXT str=\"default\" ]"
     }
 }

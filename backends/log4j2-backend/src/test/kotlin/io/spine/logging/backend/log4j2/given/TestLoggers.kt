@@ -32,12 +32,14 @@ import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.core.Appender
 import org.apache.logging.log4j.core.LogEvent
 import org.apache.logging.log4j.core.Logger
+import org.apache.logging.log4j.core.LoggerContext
 import org.apache.logging.log4j.Level as Log4jLevel
 
 private val serialNumbers = AtomicInteger()
 
 /**
- * Creates a logger with a unique name and the given [appender].
+ * Creates a logger with a unique name and the given [appender]
+ * in the default logger context.
  *
  * The name is composed of the simple name of the given [suite] class and
  * a serial number. A unique name produces a different logger for each test,
@@ -46,17 +48,27 @@ private val serialNumbers = AtomicInteger()
  * Any appenders configured previously, such as the default console
  * appender, are removed.
  */
-internal fun createLogger(suite: KClass<*>, appender: Appender): Logger {
-    val suiteName = suite.java.simpleName
+internal fun createLogger(suite: KClass<*>, appender: Appender): Logger =
+    (LogManager.getLogger(uniqueNameFor(suite)) as Logger).prepare(appender)
+
+/**
+ * Creates a logger with a unique name and the given [appender]
+ * in this [LoggerContext].
+ *
+ * See [createLogger] for the naming scheme and the appender handling.
+ */
+internal fun LoggerContext.createLogger(suite: KClass<*>, appender: Appender): Logger =
+    getLogger(uniqueNameFor(suite)).prepare(appender)
+
+private fun uniqueNameFor(suite: KClass<*>): String {
     val testSerial = serialNumbers.incrementAndGet()
-    val loggerName = "%s_%02d".format(suiteName, testSerial)
-    val logger = LogManager.getLogger(loggerName) as Logger
-    logger.apply {
-        level = Log4jLevel.TRACE
-        appenders.forEach { removeAppender(it.value) }
-        addAppender(appender)
-    }
-    return logger
+    return "%s_%02d".format(suite.java.simpleName, testSerial)
+}
+
+private fun Logger.prepare(appender: Appender): Logger = apply {
+    level = Log4jLevel.TRACE
+    appenders.forEach { removeAppender(it.value) }
+    addAppender(appender)
 }
 
 /**
