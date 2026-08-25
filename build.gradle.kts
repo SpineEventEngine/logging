@@ -30,7 +30,6 @@ import io.spine.dependency.lib.Jackson
 import io.spine.dependency.lib.Kotlin
 import io.spine.dependency.local.Base
 import io.spine.dependency.local.Logging
-import io.spine.dependency.local.ToolBase
 import io.spine.dependency.local.Validation
 import io.spine.dependency.test.JUnit
 import io.spine.gradle.publish.PublishingRepos
@@ -78,7 +77,6 @@ allprojects {
     configurations {
         forceVersions()
         all {
-            exclude("io.spine:spine-validate")
             resolutionStrategy {
                 force(
                     Kotlin.bom,
@@ -88,7 +86,6 @@ allprojects {
                     Dokka.BasePlugin.lib,
                     Base.lib,
                     Base.annotations,
-                    ToolBase.lib,
                     Logging.lib,
                     Validation.runtime,
                 )

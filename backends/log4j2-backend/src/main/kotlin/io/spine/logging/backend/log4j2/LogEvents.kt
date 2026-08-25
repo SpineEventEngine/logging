@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,12 +34,12 @@ import io.spine.logging.LogContext
 import io.spine.logging.MetadataKey
 import io.spine.logging.backend.LogData
 import io.spine.logging.backend.MetadataHandler
+import io.spine.logging.backend.MetadataProcessor
 import io.spine.logging.backend.Platform
 import io.spine.logging.backend.SimpleMessageFormatter
 import io.spine.logging.context.ScopedLoggingContext
 import io.spine.logging.context.Tags
 import io.spine.logging.toLevel
-import java.util.Objects.requireNonNull
 import java.util.concurrent.TimeUnit.NANOSECONDS
 import java.util.concurrent.TimeUnit.SECONDS
 import java.util.logging.Level.FINE
@@ -49,7 +49,7 @@ import java.util.logging.Level.WARNING
 import java.util.stream.Collectors
 import java.util.stream.StreamSupport
 import org.apache.logging.log4j.core.LogEvent
-import org.apache.logging.log4j.core.LoggerContext
+import org.apache.logging.log4j.core.Logger
 import org.apache.logging.log4j.core.config.DefaultConfiguration
 import org.apache.logging.log4j.core.impl.ContextDataFactory
 import org.apache.logging.log4j.core.impl.Log4jLogEvent
@@ -60,43 +60,76 @@ import org.apache.logging.log4j.util.StringMap
 import org.apache.logging.log4j.Level as L4jLevel
 
 /**
- * Helper to format [LogData].
+ * Converts this [LogData] to a Log4j2 [LogEvent] to be logged by the given [logger].
+ *
+ * The way the log message is formatted depends on the configuration of
+ * the [logger]'s context — the configuration whose layouts render the event.
+ *
+ * If no configuration file was located, Log4j2 falls back to
+ * [DefaultConfiguration], whose hard-wired console layout ignores the context
+ * data of a log event. In this case, the metadata is appended to the message
+ * itself — in the `[CONTEXT key="value" ... ]` form — so that it is not lost.
+ *
+ * With a user-provided configuration, the layout is under the user's control,
+ * and only the log message itself becomes the Log4j2 message. The metadata is
+ * carried by the context data map of the created event, where a pattern layout
+ * can render it, e.g., via `%X`.
  */
-public fun toLog4jLogEvent(loggerName: String, logData: LogData): LogEvent {
-    val metadata = io.spine.logging.backend.MetadataProcessor.forScopeAndLogSite(
-        Platform.getInjectedMetadata(), logData.metadata
+internal fun LogData.toLog4jEvent(logger: Logger): LogEvent {
+    val metadata = MetadataProcessor.forScopeAndLogSite(
+        Platform.getInjectedMetadata(), this.metadata
     )
 
-    // See JavaDoc in the original version for details about DefaultConfiguration handling.
-    val ctx = LoggerContext.getContext(false)
-    val config = ctx.configuration
+    /*
+     * The type of the configuration tells whether a configuration file was
+     * loaded (or the default configuration was overwritten by other means,
+     * such as a custom configuration factory).
+     *
+     * Unlike the original Flogger implementation, which inspects the statically
+     * looked-up `LoggerContext.getContext(false)`, the check deliberately uses
+     * the context of the logger rendering the event. The two may differ in
+     * multi-context deployments (per-webapp or OSGi context selectors, etc.),
+     * and only the rendering context determines whether context data is shown.
+     *
+     * Be aware that `LoggerContext` and `DefaultConfiguration` are not a part
+     * of the public Log4j2 API, and this behavior can change with any minor release.
+     */
+    val config = logger.context.configuration
     val message: String = if (config is DefaultConfiguration) {
-        SimpleMessageFormatter.getDefaultFormatter().format(logData, metadata)
+        SimpleMessageFormatter.getDefaultFormatter().format(this, metadata)
     } else {
-        error("Unable to format a message for the configuration: `$config`.")
+        SimpleMessageFormatter.getLiteralLogMessage(this)
     }
 
     val thrown = metadata.getSingleValue(LogContext.Key.LOG_CAUSE)
-    return toLog4jLogEvent(
-        loggerName, logData, message, logData.level.toLog4j(), thrown
+    return toLog4jEvent(
+        loggerName = logger.name,
+        logData = this,
+        message = message,
+        level = level.toLog4j(),
+        thrown = thrown
     )
 }
 
 /**
- * Helper to format [LogData].
+ * Converts this erroneous [LogData] to a Log4j2 [LogEvent] describing
+ * the given [error], to be logged by the given [logger].
  */
-public fun toLog4jLogEvent(
-    loggerName: String,
-    error: RuntimeException,
-    badData: LogData
-): LogEvent {
-    val message = formatBadLogData(error, badData)
+internal fun LogData.toLog4jEvent(logger: Logger, error: RuntimeException): LogEvent {
+    val message = formatBadLogData(error, this)
+    // Re-target this log message as a warning (or above) since it indicates a real bug.
     val level =
-        if (badData.level.value < WARNING.intValue()) WARNING.toLevel() else badData.level
-    return toLog4jLogEvent(loggerName, badData, message, level.toLog4j(), error)
+        if (this.level.value < WARNING.intValue()) WARNING.toLevel() else this.level
+    return toLog4jEvent(
+        loggerName = logger.name,
+        logData = this,
+        message = message,
+        level = level.toLog4j(),
+        thrown = error
+    )
 }
 
-private fun toLog4jLogEvent(
+private fun toLog4jEvent(
     loggerName: String,
     logData: LogData,
     message: String,
@@ -125,7 +158,6 @@ private fun toLog4jLogEvent(
         .build()
 }
 
-@Suppress("NAME_SHADOWING")
 private fun getInstant(timestampNanos: Long): Instant {
     val instant = MutableInstant()
     val epochSeconds = NANOSECONDS.toSeconds(timestampNanos)
@@ -201,16 +233,16 @@ private fun processTags(key: MetadataKey<Any>, value: Any, kvh: KeyValueHandler)
  * We do not support MDC/NDC merging. Use [ScopedLoggingContext].
  */
 private fun createContextMap(logData: LogData): StringMap {
-    val metadataProcessor = io.spine.logging.backend.MetadataProcessor.forScopeAndLogSite(
+    val metadataProcessor = MetadataProcessor.forScopeAndLogSite(
         Platform.getInjectedMetadata(), logData.metadata
     )
 
     val contextData = ContextDataFactory.createContextData(metadataProcessor.keyCount())
     val kvh = KeyValueHandler { key, value ->
-        requireNonNull(value)
+        requireNotNull(value)
         contextData.putValue(
             key,
-            ValueQueue.maybeWrap(value!!, contextData.getValue(key))
+            ValueQueue.maybeWrap(value, contextData.getValue(key))
         )
     }
     metadataProcessor.process(HANDLER, kvh)

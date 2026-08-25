@@ -33,7 +33,6 @@ import io.spine.logging.LogContext
 import io.spine.logging.MetadataKey
 import io.spine.logging.backend.SimpleMessageFormatter.appendContext
 import io.spine.logging.backend.SimpleMessageFormatter.getLiteralLogMessage
-import io.spine.logging.backend.SimpleMessageFormatter.getSimpleFormatterIgnoring
 import io.spine.logging.backend.SimpleMessageFormatter.mustBeFormatted
 
 /**

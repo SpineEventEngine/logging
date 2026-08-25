@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, The Flogger Authors; 2023, TeamDev. All rights reserved.
+ * Copyright 2023, The Flogger Authors; 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,10 +44,10 @@ internal class Log4j2LoggerBackend(private val logger: Logger) : LoggerBackend()
 
     override fun log(data: LogData) {
         // The caller must ensure isLoggable() is checked before calling this method.
-        logger.get().log(toLog4jLogEvent(logger.name, data))
+        logger.get().log(data.toLog4jEvent(logger))
     }
 
     override fun handleError(error: RuntimeException, badData: LogData) {
-        logger.get().log(toLog4jLogEvent(logger.name, error, badData))
+        logger.get().log(badData.toLog4jEvent(logger, error))
     }
 }
