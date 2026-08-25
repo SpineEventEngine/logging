@@ -1,0 +1,1 @@
+var typeSearchIndex = [{"p":"io.spine.logging.backend.otel.bootstrap","l":"OtelLogging","url":"io/spine/logging/backend/otel/bootstrap/OtelLogging.html"}, {"l":"All classes","url":"allclasses.html"}]
