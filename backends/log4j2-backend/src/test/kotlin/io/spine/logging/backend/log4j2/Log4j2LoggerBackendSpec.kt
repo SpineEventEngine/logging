@@ -1,5 +1,5 @@
 /*
- * Copyright 2023, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,12 +34,10 @@ import io.spine.logging.MetadataKey
 import io.spine.logging.backend.log4j2.given.MemoizingAppender
 import io.spine.logging.backend.log4j2.given.StubLogData
 import io.spine.logging.backend.log4j2.given.StubLogSite
+import io.spine.logging.backend.log4j2.given.createLogger
+import io.spine.logging.backend.log4j2.given.formatted
 import io.spine.logging.toLevel
-import java.util.concurrent.atomic.AtomicInteger
-import org.apache.logging.log4j.LogManager
-import org.apache.logging.log4j.core.Appender
 import org.apache.logging.log4j.core.LogEvent
-import org.apache.logging.log4j.core.Logger
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -71,7 +69,7 @@ internal class Log4j2LoggerBackendSpec {
     @BeforeEach
     fun setUp() {
         val memoizingAppender = MemoizingAppender()
-        val logger = createLogger(memoizingAppender)
+        val logger = createLogger(Log4j2LoggerBackendSpec::class, memoizingAppender)
         backend = Log4j2LoggerBackend(logger)
         logged = memoizingAppender.events
     }
@@ -176,32 +174,3 @@ internal class Log4j2LoggerBackendSpec {
         }
     }
 }
-
-private val serialNumbers = AtomicInteger()
-
-/**
- * Creates a logger with a unique name and the given [appender].
- *
- * The default console appender is removed.
- *
- * A unique name should produce a different logger for each test,
- * allowing tests to be run in parallel.
- */
-private fun createLogger(appender: Appender): Logger {
-    val suiteName = Log4j2LoggerBackendSpec::class.simpleName!!
-    val testSerial = serialNumbers.incrementAndGet()
-    val loggerName = "%s_%02d".format(suiteName, testSerial)
-    val logger = LogManager.getLogger(loggerName) as Logger
-    logger.apply {
-        level = Log4jLevel.TRACE
-        appenders.forEach { removeAppender(it.value) }
-        addAppender(appender)
-    }
-    return logger
-}
-
-/**
- * Returns a formatted message from this [LogEvent].
- */
-private val LogEvent.formatted
-    get() = message.formattedMessage

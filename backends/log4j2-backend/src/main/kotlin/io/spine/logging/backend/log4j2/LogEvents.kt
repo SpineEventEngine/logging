@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, TeamDev. All rights reserved.
+ * Copyright 2026, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,20 +60,39 @@ import org.apache.logging.log4j.util.StringMap
 import org.apache.logging.log4j.Level as L4jLevel
 
 /**
- * Helper to format [LogData].
+ * Converts the given [logData] to a Log4j2 [LogEvent].
+ *
+ * The way the log message is formatted depends on the current Log4j2 configuration.
+ *
+ * If no configuration file was located, Log4j2 falls back to
+ * [DefaultConfiguration], whose hard-wired console layout ignores the context
+ * data of a log event. In this case, the metadata is appended to the message
+ * itself — in the `[CONTEXT key="value" ... ]` form — so that it is not lost.
+ *
+ * With a user-provided configuration, the layout is under the user's control,
+ * and only the log message itself becomes the Log4j2 message. The metadata is
+ * carried by the context data map of the created event, where a pattern layout
+ * can render it, e.g., via `%X`.
  */
 public fun toLog4jLogEvent(loggerName: String, logData: LogData): LogEvent {
     val metadata = io.spine.logging.backend.MetadataProcessor.forScopeAndLogSite(
         Platform.getInjectedMetadata(), logData.metadata
     )
 
-    // See JavaDoc in the original version for details about DefaultConfiguration handling.
+    /*
+     * Checking the type of the current configuration tells whether a configuration
+     * file was loaded (or the default configuration was overwritten by other means,
+     * such as a custom configuration factory).
+     *
+     * Be aware that the `LoggerContext` class is not a part of the public Log4j2 API,
+     * and this behavior can change with any minor release.
+     */
     val ctx = LoggerContext.getContext(false)
     val config = ctx.configuration
     val message: String = if (config is DefaultConfiguration) {
         SimpleMessageFormatter.getDefaultFormatter().format(logData, metadata)
     } else {
-        error("Unable to format a message for the configuration: `$config`.")
+        SimpleMessageFormatter.getLiteralLogMessage(logData)
     }
 
     val thrown = metadata.getSingleValue(LogContext.Key.LOG_CAUSE)
