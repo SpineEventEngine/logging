@@ -27,6 +27,7 @@
 package io.spine.logging.backend.log4j2
 
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.logging.LogContext.Key
 import io.spine.logging.LogSite
@@ -135,6 +136,31 @@ internal class Log4j2LoggerBackendSpec {
             backend.log(data)
             lastLogged.level shouldBe expectedLog4jLevel
             lastLogged.formatted shouldBe message
+        }
+    }
+
+    @Nested
+    inner class
+    `handle a logging error` {
+
+        private val error = IllegalStateException("Malformed log statement")
+
+        @Test
+        fun `re-targeting low-level records to WARN`() {
+            val data = StubLogData(LITERAL).setLevel(JulLevel.FINE.toLevel())
+            backend.handleError(error, data)
+            lastLogged.level shouldBe Log4jLevel.WARN
+            lastLogged.thrown shouldBeSameInstanceAs error
+            lastLogged.formatted shouldContain "LOGGING ERROR: ${error.message}"
+            lastLogged.formatted shouldContain LITERAL
+        }
+
+        @Test
+        fun `keeping the level of severe records`() {
+            val data = StubLogData(LITERAL).setLevel(JulLevel.SEVERE.toLevel())
+            backend.handleError(error, data)
+            lastLogged.level shouldBe Log4jLevel.ERROR
+            lastLogged.thrown shouldBeSameInstanceAs error
         }
     }
 
