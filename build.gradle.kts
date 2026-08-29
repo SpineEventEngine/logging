@@ -27,8 +27,9 @@
 import io.spine.dependency.build.Dokka
 import io.spine.dependency.kotlinx.DateTime
 import io.spine.dependency.lib.Jackson
+import io.spine.dependency.kotlinx.AtomicFu
+import io.spine.dependency.kotlinx.Coroutines
 import io.spine.dependency.lib.Kotlin
-import io.spine.dependency.lib.KotlinX
 import io.spine.dependency.local.Base
 import io.spine.dependency.local.Logging
 import io.spine.dependency.local.Validation
@@ -81,7 +82,8 @@ allprojects {
             resolutionStrategy {
                 force(
                     Kotlin.bom,
-                    KotlinX.Coroutines.bom,
+                    Coroutines.bom,
+                    AtomicFu.lib,
                     DateTime.lib,
                     Jackson.bom,
                     JUnit.bom,
