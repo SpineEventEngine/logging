@@ -83,6 +83,10 @@ allprojects {
                 force(
                     Kotlin.bom,
                     Coroutines.bom,
+                    // Not in `Coroutines.modules`; requested at 1.10.2 by
+                    // ktor 3.4.2 via `opentelemetry-kotlin` in the OTel
+                    // backend tests.
+                    "${Coroutines.group}:kotlinx-coroutines-slf4j:${Coroutines.version}",
                     AtomicFu.lib,
                     DateTime.lib,
                     Jackson.bom,
