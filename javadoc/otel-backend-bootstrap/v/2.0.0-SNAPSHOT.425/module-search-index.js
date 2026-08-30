@@ -1,0 +1,1 @@
+var moduleSearchIndex = [{"l":"otel-backend-bootstrap","url":"index.html"}]
