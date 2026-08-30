@@ -1,0 +1,8 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:io.spine.logging////PointingToDeclaration/smoke-test/io.spine.logging/index.html
+$dokka.location:io.spine.logging/AbstractLoggingSmokeTest///PointingToDeclaration/smoke-test/io.spine.logging/-abstract-logging-smoke-test/index.html
+$dokka.location:io.spine.logging/AbstractLoggingSmokeTest/AbstractLoggingSmokeTest/#/PointingToDeclaration/smoke-test/io.spine.logging/-abstract-logging-smoke-test/-abstract-logging-smoke-test.html
+$dokka.location:io.spine.logging/AbstractLoggingSmokeTest/log by implementing 'WithLogging' interface/#/PointingToDeclaration/smoke-test/io.spine.logging/-abstract-logging-smoke-test/log by implementing '-with-logging' interface.html
+$dokka.location:io.spine.logging/AbstractLoggingSmokeTest/log using instance of 'JvmLogger'/#/PointingToDeclaration/smoke-test/io.spine.logging/-abstract-logging-smoke-test/log using instance of '-jvm-logger'.html
+io.spine.logging
