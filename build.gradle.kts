@@ -25,6 +25,8 @@
  */
 
 import io.spine.dependency.build.Dokka
+import io.spine.dependency.kotlinx.AtomicFu
+import io.spine.dependency.kotlinx.Coroutines
 import io.spine.dependency.kotlinx.DateTime
 import io.spine.dependency.lib.Jackson
 import io.spine.dependency.lib.Kotlin
@@ -80,6 +82,12 @@ allprojects {
             resolutionStrategy {
                 force(
                     Kotlin.bom,
+                    Coroutines.bom,
+                    // Not in `Coroutines.modules`; requested at 1.10.2 by
+                    // Ktor 3.4.2 via `opentelemetry-kotlin` in the OTel
+                    // backend tests.
+                    "${Coroutines.group}:${Coroutines.infix}-slf4j:${Coroutines.version}",
+                    AtomicFu.lib,
                     DateTime.lib,
                     Jackson.bom,
                     JUnit.bom,
