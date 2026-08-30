@@ -25,10 +25,10 @@
  */
 
 import io.spine.dependency.build.Dokka
-import io.spine.dependency.kotlinx.DateTime
-import io.spine.dependency.lib.Jackson
 import io.spine.dependency.kotlinx.AtomicFu
 import io.spine.dependency.kotlinx.Coroutines
+import io.spine.dependency.kotlinx.DateTime
+import io.spine.dependency.lib.Jackson
 import io.spine.dependency.lib.Kotlin
 import io.spine.dependency.local.Base
 import io.spine.dependency.local.Logging
@@ -86,7 +86,7 @@ allprojects {
                     // Not in `Coroutines.modules`; requested at 1.10.2 by
                     // ktor 3.4.2 via `opentelemetry-kotlin` in the OTel
                     // backend tests.
-                    "${Coroutines.group}:kotlinx-coroutines-slf4j:${Coroutines.version}",
+                    "${Coroutines.group}:${Coroutines.infix}-slf4j:${Coroutines.version}",
                     AtomicFu.lib,
                     DateTime.lib,
                     Jackson.bom,
