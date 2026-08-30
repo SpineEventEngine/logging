@@ -1,0 +1,1 @@
+var typeSearchIndex = [{"p":"io.spine.logging.context.grpc","l":"GrpcContextDataProvider","url":"io/spine/logging/context/grpc/GrpcContextDataProvider.html"}, {"l":"All classes","url":"allclasses.html"}]
