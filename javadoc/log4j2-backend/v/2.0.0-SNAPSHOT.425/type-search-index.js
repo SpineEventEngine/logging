@@ -1,0 +1,1 @@
+var typeSearchIndex = [{"p":"io.spine.logging.backend.log4j2","l":"Log4j2BackendFactory","url":"io/spine/logging/backend/log4j2/Log4j2BackendFactory.html"}, {"p":"io.spine.logging.backend.log4j2","l":"LogEvents","url":"io/spine/logging/backend/log4j2/LogEvents.html"}, {"l":"All classes","url":"allclasses.html"}]
