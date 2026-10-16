@@ -1,0 +1,1 @@
+var packageSearchIndex = [{"l":"io.spine.logging.backend.otel.bootstrap","url":"io/spine/logging/backend/otel/bootstrap/package-summary.html"}, {"l":"All packages","url":"index.html"}]
