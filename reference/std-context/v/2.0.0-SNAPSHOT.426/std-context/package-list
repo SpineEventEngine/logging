@@ -1,0 +1,12 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:io.spine.logging.context.std////PointingToDeclaration/std-context/io.spine.logging.context.std/index.html
+$dokka.location:io.spine.logging.context.std/StdContextDataProvider///PointingToDeclaration/std-context/io.spine.logging.context.std/-std-context-data-provider/index.html
+$dokka.location:io.spine.logging.context.std/StdContextDataProvider/StdContextDataProvider/#/PointingToDeclaration/std-context/io.spine.logging.context.std/-std-context-data-provider/-std-context-data-provider.html
+$dokka.location:io.spine.logging.context.std/StdContextDataProvider/getContextApiSingleton/#/PointingToDeclaration/std-context/io.spine.logging.context.std/-std-context-data-provider/get-context-api-singleton.html
+$dokka.location:io.spine.logging.context.std/StdContextDataProvider/getMappedLevel/#kotlin.String/PointingToDeclaration/std-context/io.spine.logging.context.std/-std-context-data-provider/get-mapped-level.html
+$dokka.location:io.spine.logging.context.std/StdContextDataProvider/getMetadata/#/PointingToDeclaration/std-context/io.spine.logging.context.std/-std-context-data-provider/get-metadata.html
+$dokka.location:io.spine.logging.context.std/StdContextDataProvider/getScope/#io.spine.logging.context.ScopeType/PointingToDeclaration/std-context/io.spine.logging.context.std/-std-context-data-provider/get-scope.html
+$dokka.location:io.spine.logging.context.std/StdContextDataProvider/getTags/#/PointingToDeclaration/std-context/io.spine.logging.context.std/-std-context-data-provider/get-tags.html
+$dokka.location:io.spine.logging.context.std/StdContextDataProvider/shouldForceLogging/#kotlin.String#io.spine.logging.Level#kotlin.Boolean/PointingToDeclaration/std-context/io.spine.logging.context.std/-std-context-data-provider/should-force-logging.html
+io.spine.logging.context.std
