@@ -1,0 +1,13 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:io.spine.logging.context.grpc////PointingToDeclaration/grpc-context/io.spine.logging.context.grpc/index.html
+$dokka.location:io.spine.logging.context.grpc/GrpcContextDataProvider.Companion///PointingToDeclaration/grpc-context/io.spine.logging.context.grpc/-grpc-context-data-provider/-companion/index.html
+$dokka.location:io.spine.logging.context.grpc/GrpcContextDataProvider///PointingToDeclaration/grpc-context/io.spine.logging.context.grpc/-grpc-context-data-provider/index.html
+$dokka.location:io.spine.logging.context.grpc/GrpcContextDataProvider/GrpcContextDataProvider/#/PointingToDeclaration/grpc-context/io.spine.logging.context.grpc/-grpc-context-data-provider/-grpc-context-data-provider.html
+$dokka.location:io.spine.logging.context.grpc/GrpcContextDataProvider/getContextApiSingleton/#/PointingToDeclaration/grpc-context/io.spine.logging.context.grpc/-grpc-context-data-provider/get-context-api-singleton.html
+$dokka.location:io.spine.logging.context.grpc/GrpcContextDataProvider/getMappedLevel/#kotlin.String/PointingToDeclaration/grpc-context/io.spine.logging.context.grpc/-grpc-context-data-provider/get-mapped-level.html
+$dokka.location:io.spine.logging.context.grpc/GrpcContextDataProvider/getMetadata/#/PointingToDeclaration/grpc-context/io.spine.logging.context.grpc/-grpc-context-data-provider/get-metadata.html
+$dokka.location:io.spine.logging.context.grpc/GrpcContextDataProvider/getScope/#io.spine.logging.context.ScopeType/PointingToDeclaration/grpc-context/io.spine.logging.context.grpc/-grpc-context-data-provider/get-scope.html
+$dokka.location:io.spine.logging.context.grpc/GrpcContextDataProvider/getTags/#/PointingToDeclaration/grpc-context/io.spine.logging.context.grpc/-grpc-context-data-provider/get-tags.html
+$dokka.location:io.spine.logging.context.grpc/GrpcContextDataProvider/shouldForceLogging/#kotlin.String#io.spine.logging.Level#kotlin.Boolean/PointingToDeclaration/grpc-context/io.spine.logging.context.grpc/-grpc-context-data-provider/should-force-logging.html
+io.spine.logging.context.grpc
