@@ -1,0 +1,1 @@
+var packageSearchIndex = [{"l":"io.spine.logging.backend.jul","url":"io/spine/logging/backend/jul/package-summary.html"}, {"l":"All packages","url":"index.html"}]
