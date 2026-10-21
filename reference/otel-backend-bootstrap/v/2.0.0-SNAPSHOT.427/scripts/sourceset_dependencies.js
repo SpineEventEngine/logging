@@ -1,0 +1,1 @@
+sourceset_dependencies='{":otel-backend-bootstrap/main":[]}'
