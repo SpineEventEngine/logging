@@ -1,0 +1,8 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:io.spine.logging.backend.otel.bootstrap////PointingToDeclaration/otel-backend-bootstrap/io.spine.logging.backend.otel.bootstrap/index.html
+$dokka.location:io.spine.logging.backend.otel.bootstrap/OtelLogging///PointingToDeclaration/otel-backend-bootstrap/io.spine.logging.backend.otel.bootstrap/-otel-logging/index.html
+$dokka.location:io.spine.logging.backend.otel.bootstrap/OtelLogging/DEFAULT_OTLP_HTTP_ENDPOINT/#/PointingToDeclaration/otel-backend-bootstrap/io.spine.logging.backend.otel.bootstrap/-otel-logging/-d-e-f-a-u-l-t_-o-t-l-p_-h-t-t-p_-e-n-d-p-o-i-n-t.html
+$dokka.location:io.spine.logging.backend.otel.bootstrap/OtelLogging/fromEnvironment/#/PointingToDeclaration/otel-backend-bootstrap/io.spine.logging.backend.otel.bootstrap/-otel-logging/from-environment.html
+$dokka.location:io.spine.logging.backend.otel.bootstrap/OtelLogging/installOtlpHttp/#kotlin.String/PointingToDeclaration/otel-backend-bootstrap/io.spine.logging.backend.otel.bootstrap/-otel-logging/install-otlp-http.html
+io.spine.logging.backend.otel.bootstrap
