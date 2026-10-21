@@ -1,0 +1,34 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:io.spine.logging.backend.jul////PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/index.html
+$dokka.location:io.spine.logging.backend.jul//LogRecord/#io.spine.logging.Level#kotlin.String?/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-log-record.html
+$dokka.location:io.spine.logging.backend.jul/AbstractJulBackend.Companion///PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-abstract-jul-backend/-companion/index.html
+$dokka.location:io.spine.logging.backend.jul/AbstractJulBackend///PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-abstract-jul-backend/index.html
+$dokka.location:io.spine.logging.backend.jul/AbstractJulBackend/AbstractJulBackend/#kotlin.String/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-abstract-jul-backend/-abstract-jul-backend.html
+$dokka.location:io.spine.logging.backend.jul/AbstractJulBackend/isLoggable/#io.spine.logging.Level/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-abstract-jul-backend/is-loggable.html
+$dokka.location:io.spine.logging.backend.jul/AbstractJulBackend/log/#java.util.logging.LogRecord#kotlin.Boolean/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-abstract-jul-backend/log.html
+$dokka.location:io.spine.logging.backend.jul/AbstractJulBackend/loggerName/#/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-abstract-jul-backend/logger-name.html
+$dokka.location:io.spine.logging.backend.jul/AbstractJulRecord///PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-abstract-jul-record/index.html
+$dokka.location:io.spine.logging.backend.jul/AbstractJulRecord/AbstractJulRecord/#io.spine.logging.backend.LogData#io.spine.logging.backend.Metadata/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-abstract-jul-record/-abstract-jul-record.html
+$dokka.location:io.spine.logging.backend.jul/AbstractJulRecord/AbstractJulRecord/#java.lang.RuntimeException#io.spine.logging.backend.LogData#io.spine.logging.backend.Metadata/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-abstract-jul-record/-abstract-jul-record.html
+$dokka.location:io.spine.logging.backend.jul/AbstractJulRecord/getLogData/#/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-abstract-jul-record/get-log-data.html
+$dokka.location:io.spine.logging.backend.jul/AbstractJulRecord/getLogMessageFormatter/#/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-abstract-jul-record/get-log-message-formatter.html
+$dokka.location:io.spine.logging.backend.jul/AbstractJulRecord/getMessage/#/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-abstract-jul-record/get-message.html
+$dokka.location:io.spine.logging.backend.jul/AbstractJulRecord/getMetadataProcessor/#/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-abstract-jul-record/get-metadata-processor.html
+$dokka.location:io.spine.logging.backend.jul/AbstractJulRecord/message/#/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-abstract-jul-record/message.html
+$dokka.location:io.spine.logging.backend.jul/AbstractJulRecord/setMessage/#kotlin.String?/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-abstract-jul-record/set-message.html
+$dokka.location:io.spine.logging.backend.jul/AbstractJulRecord/setParameters/#kotlin.Array[kotlin.Any]?/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-abstract-jul-record/set-parameters.html
+$dokka.location:io.spine.logging.backend.jul/AbstractJulRecord/setResourceBundle/#java.util.ResourceBundle?/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-abstract-jul-record/set-resource-bundle.html
+$dokka.location:io.spine.logging.backend.jul/AbstractJulRecord/setResourceBundleName/#kotlin.String?/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-abstract-jul-record/set-resource-bundle-name.html
+$dokka.location:io.spine.logging.backend.jul/AbstractJulRecord/toString/#/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-abstract-jul-record/to-string.html
+$dokka.location:io.spine.logging.backend.jul/JulBackendFactory///PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-jul-backend-factory/index.html
+$dokka.location:io.spine.logging.backend.jul/JulBackendFactory/JulBackendFactory/#/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-jul-backend-factory/-jul-backend-factory.html
+$dokka.location:io.spine.logging.backend.jul/JulBackendFactory/create/#kotlin.String/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-jul-backend-factory/create.html
+$dokka.location:io.spine.logging.backend.jul/JulBackendFactory/toString/#/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-jul-backend-factory/to-string.html
+$dokka.location:io.spine.logging.backend.jul/JulRecord.Companion///PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-jul-record/-companion/index.html
+$dokka.location:io.spine.logging.backend.jul/JulRecord.Companion/create/#io.spine.logging.backend.LogData#io.spine.logging.backend.Metadata/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-jul-record/-companion/create.html
+$dokka.location:io.spine.logging.backend.jul/JulRecord.Companion/create/#io.spine.logging.backend.LogData/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-jul-record/-companion/create.html
+$dokka.location:io.spine.logging.backend.jul/JulRecord.Companion/error/#java.lang.RuntimeException#io.spine.logging.backend.LogData#io.spine.logging.backend.Metadata/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-jul-record/-companion/error.html
+$dokka.location:io.spine.logging.backend.jul/JulRecord.Companion/error/#java.lang.RuntimeException#io.spine.logging.backend.LogData/PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-jul-record/-companion/error.html
+$dokka.location:io.spine.logging.backend.jul/JulRecord///PointingToDeclaration/jul-backend/io.spine.logging.backend.jul/-jul-record/index.html
+io.spine.logging.backend.jul
