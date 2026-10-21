@@ -39,8 +39,9 @@ dependencies {
     // machinery (`batchLogRecordProcessor`), and the OTLP exporters. Only this
     // bootstrap depends on them; the backend stays API-only.
     implementation(OpenTelemetryKotlin.implementation)
-    implementation(OpenTelemetryKotlin.exportersCore)
-    implementation(OpenTelemetryKotlin.exportersOtlp)
+    // `OpenTelemetryKotlin` from `config` declares no exporter artifacts yet.
+    implementation("${OpenTelemetryKotlin.group}:exporters-core:${OpenTelemetryKotlin.version}")
+    implementation("${OpenTelemetryKotlin.group}:exporters-otlp:${OpenTelemetryKotlin.version}")
     implementation(OpenTelemetryKotlin.noop)
 
     // `runBlocking`, to invoke the SDK's suspending `shutdown()` from `close()`.
