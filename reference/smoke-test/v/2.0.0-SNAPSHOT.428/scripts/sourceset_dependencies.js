@@ -1,0 +1,1 @@
+sourceset_dependencies='{":smoke-test/main":[]}'
